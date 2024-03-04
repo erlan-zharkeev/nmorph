@@ -1,0 +1,22 @@
+:root {
+  --main-bg: #ebf3fa;
+  --darker-color: #c3cad0;
+  --lighter-color: #ffffff;
+
+  --accent-color-00: #687b9e72;
+  --accent-color-01: #687b9e;
+  --accent-color-02: #687b9e34;
+
+  --success-color-01: rgb(77, 186, 77);
+  --error-color-01: rgb(188, 101, 101);
+  --text-00: #ffffff;
+  --text-01: #687b9e;
+  --text-02: #8498bc;
+
+  &[data-theme='dark'] {
+    $main-bg: #383143;
+    --main-bg: #383143;
+    --darker-color: #{darken($main-bg, 10%)};
+    --lighter-color: #{lighten($main-bg, 10%)};
+  }
+}

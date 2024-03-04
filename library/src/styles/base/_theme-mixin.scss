@@ -1,0 +1,22 @@
+@mixin nmorph-outset() {
+  background: var(--main-bg);
+  box-shadow:
+    #{$base-shadow-width} $base-shadow-width $base-shadow-blur var(--darker-color),
+    -#{$base-shadow-width} -#{$base-shadow-width} $base-shadow-blur var(--lighter-color);
+}
+
+@mixin nmorph-inset() {
+  background: var(--main-bg);
+  box-shadow:
+    inset $base-shadow-width $base-shadow-width $base-shadow-blur var(--darker-color),
+    inset -#{$base-shadow-width} -#{$base-shadow-width} $base-shadow-blur var(--lighter-color);
+}
+
+@mixin nmorph-combined() {
+  background: var(--main-bg);
+  box-shadow:
+    $base-shadow-width $base-shadow-width $base-shadow-blur var(--darker-color),
+    -#{$base-shadow-width} -#{$base-shadow-width} $base-shadow-blur var(--lighter-color),
+    inset $base-shadow-width $base-shadow-width $base-shadow-blur var(--darker-color),
+    inset -#{$base-shadow-width} -#{$base-shadow-width} $base-shadow-blur var(--lighter-color);
+}
