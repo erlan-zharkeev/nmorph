@@ -28,7 +28,7 @@ const width = computed(() => (props.width ? props.width : props.fill ? '100%' : 
 const modifiers = computed(() => createModifiers('nmorph-button-wrapper', [props.styleType]));
 
 export interface IEmit {
-  (e: 'button-click'): void;
+  (e: 'click'): void;
 }
 
 const emit = defineEmits<IEmit>();
@@ -41,7 +41,7 @@ const emit = defineEmits<IEmit>();
       :disabled="props.disabled"
       :loading="props.loading"
       :type="props.type"
-      @click="emit('button-click')"
+      @click="emit('click')"
     >
       <slot name="default" />
       <div v-if="!props.loading && props.text" class="nmorph-button__main-content">
@@ -75,7 +75,7 @@ $hover-transition:
 }
 
 .nmorph-button {
-  --height: 32px;
+  --height: $default-input-height;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -95,8 +95,8 @@ $hover-transition:
   color: var(--text-00);
   transition: $hover-transition;
   box-shadow: none;
-  svg {
-    fill: var(--text-00);
+  .nmorph-icon {
+    --color: var(--text-00);
   }
 }
 

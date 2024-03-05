@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <NmorphTextInput id="test" v-model="xxx" :rules="rules" />
+    <NmorphTextInput id="test" v-model="xxx" :rules="rules" type-password />
   </div>
 </template>
 <script lang="ts" setup>

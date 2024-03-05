@@ -31,9 +31,9 @@ describe('NmorphButton', () => {
     expect(wrapper.findComponent(NmorphLoader).exists()).toBe(true);
   });
 
-  it('emits button-click event when clicked', async () => {
+  it('emits click event when clicked', async () => {
     const wrapper = mount(NmorphButton);
     await wrapper.find('button').trigger('click');
-    expect(wrapper.emitted('button-click')).toHaveLength(1);
+    expect(wrapper.emitted('click')).toHaveLength(1);
   });
 });

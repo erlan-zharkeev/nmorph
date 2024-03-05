@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { InputHeight } from '../inputs.enums';
 import NmorphTextInput from './NmorphTextInput.vue';
 
 const setupApp = ({ app }) => {
@@ -13,6 +14,7 @@ const initState = () => ({
   disabled: false,
   modelValue: '',
   error: false,
+  height: 'default',
 });
 </script>
 
@@ -44,6 +46,7 @@ const initState = () => ({
         <HstCheckbox v-model="state.typePassword" title="type password" />
         <HstCheckbox v-model="state.error" title="error" />
         <HstCheckbox v-model="state.disabled" title="disabled" />
+        <HstSelect v-model="state.height" :options="Object.values(InputHeight)" title="height" />
       </template>
     </Variant>
   </Story>
