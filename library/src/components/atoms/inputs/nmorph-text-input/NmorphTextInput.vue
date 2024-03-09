@@ -6,7 +6,7 @@ import NmorphIcon from './../../nmorph-icon/NmorphIcon.vue';
 import { computed } from 'vue';
 import NmorphErrorBox from './../nmorph-error-box/NmorphErrorBox.vue';
 import { createModifiers } from './../../../../utils';
-import { InputHeight } from '../inputs.enums';
+import { ControlComponentHeight } from './../../../common-component.enums';
 
 interface IRule {
   pattern: RegExp;
@@ -14,7 +14,6 @@ interface IRule {
 }
 
 interface IProps {
-  id: string;
   placeholder?: string;
   label?: string;
   typePassword?: boolean;
@@ -22,18 +21,18 @@ interface IProps {
   modelValue?: string;
   error?: boolean;
   rules?: IRule[];
-  height?: keyof typeof InputHeight;
+  height?: keyof typeof ControlComponentHeight;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  placeholder: 'Enter text',
+  placeholder: '',
   label: '',
   typePassword: false,
   disabled: false,
   modelValue: '',
   error: false,
   rules: () => [],
-  height: InputHeight.default,
+  height: ControlComponentHeight['default-height'],
 });
 
 export interface IEmit {
@@ -53,11 +52,12 @@ onMounted(() => {
 
 const invalid = computed(() => Boolean(errors.value.length));
 const touched = ref(false);
+const showValidationElements = computed(() => touched.value && Boolean(props.rules.length));
 
 const modifiers = computed(() =>
   createModifiers('nmorph-text-input', [
     props.label ? 'labeled' : '',
-    touched.value ? (invalid.value ? 'invalid' : 'valid') : '',
+    showValidationElements.value ? (invalid.value ? 'invalid' : 'valid') : '',
     props.height,
     focused.value ? 'focused' : '',
   ])
@@ -105,19 +105,17 @@ const handleBlur = () => {
   focused.value = false;
 };
 
-const validateIconSize = computed(() => (props.height === 'small' ? 18 : 24));
+const validateIconSize = computed(() => (props.height === 'small-height' ? '18px' : '24px'));
 </script>
 
 <template>
   <div :class="modifiers">
-    <label :for="props.id">{{ props.label }}</label>
+    <label v-if="props.label">{{ props.label }}</label>
     <div class="nmorph-text-input__main-content">
       <div class="nmorph-text-input__input-side">
         <input
-          :id="props.id"
           ref="domInputRef"
           :type="type"
-          :name="props.id"
           :placeholder="props.placeholder"
           :disabled="props.disabled"
           :value="inputValue"
@@ -125,21 +123,26 @@ const validateIconSize = computed(() => (props.height === 'small' ? 18 : 24));
           @focus="handleFocus"
           @blur="handleBlur"
         />
-        <div v-if="props.typePassword" class="nmorph-text-input__password-btn">
-          <NmorphButton style-type="transparent" @click="changePasswordAppearance">
-            <NmorphIcon :name="showPassword ? 'eye-blocked' : 'eye'" />
-          </NmorphButton>
-        </div>
+        <NmorphButton
+          v-if="props.typePassword"
+          class="nmorph-text-input__password-btn"
+          style-type="transparent"
+          height="small-height"
+          bg-transparent-on-hover
+          @click="changePasswordAppearance"
+        >
+          <NmorphIcon :name="showPassword ? 'eye-blocked' : 'eye'" />
+        </NmorphButton>
       </div>
       <NmorphIcon
-        v-if="touched"
+        v-if="showValidationElements"
         class="nmorph-text-input__validate-icon"
         :name="validationIcon"
         :width="validateIconSize"
         :height="validateIconSize"
       />
     </div>
-    <NmorphErrorBox :errors="errors" :height="props.height" />
+    <NmorphErrorBox v-if="showValidationElements" :errors="errors" :height="props.height" />
     <slot name="append" />
   </div>
 </template>
@@ -148,133 +151,127 @@ const validateIconSize = computed(() => (props.height === 'small' ? 18 : 24));
 $input-transition: ease-in-out var(--transition-01) background;
 
 .nmorph-text-input {
-  --height: $default-input-height;
+  --height: #{$default-input-height};
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  padding: $base-shadow-width;
+
+  .nmorph-text-input__main-content {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+  }
+
+  .nmorph-text-input__input-side {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    position: relative;
+  }
+
+  label {
+    @include body-1-strong(var(--text-01));
+  }
+
+  input {
+    width: 100%;
+    border-width: 0;
+    border-radius: var(--default-border-radius);
+    text-indent: $base-input-indentation;
+    height: var(--height);
+    transition: $input-transition;
+    @include nmorph-inset;
+    @include body-1(var(--text-01));
+  }
+
+  input:focus {
+    outline: none;
+    transition: $input-transition;
+    color: var(--text-00);
+    @include nmorph-outset;
+    background: var(--accent-color-00);
+    border: none;
+  }
+
+  input:focus::placeholder {
+    color: var(--text-00);
+  }
+
+  input::placeholder {
+    color: var(--text-01);
+  }
+
+  input:disabled {
+    @include disabled;
+  }
+
+  .nmorph-text-input__password-btn {
+    position: absolute;
+    height: 100%;
+    right: 0;
+    .nmorph-button__content {
+      padding: 8px;
+    }
+  }
 }
 
-.nmorph-text-input--small {
-  --height: $small-input-height;
+.nmorph-text-input--labeled {
+  .nmorph-text-input__main-content {
+    margin-top: 4px;
+  }
 }
 
-.nmorph-text-input input {
-  width: 100%;
-  border: 2px solid var(--main-bg);
-  border-radius: var(--border-radius-60);
-  text-indent: $base-input-indentation;
-  height: var(--height);
-  transition: $input-transition;
-  @include nmorph-inset;
-  @include body-1(var(--text-01));
+.nmorph-text-input--focused {
+  .nmorph-text-input__password-btn {
+    .nmorph-icon {
+      --color: var(--text-00);
+    }
+    .nmorph-button:not(:disabled):not([loading='true']):hover {
+      .nmorph-icon {
+        --color: var(--text-00);
+      }
+    }
+  }
 }
 
-.nmorph-text-input input:focus {
-  outline: none;
-  transition: $input-transition;
-  color: var(--text-00);
-  @include nmorph-outset;
-  background: var(--accent-color-00);
-  border: none;
+.nmorph-text-input--valid {
+  input:focus {
+    background: var(--success-color-01);
+    .nmorph-text-input__validate-icon {
+      margin-left: 12px;
+    }
+  }
+  .nmorph-text-input__validate-icon {
+    --color: var(--success-color-01);
+    margin-left: 8px;
+  }
 }
 
-.nmorph-text-input input:focus::placeholder {
-  color: var(--text-00);
+.nmorph-text-input--invalid {
+  input:focus {
+    background: var(--error-color-01);
+    .nmorph-text-input__validate-icon {
+      margin-left: 12px;
+    }
+  }
+  .nmorph-text-input__validate-icon {
+    --color: var(--error-color-01);
+    margin-left: 8px;
+  }
 }
 
-.nmorph-text-input input::placeholder {
-  color: var(--text-01);
-}
-
-.nmorph-text-input input:disabled {
-  @include disabled;
-}
-
-.nmorph-text-input label {
-  @include body-1(var(--text-01));
-  margin-left: 4px;
-}
-
-.nmorph-text-input--labeled input {
-  margin-top: 4px;
-}
-
-.nmorph-text-input__password-btn {
-  position: absolute;
-  right: 3px;
-}
-
-.nmorph-text-input__input-side {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-  position: relative;
-}
-
-.nmorph-text-input__password-btn .nmorph-button:hover {
-  --height: 26px;
-  margin-bottom: 1px;
-}
-
-.nmorph-text-input__password-btn .nmorph-button:not(:disabled):not([loading='true']):hover {
-  background-color: transparent;
-}
-
-.nmorph-text-input__password-btn .nmorph-button:not(:disabled):not([loading='true']):hover .nmorph-icon {
-  --color: var(--text-01);
-}
-
-.nmorph-text-input--focused .nmorph-text-input__password-btn .nmorph-icon {
-  --color: var(--text-00);
-}
-
-.nmorph-text-input--focused
-  .nmorph-text-input__password-btn
-  .nmorph-button:not(:disabled):not([loading='true']):hover
-  .nmorph-icon {
-  --color: var(--text-00);
-}
-
-.nmorph-text-input--small .nmorph-text-input__password-btn .nmorph-button {
-  --height: $small-input-height;
-}
-
-.nmorph-text-input input:focus .nmorph-text-input__password-btn .nmorph-button:hover {
-  background: transparent;
-}
-
-.nmorph-text-input--valid input:focus {
-  background: var(--success-color-01);
-}
-
-.nmorph-text-input--valid .nmorph-text-input__validate-icon {
-  --color: var(--success-color-01);
-}
-
-.nmorph-text-input--invalid input:focus {
-  background: var(--error-color-01);
-}
-
-.nmorph-text-input--invalid .nmorph-text-input__validate-icon {
-  --color: var(--error-color-01);
-}
-
-.nmorph-text-input--invalid .nmorph-text-input__validate-icon,
-.nmorph-text-input--valid .nmorph-text-input__validate-icon {
-  margin-left: 8px;
-}
-
-.nmorph-text-input--invalid input:focus .nmorph-text-input__validate-icon,
-.nmorph-text-input--valid input:focus .nmorph-text-input__validate-icon {
-  margin-left: 12px;
-}
-
-.nmorph-text-input__main-content {
-  display: inline-flex;
-  align-items: center;
-  width: 100%;
-  position: relative;
+.nmorph-text-input--small-height {
+  --height: #{$small-input-height};
+  label {
+    @include caption-1-strong(var(--text-01));
+  }
+  .nmorph-text-input__password-btn {
+    margin-top: 0px;
+    .nmorph-button {
+      --height: #{$small-input-height};
+    }
+  }
 }
 </style>

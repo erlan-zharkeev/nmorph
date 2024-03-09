@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { InputHeight } from '../inputs.enums';
 import { createModifiers } from './../../../../utils';
+import { ControlComponentHeight } from './../../../common-component.enums';
 
 interface IProps {
   errors: string[];
-  height?: keyof typeof InputHeight;
+  height?: keyof typeof ControlComponentHeight;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  height: InputHeight.default,
+  height: ControlComponentHeight['default-height'],
 });
 const reversedErrors = computed(() => [...props.errors].reverse());
 
@@ -18,7 +18,7 @@ const modifiers = computed(() => createModifiers('nmorph-error-box', [props.heig
 
 <template>
   <div :class="modifiers">
-    <transition-group name="error-animation" tag="div">
+    <transition-group name="list" tag="div">
       <p v-for="error in reversedErrors" :key="error" class="nmorph-error-box__error">{{ error }}</p>
     </transition-group>
   </div>
@@ -26,32 +26,23 @@ const modifiers = computed(() => createModifiers('nmorph-error-box', [props.heig
 
 <style lang="scss">
 .nmorph-error-box {
+  --height: 24px;
   margin-top: $base-shadow-width;
-  --height: $small-input-height;
   height: var(--height);
   overflow: hidden;
-}
-
-.nmorph-error-box--small {
-  --height: 14px;
-}
-.nmorph-error-box--small .nmorph-error-box__error {
-  @include caption-2(var(--error-color-01));
-}
-
-.nmorph-error-box__error {
   @include body-1(var(--error-color-01));
-  text-align: left;
-  margin: 0;
-  margin-left: 12px;
+
+  .nmorph-error-box__error {
+    text-align: left;
+    margin: 0;
+    margin-left: 12px;
+  }
 }
 
-.error-animation-enter-active,
-.error-animation-leave-active {
-  transition: opacity 0.5s ease;
-}
-.error-animation-enter,
-.error-animation-leave-to {
-  opacity: 0;
+.nmorph-error-box--small-height {
+  --height: 14px;
+  .nmorph-error-box__error {
+    @include caption-2(var(--error-color-01));
+  }
 }
 </style>

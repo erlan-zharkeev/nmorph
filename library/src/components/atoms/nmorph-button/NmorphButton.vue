@@ -3,6 +3,7 @@ import NmorphLoader from './../nmorph-loader/NmorphLoader.vue';
 import { createModifiers } from './../../../utils';
 import { NmorphButtonType, NmorphButtonStyle } from './NmorphButton.enums';
 import { computed } from 'vue';
+import { ControlComponentHeight } from './../../common-component.enums';
 
 interface IProps {
   type?: keyof typeof NmorphButtonType;
@@ -12,6 +13,8 @@ interface IProps {
   disabled?: boolean;
   loading?: boolean;
   styleType?: keyof typeof NmorphButtonStyle;
+  height?: keyof typeof ControlComponentHeight;
+  bgTransparentOnHover?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -22,14 +25,24 @@ const props = withDefaults(defineProps<IProps>(), {
   disabled: false,
   loading: false,
   styleType: NmorphButtonStyle.default,
+  height: ControlComponentHeight['default-height'],
+  bgTransparentOnHover: false,
 });
 
 const width = computed(() => (props.width ? props.width : props.fill ? '100%' : 'auto'));
-const modifiers = computed(() => createModifiers('nmorph-button-wrapper', [props.styleType]));
+const modifiers = computed(() =>
+  createModifiers('nmorph-button', [
+    props.styleType,
+    props.height,
+    props.bgTransparentOnHover ? 'bg-transparent-on-hover' : '',
+  ])
+);
 
 export interface IEmit {
   (e: 'click'): void;
 }
+
+const loaderScale = computed(() => (props.height === ControlComponentHeight['default-height'] ? 1 : 0.7));
 
 const emit = defineEmits<IEmit>();
 </script>
@@ -37,74 +50,86 @@ const emit = defineEmits<IEmit>();
 <template>
   <div :class="modifiers">
     <button
-      class="nmorph-button"
+      class="nmorph-button__content"
       :disabled="props.disabled"
       :loading="props.loading"
       :type="props.type"
       @click="emit('click')"
     >
       <slot name="default" />
-      <div v-if="!props.loading && props.text" class="nmorph-button__main-content">
-        <span>{{ props.text }}</span>
-      </div>
-      <NmorphLoader v-if="props.loading" />
+      <span v-if="!props.loading && props.text">{{ props.text }}</span>
+      <NmorphLoader v-if="props.loading" :scale="loaderScale" />
       <slot name="append" />
     </button>
   </div>
 </template>
 
 <style lang="scss">
-$hover-transition:
-  var(--transition-03) ease-in-out background,
-  var(--transition-03) ease-in-out color,
-  var(--transition-04) ease-in-out box-shadow;
+.nmorph-button {
+  $hover-transition:
+    var(--transition-02) ease-in-out background,
+    var(--transition-02) ease-in-out color,
+    var(--transition-02) ease-in-out box-shadow;
+  --height: #{$default-input-height};
 
-.nmorph-button-wrapper {
-  padding: $nmorph-wrapper-padding;
   width: v-bind(width);
   display: inline-block;
-}
+  @include nmorph-wrapper;
 
-.nmorph-button-wrapper--transparent {
-  padding: 0;
-}
+  .nmorph-button__content {
+    width: 100%;
+    height: var(--height);
+    border: none;
+    cursor: pointer;
+    border-radius: var(--default-border-radius);
+    padding: 0 14px;
+    transition: $hover-transition;
+    @include flex-full-center;
+    @include body-1(var(--text-01));
+    @include nmorph-outset;
+  }
 
-.nmorph-button-wrapper--transparent .nmorph-button {
-  box-shadow: none;
-  background: transparent;
-}
+  .nmorph-button__content:disabled {
+    @include disabled;
+  }
 
-.nmorph-button {
-  --height: $default-input-height;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: var(--height);
-  border: none;
-  cursor: pointer;
-  border-radius: var(--border-radius-40);
-  @include body-1(var(--text-01));
-  @include nmorph-outset;
-  padding: 0 14px;
-  transition: $hover-transition;
-}
+  .nmorph-button__content[loading='true'] {
+    cursor: default;
+  }
 
-.nmorph-button:not(:disabled):not([loading='true']):hover {
-  background: var(--accent-color-01);
-  color: var(--text-00);
-  transition: $hover-transition;
-  box-shadow: none;
-  .nmorph-icon {
-    --color: var(--text-00);
+  .nmorph-button__content:not(:disabled):not([loading='true']):hover {
+    background: var(--accent-color-01);
+    color: var(--text-00);
+    transition: $hover-transition;
+    box-shadow: none;
+    .nmorph-icon {
+      --color: var(--text-00);
+    }
   }
 }
 
-.nmorph-button:disabled {
-  @include disabled;
+.nmorph-button--transparent {
+  padding: 0;
+  .nmorph-button__content {
+    box-shadow: none;
+    background: transparent;
+  }
 }
 
-.nmorph-button[loading='true'] {
-  cursor: default;
+.nmorph-button--small-height {
+  --height: 100%;
+  .nmorph-button__content {
+    @include caption-1(var(--text-01));
+  }
+}
+
+.nmorph-button--bg-transparent-on-hover {
+  .nmorph-button__content:not(:disabled):not([loading='true']):hover {
+    background: inherit;
+    box-shadow: none;
+    .nmorph-icon {
+      --color: var(--text-01);
+    }
+  }
 }
 </style>

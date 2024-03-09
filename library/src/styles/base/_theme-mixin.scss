@@ -20,3 +20,8 @@
     inset $base-shadow-width $base-shadow-width $base-shadow-blur var(--darker-color),
     inset -#{$base-shadow-width} -#{$base-shadow-width} $base-shadow-blur var(--lighter-color);
 }
+
+@mixin nmorph-wrapper() {
+  padding: $nmorph-wrapper-padding;
+  box-sizing: content-box;
+}

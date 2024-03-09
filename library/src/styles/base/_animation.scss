@@ -1,0 +1,19 @@
+.list-enter-active,
+.list-leave-active {
+  transition: all var(--transition-02) ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.opacity-enter-active,
+.opacity-list-leave-active {
+  transition: all var(--transition-02) ease;
+}
+
+.opacity-enter-from,
+.opacity-leave-to {
+  opacity: 0;
+}

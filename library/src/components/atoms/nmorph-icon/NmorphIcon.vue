@@ -2,70 +2,36 @@
 import { computed } from 'vue';
 import { IconSize, NmorphIconList } from './NmorphIconList.enums';
 import { NmorphIconsMap } from './NmorphIconsMap';
-
-interface IIconDimensions {
-  width: number;
-  height: number;
-}
+import { createModifiers } from './../../../utils';
 
 interface IProps {
   name?: keyof typeof NmorphIconList | '';
   size?: keyof typeof IconSize;
-  width?: number | null;
-  height?: number | null;
+  width?: string;
+  height?: string;
   path?: string;
 }
-
-const IconSizeMap: Record<IconSize, IIconDimensions> = {
-  [IconSize.small]: {
-    width: 14,
-    height: 14,
-  },
-  [IconSize.medium]: {
-    width: 20,
-    height: 20,
-  },
-  [IconSize.large]: {
-    width: 32,
-    height: 32,
-  },
-};
 
 const props = withDefaults(defineProps<IProps>(), {
   name: '',
   size: IconSize.small,
-  width: null,
-  height: null,
+  width: '',
+  height: '',
   path: '',
 });
 
-const size = computed(() => {
-  return {
-    width: `${props.width ?? IconSizeMap[props.size as IconSize].width}px`,
-    height: `${props.height ?? IconSizeMap[props.size as IconSize].height}px`,
-  };
-});
+const modifiers = computed(() =>
+  createModifiers('nmorph-icon', [props.size, props.width ? 'custom-width' : '', props.height ? 'custom-height' : ''])
+);
 </script>
 
 <template>
-  <div
-    class="nmorph-icon"
-    :style="{
-      width: size.width,
-      height: size.height,
-    }"
-  >
+  <div :class="modifiers">
     <div v-if="props.name" class="nmorph-icon__content">
       <component :is="NmorphIconsMap[props.name as keyof typeof NmorphIconList]" />
     </div>
     <div v-else-if="props.path" class="nmorph-icon__as-image">
-      <img
-        :src="props.path"
-        :style="{
-          width: size.width,
-          height: size.height,
-        }"
-      />
+      <img :src="props.path" />
     </div>
     <slot v-else />
   </div>
@@ -74,15 +40,44 @@ const size = computed(() => {
 <style lang="scss">
 .nmorph-icon {
   --color: var(--text-01);
+  width: var(--width);
+  height: var(--height);
+
+  .nmorph-icon__content {
+    @include flex-full-center;
+  }
+
+  svg {
+    @include wh100;
+    fill: var(--color);
+  }
+
+  .nmorph-icon__as-image img {
+    width: var(--width);
+    height: var(--height);
+  }
 }
-.nmorph-icon svg {
-  width: 100%;
-  height: 100%;
-  fill: var(--color);
+
+.nmorph-icon--small {
+  --width: 14px;
+  --height: 14px;
 }
-.nmorph-icon__content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+.nmorph-icon--medium {
+  --width: 20px;
+  --height: 20px;
+}
+
+.nmorph-icon--large {
+  --width: 32px;
+  --height: 32px;
+}
+
+.nmorph-icon--custom-width {
+  --width: v-bind(props.width);
+}
+
+.nmorph-icon--custom-height {
+  --height: v-bind(props.height);
 }
 </style>
