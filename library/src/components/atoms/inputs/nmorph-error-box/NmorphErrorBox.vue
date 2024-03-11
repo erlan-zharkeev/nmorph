@@ -4,13 +4,15 @@ import { createModifiers } from './../../../../utils';
 import { ControlComponentHeight } from './../../../common-component.enums';
 
 interface IProps {
-  errors: string[];
   height?: keyof typeof ControlComponentHeight;
+  errors: string[];
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  height: ControlComponentHeight['default-height'],
+  height: ControlComponentHeight['thick'],
+  errors: () => [],
 });
+
 const reversedErrors = computed(() => [...props.errors].reverse());
 
 const modifiers = computed(() => createModifiers('nmorph-error-box', [props.height]));
@@ -39,7 +41,7 @@ const modifiers = computed(() => createModifiers('nmorph-error-box', [props.heig
   }
 }
 
-.nmorph-error-box--small-height {
+.nmorph-error-box--thin {
   --height: 14px;
   .nmorph-error-box__error {
     @include caption-2(var(--error-color-01));

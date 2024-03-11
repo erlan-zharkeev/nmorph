@@ -1,59 +1,53 @@
 <template>
   <div class="wrapper">
     <div class="wrapper__left horizontal">
-      <div class="wrapper__element">
-        <NmorphRadioGroup v-model="radioValue" :options="radioOptions" />
-      </div>
-      <div class="wrapper__element">
-        <NmorphCheckboxGroup v-model="checkboxValue" :options="checkboxOptions" />
-      </div>
-      <div class="wrapper__element">
-        <NmorphRadioGroup v-model="radioValue" :options="radioOptions" style-type="button-style" />
-      </div>
-      <div class="wrapper__element">
-        <NmorphCheckboxGroup v-model="checkboxValue" :options="checkboxOptions" style-type="button-style" />
-      </div>
-      <div class="wrapper__element">
-        <NmorphButton text="click" loading />
-      </div>
-      <div class="wrapper__element">
-        <NmorphTextInput v-model="textValue" label="Label one" :rules="inputRules" type-password />
-      </div>
-    </div>
-    <div class="wrapper__right vertical">
-      <!-- <div class="wrapper__element">
-        <NmorphRadioGroup v-model="radioValue" :options="radioOptions" direction="column" />
-      </div>
-      <div class="wrapper__element">
-        <NmorphCheckboxGroup v-model="checkboxValue" :options="checkboxOptions" direction="column" />
-      </div>
-      <div class="wrapper__element">
-        <NmorphRadioGroup v-model="radioValue" :options="radioOptions" direction="column" style-type="button-style" />
-      </div>
-      <div class="wrapper__element">
+      <NmorphCard>
+        <template #header>Label one</template>
+        <NmorphTextInput v-model="textValue" label="Label one" :rules="inputRules" type-password fill />
+        <NmorphNumberInput
+          v-model="numberModel"
+          :min="2"
+          :max="8"
+          label="Label one"
+          :rules="[{ value: 5, operator: 'eq', error: 'Че дурак вообще?!' }]"
+          static-error-box-space
+          fill
+        />
+        <NmorphRadioGroup
+          v-model="radioValue"
+          label="Label one"
+          :options="radioOptions"
+          :rules="[{ error: 'мимо сука', radioCompareType: 'not-equal', value: 'label3' }]"
+          static-error-box-space
+        />
         <NmorphCheckboxGroup
           v-model="checkboxValue"
+          label="Label one"
           :options="checkboxOptions"
-          direction="column"
-          style-type="button-style"
+          :rules="[{ error: 'мимо сучараааа!!!', checkboxCompareType: 'not-contains', value: ['Three'] }]"
+          static-error-box-space
+          fill
         />
-      </div> -->
+        <template #footer>Copyright</template>
+      </NmorphCard>
     </div>
+    <div class="wrapper__right vertical" />
   </div>
 </template>
 <script lang="ts" setup>
-import { NmorphCheckboxGroup, NmorphRadioGroup, NmorphIcon, NmorphButton } from '@nmorph/nmorph-ui-kit/components';
+import { NmorphCheckboxGroup, NmorphRadioGroup, NmorphNumberInput, NmorphCard } from '@nmorph/nmorph-ui-kit/components';
 import NmorphTextInput from '@nmorph/nmorph-ui-kit/components/atoms/inputs/nmorph-text-input/NmorphTextInput.vue';
 import { ref } from 'vue';
 const checkboxValue = ref<string[]>(['Two']);
 const radioValue = ref('label1');
 const textValue = ref('');
+const numberModel = ref(1);
 
 const inputRules = [
   {
     pattern:
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    error: 'fui morzh',
+    error: 'hui morzh',
   },
 ];
 
@@ -119,5 +113,10 @@ const checkboxOptions = ref([
 
 .d-flex {
   display: flex;
+  align-items: flex-end;
+}
+
+.ml-2 {
+  margin-left: 8px;
 }
 </style>

@@ -3,6 +3,8 @@ export enum NmorphIconList {
   'eye-blocked' = 'eye-blocked',
   'success' = 'success',
   'error' = 'error',
+  'plus' = 'plus',
+  'minus' = 'minus',
 }
 
 export enum IconSize {

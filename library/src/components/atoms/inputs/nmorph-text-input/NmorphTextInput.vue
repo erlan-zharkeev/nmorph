@@ -6,22 +6,15 @@ import NmorphIcon from './../../nmorph-icon/NmorphIcon.vue';
 import { computed } from 'vue';
 import NmorphErrorBox from './../nmorph-error-box/NmorphErrorBox.vue';
 import { createModifiers } from './../../../../utils';
-import { ControlComponentHeight } from './../../../common-component.enums';
+import { CommonInputProps, ControlComponentHeight } from './../../../common-component.enums';
+import { ITextValidationRule, useValidation } from './../../../../hooks/useValidation';
+import NmorphValidationIcon from './../common/NmorphValidationIcon.vue';
 
-interface IRule {
-  pattern: RegExp;
-  error: string;
-}
-
-interface IProps {
+interface IProps extends CommonInputProps {
   placeholder?: string;
-  label?: string;
   typePassword?: boolean;
-  disabled?: boolean;
   modelValue?: string;
-  error?: boolean;
-  rules?: IRule[];
-  height?: keyof typeof ControlComponentHeight;
+  rules?: ITextValidationRule[];
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -30,9 +23,11 @@ const props = withDefaults(defineProps<IProps>(), {
   typePassword: false,
   disabled: false,
   modelValue: '',
-  error: false,
   rules: () => [],
-  height: ControlComponentHeight['default-height'],
+  height: ControlComponentHeight['thick'],
+  showValidationIcon: true,
+  staticErrorBoxSpace: false,
+  fill: true,
 });
 
 export interface IEmit {
@@ -50,32 +45,23 @@ onMounted(() => {
   if (domInputRef.value) emit('getDomRef', domInputRef);
 });
 
-const invalid = computed(() => Boolean(errors.value.length));
-const touched = ref(false);
-const showValidationElements = computed(() => touched.value && Boolean(props.rules.length));
-
 const modifiers = computed(() =>
   createModifiers('nmorph-text-input', [
     props.label ? 'labeled' : '',
-    showValidationElements.value ? (invalid.value ? 'invalid' : 'valid') : '',
+    showValidation.value ? (valid.value ? 'valid' : 'invalid') : '',
     props.height,
     focused.value ? 'focused' : '',
+    props.typePassword ? 'password' : '',
   ])
 );
 
 const inputValue = ref(props.modelValue);
-const errors = ref<string[]>([]);
+const { showValidation, valid, errors } = useValidation({ rules: props.rules, inputValue });
 
 watch(
   () => props.modelValue,
   (newValue) => {
     inputValue.value = newValue;
-    touched.value = true;
-    errors.value = props.rules.reduce((acc, rule) => {
-      const match = inputValue.value.match(rule.pattern);
-      if (!match) acc.push(rule.error);
-      return acc;
-    }, [] as string[]);
   }
 );
 
@@ -92,7 +78,6 @@ const changePasswordAppearance = () => {
 const type = computed(() => {
   return props.typePassword && !showPassword.value ? 'password' : 'text';
 });
-const validationIcon = computed(() => (invalid.value ? 'error' : 'success'));
 
 const focused = ref(false);
 
@@ -104,8 +89,6 @@ const handleBlur = () => {
   emit('blur');
   focused.value = false;
 };
-
-const validateIconSize = computed(() => (props.height === 'small-height' ? '18px' : '24px'));
 </script>
 
 <template>
@@ -127,22 +110,16 @@ const validateIconSize = computed(() => (props.height === 'small-height' ? '18px
           v-if="props.typePassword"
           class="nmorph-text-input__password-btn"
           style-type="transparent"
-          height="small-height"
+          width="32px"
           bg-transparent-on-hover
           @click="changePasswordAppearance"
         >
           <NmorphIcon :name="showPassword ? 'eye-blocked' : 'eye'" />
         </NmorphButton>
       </div>
-      <NmorphIcon
-        v-if="showValidationElements"
-        class="nmorph-text-input__validate-icon"
-        :name="validationIcon"
-        :width="validateIconSize"
-        :height="validateIconSize"
-      />
+      <NmorphValidationIcon :valid="valid" :show="showValidation" />
     </div>
-    <NmorphErrorBox v-if="showValidationElements" :errors="errors" :height="props.height" />
+    <NmorphErrorBox v-if="props.staticErrorBoxSpace || showValidation" :errors="errors" :height="props.height" />
     <slot name="append" />
   </div>
 </template>
@@ -151,7 +128,7 @@ const validateIconSize = computed(() => (props.height === 'small-height' ? '18px
 $input-transition: ease-in-out var(--transition-01) background;
 
 .nmorph-text-input {
-  --height: #{$default-input-height};
+  --height: #{$thick-input-height};
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -177,7 +154,7 @@ $input-transition: ease-in-out var(--transition-01) background;
 
   input {
     width: 100%;
-    border-width: 0;
+    border: none;
     border-radius: var(--default-border-radius);
     text-indent: $base-input-indentation;
     height: var(--height);
@@ -192,7 +169,6 @@ $input-transition: ease-in-out var(--transition-01) background;
     color: var(--text-00);
     @include nmorph-outset;
     background: var(--accent-color-00);
-    border: none;
   }
 
   input:focus::placeholder {
@@ -217,6 +193,10 @@ $input-transition: ease-in-out var(--transition-01) background;
   }
 }
 
+.nmorph-text-input--fill {
+  width: 100%;
+}
+
 .nmorph-text-input--labeled {
   .nmorph-text-input__main-content {
     margin-top: 4px;
@@ -239,39 +219,31 @@ $input-transition: ease-in-out var(--transition-01) background;
 .nmorph-text-input--valid {
   input:focus {
     background: var(--success-color-01);
-    .nmorph-text-input__validate-icon {
-      margin-left: 12px;
-    }
-  }
-  .nmorph-text-input__validate-icon {
-    --color: var(--success-color-01);
-    margin-left: 8px;
   }
 }
 
 .nmorph-text-input--invalid {
   input:focus {
     background: var(--error-color-01);
-    .nmorph-text-input__validate-icon {
-      margin-left: 12px;
-    }
-  }
-  .nmorph-text-input__validate-icon {
-    --color: var(--error-color-01);
-    margin-left: 8px;
   }
 }
 
-.nmorph-text-input--small-height {
-  --height: #{$small-input-height};
+.nmorph-text-input--thin {
+  --height: #{$thin-input-height};
   label {
     @include caption-1-strong(var(--text-01));
   }
   .nmorph-text-input__password-btn {
     margin-top: 0px;
     .nmorph-button {
-      --height: #{$small-input-height};
+      --height: #{$thin-input-height};
     }
+  }
+}
+
+.nmorph-text-input--password {
+  input {
+    padding-right: #{$thin-input-height};
   }
 }
 </style>

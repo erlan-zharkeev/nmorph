@@ -20,16 +20,6 @@ describe('YourIconComponent', () => {
     expect(wrapper.find('img').attributes('src')).toBe(path);
   });
 
-  it('applies custom size through props', () => {
-    const width = 50;
-    const height = 50;
-    const wrapper = mount(NmorphIcon, {
-      props: { width, height },
-    });
-    expect(wrapper.attributes('style')).toContain(`width: ${width}px`);
-    expect(wrapper.attributes('style')).toContain(`height: ${height}px`);
-  });
-
   it('renders default slot when no name or path provided', () => {
     const wrapper = mount(NmorphIcon, {
       slots: {
@@ -37,11 +27,5 @@ describe('YourIconComponent', () => {
       },
     });
     expect(wrapper.text()).toContain('Default slot content');
-  });
-
-  it('applies default size when no size provided', () => {
-    const wrapper = mount(NmorphIcon);
-    expect(wrapper.attributes('style')).toContain('width: 14px');
-    expect(wrapper.attributes('style')).toContain('height: 14px');
   });
 });

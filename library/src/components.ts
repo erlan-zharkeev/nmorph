@@ -5,6 +5,8 @@ import NmorphLoader from './components/atoms/nmorph-loader/NmorphLoader.vue';
 import NmorphCheckbox from './components/atoms/inputs/nmorph-checkbox/NmorphCheckbox.vue';
 import NmorphCheckboxGroup from './components/atoms/inputs/nmorph-checkbox-group/NmorphCheckboxGroup.vue';
 import NmorphRadioGroup from './components/atoms/inputs/nmorph-radio-group/NmorphRadioGroup.vue';
+import NmorphNumberInput from './components/atoms/inputs/nmorph-number-input/NmorphNumberInput.vue';
+import NmorphCard from './components/atoms/nmorph-card/NmorphCard.vue';
 
 export {
   NmorphTextInput,
@@ -14,4 +16,6 @@ export {
   NmorphCheckbox,
   NmorphRadioGroup,
   NmorphCheckboxGroup,
+  NmorphNumberInput,
+  NmorphCard,
 };

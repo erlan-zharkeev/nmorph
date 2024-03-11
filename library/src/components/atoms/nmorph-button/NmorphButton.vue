@@ -15,6 +15,7 @@ interface IProps {
   styleType?: keyof typeof NmorphButtonStyle;
   height?: keyof typeof ControlComponentHeight;
   bgTransparentOnHover?: boolean;
+  ripple?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -25,8 +26,9 @@ const props = withDefaults(defineProps<IProps>(), {
   disabled: false,
   loading: false,
   styleType: NmorphButtonStyle.default,
-  height: ControlComponentHeight['default-height'],
+  height: ControlComponentHeight['thick'],
   bgTransparentOnHover: false,
+  ripple: true,
 });
 
 const width = computed(() => (props.width ? props.width : props.fill ? '100%' : 'auto'));
@@ -35,6 +37,7 @@ const modifiers = computed(() =>
     props.styleType,
     props.height,
     props.bgTransparentOnHover ? 'bg-transparent-on-hover' : '',
+    props.ripple ? 'ripple' : '',
   ])
 );
 
@@ -42,7 +45,7 @@ export interface IEmit {
   (e: 'click'): void;
 }
 
-const loaderScale = computed(() => (props.height === ControlComponentHeight['default-height'] ? 1 : 0.7));
+const loaderScale = computed(() => (props.height === ControlComponentHeight['thick'] ? 1 : 0.7));
 
 const emit = defineEmits<IEmit>();
 </script>
@@ -70,11 +73,10 @@ const emit = defineEmits<IEmit>();
     var(--transition-02) ease-in-out background,
     var(--transition-02) ease-in-out color,
     var(--transition-02) ease-in-out box-shadow;
-  --height: #{$default-input-height};
+  --height: #{$thick-input-height};
 
   width: v-bind(width);
   display: inline-block;
-  @include nmorph-wrapper;
 
   .nmorph-button__content {
     width: 100%;
@@ -116,8 +118,8 @@ const emit = defineEmits<IEmit>();
   }
 }
 
-.nmorph-button--small-height {
-  --height: 100%;
+.nmorph-button--thin {
+  --height: #{$thin-input-height};
   .nmorph-button__content {
     @include caption-1(var(--text-01));
   }
@@ -130,6 +132,32 @@ const emit = defineEmits<IEmit>();
     .nmorph-icon {
       --color: var(--text-01);
     }
+  }
+}
+
+.nmorph-button--ripple {
+  .nmorph-button__content {
+    position: relative;
+    overflow: hidden;
+  }
+  .nmorph-button__content::after {
+    content: '';
+    @include wh100;
+    @include absolute-zero;
+    background-image: radial-gradient(circle, var(--main-bg) 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition:
+      transform 0.3s,
+      opacity 1s;
+  }
+
+  .nmorph-button__content:active::after {
+    transform: scale(0, 0);
+    opacity: 0.3;
+    transition: 0s;
   }
 }
 </style>

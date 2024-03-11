@@ -56,7 +56,7 @@ const modifiers = computed(() =>
 
 <style lang="scss" scoped>
 .nmorph-radio {
-  --size: #{$xs-input-height};
+  --size: #{$extra-thick-input-height};
   cursor: pointer;
   @include body-1(var(--text-01));
 
@@ -100,8 +100,7 @@ const modifiers = computed(() =>
 }
 
 .nmorph-radio--button-style {
-  --size: #{$default-input-height};
-  @include nmorph-wrapper;
+  --size: #{$thick-input-height};
 
   .nmorph-radio__fake {
     padding: 8px;
