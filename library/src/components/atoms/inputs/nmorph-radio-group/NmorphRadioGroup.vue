@@ -3,8 +3,8 @@ import { IRadioOption, RadioStyleType } from '../nmorph-radio/types';
 import NmorphRadio from './../nmorph-radio/NmorphRadio.vue';
 import { createModifiers } from './../../../../utils';
 import { computed, provide, ref } from 'vue';
-import { CommonInputProps, ComponentDirection } from 'src/components/common-component.enums';
-import NmorphErrorBox from './../nmorph-error-box/NmorphErrorBox.vue';
+import { CommonInputProps, ComponentDirection } from './../../../common-component.enums';
+import NmorphErrorBox from './../../nmorph-error-box/NmorphErrorBox.vue';
 import { useValidation, IRadioGroupValidationRule } from './../../../../hooks/useValidation';
 import NmorphValidationIcon from './../common/NmorphValidationIcon.vue';
 

@@ -69,13 +69,16 @@ export const useValidation = ({ inputValue, rules }: IUseValidationPayload) => {
   const touched = ref(false);
   const showValidation = computed(() => touched.value && Boolean(rules.length));
 
-  const validationHandler = (value: unknown) => {
+  const validate = () => {
+    const { value }: { value: unknown } = inputValue;
     if (!touched.value) touched.value = true;
 
-    const textValidation = typeof value === 'string' && 'pattern' in rules[0];
+    const hasRule = (key: string) => rules.length > 0 && key in rules[0];
+
+    const textValidation = typeof value === 'string' && hasRule('pattern');
     const numberValidation = typeof value === 'number';
-    const radioGroupValidation = typeof value === 'string' && 'radioCompareType' in rules[0];
-    const checkboxGroupValidation = Array.isArray(value) && 'checkboxCompareType' in rules[0];
+    const radioGroupValidation = typeof value === 'string' && hasRule('radioCompareType');
+    const checkboxGroupValidation = Array.isArray(value) && hasRule('checkboxCompareType');
 
     if (textValidation) {
       const typeInferredRules = rules as ITextValidationRule[];
@@ -154,7 +157,8 @@ export const useValidation = ({ inputValue, rules }: IUseValidationPayload) => {
     }
   };
 
-  watch(inputValue, validationHandler, { deep: true });
+  watch(inputValue, validate, { deep: true });
+  watch(() => rules, validate, { deep: true });
 
   return {
     touched,

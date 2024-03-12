@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { IconSize, NmorphIconList } from './NmorphIconList.enums';
+import { IconName, IconSize, NmorphIconList } from './NmorphIconList.enums';
 import { NmorphIconsMap } from './NmorphIconsMap';
 import { createModifiers } from './../../../utils';
 
 interface IProps {
-  name?: keyof typeof NmorphIconList | '';
+  name?: IconName;
   size?: keyof typeof IconSize;
   width?: string;
   height?: string;

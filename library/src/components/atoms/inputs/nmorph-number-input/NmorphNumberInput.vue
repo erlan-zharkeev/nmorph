@@ -4,7 +4,7 @@ import { createModifiers } from './../../../../utils';
 import { computed, ref } from 'vue';
 import NmorphButton from './../../nmorph-button/NmorphButton.vue';
 import NmorphIcon from './../../nmorph-icon/NmorphIcon.vue';
-import NmorphErrorBox from './../nmorph-error-box/NmorphErrorBox.vue';
+import NmorphErrorBox from './../../nmorph-error-box/NmorphErrorBox.vue';
 import { INumberValidationRule, useValidation } from './../../../../hooks/useValidation';
 import NmorphValidationIcon from './../common/NmorphValidationIcon.vue';
 
@@ -219,13 +219,13 @@ $input-transition: ease-in-out var(--transition-01) background;
 
 .nmorph-number-input--valid {
   input:focus {
-    background: var(--success-color-01);
+    background: var(--success-color-00);
   }
 }
 
 .nmorph-number-input--invalid {
   input:focus {
-    background: var(--error-color-01);
+    background: var(--error-color-00);
   }
 }
 

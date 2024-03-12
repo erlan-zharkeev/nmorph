@@ -2,9 +2,12 @@
 @import 'border-radius';
 @import 'typography';
 @import 'normalize';
-@import 'fonts';
 @import 'transition';
 @import 'dimensions';
 @import 'theme-mixin';
 @import 'animation';
-@import 'common';
+@import 'common-mixins';
+
+body {
+  font-family: 'Helvetica', 'Roboto', Arial, sans-serif;
+}

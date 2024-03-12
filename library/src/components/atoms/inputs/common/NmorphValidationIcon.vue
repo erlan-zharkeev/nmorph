@@ -38,12 +38,12 @@ const validateIconSize = '18px';
 }
 .nmorph-validation-icon--valid {
   .nmorph-validation-icon__content {
-    --color: var(--success-color-01);
+    --color: var(--success-color-00);
   }
 }
 .nmorph-validation-icon--invalid {
   .nmorph-validation-icon__content {
-    --color: var(--error-color-01);
+    --color: var(--error-color-00);
   }
 }
 </style>

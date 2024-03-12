@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { createModifiers } from './../../../../utils';
-import { ControlComponentHeight } from './../../../common-component.enums';
+import { createModifiers } from './../../../utils';
+import { ControlComponentHeight } from './../../common-component.enums';
 
 interface IProps {
   height?: keyof typeof ControlComponentHeight;
@@ -32,7 +32,7 @@ const modifiers = computed(() => createModifiers('nmorph-error-box', [props.heig
   margin-top: $base-shadow-width;
   height: var(--height);
   overflow: hidden;
-  @include body-1(var(--error-color-01));
+  @include body-1(var(--error-color-00));
 
   .nmorph-error-box__error {
     text-align: left;
@@ -44,7 +44,7 @@ const modifiers = computed(() => createModifiers('nmorph-error-box', [props.heig
 .nmorph-error-box--thin {
   --height: 14px;
   .nmorph-error-box__error {
-    @include caption-2(var(--error-color-01));
+    @include caption-2(var(--error-color-00));
   }
 }
 </style>

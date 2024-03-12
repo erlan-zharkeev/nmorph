@@ -4,7 +4,7 @@ import { computed, provide, ref } from 'vue';
 import { ICheckboxOption, ICheckboxStyleType } from './../nmorph-checkbox/types';
 import NmorphCheckbox from '../nmorph-checkbox/NmorphCheckbox.vue';
 import { CommonInputProps, ComponentDirection } from './../../../common-component.enums';
-import NmorphErrorBox from './../nmorph-error-box/NmorphErrorBox.vue';
+import NmorphErrorBox from './../../nmorph-error-box/NmorphErrorBox.vue';
 import { useValidation, ICheckboxGroupValidationRule } from './../../../../hooks/useValidation';
 import NmorphValidationIcon from './../common/NmorphValidationIcon.vue';
 

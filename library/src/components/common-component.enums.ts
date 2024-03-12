@@ -22,3 +22,10 @@ export enum ShadowType {
   outset = 'outset',
   combined = 'combined',
 }
+
+export enum Color {
+  accent = 'accent',
+  success = 'success',
+  error = 'error',
+  warning = 'warning',
+}

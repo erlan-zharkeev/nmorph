@@ -4,7 +4,7 @@ import { onMounted } from 'vue';
 import NmorphButton from './../../nmorph-button/NmorphButton.vue';
 import NmorphIcon from './../../nmorph-icon/NmorphIcon.vue';
 import { computed } from 'vue';
-import NmorphErrorBox from './../nmorph-error-box/NmorphErrorBox.vue';
+import NmorphErrorBox from './../../nmorph-error-box/NmorphErrorBox.vue';
 import { createModifiers } from './../../../../utils';
 import { CommonInputProps, ControlComponentHeight } from './../../../common-component.enums';
 import { ITextValidationRule, useValidation } from './../../../../hooks/useValidation';
@@ -56,6 +56,7 @@ const modifiers = computed(() =>
 );
 
 const inputValue = ref(props.modelValue);
+
 const { showValidation, valid, errors } = useValidation({ rules: props.rules, inputValue });
 
 watch(
@@ -218,13 +219,13 @@ $input-transition: ease-in-out var(--transition-01) background;
 
 .nmorph-text-input--valid {
   input:focus {
-    background: var(--success-color-01);
+    background: var(--success-color-00);
   }
 }
 
 .nmorph-text-input--invalid {
   input:focus {
-    background: var(--error-color-01);
+    background: var(--error-color-00);
   }
 }
 

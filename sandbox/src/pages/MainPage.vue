@@ -3,7 +3,7 @@
     <div class="wrapper__left horizontal">
       <NmorphCard>
         <template #header>Label one</template>
-        <NmorphTextInput v-model="textValue" label="Label one" :rules="inputRules" type-password fill />
+        <NmorphTextInput v-model="textValue" label="Label one" :rules="reactiveInputRules" type-password fill />
         <NmorphNumberInput
           v-model="numberModel"
           :min="2"
@@ -31,13 +31,23 @@
         <template #footer>Copyright</template>
       </NmorphCard>
     </div>
-    <div class="wrapper__right vertical" />
+    <div class="wrapper__right vertical">
+      <NmorphCard>
+        <NmorphLink text="click me" underline icon-name="plus" color="error" />
+      </NmorphCard>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { NmorphCheckboxGroup, NmorphRadioGroup, NmorphNumberInput, NmorphCard } from '@nmorph/nmorph-ui-kit/components';
-import NmorphTextInput from '@nmorph/nmorph-ui-kit/components/atoms/inputs/nmorph-text-input/NmorphTextInput.vue';
-import { ref } from 'vue';
+import {
+  NmorphCheckboxGroup,
+  NmorphRadioGroup,
+  NmorphNumberInput,
+  NmorphCard,
+  NmorphTextInput,
+  NmorphLink,
+} from '@nmorph/nmorph-ui-kit/components';
+import { reactive, ref } from 'vue';
 const checkboxValue = ref<string[]>(['Two']);
 const radioValue = ref('label1');
 const textValue = ref('');
@@ -50,6 +60,12 @@ const inputRules = [
     error: 'hui morzh',
   },
 ];
+
+let reactiveInputRules = reactive(inputRules);
+
+const handler = () => {
+  reactiveInputRules.splice(0, reactiveInputRules.length);
+};
 
 const radioOptions = [
   {
@@ -103,6 +119,7 @@ const checkboxOptions = ref([
   width: 50%;
 }
 .wrapper__right {
+  margin-left: 8px;
   &.vertical {
     display: flex;
   }
@@ -117,6 +134,6 @@ const checkboxOptions = ref([
 }
 
 .ml-2 {
-  margin-left: 8px;
+  margin-left: 16px;
 }
 </style>

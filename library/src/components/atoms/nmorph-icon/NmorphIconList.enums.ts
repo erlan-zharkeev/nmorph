@@ -12,3 +12,5 @@ export enum IconSize {
   medium = 'medium',
   large = 'large',
 }
+
+export type IconName = keyof typeof NmorphIconList | '';
