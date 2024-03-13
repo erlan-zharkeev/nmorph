@@ -10,8 +10,6 @@ export enum ComponentDirection {
 
 export interface CommonInputProps {
   height?: keyof typeof ControlComponentHeight;
-  showValidationIcon?: boolean;
-  staticErrorBoxSpace?: boolean;
   fill?: boolean;
   disabled?: boolean;
   label?: string;

@@ -25,3 +25,8 @@
   padding: $nmorph-wrapper-padding;
   box-sizing: content-box;
 }
+
+@mixin nmorph-dark-shadow() {
+  background: var(--main-bg);
+  box-shadow: 0 0 $base-shadow-blur var(--darker-color);
+}

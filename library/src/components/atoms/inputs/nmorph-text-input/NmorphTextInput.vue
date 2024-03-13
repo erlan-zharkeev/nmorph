@@ -15,6 +15,8 @@ interface IProps extends CommonInputProps {
   typePassword?: boolean;
   modelValue?: string;
   rules?: ITextValidationRule[];
+  showValidationIcon?: boolean;
+  staticErrorBoxSpace?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {

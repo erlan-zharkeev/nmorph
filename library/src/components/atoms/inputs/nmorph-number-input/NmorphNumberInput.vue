@@ -15,6 +15,8 @@ interface IProps extends CommonInputProps {
   step?: number;
   actionBtnPositionRight?: boolean;
   rules?: INumberValidationRule[];
+  showValidationIcon?: boolean;
+  staticErrorBoxSpace?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {

@@ -14,6 +14,8 @@ interface IProps extends CommonInputProps {
   styleType?: keyof typeof RadioStyleType;
   direction?: keyof typeof ComponentDirection;
   rules?: IRadioGroupValidationRule[];
+  showValidationIcon?: boolean;
+  staticErrorBoxSpace?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {

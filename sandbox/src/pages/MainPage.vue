@@ -18,22 +18,27 @@
           label="Label one"
           :options="radioOptions"
           :rules="[{ error: 'мимо сука', radioCompareType: 'not-equal', value: 'label3' }]"
+          style-type="button-style"
           static-error-box-space
         />
         <NmorphCheckboxGroup
           v-model="checkboxValue"
           label="Label one"
           :options="checkboxOptions"
+          style-type="button-style"
           :rules="[{ error: 'мимо сучараааа!!!', checkboxCompareType: 'not-contains', value: ['Three'] }]"
           static-error-box-space
           fill
         />
-        <template #footer>Copyright</template>
+        <NmorphSlider v-model="slider" :step="1" :show-value="false" />
       </NmorphCard>
     </div>
     <div class="wrapper__right vertical">
       <NmorphCard>
-        <NmorphLink text="click me" underline icon-name="plus" color="error" />
+        <NmorphTooltip text="read me" position="right">
+          <NmorphLink text="click me" underline icon-name="plus" color="error" />
+        </NmorphTooltip>
+        <template #footer>Copyright</template>
       </NmorphCard>
     </div>
   </div>
@@ -46,13 +51,15 @@ import {
   NmorphCard,
   NmorphTextInput,
   NmorphLink,
+  NmorphSlider,
+  NmorphTooltip,
 } from '@nmorph/nmorph-ui-kit/components';
 import { reactive, ref } from 'vue';
 const checkboxValue = ref<string[]>(['Two']);
 const radioValue = ref('label1');
 const textValue = ref('');
 const numberModel = ref(1);
-
+const slider = ref(20);
 const inputRules = [
   {
     pattern:
@@ -110,10 +117,14 @@ const checkboxOptions = ref([
 .wrapper {
   height: 100vh;
   background-color: var(--main-bg);
-  padding: 2rem;
+  padding: 1rem;
   display: flex;
 }
-
+.test {
+  position: fixed;
+  left: 0%;
+  bottom: 50px;
+}
 .wrapper__left,
 .wrapper__right {
   width: 50%;

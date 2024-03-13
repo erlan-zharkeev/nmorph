@@ -14,6 +14,8 @@ interface IProps extends CommonInputProps {
   styleType?: keyof typeof ICheckboxStyleType;
   direction?: keyof typeof ComponentDirection;
   rules?: ICheckboxGroupValidationRule[];
+  showValidationIcon?: boolean;
+  staticErrorBoxSpace?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
