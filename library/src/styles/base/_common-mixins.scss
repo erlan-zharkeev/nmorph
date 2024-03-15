@@ -1,27 +1,27 @@
-@mixin disabled () {
+@mixin disabled() {
   cursor: not-allowed;
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
-@mixin wh100 () {
+@mixin wh100() {
   width: 100%;
   height: 100%;
 }
 
-@mixin flex-full-center () {
+@mixin flex-full-center() {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-@mixin absolute-center () {
+@mixin absolute-center() {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-@mixin absolute-zero () {
+@mixin absolute-zero() {
   position: absolute;
   top: 0;
   left: 0;

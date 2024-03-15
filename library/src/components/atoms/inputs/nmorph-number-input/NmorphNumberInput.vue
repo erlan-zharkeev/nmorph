@@ -61,8 +61,12 @@ const maxBtnDisabled = computed(() => inputValue.value >= props.max);
 const rightActionBtnHeight = computed(() => (props.height === 'thick' ? '16px' : '12px'));
 const iconSizeMap = {
   thick: {
+    default: '12px',
+    right: '8px',
+  },
+  default: {
     default: '10px',
-    right: '6px',
+    right: '7px',
   },
   thin: {
     default: '8px',
@@ -248,7 +252,7 @@ $input-transition: ease-in-out var(--transition-01) background;
 }
 
 .nmorph-number-input--thin {
-  --height: #{$thin-input-height};
+  --height: #{$default-input-height};
   input {
     @include caption-1(var(--text-01));
   }

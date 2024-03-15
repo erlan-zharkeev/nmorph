@@ -5,6 +5,7 @@ export enum NmorphIconList {
   'error' = 'error',
   'plus' = 'plus',
   'minus' = 'minus',
+  'loader' = 'loader',
 }
 
 export enum IconSize {

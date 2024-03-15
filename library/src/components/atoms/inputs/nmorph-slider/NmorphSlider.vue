@@ -1,108 +1,177 @@
 <script setup lang="ts">
-import { CommonInputProps, ControlComponentHeight } from './../../../common-component.enums';
+import { CommonInputProps } from './../../../common-component.enums';
 import { createModifiers } from './../../../../utils';
-import { computed, ref } from 'vue';
+import { computed, ref, watch, onUnmounted, onMounted } from 'vue';
+import NmorphTooltip from './../../nmorph-tooltip/NmorphTooltip.vue';
 
-interface IProps extends CommonInputProps {
+interface IProps extends Omit<CommonInputProps, 'height'> {
   modelValue?: number;
   max?: number;
   min?: number;
   step?: number;
-  vertical?: boolean;
-  showValue?: boolean;
+  showTooltip?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  height: ControlComponentHeight['thick'],
   modelValue: 0,
-  max: Infinity,
-  min: -Infinity,
+  max: 100,
+  min: 0,
   step: 1,
   disabled: false,
   fill: true,
-  vertical: false,
-  showValue: true,
+  showTooltip: true,
 });
 
 const modifiers = computed(() =>
-  createModifiers('nmorph-slider-input', [
-    props.height,
-    props.disabled ? 'disabled' : '',
-    props.fill ? 'fill' : '',
-    props.vertical ? 'vertical' : '',
-  ])
+  createModifiers('nmorph-slider', [props.disabled ? 'disabled' : '', props.fill ? 'fill' : ''])
 );
 
-const inputValue = ref(props.modelValue);
+const thumbWidth = 40;
+const thumbWidthCss = `${thumbWidth}px`;
+const tooltipVisible = ref(props.showTooltip);
 
-export interface IEmit {
-  (e: 'update:modelValue', val: string): void;
-}
+const emit = defineEmits<{
+  (e: 'update:modelValue', val: number): void;
+}>();
 
-const emit = defineEmits<IEmit>();
+const thumbValue = ref(props.modelValue);
 
-const inputHandler = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  let result = Number(target.value);
-  inputValue.value = result;
-  emit('update:modelValue', target.value);
+const sliderContainer = ref<HTMLElement | null>(null);
+
+watch(thumbValue, () => {
+  emit('update:modelValue', thumbValue.value);
+});
+
+const thumbXPercentPosition = computed(() => {
+  const resizeRecomputeTrigger = windowWidth.value - windowWidth.value;
+  const range = props.max - props.min + resizeRecomputeTrigger;
+  const basePosition = ((thumbValue.value - props.min) / range) * 100;
+  const containerWidth = sliderContainer.value?.clientWidth || 0;
+  const thumbPercentWidth = (thumbWidth / containerWidth) * 100;
+  const halfThumbPercent = thumbPercentWidth / 2;
+  let adjustedPosition = basePosition - halfThumbPercent;
+  const thumb = `${Math.max(0, Math.min(100 - thumbPercentWidth, adjustedPosition))}%`;
+  const tooltip = `${adjustedPosition + halfThumbPercent}%`;
+  return {
+    thumb,
+    tooltip,
+  };
+});
+
+const windowWidth = ref(window.innerWidth);
+const windowHeight = ref(window.innerHeight);
+const resizeWindowHandler = () => {
+  windowWidth.value = window.innerWidth;
+  windowHeight.value = window.innerHeight;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', resizeWindowHandler);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('mouseup', mouseUp);
+  window.removeEventListener('resize', resizeWindowHandler);
+});
+
+const mouseMove = (event: MouseEvent) => {
+  const rect = sliderContainer.value?.getBoundingClientRect();
+  let percent = 0;
+  if (rect) {
+    const position = event.clientX - rect.left;
+    const size = rect.width;
+    percent = Math.max(0, Math.min(1, position / size));
+    thumbValue.value = props.min + percent * (props.max - props.min);
+  }
+  thumbValue.value = Math.round(thumbValue.value / props.step) * props.step;
+  thumbValue.value = Math.max(props.min, Math.min(props.max, thumbValue.value));
+};
+
+const mouseUp = () => {
+  document.removeEventListener('mousemove', mouseMove);
+  document.removeEventListener('mouseup', mouseUp);
+};
+
+const mousedownHandler = () => {
+  if (props.disabled) return;
+  document.addEventListener('mousemove', mouseMove);
+  document.addEventListener('mouseup', mouseUp);
+};
+
+const sliderFirst = ref<HTMLElement | null>(null);
+
+const handleMouseEnter = () => {
+  if (props.showTooltip) tooltipVisible.value = true;
+};
+const handleMouseLeave = () => {
+  if (props.showTooltip) tooltipVisible.value = false;
 };
 </script>
 
 <template>
   <div :class="modifiers">
-    <div class="nmorph-slider-input__content">
-      <div class="nmorph-slider-input__input-wrapper">
-        <div class="nmorph-slider-input__input-container">
-          <div class="nmorph-slider-input__thumb" />
+    <div class="nmorph-slider__content">
+      <div class="nmorph-slider__input-wrapper">
+        <div ref="sliderContainer" class="nmorph-slider__input-container">
+          <NmorphTooltip
+            v-if="tooltipVisible && !props.disabled"
+            :text="String(thumbValue)"
+            force-show
+            :force-coordinate="{ x: thumbXPercentPosition.tooltip, y: '24px' }"
+            block-position
+          />
+          <div
+            ref="sliderFirst"
+            class="nmorph-slider__thumb"
+            :style="{ left: thumbXPercentPosition.thumb }"
+            @mouseenter="handleMouseEnter"
+            @mouseleave="handleMouseLeave"
+            @mousedown="mousedownHandler"
+          />
         </div>
       </div>
-      <div v-if="props.showValue" class="nmorph-slider-input__value">{{ props.modelValue }}</div>
     </div>
   </div>
 </template>
 
 <style lang="scss">
-.nmorph-slider-input {
-  --height: #{$thick-input-height};
-  --thumb-width: 20%;
-  --value-fixed-container-width: 24px;
+.nmorph-slider {
+  --value-fixed-container-width: 18px;
 
   cursor: pointer;
 
-  .nmorph-slider-input__content {
+  .nmorph-slider__content {
     display: flex;
     align-items: center;
   }
 
-  .nmorph-slider-input__input-wrapper {
+  .nmorph-slider__input-wrapper {
     width: 100%;
-    height: var(--height);
+    height: var(--value-fixed-container-width);
     border-radius: var(--default-border-radius);
-    padding: 0 $nmorph-wrapper-padding;
-    overflow: hidden;
     display: flex;
     align-items: center;
     @include nmorph-inset;
   }
 
-  .nmorph-slider-input__input-container {
+  .nmorph-slider__input-container {
     width: 100%;
+    height: 24px;
     position: relative;
     display: flex;
     align-items: center;
   }
 
-  .nmorph-slider-input__thumb {
+  .nmorph-slider__thumb {
     position: absolute;
     border-radius: var(--default-border-radius);
-    width: var(--thumb-width);
-    height: 22px;
+    width: v-bind(thumbWidthCss);
+    height: 20px;
     border: 0;
     @include nmorph-outset;
   }
 
-  .nmorph-slider-input__value {
+  .nmorph-slider__value {
     margin-left: 16px;
     display: flex;
     justify-content: center;
@@ -111,22 +180,18 @@ const inputHandler = (event: Event) => {
   }
 }
 
-.nmorph-slider-input--fill {
+.nmorph-slider--fill {
   width: 100%;
-  .nmorph-slider-input__content {
+  .nmorph-slider__content {
     width: 100%;
   }
 }
 
-.nmorph-slider-input--disabled {
+.nmorph-slider--disabled {
   @include disabled;
 
-  .nmorph-slider-input__input-content {
+  .nmorph-slider__input-content {
     pointer-events: none;
   }
-}
-
-.nmorph-slider-input--thin {
-  --height: #{$thin-input-height};
 }
 </style>

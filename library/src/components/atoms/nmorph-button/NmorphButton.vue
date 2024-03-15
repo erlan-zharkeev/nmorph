@@ -119,7 +119,7 @@ const emit = defineEmits<IEmit>();
 }
 
 .nmorph-button--thin {
-  --height: #{$thin-input-height};
+  --height: #{$default-input-height};
   .nmorph-button__content {
     @include caption-1(var(--text-01));
   }

@@ -2,8 +2,9 @@
   <div class="wrapper">
     <div class="wrapper__left horizontal">
       <NmorphCard>
-        <template #header>Label one</template>
+        <template #header>Card left</template>
         <NmorphTextInput v-model="textValue" label="Label one" :rules="reactiveInputRules" type-password fill />
+        <div class="divider" />
         <NmorphNumberInput
           v-model="numberModel"
           :min="2"
@@ -13,6 +14,7 @@
           static-error-box-space
           fill
         />
+        <div class="divider" />
         <NmorphRadioGroup
           v-model="radioValue"
           label="Label one"
@@ -21,6 +23,7 @@
           style-type="button-style"
           static-error-box-space
         />
+        <div class="divider" />
         <NmorphCheckboxGroup
           v-model="checkboxValue"
           label="Label one"
@@ -30,12 +33,18 @@
           static-error-box-space
           fill
         />
-        <NmorphSlider v-model="slider" :step="1" :show-value="false" />
+        <div class="divider" />
+        <NmorphSlider v-model="slider" :step="1" />
+        <div class="divider" />
+        <NmorphSwitch v-model="switchValue">
+          <template #thumb-on><NmorphIcon name="eye" width="10px" height="10px" /></template>
+          <template #thumb-off><NmorphIcon name="eye-blocked" width="10px" height="10px" /></template>
+        </NmorphSwitch>
       </NmorphCard>
     </div>
     <div class="wrapper__right vertical">
       <NmorphCard>
-        <NmorphTooltip text="read me" position="right">
+        <NmorphTooltip text="read me" position="right" disabled>
           <NmorphLink text="click me" underline icon-name="plus" color="error" />
         </NmorphTooltip>
         <template #footer>Copyright</template>
@@ -51,15 +60,17 @@ import {
   NmorphCard,
   NmorphTextInput,
   NmorphLink,
+  NmorphIcon,
   NmorphSlider,
   NmorphTooltip,
+  NmorphSwitch,
 } from '@nmorph/nmorph-ui-kit/components';
 import { reactive, ref } from 'vue';
 const checkboxValue = ref<string[]>(['Two']);
 const radioValue = ref('label1');
 const textValue = ref('');
 const numberModel = ref(1);
-const slider = ref(20);
+const slider = ref(50);
 const inputRules = [
   {
     pattern:
@@ -69,6 +80,8 @@ const inputRules = [
 ];
 
 let reactiveInputRules = reactive(inputRules);
+
+const switchValue = ref(false);
 
 const handler = () => {
   reactiveInputRules.splice(0, reactiveInputRules.length);
@@ -114,6 +127,9 @@ const checkboxOptions = ref([
 ]);
 </script>
 <style lang="scss">
+.divider {
+  margin: 1rem;
+}
 .wrapper {
   height: 100vh;
   background-color: var(--main-bg);

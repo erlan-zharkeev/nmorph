@@ -74,7 +74,7 @@ const modifiers = computed(() =>
 
 <style lang="scss">
 .nmorph-checkbox {
-  --size: #{$extra-thick-input-height};
+  --size: #{$extra-thin-input-height};
   cursor: pointer;
   @include body-1(var(--text-01));
 

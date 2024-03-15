@@ -1,5 +1,6 @@
 export enum ControlComponentHeight {
   'thick' = 'thick',
+  'default' = 'default',
   'thin' = 'thin',
 }
 
@@ -12,7 +13,6 @@ export interface CommonInputProps {
   height?: keyof typeof ControlComponentHeight;
   fill?: boolean;
   disabled?: boolean;
-  label?: string;
 }
 
 export enum ShadowType {

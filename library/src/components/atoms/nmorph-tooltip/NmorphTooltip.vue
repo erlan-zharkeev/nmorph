@@ -11,19 +11,30 @@ enum TooltipPosition {
 
 type Placement = keyof typeof TooltipPosition;
 
+interface ForceCoordinate {
+  x?: string;
+  y?: string;
+}
+
 interface IProps {
   disabled?: boolean;
   text?: string;
   position?: Placement;
+  forceShow?: boolean;
+  forceCoordinate?: ForceCoordinate | null;
+  blockPosition?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
   disabled: false,
   text: '',
   position: 'top',
+  forceShow: false,
+  forceCoordinate: null,
+  blockPosition: false,
 });
 
-const show = ref(false);
+const showTooltip = ref(props.forceShow);
 const placement = ref<Placement>(props.position);
 
 const modifiers = computed(() =>
@@ -34,7 +45,7 @@ const tooltipDOMRef = ref<HTMLElement | null>(null);
 
 const adjustPlacement = () => {
   nextTick(() => {
-    if (tooltipDOMRef.value) {
+    if (tooltipDOMRef.value && !props.blockPosition) {
       const tooltip = tooltipDOMRef.value.getBoundingClientRect();
       const { x, y, width, height } = tooltip;
       const screenWidth = window.innerWidth;
@@ -56,13 +67,16 @@ const adjustPlacement = () => {
 };
 
 const handleMouseEnter = () => {
-  show.value = true;
+  showTooltip.value = true;
   adjustPlacement();
 };
 
 const handleMouseLeave = () => {
-  show.value = false;
+  if (props.forceShow) return;
+  showTooltip.value = false;
 };
+
+const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
 </script>
 
 <template>
@@ -74,8 +88,20 @@ const handleMouseLeave = () => {
       @mouseleave="handleMouseLeave"
     >
       <slot name="default" />
-      <transition-group name="opacity" tag="div">
-        <div v-if="show" class="nmorph-tooltip__info-content">
+      <transition-group v-if="props.forceCoordinate" name="opacity" tag="div">
+        <div
+          v-if="showTooltip && props.text && !props.disabled"
+          class="nmorph-tooltip__info-content"
+          :style="{ left: forceCoordinate?.x, bottom: forceCoordinate?.y }"
+        >
+          <div class="nmorph-tooltip__shadow-content">
+            <div class="nmorph-tooltip__triangle" />
+            <span>{{ text }}</span>
+          </div>
+        </div>
+      </transition-group>
+      <transition-group v-else name="opacity" tag="div">
+        <div v-if="showTooltip && !props.disabled" class="nmorph-tooltip__info-content">
           <div class="nmorph-tooltip__shadow-content">
             <div class="nmorph-tooltip__triangle" />
             <span v-if="props.text">{{ text }}</span>
@@ -90,6 +116,7 @@ const handleMouseLeave = () => {
 <style lang="scss">
 .nmorph-tooltip {
   display: inline-block;
+  width: v-bind(width);
   --max-width: 120px;
 
   .nmorph-tooltip__content {

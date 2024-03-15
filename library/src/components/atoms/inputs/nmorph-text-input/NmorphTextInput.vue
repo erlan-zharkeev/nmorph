@@ -232,21 +232,21 @@ $input-transition: ease-in-out var(--transition-01) background;
 }
 
 .nmorph-text-input--thin {
-  --height: #{$thin-input-height};
+  --height: #{$default-input-height};
   label {
     @include caption-1-strong(var(--text-01));
   }
   .nmorph-text-input__password-btn {
     margin-top: 0px;
     .nmorph-button {
-      --height: #{$thin-input-height};
+      --height: #{$default-input-height};
     }
   }
 }
 
 .nmorph-text-input--password {
   input {
-    padding-right: #{$thin-input-height};
+    padding-right: #{$default-input-height};
   }
 }
 </style>

@@ -56,7 +56,7 @@ const modifiers = computed(() =>
 
 <style lang="scss" scoped>
 .nmorph-radio {
-  --size: #{$extra-thick-input-height};
+  --size: #{$extra-thin-input-height};
   cursor: pointer;
   @include body-1(var(--text-01));
 

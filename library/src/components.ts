@@ -4,6 +4,7 @@ import NmorphCheckboxGroup from './components/atoms/inputs/nmorph-checkbox-group
 import NmorphRadioGroup from './components/atoms/inputs/nmorph-radio-group/NmorphRadioGroup.vue';
 import NmorphNumberInput from './components/atoms/inputs/nmorph-number-input/NmorphNumberInput.vue';
 import NmorphSlider from './components/atoms/inputs/nmorph-slider/NmorphSlider.vue';
+import NmorphSwitch from './components/atoms/inputs/nmorph-switch/NmorphSwitch.vue';
 
 import NmorphIcon from './components/atoms/nmorph-icon/NmorphIcon.vue';
 import NmorphButton from './components/atoms/nmorph-button/NmorphButton.vue';
@@ -22,6 +23,7 @@ export {
   NmorphRadioGroup,
   NmorphCheckboxGroup,
   NmorphNumberInput,
+  NmorphSwitch,
   NmorphCard,
   NmorphLink,
   NmorphSlider,
