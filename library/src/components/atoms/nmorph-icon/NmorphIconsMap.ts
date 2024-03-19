@@ -6,6 +6,7 @@ import Error from './../../../assets/icons/error.svg';
 import Plus from './../../../assets/icons/plus.svg';
 import Minus from './../../../assets/icons/minus.svg';
 import Loader from './../../../assets/icons/loader.svg';
+import ChevronDown from './../../../assets/icons/chevron-down.svg';
 
 export const NmorphIconsMap: { [key in NmorphIconList]: string } = {
   [NmorphIconList.eye]: Eye,
@@ -15,4 +16,5 @@ export const NmorphIconsMap: { [key in NmorphIconList]: string } = {
   [NmorphIconList.plus]: Plus,
   [NmorphIconList.minus]: Minus,
   [NmorphIconList.loader]: Loader,
+  [NmorphIconList['chevron-down']]: ChevronDown
 };

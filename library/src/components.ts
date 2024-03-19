@@ -5,6 +5,8 @@ import NmorphRadioGroup from './components/atoms/inputs/nmorph-radio-group/Nmorp
 import NmorphNumberInput from './components/atoms/inputs/nmorph-number-input/NmorphNumberInput.vue';
 import NmorphSlider from './components/atoms/inputs/nmorph-slider/NmorphSlider.vue';
 import NmorphSwitch from './components/atoms/inputs/nmorph-switch/NmorphSwitch.vue';
+import NmorphSelect from './components/atoms/inputs/nmorph-select/NmorphSelect.vue';
+import NmorphSelectOption from './components/atoms/inputs/nmorph-select-option/NmorphSelectOption.vue';
 
 import NmorphIcon from './components/atoms/nmorph-icon/NmorphIcon.vue';
 import NmorphButton from './components/atoms/nmorph-button/NmorphButton.vue';
@@ -13,6 +15,7 @@ import NmorphCard from './components/atoms/nmorph-card/NmorphCard.vue';
 import NmorphLink from './components/atoms/nmorph-link/NmorphLink.vue';
 import NmorphErrorBox from './components/atoms/nmorph-error-box/NmorphErrorBox.vue';
 import NmorphTooltip from './components/atoms/nmorph-tooltip/NmorphTooltip.vue';
+import NmorphTag from './components/atoms/nmorph-tag/NmorphTag.vue';
 
 export {
   NmorphTextInput,
@@ -24,9 +27,12 @@ export {
   NmorphCheckboxGroup,
   NmorphNumberInput,
   NmorphSwitch,
+  NmorphSelect,
+  NmorphSelectOption,
   NmorphCard,
   NmorphLink,
   NmorphSlider,
   NmorphErrorBox,
   NmorphTooltip,
+  NmorphTag,
 };

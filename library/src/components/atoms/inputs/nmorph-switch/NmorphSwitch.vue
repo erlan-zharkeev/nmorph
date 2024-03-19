@@ -4,7 +4,7 @@ import { createModifiers } from './../../../../utils';
 import { computed, ref } from 'vue';
 import NmorphIcon from './../../nmorph-icon/NmorphIcon.vue';
 
-interface IProps extends CommonInputProps {
+interface IProps extends Omit<CommonInputProps, 'fill'> {
   modelValue?: boolean;
   loading?: boolean;
 }
@@ -12,6 +12,8 @@ interface IProps extends CommonInputProps {
 const props = withDefaults(defineProps<IProps>(), {
   modelValue: false,
   loading: true,
+  disabled: false,
+  height: 'default',
 });
 
 const modifiers = computed(() =>

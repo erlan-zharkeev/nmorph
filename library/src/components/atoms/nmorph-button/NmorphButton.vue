@@ -44,9 +44,7 @@ const modifiers = computed(() =>
 export interface IEmit {
   (e: 'click'): void;
 }
-
 const loaderScale = computed(() => (props.height === ControlComponentHeight['thick'] ? 1 : 0.7));
-
 const emit = defineEmits<IEmit>();
 </script>
 

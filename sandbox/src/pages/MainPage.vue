@@ -40,6 +40,8 @@
           <template #thumb-on><NmorphIcon name="eye" width="10px" height="10px" /></template>
           <template #thumb-off><NmorphIcon name="eye-blocked" width="10px" height="10px" /></template>
         </NmorphSwitch>
+        <div class="divider" />
+        <NmorphSelect v-model="selectVal" :options="selectOptions" value-required />
       </NmorphCard>
     </div>
     <div class="wrapper__right vertical">
@@ -47,6 +49,9 @@
         <NmorphTooltip text="read me" position="right" disabled>
           <NmorphLink text="click me" underline icon-name="plus" color="error" />
         </NmorphTooltip>
+        <div class="">
+          <NmorphTag v-for="tag in tags" v-bind="tag" :key="tag.value" height="thin" @close="closeTagHandler" />
+        </div>
         <template #footer>Copyright</template>
       </NmorphCard>
     </div>
@@ -58,12 +63,14 @@ import {
   NmorphRadioGroup,
   NmorphNumberInput,
   NmorphCard,
+  NmorphSelect,
   NmorphTextInput,
   NmorphLink,
   NmorphIcon,
   NmorphSlider,
   NmorphTooltip,
   NmorphSwitch,
+  NmorphTag,
 } from '@nmorph/nmorph-ui-kit/components';
 import { reactive, ref } from 'vue';
 const checkboxValue = ref<string[]>(['Two']);
@@ -71,6 +78,7 @@ const radioValue = ref('label1');
 const textValue = ref('');
 const numberModel = ref(1);
 const slider = ref(50);
+const selectVal = ref(['1']);
 const inputRules = [
   {
     pattern:
@@ -81,10 +89,20 @@ const inputRules = [
 
 let reactiveInputRules = reactive(inputRules);
 
+let tags = reactive([
+  { text: 'tag one', value: 'value-1' },
+  { text: 'two', value: 'value-2' },
+]);
+
 const switchValue = ref(false);
 
 const handler = () => {
   reactiveInputRules.splice(0, reactiveInputRules.length);
+};
+
+const closeTagHandler = (value: string) => {
+  const index = tags.findIndex((tag) => tag.value === value);
+  if (index !== -1) tags.splice(index, 1);
 };
 
 const radioOptions = [
@@ -104,6 +122,22 @@ const radioOptions = [
     value: 'label3',
   },
 ];
+
+const selectOptions = reactive([
+  {
+    label: 'Label-1',
+    value: '1',
+  },
+  {
+    label: 'Label-2',
+    value: '2',
+    disabled: true,
+  },
+  {
+    label: 'Label-3',
+    value: '3',
+  },
+]);
 
 const checkboxOptions = ref([
   {
