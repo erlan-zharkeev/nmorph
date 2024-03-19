@@ -7,6 +7,7 @@ import NmorphSlider from './components/atoms/inputs/nmorph-slider/NmorphSlider.v
 import NmorphSwitch from './components/atoms/inputs/nmorph-switch/NmorphSwitch.vue';
 import NmorphSelect from './components/atoms/inputs/nmorph-select/NmorphSelect.vue';
 import NmorphSelectOption from './components/atoms/inputs/nmorph-select-option/NmorphSelectOption.vue';
+import NmorphFileUpload from './components/atoms/inputs/nmorph-file-upload/NmorphFileUpload.vue';
 
 import NmorphIcon from './components/atoms/nmorph-icon/NmorphIcon.vue';
 import NmorphButton from './components/atoms/nmorph-button/NmorphButton.vue';
@@ -29,6 +30,7 @@ export {
   NmorphSwitch,
   NmorphSelect,
   NmorphSelectOption,
+  NmorphFileUpload,
   NmorphCard,
   NmorphLink,
   NmorphSlider,

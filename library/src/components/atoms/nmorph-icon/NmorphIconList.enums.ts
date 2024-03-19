@@ -7,6 +7,11 @@ export enum NmorphIconList {
   'minus' = 'minus',
   'loader' = 'loader',
   'chevron-down' = 'chevron-down',
+  'audio' = 'audio',
+  'archive' = 'archive',
+  'video' = 'video',
+  'image' = 'image',
+  'doc' = 'doc',
 }
 
 export enum IconSize {

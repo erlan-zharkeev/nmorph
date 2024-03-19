@@ -7,6 +7,11 @@ import Plus from './../../../assets/icons/plus.svg';
 import Minus from './../../../assets/icons/minus.svg';
 import Loader from './../../../assets/icons/loader.svg';
 import ChevronDown from './../../../assets/icons/chevron-down.svg';
+import Archive from './../../../assets/icons/archive.svg';
+import Audio from './../../../assets/icons/audio.svg';
+import Video from './../../../assets/icons/video.svg';
+import Doc from './../../../assets/icons/doc.svg';
+import Image from './../../../assets/icons/image.svg';
 
 export const NmorphIconsMap: { [key in NmorphIconList]: string } = {
   [NmorphIconList.eye]: Eye,
@@ -16,5 +21,10 @@ export const NmorphIconsMap: { [key in NmorphIconList]: string } = {
   [NmorphIconList.plus]: Plus,
   [NmorphIconList.minus]: Minus,
   [NmorphIconList.loader]: Loader,
-  [NmorphIconList['chevron-down']]: ChevronDown
+  [NmorphIconList['chevron-down']]: ChevronDown,
+  [NmorphIconList.archive]: Archive,
+  [NmorphIconList.audio]: Audio,
+  [NmorphIconList.video]: Video,
+  [NmorphIconList.doc]: Doc,
+  [NmorphIconList.image]: Image,
 };

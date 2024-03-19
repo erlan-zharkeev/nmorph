@@ -86,8 +86,7 @@ const optionTransitionendHandler = () => {
   selectedLineOutset.value = true;
 };
 
-const closeHandler = (event: Event) => {
-  event.preventDefault();
+const closeHandler = () => {
   open.value = false;
 };
 

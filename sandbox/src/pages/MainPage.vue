@@ -42,6 +42,8 @@
         </NmorphSwitch>
         <div class="divider" />
         <NmorphSelect v-model="selectVal" :options="selectOptions" value-required />
+        <div class="divider" />
+        <NmorphFileUpload />
       </NmorphCard>
     </div>
     <div class="wrapper__right vertical">
@@ -69,6 +71,7 @@ import {
   NmorphIcon,
   NmorphSlider,
   NmorphTooltip,
+  NmorphFileUpload,
   NmorphSwitch,
   NmorphTag,
 } from '@nmorph/nmorph-ui-kit/components';
