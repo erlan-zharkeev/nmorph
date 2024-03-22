@@ -19,7 +19,7 @@ interface IProps {
   text?: string;
   iconName?: IconName;
   target?: keyof typeof LinkTarget;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {

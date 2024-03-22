@@ -24,6 +24,8 @@
   --text-01: #687b9e;
   --text-02: #8498bc;
 
+  --half-transparent-background: rgba(0, 0, 0, 50%);
+
   &[data-theme='dark'] {
     $main-bg: #383143;
     --main-bg: #383143;

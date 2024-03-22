@@ -12,6 +12,12 @@ import Audio from './../../../assets/icons/audio.svg';
 import Video from './../../../assets/icons/video.svg';
 import Doc from './../../../assets/icons/doc.svg';
 import Image from './../../../assets/icons/image.svg';
+import Enlarge from './../../../assets/icons/enlarge.svg';
+import Shrink from './../../../assets/icons/shrink.svg';
+import RotateRight from './../../../assets/icons/rotate-right.svg';
+import RotateLeft from './../../../assets/icons/rotate-left.svg';
+import ZoomIn from './../../../assets/icons/zoom-in.svg';
+import ZoomOut from './../../../assets/icons/zoom-out.svg';
 
 export const NmorphIconsMap: { [key in NmorphIconList]: string } = {
   [NmorphIconList.eye]: Eye,
@@ -27,4 +33,10 @@ export const NmorphIconsMap: { [key in NmorphIconList]: string } = {
   [NmorphIconList.video]: Video,
   [NmorphIconList.doc]: Doc,
   [NmorphIconList.image]: Image,
+  [NmorphIconList.enlarge]: Enlarge,
+  [NmorphIconList.shrink]: Shrink,
+  [NmorphIconList['rotate-right']]: RotateRight,
+  [NmorphIconList['rotate-left']]: RotateLeft,
+  [NmorphIconList['zoom-in']]: ZoomIn,
+  [NmorphIconList['zoom-out']]: ZoomOut,
 };

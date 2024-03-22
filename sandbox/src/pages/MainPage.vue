@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+    <NmorphOverlay>
+      <div class="content">Content</div>
+    </NmorphOverlay>
     <div class="wrapper__left horizontal">
       <NmorphCard>
         <template #header>Card left</template>
@@ -43,7 +46,7 @@
         <div class="divider" />
         <NmorphSelect v-model="selectVal" :options="selectOptions" value-required />
         <div class="divider" />
-        <NmorphFileUpload />
+        <NmorphFileUpload multiple @on-files-changed="filesCapturedHandler" />
       </NmorphCard>
     </div>
     <div class="wrapper__right vertical">
@@ -54,6 +57,10 @@
         <div class="">
           <NmorphTag v-for="tag in tags" v-bind="tag" :key="tag.value" height="thin" @close="closeTagHandler" />
         </div>
+        <div class="divider" />
+        <NmorphImagePreview src="https://images.pexels.com/photos/20367774/pexels-photo-20367774.jpeg" />
+        <!-- <NmorphCarousel /> -->
+        <!-- <ElImage src="./../assets/images/cat.png" /> -->
         <template #footer>Copyright</template>
       </NmorphCard>
     </div>
@@ -61,6 +68,7 @@
 </template>
 <script lang="ts" setup>
 import {
+  NmorphCarousel,
   NmorphCheckboxGroup,
   NmorphRadioGroup,
   NmorphNumberInput,
@@ -72,9 +80,15 @@ import {
   NmorphSlider,
   NmorphTooltip,
   NmorphFileUpload,
+  NmorphOverlay,
   NmorphSwitch,
   NmorphTag,
+  NmorphImage,
+  NmorphImagePreview,
 } from '@nmorph/nmorph-ui-kit/components';
+import { ElImage } from 'element-plus';
+// import IMAGE from './../assets/images/cat.png';
+
 import { reactive, ref } from 'vue';
 const checkboxValue = ref<string[]>(['Two']);
 const radioValue = ref('label1');
@@ -162,6 +176,10 @@ const checkboxOptions = ref([
     label: 'Label 3',
   },
 ]);
+
+const filesCapturedHandler = (files) => {
+  console.log(files);
+};
 </script>
 <style lang="scss">
 .divider {

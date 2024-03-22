@@ -17,15 +17,21 @@ import NmorphLink from './components/atoms/nmorph-link/NmorphLink.vue';
 import NmorphErrorBox from './components/atoms/nmorph-error-box/NmorphErrorBox.vue';
 import NmorphTooltip from './components/atoms/nmorph-tooltip/NmorphTooltip.vue';
 import NmorphTag from './components/atoms/nmorph-tag/NmorphTag.vue';
+import NmorphOverlay from './components/atoms/nmorph-overlay/NmorphOverlay.vue';
+import NmorphImage from './components/atoms/nmorph-image/NmorphImage.vue';
+import NmorphImagePreview from './components/atoms/nmorph-image-preview/NmorphImagePreview.vue';
+import NmorphCarousel from './components/atoms/nmorph-carousel/NmorphCarousel.vue';
 
 export {
   NmorphTextInput,
+  NmorphImage,
   NmorphIcon,
   NmorphButton,
   NmorphLoader,
   NmorphCheckbox,
   NmorphRadioGroup,
   NmorphCheckboxGroup,
+  NmorphCarousel,
   NmorphNumberInput,
   NmorphSwitch,
   NmorphSelect,
@@ -36,5 +42,7 @@ export {
   NmorphSlider,
   NmorphErrorBox,
   NmorphTooltip,
+  NmorphOverlay,
+  NmorphImagePreview,
   NmorphTag,
 };

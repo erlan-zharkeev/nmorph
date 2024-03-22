@@ -12,6 +12,12 @@ export enum NmorphIconList {
   'video' = 'video',
   'image' = 'image',
   'doc' = 'doc',
+  'enlarge' = 'enlarge',
+  'shrink' = 'shrink',
+  'rotate-right' = 'rotate-right',
+  'rotate-left' = 'rotate-left',
+  'zoom-in' = 'zoom-in',
+  'zoom-out' = 'zoom-out',
 }
 
 export enum IconSize {

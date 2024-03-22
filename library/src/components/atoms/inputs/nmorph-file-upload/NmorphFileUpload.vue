@@ -20,8 +20,10 @@ const props = withDefaults(defineProps<IProps>(), {
   photoWithPreview: true,
 });
 
+const getPlainType = (resolution: string) => resolution.split('/')[1];
+
 const typeFileIconMap = (resolution: string): keyof typeof NmorphIconList => {
-  const plainResolutionName = resolution.split('/')[1];
+  const plainResolutionName = getPlainType(resolution);
   let result: keyof typeof NmorphIconList = 'doc';
   if (plainResolutionName in ImageResolution) result = 'image';
   if (plainResolutionName in AudioResolution) result = 'audio';
@@ -30,7 +32,13 @@ const typeFileIconMap = (resolution: string): keyof typeof NmorphIconList => {
   return result;
 };
 
-let files = reactive<File[]>([]);
+interface CustomFileData {
+  data: File;
+  previewUrl: string;
+}
+
+let files = reactive<CustomFileData[]>([]);
+
 const fileInput = ref<HTMLElement | null>(null);
 
 const openFileSelector = () => {
@@ -43,41 +51,41 @@ const handleFileUpload = (event: Event) => {
   const target = event.target as HTMLInputElement;
   if (target.files) {
     Array.from(target.files).forEach((file) => {
-      files.push(file);
+      const resolution = getPlainType(file.type) as Resolution;
+      if (!props.allowedTypes.includes(resolution)) {
+        return emit('on-unsupported-file-type-error', file.type);
+      }
+      const previewUrl = URL.createObjectURL(file);
+      const result = { data: file, previewUrl };
+      files.push(result);
     });
+    if (files.length === 0) return;
+    filesChanged();
   }
 };
 
-const removeFile = (fileName: string) => {
-  const index = files.findIndex((file) => file.name === fileName);
-  if (index !== -1) files.splice(index, 1);
+const filesChanged = () => {
+  emit(
+    'on-files-changed',
+    files.map((file) => file.data)
+  );
 };
 
-// const uploadFiles = async () => {
-//   if (files.value.length > 0) {
-//     const formData = new FormData();
-//     files.value.forEach((file) => {
-//       formData.append('files[]', file);
-//     });
+const removeFile = (fileName: string) => {
+  const index = files.findIndex((file) => file.data.name === fileName);
+  if (index !== -1) {
+    URL.revokeObjectURL(files[index].previewUrl);
+    files.splice(index, 1);
+    filesChanged();
+  }
+};
 
-//     try {
-//       const response = await fetch('YOUR_ENDPOINT_HERE', {
-//         method: 'POST',
-//         body: formData,
-//       });
-//       // Обработка ответа от сервера
-//       console.log('Успешно:', response);
-//     } catch (error) {
-//       console.error('Ошибка при загрузке файла:', error);
-//     }
-//   }
-// };
+export interface IEmit {
+  (e: 'on-files-changed', val: File[]): void;
+  (e: 'on-unsupported-file-type-error', val: string): void;
+}
 
-// export interface IEmit {
-//   (e: 'update:modelValue', val: boolean): void;
-// }
-
-// const emit = defineEmits<IEmit>();
+const emit = defineEmits<IEmit>();
 
 const modifiers = computed(() => createModifiers('nmorph-file-upload', [props.disabled ? 'disabled' : '']));
 </script>
@@ -92,13 +100,14 @@ const modifiers = computed(() => createModifiers('nmorph-file-upload', [props.di
     </div>
     <div class="nmorph-file-upload__list">
       <transition-group name="list" tag="div">
-        <div v-for="file in files" :key="file.name" class="nmorph-file-upload__file">
+        <div v-for="{ data, previewUrl } in files" :key="data.name" class="nmorph-file-upload__file">
+          <!-- <img :src="previewUrl" /> -->
           <div class="nmorph-file-upload__file-info">
-            <NmorphIcon :name="typeFileIconMap(file.type)" width="14px" height="17px" />
-            <span class="nmorph-file-upload__file-name">{{ file.name }}</span>
+            <NmorphIcon :name="typeFileIconMap(data.type)" width="14px" height="17px" />
+            <span class="nmorph-file-upload__file-name">{{ data.name }}</span>
           </div>
           <div class="nmorph-file-upload__remove-file">
-            <NmorphButton height="thin" style-type="transparent" @click="removeFile(file.name)">
+            <NmorphButton height="thin" style-type="transparent" @click="removeFile(data.name)">
               <NmorphIcon name="error" />
             </NmorphButton>
           </div>
@@ -125,6 +134,7 @@ const modifiers = computed(() => createModifiers('nmorph-file-upload', [props.di
     justify-content: space-between;
     padding: 4px 8px;
     border-radius: var(--default-border-radius);
+    margin-bottom: 4px;
     @include nmorph-outset;
   }
   .nmorph-file-upload__file-info {
