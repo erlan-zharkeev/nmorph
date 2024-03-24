@@ -1,32 +1,34 @@
 @mixin nmorph-outset() {
   background: var(--main-bg);
   box-shadow:
-    #{$base-shadow-width} $base-shadow-width $base-shadow-blur var(--darker-color),
-    -#{$base-shadow-width} -#{$base-shadow-width} $base-shadow-blur var(--lighter-color);
+    var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--darker-color),
+    calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur) var(--lighter-color);
 }
 
 @mixin nmorph-inset() {
   background: var(--main-bg);
   box-shadow:
-    inset $base-shadow-width $base-shadow-width $base-shadow-blur var(--darker-color),
-    inset -#{$base-shadow-width} -#{$base-shadow-width} $base-shadow-blur var(--lighter-color);
+    inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--darker-color),
+    inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+      var(--lighter-color);
 }
 
 @mixin nmorph-combined() {
   background: var(--main-bg);
   box-shadow:
-    $base-shadow-width $base-shadow-width $base-shadow-blur var(--darker-color),
-    -#{$base-shadow-width} -#{$base-shadow-width} $base-shadow-blur var(--lighter-color),
-    inset $base-shadow-width $base-shadow-width $base-shadow-blur var(--darker-color),
-    inset -#{$base-shadow-width} -#{$base-shadow-width} $base-shadow-blur var(--lighter-color);
+    var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--darker-color),
+    calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur) var(--lighter-color),
+    inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--darker-color),
+    inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+      var(--lighter-color);
 }
 
 @mixin nmorph-wrapper() {
-  padding: $nmorph-wrapper-padding;
+  padding: var(--nmorph-wrapper-padding);
   box-sizing: content-box;
 }
 
 @mixin nmorph-dark-shadow() {
   background: var(--main-bg);
-  box-shadow: 0 0 $base-shadow-blur var(--darker-color);
+  box-shadow: 0 0 var(--base-shadow-blur) var(--darker-color);
 }

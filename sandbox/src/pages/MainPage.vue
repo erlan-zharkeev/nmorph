@@ -1,14 +1,21 @@
 <template>
   <div class="wrapper">
-    <NmorphOverlay>
-      <div class="content">Content</div>
-    </NmorphOverlay>
     <div class="wrapper__left horizontal">
       <NmorphCard>
-        <template #header>Card left</template>
-        <NmorphTextInput v-model="textValue" label="Label one" :rules="reactiveInputRules" type-password fill />
+        <NmorphForm :value="form">
+          <NmorphFormItem id="username" label="Username" static-error-box-space>
+            <NmorphTextInput v-model="form.username.value" fill />
+          </NmorphFormItem>
+          <NmorphFormItem id="email" label="Email" static-error-box-space>
+            <NmorphTextInput v-model="form.email.value" fill />
+          </NmorphFormItem>
+          <NmorphFormItem id="years" label="Years old" static-error-box-space>
+            <NmorphNumberInput v-model="form.years.value" :min="2" :max="8" fill />
+          </NmorphFormItem>
+        </NmorphForm>
+
         <div class="divider" />
-        <NmorphNumberInput
+        <!-- <NmorphNumberInput
           v-model="numberModel"
           :min="2"
           :max="8"
@@ -46,65 +53,78 @@
         <div class="divider" />
         <NmorphSelect v-model="selectVal" :options="selectOptions" value-required />
         <div class="divider" />
-        <NmorphFileUpload multiple @on-files-changed="filesCapturedHandler" />
+        <NmorphFileUpload multiple @on-files-changed="filesCapturedHandler" /> -->
       </NmorphCard>
     </div>
     <div class="wrapper__right vertical">
       <NmorphCard>
-        <NmorphTooltip text="read me" position="right" disabled>
+        <!-- <NmorphTooltip text="read me" position="right" disabled>
           <NmorphLink text="click me" underline icon-name="plus" color="error" />
         </NmorphTooltip>
         <div class="">
           <NmorphTag v-for="tag in tags" v-bind="tag" :key="tag.value" height="thin" @close="closeTagHandler" />
         </div>
         <div class="divider" />
-        <NmorphImagePreview src="https://images.pexels.com/photos/20367774/pexels-photo-20367774.jpeg" />
-        <!-- <NmorphCarousel /> -->
-        <!-- <ElImage src="./../assets/images/cat.png" /> -->
-        <template #footer>Copyright</template>
+        <NmorphImagePreview :src="slides" />
+        <template #footer>Copyright</template> -->
       </NmorphCard>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import {
-  NmorphCarousel,
   NmorphCheckboxGroup,
   NmorphRadioGroup,
   NmorphNumberInput,
   NmorphCard,
   NmorphSelect,
+  NmorphFormItem,
+  NmorphForm,
   NmorphTextInput,
-  NmorphLink,
-  NmorphIcon,
   NmorphSlider,
-  NmorphTooltip,
   NmorphFileUpload,
-  NmorphOverlay,
   NmorphSwitch,
-  NmorphTag,
-  NmorphImage,
-  NmorphImagePreview,
-} from '@nmorph/nmorph-ui-kit/components';
-import { ElImage } from 'element-plus';
-// import IMAGE from './../assets/images/cat.png';
-
+} from './../../../library/src/components';
 import { reactive, ref } from 'vue';
+
+const usernameRules = [
+  {
+    pattern: /.{5,}/,
+    error: 'Too short',
+  },
+];
+const emailRules = [
+  {
+    pattern:
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    error: 'Not email',
+  },
+];
+const yearsRules = [{ value: 5, operator: 'eq', error: 'Че дурак вообще?!' }];
+
+const form = reactive({
+  username: {
+    value: '',
+    rules: usernameRules,
+  },
+  email: {
+    value: '',
+    rules: emailRules,
+  },
+  years: {
+    value: 0,
+    rules: yearsRules,
+  },
+});
+
 const checkboxValue = ref<string[]>(['Two']);
 const radioValue = ref('label1');
 const textValue = ref('');
 const numberModel = ref(1);
 const slider = ref(50);
 const selectVal = ref(['1']);
-const inputRules = [
-  {
-    pattern:
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    error: 'hui morzh',
-  },
-];
 
-let reactiveInputRules = reactive(inputRules);
+// let reactiveInputRules = reactive(inputRules);
 
 let tags = reactive([
   { text: 'tag one', value: 'value-1' },
@@ -116,7 +136,11 @@ const switchValue = ref(false);
 const handler = () => {
   reactiveInputRules.splice(0, reactiveInputRules.length);
 };
-
+const slides = ref([
+  'https://images.pexels.com/photos/20367774/pexels-photo-20367774.jpeg',
+  'https://images.pexels.com/photos/20596245/pexels-photo-20596245.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+  'https://images.pexels.com/photos/8755970/pexels-photo-8755970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+]);
 const closeTagHandler = (value: string) => {
   const index = tags.findIndex((tag) => tag.value === value);
   if (index !== -1) tags.splice(index, 1);
@@ -177,8 +201,8 @@ const checkboxOptions = ref([
   },
 ]);
 
-const filesCapturedHandler = (files) => {
-  console.log(files);
+const filesCapturedHandler = () => {
+  console.log('files');
 };
 </script>
 <style lang="scss">

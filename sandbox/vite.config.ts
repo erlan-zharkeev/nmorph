@@ -5,24 +5,35 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import svgLoader from 'vite-svg-loader';
 
 export default defineConfig({
-  plugins: [vue(), vueJsx(), svgLoader()],
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => {
+            return tag.startsWith('nmorph-'); // (return true)
+          },
+        },
+      },
+    }),
+    vueJsx(),
+    svgLoader(),
+  ],
   resolve: {
     alias: {
-      '@': `${resolve(__dirname, './src')}`,
-      '@nmorph/nmorph-ui-kit': resolve(__dirname, '..', 'library', 'src'),
-      'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
+      '@': resolve(__dirname, '..', 'library', 'src'),
     },
   },
   build: {
     rollupOptions: {
       input: resolve(__dirname, 'src', 'app', 'index.ts'),
     },
+    sourcemap: true,
   },
   css: {
     preprocessorOptions: {
       scss: {
         additionalData: `
-          @import '@nmorph/nmorph-ui-kit/styles/main';
+          @import '@/styles/main';
         `,
       },
     },

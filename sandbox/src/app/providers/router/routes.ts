@@ -1,4 +1,4 @@
-import MainPage from '@/pages/MainPage.vue';
+import MainPage from './../../../pages/MainPage.vue';
 import { type RouteRecordRaw } from 'vue-router';
 
 export const routes: RouteRecordRaw[] = [

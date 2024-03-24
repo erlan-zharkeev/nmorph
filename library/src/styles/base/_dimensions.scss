@@ -1,10 +1,19 @@
-$base-shadow-width: 4px;
-$base-shadow-blur: $base-shadow-width * 2.5;
-$nmorph-wrapper-padding: $base-shadow-width * 1.5;
-$base-input-indentation: 8px;
+:root {
+  --thick-component: 38px;
+  --default-thickness-component: 30px;
+  --thin-components: 22px;
+  --extra-thin-components: 14px;
 
-$thick-input-height: 38px;
-$default-input-height: 30px;
-$thin-input-height: 22px;
+  --max-width-container: 280px;
 
-$extra-thin-input-height: 14px;
+  --default-indentation-input: 8px;
+
+  --indentation-00: 0;
+  --indentation-01: 2px;
+  --indentation-02: 4px;
+  --indentation-03: 8px;
+
+  --base-shadow-width: 4px;
+  --base-shadow-blur: calc(var(--base-shadow-width) * 2.5);
+  --nmorph-wrapper-padding: calc(var(--base-shadow-width) * 1.5);
+}
