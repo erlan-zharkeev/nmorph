@@ -1,4 +1,4 @@
-import { NmorphIconList } from '@/types/common.enums';
+import { NmorphIconList } from '@/types/common';
 
 import Eye from '@/assets/icons/eye.svg';
 import EyeBlocked from '@/assets/icons/eye-blocked.svg';

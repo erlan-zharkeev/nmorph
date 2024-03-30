@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { CommonInputProps } from '@/types/common.enums';
+import { NmorphCommonInputProps } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref } from 'vue';
 import { NmorphIcon } from '@/components';
 
-interface IProps extends Omit<CommonInputProps, 'fill'> {
+interface IProps extends Omit<NmorphCommonInputProps, 'fill'> {
   modelValue?: boolean;
   loading?: boolean;
 }
@@ -37,10 +37,10 @@ const changeHandler = () => {
 };
 
 interface IEmit {
-  (e: 'inputDOMRef', val: Ref<HTMLElement | null>): void;
+  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
   (e: 'update:modelValue', val: boolean): void;
 }
-const inputDOMRef = ref<HTMLElement | null>(null);
+const inputDOMRef = ref<NmorphDomElement>(null);
 onMounted(() => {
   emit('inputDOMRef', inputDOMRef);
 });
@@ -133,3 +133,4 @@ onMounted(() => {
   @include nmorph-switch-disabled;
 }
 </style>
+@/types/common

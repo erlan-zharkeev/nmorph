@@ -2,14 +2,14 @@
 import { computed, provide, ref } from 'vue';
 import { NmorphCheckbox } from '@/components';
 import { getModifiers } from '@/utils';
-import { CommonInputProps, ComponentDirection } from '@/types/common.enums';
+import { NmorphCommonInputProps, NmorphComponentDirection } from '@/types/common';
 import { ICheckboxOption, ICheckboxStyleType } from '../types';
 
-interface IProps extends CommonInputProps {
+interface IProps extends NmorphCommonInputProps {
   modelValue: string[];
   options?: ICheckboxOption[];
   styleType?: keyof typeof ICheckboxStyleType;
-  direction?: keyof typeof ComponentDirection;
+  direction?: keyof typeof NmorphComponentDirection;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -95,3 +95,4 @@ provide('change-checkbox-value-handler', changeHandler);
   }
 }
 </style>
+@/types/common

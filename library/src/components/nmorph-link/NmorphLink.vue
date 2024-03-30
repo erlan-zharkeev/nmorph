@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { getModifiers } from '@/utils';
 import { computed } from 'vue';
-import { IconName } from '../nmorph-icon/types';
-import { Color } from '@/types/common.enums';
+import { NmorphIconName } from '../nmorph-icon/types';
+import { NmorphColor } from '@/types/common';
 import { NmorphIcon } from '@/components';
 
 enum LinkTarget {
@@ -13,17 +13,17 @@ enum LinkTarget {
 }
 
 interface IProps {
-  color?: keyof typeof Color;
+  color?: keyof typeof NmorphColor;
   underline?: boolean;
   href?: string;
   text?: string;
-  iconName?: IconName;
+  iconName?: NmorphIconName;
   target?: keyof typeof LinkTarget;
   disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  color: Color.accent,
+  color: NmorphColor.accent,
   href: '',
   underline: false,
   iconName: '',
@@ -107,3 +107,4 @@ const modifiers = computed(() =>
   --hover-color: var(--error-color-00);
 }
 </style>
+@/types/common

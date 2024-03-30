@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { CommonInputProps, NmorphComponentHeight } from '@/types/common.enums';
+import { NmorphCommonInputProps, NmorphComponentHeight } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphButtonType, NmorphButtonStyle } from './types';
 import { NmorphIcon } from '@/components';
-import { IconSize } from '../nmorph-icon/types';
+import { NmorphIconSize } from '../nmorph-icon/types';
 
-interface IProps extends CommonInputProps {
+interface IProps extends NmorphCommonInputProps {
   type?: keyof typeof NmorphButtonType;
   text?: string;
   loading?: boolean;
@@ -51,7 +51,7 @@ const iconSizeMap = {
   thick: 'large',
 };
 
-const loadingButtonSize = computed(() => iconSizeMap[props.height] as IconSize);
+const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIconSize);
 </script>
 
 <template>
@@ -175,3 +175,4 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as IconSize);
   @include disabled;
 }
 </style>
+@/types/common

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CommonInputProps, NmorphComponentHeight } from '@/types/common.enums';
+import { NmorphCommonInputProps, NmorphComponentHeight } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { inject, Ref, computed } from 'vue';
 import { SelectModelValue } from './types';
@@ -8,7 +8,7 @@ import { NmorphIcon } from '@/components';
 const selectSelectedValue = inject<Ref<SelectModelValue>>('select-selected-value');
 const selectChangeSelectedValue = inject<(value: string) => void>('select-change-selected-value');
 
-export interface ISelectOption extends Omit<CommonInputProps, 'fill'> {
+export interface ISelectOption extends Omit<NmorphCommonInputProps, 'fill'> {
   value: string;
   label: string;
 }
@@ -98,3 +98,4 @@ const modifiers = computed(() =>
   align-items: center;
 }
 </style>
+@/types/common

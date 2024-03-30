@@ -1,15 +1,8 @@
 <script setup lang="ts">
+import { usePlacement } from '@/hooks';
+import { NmorphDomElement, NmorphPlacement } from '@/types/common';
 import { getModifiers } from '@/utils';
-import { computed, ref, nextTick } from 'vue';
-
-enum TooltipPosition {
-  left = 'left',
-  right = 'right',
-  top = 'top',
-  bottom = 'bottom',
-}
-
-type Placement = keyof typeof TooltipPosition;
+import { computed, ref } from 'vue';
 
 interface ForceCoordinate {
   x?: string;
@@ -19,7 +12,7 @@ interface ForceCoordinate {
 interface IProps {
   disabled?: boolean;
   text?: string;
-  position?: Placement;
+  position?: NmorphPlacement;
   forceShow?: boolean;
   forceCoordinate?: ForceCoordinate | null;
   blockPosition?: boolean;
@@ -35,38 +28,19 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const showTooltip = ref(props.forceShow);
-const placement = ref<Placement>(props.position);
+const tooltipDOMRef = ref<NmorphDomElement>(null);
+
+const { placement, adjustPlacement } = usePlacement({
+  initialPlacement: props.position,
+  targetDomElement: tooltipDOMRef,
+  blockPosition: props.blockPosition,
+});
 
 const modifiers = computed(() =>
   getModifiers({
     'nmorph-tooltip': [placement.value, `${props.disabled && 'disabled'}`],
   })
 );
-
-const tooltipDOMRef = ref<HTMLElement | null>(null);
-
-const adjustPlacement = () => {
-  nextTick(() => {
-    if (tooltipDOMRef.value && !props.blockPosition) {
-      const tooltip = tooltipDOMRef.value.getBoundingClientRect();
-      const { x, y, width, height } = tooltip;
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-      if (placement.value === 'right' && width < screenWidth - x) {
-        placement.value = 'left';
-      }
-      if (placement.value === 'bottom' && height < screenHeight - y) {
-        placement.value = 'top';
-      }
-      if (placement.value === 'left' && width < screenWidth + x) {
-        placement.value = 'right';
-      }
-      if (placement.value === 'top' && height < screenHeight + y) {
-        placement.value = 'bottom';
-      }
-    }
-  });
-};
 
 const handleMouseEnter = () => {
   showTooltip.value = true;

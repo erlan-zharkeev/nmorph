@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { CommonInputProps, ComponentDirection } from '@/types/common.enums';
+import { NmorphCommonInputProps, NmorphComponentDirection } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { ref, computed, provide } from 'vue';
 import { IRadioOption, RadioStyleType } from '../types';
 import NmorphRadio from './../nmorph-radio/NmorphRadio.vue';
 
-interface IProps extends CommonInputProps {
+interface IProps extends NmorphCommonInputProps {
   modelValue: string;
   options?: IRadioOption[];
   styleType?: keyof typeof RadioStyleType;
-  direction?: keyof typeof ComponentDirection;
+  direction?: keyof typeof NmorphComponentDirection;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -88,3 +88,4 @@ provide('change-radio-button-value-handler', changeHandler);
   }
 }
 </style>
+@/types/common

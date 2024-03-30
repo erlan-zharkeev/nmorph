@@ -1,9 +1,9 @@
-import { NmorphIconList } from '@/types/common.enums';
+import { NmorphIconList } from '@/types/common';
 
-export enum IconSize {
+export enum NmorphIconSize {
   small = 'small',
   medium = 'medium',
   large = 'large',
 }
 
-export type IconName = keyof typeof NmorphIconList | '';
+export type NmorphIconName = keyof typeof NmorphIconList | '';

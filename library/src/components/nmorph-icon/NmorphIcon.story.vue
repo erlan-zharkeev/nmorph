@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import NmorphIcon from './NmorphIcon.vue';
-import { IconSize } from './types';
+import { NmorphIconSize } from './types';
 import { NmorphIconList } from './../../types/common.enums';
 
 const setupApp = ({ app }) => {
@@ -10,7 +10,7 @@ const setupApp = ({ app }) => {
 const initState = () => ({
   name: 'eye',
   path: '',
-  size: IconSize.medium,
+  size: NmorphIconSize.medium,
   width: null,
   height: null,
 });
@@ -33,7 +33,7 @@ const initState = () => ({
       <template #controls="{ state }">
         <HstSelect v-model="state.name" :options="Object.keys(NmorphIconList)" title="icon name" />
         <HstText v-model="state.path" title="image path" />
-        <HstSelect v-model="state.size" :options="Object.keys(IconSize)" title="icon size" />
+        <HstSelect v-model="state.size" :options="Object.keys(NmorphIconSize)" title="icon size" />
         <HstNumber v-model="state.width" title="width" />
         <HstNumber v-model="state.height" title="height" />
       </template>

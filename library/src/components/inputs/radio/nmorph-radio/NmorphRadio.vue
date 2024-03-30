@@ -29,10 +29,10 @@ const modifiers = computed(() =>
 );
 
 interface IEmit {
-  (e: 'inputDOMRef', val: Ref<HTMLElement | null>): void;
+  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
 }
 const emit = defineEmits<IEmit>();
-const inputDOMRef = ref<HTMLElement | null>(null);
+const inputDOMRef = ref<NmorphDomElement>(null);
 
 onMounted(() => {
   emit('inputDOMRef', inputDOMRef);

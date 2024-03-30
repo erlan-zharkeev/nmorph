@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<ICheckboxOption>(), {
 });
 
 interface IEmit {
-  (e: 'inputDOMRef', val: Ref<HTMLElement | null>): void;
+  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
   (e: 'update:modelValue', val: boolean): void;
 }
 
@@ -22,7 +22,7 @@ onMounted(() => {
   emit('inputDOMRef', inputDOMRef);
 });
 
-const inputDOMRef = ref<HTMLElement | null>(null);
+const inputDOMRef = ref<NmorphDomElement>(null);
 const hasGroup = groupSelectedValue !== undefined;
 const initialValue = hasGroup ? ref(groupSelectedValue.value) : ref(props.modelValue);
 

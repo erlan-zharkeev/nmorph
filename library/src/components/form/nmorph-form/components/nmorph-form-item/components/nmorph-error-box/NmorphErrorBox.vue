@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphComponentHeight } from '@/types/common.enums';
+import { NmorphComponentHeight } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { Ref, computed } from 'vue';
 
@@ -56,3 +56,4 @@ const modifiers = computed(() =>
   }
 }
 </style>
+@/types/common

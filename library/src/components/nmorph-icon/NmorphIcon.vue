@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { getModifiers } from '@/utils';
-import { IconName, IconSize } from './types';
+import { NmorphIconName, NmorphIconSize } from './types';
 import { NmorphIconsMap } from './NmorphIconsMap';
-import { NmorphIconList } from '@/types/common.enums';
+import { NmorphIconList } from '@/types/common';
 
 interface IProps {
-  name?: IconName;
-  size?: keyof typeof IconSize;
+  name?: NmorphIconName;
+  size?: keyof typeof NmorphIconSize;
   width?: string;
   height?: string;
   path?: string;
@@ -86,3 +86,4 @@ const modifiers = computed(() =>
   --height: v-bind(props.height);
 }
 </style>
+@/types/common

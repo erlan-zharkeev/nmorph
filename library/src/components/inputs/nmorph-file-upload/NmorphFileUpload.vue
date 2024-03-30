@@ -2,7 +2,7 @@
 import { Ref, computed, onMounted, reactive, ref } from 'vue';
 import { ArchiveResolution, AudioResolution, ImageResolution, Resolution, VideoResolution } from './types';
 import { getModifiers } from '@/utils';
-import { NmorphIconList } from '@/types/common.enums';
+import { NmorphIconList } from '@/types/common';
 import { NmorphButton, NmorphIcon, NmorphImagePreview } from '@/components';
 
 interface IProps {
@@ -42,7 +42,7 @@ interface CustomFileData {
 
 let files = reactive<CustomFileData[]>(props.modelValue);
 
-const inputDOMRef = ref<HTMLElement | null>(null);
+const inputDOMRef = ref<NmorphDomElement>(null);
 
 const openFileSelector = () => {
   if (inputDOMRef.value) {
@@ -88,7 +88,7 @@ onMounted(() => {
 });
 
 interface IEmit {
-  (e: 'inputDOMRef', val: Ref<HTMLElement | null>): void;
+  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
   (e: 'update:modelValue', val: File[]): void;
   (e: 'on-unsupported-file-type-error', val: string): void;
 }
@@ -172,3 +172,4 @@ const modifiers = computed(() =>
   }
 }
 </style>
+@/types/common

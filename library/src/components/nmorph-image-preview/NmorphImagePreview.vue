@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getModifiers } from '@/utils';
 import { ComputedRef, computed, ref } from 'vue';
-import { IconName } from '../nmorph-icon/types';
+import { NmorphIconName } from '../nmorph-icon/types';
 import { NmorphImage, NmorphButton, NmorphIcon, NmorphOverlay } from '@/components';
 
 interface IProps {
@@ -87,7 +87,7 @@ const shrinkToNormal = () => {
 const rotateLevel = ref(0);
 
 interface Action {
-  icon: IconName;
+  icon: NmorphIconName;
   handler: () => void;
 }
 

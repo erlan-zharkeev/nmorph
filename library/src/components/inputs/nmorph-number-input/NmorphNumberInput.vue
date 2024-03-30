@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { CommonInputProps, NmorphComponentHeight } from '@/types/common.enums';
+import { NmorphCommonInputProps, NmorphComponentHeight } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref, watch } from 'vue';
 import { NmorphButton, NmorphIcon } from '@/components';
 
-interface IProps extends CommonInputProps {
+interface IProps extends NmorphCommonInputProps {
   modelValue?: number;
   max?: number;
   min?: number;
@@ -66,7 +66,7 @@ const actionBtnIconSize = computed(() => {
 });
 
 interface IEmit {
-  (e: 'inputDOMRef', val: Ref<HTMLElement | null>): void;
+  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
   (e: 'update:modelValue', val: number): void;
 }
 
@@ -98,7 +98,7 @@ onMounted(() => {
   emit('inputDOMRef', inputDOMRef);
 });
 
-const inputDOMRef = ref<HTMLElement | null>(null);
+const inputDOMRef = ref<NmorphDomElement>(null);
 </script>
 
 <template>
@@ -254,3 +254,4 @@ const inputDOMRef = ref<HTMLElement | null>(null);
   }
 }
 </style>
+@/types/common

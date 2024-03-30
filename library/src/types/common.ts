@@ -4,24 +4,24 @@ export enum NmorphComponentHeight {
   thin = 'thin-component',
 }
 
-export enum ComponentDirection {
+export enum NmorphComponentDirection {
   row = 'row',
   column = 'column',
 }
 
-export interface CommonInputProps {
+export interface NmorphCommonInputProps {
   height?: keyof typeof NmorphComponentHeight;
   fill?: boolean;
   disabled?: boolean;
 }
 
-export enum ShadowType {
+export enum NmorphShadowType {
   inset = 'inset',
   outset = 'outset',
   combined = 'combined',
 }
 
-export enum Color {
+export enum NmorphColor {
   accent = 'accent',
   success = 'success',
   error = 'error',
@@ -49,3 +49,14 @@ export enum NmorphIconList {
   'zoom-in' = 'zoom-in',
   'zoom-out' = 'zoom-out',
 }
+
+export enum NmorphComponentPosition {
+  left = 'left',
+  right = 'right',
+  top = 'top',
+  bottom = 'bottom',
+}
+
+export type NmorphPlacement = keyof typeof NmorphComponentPosition;
+
+export type NmorphDomElement = HTMLElement | null;

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ShadowType } from '@/types/common.enums';
+import { NmorphShadowType } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { computed } from 'vue';
 
 interface IProps {
-  shadowType?: keyof typeof ShadowType;
+  shadowType?: keyof typeof NmorphShadowType;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  shadowType: ShadowType.outset,
+  shadowType: NmorphShadowType.outset,
 });
 
 const modifiers = computed(() =>
@@ -69,3 +69,4 @@ const modifiers = computed(() =>
   @include nmorph-combined;
 }
 </style>
+@/types/common

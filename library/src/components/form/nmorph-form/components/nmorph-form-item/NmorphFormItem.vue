@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getModifiers } from '@/utils';
 import { computed, inject } from 'vue';
-import { NmorphComponentHeight } from '@/types/common.enums';
+import { NmorphComponentHeight } from '@/types/common';
 import { FormValidationData } from '@/components/form/types';
 import { NmorphValidationIcon, NmorphErrorBox } from './components';
 
@@ -90,3 +90,4 @@ const modifiers = computed(() =>
   }
 }
 </style>
+@/types/common

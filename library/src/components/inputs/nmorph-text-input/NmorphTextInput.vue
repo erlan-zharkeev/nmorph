@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { CommonInputProps, NmorphComponentHeight } from '@/types/common.enums';
+import { NmorphCommonInputProps, NmorphComponentHeight } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref } from 'vue';
 import { NmorphIcon, NmorphButton } from '@/components';
 
-interface IProps extends CommonInputProps {
+interface IProps extends NmorphCommonInputProps {
   placeholder?: string;
   typePassword?: boolean;
   modelValue?: string;
@@ -53,10 +53,10 @@ const handleBlur = () => {
   focused.value = false;
 };
 
-const inputDOMRef = ref<HTMLElement | null>(null);
+const inputDOMRef = ref<NmorphDomElement>(null);
 
 interface IEmit {
-  (e: 'inputDOMRef', val: Ref<HTMLElement | null>): void;
+  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
   (e: 'update:modelValue', val: string): void;
   (e: 'focus'): void;
   (e: 'blur'): void;
@@ -169,3 +169,4 @@ onMounted(() => {
   }
 }
 </style>
+@/types/common

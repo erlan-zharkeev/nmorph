@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { CommonInputProps, NmorphComponentHeight } from '@/types/common.enums';
+import { NmorphCommonInputProps, NmorphComponentHeight, NmorphDomElement } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide } from 'vue';
 import { ISelectOption } from '../nmorph-select-option/NmorphSelectOption.vue';
 import { SelectModelValue } from '../nmorph-select-option/types';
 import { NmorphTag, NmorphIcon, NmorphSelectOption } from '@/components';
+import { usePlacement } from '@/hooks';
 
-interface IProps extends CommonInputProps {
+interface IProps extends NmorphCommonInputProps {
   noElementPlaceholder?: string;
   valueRequired?: boolean;
   options?: ISelectOption[];
@@ -36,8 +37,8 @@ const emit = defineEmits<{
 const initialValue = ref<SelectModelValue>(props.modelValue);
 const open = ref(props.open);
 
-const optionsWrapperDOMRef = ref<HTMLElement | null>(null);
-const optionsDOMRef = ref<HTMLElement | null>(null);
+const optionsWrapperDOMRef = ref<NmorphDomElement>(null);
+const optionsDOMRef = ref<NmorphDomElement>(null);
 const optionsHeight = ref<string | null>(null);
 const selectedLineOutset = ref(true);
 
@@ -62,10 +63,17 @@ const changeHandler = (value: string) => {
   emit('update:modelValue', initialValue.value);
 };
 
+const { placement, adjustPlacement } = usePlacement({
+  initialPlacement: 'bottom',
+  targetDomElement: optionsDOMRef,
+  blockPosition: false,
+});
+
 const modifiers = computed(() =>
   getModifiers({
     nmorph: [NmorphComponentHeight[props.height], `${props.fill && 'fill'}`],
     'nmorph-select': [
+      placement.value,
       `${props.disabled && 'disabled'}`,
       `${props.modelValue ? 'on' : 'off'}`,
       `${props.modelValue && 'loading'}`,
@@ -93,6 +101,7 @@ const closeHandler = () => {
 };
 
 onMounted(() => {
+  adjustPlacement();
   if (!optionsDOMRef.value) return;
   optionsHeight.value = `${optionsDOMRef.value.clientHeight}px`;
   optionsWrapperDOMRef.value?.addEventListener('transitionend', optionTransitionendHandler);
@@ -241,6 +250,12 @@ provide('select-change-selected-value', changeHandler);
 .nmorph-select--selected-line-inset {
   .nmorph-select__content {
     @include nmorph-inset;
+  }
+}
+
+.nmorph-select--top {
+  .nmorph-select__options-wrapper {
+    bottom: 100%;
   }
 }
 </style>

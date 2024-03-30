@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { CommonInputProps } from '@/types/common.enums';
+import { NmorphCommonInputProps } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import { NmorphTooltip } from '@/components';
 
-interface IProps extends Omit<CommonInputProps, 'height'> {
+interface IProps extends Omit<NmorphCommonInputProps, 'height'> {
   modelValue?: number;
   max?: number;
   min?: number;
@@ -39,7 +39,7 @@ const emit = defineEmits<{
 
 const thumbValue = ref(props.modelValue);
 
-const sliderContainer = ref<HTMLElement | null>(null);
+const sliderContainer = ref<NmorphDomElement>(null);
 
 watch(thumbValue, () => {
   emit('update:modelValue', thumbValue.value);
@@ -101,7 +101,7 @@ const mousedownHandler = () => {
   document.addEventListener('mouseup', mouseUp);
 };
 
-const sliderFirst = ref<HTMLElement | null>(null);
+const sliderFirst = ref<NmorphDomElement>(null);
 
 const handleMouseEnter = () => {
   if (props.showTooltip) tooltipVisible.value = true;
@@ -200,3 +200,4 @@ const handleMouseLeave = () => {
   }
 }
 </style>
+@/types/common

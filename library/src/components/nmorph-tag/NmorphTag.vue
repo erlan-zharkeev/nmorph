@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphComponentHeight } from '@/types/common.enums';
+import { NmorphComponentHeight } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphIcon } from '@/components';
@@ -84,3 +84,4 @@ const closeHandler = () => {
   box-shadow: none;
 }
 </style>
+@/types/common
