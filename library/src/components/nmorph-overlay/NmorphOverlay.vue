@@ -38,6 +38,7 @@ const emit = defineEmits<IEmit>();
 <style lang="scss">
 .nmorph-overlay {
   opacity: 0;
+
   @include overlay;
 }
 

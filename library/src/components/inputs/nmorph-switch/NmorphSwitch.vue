@@ -65,29 +65,28 @@ onMounted(() => {
   --offset: 2px;
   --thumb-height: 16px;
 
-  $left-transition: left ease-in-out var(--transition-02);
-  $bg-transition: background ease-in-out var(--transition-02);
-  $box-shadow-transition: box-shadow ease-in-out var(--transition-02);
-
-  border-radius: var(--border-radius-circular);
-  cursor: pointer;
   width: 40px;
   height: var(--height);
   overflow: hidden;
+  border-radius: var(--border-radius-circular);
+  cursor: pointer;
 
   .nmorph-switch__content {
-    border-radius: var(--border-radius-circular);
-    height: 100%;
     position: relative;
-    transition: $bg-transition, $box-shadow-transition;
+    height: 100%;
+    border-radius: var(--border-radius-circular);
+    transition:
+      background ease-in-out var(--transition-02),
+      box-shadow ease-in-out var(--transition-02);
+
     @include nmorph-inset;
   }
 
   input {
     width: 100%;
     height: var(--height);
-    opacity: 0;
     visibility: hidden;
+    opacity: 0;
   }
 
   .nmorph-switch-thumb {
@@ -97,7 +96,10 @@ onMounted(() => {
     width: var(--thumb-height);
     height: var(--thumb-height);
     border-radius: var(--border-radius-circular);
-    transition: $left-transition, $box-shadow-transition;
+    transition:
+      left ease-in-out var(--transition-02),
+      box-shadow ease-in-out var(--transition-02);
+
     @include flex-full-center;
     @include nmorph-outset;
   }
@@ -120,6 +122,7 @@ onMounted(() => {
     background: var(--accent-color-01);
     box-shadow: none;
   }
+
   .nmorph-switch-thumb {
     left: calc(100% - 16px - 2px);
     box-shadow: none;

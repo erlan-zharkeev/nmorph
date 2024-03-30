@@ -184,24 +184,24 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
 </template>
 
 <style lang="scss">
-$nmorph-image-preview-btn-margin: 20px;
-
 .nmorph-image-preview {
-  --width: 100px;
-  --height: 100px;
+  --width: 50px;
+  --height: 50px;
 
-  overflow: hidden;
   width: var(--width);
   height: var(--height);
+  overflow: hidden;
 
   .nmorph-image-preview__trigger {
-    cursor: pointer;
     position: relative;
     width: 100%;
     height: 100%;
+    cursor: pointer;
+
     &:hover {
       filter: brightness(0.8);
     }
+
     .nmorph-image {
       width: 100%;
       height: 100%;
@@ -210,25 +210,29 @@ $nmorph-image-preview-btn-margin: 20px;
 
   .nmorph-image-preview__content {
     transition: var(--transition-04) opacity ease-in-out;
+
     @include absolute-center;
   }
 
   .nmorph-image-preview__actions {
     position: absolute;
-    transform: translateX(-50%);
     bottom: -50px;
     left: 50%;
     z-index: 2;
-    transition: ease-in-out bottom var(--transition-03);
     display: flex;
     height: 0;
+    transform: translateX(-50%);
+    transition: ease-in-out bottom var(--transition-03);
   }
+
   .nmorph-image-preview__action-element {
     margin-right: var(--indentation-03);
   }
+
   .nmorph-button__content {
     box-shadow: none;
   }
+
   .nmorph-image-preview__left,
   .nmorph-image-preview__right {
     z-index: 2;
@@ -255,6 +259,8 @@ $nmorph-image-preview-btn-margin: 20px;
   .nmorph-image-preview__actions {
     bottom: 50px;
   }
+
+  $nmorph-image-preview-btn-margin: 20px;
 
   .nmorph-image-preview__left {
     left: $nmorph-image-preview-btn-margin;

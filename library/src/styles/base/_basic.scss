@@ -10,12 +10,15 @@ body {
 // HEIGHT
 .nmorph--default-height-component {
   --height: var(--default-thickness-component);
+  height: var(--height);
 }
 .nmorph--thin-component {
   --height: var(--thin-component);
+  height: var(--height);
 }
 .nmorph--thick-component {
   --height: var(--thick-component);
+  height: var(--height);
 }
 
 // INPUTS

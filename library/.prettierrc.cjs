@@ -1,3 +1,8 @@
 module.exports = {
-  ...require('./.prettierrc.base.cjs'),
+  printWidth: 120,
+  trailingComma: 'es5',
+  tabWidth: 2,
+  semi: true,
+  singleQuote: true,
+  proseWrap: 'always',
 };

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CommonInputProps } from '@/types/common.enums';
+import { CommonInputProps, NmorphComponentHeight } from '@/types/common.enums';
 import { getModifiers } from '@/utils';
 import { inject, Ref, computed } from 'vue';
 import { SelectModelValue } from './types';
@@ -42,8 +42,8 @@ const checked = computed(() => {
 
 const modifiers = computed(() =>
   getModifiers({
+    nmorph: [NmorphComponentHeight[props.height]],
     'nmorph-select-option': [
-      props.height,
       `${props.disabled && 'disabled'}`,
       `${props.label && 'with-label'}`,
       `${checked.value && 'checked'}`,
@@ -64,18 +64,19 @@ const modifiers = computed(() =>
 
 <style lang="scss">
 .nmorph-select-option {
-  --height: var(--default-thickness-component);
   --hover-bg: var(--accent-color-01);
   --hover-color: var(--text-00);
 
-  height: var(--height);
-  cursor: pointer;
   display: flex;
   justify-content: space-between;
-  padding: var(--indentation-00) var(--indentation-03);
+  padding: var(--indentation-00) var(--default-indentation-input);
+  cursor: pointer;
 
   &:not(.nmorph-select-option--disabled):hover {
     background: var(--hover-bg);
+  }
+
+  &:not(.nmorph-select-option--disabled):hover span {
     color: var(--hover-color);
   }
 
@@ -86,6 +87,7 @@ const modifiers = computed(() =>
 
 .nmorph-select-option--disabled {
   @include disabled;
+
   .nmorph-select-option__content {
     pointer-events: none;
   }

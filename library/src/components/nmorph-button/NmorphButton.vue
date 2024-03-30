@@ -73,22 +73,27 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as IconSize);
 
 <style lang="scss">
 .nmorph-button {
-  width: auto;
   display: inline-block;
+  width: auto;
 
   .nmorph-button__content {
     width: 100%;
     height: var(--height);
-    border: none;
-    cursor: pointer;
-    border-radius: var(--default-border-radius);
     padding: var(--indentation-00) var(--indentation-04);
+    border: none;
+    border-radius: var(--default-border-radius);
+    cursor: pointer;
     transition:
       var(--transition-02) ease-in-out background,
       var(--transition-02) ease-in-out color,
       var(--transition-02) ease-in-out box-shadow;
+
     @include flex-full-center;
     @include nmorph-outset;
+  }
+
+  span {
+    margin-top: 2px;
   }
 
   .nmorph-button__content:disabled {
@@ -99,47 +104,28 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as IconSize);
     cursor: default;
   }
 
-  .nmorph-button__content:not(:disabled):not([loading='true']):hover {
-    background: var(--accent-color-01);
+  .nmorph-button__content:not(:disabled, [loading='true']):hover {
     color: var(--text-00);
+    background: var(--accent-color-01);
     box-shadow: none;
-    span {
-      color: var(--text-00);
-    }
-    .nmorph-icon {
-      --color: var(--text-00);
-    }
   }
 
-  span {
-    margin-top: 2px;
+  .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
+    --color: var(--text-00);
   }
-}
 
-.nmorph-button.nmorph--thin-component {
-  @include body-3;
+  .nmorph-button__content:not(:disabled, [loading='true']):hover span {
+    color: var(--text-00);
+  }
 }
 
 .nmorph-button--transparent {
   padding: var(--indentation-00);
+
   .nmorph-button__content {
-    box-shadow: none;
     background: transparent;
-  }
-}
-
-.nmorph-button--bg-transparent-on-hover {
-  .nmorph-button__content:not(:disabled):not([loading='true']):hover {
-    background: inherit;
     box-shadow: none;
-    .nmorph-icon {
-      --color: var(--text-01);
-    }
   }
-}
-
-.nmorph-button--disabled {
-  @include disabled;
 }
 
 .nmorph-button--ripple {
@@ -149,9 +135,6 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as IconSize);
   }
 
   .nmorph-button__content::after {
-    content: '';
-    @include wh100;
-    @include absolute-zero;
     background-image: radial-gradient(circle, var(--main-bg) 10%, transparent 10.01%);
     background-repeat: no-repeat;
     background-position: 50%;
@@ -160,6 +143,10 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as IconSize);
     transition:
       transform 0.3s,
       opacity 1s;
+    content: '';
+
+    @include wh100;
+    @include absolute-zero;
   }
 
   .nmorph-button__content:active::after {
@@ -167,5 +154,24 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as IconSize);
     opacity: 0.3;
     transition: 0s;
   }
+}
+
+.nmorph-button.nmorph--thin-component {
+  @include body-3;
+}
+
+.nmorph-button--bg-transparent-on-hover {
+  .nmorph-button__content:not(:disabled, [loading='true']):hover {
+    background: inherit;
+    box-shadow: none;
+
+    .nmorph-icon {
+      --color: var(--text-01);
+    }
+  }
+}
+
+.nmorph-button--disabled {
+  @include disabled;
 }
 </style>

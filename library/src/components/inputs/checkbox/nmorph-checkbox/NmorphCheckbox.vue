@@ -80,10 +80,10 @@ const modifiers = computed(() =>
   cursor: pointer;
 
   .nmorph-checkbox__content {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
   }
 
   .nmorph-checkbox__input-wrapper {
@@ -94,22 +94,25 @@ const modifiers = computed(() =>
 
   input {
     opacity: 0;
+
     @include absolute-zero;
     @include wh100;
   }
 
   .nmorph-checkbox__fake {
     border-radius: var(--default-border-radius);
+
     @include wh100;
     @include absolute-zero;
     @include nmorph-inset;
   }
 
   .nmorph-checkbox__fake-checked {
-    background: var(--accent-color-01);
     width: 50%;
     height: 50%;
+    background: var(--accent-color-01);
     border-radius: var(--border-radius-20);
+
     @include absolute-center;
   }
 
@@ -126,12 +129,13 @@ const modifiers = computed(() =>
   --size: var(--thick-component);
 
   .nmorph-checkbox__fake {
-    padding: var(--indentation-03);
-    border-radius: var(--default-border-radius);
     position: relative;
-    height: var(--size);
     display: flex;
     align-items: center;
+    height: var(--size);
+    padding: var(--indentation-03);
+    border-radius: var(--default-border-radius);
+
     @include nmorph-outset;
   }
 }

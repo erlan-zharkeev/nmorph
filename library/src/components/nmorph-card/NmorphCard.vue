@@ -36,11 +36,11 @@ const modifiers = computed(() =>
 .nmorph-card {
   --card-padding: var(--indentation-04);
 
+  display: flex;
+  flex-direction: column;
   width: 100%;
   padding: var(--card-padding);
   border-radius: var(--default-border-radius);
-  display: flex;
-  flex-direction: column;
 
   .nmorph-card__header {
     @include title-2;
@@ -52,6 +52,7 @@ const modifiers = computed(() =>
 
   .nmorph-card__footer {
     @include body-3;
+
     height: fit-content;
   }
 }

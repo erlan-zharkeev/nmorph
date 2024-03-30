@@ -24,7 +24,8 @@ const props = withDefaults(defineProps<IProps>(), {
 
 const modifiers = computed(() =>
   getModifiers({
-    'nmorph-slider': [`${props.disabled && 'disabled'}`, `${props.fill && 'fill'}`],
+    nmorph: [`${props.fill && 'fill'}`],
+    'nmorph-slider': [`${props.disabled && 'disabled'}`],
   })
 );
 
@@ -148,41 +149,44 @@ const handleMouseLeave = () => {
   }
 
   .nmorph-slider__input-wrapper {
+    display: flex;
+    align-items: center;
     width: 100%;
     height: var(--value-fixed-container-width);
     border-radius: var(--default-border-radius);
-    display: flex;
-    align-items: center;
+
     @include nmorph-inset;
   }
 
   .nmorph-slider__input-container {
-    width: 100%;
-    height: 24px;
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
+    height: 24px;
   }
 
   .nmorph-slider__thumb {
     position: absolute;
-    border-radius: var(--default-border-radius);
     width: v-bind(thumbWidthCss);
     height: 20px;
     border: 0;
+    border-radius: var(--default-border-radius);
+
     @include nmorph-outset;
   }
 
   .nmorph-slider__value {
-    margin-left: var(--indentation-04);
     display: flex;
     justify-content: center;
     width: var(--value-fixed-container-width);
+    margin-left: var(--indentation-04);
   }
 }
 
 .nmorph-slider--fill {
   width: 100%;
+
   .nmorph-slider__content {
     width: 100%;
   }

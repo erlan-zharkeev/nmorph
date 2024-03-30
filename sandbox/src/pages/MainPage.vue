@@ -47,7 +47,7 @@
         </NmorphFormItem>
 
         <NmorphFormItem id="food" label="Favorite food">
-          <NmorphSelect v-model="form.food.value" value-required>
+          <NmorphSelect v-model="form.food.value" value-required :options-map="food" fill>
             <NmorphSelectOption
               v-for="option in food"
               :key="option.value"
@@ -57,12 +57,14 @@
           </NmorphSelect>
         </NmorphFormItem>
 
-        <NmorphFormItem id="send">
+        <NmorphFormItem id="photo" label="Photo">
+          <NmorphFileUpload v-model="form.photo.value" multiple />
+        </NmorphFormItem>
+
+        <NmorphFormItem id="send" label="Send form">
           <NmorphButton text="Click me" width="100px" fill />
         </NmorphFormItem>
       </NmorphForm>
-
-      <!-- <NmorphFileUpload multiple @on-files-changed="filesCapturedHandler" /> -->
     </NmorphCard>
   </div>
 </template>
@@ -74,6 +76,7 @@ import {
   NmorphFormItem,
   NmorphRadio,
   NmorphForm,
+  NmorphFileUpload,
   NmorphSelect,
   NmorphIcon,
   NmorphTextInput,
@@ -117,6 +120,10 @@ const form = reactive({
   food: {
     value: ['apple'],
     rules: [{ compareValue: ['pear'], arrayCompareType: 'not-contains', error: 'Pear is not available' }],
+  },
+  photo: {
+    value: [],
+    rules: [],
   },
 });
 

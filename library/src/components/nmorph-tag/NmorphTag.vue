@@ -20,7 +20,8 @@ const props = withDefaults(defineProps<IProps>(), {
 
 const modifiers = computed(() =>
   getModifiers({
-    'nmorph-tag': [props.height, `${props.transparent && 'transparent'}`],
+    nmorph: [NmorphComponentHeight[props.height]],
+    'nmorph-tag': [`${props.transparent && 'transparent'}`],
   })
 );
 
@@ -46,19 +47,18 @@ const closeHandler = () => {
 
 <style lang="scss">
 .nmorph-tag {
-  --height: var(--default-thickness-component);
-  height: var(--height);
-  cursor: default;
   display: inline-flex;
+  margin-right: var(--indentation-02);
   padding: var(--indentation-00) var(--indentation-03);
   border-radius: var(--default-border-radius);
-  margin-right: var(--indentation-02);
+  cursor: default;
+
   @include nmorph-inset;
 
   .nmorph-tag__content {
-    height: 100%;
     display: flex;
     align-items: center;
+    height: 100%;
   }
 
   .nmorph-tag__close-icon {
@@ -69,6 +69,7 @@ const closeHandler = () => {
 
 .nmorph-tag--thin {
   --height: var(--thin-component);
+
   span {
     @include body-3;
   }
@@ -79,7 +80,7 @@ const closeHandler = () => {
 }
 
 .nmorph-tag--transparent {
-  box-shadow: none;
   background: transparent;
+  box-shadow: none;
 }
 </style>

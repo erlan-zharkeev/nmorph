@@ -74,14 +74,13 @@ provide('change-checkbox-value-handler', changeHandler);
 
   .nmorph-checkbox-group__content {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
     width: 100%;
   }
 
   .nmorph-checkbox:not(:last-child) {
-    margin-bottom: var(--indentation-03);
     margin-right: var(--indentation-03);
+    margin-bottom: var(--indentation-03);
   }
 }
 
@@ -89,9 +88,10 @@ provide('change-checkbox-value-handler', changeHandler);
   .nmorph-checkbox-group__content {
     flex-direction: column;
   }
+
   .nmorph-checkbox:not(:last-child) {
-    margin-bottom: var(--indentation-03);
     margin-right: var(--indentation-00);
+    margin-bottom: var(--indentation-03);
   }
 }
 </style>

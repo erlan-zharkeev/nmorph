@@ -6,17 +6,21 @@ import { NmorphIconList } from '@/types/common.enums';
 import { NmorphButton, NmorphIcon, NmorphImagePreview } from '@/components';
 
 interface IProps {
+  modelValue?: CustomFileData[];
   disabled?: boolean;
   multiple?: boolean;
   allowedTypes?: Resolution[];
   photoWithPreview?: boolean;
+  fill?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
+  modelValue: () => [],
   disabled: false,
   multiple: false,
   allowedTypes: () => ['jpg', 'jpeg', 'png'],
   photoWithPreview: true,
+  fill: true,
 });
 
 const getPlainType = (resolution: string) => resolution.split('/')[1];
@@ -36,7 +40,7 @@ interface CustomFileData {
   previewUrl: string;
 }
 
-let files = reactive<CustomFileData[]>([]);
+let files = reactive<CustomFileData[]>(props.modelValue);
 
 const inputDOMRef = ref<HTMLElement | null>(null);
 
@@ -65,7 +69,7 @@ const handleFileUpload = (event: Event) => {
 
 const filesChanged = () => {
   emit(
-    'on-files-changed',
+    'update:modelValue',
     files.map((file) => file.data)
   );
 };
@@ -85,7 +89,7 @@ onMounted(() => {
 
 interface IEmit {
   (e: 'inputDOMRef', val: Ref<HTMLElement | null>): void;
-  (e: 'on-files-changed', val: File[]): void;
+  (e: 'update:modelValue', val: File[]): void;
   (e: 'on-unsupported-file-type-error', val: string): void;
 }
 
@@ -93,6 +97,7 @@ const emit = defineEmits<IEmit>();
 
 const modifiers = computed(() =>
   getModifiers({
+    nmorph: [`${props.fill && 'fill'}`],
     'nmorph-file-upload': [`${props.disabled && 'disabled'}`],
   })
 );
@@ -103,7 +108,7 @@ const modifiers = computed(() =>
     <div class="nmorph-file-upload__trigger">
       <input ref="inputDOMRef" type="file" :multiple="props.multiple" @change="handleFileUpload" />
       <slot name="trigger">
-        <NmorphButton text="select file" @click="openFileSelector" />
+        <NmorphButton text="select file" fill @click="openFileSelector" />
       </slot>
     </div>
     <div class="nmorph-file-upload__list">
@@ -130,29 +135,38 @@ const modifiers = computed(() =>
   .nmorph-file-upload__trigger {
     position: relative;
   }
+
   input {
     display: none;
   }
+
   .nmorph-file-upload__list {
     margin-top: var(--indentation-03);
   }
+
   .nmorph-file-upload__file {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: var(--indentation-02);
     padding: var(--indentation-02) var(--indentation-03);
     border-radius: var(--default-border-radius);
-    margin-bottom: var(--indentation-02);
+
     @include nmorph-outset;
   }
+
   .nmorph-file-upload__file-info {
     display: flex;
     align-items: center;
+    width: 50%;
+    margin-left: var(--indentation-02);
   }
+
   .nmorph-file-upload__file-name {
     margin-left: var(--indentation-02);
     line-height: 0;
   }
+
   .nmorph-file-upload__remove-file {
     margin-left: var(--indentation-03);
   }

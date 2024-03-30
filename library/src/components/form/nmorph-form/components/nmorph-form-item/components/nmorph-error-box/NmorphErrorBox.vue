@@ -22,11 +22,8 @@ const reversedErrors = computed(() => {
 
 const modifiers = computed(() =>
   getModifiers({
-    'nmorph-error-box': [
-      props.height,
-      `${props.staticHeight && 'static-height'}`,
-      `${reversedErrors.value.length === 0 && 'empty'}`,
-    ],
+    nmorph: [NmorphComponentHeight[props.height]],
+    'nmorph-error-box': [`${props.staticHeight && 'static-height'}`, `${reversedErrors.value.length === 0 && 'empty'}`],
   })
 );
 </script>
@@ -41,31 +38,21 @@ const modifiers = computed(() =>
 
 <style lang="scss">
 .nmorph-error-box {
-  --height: 24px;
-
-  margin-top: var(--indentation-02);
-  height: var(--height);
-  overflow: hidden;
   display: block;
+  margin-top: var(--indentation-02);
+  overflow: hidden;
 
   .nmorph-error-box__error {
-    text-align: left;
     margin: var(--indentation-00);
     margin-left: var(--default-indentation-input);
     color: var(--error-color-00);
+    text-align: left;
   }
 }
 
 .nmorph-error-box--empty {
   &:not(.nmorph-error-box--static-height) {
     display: none;
-  }
-}
-
-.nmorph-error-box--thin {
-  --height: 14px;
-  .nmorph-error-box__error {
-    @include body-3;
   }
 }
 </style>

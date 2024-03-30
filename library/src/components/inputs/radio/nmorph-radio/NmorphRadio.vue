@@ -78,10 +78,10 @@ onMounted(() => {
   cursor: pointer;
 
   .nmorph-radio__content {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
   }
 
   span {
@@ -96,22 +96,25 @@ onMounted(() => {
 
   input {
     opacity: 0;
+
     @include absolute-zero;
     @include wh100;
   }
 
   .nmorph-radio__fake {
     border-radius: var(--border-radius-circular);
+
     @include wh100;
     @include absolute-zero;
     @include nmorph-inset;
   }
 
   .nmorph-radio__fake-checked {
-    background: var(--accent-color-01);
     width: 50%;
     height: 50%;
+    background: var(--accent-color-01);
     border-radius: var(--border-radius-circular);
+
     @include absolute-center;
   }
 
@@ -124,17 +127,15 @@ onMounted(() => {
   --size: var(--default-thickness-component);
 
   .nmorph-radio__fake {
-    justify-content: center;
-    white-space: nowrap;
-  }
-
-  .nmorph-radio__fake {
-    padding: var(--indentation-03);
-    border-radius: var(--default-border-radius);
     position: relative;
-    height: var(--size);
     display: flex;
     align-items: center;
+    justify-content: center;
+    height: var(--size);
+    padding: var(--indentation-03);
+    white-space: nowrap;
+    border-radius: var(--default-border-radius);
+
     @include nmorph-outset;
   }
 }

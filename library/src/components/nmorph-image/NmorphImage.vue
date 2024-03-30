@@ -71,6 +71,7 @@ const objectFit = computed(() => props.fit);
 
   img {
     @include wh100;
+
     object-fit: v-bind(objectFit);
   }
 }

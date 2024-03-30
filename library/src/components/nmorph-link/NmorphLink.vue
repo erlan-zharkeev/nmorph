@@ -59,9 +59,9 @@ const modifiers = computed(() =>
   display: inline-block;
 
   a {
-    text-decoration: none;
     display: flex;
     align-items: center;
+    text-decoration: none;
   }
 
   .nmorph-link__icon {
@@ -71,6 +71,7 @@ const modifiers = computed(() =>
 
   :hover {
     color: var(--hover-color);
+
     .nmorph-link__icon {
       --color: var(--hover-color);
     }
@@ -85,6 +86,7 @@ const modifiers = computed(() =>
 
 .nmorph-link--disabled {
   @include disabled;
+
   a {
     pointer-events: none;
   }

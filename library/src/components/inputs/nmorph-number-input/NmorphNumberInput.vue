@@ -164,11 +164,12 @@ const inputDOMRef = ref<HTMLElement | null>(null);
   }
 
   .nmorph-number-input__input-content {
-    height: var(--height);
     display: flex;
     width: 100%;
+    height: var(--height);
     height: 100%;
     border-radius: var(--default-border-radius);
+
     @include nmorph-outset;
   }
 
@@ -188,20 +189,22 @@ const inputDOMRef = ref<HTMLElement | null>(null);
 
   input {
     width: auto;
+    width: 100%;
+    padding: var(--indentation-00) var(--default-indentation-input);
+    text-align: center;
     border: none;
-    transition: ease-in-out var(--transition-01) background;
     border-top: 1px solid var(--main-bg);
     border-bottom: 1px solid var(--main-bg);
-    text-align: center;
-    padding: var(--indentation-00) var(--indentation-03);
-    width: 100%;
+    transition: ease-in-out var(--transition-01) background;
+
     @include nmorph-inset;
   }
 
   input:focus {
-    outline: none;
-    @include nmorph-outset;
     background: var(--accent-color-00);
+    outline: none;
+
+    @include nmorph-outset;
   }
 
   .nmorph-number-input__action-btns {
@@ -212,6 +215,7 @@ const inputDOMRef = ref<HTMLElement | null>(null);
 
 .nmorph-number-input--disabled {
   @include disabled;
+
   .nmorph-number-input__input-content {
     pointer-events: none;
   }
@@ -222,18 +226,21 @@ const inputDOMRef = ref<HTMLElement | null>(null);
     border-top-left-radius: var(--default-border-radius);
     border-bottom-left-radius: var(--default-border-radius);
   }
+
   .nmorph-number-input__decrease,
   .nmorph-number-input__increase {
     display: flex;
     justify-content: center;
     width: 100%;
   }
+
   .nmorph-number-input__decrease {
     .nmorph-button__content {
       border-radius: 0;
       border-top-right-radius: var(--default-border-radius);
     }
   }
+
   .nmorph-number-input__increase {
     .nmorph-button__content {
       border-radius: 0;

@@ -117,19 +117,21 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
 
 <style lang="scss">
 .nmorph-tooltip {
+  --max-width: 120px;
+
   display: inline-block;
   width: v-bind(width);
-  --max-width: 120px;
 
   .nmorph-tooltip__content {
     position: relative;
   }
 
   .nmorph-tooltip__info-content {
-    max-width: var(--max-width);
     position: absolute;
+    max-width: var(--max-width);
     padding: var(--indentation-03);
     border-radius: var(--default-border-radius);
+
     @include nmorph-dark-shadow;
   }
 
@@ -152,11 +154,12 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
     left: 50%;
     transform: translateX(-50%);
   }
+
   .nmorph-tooltip__triangle {
     top: 100%;
     left: 50%;
-    border-width: 8px 8px 0 8px;
     border-color: var(--main-bg) transparent transparent transparent;
+    border-width: 8px 8px 0;
     transform: translateX(-50%);
   }
 }
@@ -167,11 +170,12 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
     left: calc(100% + 12px);
     transform: translateY(-50%);
   }
+
   .nmorph-tooltip__triangle {
     top: 50%;
     right: 100%;
-    border-width: 8px 8px 8px 0;
     border-color: transparent var(--main-bg) transparent transparent;
+    border-width: 8px 8px 8px 0;
     transform: translateY(-50%);
   }
 }
@@ -182,11 +186,12 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
     left: 50%;
     transform: translateX(-50%);
   }
+
   .nmorph-tooltip__triangle {
     bottom: 100%;
     left: 50%;
-    border-width: 0 8px 8px 8px;
     border-color: transparent transparent var(--main-bg) transparent;
+    border-width: 0 8px 8px;
     transform: translateX(-50%);
   }
 }
@@ -197,11 +202,12 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
     right: calc(100% + 12px);
     transform: translateY(-50%);
   }
+
   .nmorph-tooltip__triangle {
     top: 50%;
     left: 100%;
-    border-width: 8px 0 8px 8px;
     border-color: transparent transparent transparent var(--main-bg);
+    border-width: 8px 0 8px 8px;
     transform: translateY(-50%);
   }
 }

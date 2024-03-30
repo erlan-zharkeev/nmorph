@@ -43,6 +43,7 @@ const modifiers = computed(() =>
 <style lang="scss">
 .nmorph-icon {
   --color: var(--text-01);
+
   width: var(--width);
   height: var(--height);
 
@@ -52,6 +53,7 @@ const modifiers = computed(() =>
 
   svg {
     @include wh100;
+
     fill: var(--color);
   }
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CommonInputProps } from '@/types/common.enums';
+import { CommonInputProps, NmorphComponentHeight } from '@/types/common.enums';
 import { getModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide } from 'vue';
 import { ISelectOption } from '../nmorph-select-option/NmorphSelectOption.vue';
@@ -10,6 +10,7 @@ interface IProps extends CommonInputProps {
   noElementPlaceholder?: string;
   valueRequired?: boolean;
   options?: ISelectOption[];
+  optionsMap?: ISelectOption[];
   modelValue?: SelectModelValue;
   loading?: boolean;
   open?: boolean;
@@ -19,6 +20,7 @@ const props = withDefaults(defineProps<IProps>(), {
   noElementPlaceholder: 'Choose value',
   valueRequired: false,
   options: () => [],
+  optionsMap: () => [],
   modelValue: '',
   loading: true,
   fill: false,
@@ -62,12 +64,11 @@ const changeHandler = (value: string) => {
 
 const modifiers = computed(() =>
   getModifiers({
+    nmorph: [NmorphComponentHeight[props.height], `${props.fill && 'fill'}`],
     'nmorph-select': [
-      props.height,
       `${props.disabled && 'disabled'}`,
       `${props.modelValue ? 'on' : 'off'}`,
       `${props.modelValue && 'loading'}`,
-      `${props.fill && 'fill'}`,
       `${open.value && 'open'}`,
       `${selectedLineOutset.value ? 'selected-line-outset' : 'selected-line-inset'}`,
     ],
@@ -111,13 +112,24 @@ const selectedValueTitle = computed(() => {
   return initialValue.value;
 });
 
-const tags = computed(() =>
-  props.options
-    .filter((option) => initialValue.value.includes(option.value))
-    .map((option) => {
-      return { text: option.label, value: option.value };
-    })
-);
+const optionsMap = computed(() => (props.options.length > 0 ? props.options : props.optionsMap));
+
+const tags = computed(() => {
+  const haveMap = optionsMap.value.length > 0;
+  if (haveMap) {
+    return optionsMap.value
+      .filter((option) => initialValue.value.includes(option.value))
+      .map((option) => {
+        return { text: option.label, value: option.value };
+      });
+  }
+  if (Array.isArray(initialValue.value)) {
+    return initialValue.value.map((option) => {
+      return { text: option, value: option };
+    });
+  }
+  return [{ text: initialValue.value, value: initialValue.value }];
+});
 
 provide('select-selected-value', initialValue);
 provide('select-change-selected-value', changeHandler);
@@ -139,6 +151,7 @@ provide('select-change-selected-value', changeHandler);
             :key="tag.value"
             v-bind="tag"
             transparent
+            :removable="tags.length > 1 || !props.valueRequired"
             height="thin"
             @close="changeHandler"
           />
@@ -151,7 +164,7 @@ provide('select-change-selected-value', changeHandler);
         :style="{ height: open && optionsHeight ? optionsHeight : '0px' }"
       >
         <div ref="optionsDOMRef" class="nmorph-select__options">
-          <NmorphSelectOption v-for="option in options" :key="option.value" v-bind="option" />
+          <NmorphSelectOption v-for="option in options" :key="option.value" v-bind="option" :height="props.height" />
           <slot name="default" />
         </div>
       </div>
@@ -161,21 +174,18 @@ provide('select-change-selected-value', changeHandler);
 
 <style lang="scss">
 .nmorph-select {
-  --height: var(--default-thickness-component);
   --base-width: 200px;
-
-  $chevron-rotate-transition: ease-in-out transform var(--transition-02);
-  $options-expand-transition: ease-in-out height var(--transition-02);
 
   width: var(--base-width);
   height: var(--height);
   cursor: pointer;
 
   .nmorph-select__content {
-    height: 100%;
     position: relative;
-    padding: var(--indentation-00) var(--indentation-03);
+    height: 100%;
+    padding: var(--indentation-00) var(--default-indentation-input);
     border-radius: var(--default-border-radius);
+
     @include nmorph-outset;
   }
 
@@ -186,14 +196,20 @@ provide('select-change-selected-value', changeHandler);
     height: 100%;
   }
 
+  .nmorph-select__selected-value {
+    @include ellipsis;
+  }
+
   .nmorph-select__options-wrapper {
     position: absolute;
-    width: 100%;
     left: 0;
-    border-radius: var(--default-border-radius);
-    overflow: hidden;
+    z-index: 1;
+    width: 100%;
     height: 0;
-    transition: $options-expand-transition;
+    overflow: hidden;
+    border-radius: var(--default-border-radius);
+    transition: ease-in-out height var(--transition-02);
+
     @include nmorph-outset;
 
     .nmorph-select__option {
@@ -201,18 +217,18 @@ provide('select-change-selected-value', changeHandler);
     }
 
     .nmorph-select__chevron {
-      transition: $chevron-rotate-transition;
+      transition: ease-in-out transform var(--transition-02);
     }
   }
 }
 
 .nmorph-select--open {
-  .nmorph-select__content {
-    @include nmorph-inset;
-  }
-
   .nmorph-select__chevron {
     transform: rotate(180deg);
+  }
+
+  .nmorph-select__content {
+    @include nmorph-inset;
   }
 }
 

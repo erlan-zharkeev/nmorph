@@ -67,14 +67,13 @@ provide('change-radio-button-value-handler', changeHandler);
 
   .nmorph-radio-group__content {
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
     width: 100%;
-    flex-wrap: wrap;
   }
 
   .nmorph-radio:not(:last-child) {
-    margin-bottom: var(--indentation-03);
     margin-right: var(--indentation-03);
+    margin-bottom: var(--indentation-03);
   }
 }
 
@@ -84,8 +83,8 @@ provide('change-radio-button-value-handler', changeHandler);
   }
 
   .nmorph-radio:not(:last-child) {
-    margin-bottom: var(--indentation-03);
     margin-right: var(--indentation-00);
+    margin-bottom: var(--indentation-03);
   }
 }
 </style>

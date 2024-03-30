@@ -101,31 +101,33 @@ onMounted(() => {
 <style lang="scss">
 .nmorph-text-input {
   display: flex;
-  align-items: flex-start;
   flex-direction: column;
+  align-items: flex-start;
 
   .nmorph-text-input__input-side {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     width: 100%;
-    position: relative;
   }
 
   input {
     width: 100%;
+    height: var(--height);
+    text-indent: var(--default-indentation-input);
     border: none;
     border-radius: var(--default-border-radius);
-    text-indent: var(--default-indentation-input);
-    height: var(--height);
     transition: ease-in-out var(--transition-01) background;
+
     @include nmorph-inset;
   }
 
   input:focus {
-    outline: none;
-    @include nmorph-outset;
     background: var(--accent-color-00);
+    outline: none;
+
+    @include nmorph-outset;
   }
 
   input:disabled {
@@ -134,8 +136,9 @@ onMounted(() => {
 
   .nmorph-text-input__password-btn {
     position: absolute;
-    height: 100%;
     right: 0;
+    height: 100%;
+
     .nmorph-button__content {
       padding: var(--indentation-03);
     }
@@ -145,6 +148,7 @@ onMounted(() => {
 .nmorph-button.nmorph--thin-component {
   .nmorph-text-input__password-btn {
     margin-top: var(--indentation-00);
+
     .nmorph-button {
       --height: var(--thin-component);
     }
@@ -156,7 +160,8 @@ onMounted(() => {
     .nmorph-icon {
       --color: var(--text-00);
     }
-    .nmorph-button:not(:disabled):not([loading='true']):hover {
+
+    .nmorph-button:not(:disabled, [loading='true']):hover {
       .nmorph-icon {
         --color: var(--text-00);
       }
