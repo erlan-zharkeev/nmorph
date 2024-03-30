@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { computed } from 'vue';
 import { IconName } from '../nmorph-icon/types';
 import { Color } from '@/types/common.enums';
@@ -33,7 +33,9 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const modifiers = computed(() =>
-  createModifiers('nmorph-link', [props.color, props.underline ? 'underline' : '', props.disabled ? 'disabled' : ''])
+  getModifiers({
+    'nmorph-link': [props.color, `${props.underline && 'underline'}`, `${props.disabled && 'disabled'}`],
+  })
 );
 </script>
 
@@ -57,14 +59,13 @@ const modifiers = computed(() =>
   display: inline-block;
 
   a {
-    @include body-1(var(--link-color));
     text-decoration: none;
     display: flex;
     align-items: center;
   }
 
   .nmorph-link__icon {
-    margin-left: 4px;
+    margin-left: var(--indentation-02);
     --color: var(--link-color);
   }
 

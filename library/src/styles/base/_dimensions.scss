@@ -1,10 +1,10 @@
 :root {
   --thick-component: 38px;
   --default-thickness-component: 30px;
-  --thin-components: 22px;
-  --extra-thin-components: 14px;
+  --thin-component: 22px;
+  --extra-thin-component: 14px;
 
-  --max-width-container: 280px;
+  --form-container: 280px;
 
   --default-indentation-input: 8px;
 
@@ -12,6 +12,7 @@
   --indentation-01: 2px;
   --indentation-02: 4px;
   --indentation-03: 8px;
+  --indentation-04: 16px;
 
   --base-shadow-width: 4px;
   --base-shadow-blur: calc(var(--base-shadow-width) * 2.5);

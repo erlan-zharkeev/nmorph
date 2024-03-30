@@ -1,245 +1,197 @@
 <template>
   <div class="wrapper">
-    <div class="wrapper__left horizontal">
-      <NmorphCard>
-        <NmorphForm :value="form">
-          <NmorphFormItem id="username" label="Username" static-error-box-space>
-            <NmorphTextInput v-model="form.username.value" fill />
-          </NmorphFormItem>
-          <NmorphFormItem id="email" label="Email" static-error-box-space>
-            <NmorphTextInput v-model="form.email.value" fill />
-          </NmorphFormItem>
-          <NmorphFormItem id="years" label="Years old" static-error-box-space>
-            <NmorphNumberInput v-model="form.years.value" :min="2" :max="8" fill />
-          </NmorphFormItem>
-        </NmorphForm>
+    <NmorphCard>
+      <NmorphForm :value="form">
+        <NmorphFormItem id="username" label="Username">
+          <NmorphTextInput v-model="form.username.value" type-password fill />
+        </NmorphFormItem>
 
-        <div class="divider" />
-        <!-- <NmorphNumberInput
-          v-model="numberModel"
-          :min="2"
-          :max="8"
-          label="Label one"
-          :rules="[{ value: 5, operator: 'eq', error: 'Че дурак вообще?!' }]"
-          static-error-box-space
-          fill
-        />
-        <div class="divider" />
-        <NmorphRadioGroup
-          v-model="radioValue"
-          label="Label one"
-          :options="radioOptions"
-          :rules="[{ error: 'мимо сука', radioCompareType: 'not-equal', value: 'label3' }]"
-          style-type="button-style"
-          static-error-box-space
-        />
-        <div class="divider" />
-        <NmorphCheckboxGroup
-          v-model="checkboxValue"
-          label="Label one"
-          :options="checkboxOptions"
-          style-type="button-style"
-          :rules="[{ error: 'мимо сучараааа!!!', checkboxCompareType: 'not-contains', value: ['Three'] }]"
-          static-error-box-space
-          fill
-        />
-        <div class="divider" />
-        <NmorphSlider v-model="slider" :step="1" />
-        <div class="divider" />
-        <NmorphSwitch v-model="switchValue">
-          <template #thumb-on><NmorphIcon name="eye" width="10px" height="10px" /></template>
-          <template #thumb-off><NmorphIcon name="eye-blocked" width="10px" height="10px" /></template>
-        </NmorphSwitch>
-        <div class="divider" />
-        <NmorphSelect v-model="selectVal" :options="selectOptions" value-required />
-        <div class="divider" />
-        <NmorphFileUpload multiple @on-files-changed="filesCapturedHandler" /> -->
-      </NmorphCard>
-    </div>
-    <div class="wrapper__right vertical">
-      <NmorphCard>
-        <!-- <NmorphTooltip text="read me" position="right" disabled>
-          <NmorphLink text="click me" underline icon-name="plus" color="error" />
-        </NmorphTooltip>
-        <div class="">
-          <NmorphTag v-for="tag in tags" v-bind="tag" :key="tag.value" height="thin" @close="closeTagHandler" />
-        </div>
-        <div class="divider" />
-        <NmorphImagePreview :src="slides" />
-        <template #footer>Copyright</template> -->
-      </NmorphCard>
-    </div>
+        <NmorphFormItem id="years" label="Years old">
+          <NmorphNumberInput v-model="form.years.value" :min="2" :max="8" fill />
+        </NmorphFormItem>
+
+        <NmorphFormItem id="gender" label="Gender">
+          <NmorphRadioGroup v-model="form.gender.value">
+            <NmorphRadio
+              v-for="option in genders"
+              :key="option.value"
+              :label="option.label"
+              :value="option.value"
+              :disabled="option.disabled"
+            />
+          </NmorphRadioGroup>
+        </NmorphFormItem>
+
+        <NmorphFormItem id="roles" label="Roles">
+          <NmorphCheckboxGroup v-model="form.roles.value">
+            <NmorphCheckbox
+              v-for="option in roles"
+              :id="option.id"
+              :key="option.id"
+              :label="option.label"
+              :disabled="option.disabled"
+              style-type="button-style"
+            />
+          </NmorphCheckboxGroup>
+        </NmorphFormItem>
+
+        <NmorphFormItem id="agreement" label="Agreement">
+          <NmorphSwitch v-model="form.agreement.value">
+            <template #thumb-on><NmorphIcon name="eye" width="10px" height="10px" /></template>
+            <template #thumb-off><NmorphIcon name="eye-blocked" width="10px" height="10px" /></template>
+          </NmorphSwitch>
+        </NmorphFormItem>
+
+        <NmorphFormItem id="weight" label="Weight">
+          <NmorphSlider v-model="form.weight.value" :step="1" :max="150" :min="30" />
+        </NmorphFormItem>
+
+        <NmorphFormItem id="food" label="Favorite food">
+          <NmorphSelect v-model="form.food.value" value-required>
+            <NmorphSelectOption
+              v-for="option in food"
+              :key="option.value"
+              :label="option.label"
+              :value="option.value"
+            />
+          </NmorphSelect>
+        </NmorphFormItem>
+
+        <NmorphFormItem id="send">
+          <NmorphButton text="Click me" width="100px" fill />
+        </NmorphFormItem>
+      </NmorphForm>
+
+      <!-- <NmorphFileUpload multiple @on-files-changed="filesCapturedHandler" /> -->
+    </NmorphCard>
   </div>
 </template>
 <script lang="ts" setup>
 import {
-  NmorphCheckboxGroup,
   NmorphRadioGroup,
   NmorphNumberInput,
   NmorphCard,
-  NmorphSelect,
   NmorphFormItem,
+  NmorphRadio,
   NmorphForm,
+  NmorphSelect,
+  NmorphIcon,
   NmorphTextInput,
-  NmorphSlider,
-  NmorphFileUpload,
   NmorphSwitch,
+  NmorphSlider,
+  NmorphButton,
+  NmorphCheckbox,
+  NmorphCheckboxGroup,
+  NmorphSelectOption,
 } from './../../../library/src/components';
-import { reactive, ref } from 'vue';
-
-const usernameRules = [
-  {
-    pattern: /.{5,}/,
-    error: 'Too short',
-  },
-];
-const emailRules = [
-  {
-    pattern:
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    error: 'Not email',
-  },
-];
-const yearsRules = [{ value: 5, operator: 'eq', error: 'Че дурак вообще?!' }];
+import { reactive } from 'vue';
 
 const form = reactive({
   username: {
     value: '',
-    rules: usernameRules,
-  },
-  email: {
-    value: '',
-    rules: emailRules,
+    rules: [{ pattern: /.{5,}/, error: 'Too short' }],
   },
   years: {
     value: 0,
-    rules: yearsRules,
+    rules: [{ compareValue: 5, numberCompareType: 'eq', error: 'Wrong age' }],
+  },
+  gender: {
+    value: 'male',
+    rules: [{ compareValue: 'non-binary', booleanCompareType: 'not-eq', error: 'Wrong sex' }],
+  },
+  roles: {
+    value: ['developer', 'reviewer'],
+    rules: [{ compareValue: ['maintainer'], arrayCompareType: 'not-contains', error: 'You cant be a maintainer' }],
+  },
+  agreement: {
+    value: true,
+    rules: [{ compareValue: false, booleanCompareType: 'eq', error: 'You must set agreement' }],
+  },
+  weight: {
+    value: 55,
+    rules: [
+      { compareValue: 50, numberCompareType: 'lt', error: 'Weight must be greater than 50' },
+      { compareValue: 110, numberCompareType: 'gt', error: 'Weight must be less than 110' },
+    ],
+  },
+  food: {
+    value: ['apple'],
+    rules: [{ compareValue: ['pear'], arrayCompareType: 'not-contains', error: 'Pear is not available' }],
   },
 });
 
-const checkboxValue = ref<string[]>(['Two']);
-const radioValue = ref('label1');
-const textValue = ref('');
-const numberModel = ref(1);
-const slider = ref(50);
-const selectVal = ref(['1']);
-
-// let reactiveInputRules = reactive(inputRules);
-
-let tags = reactive([
-  { text: 'tag one', value: 'value-1' },
-  { text: 'two', value: 'value-2' },
-]);
-
-const switchValue = ref(false);
-
-const handler = () => {
-  reactiveInputRules.splice(0, reactiveInputRules.length);
-};
-const slides = ref([
-  'https://images.pexels.com/photos/20367774/pexels-photo-20367774.jpeg',
-  'https://images.pexels.com/photos/20596245/pexels-photo-20596245.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-  'https://images.pexels.com/photos/8755970/pexels-photo-8755970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-]);
-const closeTagHandler = (value: string) => {
-  const index = tags.findIndex((tag) => tag.value === value);
-  if (index !== -1) tags.splice(index, 1);
-};
-
-const radioOptions = [
+const genders = [
   {
     disabled: false,
-    label: 'Label 1',
-    value: 'label1',
-  },
-  {
-    disabled: true,
-    label: 'Label 2',
-    value: 'label2',
+    label: 'Male',
+    value: 'male',
   },
   {
     disabled: false,
-    label: 'Label 3',
-    value: 'label3',
+    label: 'Female',
+    value: 'female',
+  },
+  {
+    disabled: false,
+    label: 'Non-binary asdfa asdf s',
+    value: 'non-binary',
   },
 ];
 
-const selectOptions = reactive([
+const roles = [
   {
-    label: 'Label-1',
-    value: '1',
-  },
-  {
-    label: 'Label-2',
-    value: '2',
-    disabled: true,
-  },
-  {
-    label: 'Label-3',
-    value: '3',
-  },
-]);
-
-const checkboxOptions = ref([
-  {
-    id: 'One',
+    id: 'maintainer',
     disabled: false,
     modelValue: true,
-    label: 'Label 1',
+    label: 'Maintainer',
   },
   {
-    id: 'Two',
+    id: 'unknown',
     disabled: true,
     modelValue: false,
-    label: 'Label 2',
+    label: 'unknown',
   },
   {
-    id: 'Three',
+    id: 'developer',
     disabled: false,
     modelValue: false,
-    label: 'Label 3',
+    label: 'Developer',
   },
-]);
+  {
+    id: 'reviewer',
+    disabled: false,
+    modelValue: false,
+    label: 'Reviewer',
+  },
+];
 
-const filesCapturedHandler = () => {
-  console.log('files');
-};
+const food = [
+  {
+    label: 'Pear',
+    value: 'pear',
+  },
+  {
+    label: 'Apple',
+    value: 'apple',
+  },
+  {
+    label: 'Orange',
+    value: 'orange',
+  },
+];
 </script>
 <style lang="scss">
-.divider {
-  margin: 1rem;
+form {
+  max-width: 400px;
 }
+.divider {
+  margin: 20px;
+}
+
 .wrapper {
-  height: 100vh;
   background-color: var(--main-bg);
+  height: 100vh;
   padding: 1rem;
   display: flex;
-}
-.test {
-  position: fixed;
-  left: 0%;
-  bottom: 50px;
-}
-.wrapper__left,
-.wrapper__right {
-  width: 50%;
-}
-.wrapper__right {
-  margin-left: 8px;
-  &.vertical {
-    display: flex;
-  }
-}
-.wrapper__element {
-  padding: 4px;
-}
-
-.d-flex {
-  display: flex;
-  align-items: flex-end;
-}
-
-.ml-2 {
-  margin-left: 16px;
 }
 </style>

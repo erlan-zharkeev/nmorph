@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { CommonInputProps } from '@/types/common.enums';
-import { createModifiers } from '@/utils';
-import { computed, ref } from 'vue';
+import { CommonInputProps, NmorphComponentHeight } from '@/types/common.enums';
+import { getModifiers } from '@/utils';
+import { Ref, computed, onMounted, ref } from 'vue';
 import { NmorphIcon, NmorphButton } from '@/components';
 
 interface IProps extends CommonInputProps {
@@ -21,21 +21,11 @@ const props = withDefaults(defineProps<IProps>(), {
   fill: true,
 });
 
-interface IEmit {
-  (e: 'update:modelValue', val: string): void;
-  (e: 'focus'): void;
-  (e: 'blur'): void;
-}
-
-const emit = defineEmits<IEmit>();
-
 const modifiers = computed(() =>
-  createModifiers('nmorph-text-input', [
-    props.height,
-    focused.value ? 'focused' : '',
-    props.typePassword ? 'password' : '',
-    props.fill ? 'fill' : '',
-  ])
+  getModifiers({
+    nmorph: [NmorphComponentHeight[props.height], `${focused.value && 'focused'}`, `${props.fill && 'fill'}`],
+    'nmorph-text-input': [`${props.typePassword && 'password'}`],
+  })
 );
 
 const handleInput = (event: Event): void => {
@@ -47,6 +37,7 @@ const showPassword = ref(false);
 const changePasswordAppearance = () => {
   showPassword.value = !showPassword.value;
 };
+
 const type = computed(() => {
   return props.typePassword && !showPassword.value ? 'password' : 'text';
 });
@@ -61,13 +52,29 @@ const handleBlur = () => {
   emit('blur');
   focused.value = false;
 };
+
+const inputDOMRef = ref<HTMLElement | null>(null);
+
+interface IEmit {
+  (e: 'inputDOMRef', val: Ref<HTMLElement | null>): void;
+  (e: 'update:modelValue', val: string): void;
+  (e: 'focus'): void;
+  (e: 'blur'): void;
+}
+
+const emit = defineEmits<IEmit>();
+
+onMounted(() => {
+  emit('inputDOMRef', inputDOMRef);
+});
 </script>
 
 <template>
   <div :class="modifiers">
     <div class="nmorph-text-input__input-side">
       <input
-        ref="domInputRef"
+        ref="inputDOMRef"
+        class="nmorph-native-input"
         :type="type"
         :placeholder="props.placeholder"
         :disabled="props.disabled"
@@ -82,6 +89,7 @@ const handleBlur = () => {
         style-type="transparent"
         width="32px"
         bg-transparent-on-hover
+        :height="props.height"
         @click="changePasswordAppearance"
       >
         <NmorphIcon :name="showPassword ? 'eye-blocked' : 'eye'" />
@@ -92,7 +100,6 @@ const handleBlur = () => {
 
 <style lang="scss">
 .nmorph-text-input {
-  --height: var(--thick-component);
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -113,22 +120,12 @@ const handleBlur = () => {
     height: var(--height);
     transition: ease-in-out var(--transition-01) background;
     @include nmorph-inset;
-    @include body-1(var(--text-01));
   }
 
   input:focus {
     outline: none;
-    color: var(--text-00);
     @include nmorph-outset;
     background: var(--accent-color-00);
-  }
-
-  input:focus::placeholder {
-    color: var(--text-00);
-  }
-
-  input::placeholder {
-    color: var(--text-01);
   }
 
   input:disabled {
@@ -140,16 +137,21 @@ const handleBlur = () => {
     height: 100%;
     right: 0;
     .nmorph-button__content {
-      padding: 8px;
+      padding: var(--indentation-03);
     }
   }
 }
 
-.nmorph-text-input--fill {
-  width: 100%;
+.nmorph-button.nmorph--thin-component {
+  .nmorph-text-input__password-btn {
+    margin-top: var(--indentation-00);
+    .nmorph-button {
+      --height: var(--thin-component);
+    }
+  }
 }
 
-.nmorph-text-input--focused {
+.nmorph-button.nmorph--focused {
   .nmorph-text-input__password-btn {
     .nmorph-icon {
       --color: var(--text-00);
@@ -159,35 +161,6 @@ const handleBlur = () => {
         --color: var(--text-00);
       }
     }
-  }
-}
-
-.nmorph-text-input--valid {
-  input:focus {
-    background: var(--success-color-00);
-  }
-}
-
-.nmorph-text-input--invalid {
-  input:focus {
-    background: var(--error-color-00);
-  }
-}
-
-.nmorph-text-input--thin {
-  --height: var(--default-thickness-component);
-
-  .nmorph-text-input__password-btn {
-    margin-top: 0px;
-    .nmorph-button {
-      --height: var(--default-thickness-component);
-    }
-  }
-}
-
-.nmorph-text-input--password {
-  input {
-    padding-right: var(--default-thickness-component);
   }
 }
 </style>

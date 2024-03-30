@@ -28,7 +28,6 @@
 }
 
 @mixin overlay($zIndex: 1) {
-  --overlay-background-color: var(--half-transparent-background);
   background-color: var(--overlay-background-color);
   z-index: $zIndex;
   overflow: hidden;
@@ -36,4 +35,10 @@
   transition: ease-in-out var(--transition-02) opacity;
   @include wh100;
   @include absolute-zero;
+}
+
+@mixin ellipsis() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

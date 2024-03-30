@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ShadowType } from '@/types/common.enums';
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { computed } from 'vue';
 
 interface IProps {
@@ -11,7 +11,11 @@ const props = withDefaults(defineProps<IProps>(), {
   shadowType: ShadowType.outset,
 });
 
-const modifiers = computed(() => createModifiers('nmorph-card', [props.shadowType]));
+const modifiers = computed(() =>
+  getModifiers({
+    'nmorph-card': [props.shadowType],
+  })
+);
 </script>
 
 <template>
@@ -30,25 +34,24 @@ const modifiers = computed(() => createModifiers('nmorph-card', [props.shadowTyp
 
 <style lang="scss">
 .nmorph-card {
-  --padding: 12px;
+  --card-padding: var(--indentation-04);
 
   width: 100%;
-  padding: var(--padding);
+  padding: var(--card-padding);
   border-radius: var(--default-border-radius);
   display: flex;
   flex-direction: column;
 
   .nmorph-card__header {
-    @include subtitle-2-stronger(var(--text-01));
+    @include title-2;
   }
 
   .nmorph-card__content {
     height: 100%;
-    @include body-1(var(--text-01));
   }
 
   .nmorph-card__footer {
-    @include caption-1(var(--text-01));
+    @include body-3;
     height: fit-content;
   }
 }

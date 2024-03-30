@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import NmorphTextInput from './NmorphTextInput.vue';
-import { ControlComponentHeight } from './../../../types/common.enums';
+import { NmorphComponentHeight } from './../../../types/common.enums';
 
 const setupApp = ({ app }) => {
   app.use();
@@ -9,7 +9,6 @@ const setupApp = ({ app }) => {
 const initState = () => ({
   id: 'identifier',
   placeholder: 'Placeholder text',
-  label: 'Label Example',
   typePassword: false,
   disabled: false,
   modelValue: '',
@@ -40,12 +39,10 @@ const initState = () => ({
             :placeholder="state.placeholder"
             :type-password="state.typePassword"
             :error="state.error"
-            :label="state.label"
             :disabled="state.disabled"
             :type="state.typePassword ? 'password' : 'text'"
             :name="state.id"
             :rules="state.rules"
-            :class="{ 'nmorph-text-input--labeled': state.label }"
           />
         </div>
       </template>
@@ -53,7 +50,6 @@ const initState = () => ({
         <HstText v-model="state.modelValue" title="modelValue" />
         <HstText v-model="state.id" title="identifier/field-name" />
         <HstText v-model="state.placeholder" title="placeholder" />
-        <HstText v-model="state.label" title="label" />
         <HstCheckbox v-model="state.typePassword" title="type password" />
         <HstCheckbox v-model="state.error" title="error" />
         <HstCheckbox v-model="state.disabled" title="disabled" />
@@ -61,7 +57,7 @@ const initState = () => ({
           <HstText v-model="option.pattern" :title="'pattern' + (optionIndex + 1)" />
           <HstText v-model="option.error" :title="'error text' + (optionIndex + 1)" />
         </div>
-        <HstSelect v-model="state.height" :options="Object.values(ControlComponentHeight)" title="height" />
+        <HstSelect v-model="state.height" :options="Object.values(NmorphComponentHeight)" title="height" />
       </template>
     </Variant>
   </Story>

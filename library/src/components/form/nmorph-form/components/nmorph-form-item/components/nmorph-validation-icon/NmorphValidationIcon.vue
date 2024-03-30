@@ -1,18 +1,22 @@
 <script setup lang="ts">
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { ComputedRef, computed } from 'vue';
 import { NmorphIcon } from '@/components';
 
 interface IProps {
   valid: boolean | ComputedRef<boolean>;
-  show: boolean | ComputedRef<boolean>;
+  show?: boolean | ComputedRef<boolean>;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
   show: true,
 });
 
-const modifiers = computed(() => createModifiers('nmorph-validation-icon', [props.valid ? 'valid' : 'invalid']));
+const modifiers = computed(() =>
+  getModifiers({
+    'nmorph-validation-icon': [props.valid ? 'valid' : 'invalid'],
+  })
+);
 
 const validationIcon = computed(() => (props.valid ? 'success' : 'error'));
 const validateIconSize = '18px';
@@ -32,15 +36,16 @@ const validateIconSize = '18px';
 
 <style lang="scss">
 .nmorph-validation-icon {
-  .nmorph-validation-icon__content {
-    margin-left: 8px;
-  }
+  width: v-bind(validateIconSize);
+  margin-left: var(--indentation-03);
 }
+
 .nmorph-validation-icon--valid {
   .nmorph-validation-icon__content {
     --color: var(--success-color-00);
   }
 }
+
 .nmorph-validation-icon--invalid {
   .nmorph-validation-icon__content {
     --color: var(--error-color-00);

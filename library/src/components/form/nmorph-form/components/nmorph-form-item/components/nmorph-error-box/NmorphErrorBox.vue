@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { ControlComponentHeight } from '@/types/common.enums';
-import { createModifiers } from '@/utils';
+import { NmorphComponentHeight } from '@/types/common.enums';
+import { getModifiers } from '@/utils';
 import { Ref, computed } from 'vue';
 
 interface IProps {
-  height?: keyof typeof ControlComponentHeight;
-  errors: string[] | Ref<string[]>;
+  height?: keyof typeof NmorphComponentHeight;
+  errors?: string[] | Ref<string[]>;
+  staticHeight?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  height: 'thick',
+  height: 'default',
   errors: () => [],
+  staticHeight: false,
 });
 
 const reversedErrors = computed(() => {
@@ -18,7 +20,15 @@ const reversedErrors = computed(() => {
   return arr.reverse();
 });
 
-const modifiers = computed(() => createModifiers('nmorph-error-box', [props.height]));
+const modifiers = computed(() =>
+  getModifiers({
+    'nmorph-error-box': [
+      props.height,
+      `${props.staticHeight && 'static-height'}`,
+      `${reversedErrors.value.length === 0 && 'empty'}`,
+    ],
+  })
+);
 </script>
 
 <template>
@@ -36,19 +46,26 @@ const modifiers = computed(() => createModifiers('nmorph-error-box', [props.heig
   margin-top: var(--indentation-02);
   height: var(--height);
   overflow: hidden;
-  @include body-1(var(--error-color-00));
+  display: block;
 
   .nmorph-error-box__error {
     text-align: left;
-    margin: 0;
+    margin: var(--indentation-00);
     margin-left: var(--default-indentation-input);
+    color: var(--error-color-00);
+  }
+}
+
+.nmorph-error-box--empty {
+  &:not(.nmorph-error-box--static-height) {
+    display: none;
   }
 }
 
 .nmorph-error-box--thin {
   --height: 14px;
   .nmorph-error-box__error {
-    @include caption-2(var(--error-color-00));
+    @include body-3;
   }
 }
 </style>

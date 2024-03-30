@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { computed, ref, nextTick } from 'vue';
 
 enum TooltipPosition {
@@ -38,7 +38,9 @@ const showTooltip = ref(props.forceShow);
 const placement = ref<Placement>(props.position);
 
 const modifiers = computed(() =>
-  createModifiers('nmorph-tooltip', [props.disabled ? 'disabled' : '', placement.value])
+  getModifiers({
+    'nmorph-tooltip': [placement.value, `${props.disabled && 'disabled'}`],
+  })
 );
 
 const tooltipDOMRef = ref<HTMLElement | null>(null);
@@ -126,13 +128,9 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
   .nmorph-tooltip__info-content {
     max-width: var(--max-width);
     position: absolute;
-    padding: 8px;
+    padding: var(--indentation-03);
     border-radius: var(--default-border-radius);
     @include nmorph-dark-shadow;
-  }
-
-  .nmorph-tooltip__shadow-content {
-    @include body-1(var(--text-01));
   }
 
   span {

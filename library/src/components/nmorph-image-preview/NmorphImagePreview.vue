@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { ComputedRef, computed, ref } from 'vue';
 import { IconName } from '../nmorph-icon/types';
 import { NmorphImage, NmorphButton, NmorphIcon, NmorphOverlay } from '@/components';
@@ -24,7 +24,12 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const open = ref(props.show);
-const modifiers = computed(() => createModifiers('nmorph-image-preview', [open.value ? 'opened' : '']));
+const modifiers = computed(() =>
+  getModifiers({
+    'nmorph-image-preview': [`${open.value && 'opened'}`],
+  })
+);
+
 const currentIndex = ref(props.initialIndex);
 const triggerSource = computed(() => (typeof props.src === 'string' ? props.src : props.src[currentIndex.value]));
 
@@ -219,7 +224,7 @@ $nmorph-image-preview-btn-margin: 20px;
     height: 0;
   }
   .nmorph-image-preview__action-element {
-    margin-right: 8px;
+    margin-right: var(--indentation-03);
   }
   .nmorph-button__content {
     box-shadow: none;

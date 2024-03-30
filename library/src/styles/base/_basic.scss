@@ -1,0 +1,40 @@
+* {
+  color: var(--text-01);
+}
+
+body {
+  font-family: 'Helvetica', 'Roboto', Arial, sans-serif;
+  @include body-1;
+}
+
+// HEIGHT
+.nmorph--default-height-component {
+  --height: var(--default-thickness-component);
+}
+.nmorph--thin-component {
+  --height: var(--thin-component);
+}
+.nmorph--thick-component {
+  --height: var(--thick-component);
+}
+
+// INPUTS
+.nmorph--thin-component.nmorph-native-input {
+  @include body-3;
+}
+
+.nmorph--focused {
+}
+
+.nmorph-native-input:focus {
+  color: var(--text-00);
+}
+
+.nmorph-native-input:focus::placeholder {
+  color: var(--text-00);
+}
+
+// WIDTH
+.nmorph--fill {
+  width: 100%;
+}

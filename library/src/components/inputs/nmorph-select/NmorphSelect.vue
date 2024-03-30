@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CommonInputProps } from '@/types/common.enums';
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide } from 'vue';
 import { ISelectOption } from '../nmorph-select-option/NmorphSelectOption.vue';
 import { SelectModelValue } from '../nmorph-select-option/types';
@@ -61,15 +61,17 @@ const changeHandler = (value: string) => {
 };
 
 const modifiers = computed(() =>
-  createModifiers('nmorph-select', [
-    props.disabled ? 'disabled' : '',
-    props.modelValue ? 'on' : 'off',
-    props.loading ? 'loading' : '',
-    props.fill ? 'fill' : '',
-    open.value ? 'open' : '',
-    selectedLineOutset.value ? 'selected-line-outset' : 'selected-line-inset',
-    props.height,
-  ])
+  getModifiers({
+    'nmorph-select': [
+      props.height,
+      `${props.disabled && 'disabled'}`,
+      `${props.modelValue ? 'on' : 'off'}`,
+      `${props.modelValue && 'loading'}`,
+      `${props.fill && 'fill'}`,
+      `${open.value && 'open'}`,
+      `${selectedLineOutset.value ? 'selected-line-outset' : 'selected-line-inset'}`,
+    ],
+  })
 );
 
 const clickHandler = () => {
@@ -124,7 +126,6 @@ provide('select-change-selected-value', changeHandler);
 <template>
   <div :class="modifiers">
     <div class="nmorph-select__content">
-      <select />
       <div class="nmorph-select__selected-values-line" @click.stop="clickHandler">
         <div v-if="typeof initialValue === 'string'" class="nmorph-select__selected-value">
           {{ selectedValueTitle }}
@@ -151,6 +152,7 @@ provide('select-change-selected-value', changeHandler);
       >
         <div ref="optionsDOMRef" class="nmorph-select__options">
           <NmorphSelectOption v-for="option in options" :key="option.value" v-bind="option" />
+          <slot name="default" />
         </div>
       </div>
     </div>
@@ -160,17 +162,19 @@ provide('select-change-selected-value', changeHandler);
 <style lang="scss">
 .nmorph-select {
   --height: var(--default-thickness-component);
+  --base-width: 200px;
+
   $chevron-rotate-transition: ease-in-out transform var(--transition-02);
   $options-expand-transition: ease-in-out height var(--transition-02);
 
+  width: var(--base-width);
   height: var(--height);
   cursor: pointer;
-  @include body-1(var(--text-01));
 
   .nmorph-select__content {
     height: 100%;
     position: relative;
-    padding: 0 8px;
+    padding: var(--indentation-00) var(--indentation-03);
     border-radius: var(--default-border-radius);
     @include nmorph-outset;
   }
@@ -180,14 +184,6 @@ provide('select-change-selected-value', changeHandler);
     align-items: center;
     justify-content: space-between;
     height: 100%;
-  }
-
-  select {
-    appearance: none;
-    visibility: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
   }
 
   .nmorph-select__options-wrapper {
@@ -201,7 +197,7 @@ provide('select-change-selected-value', changeHandler);
     @include nmorph-outset;
 
     .nmorph-select__option {
-      padding: 8px;
+      padding: var(--indentation-03);
     }
 
     .nmorph-select__chevron {

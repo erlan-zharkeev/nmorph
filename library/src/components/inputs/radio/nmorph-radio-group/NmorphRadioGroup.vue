@@ -1,23 +1,22 @@
 <script setup lang="ts">
 import { CommonInputProps, ComponentDirection } from '@/types/common.enums';
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { ref, computed, provide } from 'vue';
 import { IRadioOption, RadioStyleType } from '../types';
 import NmorphRadio from './../nmorph-radio/NmorphRadio.vue';
 
 interface IProps extends CommonInputProps {
   modelValue: string;
-  options: IRadioOption[];
+  options?: IRadioOption[];
   styleType?: keyof typeof RadioStyleType;
   direction?: keyof typeof ComponentDirection;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
   modelValue: '',
-  styleType: 'radio-style',
+  styleType: 'button-style',
   options: () => [],
   direction: 'row',
-  fill: true,
   label: '',
 });
 
@@ -33,14 +32,7 @@ const changeHandler = (value: string) => {
   emit('update:modelValue', initialValue.value);
 };
 
-const modifiers = computed(() =>
-  createModifiers('nmorph-radio-group', [
-    props.styleType,
-    props.direction,
-    props.fill ? 'fill' : '',
-    props.label ? 'labeled' : '',
-  ])
-);
+const modifiers = computed(() => getModifiers({ 'nmorph-radio-group': [props.styleType, props.direction] }));
 
 provide('radio-group-selected-value', initialValue);
 provide('change-radio-button-value-handler', changeHandler);
@@ -48,7 +40,6 @@ provide('change-radio-button-value-handler', changeHandler);
 
 <template>
   <div :class="modifiers">
-    <legend v-if="props.label">{{ props.label }}</legend>
     <div class="nmorph-radio-group__wrapper">
       <div class="nmorph-radio-group__content">
         <NmorphRadio
@@ -78,9 +69,12 @@ provide('change-radio-button-value-handler', changeHandler);
     display: flex;
     flex-direction: row;
     width: 100%;
+    flex-wrap: wrap;
   }
-  .nmorph-radio {
-    margin-right: 8px;
+
+  .nmorph-radio:not(:last-child) {
+    margin-bottom: var(--indentation-03);
+    margin-right: var(--indentation-03);
   }
 }
 
@@ -88,25 +82,10 @@ provide('change-radio-button-value-handler', changeHandler);
   .nmorph-radio-group__content {
     flex-direction: column;
   }
-  .nmorph-radio {
-    margin-right: 0;
-    margin-bottom: 8px;
-  }
-}
 
-.nmorph-radio-group--fill {
-  width: 100%;
-}
-
-.nmorph-radio-group--labeled {
-  .nmorph-radio-group__content {
-    margin-top: 4px;
-  }
-  .nmorph-validation-icon {
-    margin-top: 4px;
-  }
-  legend {
-    @include body-1-strong(var(--text-01));
+  .nmorph-radio:not(:last-child) {
+    margin-bottom: var(--indentation-03);
+    margin-right: var(--indentation-00);
   }
 }
 </style>

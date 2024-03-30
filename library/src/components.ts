@@ -1,6 +1,7 @@
 import NmorphTextInput from '@/components/inputs/nmorph-text-input/NmorphTextInput.vue';
 import NmorphCheckbox from '@/components/inputs/checkbox/nmorph-checkbox/NmorphCheckbox.vue';
 import NmorphCheckboxGroup from '@/components/inputs/checkbox/nmorph-checkbox-group/NmorphCheckboxGroup.vue';
+import NmorphRadio from '@/components/inputs/radio/nmorph-radio/NmorphRadio.vue';
 import NmorphRadioGroup from '@/components/inputs/radio/nmorph-radio-group/NmorphRadioGroup.vue';
 import NmorphNumberInput from '@/components/inputs/nmorph-number-input/NmorphNumberInput.vue';
 import NmorphSlider from '@/components/inputs/nmorph-slider/NmorphSlider.vue';
@@ -27,8 +28,9 @@ export {
   NmorphImage,
   NmorphIcon,
   NmorphButton,
-  NmorphCheckbox,
+  NmorphRadio,
   NmorphRadioGroup,
+  NmorphCheckbox,
   NmorphCheckboxGroup,
   NmorphCarousel,
   NmorphNumberInput,

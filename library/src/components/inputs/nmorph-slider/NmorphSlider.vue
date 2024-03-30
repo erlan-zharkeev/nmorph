@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CommonInputProps } from '@/types/common.enums';
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import { NmorphTooltip } from '@/components';
 
@@ -23,7 +23,9 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const modifiers = computed(() =>
-  createModifiers('nmorph-slider', [props.disabled ? 'disabled' : '', props.fill ? 'fill' : ''])
+  getModifiers({
+    'nmorph-slider': [`${props.disabled && 'disabled'}`, `${props.fill && 'fill'}`],
+  })
 );
 
 const thumbWidth = 40;
@@ -172,11 +174,10 @@ const handleMouseLeave = () => {
   }
 
   .nmorph-slider__value {
-    margin-left: 16px;
+    margin-left: var(--indentation-04);
     display: flex;
     justify-content: center;
     width: var(--value-fixed-container-width);
-    @include body-1-strong(var(--text-01));
   }
 }
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { Ref, computed, onMounted, reactive, ref } from 'vue';
 import { ArchiveResolution, AudioResolution, ImageResolution, Resolution, VideoResolution } from './types';
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { NmorphIconList } from '@/types/common.enums';
 import { NmorphButton, NmorphIcon, NmorphImagePreview } from '@/components';
 
@@ -38,11 +38,11 @@ interface CustomFileData {
 
 let files = reactive<CustomFileData[]>([]);
 
-const fileInput = ref<HTMLElement | null>(null);
+const inputDOMRef = ref<HTMLElement | null>(null);
 
 const openFileSelector = () => {
-  if (fileInput.value) {
-    fileInput.value.click();
+  if (inputDOMRef.value) {
+    inputDOMRef.value.click();
   }
 };
 
@@ -79,20 +79,29 @@ const removeFile = (fileName: string) => {
   }
 };
 
+onMounted(() => {
+  emit('inputDOMRef', inputDOMRef);
+});
+
 interface IEmit {
+  (e: 'inputDOMRef', val: Ref<HTMLElement | null>): void;
   (e: 'on-files-changed', val: File[]): void;
   (e: 'on-unsupported-file-type-error', val: string): void;
 }
 
 const emit = defineEmits<IEmit>();
 
-const modifiers = computed(() => createModifiers('nmorph-file-upload', [props.disabled ? 'disabled' : '']));
+const modifiers = computed(() =>
+  getModifiers({
+    'nmorph-file-upload': [`${props.disabled && 'disabled'}`],
+  })
+);
 </script>
 
 <template>
   <div :class="modifiers">
     <div class="nmorph-file-upload__trigger">
-      <input ref="fileInput" type="file" :multiple="props.multiple" @change="handleFileUpload" />
+      <input ref="inputDOMRef" type="file" :multiple="props.multiple" @change="handleFileUpload" />
       <slot name="trigger">
         <NmorphButton text="select file" @click="openFileSelector" />
       </slot>
@@ -125,15 +134,15 @@ const modifiers = computed(() => createModifiers('nmorph-file-upload', [props.di
     display: none;
   }
   .nmorph-file-upload__list {
-    margin-top: 8px;
+    margin-top: var(--indentation-03);
   }
   .nmorph-file-upload__file {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 4px 8px;
+    padding: var(--indentation-02) var(--indentation-03);
     border-radius: var(--default-border-radius);
-    margin-bottom: 4px;
+    margin-bottom: var(--indentation-02);
     @include nmorph-outset;
   }
   .nmorph-file-upload__file-info {
@@ -141,11 +150,11 @@ const modifiers = computed(() => createModifiers('nmorph-file-upload', [props.di
     align-items: center;
   }
   .nmorph-file-upload__file-name {
-    margin-left: 4px;
+    margin-left: var(--indentation-02);
     line-height: 0;
   }
   .nmorph-file-upload__remove-file {
-    margin-left: 8px;
+    margin-left: var(--indentation-03);
   }
 }
 </style>

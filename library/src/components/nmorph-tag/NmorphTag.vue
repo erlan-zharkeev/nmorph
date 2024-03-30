@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ControlComponentHeight } from '@/types/common.enums';
-import { createModifiers } from '@/utils';
+import { NmorphComponentHeight } from '@/types/common.enums';
+import { getModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphIcon } from '@/components';
 
@@ -8,7 +8,7 @@ interface IProps {
   value: string;
   text: string;
   removable?: boolean;
-  height?: keyof typeof ControlComponentHeight;
+  height?: keyof typeof NmorphComponentHeight;
   transparent?: boolean;
 }
 
@@ -18,10 +18,14 @@ const props = withDefaults(defineProps<IProps>(), {
   transparent: false,
 });
 
-const modifiers = computed(() => createModifiers('nmorph-tag', [props.height, props.transparent ? 'transparent' : '']));
+const modifiers = computed(() =>
+  getModifiers({
+    'nmorph-tag': [props.height, `${props.transparent && 'transparent'}`],
+  })
+);
 
 interface IEmit {
-  (e: 'close', value: string): void;
+  (e: 'close', val: string): void;
 }
 
 const emit = defineEmits<IEmit>();
@@ -46,9 +50,9 @@ const closeHandler = () => {
   height: var(--height);
   cursor: default;
   display: inline-flex;
-  padding: 0 8px;
+  padding: var(--indentation-00) var(--indentation-03);
   border-radius: var(--default-border-radius);
-  margin-right: 4px;
+  margin-right: var(--indentation-02);
   @include nmorph-inset;
 
   .nmorph-tag__content {
@@ -57,28 +61,21 @@ const closeHandler = () => {
     align-items: center;
   }
 
-  span {
-    @include body-1(var(--text-01));
-  }
-
   .nmorph-tag__close-icon {
-    margin-left: 4px;
+    margin-left: var(--indentation-02);
     cursor: pointer;
   }
 }
 
 .nmorph-tag--thin {
-  --height: var(--thin-components);
+  --height: var(--thin-component);
   span {
-    @include caption-1(var(--text-01));
+    @include body-3;
   }
 }
 
 .nmorph-tag--thick {
   --height: var(--thick-component);
-  span {
-    @include body-2(var(--text-01));
-  }
 }
 
 .nmorph-tag--transparent {

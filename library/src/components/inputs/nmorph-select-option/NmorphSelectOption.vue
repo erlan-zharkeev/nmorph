@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CommonInputProps } from '@/types/common.enums';
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { inject, Ref, computed } from 'vue';
 import { SelectModelValue } from './types';
 import { NmorphIcon } from '@/components';
@@ -41,12 +41,14 @@ const checked = computed(() => {
 });
 
 const modifiers = computed(() =>
-  createModifiers('nmorph-select-option', [
-    props.disabled ? 'disabled' : '',
-    props.height,
-    props.label ? 'with-label' : '',
-    checked.value ? 'checked' : '',
-  ])
+  getModifiers({
+    'nmorph-select-option': [
+      props.height,
+      `${props.disabled && 'disabled'}`,
+      `${props.label && 'with-label'}`,
+      `${checked.value && 'checked'}`,
+    ],
+  })
 );
 </script>
 
@@ -70,7 +72,7 @@ const modifiers = computed(() =>
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  padding: 0 8px;
+  padding: var(--indentation-00) var(--indentation-03);
 
   &:not(.nmorph-select-option--disabled):hover {
     background: var(--hover-bg);

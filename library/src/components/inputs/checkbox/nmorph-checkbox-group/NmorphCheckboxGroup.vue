@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed, provide, ref } from 'vue';
 import { NmorphCheckbox } from '@/components';
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { CommonInputProps, ComponentDirection } from '@/types/common.enums';
 import { ICheckboxOption, ICheckboxStyleType } from '../types';
 
 interface IProps extends CommonInputProps {
   modelValue: string[];
-  options: ICheckboxOption[];
+  options?: ICheckboxOption[];
   styleType?: keyof typeof ICheckboxStyleType;
   direction?: keyof typeof ComponentDirection;
 }
@@ -17,7 +17,6 @@ const props = withDefaults(defineProps<IProps>(), {
   options: () => [],
   styleType: 'checkbox-style',
   direction: 'row',
-  fill: true,
 });
 
 interface IEmit {
@@ -36,7 +35,9 @@ const changeHandler = (id: string) => {
 };
 
 const modifiers = computed(() =>
-  createModifiers('nmorph-checkbox-group', [props.styleType, props.direction, props.fill ? 'fill' : ''])
+  getModifiers({
+    'nmorph-checkbox-group': [props.styleType, props.direction],
+  })
 );
 
 provide('checkbox-group-selected-value', initialValue);
@@ -74,10 +75,13 @@ provide('change-checkbox-value-handler', changeHandler);
   .nmorph-checkbox-group__content {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     width: 100%;
   }
-  .nmorph-checkbox {
-    margin-right: 8px;
+
+  .nmorph-checkbox:not(:last-child) {
+    margin-bottom: var(--indentation-03);
+    margin-right: var(--indentation-03);
   }
 }
 
@@ -85,22 +89,9 @@ provide('change-checkbox-value-handler', changeHandler);
   .nmorph-checkbox-group__content {
     flex-direction: column;
   }
-  .nmorph-checkbox {
-    margin-right: 0;
-    margin-bottom: 8px;
-  }
-}
-
-.nmorph-checkbox-group--fill {
-  width: 100%;
-}
-
-.nmorph-checkbox-group--labeled {
-  .nmorph-checkbox-group__content {
-    margin-top: 4px;
-  }
-  .nmorph-validation-icon {
-    margin-top: 4px;
+  .nmorph-checkbox:not(:last-child) {
+    margin-bottom: var(--indentation-03);
+    margin-right: var(--indentation-00);
   }
 }
 </style>

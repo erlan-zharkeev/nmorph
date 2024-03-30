@@ -1,44 +1,42 @@
 <script setup lang="ts">
-import { ControlComponentHeight } from '@/types/common.enums';
-import { createModifiers } from '@/utils';
+import { CommonInputProps, NmorphComponentHeight } from '@/types/common.enums';
+import { getModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphButtonType, NmorphButtonStyle } from './types';
 import { NmorphIcon } from '@/components';
+import { IconSize } from '../nmorph-icon/types';
 
-interface IProps {
+interface IProps extends CommonInputProps {
   type?: keyof typeof NmorphButtonType;
-  width?: string;
-  fill?: boolean;
   text?: string;
-  disabled?: boolean;
   loading?: boolean;
   styleType?: keyof typeof NmorphButtonStyle;
-  height?: keyof typeof ControlComponentHeight;
   bgTransparentOnHover?: boolean;
   ripple?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  type: NmorphButtonType.button,
-  width: '',
+  type: 'button',
   fill: false,
   text: '',
   disabled: false,
   loading: false,
-  styleType: NmorphButtonStyle.default,
-  height: 'thick',
+  styleType: 'default',
+  height: 'default',
   bgTransparentOnHover: false,
   ripple: true,
 });
 
-const width = computed(() => (props.width ? props.width : props.fill ? '100%' : 'auto'));
 const modifiers = computed(() =>
-  createModifiers('nmorph-button', [
-    props.styleType,
-    props.height,
-    props.bgTransparentOnHover ? 'bg-transparent-on-hover' : '',
-    props.ripple ? 'ripple' : '',
-  ])
+  getModifiers({
+    nmorph: [NmorphComponentHeight[props.height], `${props.fill && 'fill'}`],
+    'nmorph-button': [
+      props.styleType,
+      `${props.disabled && 'disabled'}`,
+      `${props.bgTransparentOnHover && 'bg-transparent-on-hover'}`,
+      `${props.ripple && 'ripple'}`,
+    ],
+  })
 );
 
 interface IEmit {
@@ -46,6 +44,14 @@ interface IEmit {
 }
 
 const emit = defineEmits<IEmit>();
+
+const iconSizeMap = {
+  thin: 'small',
+  default: 'medium',
+  thick: 'large',
+};
+
+const loadingButtonSize = computed(() => iconSizeMap[props.height] as IconSize);
 </script>
 
 <template>
@@ -59,7 +65,7 @@ const emit = defineEmits<IEmit>();
     >
       <slot name="default" />
       <span v-if="!props.loading && props.text">{{ props.text }}</span>
-      <NmorphIcon v-if="props.loading" name="loader" />
+      <NmorphIcon v-if="props.loading" name="loader" :size="loadingButtonSize" />
       <slot name="append" />
     </button>
   </div>
@@ -67,13 +73,7 @@ const emit = defineEmits<IEmit>();
 
 <style lang="scss">
 .nmorph-button {
-  $hover-transition:
-    var(--transition-02) ease-in-out background,
-    var(--transition-02) ease-in-out color,
-    var(--transition-02) ease-in-out box-shadow;
-  --height: var(--thick-component);
-
-  width: v-bind(width);
+  width: auto;
   display: inline-block;
 
   .nmorph-button__content {
@@ -82,15 +82,17 @@ const emit = defineEmits<IEmit>();
     border: none;
     cursor: pointer;
     border-radius: var(--default-border-radius);
-    padding: 0 14px;
-    transition: $hover-transition;
+    padding: var(--indentation-00) var(--indentation-04);
+    transition:
+      var(--transition-02) ease-in-out background,
+      var(--transition-02) ease-in-out color,
+      var(--transition-02) ease-in-out box-shadow;
     @include flex-full-center;
-    @include body-1(var(--text-01));
     @include nmorph-outset;
   }
 
   .nmorph-button__content:disabled {
-    @include disabled;
+    pointer-events: none;
   }
 
   .nmorph-button__content[loading='true'] {
@@ -100,26 +102,29 @@ const emit = defineEmits<IEmit>();
   .nmorph-button__content:not(:disabled):not([loading='true']):hover {
     background: var(--accent-color-01);
     color: var(--text-00);
-    transition: $hover-transition;
     box-shadow: none;
+    span {
+      color: var(--text-00);
+    }
     .nmorph-icon {
       --color: var(--text-00);
     }
   }
-}
 
-.nmorph-button--transparent {
-  padding: 0;
-  .nmorph-button__content {
-    box-shadow: none;
-    background: transparent;
+  span {
+    margin-top: 2px;
   }
 }
 
-.nmorph-button--thin {
-  --height: var(--default-thickness-component);
+.nmorph-button.nmorph--thin-component {
+  @include body-3;
+}
+
+.nmorph-button--transparent {
+  padding: var(--indentation-00);
   .nmorph-button__content {
-    @include caption-1(var(--text-01));
+    box-shadow: none;
+    background: transparent;
   }
 }
 
@@ -133,11 +138,16 @@ const emit = defineEmits<IEmit>();
   }
 }
 
+.nmorph-button--disabled {
+  @include disabled;
+}
+
 .nmorph-button--ripple {
   .nmorph-button__content {
     position: relative;
     overflow: hidden;
   }
+
   .nmorph-button__content::after {
     content: '';
     @include wh100;

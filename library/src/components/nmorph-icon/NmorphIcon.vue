@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { IconName, IconSize } from './types';
 import { NmorphIconsMap } from './NmorphIconsMap';
 import { NmorphIconList } from '@/types/common.enums';
@@ -15,14 +15,16 @@ interface IProps {
 
 const props = withDefaults(defineProps<IProps>(), {
   name: '',
-  size: IconSize.small,
+  size: 'small',
   width: '',
   height: '',
   path: '',
 });
 
 const modifiers = computed(() =>
-  createModifiers('nmorph-icon', [props.size, props.width ? 'custom-width' : '', props.height ? 'custom-height' : ''])
+  getModifiers({
+    'nmorph-icon': [props.size, `${props.width && 'custom-width'}`, `${props.height && 'custom-height'}`],
+  })
 );
 </script>
 

@@ -1,7 +1,7 @@
-export enum ControlComponentHeight {
-  thick = 'thick',
-  default = 'default',
-  thin = 'thin',
+export enum NmorphComponentHeight {
+  thick = 'thick-component',
+  default = 'default-height-component',
+  thin = 'thin-component',
 }
 
 export enum ComponentDirection {
@@ -10,7 +10,7 @@ export enum ComponentDirection {
 }
 
 export interface CommonInputProps {
-  height?: keyof typeof ControlComponentHeight;
+  height?: keyof typeof NmorphComponentHeight;
   fill?: boolean;
   disabled?: boolean;
 }

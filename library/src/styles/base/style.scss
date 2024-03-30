@@ -1,13 +1,9 @@
-@import 'colors';
-@import 'border-radius';
-@import 'typography';
 @import 'normalize';
-@import 'transition';
+@import 'colors';
+@import 'typography';
 @import 'dimensions';
+@import 'border-radius';
 @import 'theme-mixin';
 @import 'animation';
 @import 'common-mixins';
-
-body {
-  font-family: 'Helvetica', 'Roboto', Arial, sans-serif;
-}
+@import 'basic'

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { CommonInputProps } from '@/types/common.enums';
-import { createModifiers } from '@/utils';
-import { computed, ref, watch } from 'vue';
+import { CommonInputProps, NmorphComponentHeight } from '@/types/common.enums';
+import { getModifiers } from '@/utils';
+import { Ref, computed, onMounted, ref, watch } from 'vue';
 import { NmorphButton, NmorphIcon } from '@/components';
 
 interface IProps extends CommonInputProps {
@@ -9,29 +9,28 @@ interface IProps extends CommonInputProps {
   max?: number;
   min?: number;
   step?: number;
-  interceptWrongValue?: boolean;
   actionBtnPositionRight?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  height: 'thick',
+  height: 'default',
   modelValue: 0,
   max: Infinity,
   min: -Infinity,
   step: 1,
   disabled: false,
   actionBtnPositionRight: false,
-  interceptWrongValue: false,
   fill: true,
 });
 
 const modifiers = computed(() =>
-  createModifiers('nmorph-number-input', [
-    props.height,
-    props.disabled ? 'disabled' : '',
-    props.actionBtnPositionRight ? 'action-btn-position-right' : '',
-    props.fill ? 'fill' : '',
-  ])
+  getModifiers({
+    nmorph: [NmorphComponentHeight[props.height], `${props.fill && 'fill'}`],
+    'nmorph-number-input': [
+      `${props.disabled && 'disabled'}`,
+      `${props.actionBtnPositionRight && 'action-btn-position-right'}`,
+    ],
+  })
 );
 
 const initialValue = ref(props.modelValue);
@@ -67,6 +66,7 @@ const actionBtnIconSize = computed(() => {
 });
 
 interface IEmit {
+  (e: 'inputDOMRef', val: Ref<HTMLElement | null>): void;
   (e: 'update:modelValue', val: number): void;
 }
 
@@ -77,16 +77,28 @@ const inputHandler = (event: Event) => {
 
   let result = Number(target.value);
 
-  if (props.interceptWrongValue) {
-    if (result > props.max) result = props.max;
-    if (result < props.min) result = props.min;
-  }
   initialValue.value = result;
 };
 
 watch(initialValue, (updatedValue) => {
+  if (updatedValue > props.max) {
+    initialValue.value = props.max;
+    inputDOMRef.value?.blur();
+  }
+
+  if (initialValue.value < props.min) {
+    initialValue.value = props.min;
+    inputDOMRef.value?.blur();
+  }
+
   emit('update:modelValue', updatedValue);
 });
+
+onMounted(() => {
+  emit('inputDOMRef', inputDOMRef);
+});
+
+const inputDOMRef = ref<HTMLElement | null>(null);
 </script>
 
 <template>
@@ -103,7 +115,15 @@ watch(initialValue, (updatedValue) => {
             <NmorphIcon name="minus" :width="actionBtnIconSize" :height="actionBtnIconSize" />
           </NmorphButton>
         </div>
-        <input :value="initialValue" type="number" :min="props.min" :max="props.max" @input="inputHandler" />
+        <input
+          ref="inputDOMRef"
+          class="nmorph-native-input"
+          :value="initialValue"
+          type="number"
+          :min="props.min"
+          :max="props.max"
+          @input="inputHandler"
+        />
         <div v-if="!actionBtnPositionRight" class="nmorph-number-input__increase">
           <NmorphButton
             style-type="transparent"
@@ -133,8 +153,6 @@ watch(initialValue, (updatedValue) => {
 
 <style lang="scss">
 .nmorph-number-input {
-  --height: var(--thick-component);
-
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
@@ -175,15 +193,13 @@ watch(initialValue, (updatedValue) => {
     border-top: 1px solid var(--main-bg);
     border-bottom: 1px solid var(--main-bg);
     text-align: center;
-    padding: 0 8px;
+    padding: var(--indentation-00) var(--indentation-03);
     width: 100%;
     @include nmorph-inset;
-    @include body-1(var(--text-01));
   }
 
   input:focus {
     outline: none;
-    color: var(--text-00);
     @include nmorph-outset;
     background: var(--accent-color-00);
   }
@@ -194,42 +210,10 @@ watch(initialValue, (updatedValue) => {
   }
 }
 
-.nmorph-number-input--fill {
-  width: 100%;
-}
-
-.nmorph-number-input--valid {
-  input:focus {
-    background: var(--success-color-00);
-  }
-}
-
-.nmorph-number-input--invalid {
-  input:focus {
-    background: var(--error-color-00);
-  }
-}
-
-.nmorph-number-input--labeled {
-  .nmorph-number-input__input-content {
-    margin-top: 4px;
-  }
-  .nmorph-validation-icon {
-    margin-top: 4px;
-  }
-}
-
 .nmorph-number-input--disabled {
   @include disabled;
   .nmorph-number-input__input-content {
     pointer-events: none;
-  }
-}
-
-.nmorph-number-input--thin {
-  --height: var(--default-thickness-component);
-  input {
-    @include caption-1(var(--text-01));
   }
 }
 

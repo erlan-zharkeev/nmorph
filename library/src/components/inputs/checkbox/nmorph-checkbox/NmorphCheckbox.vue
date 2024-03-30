@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, Ref, inject } from 'vue';
-import { createModifiers } from '@/utils';
+import { computed, ref, Ref, inject, onMounted } from 'vue';
+import { getModifiers } from '@/utils';
 import { ICheckboxOption } from '../types';
 
 const groupSelectedValue = inject<Ref<string[]>>('checkbox-group-selected-value');
@@ -14,16 +14,19 @@ const props = withDefaults(defineProps<ICheckboxOption>(), {
 });
 
 interface IEmit {
+  (e: 'inputDOMRef', val: Ref<HTMLElement | null>): void;
   (e: 'update:modelValue', val: boolean): void;
 }
 
-const hasGroup = groupSelectedValue !== undefined;
+onMounted(() => {
+  emit('inputDOMRef', inputDOMRef);
+});
 
+const inputDOMRef = ref<HTMLElement | null>(null);
+const hasGroup = groupSelectedValue !== undefined;
 const initialValue = hasGroup ? ref(groupSelectedValue.value) : ref(props.modelValue);
 
-const checked = computed(() =>
-  hasGroup ? Boolean(groupSelectedValue.value.find((id) => id === props.id)) : props.modelValue
-);
+const checked = computed(() => (hasGroup ? groupSelectedValue.value.includes(props.id) : props.modelValue));
 
 const emit = defineEmits<IEmit>();
 const handleChange = () => {
@@ -37,11 +40,9 @@ const handleChange = () => {
 };
 
 const modifiers = computed(() =>
-  createModifiers('nmorph-checkbox', [
-    checked.value ? 'checked' : '',
-    props.disabled ? 'disabled' : '',
-    props.styleType,
-  ])
+  getModifiers({
+    'nmorph-checkbox': [`${checked.value && 'checked'}`, `${props.disabled && 'disabled'}`, props.styleType],
+  })
 );
 </script>
 
@@ -49,21 +50,21 @@ const modifiers = computed(() =>
   <label :class="modifiers">
     <div v-if="props.styleType === 'checkbox-style'" class="nmorph-checkbox__content">
       <div class="nmorph-checkbox__input-wrapper">
-        <input type="checkbox" :disabled="props.disabled" :checked="checked" @change="handleChange" />
+        <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked" @change="handleChange" />
         <div class="nmorph-checkbox__fake" />
-        <transition-group name="opacity" tag="div">
-          <div v-if="checked" class="nmorph-checkbox__fake-checked" />
-        </transition-group>
+        <div v-if="checked" class="nmorph-checkbox__fake-checked" />
       </div>
-      <span v-if="props.label" class="nmorph-checkbox__label">{{ props.label }}</span>
+      <div v-if="props.label" class="nmorph-checkbox__label">
+        <span>{{ props.label }}</span>
+      </div>
       <div v-else class="nmorph-checkbox__label">
         <slot name="default" />
       </div>
     </div>
     <div v-if="props.styleType === 'button-style'" class="nmorph-checkbox__content">
-      <input type="checkbox" :disabled="props.disabled" :checked="checked" @change="handleChange" />
+      <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked" @change="handleChange" />
       <div v-if="props.label" class="nmorph-checkbox__fake">
-        {{ props.label }}
+        <span> {{ props.label }} </span>
       </div>
       <div v-else class="nmorph-checkbox__fake">
         <slot name="label" />
@@ -74,9 +75,9 @@ const modifiers = computed(() =>
 
 <style lang="scss">
 .nmorph-checkbox {
-  --size: var(--extra-thin-components);
+  --size: var(--extra-thin-component);
+
   cursor: pointer;
-  @include body-1(var(--text-01));
 
   .nmorph-checkbox__content {
     display: flex;
@@ -113,7 +114,11 @@ const modifiers = computed(() =>
   }
 
   .nmorph-checkbox__label {
-    margin-left: 4px;
+    margin-left: var(--indentation-02);
+  }
+
+  .nmorph-checkbox__fake span {
+    margin-top: 2px;
   }
 }
 
@@ -121,7 +126,7 @@ const modifiers = computed(() =>
   --size: var(--thick-component);
 
   .nmorph-checkbox__fake {
-    padding: 8px;
+    padding: var(--indentation-03);
     border-radius: var(--default-border-radius);
     position: relative;
     height: var(--size);

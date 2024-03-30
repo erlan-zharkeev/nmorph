@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 
 enum ImageFit {
@@ -37,7 +37,12 @@ const onImageError = () => {
   imageLoadError.value = true;
 };
 
-const modifiers = computed(() => createModifiers('nmorph-image', []));
+const modifiers = computed(() =>
+  getModifiers({
+    'nmorph-image': [],
+  })
+);
+
 const objectFit = computed(() => props.fit);
 </script>
 
@@ -67,11 +72,6 @@ const objectFit = computed(() => props.fit);
   img {
     @include wh100;
     object-fit: v-bind(objectFit);
-  }
-
-  .nmorph-image__loading,
-  .nmorph-image__load-failed {
-    @include body-1(var(--text-01));
   }
 }
 </style>

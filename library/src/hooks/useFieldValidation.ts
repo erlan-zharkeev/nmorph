@@ -1,10 +1,10 @@
 import { AvailableFormValueType } from '@/components/form/types';
 import { ref, computed } from 'vue';
 
-export const enum CheckboxValidationType {
+export const enum ArrayValidationOperator {
   'contains-one' = 'contains-one',
   'not-contains' = 'not-contains',
-  'full-equal' = 'full-equal',
+  'full-eq' = 'full-eq',
 }
 
 export enum NumberCompareOperator {
@@ -15,17 +15,17 @@ export enum NumberCompareOperator {
   'lt' = 'lt',
 }
 
-export enum RadioCompareType {
-  'equal' = 'equal',
-  'not-equal' = 'not-equal',
+export enum BooleanCompareOperator {
+  'eq' = 'eq',
+  'not-eq' = 'not-eq',
 }
 
 export interface IRule {
   pattern?: RegExp;
-  operator?: keyof typeof NumberCompareOperator;
-  radioCompareType?: keyof typeof RadioCompareType;
-  checkboxCompareType?: keyof typeof CheckboxValidationType;
-  value?: number | string | string[];
+  numberCompareType?: keyof typeof NumberCompareOperator;
+  booleanCompareType?: keyof typeof BooleanCompareOperator;
+  arrayCompareType?: keyof typeof ArrayValidationOperator;
+  compareValue?: number | string | string[];
   error: string;
 }
 
@@ -43,18 +43,18 @@ export interface ITextValidationRule extends IRule {
 }
 
 export interface INumberValidationRule extends IRule {
-  operator: keyof typeof NumberCompareOperator;
-  value: number;
+  numberCompareType: keyof typeof NumberCompareOperator;
+  compareValue: number;
 }
 
 export interface IRadioGroupValidationRule extends IRule {
-  radioCompareType: RadioCompareType;
-  value: string;
+  booleanCompareType: BooleanCompareOperator;
+  compareValue: string;
 }
 
 export interface ICheckboxGroupValidationRule extends IRule {
-  checkboxCompareType: keyof typeof CheckboxValidationType;
-  value: string[];
+  arrayCompareType: keyof typeof ArrayValidationOperator;
+  compareValue: string[];
 }
 
 export const useFieldValidation = (data: IUseValidationPayload) => {
@@ -63,19 +63,19 @@ export const useFieldValidation = (data: IUseValidationPayload) => {
   const errors = ref<string[]>([]);
   const valid = computed(() => errors.value.length === 0);
   const touched = ref(false);
-  const showValidation = computed(() => touched.value && Boolean(rules.length));
 
   const validate = () => {
     if (inputValue === null || !Boolean(rules.length)) return null;
     const value = inputValue;
 
     const hasRuleKey = (key: string) => rules.length > 0 && key in rules[0];
-    const numberValidation = typeof value === 'number' && hasRuleKey('operator');
     const textValidation = typeof value === 'string' && hasRuleKey('pattern');
-    const radioGroupValidation = typeof value === 'string' && hasRuleKey('radioCompareType');
-    const checkboxGroupValidation = Array.isArray(value) && hasRuleKey('checkboxCompareType');
+    const numberValidation = typeof value === 'number' && hasRuleKey('numberCompareType');
+    const booleanValidation =
+      typeof value === 'string' || (typeof value === 'boolean' && hasRuleKey('booleanCompareType'));
+    const arrayValidation = Array.isArray(value) && hasRuleKey('arrayCompareType');
 
-    const wrongType = !numberValidation && !textValidation && !radioGroupValidation && !checkboxGroupValidation;
+    const wrongType = !numberValidation && !textValidation && !booleanValidation && !arrayValidation;
     if (wrongType) {
       console.warn('The input value and the provided rules do not match');
       return null;
@@ -96,9 +96,9 @@ export const useFieldValidation = (data: IUseValidationPayload) => {
       const compareValues = (
         inputValue: number,
         compareValue: number,
-        operator: keyof typeof NumberCompareOperator
+        numberCompareType: keyof typeof NumberCompareOperator
       ) => {
-        switch (operator) {
+        switch (numberCompareType) {
           case 'eq':
             return inputValue === compareValue;
           case 'gt':
@@ -115,32 +115,39 @@ export const useFieldValidation = (data: IUseValidationPayload) => {
       };
       const typeInferredRules = rules as INumberValidationRule[];
       errors.value = typeInferredRules.reduce((acc, rule) => {
-        const match = compareValues(value, rule.value, rule.operator);
+        const match = compareValues(value, rule.compareValue, rule.numberCompareType);
         if (match) acc.push(rule.error);
         return acc;
       }, [] as string[]);
     }
 
-    if (radioGroupValidation) {
+    if (booleanValidation) {
       const typeInferredRules = rules as IRadioGroupValidationRule[];
       errors.value = typeInferredRules.reduce((acc, rule) => {
-        const match = value === rule.value;
+        let match = false;
+        const { compareValue, booleanCompareType } = rule;
+        if (booleanCompareType === 'not-eq') {
+          match = value === compareValue;
+        }
+        if (booleanCompareType === 'eq') {
+          match = value !== compareValue;
+        }
         if (!match) acc.push(rule.error);
         return acc;
       }, [] as string[]);
     }
 
-    if (checkboxGroupValidation) {
+    if (arrayValidation) {
       const typeInferredRules = rules as ICheckboxGroupValidationRule[];
       const compareValues = (
         inputValue: string[],
         compareValue: string[],
-        checkboxCompareType: keyof typeof CheckboxValidationType
+        arrayCompareType: keyof typeof ArrayValidationOperator
       ) => {
-        switch (checkboxCompareType) {
+        switch (arrayCompareType) {
           case 'contains-one':
             return inputValue.some((element) => compareValue.includes(element));
-          case 'full-equal':
+          case 'full-eq':
             if (inputValue.length !== compareValue.length) return false;
             const sortedArr1 = [...inputValue].sort();
             const sortedArr2 = [...compareValue].sort();
@@ -153,7 +160,7 @@ export const useFieldValidation = (data: IUseValidationPayload) => {
       };
 
       errors.value = typeInferredRules.reduce((acc, rule) => {
-        const match = compareValues(value, rule.value, rule.checkboxCompareType);
+        const match = compareValues(value, rule.compareValue, rule.arrayCompareType);
         if (!match) acc.push(rule.error);
         return acc;
       }, [] as string[]);
@@ -162,7 +169,6 @@ export const useFieldValidation = (data: IUseValidationPayload) => {
 
   return {
     touched,
-    showValidation,
     valid,
     errors,
     validate,

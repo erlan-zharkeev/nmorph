@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { createModifiers } from '@/utils';
+import { getModifiers } from '@/utils';
 import { computed, inject } from 'vue';
-import { ControlComponentHeight } from '@/types/common.enums';
-import NmorphValidationIcon from './components/nmorph-validation-icon/NmorphValidationIcon.vue';
-import NmorphErrorBox from './components/nmorph-error-box/NmorphErrorBox.vue';
+import { NmorphComponentHeight } from '@/types/common.enums';
 import { FormValidationData } from '@/components/form/types';
+import { NmorphValidationIcon, NmorphErrorBox } from './components';
 
 interface IProps {
   id: string;
-  height?: keyof typeof ControlComponentHeight;
+  height?: keyof typeof NmorphComponentHeight;
   label?: string;
   showValidationIcon?: boolean;
   staticErrorBoxSpace?: boolean;
@@ -26,17 +25,19 @@ const props = withDefaults(defineProps<IProps>(), {
 const formData = inject<FormValidationData>('form-data');
 const validationData = computed(() => formData?.fields[props.id]);
 
+const ableToShowValidation = computed(() => props.validate && validationData.value);
+const showStatusIcon = computed(
+  () => Boolean(ableToShowValidation.value) && Boolean(validationData?.value?.touched) && props.showValidationIcon
+);
+const ableToAddValidationModifiers = computed(() => ableToShowValidation.value && validationData.value?.touched);
+
 const modifiers = computed(() =>
-  createModifiers('nmorph-form-item', [
-    props.label ? 'labeled' : '',
-    validationData.value
-      ? validationData.value.showValidation
-        ? validationData.value.valid
-          ? 'valid'
-          : 'invalid'
-        : ''
-      : '',
-  ])
+  getModifiers({
+    'nmorph-form-item': [
+      `${props.label && 'labeled'}`,
+      `${ableToAddValidationModifiers.value && (validationData.value?.valid ? 'valid' : 'invalid')}`,
+    ],
+  })
 );
 </script>
 
@@ -45,25 +46,22 @@ const modifiers = computed(() =>
     <label v-if="props.label">{{ props.label }}</label>
     <div class="nmorph-form-item__content">
       <slot name="default" />
-      <NmorphValidationIcon
-        v-if="showValidationIcon && validationData?.touched"
-        :valid="validationData.valid"
-        :show="validationData.showValidation"
-      />
+      <NmorphValidationIcon :valid="Boolean(validationData?.valid)" :show="showStatusIcon" />
     </div>
-    <NmorphErrorBox
-      v-if="validationData && (props.staticErrorBoxSpace || validationData.showValidation)"
-      :errors="validationData.errors"
-      :height="props.height"
-    />
+    <NmorphErrorBox :errors="validationData?.errors" :height="props.height" :static-height="staticErrorBoxSpace" />
   </div>
 </template>
 
 <style lang="scss">
 .nmorph-form-item {
-  margin: 4px 0;
+  margin: var(--indentation-03) var(--indentation-00);
+
+  label {
+    @include title-3;
+  }
+
   .nmorph-form-item__content {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     width: 100%;
     position: relative;
@@ -72,8 +70,19 @@ const modifiers = computed(() =>
 
 .nmorph-form-item--labeled {
   .nmorph-form-item__content {
-    margin-top: 4px;
+    margin-top: var(--indentation-02);
+  }
+}
+
+.nmorph-form-item--valid {
+  .nmorph-native-input:focus {
+    background: var(--success-color-00);
+  }
+}
+
+.nmorph-form-item--invalid {
+  .nmorph-native-input:focus {
+    background: var(--error-color-00);
   }
 }
 </style>
-../../../types

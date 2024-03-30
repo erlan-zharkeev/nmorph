@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Ref, computed, inject } from 'vue';
-import { createModifiers } from '@/utils';
+import { Ref, computed, inject, onMounted, ref } from 'vue';
+import { getModifiers } from '@/utils';
 import { IRadioOption, RadioStyleType } from '../types';
 
 const groupSelectedValue = inject<Ref<string>>('radio-group-selected-value');
@@ -13,7 +13,7 @@ interface IProps extends IRadioOption {
 const props = withDefaults(defineProps<IProps>(), {
   disabled: false,
   label: '',
-  styleType: 'radio-style',
+  styleType: 'button-style',
 });
 
 const changeHandler = () => {
@@ -23,19 +23,29 @@ const changeHandler = () => {
 const checked = computed(() => groupSelectedValue?.value === props.value);
 
 const modifiers = computed(() =>
-  createModifiers('nmorph-radio', [props.disabled ? 'disabled' : '', props.styleType, checked.value ? 'checked' : ''])
+  getModifiers({
+    'nmorph-radio': [`${props.disabled && 'disabled'}`, `${checked.value && 'checked'}`, props.styleType],
+  })
 );
+
+interface IEmit {
+  (e: 'inputDOMRef', val: Ref<HTMLElement | null>): void;
+}
+const emit = defineEmits<IEmit>();
+const inputDOMRef = ref<HTMLElement | null>(null);
+
+onMounted(() => {
+  emit('inputDOMRef', inputDOMRef);
+});
 </script>
 
 <template>
   <label :class="modifiers" @click.prevent="changeHandler">
     <div v-if="props.styleType === 'radio-style'" class="nmorph-radio__content">
       <div class="nmorph-radio__input-wrapper">
-        <input type="radio" :name="props.label" :value="props.value" :checked="checked" />
+        <input ref="inputDOMRef" type="radio" :name="props.label" :value="props.value" :checked="checked" />
         <div class="nmorph-radio__fake" />
-        <transition-group name="opacity" tag="div">
-          <div v-if="checked" class="nmorph-radio__fake-checked" />
-        </transition-group>
+        <div v-if="checked" class="nmorph-radio__fake-checked" />
       </div>
       <span v-if="props.label" class="nmorph-radio__label">
         {{ props.label }}
@@ -43,9 +53,16 @@ const modifiers = computed(() =>
       <slot v-else name="label" />
     </div>
     <div v-if="props.styleType === 'button-style'" class="nmorph-radio__content">
-      <input type="radio" :disabled="props.disabled" :name="props.label" :value="props.value" :checked="checked" />
+      <input
+        ref="inputDOMRef"
+        type="radio"
+        :disabled="props.disabled"
+        :name="props.label"
+        :value="props.value"
+        :checked="checked"
+      />
       <div v-if="props.label" class="nmorph-radio__fake">
-        {{ props.label }}
+        <span> {{ props.label }} </span>
       </div>
       <div v-else class="nmorph-radio__fake">
         <slot name="label" />
@@ -56,15 +73,19 @@ const modifiers = computed(() =>
 
 <style lang="scss" scoped>
 .nmorph-radio {
-  --size: var(--extra-thin-components);
+  --size: var(--extra-thin-component);
+
   cursor: pointer;
-  @include body-1(var(--text-01));
 
   .nmorph-radio__content {
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+  }
+
+  span {
+    margin-top: 2px;
   }
 
   .nmorph-radio__input-wrapper {
@@ -95,15 +116,20 @@ const modifiers = computed(() =>
   }
 
   .nmorph-radio__label {
-    margin-left: 4px;
+    margin-left: var(--indentation-02);
   }
 }
 
 .nmorph-radio--button-style {
-  --size: var(--thick-component);
+  --size: var(--default-thickness-component);
 
   .nmorph-radio__fake {
-    padding: 8px;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  .nmorph-radio__fake {
+    padding: var(--indentation-03);
     border-radius: var(--default-border-radius);
     position: relative;
     height: var(--size);
