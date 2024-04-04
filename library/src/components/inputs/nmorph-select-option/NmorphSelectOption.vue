@@ -98,4 +98,3 @@ const modifiers = computed(() =>
   align-items: center;
 }
 </style>
-@/types/common

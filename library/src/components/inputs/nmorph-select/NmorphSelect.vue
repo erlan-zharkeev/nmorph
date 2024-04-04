@@ -65,7 +65,7 @@ const changeHandler = (value: string) => {
 
 const { placement, adjustPlacement } = usePlacement({
   initialPlacement: 'bottom',
-  targetDomElement: optionsDOMRef,
+  dropdownDOMElement: optionsDOMRef,
   blockPosition: false,
 });
 
@@ -259,3 +259,4 @@ provide('select-change-selected-value', changeHandler);
   }
 }
 </style>
+../nmorph-select-option/types/types

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphCommonInputProps } from '@/types/common';
+import { NmorphCommonInputProps, NmorphDomElement } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref } from 'vue';
 import { NmorphIcon } from '@/components';
@@ -133,4 +133,3 @@ onMounted(() => {
   @include nmorph-switch-disabled;
 }
 </style>
-@/types/common

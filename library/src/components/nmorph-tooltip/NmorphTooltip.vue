@@ -1,20 +1,15 @@
 <script setup lang="ts">
 import { usePlacement } from '@/hooks';
-import { NmorphDomElement, NmorphPlacement } from '@/types/common';
+import { NmorphCoords, NmorphDomElement, NmorphPlacement } from '@/types/common';
 import { getModifiers } from '@/utils';
 import { computed, ref } from 'vue';
-
-interface ForceCoordinate {
-  x?: string;
-  y?: string;
-}
 
 interface IProps {
   disabled?: boolean;
   text?: string;
   position?: NmorphPlacement;
   forceShow?: boolean;
-  forceCoordinate?: ForceCoordinate | null;
+  forceCoordinate?: Partial<NmorphCoords<string>> | null;
   blockPosition?: boolean;
 }
 
@@ -32,7 +27,7 @@ const tooltipDOMRef = ref<NmorphDomElement>(null);
 
 const { placement, adjustPlacement } = usePlacement({
   initialPlacement: props.position,
-  targetDomElement: tooltipDOMRef,
+  dropdownDOMElement: tooltipDOMRef,
   blockPosition: props.blockPosition,
 });
 

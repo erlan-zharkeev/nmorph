@@ -1,10 +1,14 @@
 <template>
   <div class="wrapper">
-    <NmorphCard> </NmorphCard>
+    <NmorphCard>
+      <NmorphTimePicker v-model="time" />
+    </NmorphCard>
   </div>
 </template>
 <script lang="ts" setup>
-import { NmorphCard } from './../../../library/src/components';
+import { ref } from 'vue';
+import { NmorphTimePicker, NmorphCard } from './../../../library/src/components';
+const time = ref([0, 0, 0])
 </script>
 <style lang="scss">
 .divider {

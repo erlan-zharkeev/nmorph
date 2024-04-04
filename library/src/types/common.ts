@@ -60,3 +60,8 @@ export enum NmorphComponentPosition {
 export type NmorphPlacement = keyof typeof NmorphComponentPosition;
 
 export type NmorphDomElement = HTMLElement | null;
+
+export interface NmorphCoords<T> {
+  x: T;
+  y: T;
+}

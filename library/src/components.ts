@@ -9,6 +9,7 @@ import NmorphSwitch from '@/components/inputs/nmorph-switch/NmorphSwitch.vue';
 import NmorphSelect from '@/components/inputs/nmorph-select/NmorphSelect.vue';
 import NmorphSelectOption from '@/components/inputs/nmorph-select-option/NmorphSelectOption.vue';
 import NmorphFileUpload from '@/components/inputs/nmorph-file-upload/NmorphFileUpload.vue';
+import NmorphTimePicker from '@/components/inputs/nmorph-time-picker/NmorphTimePicker.vue';
 import NmorphIcon from '@/components/nmorph-icon/NmorphIcon.vue';
 import NmorphButton from '@/components/nmorph-button/NmorphButton.vue';
 import NmorphCard from '@/components/nmorph-card/NmorphCard.vue';
@@ -21,6 +22,8 @@ import NmorphImagePreview from '@/components/nmorph-image-preview/NmorphImagePre
 import NmorphCarousel from '@/components/nmorph-carousel/NmorphCarousel.vue';
 import NmorphFormItem from '@/components/form/nmorph-form/components/nmorph-form-item/NmorphFormItem.vue';
 import NmorphForm from '@/components/form/nmorph-form/NmorphForm.vue';
+import NmorphScroll from '@/components/nmorph-scroll/NmorphScroll.vue';
+import NmorphDropdown from '@/components/nmorph-dropdown/NmorphDropdown.vue';
 
 export {
   NmorphForm,
@@ -35,6 +38,7 @@ export {
   NmorphCarousel,
   NmorphNumberInput,
   NmorphSwitch,
+  NmorphTimePicker,
   NmorphFormItem,
   NmorphSelect,
   NmorphSelectOption,
@@ -45,5 +49,7 @@ export {
   NmorphTooltip,
   NmorphOverlay,
   NmorphImagePreview,
+  NmorphScroll,
   NmorphTag,
+  NmorphDropdown,
 };
