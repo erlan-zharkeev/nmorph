@@ -174,7 +174,7 @@ provide('select-change-selected-value', changeHandler);
       >
         <div ref="optionsDOMRef" class="nmorph-select__options">
           <NmorphSelectOption v-for="option in options" :key="option.value" v-bind="option" :height="props.height" />
-          <slot name="default" />
+          <slot />
         </div>
       </div>
     </div>

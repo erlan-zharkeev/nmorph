@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { NmorphCommonInputProps, NmorphComponentHeight, NmorphDomElement } from '@/types/common';
 import { getModifiers } from '@/utils';
-import { Ref, computed, onMounted, ref } from 'vue';
+import { Ref, computed, onMounted, ref, watch } from 'vue';
 import { Hour, MinuteSeconds, TimeTuple } from './types';
-import NmorphRoller from './components/NmorphRoller.vue';
-import { NmorphDropdown } from '@/components';
-import { timePadNumber } from './utils';
+import NmorphTimeRoller from './components/NmorphTimeRoller.vue';
+import { NmorphDropdown, NmorphIcon } from '@/components';
+import { formatTimestampToTime, timeArrayToTimestamp } from './utils';
 
 interface IProps extends Omit<NmorphCommonInputProps, 'fill'> {
-  modelValue?: TimeTuple;
+  modelValue?: number;
   open?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  modelValue: () => [23, 0, 0],
+  modelValue: Date.now(),
   open: false,
   disabled: false,
   height: 'default',
@@ -23,26 +23,28 @@ const emit = defineEmits<IEmit>();
 
 interface IEmit {
   (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
-  (e: 'update:modelValue', val: TimeTuple): void;
+  (e: 'update:modelValue', val: number): void;
+  (e: 'on-change-open-close', val: boolean): void;
 }
 
 const timepickerDOMRef = ref<NmorphDomElement>(null);
 const inputDOMRef = ref<NmorphDomElement>(null);
 
-const open = ref(props.open);
+const openDropdown = ref(props.open);
+const timeTuple = ref<TimeTuple>([23, 0, 0]);
 
 onMounted(() => {
   emit('inputDOMRef', inputDOMRef);
 });
 
 const clickHandler = () => {
-  open.value = !open.value;
+  openDropdown.value = !openDropdown.value;
 };
 
 const modifiers = computed(() =>
   getModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
-    'nmorph-time-picker': [`${props.disabled && 'disabled'}`],
+    'nmorph-time-picker': [`${props.disabled && 'disabled'}`, `${openDropdown.value && 'open'}`],
   })
 );
 
@@ -50,38 +52,76 @@ const hours = Array.from({ length: 24 }, (_, index) => index);
 const minutesSeconds = Array.from({ length: 60 }, (_, index) => index);
 
 const hoursChangedHandler = (val: number) => {
-  const currentValue = props.modelValue;
   const hour = val as Hour;
-  emit('update:modelValue', [hour, currentValue[1], currentValue[2]]);
+  timeTuple.value = [hour, timeTuple.value[1], timeTuple.value[2]];
+  emit('update:modelValue', timeArrayToTimestamp(timeTuple.value));
 };
 
 const minutesChangedHandler = (val: number) => {
-  const currentValue = props.modelValue;
   const minutes = val as MinuteSeconds;
-  emit('update:modelValue', [currentValue[0], minutes, currentValue[2]]);
+  timeTuple.value = [timeTuple.value[0], minutes, timeTuple.value[2]];
+  emit('update:modelValue', timeArrayToTimestamp(timeTuple.value));
 };
 
 const secondsChangedHandler = (val: number) => {
-  const currentValue = props.modelValue;
   const seconds = val as MinuteSeconds;
-  emit('update:modelValue', [currentValue[0], currentValue[1], seconds]);
+  timeTuple.value = [timeTuple.value[0], timeTuple.value[1], seconds];
+  emit('update:modelValue', timeArrayToTimestamp(timeTuple.value));
 };
 
-const selectedTime = computed(() => timePadNumber(props.modelValue).join(':'));
+const onOutsideClickDropdownHandler = () => {
+  openDropdown.value = false;
+};
+
+watch(openDropdown, (newValue) => {
+  emit('on-change-open-close', newValue);
+});
+
+const fillTimeTuple = () => {
+  const initValue = formatTimestampToTime(props.modelValue)
+    .split(':')
+    .map((timeEl) => Number(timeEl)) as TimeTuple;
+  timeTuple.value = initValue;
+};
+fillTimeTuple();
+
+const step = 20;
+const cellHeight = computed(() => `${step}px`);
 </script>
 
 <template>
   <div ref="timepickerDOMRef" :class="modifiers" @click="clickHandler">
     <div class="nmorph-time-picker__content">
       <div class="nmorph-time-picker__selected-time">
-        <input ref="inputDOMRef" type="time" />
-        <span>{{ selectedTime }}</span>
+        <NmorphIcon name="time" class="nmorph-time-picker__time-icon" />
+        <input ref="inputDOMRef" type="time" :value="timeTuple" step="1" />
+        <span>{{ formatTimestampToTime(props.modelValue) }}</span>
       </div>
-      <NmorphDropdown v-if="timepickerDOMRef" :open="props.open" :relative-element="timepickerDOMRef">
+      <NmorphDropdown
+        v-if="timepickerDOMRef"
+        :open="openDropdown"
+        :relative-element="timepickerDOMRef"
+        @on-outside-click="onOutsideClickDropdownHandler"
+      >
         <div class="nmorph-time-picker__dropdown">
-          <NmorphRoller :values="hours" @value-changed="hoursChangedHandler" />
-          <NmorphRoller :values="minutesSeconds" @value-changed="minutesChangedHandler" />
-          <NmorphRoller :values="minutesSeconds" @value-changed="secondsChangedHandler" />
+          <NmorphTimeRoller
+            :values="hours"
+            :selected-value="timeTuple[0]"
+            :step-height="step"
+            @value-changed="hoursChangedHandler"
+          />
+          <NmorphTimeRoller
+            :values="minutesSeconds"
+            :selected-value="timeTuple[1]"
+            :step-height="step"
+            @value-changed="minutesChangedHandler"
+          />
+          <NmorphTimeRoller
+            :values="minutesSeconds"
+            :selected-value="timeTuple[2]"
+            :step-height="step"
+            @value-changed="secondsChangedHandler"
+          />
         </div>
       </NmorphDropdown>
     </div>
@@ -91,7 +131,7 @@ const selectedTime = computed(() => timePadNumber(props.modelValue).join(':'));
 <style lang="scss">
 .nmorph-time-picker {
   width: 160px;
-  --time-picker-value-height: 20px;
+  cursor: pointer;
 
   .nmorph-time-picker__content {
     @include nmorph-outset;
@@ -99,12 +139,18 @@ const selectedTime = computed(() => timePadNumber(props.modelValue).join(':'));
     height: 100%;
     overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: center;
   }
 
   .nmorph-time-picker__selected-time {
     display: flex;
     align-items: center;
     margin-left: var(--default-indentation-input);
+  }
+
+  .nmorph-time-picker__time-icon {
+    margin-right: 4px;
   }
 
   .nmorph-time-picker__dropdown {
@@ -115,12 +161,13 @@ const selectedTime = computed(() => timePadNumber(props.modelValue).join(':'));
   }
 
   .nmorph-time-picker__dropdown::after {
+    $line: solid 1px var(--accent-color-01);
     content: '';
-    @include absolute-center;
-    height: var(--time-picker-value-height);
-    border-top: 1px solid var(--accent-color-01);
-    border-bottom: 1px solid var(--accent-color-01);
+    border-top: $line;
+    border-bottom: $line;
     width: 100%;
+    height: v-bind(cellHeight);
+    @include absolute-center;
   }
 
   input {
@@ -129,6 +176,12 @@ const selectedTime = computed(() => timePadNumber(props.modelValue).join(':'));
     left: 0;
     visibility: hidden;
     width: 100%;
+  }
+}
+
+.nmorph-time-picker--open {
+  .nmorph-time-picker__content {
+    @include nmorph-inset;
   }
 }
 </style>

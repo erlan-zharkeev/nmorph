@@ -8,7 +8,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { NmorphTimePicker, NmorphCard } from './../../../library/src/components';
-const time = ref([0, 0, 0])
+const time = ref(Date.now())
+
 </script>
 <style lang="scss">
 .divider {

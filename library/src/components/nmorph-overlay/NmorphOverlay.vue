@@ -3,8 +3,9 @@ import { getModifiers } from '@/utils';
 import { computed } from 'vue';
 
 interface IProps {
-  show?: boolean;
+  show: boolean;
   outsideClickEmitEvent?: boolean;
+  transparent?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -27,19 +28,24 @@ interface IEmit {
 }
 
 const emit = defineEmits<IEmit>();
+
+const background = computed(() => (props.transparent ? 'transparent' : 'inherit'));
 </script>
 
 <template>
-  <div :class="modifiers" @click="clickHandler">
-    <slot name="default" />
+  <div :class="modifiers" @click.stop="clickHandler">
+    <div class="nmorph-overlay__slot" @click.stop>
+      <slot />
+    </div>
   </div>
 </template>
 
 <style lang="scss">
 .nmorph-overlay {
+  pointer-events: none;
   opacity: 0;
-
   @include overlay;
+  background: v-bind(background);
 }
 
 .nmorph-overlay--outside-click {

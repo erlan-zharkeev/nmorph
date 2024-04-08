@@ -19,6 +19,7 @@ import RotateRight from '@/assets/icons/rotate-right.svg';
 import RotateLeft from '@/assets/icons/rotate-left.svg';
 import ZoomIn from '@/assets/icons/zoom-in.svg';
 import ZoomOut from '@/assets/icons/zoom-out.svg';
+import Time from '@/assets/icons/time.svg';
 
 export const NmorphIconsMap: Record<NmorphIconList, string> = {
   [NmorphIconList.eye]: Eye,
@@ -32,6 +33,7 @@ export const NmorphIconsMap: Record<NmorphIconList, string> = {
   [NmorphIconList.archive]: Archive,
   [NmorphIconList.audio]: Audio,
   [NmorphIconList.video]: Video,
+  [NmorphIconList.time]: Time,
   [NmorphIconList.doc]: Doc,
   [NmorphIconList.image]: Image,
   [NmorphIconList.enlarge]: Enlarge,

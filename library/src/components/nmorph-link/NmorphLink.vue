@@ -46,7 +46,7 @@ const modifiers = computed(() =>
 
       {{ text }}
       <NmorphIcon v-if="iconName" class="nmorph-link__icon" :name="props.iconName" width="10px" height="10px" />
-      <slot name="default" />
+      <slot />
     </a>
   </div>
 </template>

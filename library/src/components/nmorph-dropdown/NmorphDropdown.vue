@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { getModifiers } from '@/utils';
 import { usePlacement } from '@/hooks';
 import { NmorphDomElement } from '@/types/common';
+import { NmorphOverlay } from '@/components';
 
 interface IProps {
   open: boolean;
@@ -11,14 +12,17 @@ interface IProps {
   xOffset?: number;
   yOffset?: number;
 }
+
 const props = withDefaults(defineProps<IProps>(), {
   width: 160,
   xOffset: 0,
   yOffset: 0,
 });
 
-// interface IEmit {}
-// const emit = defineEmits<IEmit>();
+interface IEmit {
+  (e: 'on-outside-click'): void;
+}
+const emit = defineEmits<IEmit>();
 
 const dropdownDOMRef = ref<NmorphDomElement>(null);
 
@@ -34,17 +38,22 @@ const { placementCoords } = usePlacement({
 const modifiers = computed(() =>
   getModifiers({
     nmorph: [],
-    'nmorph-dropdown': [],
+    'nmorph-dropdown': [`${!props.open && 'closed'}`],
   })
 );
 
 const width = computed(() => `${props.width}px`);
+const outsideClickHandler = () => {
+  emit('on-outside-click');
+};
 </script>
 
 <template>
-  <div ref="dropdownDOMRef" :class="modifiers" :style="{ left: `${placementCoords.x}`, top: `${placementCoords.y}` }">
-    <slot />
-  </div>
+  <NmorphOverlay :show="props.open" @on-outside-click="outsideClickHandler">
+    <div ref="dropdownDOMRef" :class="modifiers" :style="{ left: `${placementCoords.x}`, top: `${placementCoords.y}` }">
+      <slot />
+    </div>
+  </NmorphOverlay>
 </template>
 
 <style lang="scss">
@@ -52,5 +61,10 @@ const width = computed(() => `${props.width}px`);
   position: fixed;
   width: v-bind(width);
   @include nmorph-outset;
+}
+
+.nmorph-dropdown--closed {
+  opacity: 0;
+  z-index: -1000;
 }
 </style>

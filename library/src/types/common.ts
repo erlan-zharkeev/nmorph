@@ -48,6 +48,7 @@ export enum NmorphIconList {
   'rotate-left' = 'rotate-left',
   'zoom-in' = 'zoom-in',
   'zoom-out' = 'zoom-out',
+  'time' = 'time',
 }
 
 export enum NmorphComponentPosition {

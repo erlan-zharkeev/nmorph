@@ -58,7 +58,7 @@ const modifiers = computed(() =>
         <span>{{ props.label }}</span>
       </div>
       <div v-else class="nmorph-checkbox__label">
-        <slot name="default" />
+        <slot />
       </div>
     </div>
     <div v-if="props.styleType === 'button-style'" class="nmorph-checkbox__content">

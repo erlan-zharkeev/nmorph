@@ -6,6 +6,7 @@ import { NmorphScroll } from '@/components';
 interface IProps {
   selectedValue?: number;
   values: number[];
+  stepHeight: number;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -20,7 +21,7 @@ const emit = defineEmits<IEmit>();
 
 const modifiers = computed(() =>
   getModifiers({
-    'nmorph-roller': [],
+    'nmorph-time-roller': [],
   })
 );
 
@@ -33,13 +34,19 @@ const transformedValues = computed(() => {
 });
 
 const coords = ref({ x: 0, y: 0 });
-const step = 20;
-
 const setValueToCenter = () => {
-  const selectedValue = Math.round(coords.value.y / step);
+  const selectedValue = Math.round(coords.value.y / props.stepHeight);
   emit('value-changed', selectedValue);
-  coords.value.y = Math.round(coords.value.y / step) * step;
+  coords.value.y = Math.round(coords.value.y / props.stepHeight) * props.stepHeight;
 };
+const timeElClick = (value: string | number) => {
+  const newVal = Number(value);
+  emit('value-changed', newVal);
+  coords.value.y = newVal * props.stepHeight;
+};
+timeElClick(props.selectedValue);
+
+const cellHeight = computed(() => `${props.stepHeight}px`);
 </script>
 
 <template>
@@ -48,11 +55,12 @@ const setValueToCenter = () => {
       <div
         v-for="value in transformedValues"
         :key="value"
-        class="nmorph-roller__value"
+        class="nmorph-time-roller__value"
         :class="[
-          { 'nmorph-roller__value--invisible': value === '-' },
-          { 'nmorph-roller__value--selected-value': props.selectedValue === value },
+          { 'nmorph-time-roller__value--invisible': value === '-' },
+          { 'nmorph-time-roller__value--selected-value': props.selectedValue === value },
         ]"
+        @click="timeElClick(value)"
       >
         {{ value }}
       </div>
@@ -61,7 +69,7 @@ const setValueToCenter = () => {
 </template>
 
 <style lang="scss">
-.nmorph-roller {
+.nmorph-time-roller {
   --hover-bg: var(--accent-color-01);
   --hover-color: var(--text-00);
 
@@ -73,21 +81,21 @@ const setValueToCenter = () => {
     height: 140px;
   }
 
-  .nmorph-roller__value {
+  .nmorph-time-roller__value {
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: var(--default-border-radius);
-    height: var(--time-picker-value-height);
+    height: v-bind(cellHeight);
   }
 
-  .nmorph-roller__value:hover {
+  .nmorph-time-roller__value:hover {
     cursor: pointer;
     background-color: var(--hover-bg);
     color: var(--hover-color);
   }
 
-  .nmorph-roller__value--invisible {
+  .nmorph-time-roller__value--invisible {
     opacity: 0;
     cursor: default;
   }

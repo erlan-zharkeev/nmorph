@@ -49,7 +49,7 @@ const modifiers = computed(() =>
   <div :class="modifiers">
     <label v-if="props.label">{{ props.label }}</label>
     <div class="nmorph-form-item__content">
-      <slot name="default" />
+      <slot />
       <NmorphValidationIcon :valid="Boolean(validationData?.valid)" :show="showStatusIcon" />
     </div>
     <NmorphErrorBox :errors="validationData?.errors" :height="props.height" :static-height="staticErrorBoxSpace" />

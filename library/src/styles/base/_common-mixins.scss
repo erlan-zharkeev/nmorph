@@ -28,13 +28,15 @@
 }
 
 @mixin overlay($zIndex: 1) {
-  background-color: var(--overlay-background-color);
+  background: var(--overlay-background-color);
   z-index: $zIndex;
   overflow: hidden;
-  pointer-events: none;
   transition: ease-in-out var(--transition-02) opacity;
-  @include wh100;
-  @include absolute-zero;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
 }
 
 @mixin ellipsis() {

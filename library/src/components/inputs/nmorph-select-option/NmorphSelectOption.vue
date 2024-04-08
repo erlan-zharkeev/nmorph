@@ -56,7 +56,7 @@ const modifiers = computed(() =>
   <div :class="modifiers" @click="clickHandler">
     <div class="nmorph-select-option__content">
       <span>{{ props.label }}</span>
-      <slot name="default" />
+      <slot />
     </div>
     <NmorphIcon v-if="checked" name="success" class="nmorph-select-option__checked" />
   </div>

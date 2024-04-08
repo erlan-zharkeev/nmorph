@@ -57,7 +57,7 @@ provide('change-checkbox-value-handler', changeHandler);
           :disabled="option.disabled"
           :style-type="props.styleType"
         />
-        <slot name="default" />
+        <slot />
       </div>
     </div>
   </div>

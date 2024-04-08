@@ -63,7 +63,7 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIcon
       :type="props.type"
       @click.stop="emit('click')"
     >
-      <slot name="default" />
+      <slot />
       <span v-if="!props.loading && props.text">{{ props.text }}</span>
       <NmorphIcon v-if="props.loading" name="loader" :size="loadingButtonSize" />
       <slot name="append" />

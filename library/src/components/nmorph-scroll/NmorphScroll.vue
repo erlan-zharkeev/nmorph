@@ -101,7 +101,7 @@ watch(
 </script>
 
 <template>
-  <div ref="scrollDOMContainer" :class="modifiers" @wheel="scrollHandler">
+  <div ref="scrollDOMContainer" :class="modifiers" @wheel.passive="scrollHandler">
     <slot />
   </div>
 </template>

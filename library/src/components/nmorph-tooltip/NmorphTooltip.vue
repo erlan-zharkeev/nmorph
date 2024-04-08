@@ -58,7 +58,7 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
       @mouseenter="handleMouseEnter"
       @mouseleave="handleMouseLeave"
     >
-      <slot name="default" />
+      <slot />
       <transition-group v-if="props.forceCoordinate" name="opacity" tag="div">
         <div
           v-if="showTooltip && props.text && !props.disabled"

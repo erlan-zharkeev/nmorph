@@ -35,7 +35,7 @@ provide('form-data', formValidationData);
 <template>
   <form :class="modifiers">
     <div class="nmorph-form__content">
-      <slot name="default" />
+      <slot />
     </div>
   </form>
 </template>
