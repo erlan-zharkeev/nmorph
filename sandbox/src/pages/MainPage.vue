@@ -1,14 +1,14 @@
 <template>
   <div class="wrapper">
     <NmorphCard>
-      <NmorphTimePicker v-model="time" />
+      <NmorphTooltip text="here i'm">
+        <NmorphButton>Text me</NmorphButton>
+      </NmorphTooltip>
     </NmorphCard>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { NmorphTimePicker, NmorphCard } from './../../../library/src/components';
-const time = ref(Date.now())
+import { NmorphCard, NmorphTooltip, NmorphButton } from './../../../library/src/components';
 
 </script>
 <style lang="scss">

@@ -1,28 +1,42 @@
 import { NmorphCoords, NmorphDomElement, NmorphPlacement } from '@/types/common';
-import { Ref, ref, nextTick } from 'vue';
+import { Ref, ref, nextTick, onMounted } from 'vue';
 
 interface IUsePlacementPayload {
   initialPlacement: NmorphPlacement;
-  dropdownDOMElement: Ref<NmorphDomElement>;
-  blockPosition: boolean;
-  relativeElement: NmorphDomElement;
+  contentDOMElement: Ref<NmorphDomElement>;
+  relativeElement: NmorphDomElement | Ref<NmorphDomElement>;
   yOffset?: number;
   xOffset?: number;
 }
 
 export const usePlacement = (data: IUsePlacementPayload) => {
-  const { initialPlacement, relativeElement, dropdownDOMElement, yOffset = 0, xOffset = 0, blockPosition } = data;
+  const { initialPlacement, relativeElement, contentDOMElement, yOffset = 0, xOffset = 0 } = data;
   const placement = ref<NmorphPlacement>(initialPlacement);
   const placementCoords = ref<NmorphCoords<string>>({ x: '0px', y: '0px' });
 
+  onMounted(() => {
+    adjustPlacement();
+  });
+
   const adjustPlacement = () => {
     nextTick(() => {
-      if (!dropdownDOMElement.value || !relativeElement || blockPosition) return;
-      const dropdownEl = dropdownDOMElement.value.getBoundingClientRect();
+      if (!contentDOMElement.value || !relativeElement) {
+        console.warn('There is no relative element or content DOM element');
+        return;
+      }
+
+      const dropdownEl = contentDOMElement.value.getBoundingClientRect();
       const dropdownElWidth = dropdownEl.width;
       const dropdownElHeight = dropdownEl.height;
 
-      const relativeEl = relativeElement?.getBoundingClientRect();
+      const actualRelativeEl = 'value' in relativeElement ? relativeElement.value : relativeElement;
+
+      if (!actualRelativeEl) {
+        console.warn('Relative element is not an HTMLElement');
+        return;
+      }
+
+      const relativeEl = (actualRelativeEl as HTMLElement).getBoundingClientRect();
       const { x, y } = relativeEl;
 
       const relativeElWidth = relativeEl.width;
@@ -65,7 +79,5 @@ export const usePlacement = (data: IUsePlacementPayload) => {
     });
   };
 
-  adjustPlacement();
-
-  return { placement, adjustPlacement, placementCoords };
+  return { placement, placementCoords };
 };

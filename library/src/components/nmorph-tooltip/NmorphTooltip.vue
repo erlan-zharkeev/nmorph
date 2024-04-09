@@ -5,41 +5,37 @@ import { getModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 
 interface IProps {
-  disabled?: boolean;
   text?: string;
   position?: NmorphPlacement;
   forceShow?: boolean;
   forceCoordinate?: Partial<NmorphCoords<string>> | null;
-  blockPosition?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  disabled: false,
   text: '',
   position: 'top',
   forceShow: false,
   forceCoordinate: null,
-  blockPosition: false,
 });
 
 const showTooltip = ref(props.forceShow);
 const tooltipDOMRef = ref<NmorphDomElement>(null);
+const slotDOMRef = ref<NmorphDomElement>(null);
 
-const { placement, adjustPlacement } = usePlacement({
-  initialPlacement: props.position,
-  dropdownDOMElement: tooltipDOMRef,
-  blockPosition: props.blockPosition,
+const { placement } = usePlacement({
+  initialPlacement: 'top',
+  contentDOMElement: tooltipDOMRef,
+  relativeElement: slotDOMRef,
 });
 
 const modifiers = computed(() =>
   getModifiers({
-    'nmorph-tooltip': [placement.value, `${props.disabled && 'disabled'}`],
+    'nmorph-tooltip': [placement.value],
   })
 );
 
 const handleMouseEnter = () => {
   showTooltip.value = true;
-  adjustPlacement();
 };
 
 const handleMouseLeave = () => {
@@ -58,10 +54,12 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
       @mouseenter="handleMouseEnter"
       @mouseleave="handleMouseLeave"
     >
-      <slot />
+      <div ref="slotDOMRef">
+        <slot />
+      </div>
       <transition-group v-if="props.forceCoordinate" name="opacity" tag="div">
         <div
-          v-if="showTooltip && props.text && !props.disabled"
+          v-if="showTooltip && props.text"
           class="nmorph-tooltip__info-content"
           :style="{ left: forceCoordinate?.x, bottom: forceCoordinate?.y }"
         >
@@ -72,7 +70,7 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
         </div>
       </transition-group>
       <transition-group v-else name="opacity" tag="div">
-        <div v-if="showTooltip && !props.disabled" class="nmorph-tooltip__info-content">
+        <div v-if="showTooltip" class="nmorph-tooltip__info-content">
           <div class="nmorph-tooltip__shadow-content">
             <div class="nmorph-tooltip__triangle" />
             <span v-if="props.text">{{ text }}</span>

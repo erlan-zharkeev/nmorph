@@ -57,6 +57,10 @@
           </NmorphSelect>
         </NmorphFormItem>
 
+        <NmorphFormItem id="time" label="Choose time">
+          <NmorphTimePicker v-model="form.time.value" />
+        </NmorphFormItem>
+
         <NmorphFormItem id="photo" label="Photo">
           <NmorphFileUpload v-model="form.photo.value" multiple />
         </NmorphFormItem>
@@ -86,6 +90,7 @@ import {
   NmorphCheckbox,
   NmorphCheckboxGroup,
   NmorphSelectOption,
+  NmorphTimePicker
 } from './../../../library/src/components';
 import { reactive } from 'vue';
 
@@ -125,6 +130,10 @@ const form = reactive({
     value: [],
     rules: [],
   },
+  time: {
+    value: Date.now(),
+    rules: []
+  }
 });
 
 const genders = [

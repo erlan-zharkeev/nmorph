@@ -116,9 +116,7 @@ watch(
 
   padding-right: v-bind(paddingRight);
   padding-bottom: v-bind(paddingBottom);
-
-  overflow-y: v-bind(overflowY);
-  overflow-x: v-bind(overflowX);
+  overflow: v-bind(overflowX) v-bind(overflowY);
 
   &::-webkit-scrollbar {
     width: var(--scrollbar-width);
@@ -129,11 +127,13 @@ watch(
 
   &::-webkit-scrollbar-track {
     @include nmorph-inset;
+
     border-radius: var(--border-radius-40);
   }
 
   &::-webkit-scrollbar-thumb {
     @include nmorph-outset;
+
     border-radius: var(--border-radius-40);
   }
 }

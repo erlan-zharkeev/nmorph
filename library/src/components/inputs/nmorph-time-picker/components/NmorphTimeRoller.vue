@@ -7,11 +7,13 @@ interface IProps {
   selectedValue?: number;
   values: number[];
   stepHeight: number;
+  setValueOnMount?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
   selectedValue: 0,
   values: () => [],
+  setValueOnMount: false,
 });
 
 interface IEmit {
@@ -39,13 +41,14 @@ const setValueToCenter = () => {
   emit('value-changed', selectedValue);
   coords.value.y = Math.round(coords.value.y / props.stepHeight) * props.stepHeight;
 };
+
 const timeElClick = (value: string | number) => {
   const newVal = Number(value);
   emit('value-changed', newVal);
   coords.value.y = newVal * props.stepHeight;
 };
-timeElClick(props.selectedValue);
 
+if (props.setValueOnMount) timeElClick(props.selectedValue);
 const cellHeight = computed(() => `${props.stepHeight}px`);
 </script>
 
@@ -78,6 +81,7 @@ const cellHeight = computed(() => `${props.stepHeight}px`);
 
   .nmorph-scroll {
     --padding-right: 8px;
+
     height: 140px;
   }
 
@@ -85,19 +89,19 @@ const cellHeight = computed(() => `${props.stepHeight}px`);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--default-border-radius);
     height: v-bind(cellHeight);
+    border-radius: var(--default-border-radius);
   }
 
   .nmorph-time-roller__value:hover {
-    cursor: pointer;
-    background-color: var(--hover-bg);
     color: var(--hover-color);
+    background-color: var(--hover-bg);
+    cursor: pointer;
   }
 
   .nmorph-time-roller__value--invisible {
-    opacity: 0;
     cursor: default;
+    opacity: 0;
   }
 }
 </style>

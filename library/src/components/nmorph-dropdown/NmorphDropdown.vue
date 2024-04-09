@@ -11,12 +11,14 @@ interface IProps {
   width?: number;
   xOffset?: number;
   yOffset?: number;
+  fillWidth?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
   width: 160,
   xOffset: 0,
   yOffset: 0,
+  fillWidth: true,
 });
 
 interface IEmit {
@@ -28,8 +30,7 @@ const dropdownDOMRef = ref<NmorphDomElement>(null);
 
 const { placementCoords } = usePlacement({
   initialPlacement: 'bottom',
-  dropdownDOMElement: dropdownDOMRef,
-  blockPosition: false,
+  contentDOMElement: dropdownDOMRef,
   relativeElement: props.relativeElement,
   yOffset: props.yOffset,
   xOffset: props.xOffset,
@@ -37,19 +38,19 @@ const { placementCoords } = usePlacement({
 
 const modifiers = computed(() =>
   getModifiers({
-    nmorph: [],
     'nmorph-dropdown': [`${!props.open && 'closed'}`],
   })
 );
 
-const width = computed(() => `${props.width}px`);
+const width = computed(() => (props.fillWidth ? `${props.relativeElement?.clientWidth}px` : `${props.width}px`));
+
 const outsideClickHandler = () => {
   emit('on-outside-click');
 };
 </script>
 
 <template>
-  <NmorphOverlay :show="props.open" @on-outside-click="outsideClickHandler">
+  <NmorphOverlay :show="props.open" transparent @on-outside-click="outsideClickHandler">
     <div ref="dropdownDOMRef" :class="modifiers" :style="{ left: `${placementCoords.x}`, top: `${placementCoords.y}` }">
       <slot />
     </div>
@@ -60,11 +61,13 @@ const outsideClickHandler = () => {
 .nmorph-dropdown {
   position: fixed;
   width: v-bind(width);
+  border-radius: var(--default-border-radius);
+
   @include nmorph-outset;
 }
 
 .nmorph-dropdown--closed {
-  opacity: 0;
   z-index: -1000;
+  opacity: 0;
 }
 </style>

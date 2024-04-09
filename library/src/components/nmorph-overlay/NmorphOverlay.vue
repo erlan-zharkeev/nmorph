@@ -15,7 +15,11 @@ const props = withDefaults(defineProps<IProps>(), {
 
 const modifiers = computed(() =>
   getModifiers({
-    'nmorph-overlay': [`${props.outsideClickEmitEvent && 'outside-click'}`, `${props.show && 'show'}`],
+    'nmorph-overlay': [
+      `${props.outsideClickEmitEvent && 'outside-click'}`,
+      `${props.show && 'show'}`,
+      `${props.transparent && 'transparent'}`,
+    ],
   })
 );
 
@@ -28,8 +32,6 @@ interface IEmit {
 }
 
 const emit = defineEmits<IEmit>();
-
-const background = computed(() => (props.transparent ? 'transparent' : 'inherit'));
 </script>
 
 <template>
@@ -42,14 +44,18 @@ const background = computed(() => (props.transparent ? 'transparent' : 'inherit'
 
 <style lang="scss">
 .nmorph-overlay {
-  pointer-events: none;
   opacity: 0;
+  pointer-events: none;
+
   @include overlay;
-  background: v-bind(background);
 }
 
 .nmorph-overlay--outside-click {
   cursor: pointer;
+}
+
+.nmorph-overlay--transparent {
+  background: transparent;
 }
 
 .nmorph-overlay--show {

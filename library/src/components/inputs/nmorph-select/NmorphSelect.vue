@@ -4,8 +4,7 @@ import { getModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide } from 'vue';
 import { ISelectOption } from '../nmorph-select-option/NmorphSelectOption.vue';
 import { SelectModelValue } from '../nmorph-select-option/types';
-import { NmorphTag, NmorphIcon, NmorphSelectOption } from '@/components';
-import { usePlacement } from '@/hooks';
+import { NmorphTag, NmorphIcon, NmorphSelectOption, NmorphDropdown } from '@/components';
 
 interface IProps extends NmorphCommonInputProps {
   noElementPlaceholder?: string;
@@ -37,7 +36,6 @@ const emit = defineEmits<{
 const initialValue = ref<SelectModelValue>(props.modelValue);
 const open = ref(props.open);
 
-const optionsWrapperDOMRef = ref<NmorphDomElement>(null);
 const optionsDOMRef = ref<NmorphDomElement>(null);
 const optionsHeight = ref<string | null>(null);
 const selectedLineOutset = ref(true);
@@ -63,17 +61,10 @@ const changeHandler = (value: string) => {
   emit('update:modelValue', initialValue.value);
 };
 
-const { placement, adjustPlacement } = usePlacement({
-  initialPlacement: 'bottom',
-  dropdownDOMElement: optionsDOMRef,
-  blockPosition: false,
-});
-
 const modifiers = computed(() =>
   getModifiers({
     nmorph: [NmorphComponentHeight[props.height], `${props.fill && 'fill'}`],
     'nmorph-select': [
-      placement.value,
       `${props.disabled && 'disabled'}`,
       `${props.modelValue ? 'on' : 'off'}`,
       `${props.modelValue && 'loading'}`,
@@ -91,25 +82,17 @@ watch(open, (newValue) => {
   if (newValue) selectedLineOutset.value = false;
 });
 
-const optionTransitionendHandler = () => {
-  if (open.value) return;
-  selectedLineOutset.value = true;
-};
-
 const closeHandler = () => {
   open.value = false;
 };
 
 onMounted(() => {
-  adjustPlacement();
   if (!optionsDOMRef.value) return;
   optionsHeight.value = `${optionsDOMRef.value.clientHeight}px`;
-  optionsWrapperDOMRef.value?.addEventListener('transitionend', optionTransitionendHandler);
   document.addEventListener('click', closeHandler);
 });
 
 onUnmounted(() => {
-  optionsWrapperDOMRef.value?.removeEventListener('transitionend', optionTransitionendHandler);
   document.removeEventListener('click', closeHandler);
 });
 
@@ -142,12 +125,14 @@ const tags = computed(() => {
 
 provide('select-selected-value', initialValue);
 provide('select-change-selected-value', changeHandler);
+
+const nmorphSelectDOMRef = ref<NmorphDomElement>(null);
 </script>
 
 <template>
   <div :class="modifiers">
     <div class="nmorph-select__content">
-      <div class="nmorph-select__selected-values-line" @click.stop="clickHandler">
+      <div ref="nmorphSelectDOMRef" class="nmorph-select__selected-values-line" @click.stop="clickHandler">
         <div v-if="typeof initialValue === 'string'" class="nmorph-select__selected-value">
           {{ selectedValueTitle }}
         </div>
@@ -167,17 +152,18 @@ provide('select-change-selected-value', changeHandler);
         </div>
         <NmorphIcon name="chevron-down" class="nmorph-select__chevron" />
       </div>
-      <div
-        ref="optionsWrapperDOMRef"
-        class="nmorph-select__options-wrapper"
-        :style="{ height: open && optionsHeight ? optionsHeight : '0px' }"
-      >
-        <div ref="optionsDOMRef" class="nmorph-select__options">
-          <NmorphSelectOption v-for="option in options" :key="option.value" v-bind="option" :height="props.height" />
-          <slot />
-        </div>
-      </div>
     </div>
+    <NmorphDropdown
+      v-if="nmorphSelectDOMRef"
+      :open="open"
+      :relative-element="nmorphSelectDOMRef"
+      @on-outside-click="closeHandler"
+    >
+      <div ref="optionsDOMRef" class="nmorph-select__options">
+        <NmorphSelectOption v-for="option in options" :key="option.value" v-bind="option" :height="props.height" />
+        <slot />
+      </div>
+    </NmorphDropdown>
   </div>
 </template>
 
@@ -192,8 +178,6 @@ provide('select-change-selected-value', changeHandler);
   .nmorph-select__content {
     position: relative;
     height: 100%;
-    padding: var(--indentation-00) var(--default-indentation-input);
-    border-radius: var(--default-border-radius);
 
     @include nmorph-outset;
   }
@@ -203,31 +187,12 @@ provide('select-change-selected-value', changeHandler);
     align-items: center;
     justify-content: space-between;
     height: 100%;
+    padding: var(--indentation-00) var(--default-indentation-input);
+    border-radius: var(--default-border-radius);
   }
 
   .nmorph-select__selected-value {
     @include ellipsis;
-  }
-
-  .nmorph-select__options-wrapper {
-    position: absolute;
-    left: 0;
-    z-index: 1;
-    width: 100%;
-    height: 0;
-    overflow: hidden;
-    border-radius: var(--default-border-radius);
-    transition: ease-in-out height var(--transition-02);
-
-    @include nmorph-outset;
-
-    .nmorph-select__option {
-      padding: var(--indentation-03);
-    }
-
-    .nmorph-select__chevron {
-      transition: ease-in-out transform var(--transition-02);
-    }
   }
 }
 
@@ -252,11 +217,4 @@ provide('select-change-selected-value', changeHandler);
     @include nmorph-inset;
   }
 }
-
-.nmorph-select--top {
-  .nmorph-select__options-wrapper {
-    bottom: 100%;
-  }
-}
 </style>
-../nmorph-select-option/types/types
