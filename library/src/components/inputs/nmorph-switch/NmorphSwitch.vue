@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphCommonInputProps, NmorphDomElement } from '@/types/common';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref } from 'vue';
 import { NmorphIcon } from '@/components';
 
@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-switch': [
       `${props.disabled && 'disabled'}`,
       `${props.modelValue ? 'on' : 'off'}`,

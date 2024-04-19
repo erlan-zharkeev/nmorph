@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphCommonInputProps, NmorphComponentDirection } from '@/types/common';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { ref, computed, provide } from 'vue';
 import { IRadioOption, RadioStyleType } from '../types';
 import NmorphRadio from './../nmorph-radio/NmorphRadio.vue';
@@ -32,7 +32,7 @@ const changeHandler = (value: string) => {
   emit('update:modelValue', initialValue.value);
 };
 
-const modifiers = computed(() => getModifiers({ 'nmorph-radio-group': [props.styleType, props.direction] }));
+const modifiers = computed(() => useModifiers({ 'nmorph-radio-group': [props.styleType, props.direction] }));
 
 provide('radio-group-selected-value', initialValue);
 provide('change-radio-button-value-handler', changeHandler);

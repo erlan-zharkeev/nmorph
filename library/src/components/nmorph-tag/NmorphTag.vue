@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphComponentHeight } from '@/types/common';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphIcon } from '@/components';
 
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
     'nmorph-tag': [`${props.transparent && 'transparent'}`],
   })

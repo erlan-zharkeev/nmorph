@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphCommonInputProps, NmorphComponentHeight } from '@/types/common';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref, watch } from 'vue';
 import { NmorphButton, NmorphIcon } from '@/components';
 
@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     nmorph: [NmorphComponentHeight[props.height], `${props.fill && 'fill'}`],
     'nmorph-number-input': [
       `${props.disabled && 'disabled'}`,

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { NmorphIconName, NmorphIconSize } from './types';
 import { NmorphIconsMap } from './NmorphIconsMap';
 import { NmorphIconList } from '@/types/common';
@@ -14,18 +14,25 @@ interface IProps {
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  name: '',
+  name: undefined,
   size: 'small',
-  width: '',
-  height: '',
-  path: '',
+  width: undefined,
+  height: undefined,
+  path: undefined,
 });
 
 const modifiers = computed(() =>
-  getModifiers({
-    'nmorph-icon': [props.size, `${props.width && 'custom-width'}`, `${props.height && 'custom-height'}`],
+  useModifiers({
+    'nmorph-icon': [
+      `${!props.width && !props.height && props.size}`,
+      `${props.width && 'custom-width'}`,
+      `${props.height && 'custom-height'}`,
+    ],
   })
 );
+const iconDimension = computed(() => {
+  return { width: props.width, height: props.height };
+});
 </script>
 
 <template>
@@ -79,11 +86,10 @@ const modifiers = computed(() =>
 }
 
 .nmorph-icon--custom-width {
-  --width: v-bind(props.width);
+  --width: v-bind(iconDimension.width);
 }
 
 .nmorph-icon--custom-height {
-  --height: v-bind(props.height);
+  --height: v-bind(iconDimension.height);
 }
 </style>
-@/types/common

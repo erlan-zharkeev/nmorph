@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Ref, computed, onMounted, reactive, ref } from 'vue';
 import { ArchiveResolution, AudioResolution, ImageResolution, Resolution, VideoResolution } from './types';
-import { getModifiers } from '@/utils';
-import { NmorphIconList } from '@/types/common';
+import { useModifiers } from '@/utils';
+import { NmorphDomElement, NmorphIconList } from '@/types/common';
 import { NmorphButton, NmorphIcon, NmorphImagePreview } from '@/components';
 
 interface IProps {
@@ -96,7 +96,7 @@ interface IEmit {
 const emit = defineEmits<IEmit>();
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     nmorph: [`${props.fill && 'fill'}`],
     'nmorph-file-upload': [`${props.disabled && 'disabled'}`],
   })

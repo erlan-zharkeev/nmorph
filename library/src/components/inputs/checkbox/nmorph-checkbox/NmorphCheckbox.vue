@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, Ref, inject, onMounted } from 'vue';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { ICheckboxOption } from '../types';
 
 const groupSelectedValue = inject<Ref<string[]>>('checkbox-group-selected-value');
@@ -40,7 +40,7 @@ const handleChange = () => {
 };
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-checkbox': [`${checked.value && 'checked'}`, `${props.disabled && 'disabled'}`, props.styleType],
   })
 );

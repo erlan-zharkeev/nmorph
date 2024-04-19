@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { ComputedRef, computed } from 'vue';
 import { NmorphIcon } from '@/components';
 
@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-validation-icon': [props.valid ? 'valid' : 'invalid'],
   })
 );

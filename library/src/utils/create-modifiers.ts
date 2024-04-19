@@ -10,7 +10,7 @@ export const createBlockModifiers = (block: string, modifiers: string[]): string
   return stringifiedModifiers.join(' ');
 };
 
-export const getModifiers = (data: { [key: string]: string[] }) => {
+export const useModifiers = (data: { [key: string]: string[] }) => {
   return Object.entries(data)
     .map(([block, modifiers]) => {
       return createBlockModifiers(block, modifiers);

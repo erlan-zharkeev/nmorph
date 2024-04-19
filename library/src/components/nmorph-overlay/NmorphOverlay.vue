@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 
 interface IProps {
@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-overlay': [
       `${props.outsideClickEmitEvent && 'outside-click'}`,
       `${props.show && 'show'}`,

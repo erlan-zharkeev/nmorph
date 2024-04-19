@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphComponentHeight } from '@/types/common';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { Ref, computed } from 'vue';
 
 interface IProps {
@@ -21,7 +21,7 @@ const reversedErrors = computed(() => {
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
     'nmorph-error-box': [`${props.staticHeight && 'static-height'}`, `${reversedErrors.value.length === 0 && 'empty'}`],
   })

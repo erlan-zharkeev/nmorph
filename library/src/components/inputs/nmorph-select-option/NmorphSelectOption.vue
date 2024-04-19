@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphCommonInputProps, NmorphComponentHeight } from '@/types/common';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { inject, Ref, computed } from 'vue';
 import { SelectModelValue } from './types';
 import { NmorphIcon } from '@/components';
@@ -41,7 +41,7 @@ const checked = computed(() => {
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
     'nmorph-select-option': [
       `${props.disabled && 'disabled'}`,

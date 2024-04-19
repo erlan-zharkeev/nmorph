@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, inject } from 'vue';
 import { NmorphComponentHeight } from '@/types/common';
 import { FormValidationData } from '@/components/form/types';
@@ -36,7 +36,7 @@ const showStatusIcon = computed(
 const ableToAddValidationModifiers = computed(() => ableToShowValidation.value && validationData.value?.touched);
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-form-item': [
       `${props.label && 'labeled'}`,
       `${ableToAddValidationModifiers.value && (validationData.value?.valid ? 'valid' : 'invalid')}`,

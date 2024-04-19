@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphShadowType } from '@/types/common';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 
 interface IProps {
@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-card': [props.shadowType],
   })
 );

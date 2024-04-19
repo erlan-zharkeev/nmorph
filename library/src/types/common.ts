@@ -4,6 +4,13 @@ export enum NmorphComponentHeight {
   thin = 'thin-component',
 }
 
+export type NmorphSortOrderType = keyof typeof NmorphSortOrder | undefined;
+
+export enum NmorphSortOrder {
+  ascending = 'ascending',
+  descending = 'descending',
+}
+
 export enum NmorphComponentDirection {
   row = 'row',
   column = 'column',
@@ -49,6 +56,7 @@ export enum NmorphIconList {
   'zoom-in' = 'zoom-in',
   'zoom-out' = 'zoom-out',
   'time' = 'time',
+  'triangle-down' = 'triangle-down',
 }
 
 export enum NmorphComponentPosition {

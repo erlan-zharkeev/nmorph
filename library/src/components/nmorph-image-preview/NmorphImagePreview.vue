@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { ComputedRef, computed, ref } from 'vue';
 import { NmorphIconName } from '../nmorph-icon/types';
 import { NmorphImage, NmorphButton, NmorphIcon, NmorphOverlay } from '@/components';
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<IProps>(), {
 
 const open = ref(props.show);
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-image-preview': [`${open.value && 'opened'}`],
   })
 );

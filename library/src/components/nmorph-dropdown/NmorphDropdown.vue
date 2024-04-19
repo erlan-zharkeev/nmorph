@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { usePlacement } from '@/hooks';
 import { NmorphDomElement } from '@/types/common';
 import { NmorphOverlay } from '@/components';
@@ -37,7 +37,7 @@ const { placementCoords } = usePlacement({
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-dropdown': [`${!props.open && 'closed'}`],
   })
 );

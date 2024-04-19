@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 
 enum ImageFit {
@@ -38,7 +38,7 @@ const onImageError = () => {
 };
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-image': [],
   })
 );

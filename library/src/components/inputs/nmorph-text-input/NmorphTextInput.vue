@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphCommonInputProps, NmorphComponentHeight, NmorphDomElement } from '@/types/common';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref } from 'vue';
 import { NmorphIcon, NmorphButton } from '@/components';
 
@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     nmorph: [NmorphComponentHeight[props.height], `${focused.value && 'focused'}`, `${props.fill && 'fill'}`],
     'nmorph-text-input': [`${props.typePassword && 'password'}`],
   })

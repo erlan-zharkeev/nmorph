@@ -29,6 +29,8 @@
   // Common
   --overlay-background-color: rgba(0, 0, 0, 50%);
 
+  --background-hover: #e1e9ef;
+
   &[data-theme='dark'] {
     $main-bg: #383143;
     --main-bg: #383143;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 import { NmorphScroll } from '@/components';
 
@@ -8,21 +8,21 @@ interface IProps {
   values: number[];
   stepHeight: number;
   setValueOnMount?: boolean;
+  disabledRange?: [number, number] | null;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
   selectedValue: 0,
   values: () => [],
   setValueOnMount: false,
+  disabledRange: null,
 });
-
 interface IEmit {
   (e: 'value-changed', val: number): void;
 }
 const emit = defineEmits<IEmit>();
-
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-time-roller': [],
   })
 );
@@ -42,8 +42,22 @@ const setValueToCenter = () => {
   coords.value.y = Math.round(coords.value.y / props.stepHeight) * props.stepHeight;
 };
 
+const isValueDisabled = (val: number) =>
+  props.disabledRange && val >= props.disabledRange[0] && val <= props.disabledRange[1];
+
+const findClosestNumber = (candidate: number) => {
+  return (
+    props.disabledRange?.reduce((prev, curr) =>
+      Math.abs(curr - candidate) < Math.abs(prev - candidate) ? curr + 1 : prev - 1
+    ) ?? candidate
+  );
+};
+
 const timeElClick = (value: string | number) => {
-  const newVal = Number(value);
+  let newVal = Number(value);
+  if (isValueDisabled(newVal)) {
+    newVal = findClosestNumber(newVal);
+  }
   emit('value-changed', newVal);
   coords.value.y = newVal * props.stepHeight;
 };
@@ -56,16 +70,17 @@ const cellHeight = computed(() => `${props.stepHeight}px`);
   <div :class="modifiers">
     <NmorphScroll v-model="coords" @on-scroll-end="setValueToCenter">
       <div
-        v-for="value in transformedValues"
-        :key="value"
+        v-for="timeVal in transformedValues"
+        :key="timeVal"
         class="nmorph-time-roller__value"
         :class="[
-          { 'nmorph-time-roller__value--invisible': value === '-' },
-          { 'nmorph-time-roller__value--selected-value': props.selectedValue === value },
+          { 'nmorph-time-roller__value--invisible': timeVal === '-' },
+          { 'nmorph-time-roller__value--selected-value': props.selectedValue === timeVal },
+          { 'nmorph-time-roller__value--disabled-value': isValueDisabled(timeVal) },
         ]"
-        @click="timeElClick(value)"
+        @click="timeElClick(timeVal)"
       >
-        {{ value }}
+        {{ timeVal }}
       </div>
     </NmorphScroll>
   </div>
@@ -95,13 +110,22 @@ const cellHeight = computed(() => `${props.stepHeight}px`);
 
   .nmorph-time-roller__value:hover {
     color: var(--hover-color);
-    background-color: var(--hover-bg);
+    background: var(--hover-bg);
     cursor: pointer;
   }
 
   .nmorph-time-roller__value--invisible {
     cursor: default;
     opacity: 0;
+  }
+
+  .nmorph-time-roller__value.nmorph-time-roller__value--disabled-value {
+    @include disabled;
+  }
+
+  .nmorph-time-roller__value--disabled-value:hover {
+    background: transparent;
+    color: var(--accent-color-01);
   }
 }
 </style>

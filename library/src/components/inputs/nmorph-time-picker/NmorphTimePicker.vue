@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphCommonInputProps, NmorphComponentHeight, NmorphDomElement } from '@/types/common';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref, watch } from 'vue';
 import { Hour, MinuteSeconds, TimeTuple } from './types';
 import NmorphTimeRoller from './components/NmorphTimeRoller.vue';
@@ -11,6 +11,9 @@ interface IProps extends Omit<NmorphCommonInputProps, 'fill'> {
   modelValue?: number;
   open?: boolean;
   initWithoutValue?: boolean;
+  disabledHours?: [Hour, Hour] | null;
+  disabledMinutes?: [MinuteSeconds, MinuteSeconds] | null;
+  disabledSeconds?: [MinuteSeconds, MinuteSeconds] | null;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -19,6 +22,9 @@ const props = withDefaults(defineProps<IProps>(), {
   disabled: false,
   height: 'default',
   initWithoutValue: false,
+  disabledHours: null,
+  disabledMinutes: null,
+  disabledSeconds: null,
 });
 
 const emit = defineEmits<IEmit>();
@@ -45,7 +51,7 @@ const clickHandler = () => {
 };
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
     'nmorph-time-picker': [`${props.disabled && 'disabled'}`, `${openDropdown.value && 'open'}`],
   })
@@ -120,18 +126,21 @@ const selectedValue = computed(() => (emptyValue.value ? '——:——:——' 
             :values="hours"
             :selected-value="timeTuple[0]"
             :step-height="step"
+            :disabled-range="disabledHours"
             @value-changed="hoursChangedHandler"
           />
           <NmorphTimeRoller
             :set-value-on-mount="!emptyValue"
             :values="minutesSeconds"
             :selected-value="timeTuple[1]"
+            :disabled-range="disabledMinutes"
             :step-height="step"
             @value-changed="minutesChangedHandler"
           />
           <NmorphTimeRoller
             :set-value-on-mount="!emptyValue"
             :values="minutesSeconds"
+            :disabled-range="disabledSeconds"
             :selected-value="timeTuple[2]"
             :step-height="step"
             @value-changed="secondsChangedHandler"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Ref, computed, inject, onMounted, ref } from 'vue';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { IRadioOption, RadioStyleType } from '../types';
 
 const groupSelectedValue = inject<Ref<string>>('radio-group-selected-value');
@@ -23,7 +23,7 @@ const changeHandler = () => {
 const checked = computed(() => groupSelectedValue?.value === props.value);
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-radio': [`${props.disabled && 'disabled'}`, `${checked.value && 'checked'}`, props.styleType],
   })
 );

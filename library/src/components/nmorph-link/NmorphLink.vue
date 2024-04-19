@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphIconName } from '../nmorph-icon/types';
 import { NmorphColor } from '@/types/common';
@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-link': [props.color, `${props.underline && 'underline'}`, `${props.disabled && 'disabled'}`],
   })
 );

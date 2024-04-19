@@ -20,6 +20,7 @@ import RotateLeft from '@/assets/icons/rotate-left.svg';
 import ZoomIn from '@/assets/icons/zoom-in.svg';
 import ZoomOut from '@/assets/icons/zoom-out.svg';
 import Time from '@/assets/icons/time.svg';
+import TriangleDown from '@/assets/icons/triangle-down.svg';
 
 export const NmorphIconsMap: Record<NmorphIconList, string> = {
   [NmorphIconList.eye]: Eye,
@@ -42,4 +43,5 @@ export const NmorphIconsMap: Record<NmorphIconList, string> = {
   [NmorphIconList['rotate-left']]: RotateLeft,
   [NmorphIconList['zoom-in']]: ZoomIn,
   [NmorphIconList['zoom-out']]: ZoomOut,
+  [NmorphIconList['triangle-down']]: TriangleDown,
 };

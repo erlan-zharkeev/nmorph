@@ -58,7 +58,11 @@
         </NmorphFormItem>
 
         <NmorphFormItem id="time" label="Choose time">
-          <NmorphTimePicker v-model="form.time.value" />
+          <NmorphTimePicker v-model="form.time.value" :disabled-hours="[10, 20]" :disabled-minutes="[2, 5]" :disabled-seconds="[6, 9]" />
+        </NmorphFormItem>
+
+        <NmorphFormItem id="date" label="Choose date">
+          <NmorphDatePicker v-model="form.date.value" />
         </NmorphFormItem>
 
         <NmorphFormItem id="photo" label="Photo">
@@ -90,7 +94,8 @@ import {
   NmorphCheckbox,
   NmorphCheckboxGroup,
   NmorphSelectOption,
-  NmorphTimePicker
+  NmorphTimePicker,
+  NmorphDatePicker
 } from './../../../library/src/components';
 import { reactive } from 'vue';
 
@@ -131,6 +136,10 @@ const form = reactive({
     rules: [],
   },
   time: {
+    value: Date.now(),
+    rules: []
+  },
+  date: {
     value: Date.now(),
     rules: []
   }

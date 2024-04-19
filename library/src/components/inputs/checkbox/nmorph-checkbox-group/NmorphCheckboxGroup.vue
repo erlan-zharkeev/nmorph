@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, provide, ref } from 'vue';
 import { NmorphCheckbox } from '@/components';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { NmorphCommonInputProps, NmorphComponentDirection } from '@/types/common';
 import { ICheckboxOption, ICheckboxStyleType } from '../types';
 
@@ -35,7 +35,7 @@ const changeHandler = (id: string) => {
 };
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-checkbox-group': [props.styleType, props.direction],
   })
 );

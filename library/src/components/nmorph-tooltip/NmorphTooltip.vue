@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { usePlacement } from '@/hooks';
 import { NmorphCoords, NmorphDomElement, NmorphPlacement } from '@/types/common';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 
 interface IProps {
@@ -29,7 +29,7 @@ const { placement } = usePlacement({
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-tooltip': [placement.value],
   })
 );

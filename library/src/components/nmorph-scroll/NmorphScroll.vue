@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphCoords, NmorphDomElement } from '@/types/common';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 
 type Coords = NmorphCoords<number>;
@@ -71,7 +71,7 @@ onUnmounted(() => {
 });
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     'nmorph-scroll': [],
   })
 );

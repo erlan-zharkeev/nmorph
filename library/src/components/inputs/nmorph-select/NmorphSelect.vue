@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphCommonInputProps, NmorphComponentHeight, NmorphDomElement } from '@/types/common';
-import { getModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide } from 'vue';
 import { ISelectOption } from '../nmorph-select-option/NmorphSelectOption.vue';
 import { SelectModelValue } from '../nmorph-select-option/types';
@@ -62,7 +62,7 @@ const changeHandler = (value: string) => {
 };
 
 const modifiers = computed(() =>
-  getModifiers({
+  useModifiers({
     nmorph: [NmorphComponentHeight[props.height], `${props.fill && 'fill'}`],
     'nmorph-select': [
       `${props.disabled && 'disabled'}`,
@@ -209,12 +209,6 @@ const nmorphSelectDOMRef = ref<NmorphDomElement>(null);
 .nmorph-select--selected-line-outset {
   .nmorph-select__content {
     @include nmorph-outset;
-  }
-}
-
-.nmorph-select--selected-line-inset {
-  .nmorph-select__content {
-    @include nmorph-inset;
   }
 }
 </style>
