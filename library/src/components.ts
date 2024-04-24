@@ -28,6 +28,7 @@ import NmorphDropdown from '@/components/nmorph-dropdown/NmorphDropdown.vue';
 import NmorphCalendar from '@/components/nmorph-calendar/NmorphCalendar.vue';
 import NmorphTable from '@/components/table/nmorph-table/NmorphTable.vue';
 import NmorphTableColumn from '@/components/table/nmorph-table/components/nmorph-table-column/NmorphTableColumn.vue';
+import NmorphTableCell from '@/components/table/nmorph-table/components/nmorph-table-cell/NmorphTableCell.vue';
 import NmorphSortButton from '@/components/nmorph-sort-button/NmorphSortButton.vue';
 
 export {
@@ -61,5 +62,6 @@ export {
   NmorphCalendar,
   NmorphTable,
   NmorphTableColumn,
+  NmorphTableCell,
   NmorphSortButton,
 };

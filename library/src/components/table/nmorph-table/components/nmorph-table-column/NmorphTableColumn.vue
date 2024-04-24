@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue';
+import { computed, inject, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphTableColumnProps, NmorphTableDataInjection } from '@/components/table/types';
 import { onMounted } from 'vue';
+import { NmorphDomElement } from '@/types/common';
 
 const data = inject<NmorphTableDataInjection>('table-data');
-const props = withDefaults(defineProps<NmorphTableColumnProps>(), {
+interface IProps extends NmorphTableColumnProps {}
+const props = withDefaults(defineProps<IProps>(), {
   label: '',
-  width: 0,
+  width: '',
   alignment: 'center',
 });
 
@@ -17,22 +19,24 @@ const modifiers = computed(() =>
     'nmorph-table-column': [],
   })
 );
-
-const columnWidth = computed(() => props.width ?? '');
+const id = ref(0);
 
 onMounted(() => {
   if (!data?.columns.value) return;
   const { columns } = data;
-  const columnData = props;
-  data.columns.value = [...columns.value, { ...columnData, width: columnWidth.value }];
+  id.value = columns.value.length + 1;
+  data.columns.value = [...columns.value, { ...props, id: id.value }];
 });
+
+const columnDOMEl = ref<NmorphDomElement>(null);
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div ref="columnDOMEl" :data-id="id" :class="modifiers">
     <slot :scope="{ columns: data?.columns.value, rows: data?.rows.value }" />
   </div>
 </template>
+
 <style lang="scss">
 .nmorph-table-column {
 }

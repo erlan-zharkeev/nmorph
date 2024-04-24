@@ -5,14 +5,19 @@ export type NmorphTableSortType = Record<string, NmorphSortOrderType>;
 
 export type CellAlignment = 'left' | 'center' | 'right';
 export type NmorphTableDataType<T> = T[];
+
 export interface NmorphTableColumnProps {
   label?: string;
-  width?: number;
+  width?: string;
   alignment?: CellAlignment;
   prop: string;
 }
 
+export interface NmorphTableColumnData extends NmorphTableColumnProps {
+  id?: number;
+}
+
 export interface NmorphTableDataInjection {
   rows: Ref<NmorphTableSortType[]>;
-  columns: Ref<NmorphTableColumnProps[]>;
+  columns: Ref<NmorphTableColumnData[]>;
 }
