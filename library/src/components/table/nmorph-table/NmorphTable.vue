@@ -5,14 +5,14 @@ import { NmorphTableColumnProps, NmorphTableDataInjection, NmorphTableDataType, 
 import { NmorphSortButton } from '@/components';
 import { NmorphDomElement, NmorphSortOrderType } from '@/types/common';
 
-interface IProps<T> {
-  data?: NmorphTableDataType<T>;
+interface IProps {
+  data?: NmorphTableDataType;
   bordered?: boolean;
   sort?: NmorphTableSortType;
   style?: 'nmorph' | 'common';
 }
 
-const props = withDefaults(defineProps<IProps<NmorphTableSortType>>(), {
+const props = withDefaults(defineProps<IProps>(), {
   /**
    * @description table data
    */

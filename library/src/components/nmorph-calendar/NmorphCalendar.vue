@@ -1,37 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, reactive } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphTable, NmorphTableColumn } from '@/components';
+import { getMonthDaysByWeek } from './utils';
+import NmorphCalendarHeader from './components/nmorph-calendar-header/NmorphCalendarHeader.vue';
+import { NmorphTableDataType } from '../table/types';
 
-const tableData = reactive([
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Anton',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: 'barbara',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-]);
-
-interface IProps {}
-
-const props = withDefaults(defineProps<IProps>(), {});
-const emit = defineEmits<IEmit>();
-
-interface IEmit {}
+// interface IProps {}
+// const props = withDefaults(defineProps<IProps>(), {});
+// const emit = defineEmits<IEmit>();
+// interface IEmit {}
 
 const modifiers = computed(() =>
   useModifiers({
@@ -39,13 +17,34 @@ const modifiers = computed(() =>
     'nmorph-calendar': [],
   })
 );
+
+const propDaysOfWeek = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+// const now = new Date();
+const calendarMatrix = getMonthDaysByWeek(2025, 6);
+
+const calendar = reactive<NmorphTableDataType>([]);
+
+calendarMatrix.forEach((week) => {
+  const weekData: Record<string, string> = {};
+  week.forEach((day, dayIdx) => {
+    const propName = propDaysOfWeek[dayIdx];
+    weekData[propName] = String(day);
+  });
+  calendar.push(weekData);
+});
 </script>
+
 <template>
   <div :class="modifiers">
-    <NmorphTable :data="tableData" bordered :sort="defaultSort">
-      <!-- <NmorphTableColumn prop="date" label="Date" width="180"/>
-      <NmorphTableColumn prop="name" label="Name" width="180" />
-      <NmorphTableColumn prop="address" label="Address"  /> -->
+    <NmorphCalendarHeader />
+    <NmorphTable :data="calendar" bordered>
+      <NmorphTableColumn prop="sun" label="Sun" />
+      <NmorphTableColumn prop="mon" label="Mon" />
+      <NmorphTableColumn prop="tue" label="Tue" />
+      <NmorphTableColumn prop="wed" label="Wed" />
+      <NmorphTableColumn prop="thu" label="Thu" />
+      <NmorphTableColumn prop="fri" label="Fri" />
+      <NmorphTableColumn prop="sat" label="Sat" />
     </NmorphTable>
   </div>
 </template>

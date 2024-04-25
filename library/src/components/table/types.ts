@@ -3,8 +3,11 @@ import { Ref } from 'vue';
 
 export type NmorphTableSortType = Record<string, NmorphSortOrderType>;
 
+export type NmorphDataTableElRecord = Record<string, unknown>;
+
 export type CellAlignment = 'left' | 'center' | 'right';
-export type NmorphTableDataType<T> = T[];
+
+export type NmorphTableDataType = NmorphDataTableElRecord[];
 
 export interface NmorphTableColumnProps {
   label?: string;
@@ -18,6 +21,6 @@ export interface NmorphTableColumnData extends NmorphTableColumnProps {
 }
 
 export interface NmorphTableDataInjection {
-  rows: Ref<NmorphTableSortType[]>;
+  rows: Ref<NmorphDataTableElRecord[]>;
   columns: Ref<NmorphTableColumnData[]>;
 }

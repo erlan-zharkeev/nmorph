@@ -1,13 +1,13 @@
 <template>
   <div class="wrapper">
     <NmorphCard>
-
+      <NmorphCalendar />
     </NmorphCard>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { NmorphCard } from './../../../library/src/components';
+import { NmorphCard, NmorphCalendar } from './../../../library/src/components';
 
 </script>
 <style lang="scss">

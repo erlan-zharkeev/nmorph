@@ -93,7 +93,7 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIcon
   }
 
   span {
-    margin-top: 2px;
+    margin-top: 1px;
   }
 
   .nmorph-button__content:disabled {
