@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, provide, ref } from 'vue';
+import { computed, provide, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphTableColumnProps, NmorphTableDataInjection, NmorphTableDataType, NmorphTableSortType } from '../types';
 import { NmorphSortButton } from '@/components';
@@ -7,6 +7,7 @@ import { NmorphDomElement, NmorphSortOrderType } from '@/types/common';
 
 interface IProps {
   data?: NmorphTableDataType;
+  rowHover?: boolean;
   bordered?: boolean;
   sort?: NmorphTableSortType;
   style?: 'nmorph' | 'common';
@@ -20,10 +21,11 @@ const props = withDefaults(defineProps<IProps>(), {
   bordered: false,
   sort: undefined,
   style: 'nmorph',
+  rowHover: true,
 });
 
 // const emit = defineEmits<IEmit>();
-// interface IEmit {}
+// interface IEmit {};
 
 const modifiers = computed(() =>
   useModifiers({
@@ -70,7 +72,7 @@ const defaultColWidth = computed(() => {
   }, 0 as number);
 
   const candidateColQuantity = columns.value.length - filledColQuantity;
-  if (!nmorphDOMTable.value?.clientWidth || !filledColWidth) return 0;
+  if (!nmorphDOMTable.value?.clientWidth) return 0;
   const oneColumnWidth = (nmorphDOMTable.value?.clientWidth - filledColWidth) / candidateColQuantity;
   return oneColumnWidth;
 });
@@ -78,10 +80,24 @@ const defaultColWidth = computed(() => {
 const getWidth = (width: string | undefined) => {
   return width !== '' ? width : defaultColWidth.value;
 };
+
+const key = ref(0);
+watch(
+  () => props.data,
+  () => {
+    key.value = key.value + 1;
+    rows.value = props.data;
+    columns.value = [];
+  },
+  {
+    immediate: true,
+  }
+);
+const tableData = (data: unknown) => (typeof data === 'object' ? '' : data);
 </script>
 
 <template>
-  <div ref="nmorphDOMTable" :class="modifiers">
+  <div ref="nmorphDOMTable" :key="key" :class="modifiers">
     <div class="nmorph-table__wrapper">
       <table class="nmorph-table__header">
         <colgroup>
@@ -124,7 +140,12 @@ const getWidth = (width: string | undefined) => {
             />
           </colgroup>
           <tbody>
-            <tr v-for="(rowData, idx) in rows" :key="idx" class="nmorph-table__table-data-row">
+            <tr
+              v-for="(rowData, idx) in rows"
+              :key="idx"
+              class="nmorph-table__table-data-row"
+              :class="{ 'nmorph-table__table-data-row--row-hover': props.rowHover }"
+            >
               <td
                 v-for="columnData in columns"
                 :key="columnData.prop"
@@ -134,9 +155,9 @@ const getWidth = (width: string | undefined) => {
                 <div
                   :id="`table-cell-${idx}-${columnData.prop}`"
                   :style="{ 'text-align': columnData.alignment }"
-                  class="nmorph-table__cell"
+                  class="nmorph-table__cell nmorph-table__cell--data"
                 >
-                  {{ rowData[columnData.prop] }}
+                  {{ tableData(rowData[columnData.prop]) }}
                 </div>
               </td>
             </tr>
@@ -161,6 +182,7 @@ const getWidth = (width: string | undefined) => {
 <style lang="scss">
 .nmorph-table {
   --border-color: var(--accent-color-01);
+  --table-cell-height: auto;
 
   .nmorph-table__header th {
     border-bottom: 0;
@@ -181,10 +203,6 @@ const getWidth = (width: string | undefined) => {
     width: 100%;
   }
 
-  .nmorph-table__table-data-row:hover {
-    background: var(--background-hover);
-  }
-
   .nmorph-table__table-data {
     padding: var(--indentation-03) 0;
     border-bottom: 1px solid var(--border-color);
@@ -198,8 +216,16 @@ const getWidth = (width: string | undefined) => {
     padding: 0 var(--indentation-03);
   }
 
+  .nmorph-table__cell--data {
+    height: var(--table-cell-height);
+  }
+
   .nmorph-table__body {
     position: relative;
+  }
+
+  .nmorph-table__table-data-row--row-hover:hover {
+    background: var(--background-hover);
   }
 }
 

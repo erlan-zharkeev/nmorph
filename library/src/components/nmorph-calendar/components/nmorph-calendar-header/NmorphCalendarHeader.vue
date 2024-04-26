@@ -2,16 +2,17 @@
 import { computed } from 'vue';
 import { NmorphButton } from '@/components';
 import { useModifiers } from '@/utils';
+import { getMonthName } from './../../utils';
 
 interface IProps {
-  year?: string;
-  month?: string;
+  year: number;
+  month: number;
+  showPreviousMonthButton: boolean;
+  showNextMonthButton: boolean;
+  showTodayButton: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
-  year: '2000',
-  month: 'September',
-});
+const props = withDefaults(defineProps<IProps>(), {});
 
 const emit = defineEmits<IEmit>();
 interface IEmit {
@@ -30,15 +31,26 @@ const modifiers = computed(() =>
 <template>
   <div :class="modifiers">
     <slot>
-      <h2 class="nmorph-calendar-header">{{ props.year }} {{ props.month }}</h2>
+      <h2 class="nmorph-calendar-header">{{ props.year }} {{ getMonthName(props.month) }}</h2>
       <div class="nmorph-calendar-header__actions">
         <NmorphButton
+          v-if="showPreviousMonthButton"
           class="nmorph-calendar-header__action"
           text="Previous month"
           @click="emit('click-previous-month')"
         />
-        <NmorphButton class="nmorph-calendar-header__action" text="Today" @click="emit('click-today')" />
-        <NmorphButton class="nmorph-calendar-header__action" text="Next month" @click="emit('click-next-month')" />
+        <NmorphButton
+          v-if="showTodayButton"
+          class="nmorph-calendar-header__action"
+          text="Today"
+          @click="emit('click-today')"
+        />
+        <NmorphButton
+          v-if="showNextMonthButton"
+          class="nmorph-calendar-header__action"
+          text="Next month"
+          @click="emit('click-next-month')"
+        />
       </div>
     </slot>
   </div>

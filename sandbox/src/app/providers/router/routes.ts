@@ -1,6 +1,7 @@
 import MainPage from './../../../pages/MainPage.vue';
-import Form from './../../../pages/Form.vue';
-import Table from './../../../pages/Table.vue';
+import FormPage from './../../../pages/FormPage.vue';
+import TablePage from './../../../pages/TablePage.vue';
+import DatePickerPage from './../../../pages/DatePickerPage.vue';
 
 import { type RouteRecordRaw } from 'vue-router';
 
@@ -14,16 +15,23 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     path: '/form',
-    component: Form,
+    component: FormPage,
     meta: {
       title: 'Form',
     },
   },
   {
     path: '/table',
-    component: Table,
+    component: TablePage,
     meta: {
       title: 'Table',
+    },
+  },
+  {
+    path: '/date-picker',
+    component: DatePickerPage,
+    meta: {
+      title: 'Date picker',
     },
   },
 ];

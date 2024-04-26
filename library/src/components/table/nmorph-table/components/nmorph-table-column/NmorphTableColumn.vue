@@ -2,7 +2,7 @@
 import { computed, inject, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphTableColumnProps, NmorphTableDataInjection } from '@/components/table/types';
-import { onMounted } from 'vue';
+import { onMounted, provide } from 'vue';
 import { NmorphDomElement } from '@/types/common';
 
 const data = inject<NmorphTableDataInjection>('table-data');
@@ -20,13 +20,18 @@ const modifiers = computed(() =>
   })
 );
 const id = ref(0);
+provide<string>('column-property', props.prop);
 
 onMounted(() => {
+  updateTableData();
+});
+
+const updateTableData = () => {
   if (!data?.columns.value) return;
   const { columns } = data;
   id.value = columns.value.length + 1;
   data.columns.value = [...columns.value, { ...props, id: id.value }];
-});
+};
 
 const columnDOMEl = ref<NmorphDomElement>(null);
 </script>
@@ -36,8 +41,3 @@ const columnDOMEl = ref<NmorphDomElement>(null);
     <slot :scope="{ columns: data?.columns.value, rows: data?.rows.value }" />
   </div>
 </template>
-
-<style lang="scss">
-.nmorph-table-column {
-}
-</style>

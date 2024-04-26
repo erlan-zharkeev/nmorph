@@ -1,3 +1,25 @@
+import { NmorphCalendarDates, NmorphCalendarRange } from './types';
+import { monthNames } from './locale';
+import { Ref } from 'vue';
+
+export const hasAnyRangeDateInPrevMonth = (currentDate: Date, prevMonthRange: Date) => {
+  return currentDate.getMonth() > prevMonthRange.getMonth();
+};
+
+export const hasAnyRangeDateInNextMonth = (currentDate: Date, nextMonthRange: Date) => {
+  return currentDate.getMonth() < nextMonthRange.getMonth();
+};
+
+export const isTodayInRange = (range: NmorphCalendarRange) => {
+  const currentDate = new Date();
+  if (!range) return true;
+  const prevMonthRange = range && range[0];
+  const nextMonthRange = range && range[1];
+  return currentDate >= prevMonthRange && currentDate <= nextMonthRange;
+};
+
+export const getMonthName = (monthIndex: number) => monthNames[monthIndex];
+
 const isLeapYear = (year: number): boolean => {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 };
@@ -8,7 +30,17 @@ const maxDaysInMonth = (year: number, month: number): number => {
   return isLeapYear(year) ? 29 : 28;
 };
 
-export const getMonthDaysByWeek = (year: number, month: number): number[][] => {
+export const getMonthDaysByWeek = (
+  selectedDate: Ref<Date>,
+  range: NmorphCalendarRange | undefined
+): NmorphCalendarDates[] => {
+  const isDateHidden = (candidateDate: Date) => {
+    return range ? candidateDate < range[0] || candidateDate > range[1] : false;
+  };
+
+  const year: number = selectedDate.value.getFullYear();
+  const month: number = selectedDate.value.getMonth();
+
   const startDate = new Date(year, month, 1);
 
   const startDayOfWeek = startDate.getDay() + 1;
@@ -18,29 +50,58 @@ export const getMonthDaysByWeek = (year: number, month: number): number[][] => {
   const endDate = new Date(year, month, daysQuantityInMonth);
   const endDayOfWeek = endDate.getDay() + 1;
   let daysQuantityInWeekInNextMonth = 7 - endDayOfWeek;
+  const today = new Date();
+  const todayDate = today.getDate();
+  const todayMonth = today.getMonth();
 
-  const lasMonth = month - 1;
-  const lastDayInLastMonth = maxDaysInMonth(year, lasMonth);
+  const prevMonth = month - 1;
+  const lastDayInLastMonth = maxDaysInMonth(year, prevMonth);
   let startDayInPrevMonthDates = lastDayInLastMonth - daysQuantityInWeekInPrevMonth;
-  const prevDates = [];
+  const prevDates: NmorphCalendarDates = [];
   while (startDayInPrevMonthDates < lastDayInLastMonth) {
     startDayInPrevMonthDates++;
-    prevDates.push(startDayInPrevMonthDates);
+    const isToday = todayMonth === prevMonth && todayDate === startDayInPrevMonthDates;
+    const candidateDate = new Date(year, prevMonth, startDayInPrevMonthDates);
+    prevDates.push({
+      value: startDayInPrevMonthDates,
+      monthType: 'previous',
+      isToday,
+      date: candidateDate,
+      hidden: isDateHidden(candidateDate),
+    });
   }
 
-  const nextDates = [];
-  let nextMonthCounter = 0;
+  const nextMonth = month + 1;
+  const nextDates: NmorphCalendarDates = [];
+  let nextMonthDaysCounter = 0;
   while (daysQuantityInWeekInNextMonth) {
-    nextMonthCounter++;
+    nextMonthDaysCounter++;
     daysQuantityInWeekInNextMonth--;
-    nextDates.push(nextMonthCounter);
+    const isToday = todayMonth === nextMonth && todayDate === nextMonthDaysCounter;
+    const candidateDate = new Date(year, nextMonth, nextMonthDaysCounter);
+    nextDates.push({
+      value: nextMonthDaysCounter,
+      monthType: 'next',
+      isToday,
+      date: candidateDate,
+      hidden: isDateHidden(candidateDate),
+    });
   }
 
   let daysCounter = 0;
-  const datesInCurrentMonth = [];
+  const datesInCurrentMonth: NmorphCalendarDates = [];
   while (daysCounter < daysQuantityInMonth) {
+    const todayDate = today.getDate();
     daysCounter++;
-    datesInCurrentMonth.push(daysCounter);
+    const isToday = todayMonth === month && todayDate === daysCounter;
+    const candidateDate = new Date(year, month, daysCounter);
+    datesInCurrentMonth.push({
+      value: daysCounter,
+      monthType: 'current',
+      isToday,
+      date: candidateDate,
+      hidden: isDateHidden(candidateDate),
+    });
   }
 
   const calendarDates = [...prevDates, ...datesInCurrentMonth, ...nextDates];
@@ -51,5 +112,7 @@ export const getMonthDaysByWeek = (year: number, month: number): number[][] => {
     chunkedArrays.push(chunk);
   }
 
-  return chunkedArrays;
+  return chunkedArrays.filter((week) => {
+    return !week.every((day) => day.hidden);
+  });
 };

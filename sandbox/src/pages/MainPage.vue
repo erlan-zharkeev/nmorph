@@ -1,7 +1,13 @@
 <template>
   <div class="wrapper">
     <NmorphCard>
-      <NmorphCalendar />
+      <div class="calendar-wrapper">
+        <NmorphCalendar :date="new Date(2019, 2, 1)">
+          <template #date-cell="{ scope }">
+            {{ scope.isToday ? 'TODAY': scope.value }}
+          </template>
+        </NmorphCalendar>
+      </div>
     </NmorphCard>
   </div>
 </template>
