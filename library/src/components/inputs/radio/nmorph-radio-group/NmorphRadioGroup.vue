@@ -32,7 +32,9 @@ const changeHandler = (value: string) => {
   emit('update:modelValue', initialValue.value);
 };
 
-const modifiers = computed(() => useModifiers({ 'nmorph-radio-group': [props.styleType, props.direction] }));
+const modifiers = computed(() =>
+  useModifiers({ 'nmorph-radio-group': [props.styleType, props.direction, `${props.fill && 'fill'}`] })
+);
 
 provide('radio-group-selected-value', initialValue);
 provide('change-radio-button-value-handler', changeHandler);
@@ -76,7 +78,9 @@ provide('change-radio-button-value-handler', changeHandler);
     margin-bottom: var(--indentation-03);
   }
 }
-
+.nmorph-radio-group--fill {
+  width: 100%;
+}
 .nmorph-radio-group--column {
   .nmorph-radio-group__content {
     flex-direction: column;
@@ -88,4 +92,3 @@ provide('change-radio-button-value-handler', changeHandler);
   }
 }
 </style>
-@/types/common

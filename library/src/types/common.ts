@@ -57,6 +57,8 @@ export enum NmorphIconList {
   'zoom-out' = 'zoom-out',
   'time' = 'time',
   'triangle-down' = 'triangle-down',
+  'calendar' = 'calendar',
+  'chevron-double-down' = 'chevron-double-down',
 }
 
 export enum NmorphComponentPosition {

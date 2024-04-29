@@ -11,6 +11,7 @@ import NmorphSelectOption from '@/components/inputs/nmorph-select-option/NmorphS
 import NmorphFileUpload from '@/components/inputs/nmorph-file-upload/NmorphFileUpload.vue';
 import NmorphTimePicker from '@/components/inputs/nmorph-time-picker/NmorphTimePicker.vue';
 import NmorphDatePicker from '@/components/inputs/nmorph-date-picker/NmorphDatePicker.vue';
+import NmorphYearMonthPicker from '@/components/inputs/nmorph-date-picker/components/nmorph-year-month-picker/NmorphYearMonthPicker.vue';
 import NmorphIcon from '@/components/nmorph-icon/NmorphIcon.vue';
 import NmorphButton from '@/components/nmorph-button/NmorphButton.vue';
 import NmorphCard from '@/components/nmorph-card/NmorphCard.vue';
@@ -46,6 +47,7 @@ export {
   NmorphSwitch,
   NmorphTimePicker,
   NmorphDatePicker,
+  NmorphYearMonthPicker,
   NmorphFormItem,
   NmorphSelect,
   NmorphSelectOption,

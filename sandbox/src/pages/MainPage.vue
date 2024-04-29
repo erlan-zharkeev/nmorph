@@ -2,7 +2,7 @@
   <div class="wrapper">
     <NmorphCard>
       <div class="calendar-wrapper">
-        <NmorphCalendar :date="new Date(2019, 2, 1)">
+        <NmorphCalendar :initialDate="new Date(2024, 3, 1)" v-model="selectedValue">
           <template #date-cell="{ scope }">
             {{ scope.isToday ? 'TODAY': scope.value }}
           </template>
@@ -13,9 +13,11 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
 import { NmorphCard, NmorphCalendar } from './../../../library/src/components';
-
+const selectedValue = ref([new Date(2024, 3, 30)])
 </script>
+
 <style lang="scss">
 .divider {
   margin: 20px;

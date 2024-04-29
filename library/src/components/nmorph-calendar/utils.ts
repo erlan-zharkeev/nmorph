@@ -2,6 +2,23 @@ import { NmorphCalendarDates, NmorphCalendarRange } from './types';
 import { monthNames } from './locale';
 import { Ref } from 'vue';
 
+export const getDecadeYears = (year: number) => {
+  const startYear = year - (year % 10);
+  const years = [];
+  for (let i = 0; i < 10; i++) {
+    years.push(startYear + i);
+  }
+  return years;
+};
+
+export const formatDateIntl = (date: Date) => {
+  return new Intl.DateTimeFormat('en-CA', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date);
+};
+
 export const hasAnyRangeDateInPrevMonth = (currentDate: Date, prevMonthRange: Date) => {
   return currentDate.getMonth() > prevMonthRange.getMonth();
 };

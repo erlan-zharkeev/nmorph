@@ -9,18 +9,25 @@ import { NmorphCalendarDate, NmorphCalendarRange } from './types';
 
 interface IProps {
   markToday?: boolean;
-  date?: Date;
+  initialDate?: Date;
+  modelValue?: Date[];
+  singleSelectedValue?: boolean;
   range?: NmorphCalendarRange;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
   markToday: true,
-  date: () => new Date(),
+  initialDate: () => new Date(),
+  modelValue: () => [new Date()],
+  singleSelectedValue: true,
   range: undefined,
 });
 
-// const emit = defineEmits<IEmit>();
-// interface IEmit {}
+const emit = defineEmits<IEmit>();
+interface IEmit {
+  (e: 'update:modelValue', date: Date[]): void;
+  (e: 'update-initial-date', date: Date): void;
+}
 
 const modifiers = computed(() =>
   useModifiers({
@@ -29,9 +36,11 @@ const modifiers = computed(() =>
   })
 );
 
-const initialDate = ref(props.date);
+const initialDate = ref(props.initialDate);
 
 const propDaysOfWeek = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+
+const selectedValue = ref(props.modelValue);
 
 let calendar = reactive<NmorphTableDataType>([]);
 
@@ -47,11 +56,23 @@ const updateCalendar = async () => {
     calendar.push(weekData);
   });
 };
+
 updateCalendar();
 
 watch(initialDate, () => {
   updateCalendar();
+  emit('update-initial-date', initialDate.value);
 });
+
+watch(
+  () => props.initialDate,
+  (newValue) => {
+    initialDate.value = newValue;
+  },
+  {
+    deep: true,
+  }
+);
 
 const dateData = (data: unknown) => data as NmorphCalendarDate;
 
@@ -69,6 +90,12 @@ const clickDate = (dateData: NmorphCalendarDate) => {
   if (hidden) return;
   if (monthType === 'next') setNextMonth();
   if (monthType === 'previous') setPreviousMonth();
+  if (props.singleSelectedValue) {
+    selectedValue.value[0] = dateData.date;
+  } else {
+    selectedValue.value.push(dateData.date);
+  }
+  emit('update:modelValue', selectedValue.value);
 };
 
 const prevMonth = computed(() => new Date(initialDate.value.setMonth(initialDate.value.getMonth() - 1)));
@@ -87,6 +114,13 @@ const showHeaderButtons = computed(() => {
     showTodayButton,
   };
 });
+
+const isValueSelected = (value: Date) => {
+  const transformedSelectedValues = selectedValue.value.map((selectedValue) =>
+    new Date(selectedValue.setHours(0, 0, 0, 0)).getTime()
+  );
+  return transformedSelectedValues.includes(value.getTime());
+};
 </script>
 
 <template>
@@ -103,39 +137,51 @@ const showHeaderButtons = computed(() => {
         @click-today="setTodayMonth"
       />
     </slot>
-    <NmorphTable :data="calendar" bordered :row-hover="false">
-      <NmorphTableColumn
-        v-for="columnName in propDaysOfWeek"
-        :key="`${columnName}`"
-        :prop="columnName"
-        :label="columnName.toUpperCase()"
-      >
-        <template #default="{ scope }">
-          <NmorphTableCell v-for="(row, idx) in scope.rows" :key="idx" :row="idx">
-            <div
-              :data-date="`${dateData(row[columnName]).date}`"
-              :class="[
-                'nmorph-calendar-date',
-                `nmorph-calendar-date--${dateData(row[columnName]).monthType}`,
-                { 'nmorph-calendar-date--today': props.markToday && dateData(row[columnName]).isToday },
-                { 'nmorph-calendar-date--hidden': dateData(row[columnName]).hidden },
-              ]"
-              @click="clickDate(dateData(row[columnName]))"
-            >
-              <slot name="date-cell" :scope="dateData(row[columnName])">
-                {{ dateData(row[columnName]).hidden ? '-' : dateData(row[columnName]).value }}
-              </slot>
-            </div>
-          </NmorphTableCell>
-        </template>
-      </NmorphTableColumn>
-    </NmorphTable>
+    <slot name="content">
+      <NmorphTable :data="calendar" bordered :row-hover="false">
+        <NmorphTableColumn
+          v-for="columnName in propDaysOfWeek"
+          :key="`${columnName}`"
+          :prop="columnName"
+          :label="columnName.toUpperCase()"
+        >
+          <template #default="{ scope }">
+            <NmorphTableCell v-for="(row, idx) in scope.rows" :key="idx" :row="idx">
+              <div
+                :data-date="`${dateData(row[columnName]).date}`"
+                :class="[
+                  'nmorph-calendar-date',
+                  `nmorph-calendar-date--${dateData(row[columnName]).monthType}`,
+                  { 'nmorph-calendar-date--today': props.markToday && dateData(row[columnName]).isToday },
+                  { 'nmorph-calendar-date--hidden': dateData(row[columnName]).hidden },
+                  {
+                    'nmorph-calendar-date--selected': isValueSelected(dateData(row[columnName]).date),
+                  },
+                ]"
+                @click="clickDate(dateData(row[columnName]))"
+              >
+                <slot
+                  name="date-cell"
+                  :scope="{
+                    ...dateData(row[columnName]),
+                    selected: isValueSelected(dateData(row[columnName]).date),
+                  }"
+                >
+                  {{ dateData(row[columnName]).hidden ? '-' : dateData(row[columnName]).value }}
+                </slot>
+              </div>
+            </NmorphTableCell>
+          </template>
+        </NmorphTableColumn>
+      </NmorphTable>
+    </slot>
   </div>
 </template>
 
 <style lang="scss">
 .nmorph-calendar {
   --table-data-cell-height: 50px;
+  background: var(--main-bg);
 
   .nmorph-table__table-data-row {
     height: var(--table-data-cell-height);
@@ -153,6 +199,23 @@ const showHeaderButtons = computed(() => {
     color: var(--info-color-00);
     font-weight: 700;
     @include title-3;
+  }
+
+  .nmorph-table__cell {
+    @include body-3;
+  }
+
+  .nmorph-table .nmorph-table__cell {
+    padding: 0 var(--indentation-01);
+  }
+
+  .nmorph-calendar-date--selected {
+    background: var(--accent-color-00);
+    color: var(--text-00);
+  }
+
+  .nmorph-calendar-date--hidden {
+    cursor: none;
   }
 
   .nmorph-calendar-date:not(.nmorph-calendar-date--hidden) {

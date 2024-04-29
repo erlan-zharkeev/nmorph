@@ -117,10 +117,11 @@ const tableData = (data: unknown) => (typeof data === 'object' ? '' : data);
               :class="{ 'nmorph-table__table-data--bordered': props.bordered }"
             >
               <div class="nmorph-table__cell">
-                <div class="nmorph-table__button-wrapper" :style="{ 'justify-content': columnData.alignment }">
+                <div :style="{ 'justify-content': columnData.alignment }" class="nmorph-table__cell-content">
                   <span>{{ columnData.label }}</span>
                   <NmorphSortButton
                     v-if="sortData && sortData[columnData.prop]"
+                    class="nmorph-table__button-wrapper"
                     :value="sortData[columnData.prop]"
                     @sort="(e: NmorphSortOrderType) => onSort(e, columnData.prop)"
                   />
@@ -193,8 +194,8 @@ const tableData = (data: unknown) => (typeof data === 'object' ? '' : data);
     align-items: center;
   }
 
-  .nmorph-table__button-wrapper span {
-    margin-right: var(--indentation-03);
+  .nmorph-table__button-wrapper {
+    margin-left: var(--indentation-03);
   }
 
   table {
@@ -214,6 +215,11 @@ const tableData = (data: unknown) => (typeof data === 'object' ? '' : data);
 
   .nmorph-table__cell {
     padding: 0 var(--indentation-03);
+  }
+
+  .nmorph-table__cell-content {
+    display: flex;
+    align-items: center;
   }
 
   .nmorph-table__cell--data {

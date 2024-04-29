@@ -20,7 +20,9 @@ import RotateLeft from '@/assets/icons/rotate-left.svg';
 import ZoomIn from '@/assets/icons/zoom-in.svg';
 import ZoomOut from '@/assets/icons/zoom-out.svg';
 import Time from '@/assets/icons/time.svg';
+import Calendar from '@/assets/icons/calendar.svg';
 import TriangleDown from '@/assets/icons/triangle-down.svg';
+import ChevronDoubleDown from '@/assets/icons/chevron-double-down.svg';
 
 export const NmorphIconsMap: Record<NmorphIconList, string> = {
   [NmorphIconList.eye]: Eye,
@@ -44,4 +46,6 @@ export const NmorphIconsMap: Record<NmorphIconList, string> = {
   [NmorphIconList['zoom-in']]: ZoomIn,
   [NmorphIconList['zoom-out']]: ZoomOut,
   [NmorphIconList['triangle-down']]: TriangleDown,
+  [NmorphIconList.calendar]: Calendar,
+  [NmorphIconList['chevron-double-down']]: ChevronDoubleDown,
 };
