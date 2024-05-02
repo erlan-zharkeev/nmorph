@@ -2,7 +2,9 @@
 import { computed, onMounted, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { inject } from 'vue';
+
 const columnProperty = inject<string>('column-property');
+const tableIdentifier = inject<string>('table-identifier');
 
 interface IProps {
   row: number;
@@ -14,7 +16,7 @@ const modifiers = computed(() =>
   })
 );
 const isMounted = ref(false);
-const targetId = computed(() => `#table-cell-${props.row}-${columnProperty}`);
+const targetId = computed(() => `#table-cell-${tableIdentifier}-${props.row}-${columnProperty}`);
 
 onMounted(() => {
   isMounted.value = true;

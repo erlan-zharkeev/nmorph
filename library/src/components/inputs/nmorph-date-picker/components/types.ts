@@ -1,4 +1,4 @@
-export enum NmorphDatePickerType {
+export enum NmorphSelectionDateType {
   'date' = 'date',
   'dates' = 'dates',
   'daterange' = 'daterange',
@@ -10,3 +10,5 @@ export enum NmorphDatePickerType {
   // 'datetimerange' = 'datetimerange',
   // 'monthrange' = 'monthrange',
 }
+
+export type NmorphInnerPickerType = 'calendar' | 'year' | 'month';

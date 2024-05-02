@@ -3,7 +3,7 @@ export const createBlockModifiers = (block: string, modifiers: string[]): string
     .filter((mod) => mod !== 'false')
     .filter((mod) => mod)
     .map((modifier) => {
-      if (modifier) return `${block}--${modifier}`;
+      if (modifier && modifier !== 'undefined') return `${block}--${modifier}`;
     });
 
   stringifiedModifiers.push(block);

@@ -3,12 +3,12 @@ import { ref } from 'vue';
 import {
   NmorphDatePicker,
 } from './../../../library/src/components';
-const selectedDate = ref([new Date()])
+const selectedDate = ref([new Date('2024-05-13'), new Date('2024-06-14')])
 </script>
 
 <template>
   <div class="date-picker-page">
-    <NmorphDatePicker v-model="selectedDate" type="dates"/>
+    <NmorphDatePicker v-model="selectedDate" type="daterange" />
   </div>
 </template>
 

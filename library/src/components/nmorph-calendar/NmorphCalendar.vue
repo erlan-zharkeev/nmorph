@@ -5,33 +5,35 @@ import { NmorphTable, NmorphTableColumn, NmorphTableCell } from '@/components';
 import { getMonthDaysByWeek, hasAnyRangeDateInPrevMonth, hasAnyRangeDateInNextMonth, isTodayInRange } from './utils';
 import NmorphCalendarHeader from './components/nmorph-calendar-header/NmorphCalendarHeader.vue';
 import { NmorphTableDataType } from '../table/types';
-import { NmorphCalendarDate, NmorphCalendarRange } from './types';
+import { NmorphCalendarDate, NmorphCalendarRange, NmorphDate, NmorphSelectedDateModel } from './types';
+import { NmorphSelectionDateType } from '../inputs/nmorph-date-picker/components/types';
 
 interface IProps {
   markToday?: boolean;
   initialDate?: Date;
-  modelValue?: Date[];
-  singleSelectedValue?: boolean;
+  modelValue?: NmorphDate;
   range?: NmorphCalendarRange;
+  type?: keyof typeof NmorphSelectionDateType;
+  selectedValues?: NmorphSelectedDateModel;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
   markToday: true,
   initialDate: () => new Date(),
-  modelValue: () => [new Date()],
-  singleSelectedValue: true,
+  modelValue: null,
   range: undefined,
+  type: 'date',
+  selectedValues: null,
 });
 
 const emit = defineEmits<IEmit>();
 interface IEmit {
-  (e: 'update:modelValue', date: Date[]): void;
+  (e: 'update:modelValue', date: NmorphDate): void;
   (e: 'update-initial-date', date: Date): void;
 }
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [],
     'nmorph-calendar': [],
   })
 );
@@ -90,11 +92,8 @@ const clickDate = (dateData: NmorphCalendarDate) => {
   if (hidden) return;
   if (monthType === 'next') setNextMonth();
   if (monthType === 'previous') setPreviousMonth();
-  if (props.singleSelectedValue) {
-    selectedValue.value[0] = dateData.date;
-  } else {
-    selectedValue.value.push(dateData.date);
-  }
+  const { date } = dateData;
+  selectedValue.value = date;
   emit('update:modelValue', selectedValue.value);
 };
 
@@ -115,11 +114,24 @@ const showHeaderButtons = computed(() => {
   };
 });
 
+const isDateInRange = (dateToCheck: Date, range: NmorphDate[]) => {
+  const startDate = range[0];
+  const endDate = range[1];
+  if (dateToCheck === startDate || dateToCheck === endDate) return true;
+  if (!startDate || !endDate || startDate > endDate) return false;
+  return dateToCheck >= startDate && dateToCheck <= endDate;
+};
+
 const isValueSelected = (value: Date) => {
-  const transformedSelectedValues = selectedValue.value.map((selectedValue) =>
-    new Date(selectedValue.setHours(0, 0, 0, 0)).getTime()
-  );
-  return transformedSelectedValues.includes(value.getTime());
+  if (Array.isArray(props.selectedValues)) {
+    if (props.type === 'daterange') {
+      return isDateInRange(value, props.selectedValues);
+    } else {
+      return props.selectedValues.includes(value);
+    }
+  } else {
+    return props.selectedValues?.toDateString() === value.toDateString();
+  }
 };
 </script>
 

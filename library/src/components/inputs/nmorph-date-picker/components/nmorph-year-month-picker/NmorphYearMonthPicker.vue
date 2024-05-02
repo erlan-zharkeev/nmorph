@@ -59,7 +59,6 @@ interface IEmit {
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [],
     'nmorph-year-month-picker': [],
   })
 );

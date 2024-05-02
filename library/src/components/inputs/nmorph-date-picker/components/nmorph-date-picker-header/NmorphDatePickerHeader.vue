@@ -24,7 +24,6 @@ const emit = defineEmits<IEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [],
     'nmorph-date-picker-header': [],
   })
 );

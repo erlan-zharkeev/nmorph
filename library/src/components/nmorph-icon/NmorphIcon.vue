@@ -53,6 +53,8 @@ const iconDimension = computed(() => {
 
   width: var(--width);
   height: var(--height);
+  min-width: var(--width);
+  min-height: var(--height);
 
   .nmorph-icon__content {
     @include flex-full-center;

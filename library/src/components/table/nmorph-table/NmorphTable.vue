@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, provide, ref, watch } from 'vue';
-import { useModifiers } from '@/utils';
+import { generateUUID, useModifiers } from '@/utils';
 import { NmorphTableColumnProps, NmorphTableDataInjection, NmorphTableDataType, NmorphTableSortType } from '../types';
 import { NmorphSortButton } from '@/components';
 import { NmorphDomElement, NmorphSortOrderType } from '@/types/common';
@@ -29,7 +29,6 @@ const props = withDefaults(defineProps<IProps>(), {
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [],
     'nmorph-table': [`${props.style}`],
   })
 );
@@ -94,6 +93,8 @@ watch(
   }
 );
 const tableData = (data: unknown) => (typeof data === 'object' ? '' : data);
+const tableIdentifier = generateUUID();
+provide('table-identifier', tableIdentifier);
 </script>
 
 <template>
@@ -154,7 +155,7 @@ const tableData = (data: unknown) => (typeof data === 'object' ? '' : data);
                 class="nmorph-table__table-data"
               >
                 <div
-                  :id="`table-cell-${idx}-${columnData.prop}`"
+                  :id="`table-cell-${tableIdentifier}-${idx}-${columnData.prop}`"
                   :style="{ 'text-align': columnData.alignment }"
                   class="nmorph-table__cell nmorph-table__cell--data"
                 >

@@ -1,4 +1,4 @@
-import { NmorphCalendarDates, NmorphCalendarRange } from './types';
+import { NmorphCalendarDates, NmorphCalendarRange, NmorphSelectedDateModel } from './types';
 import { monthNames } from './locale';
 import { Ref } from 'vue';
 
@@ -11,12 +11,20 @@ export const getDecadeYears = (year: number) => {
   return years;
 };
 
-export const formatDateIntl = (date: Date) => {
-  return new Intl.DateTimeFormat('en-CA', {
+export const formatDateIntl = (date: NmorphSelectedDateModel) => {
+  if (!date) return;
+
+  const locale = 'en-CA';
+  const config = {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
-  }).format(date);
+  } as Intl.DateTimeFormatOptions;
+
+  if (Array.isArray(date)) {
+    return date.map((value) => (value ? new Intl.DateTimeFormat(locale, config).format(value) : null));
+  }
+  return new Intl.DateTimeFormat(locale, config).format(date);
 };
 
 export const hasAnyRangeDateInPrevMonth = (currentDate: Date, prevMonthRange: Date) => {

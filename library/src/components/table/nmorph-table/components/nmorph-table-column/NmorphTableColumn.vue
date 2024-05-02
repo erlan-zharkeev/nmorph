@@ -6,6 +6,8 @@ import { onMounted, provide } from 'vue';
 import { NmorphDomElement } from '@/types/common';
 
 const data = inject<NmorphTableDataInjection>('table-data');
+const tableIdentifier = inject<string>('table-identifier');
+
 interface IProps extends NmorphTableColumnProps {}
 const props = withDefaults(defineProps<IProps>(), {
   label: '',
@@ -15,12 +17,13 @@ const props = withDefaults(defineProps<IProps>(), {
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [],
     'nmorph-table-column': [],
   })
 );
 const id = ref(0);
+
 provide<string>('column-property', props.prop);
+provide('table-identifier', tableIdentifier);
 
 onMounted(() => {
   updateTableData();
@@ -38,6 +41,6 @@ const columnDOMEl = ref<NmorphDomElement>(null);
 
 <template>
   <div ref="columnDOMEl" :data-id="id" :class="modifiers">
-    <slot :scope="{ columns: data?.columns.value, rows: data?.rows.value }" />
+    <slot :scope="{ columns: data?.columns.value, rows: data?.rows.value, tableId: tableIdentifier }" />
   </div>
 </template>
