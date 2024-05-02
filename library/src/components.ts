@@ -32,6 +32,8 @@ import NmorphTableColumn from '@/components/table/nmorph-table/components/nmorph
 import NmorphTableCell from '@/components/table/nmorph-table/components/nmorph-table-cell/NmorphTableCell.vue';
 import NmorphSortButton from '@/components/nmorph-sort-button/NmorphSortButton.vue';
 import NmorphDivider from '@/components/nmorph-divider/NmorphDivider.vue';
+import NmorphCollapse from '@/components/nmorph-collapse/NmorphCollapse.vue';
+import NmorphCollapseItem from '@/components/nmorph-collapse/components/nmorph-collapse-item/NmorphCollapseItem.vue';
 
 export {
   NmorphForm,
@@ -68,4 +70,6 @@ export {
   NmorphTableCell,
   NmorphSortButton,
   NmorphDivider,
+  NmorphCollapse,
+  NmorphCollapseItem,
 };
