@@ -18,8 +18,8 @@ const selectedDate = ref([new Date('2024-05-13'), new Date('2024-06-14')])
   max-width: 400px;
   margin: 8px;
 }
+
 html {
   background: var(--main-bg);
-
 }
 </style>

@@ -2,6 +2,7 @@ import MainPage from './../../../pages/MainPage.vue';
 import FormPage from './../../../pages/FormPage.vue';
 import TablePage from './../../../pages/TablePage.vue';
 import DatePickerPage from './../../../pages/DatePickerPage.vue';
+import CalendarPage from './../../../pages/CalendarPage.vue';
 
 import { type RouteRecordRaw } from 'vue-router';
 
@@ -32,6 +33,13 @@ export const routes: RouteRecordRaw[] = [
     component: DatePickerPage,
     meta: {
       title: 'Date picker',
+    },
+  },
+  {
+    path: '/calendar',
+    component: CalendarPage,
+    meta: {
+      title: 'Calendar',
     },
   },
 ];
