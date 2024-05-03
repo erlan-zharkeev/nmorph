@@ -35,6 +35,7 @@ import NmorphDivider from '@/components/nmorph-divider/NmorphDivider.vue';
 import NmorphCollapse from '@/components/nmorph-collapse/NmorphCollapse.vue';
 import NmorphCollapseItem from '@/components/nmorph-collapse/components/nmorph-collapse-item/NmorphCollapseItem.vue';
 import NmorphProgress from '@/components/nmorph-progress/NmorphProgress.vue';
+import NmorphBacktop from '@/components/nmorph-backtop/NmorphBacktop.vue';
 
 export {
   NmorphForm,
@@ -74,4 +75,5 @@ export {
   NmorphCollapse,
   NmorphCollapseItem,
   NmorphProgress,
+  NmorphBacktop,
 };

@@ -13,6 +13,7 @@ interface IProps {
   circleSize?: number;
   strokeWidth?: number;
 }
+
 const props = withDefaults(defineProps<IProps>(), {
   height: 'default',
   type: 'linear',
