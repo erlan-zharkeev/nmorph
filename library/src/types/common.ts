@@ -76,3 +76,11 @@ export interface NmorphCoords<T> {
   x: T;
   y: T;
 }
+
+export enum ImageFit {
+  fill = 'fill',
+  contain = 'contain',
+  cover = 'cover',
+  none = 'none',
+  'scale-down' = 'scale-down',
+}

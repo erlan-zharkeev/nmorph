@@ -37,6 +37,7 @@ import NmorphCollapseItem from '@/components/nmorph-collapse/components/nmorph-c
 import NmorphProgress from '@/components/nmorph-progress/NmorphProgress.vue';
 import NmorphBacktop from '@/components/nmorph-backtop/NmorphBacktop.vue';
 import NmorphBadge from '@/components/nmorph-badge/NmorphBadge.vue';
+import NmorphAvatar from '@/components/nmorph-avatar/NmorphAvatar.vue';
 
 export {
   NmorphForm,
@@ -78,4 +79,5 @@ export {
   NmorphProgress,
   NmorphBacktop,
   NmorphBadge,
+  NmorphAvatar,
 };

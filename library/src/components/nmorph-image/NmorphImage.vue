@@ -1,14 +1,7 @@
 <script setup lang="ts">
+import { ImageFit } from '@/types/common';
 import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
-
-enum ImageFit {
-  fill = 'fill',
-  contain = 'contain',
-  cover = 'cover',
-  none = 'none',
-  'scale-down' = 'scale-down',
-}
 
 interface IProps {
   src: string;
@@ -16,6 +9,7 @@ interface IProps {
   alt?: string;
   loadingText?: string;
   loadFailedText?: string;
+  srcset?: string;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -24,6 +18,7 @@ const props = withDefaults(defineProps<IProps>(), {
   alt: '',
   loadingText: 'Loading ...',
   loadFailedText: 'Image loading failed',
+  srcset: '',
 });
 
 const imageLoadFinished = ref(false);
@@ -32,6 +27,7 @@ const imageLoadError = ref(false);
 const onImageLoad = () => {
   imageLoadFinished.value = true;
 };
+
 const onImageError = () => {
   imageLoadFinished.value = true;
   imageLoadError.value = true;
@@ -48,7 +44,7 @@ const objectFit = computed(() => props.fit);
 
 <template>
   <div :class="modifiers">
-    <img :src="props.src" :alt="props.alt" @load="onImageLoad" @error="onImageError" />
+    <img :src="props.src" :alt="props.alt" :srcset="props.srcset" @load="onImageLoad" @error="onImageError" />
     <div v-if="!imageLoadFinished" class="nmorph-image__loading">
       <slot name="loading"> {{ props.loadingText }} </slot>
     </div>
