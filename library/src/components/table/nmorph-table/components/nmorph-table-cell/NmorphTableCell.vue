@@ -15,9 +15,9 @@ const modifiers = computed(() =>
     'nmorph-table-cell': [],
   })
 );
-const isMounted = ref(false);
 const targetId = computed(() => `#table-cell-${tableIdentifier}-${props.row}-${columnProperty}`);
 
+const isMounted = ref(false);
 onMounted(() => {
   isMounted.value = true;
 });

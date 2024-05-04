@@ -38,6 +38,8 @@ import NmorphProgress from '@/components/nmorph-progress/NmorphProgress.vue';
 import NmorphBacktop from '@/components/nmorph-backtop/NmorphBacktop.vue';
 import NmorphBadge from '@/components/nmorph-badge/NmorphBadge.vue';
 import NmorphAvatar from '@/components/nmorph-avatar/NmorphAvatar.vue';
+import NmorphTabs from '@/components/nmorph-tabs/NmorphTabs.vue';
+import NmorphTabPane from '@/components/nmorph-tabs/components/nmorph-tab-pane/NmorphTabPane.vue';
 
 export {
   NmorphForm,
@@ -80,4 +82,6 @@ export {
   NmorphBacktop,
   NmorphBadge,
   NmorphAvatar,
+  NmorphTabs,
+  NmorphTabPane,
 };

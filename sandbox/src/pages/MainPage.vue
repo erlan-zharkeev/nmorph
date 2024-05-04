@@ -1,38 +1,27 @@
 <template>
   <div class="wrapper">
-    <NmorphCard>
-      <NmorphAvatar
-        :size="50"
-        fit="contain"
-        src="https://secure.gravatar.com/avatar/51d3c935ea5453b2915e6180a9944c11/?default=https%3A%2F%2Fvanillicon.com%2F8fff907b6502f8011495fb154ec1c0a2_200.png&rating=g&size=560"
-        ><img
-          src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
-      /></NmorphAvatar>
-    </NmorphCard>
+    <NmorphTabs v-model="activeName" stretch>
+      <NmorphTabPane label="User" name="first">User Content</NmorphTabPane>
+      <NmorphTabPane label="Config" name="second">Config</NmorphTabPane>
+      <NmorphTabPane label="Role" name="third" disabled>Role</NmorphTabPane>
+      <NmorphTabPane label="Task" name="fourth">
+        <template #label>I am from slot</template>
+        <template #default>Task</template>
+      </NmorphTabPane>
+    </NmorphTabs>
   </div>
 </template>
 
 <script lang="ts" setup>
-// import { ref } from 'vue';
-import {
-  NmorphCard,
-  NmorphButton,
-  NmorphBadge,
-  NmorphAvatar,
-} from "./../../../library/src/components";
-// const value = ref(50);
+import { ref } from "vue";
+import { NmorphTabs, NmorphTabPane } from "./../../../library/src/components";
+
+const activeName = ref("first");
 </script>
 
 <style lang="scss">
-// .nmorph-card {
-//   height: 50%;
-//   overflow: hidden;
-// }
-
-// .wrapper {
-//   background-color: var(--main-bg);
-//   height: 100vh;
-//   padding: 0;
-//   display: flex;
-// }
+.wrapper {
+  width: 1000px;
+  margin: 50px;
+}
 </style>
