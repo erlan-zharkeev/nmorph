@@ -1,12 +1,20 @@
 <template>
   <div class="wrapper">
-    <NmorphCard> // </NmorphCard>
+    <NmorphCard>
+      <NmorphBadge value="жопа">
+        <NmorphButton text="click me" />
+      </NmorphBadge>
+    </NmorphCard>
   </div>
 </template>
 
 <script lang="ts" setup>
 // import { ref } from 'vue';
-import { NmorphCard } from "./../../../library/src/components";
+import {
+  NmorphCard,
+  NmorphButton,
+  NmorphBadge,
+} from "./../../../library/src/components";
 // const value = ref(50);
 </script>
 
