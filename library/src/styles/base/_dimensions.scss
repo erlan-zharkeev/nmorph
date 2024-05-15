@@ -1,3 +1,20 @@
-$base-shadow-width: 3px;
-$base-shadow-blur: $base-shadow-width * 2.5;
-$nmorph-wrapper-padding: $base-shadow-width * 2;
+:root {
+  --thick-component: 38px;
+  --default-thickness-component: 30px;
+  --thin-component: 22px;
+  --extra-thin-component: 14px;
+
+  --form-container: 280px;
+
+  --default-indentation-input: 8px;
+
+  --indentation-00: 0;
+  --indentation-01: 2px;
+  --indentation-02: 4px;
+  --indentation-03: 8px;
+  --indentation-04: 16px;
+
+  --base-shadow-width: 4px;
+  --base-shadow-blur: calc(var(--base-shadow-width) * 2.5);
+  --nmorph-wrapper-padding: calc(var(--base-shadow-width) * 1.5);
+}

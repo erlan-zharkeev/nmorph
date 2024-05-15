@@ -1,9 +1,9 @@
-@import 'colors';
-@import 'border-radius';
-@import 'typography';
 @import 'normalize';
-@import 'fonts';
-@import 'transition';
+@import 'colors';
+@import 'typography';
 @import 'dimensions';
+@import 'border-radius';
 @import 'theme-mixin';
-@import 'common';
+@import 'animation';
+@import 'common-mixins';
+@import 'basic'

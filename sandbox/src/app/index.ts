@@ -1,11 +1,11 @@
-import '@/app/styles/main.scss';
+import './styles/main.scss';
 import { createApp } from 'vue';
-import { router } from '@/app/providers/router';
-import App from '@/app/App.vue';
-import { i18n } from '@/app/providers/i18n';
+import { router } from './providers/router';
+import App from './App.vue';
+import { i18n } from './providers/i18n';
 import { createVfm } from 'vue-final-modal';
 const vfm = createVfm();
-import { store } from '@/app/providers/store';
+import { store } from './providers/store';
 
 import 'vue-final-modal/style.css';
 const app = createApp(App);

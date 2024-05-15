@@ -1,36 +1,64 @@
 <template>
   <div class="wrapper">
-    <NmorphTextInput id="test" v-model="xxx" :rules="rules" />
+    <NmorphAutocomplete
+      v-model="value"
+      :list="variants"
+      :actionCallback="getVariants"
+    >
+    </NmorphAutocomplete>
   </div>
 </template>
+
 <script lang="ts" setup>
-import { NmorphTextInput } from '@nmorph/nmorph-ui-kit/components';
-import { ref } from 'vue';
-const xxx = ref('');
-const rules = [
-  {
-    pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-    error: 'не имэйл ебать',
-  },
-  {
-    pattern: /^.{3,}$/,
-    error: 'коротко ебать',
-  },
-];
-// const clickHandler = () => {
-//   console.log('object');
-// };
+import { ref } from "vue";
+import { NmorphAutocomplete } from "./../../../library/src/components";
+
+const value = ref("");
+const variants = ref([]);
+
+const getVariants = async () => {
+  return fetch("https://rickandmortyapi.com/api/character/?page=19")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      variants.value = data.results.map((el: any) => {
+        return {
+          value: el.name,
+        };
+      });
+    });
+};
+
+// const variants = [
+//   { value: "vue", link: "https://github.com/vuejs/vue" },
+//   { value: "element", link: "https://github.com/ElemeFE/element" },
+//   { value: "cooking", link: "https://github.com/ElemeFE/cooking" },
+//   { value: "mint-ui", link: "https://github.com/ElemeFE/mint-ui" },
+//   { value: "vuex", link: "https://github.com/vuejs/vuex" },
+//   { value: "vue-router", link: "https://github.com/vuejs/vue-router" },
+//   { value: "babel", link: "https://github.com/babel/babel" },
+// ];
 </script>
+
 <style lang="scss">
 .wrapper {
-  text-align: center;
-  height: 100vh;
-  background-color: var(--main-bg);
-  padding: 10rem;
+  margin: 50px;
 }
 
-.form {
-  max-width: 400px;
-  margin: 0 auto;
+.line {
+  display: flex;
+  .ml-2 {
+    margin-left: 8px;
+  }
+}
+
+img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 </style>
