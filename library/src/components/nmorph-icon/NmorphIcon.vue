@@ -8,6 +8,7 @@ import { NmorphIconList } from '@/types/common';
 interface IProps {
   name?: NmorphIconName;
   size?: keyof typeof NmorphIconSize;
+  // 16px в пикселях
   width?: string;
   height?: string;
   path?: string;

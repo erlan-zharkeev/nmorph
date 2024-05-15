@@ -23,6 +23,9 @@ import Time from '@/assets/icons/time.svg';
 import Calendar from '@/assets/icons/calendar.svg';
 import TriangleDown from '@/assets/icons/triangle-down.svg';
 import ChevronDoubleDown from '@/assets/icons/chevron-double-down.svg';
+import Cross from '@/assets/icons/cross.svg';
+import Info from '@/assets/icons/Info.svg';
+import Warning from '@/assets/icons/Warning.svg';
 
 export const NmorphIconsMap: Record<NmorphIconList, string> = {
   [NmorphIconList.eye]: Eye,
@@ -48,4 +51,7 @@ export const NmorphIconsMap: Record<NmorphIconList, string> = {
   [NmorphIconList['triangle-down']]: TriangleDown,
   [NmorphIconList.calendar]: Calendar,
   [NmorphIconList['chevron-double-down']]: ChevronDoubleDown,
+  [NmorphIconList.cross]: Cross,
+  [NmorphIconList.info]: Info,
+  [NmorphIconList.warning]: Warning,
 };

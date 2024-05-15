@@ -59,6 +59,9 @@ export enum NmorphIconList {
   'triangle-down' = 'triangle-down',
   'calendar' = 'calendar',
   'chevron-double-down' = 'chevron-double-down',
+  'cross' = 'cross',
+  'info' = 'info',
+  'warning' = 'warning',
 }
 
 export enum NmorphComponentPosition {

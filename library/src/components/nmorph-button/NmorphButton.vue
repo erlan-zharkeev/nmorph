@@ -8,7 +8,7 @@ import { NmorphIconSize } from '../nmorph-icon/types';
 
 interface IProps extends NmorphCommonInputProps {
   type?: keyof typeof NmorphButtonType;
-  text?: string;
+  text?: string | number;
   loading?: boolean;
   styleType?: keyof typeof NmorphButtonStyle;
   bgTransparentOnHover?: boolean;
@@ -175,4 +175,3 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIcon
   @include disabled;
 }
 </style>
-@/types/common

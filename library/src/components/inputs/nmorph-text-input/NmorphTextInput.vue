@@ -8,6 +8,7 @@ interface IProps extends NmorphCommonInputProps {
   placeholder?: string;
   typePassword?: boolean;
   modelValue?: string;
+  clearable?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -19,6 +20,7 @@ const props = withDefaults(defineProps<IProps>(), {
   rules: () => [],
   height: 'default',
   fill: true,
+  clearable: false,
 });
 
 const modifiers = computed(() =>
@@ -34,12 +36,17 @@ const handleInput = (event: Event): void => {
 };
 
 const showPassword = ref(false);
-const changePasswordAppearance = () => {
-  showPassword.value = !showPassword.value;
+
+const actionButtonClickHandler = () => {
+  if (props.clearable) {
+    emit('update:modelValue', '');
+  } else {
+    showPassword.value = !showPassword.value;
+  }
 };
 
 const type = computed(() => {
-  return props.typePassword && !showPassword.value ? 'password' : 'text';
+  return props.typePassword && !showPassword.value && !props.clearable ? 'password' : 'text';
 });
 
 const focused = ref(false);
@@ -67,6 +74,11 @@ const emit = defineEmits<IEmit>();
 onMounted(() => {
   emit('inputDOMRef', inputDOMRef);
 });
+
+const actionIcon = computed(() => {
+  if (props.clearable) return 'error';
+  else return showPassword.value ? 'eye-blocked' : 'eye';
+});
 </script>
 
 <template>
@@ -84,15 +96,15 @@ onMounted(() => {
         @blur="handleBlur"
       />
       <NmorphButton
-        v-if="props.typePassword"
+        v-if="props.typePassword || props.clearable"
         class="nmorph-text-input__password-btn"
         style-type="transparent"
         width="32px"
         bg-transparent-on-hover
         :height="props.height"
-        @click="changePasswordAppearance"
+        @click="actionButtonClickHandler"
       >
-        <NmorphIcon :name="showPassword ? 'eye-blocked' : 'eye'" />
+        <NmorphIcon :name="actionIcon" />
       </NmorphButton>
     </div>
   </div>
@@ -124,10 +136,10 @@ onMounted(() => {
   }
 
   input:focus {
-    background: var(--accent-color-00);
     outline: none;
 
     @include nmorph-outset;
+    background: var(--accent-color-00);
   }
 
   input:disabled {

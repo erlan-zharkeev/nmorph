@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphCommonInputProps, NmorphComponentDirection } from '@/types/common';
 import { useModifiers } from '@/utils';
-import { ref, computed, provide } from 'vue';
+import { ref, computed, provide, watch } from 'vue';
 import { IRadioOption, RadioStyleType } from '../types';
 import NmorphRadio from './../nmorph-radio/NmorphRadio.vue';
 
@@ -18,6 +18,7 @@ const props = withDefaults(defineProps<IProps>(), {
   options: () => [],
   direction: 'row',
   label: '',
+  disabled: false,
 });
 
 interface IEmit {
@@ -25,6 +26,13 @@ interface IEmit {
 }
 
 const initialValue = ref(props.modelValue);
+
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    initialValue.value = newValue;
+  }
+);
 
 const emit = defineEmits<IEmit>();
 const changeHandler = (value: string) => {
@@ -49,7 +57,7 @@ provide('change-radio-button-value-handler', changeHandler);
           :key="option.value"
           :label="option.label"
           :value="option.value"
-          :disabled="option.disabled"
+          :disabled="option.disabled || props.disabled"
           :style-type="props.styleType"
         />
         <slot />

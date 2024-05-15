@@ -22,6 +22,7 @@ import NmorphOverlay from '@/components/nmorph-overlay/NmorphOverlay.vue';
 import NmorphImage from '@/components/nmorph-image/NmorphImage.vue';
 import NmorphImagePreview from '@/components/nmorph-image-preview/NmorphImagePreview.vue';
 import NmorphCarousel from '@/components/nmorph-carousel/NmorphCarousel.vue';
+import NmorphCarouselItem from '@/components/nmorph-carousel/components/nmorph-carousel-item/NmorphCarouselItem.vue';
 import NmorphFormItem from '@/components/form/nmorph-form/components/nmorph-form-item/NmorphFormItem.vue';
 import NmorphForm from '@/components/form/nmorph-form/NmorphForm.vue';
 import NmorphScroll from '@/components/nmorph-scroll/NmorphScroll.vue';
@@ -40,6 +41,14 @@ import NmorphBadge from '@/components/nmorph-badge/NmorphBadge.vue';
 import NmorphAvatar from '@/components/nmorph-avatar/NmorphAvatar.vue';
 import NmorphTabs from '@/components/nmorph-tabs/NmorphTabs.vue';
 import NmorphTabPane from '@/components/nmorph-tabs/components/nmorph-tab-pane/NmorphTabPane.vue';
+import NmorphBreadcrumb from '@/components/nmorph-breadcrumb/NmorphBreadcrumb.vue';
+import NmorphBreadcrumbItem from '@/components/nmorph-breadcrumb/components/nmorph-breadcrumb-item/NmorphBreadcrumbItem.vue';
+import NmorphAlert from '@/components/nmorph-alert/NmorphAlert.vue';
+import NmorphDialog from '@/components/nmorph-dialog/NmorphDialog.vue';
+import NmorphSkeleton from '@/components/nmorph-skeleton/NmorphSkeleton.vue';
+import NmorphSkeletonItem from '@/components/nmorph-skeleton/components/NmorphSkeletonItem.vue';
+import NmorphPagination from '@/components/nmorph-pagination/NmorphPagination.vue';
+import NmorphAutocomplete from '@/components/inputs/nmorph-autocomplete/NmorphAutocomplete.vue';
 
 export {
   NmorphForm,
@@ -52,6 +61,7 @@ export {
   NmorphCheckbox,
   NmorphCheckboxGroup,
   NmorphCarousel,
+  NmorphCarouselItem,
   NmorphNumberInput,
   NmorphSwitch,
   NmorphTimePicker,
@@ -84,4 +94,12 @@ export {
   NmorphAvatar,
   NmorphTabs,
   NmorphTabPane,
+  NmorphBreadcrumb,
+  NmorphBreadcrumbItem,
+  NmorphAlert,
+  NmorphDialog,
+  NmorphSkeleton,
+  NmorphSkeletonItem,
+  NmorphPagination,
+  NmorphAutocomplete,
 };
