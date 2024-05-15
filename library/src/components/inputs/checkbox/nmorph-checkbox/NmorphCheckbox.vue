@@ -2,6 +2,7 @@
 import { computed, ref, Ref, inject, onMounted } from 'vue';
 import { useModifiers } from '@/utils';
 import { ICheckboxOption } from '../types';
+import { NmorphDomElement } from '@/types/common';
 
 const groupSelectedValue = inject<Ref<string[]>>('checkbox-group-selected-value');
 const changeValue = inject<(value: string, currentState: string[]) => void>('change-checkbox-value-handler');

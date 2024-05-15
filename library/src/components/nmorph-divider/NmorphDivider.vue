@@ -11,10 +11,6 @@ const props = withDefaults(defineProps<IProps>(), {
   direction: 'horizontal',
 });
 
-const emit = defineEmits<IEmit>();
-
-interface IEmit {}
-
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-divider': [props.direction],

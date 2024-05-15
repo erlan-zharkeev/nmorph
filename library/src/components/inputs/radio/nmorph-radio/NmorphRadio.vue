@@ -2,6 +2,7 @@
 import { Ref, computed, inject, onMounted, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { IRadioOption, RadioStyleType } from '../types';
+import { NmorphDomElement } from '@/types/common';
 
 const groupSelectedValue = inject<Ref<string>>('radio-group-selected-value');
 const changeValue = inject<(value: string) => void>('change-radio-button-value-handler');
