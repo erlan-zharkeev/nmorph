@@ -3,7 +3,7 @@ import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 import { NmorphScroll } from '@/components';
 
-interface IProps {
+interface INmorphProps {
   selectedValue?: number;
   values: number[];
   stepHeight: number;
@@ -11,16 +11,16 @@ interface IProps {
   disabledRange?: [number, number] | null;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   selectedValue: 0,
   values: () => [],
   setValueOnMount: false,
   disabledRange: null,
 });
-interface IEmit {
+interface INmorphEmit {
   (e: 'value-changed', val: number): void;
 }
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-time-roller': [],
@@ -88,8 +88,8 @@ const cellHeight = computed(() => `${props.stepHeight}px`);
 
 <style lang="scss">
 .nmorph-time-roller {
-  --hover-bg: var(--accent-color-01);
-  --hover-color: var(--text-00);
+  --hover-bg: var(--accent-color-00);
+  --hover-color: var(--text-color-00);
 
   width: 100%;
   margin-left: 2px;
@@ -125,7 +125,7 @@ const cellHeight = computed(() => `${props.stepHeight}px`);
 
   .nmorph-time-roller__value--disabled-value:hover {
     background: transparent;
-    color: var(--accent-color-01);
+    color: var(--accent-color-00);
   }
 }
 </style>

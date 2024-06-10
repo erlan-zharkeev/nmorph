@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { NmorphCommonInputProps, NmorphDomElement } from '@/types/common';
+import { INmorphCommonInputProps, NmorphDomElementType } from '@/types/common';
 import { useModifiers } from '@/utils';
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import { NmorphTooltip } from '@/components';
 
-interface IProps extends Omit<NmorphCommonInputProps, 'height'> {
+interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
   modelValue?: number;
   max?: number;
   min?: number;
@@ -12,7 +12,7 @@ interface IProps extends Omit<NmorphCommonInputProps, 'height'> {
   showTooltip?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: 0,
   max: 100,
   min: 0,
@@ -39,7 +39,7 @@ const emit = defineEmits<{
 
 const thumbValue = ref(props.modelValue);
 
-const sliderContainer = ref<NmorphDomElement>(null);
+const sliderContainer = ref<NmorphDomElementType>(null);
 
 watch(thumbValue, () => {
   emit('update:modelValue', thumbValue.value);
@@ -101,7 +101,7 @@ const mousedownHandler = () => {
   document.addEventListener('mouseup', mouseUp);
 };
 
-const sliderFirst = ref<NmorphDomElement>(null);
+const sliderFirst = ref<NmorphDomElementType>(null);
 
 const handleMouseEnter = () => {
   if (props.showTooltip) tooltipVisible.value = true;
@@ -200,4 +200,3 @@ const handleMouseLeave = () => {
   }
 }
 </style>
-@/types/common

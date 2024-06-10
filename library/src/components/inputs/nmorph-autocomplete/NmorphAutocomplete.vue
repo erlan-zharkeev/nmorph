@@ -2,20 +2,20 @@
 import { computed, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import NmorphTextInput from './../nmorph-text-input/NmorphTextInput.vue';
-import { NmorphCommonInputProps, NmorphDomElement } from '@/types/common';
+import { INmorphCommonInputProps, NmorphDomElementType } from '@/types/common';
 import NmorphDropdown from './../../nmorph-dropdown/NmorphDropdown.vue';
-import { NmorphAutocompleteActionCallback, NmorphAutocompleteListItem } from './types';
+import { NmorphAutocompleteActionCallbackType, INmorphAutocompleteListItem } from './types';
 import NmorphIcon from '@/components/nmorph-icon/NmorphIcon.vue';
 
-interface IProps extends NmorphCommonInputProps {
+interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: string;
   placeholder?: string;
   clearable?: boolean;
-  list: NmorphAutocompleteListItem[];
-  actionCallback?: NmorphAutocompleteActionCallback;
+  list: INmorphAutocompleteListItem[];
+  actionCallback?: NmorphAutocompleteActionCallbackType;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: '',
   placeholder: 'Please input',
   fill: true,
@@ -28,11 +28,11 @@ const props = withDefaults(defineProps<IProps>(), {
 
 const initialValue = ref(props.modelValue);
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'update:modelValue', value: string): void;
   (e: 'select', value: unknown): void;
 }
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -46,7 +46,7 @@ const updateValueHandler = (value: string) => {
 };
 
 const open = ref(false);
-const nmorphAutocompleteDOMRef = ref<NmorphDomElement>(null);
+const nmorphAutocompleteDOMRef = ref<NmorphDomElementType>(null);
 const closeHandler = () => {
   open.value = false;
 };
@@ -63,7 +63,7 @@ watch(filteredList, (newValue) => {
   open.value = newValue.length > 0;
 });
 
-const clickHandler = (listEl: NmorphAutocompleteListItem) => {
+const clickHandler = (listEl: INmorphAutocompleteListItem) => {
   emit('select', listEl);
   initialValue.value = listEl.value;
   setTimeout(() => {
@@ -145,7 +145,7 @@ watch(loader, (newValue) => {
 }
 
 .nmorph-autocomplete__list-item:hover {
-  background: var(--accent-color-01);
-  color: var(--text-00);
+  background: var(--accent-color-00);
+  color: var(--text-color-00);
 }
 </style>

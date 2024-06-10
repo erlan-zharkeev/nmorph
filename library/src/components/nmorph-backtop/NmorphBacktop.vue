@@ -3,25 +3,25 @@ import { computed, onUnmounted, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import NmorphButton from '../nmorph-button/NmorphButton.vue';
 import NmorphIcon from '../nmorph-icon/NmorphIcon.vue';
-import { NmorphDomElement } from '@/types/common';
+import { NmorphDomElementType } from '@/types/common';
 import { onMounted } from 'vue';
 
-interface IProps {
+interface INmorphProps {
   right?: number;
   bottom?: number;
   visibilityHeight?: number;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   right: 40,
   bottom: 40,
   visibilityHeight: 200,
 });
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'click'): void;
 }
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const offsetRight = computed(() => `${props.right}px`);
 const offsetBottom = computed(() => `${props.bottom}px`);
@@ -32,8 +32,8 @@ const modifiers = computed(() =>
   })
 );
 
-const container = ref<NmorphDomElement>(null);
-const selfDOMEl = ref<NmorphDomElement>(null);
+const container = ref<NmorphDomElementType>(null);
+const selfDOMEl = ref<NmorphDomElementType>(null);
 const showButton = ref(false);
 
 const scrollHandler = (event: Event) => {

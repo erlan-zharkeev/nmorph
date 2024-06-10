@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import { Ref, computed, inject, onMounted, ref } from 'vue';
 import { useModifiers } from '@/utils';
-import { IRadioOption, RadioStyleType } from '../types';
-import { NmorphDomElement } from '@/types/common';
+import {
+  INmorphRadioOption,
+  NmorphRadioChangeRadioButtonValueHandlerInjectionType,
+  NmorphRadioGroupSelectedValueInjectionType,
+  NmorphRadioStyleType,
+} from '../types';
+import { NmorphDomElementType } from '@/types/common';
 
-const groupSelectedValue = inject<Ref<string>>('radio-group-selected-value');
-const changeValue = inject<(value: string) => void>('change-radio-button-value-handler');
+const groupSelectedValue = inject<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value');
+const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-button-value-handler');
 
-interface IProps extends IRadioOption {
-  styleType?: keyof typeof RadioStyleType;
+interface INmorphProps extends INmorphRadioOption {
+  styleType?: keyof typeof NmorphRadioStyleType;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   label: '',
   styleType: 'button-style',
@@ -29,11 +34,11 @@ const modifiers = computed(() =>
   })
 );
 
-interface IEmit {
-  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
+interface INmorphEmit {
+  (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
 }
-const emit = defineEmits<IEmit>();
-const inputDOMRef = ref<NmorphDomElement>(null);
+const emit = defineEmits<INmorphEmit>();
+const inputDOMRef = ref<NmorphDomElementType>(null);
 
 onMounted(() => {
   emit('inputDOMRef', inputDOMRef);
@@ -113,7 +118,7 @@ onMounted(() => {
   .nmorph-radio__fake-checked {
     width: 50%;
     height: 50%;
-    background: var(--accent-color-01);
+    background: var(--accent-color-00);
     border-radius: var(--border-radius-circular);
 
     @include absolute-center;

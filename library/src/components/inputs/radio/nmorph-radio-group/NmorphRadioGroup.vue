@@ -1,18 +1,23 @@
 <script setup lang="ts">
-import { NmorphCommonInputProps, NmorphComponentDirection } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentDirection } from '@/types/common';
 import { useModifiers } from '@/utils';
 import { ref, computed, provide, watch } from 'vue';
-import { IRadioOption, RadioStyleType } from '../types';
+import {
+  INmorphRadioOption,
+  NmorphRadioChangeRadioButtonValueHandlerInjectionType,
+  NmorphRadioGroupSelectedValueInjectionType,
+  NmorphRadioStyleType,
+} from '../types';
 import NmorphRadio from './../nmorph-radio/NmorphRadio.vue';
 
-interface IProps extends NmorphCommonInputProps {
+interface INmorphProps extends INmorphCommonInputProps {
   modelValue: string;
-  options?: IRadioOption[];
-  styleType?: keyof typeof RadioStyleType;
+  options?: INmorphRadioOption[];
+  styleType?: keyof typeof NmorphRadioStyleType;
   direction?: keyof typeof NmorphComponentDirection;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: '',
   styleType: 'button-style',
   options: () => [],
@@ -21,7 +26,7 @@ const props = withDefaults(defineProps<IProps>(), {
   disabled: false,
 });
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'update:modelValue', val: string): void;
 }
 
@@ -34,7 +39,7 @@ watch(
   }
 );
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 const changeHandler = (value: string) => {
   initialValue.value = value;
   emit('update:modelValue', initialValue.value);
@@ -44,8 +49,8 @@ const modifiers = computed(() =>
   useModifiers({ 'nmorph-radio-group': [props.styleType, props.direction, `${props.fill && 'fill'}`] })
 );
 
-provide('radio-group-selected-value', initialValue);
-provide('change-radio-button-value-handler', changeHandler);
+provide<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value', initialValue);
+provide<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-button-value-handler', changeHandler);
 </script>
 
 <template>

@@ -4,7 +4,7 @@ import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphIcon } from '@/components';
 
-interface IProps {
+interface INmorphProps {
   value: string;
   text: string;
   removable?: boolean;
@@ -12,7 +12,7 @@ interface IProps {
   transparent?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   removable: true,
   transparent: false,
@@ -25,11 +25,11 @@ const modifiers = computed(() =>
   })
 );
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'close', val: string): void;
 }
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const closeHandler = () => {
   emit('close', props.value);
@@ -84,4 +84,3 @@ const closeHandler = () => {
   box-shadow: none;
 }
 </style>
-@/types/common

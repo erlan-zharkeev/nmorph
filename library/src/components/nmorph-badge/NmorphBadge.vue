@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphDomElement } from '@/types/common';
+import { NmorphDomElementType } from '@/types/common';
 import { onMounted } from 'vue';
 
-interface IProps {
+interface INmorphProps {
   value?: number | string;
   max?: number;
   isDot?: boolean;
@@ -14,12 +14,12 @@ interface IProps {
   offsetX?: number;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   value: '',
   max: 99,
   isDot: false,
   hidden: false,
-  color: 'var(--accent-color-01)',
+  color: 'var(--accent-color-00)',
   offsetX: 0,
   offsetY: 0,
 });
@@ -50,7 +50,7 @@ const appliedOffset = computed(() => {
   };
 });
 
-const badge = ref<NmorphDomElement>(null);
+const badge = ref<NmorphDomElementType>(null);
 
 const badgeWidth = ref(0);
 const badgeHeight = ref(0);

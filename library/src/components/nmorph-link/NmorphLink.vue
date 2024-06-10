@@ -4,25 +4,19 @@ import { computed } from 'vue';
 import { NmorphIconName } from '../nmorph-icon/types';
 import { NmorphColor } from '@/types/common';
 import { NmorphIcon } from '@/components';
+import { NmorphLinkTarget } from './types';
 
-enum LinkTarget {
-  self = '_self',
-  blank = '_blank',
-  parent = '_parent',
-  top = '_top',
-}
-
-interface IProps {
+interface INmorphProps {
   color?: keyof typeof NmorphColor;
   underline?: boolean;
   href?: string;
   text?: string;
   iconName?: NmorphIconName;
-  target?: keyof typeof LinkTarget;
+  target?: keyof typeof NmorphLinkTarget;
   disabled?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   color: NmorphColor.accent,
   href: '',
   underline: false,
@@ -94,17 +88,16 @@ const modifiers = computed(() =>
 
 .nmorph-link--success {
   --link-color: var(--success-color-00);
-  --hover-color: var(--success-color-01);
+  --hover-color: var(--success-color-00);
 }
 
 .nmorph-link--warning {
   --link-color: var(--warning-color-00);
-  --hover-color: var(--warning-color-01);
+  --hover-color: var(--warning-color-00);
 }
 
 .nmorph-link--error {
-  --link-color: var(--error-color-00);
-  --hover-color: var(--error-color-00);
+  --link-color: var(--error-text-color-00);
+  --hover-color: var(--error-text-color-00);
 }
 </style>
-@/types/common

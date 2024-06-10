@@ -5,7 +5,7 @@ import { NmorphIconName, NmorphIconSize } from './types';
 import { NmorphIconsMap } from './NmorphIconsMap';
 import { NmorphIconList } from '@/types/common';
 
-interface IProps {
+interface INmorphProps {
   name?: NmorphIconName;
   size?: keyof typeof NmorphIconSize;
   // 16px в пикселях
@@ -14,7 +14,7 @@ interface IProps {
   path?: string;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   name: undefined,
   size: 'small',
   width: undefined,
@@ -50,7 +50,7 @@ const iconDimension = computed(() => {
 
 <style lang="scss">
 .nmorph-icon {
-  --color: var(--text-01);
+  --color: var(--text-color-01);
 
   width: var(--width);
   height: var(--height);
@@ -65,6 +65,10 @@ const iconDimension = computed(() => {
     @include wh100;
 
     fill: var(--color);
+  }
+
+  .nmorph-icon__as-image {
+    display: flex;
   }
 
   .nmorph-icon__as-image img {

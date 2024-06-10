@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { NmorphCommonInputProps, NmorphComponentHeight } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentHeight } from '@/types/common';
 import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphButtonType, NmorphButtonStyle } from './types';
 import { NmorphIcon } from '@/components';
 import { NmorphIconSize } from '../nmorph-icon/types';
 
-interface IProps extends NmorphCommonInputProps {
+interface INmorphProps extends INmorphCommonInputProps {
   type?: keyof typeof NmorphButtonType;
   text?: string | number;
   loading?: boolean;
@@ -15,7 +15,7 @@ interface IProps extends NmorphCommonInputProps {
   ripple?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   type: 'button',
   fill: false,
   text: '',
@@ -39,11 +39,11 @@ const modifiers = computed(() =>
   })
 );
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'click'): void;
 }
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const iconSizeMap = {
   thin: 'small',
@@ -105,17 +105,17 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIcon
   }
 
   .nmorph-button__content:not(:disabled, [loading='true']):hover {
-    color: var(--text-00);
-    background: var(--accent-color-01);
+    color: var(--text-color-00);
+    background: var(--accent-color-00);
     box-shadow: none;
   }
 
   .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
-    --color: var(--text-00);
+    --color: var(--text-color-00);
   }
 
   .nmorph-button__content:not(:disabled, [loading='true']):hover span {
-    color: var(--text-00);
+    color: var(--text-color-00);
   }
 }
 
@@ -135,7 +135,7 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIcon
   }
 
   .nmorph-button__content::after {
-    background-image: radial-gradient(circle, var(--main-bg) 10%, transparent 10.01%);
+    background-image: radial-gradient(circle, var(--main-bg-color) 10%, transparent 10.01%);
     background-repeat: no-repeat;
     background-position: 50%;
     transform: scale(10, 10);
@@ -166,7 +166,7 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIcon
     box-shadow: none;
 
     .nmorph-icon {
-      --color: var(--text-01);
+      --color: var(--text-color-01);
     }
   }
 }

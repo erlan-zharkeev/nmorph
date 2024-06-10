@@ -1,1 +1,1 @@
-export type NmorphDirection = 'vertical' | 'horizontal';
+export type NmorphDirectionType = 'vertical' | 'horizontal';

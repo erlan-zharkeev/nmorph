@@ -1,14 +1,18 @@
 <script setup lang="ts">
-import { Ref, computed, provide, ref } from 'vue';
+import { computed, provide, ref } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphCollapseModel } from './types';
+import {
+  NmorphCollapseDataInjectionType,
+  NmorphCollapseModelType,
+  NmorphCollapseUpdateModelInjectionType,
+} from './types';
 
-interface IProps {
-  modelValue: NmorphCollapseModel;
+interface INmorphProps {
+  modelValue: NmorphCollapseModelType;
   accordion?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   accordion: false,
 });
 
@@ -26,12 +30,12 @@ const updateValue = (id: string, value: boolean) => {
   emit('update:modelValue', initialValue.value);
 };
 
-provide<Ref<NmorphCollapseModel>>('collapse-data', initialValue);
-provide('update-model', updateValue);
+provide<NmorphCollapseDataInjectionType>('collapse-data', initialValue);
+provide<NmorphCollapseUpdateModelInjectionType>('update-model', updateValue);
 
-const emit = defineEmits<IEmit>();
-interface IEmit {
-  (e: 'update:modelValue', value: NmorphCollapseModel): void;
+const emit = defineEmits<INmorphEmit>();
+interface INmorphEmit {
+  (e: 'update:modelValue', value: NmorphCollapseModelType): void;
 }
 
 const modifiers = computed(() =>
@@ -45,8 +49,3 @@ const modifiers = computed(() =>
     <slot />
   </div>
 </template>
-
-<style lang="scss">
-.nmorph-collapse {
-}
-</style>

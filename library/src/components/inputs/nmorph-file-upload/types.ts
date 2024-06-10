@@ -1,4 +1,4 @@
-export enum ImageResolution {
+export enum NmorphImageResolution {
   jpeg = 'image/jpeg',
   jpg = 'image/jpg',
   png = 'image/png',
@@ -7,19 +7,19 @@ export enum ImageResolution {
   webp = 'image/webp',
 }
 
-export enum VideoResolution {
+export enum NmorphVideoResolution {
   mp4 = 'video/mp4',
   webm = 'video/webm',
   'wideo-ogg' = 'video/ogg',
 }
 
-export enum AudioResolution {
+export enum NmorphAudioResolution {
   mpeg = 'audio/mpeg',
   'audio-ogg' = 'audio/ogg',
   wav = 'audio/wav',
 }
 
-export enum DocResolution {
+export enum NmorphDocResolution {
   pdf = 'application/pdf',
   msword = 'application/msword',
   docx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -29,18 +29,23 @@ export enum DocResolution {
   xml = 'application/xml',
 }
 
-export enum ArchiveResolution {
+export enum NmorphArchiveResolution {
   zip = 'application/zip',
   rar = 'application/x-rar-compressed',
   '7z' = 'application/x-7z-compressed',
 }
 
 export const resolution = {
-  ...ImageResolution,
-  ...VideoResolution,
-  ...AudioResolution,
-  ...DocResolution,
-  ...ArchiveResolution,
+  ...NmorphImageResolution,
+  ...NmorphVideoResolution,
+  ...NmorphAudioResolution,
+  ...NmorphDocResolution,
+  ...NmorphArchiveResolution,
 };
 
-export type Resolution = keyof typeof resolution;
+export type NmorphResolutionType = keyof typeof resolution;
+
+export interface INmorphCustomFileData {
+  data: File;
+  previewUrl: string;
+}

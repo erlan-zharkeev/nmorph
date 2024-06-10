@@ -12,3 +12,5 @@ export enum NmorphSelectionDateType {
 }
 
 export type NmorphInnerPickerType = 'calendar' | 'year' | 'month';
+
+export type ControlsType = 'decrease' | 'increase';

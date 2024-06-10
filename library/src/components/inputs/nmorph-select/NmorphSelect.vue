@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { NmorphCommonInputProps, NmorphComponentHeight, NmorphDomElement } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types/common';
 import { useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide } from 'vue';
-import { ISelectOption } from '../nmorph-select-option/NmorphSelectOption.vue';
-import { SelectModelValue } from '../nmorph-select-option/types';
 import { NmorphTag, NmorphIcon, NmorphSelectOption, NmorphDropdown } from '@/components';
+import {
+  NmorphSelectSelectedValueInjectionType,
+  NmorphSelectChangeSelectedValue,
+  NmorphSelectModelValueType,
+} from './types';
+import { INmorphSelectOption } from './components/nmorph-select-option/NmorphSelectOption.vue';
 
-interface IProps extends NmorphCommonInputProps {
+interface INmorphProps extends INmorphCommonInputProps {
   noElementPlaceholder?: string;
   valueRequired?: boolean;
-  options?: ISelectOption[];
-  optionsMap?: ISelectOption[];
-  modelValue?: SelectModelValue;
+  options?: INmorphSelectOption[];
+  optionsMap?: INmorphSelectOption[];
+  modelValue?: NmorphSelectModelValueType;
   loading?: boolean;
   open?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   noElementPlaceholder: 'Choose value',
   valueRequired: false,
   options: () => [],
@@ -30,13 +34,13 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', val: SelectModelValue): void;
+  (e: 'update:modelValue', val: NmorphSelectModelValueType): void;
 }>();
 
-const initialValue = ref<SelectModelValue>(props.modelValue);
+const initialValue = ref<NmorphSelectModelValueType>(props.modelValue);
 const open = ref(props.open);
 
-const optionsDOMRef = ref<NmorphDomElement>(null);
+const optionsDOMRef = ref<NmorphDomElementType>(null);
 const optionsHeight = ref<string | null>(null);
 const selectedLineOutset = ref(true);
 
@@ -123,10 +127,10 @@ const tags = computed(() => {
   return [{ text: initialValue.value, value: initialValue.value }];
 });
 
-provide('select-selected-value', initialValue);
-provide('select-change-selected-value', changeHandler);
+provide<NmorphSelectSelectedValueInjectionType>('select-selected-value', initialValue);
+provide<NmorphSelectChangeSelectedValue>('select-change-selected-value', changeHandler);
 
-const nmorphSelectDOMRef = ref<NmorphDomElement>(null);
+const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
 </script>
 
 <template>
@@ -212,3 +216,4 @@ const nmorphSelectDOMRef = ref<NmorphDomElement>(null);
   }
 }
 </style>
+./components/nmorph-select-option/NmorphSelectOption.vue./components/nmorph-select-option/types

@@ -1,4 +1,4 @@
-export type Hour =
+export type NmorphHourType =
   | 0
   | 1
   | 2
@@ -23,7 +23,7 @@ export type Hour =
   | 21
   | 22
   | 23;
-export type MinuteSeconds =
+export type NmorphMinuteSecondsType =
   | 0
   | 1
   | 2
@@ -84,4 +84,4 @@ export type MinuteSeconds =
   | 57
   | 58
   | 59;
-export type TimeTuple = [Hour, MinuteSeconds, MinuteSeconds];
+export type NmorphTimeTupleType = [NmorphHourType, NmorphMinuteSecondsType, NmorphMinuteSecondsType];

@@ -1,20 +1,27 @@
 <script setup lang="ts">
 import { Ref, computed, onMounted, reactive, ref } from 'vue';
-import { ArchiveResolution, AudioResolution, ImageResolution, Resolution, VideoResolution } from './types';
+import {
+  INmorphCustomFileData,
+  NmorphArchiveResolution,
+  NmorphAudioResolution,
+  NmorphImageResolution,
+  NmorphResolutionType,
+  NmorphVideoResolution,
+} from './types';
 import { useModifiers } from '@/utils';
-import { NmorphDomElement, NmorphIconList } from '@/types/common';
+import { NmorphDomElementType, NmorphIconList } from '@/types/common';
 import { NmorphButton, NmorphIcon, NmorphImagePreview } from '@/components';
 
-interface IProps {
-  modelValue?: CustomFileData[];
+interface INmorphProps {
+  modelValue?: INmorphCustomFileData[];
   disabled?: boolean;
   multiple?: boolean;
-  allowedTypes?: Resolution[];
+  allowedTypes?: NmorphResolutionType[];
   photoWithPreview?: boolean;
   fill?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: () => [],
   disabled: false,
   multiple: false,
@@ -28,21 +35,16 @@ const getPlainType = (resolution: string) => resolution.split('/')[1];
 const typeFileIconMap = (resolution: string): keyof typeof NmorphIconList => {
   const plainResolutionName = getPlainType(resolution);
   let result: keyof typeof NmorphIconList = 'doc';
-  if (plainResolutionName in ImageResolution) result = 'image';
-  if (plainResolutionName in AudioResolution) result = 'audio';
-  if (plainResolutionName in VideoResolution) result = 'video';
-  if (plainResolutionName in ArchiveResolution) result = 'archive';
+  if (plainResolutionName in NmorphImageResolution) result = 'image';
+  if (plainResolutionName in NmorphAudioResolution) result = 'audio';
+  if (plainResolutionName in NmorphVideoResolution) result = 'video';
+  if (plainResolutionName in NmorphArchiveResolution) result = 'archive';
   return result;
 };
 
-interface CustomFileData {
-  data: File;
-  previewUrl: string;
-}
+let files = reactive<INmorphCustomFileData[]>(props.modelValue);
 
-let files = reactive<CustomFileData[]>(props.modelValue);
-
-const inputDOMRef = ref<NmorphDomElement>(null);
+const inputDOMRef = ref<NmorphDomElementType>(null);
 
 const openFileSelector = () => {
   if (inputDOMRef.value) {
@@ -54,7 +56,7 @@ const handleFileUpload = (event: Event) => {
   const target = event.target as HTMLInputElement;
   if (target.files) {
     Array.from(target.files).forEach((file) => {
-      const resolution = getPlainType(file.type) as Resolution;
+      const resolution = getPlainType(file.type) as NmorphResolutionType;
       if (!props.allowedTypes.includes(resolution)) {
         return emit('on-unsupported-file-type-error', file.type);
       }
@@ -87,13 +89,13 @@ onMounted(() => {
   emit('inputDOMRef', inputDOMRef);
 });
 
-interface IEmit {
-  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
+interface INmorphEmit {
+  (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
   (e: 'update:modelValue', val: File[]): void;
   (e: 'on-unsupported-file-type-error', val: string): void;
 }
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -108,7 +110,7 @@ const modifiers = computed(() =>
     <div class="nmorph-file-upload__trigger">
       <input ref="inputDOMRef" type="file" :multiple="props.multiple" @change="handleFileUpload" />
       <slot name="trigger">
-        <NmorphButton text="select file" fill @click="openFileSelector" />
+        <NmorphButton text="Select file" fill @click="openFileSelector" />
       </slot>
     </div>
     <div class="nmorph-file-upload__list">
@@ -172,4 +174,3 @@ const modifiers = computed(() =>
   }
 }
 </style>
-@/types/common

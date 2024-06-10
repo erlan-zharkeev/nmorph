@@ -16,7 +16,7 @@ export enum NmorphComponentDirection {
   column = 'column',
 }
 
-export interface NmorphCommonInputProps {
+export interface INmorphCommonInputProps {
   height?: keyof typeof NmorphComponentHeight;
   fill?: boolean;
   disabled?: boolean;
@@ -71,16 +71,16 @@ export enum NmorphComponentPosition {
   bottom = 'bottom',
 }
 
-export type NmorphPlacement = keyof typeof NmorphComponentPosition;
+export type NmorphPlacementType = keyof typeof NmorphComponentPosition;
 
-export type NmorphDomElement = HTMLElement | null;
+export type NmorphDomElementType = HTMLElement | null;
 
-export interface NmorphCoords<T> {
+export interface INmorphCoords<T> {
   x: T;
   y: T;
 }
 
-export enum ImageFit {
+export enum NmorphImageFit {
   fill = 'fill',
   contain = 'contain',
   cover = 'cover',

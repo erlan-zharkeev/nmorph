@@ -2,17 +2,18 @@
 import { computed, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import NmorphRadioGroup from '@/components/inputs/radio/nmorph-radio-group/NmorphRadioGroup.vue';
-import { IRadioOption } from '@/components/inputs/radio/types';
+import { INmorphRadioOption } from '@/components/inputs/radio/types';
 import { monthNames } from '@/components/nmorph-calendar/locale';
 import { getDecadeYears } from '@/components/nmorph-calendar/utils';
 import { NmorphButton, NmorphIcon } from '@/components';
+import { ControlsType } from '../types';
 
-interface IProps {
+interface INmorphProps {
   currentDate: Date;
   type?: 'year' | 'month';
 }
 
-const initialMonthData: IRadioOption[] = monthNames.map((monthName, idx) => {
+const initialMonthData: INmorphRadioOption[] = monthNames.map((monthName, idx) => {
   const label = monthName.substring(0, 3);
   return {
     label,
@@ -20,11 +21,11 @@ const initialMonthData: IRadioOption[] = monthNames.map((monthName, idx) => {
   };
 });
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   type: 'month',
 });
 
-const values = ref<IRadioOption[]>(initialMonthData);
+const values = ref<INmorphRadioOption[]>(initialMonthData);
 const selectedValue = ref(String(props.currentDate.getMonth()));
 const selectedYear = ref(props.currentDate.getFullYear());
 
@@ -50,8 +51,8 @@ watch(
   }
 );
 
-const emit = defineEmits<IEmit>();
-interface IEmit {
+const emit = defineEmits<INmorphEmit>();
+interface INmorphEmit {
   (e: 'update-year', val: string): void;
   (e: 'update-month', val: string): void;
   (e: 'back-to-years'): void;
@@ -68,8 +69,6 @@ const updateModelValue = (value: string) => {
   if (props.type === 'month') emit('update-month', selectedValue.value);
   else emit('update-year', selectedValue.value);
 };
-
-type ControlsType = 'decrease' | 'increase';
 
 const updateYearValues = (operator: ControlsType) => {
   values.value = values.value.map((year) => {

@@ -3,9 +3,7 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgLoader from 'vite-svg-loader';
-// import path from 'path';
 import { fileURLToPath, URL } from 'url';
 
 export default defineConfig({
@@ -14,22 +12,11 @@ export default defineConfig({
     dts({
       include: ['./src/**/*.ts', './src/**/*.vue'],
       cleanVueFileName: false,
-      outDir: './dist/types',
+      outDir: './dist',
       insertTypesEntry: true,
       copyDtsFiles: false,
       staticImport: true,
       exclude: ['**/*.spec.ts', '**/*.story.vue', 'node_modules', 'vuetify'],
-    }),
-    viteStaticCopy({
-      targets: [
-        {
-          src: './src/styles/**/*.scss',
-          dest: './styles',
-          rename: (fileName, fileExtension, fullPath): string => {
-            return fullPath.replace(/.*src\/styles\//, '');
-          },
-        },
-      ],
     }),
     svgLoader(),
   ],
@@ -38,7 +25,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src', 'main.ts'),
       name: 'library',
-      formats: ['es'],
+      formats: ['es', 'umd'],
       fileName: (format: string) => `index.${format}.js`,
     },
     rollupOptions: {

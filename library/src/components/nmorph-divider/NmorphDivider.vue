@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphDirection } from './types';
+import { NmorphDirectionType } from './types';
 
-interface IProps {
-  direction?: NmorphDirection;
+interface INmorphProps {
+  direction?: NmorphDirectionType;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   direction: 'horizontal',
 });
 

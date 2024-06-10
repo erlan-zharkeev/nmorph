@@ -3,12 +3,12 @@ import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import NmorphSkeletonItem from './components/NmorphSkeletonItem.vue';
 
-interface IProps {
+interface INmorphProps {
   animated?: boolean;
   loading?: boolean;
   rows?: number;
 }
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   animated: true,
   loading: true,
   rows: 0,

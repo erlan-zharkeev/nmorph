@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { NmorphCommonInputProps, NmorphDomElement } from '@/types/common';
+import { INmorphCommonInputProps, NmorphDomElementType } from '@/types/common';
 import { useModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref } from 'vue';
 import { NmorphIcon } from '@/components';
 
-interface IProps extends Omit<NmorphCommonInputProps, 'fill'> {
+interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
   modelValue?: boolean;
   loading?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: false,
   loading: false,
   disabled: false,
@@ -26,7 +26,7 @@ const modifiers = computed(() =>
   })
 );
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const initialValue = ref(props.modelValue);
 
@@ -36,11 +36,11 @@ const changeHandler = () => {
   emit('update:modelValue', initialValue.value);
 };
 
-interface IEmit {
-  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
+interface INmorphEmit {
+  (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
   (e: 'update:modelValue', val: boolean): void;
 }
-const inputDOMRef = ref<NmorphDomElement>(null);
+const inputDOMRef = ref<NmorphDomElementType>(null);
 onMounted(() => {
   emit('inputDOMRef', inputDOMRef);
 });
@@ -119,7 +119,7 @@ onMounted(() => {
 
 .nmorph-switch--on {
   .nmorph-switch__content {
-    background: var(--accent-color-01);
+    background: var(--accent-color-00);
     box-shadow: none;
   }
 

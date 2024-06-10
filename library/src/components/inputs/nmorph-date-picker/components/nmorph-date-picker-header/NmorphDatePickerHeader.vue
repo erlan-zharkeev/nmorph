@@ -4,14 +4,14 @@ import { useModifiers } from '@/utils';
 import { NmorphButton, NmorphIcon } from '@/components';
 import { getMonthName } from '@/components/nmorph-calendar/utils';
 
-interface IProps {
+interface INmorphProps {
   date?: Date;
 }
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   date: () => new Date(),
 });
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'prev-month'): void;
   (e: 'next-month'): void;
   (e: 'prev-year'): void;
@@ -20,7 +20,7 @@ interface IEmit {
   (e: 'change-month'): void;
 }
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

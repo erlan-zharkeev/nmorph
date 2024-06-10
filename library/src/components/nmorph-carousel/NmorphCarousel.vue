@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { generateUUID, useModifiers } from '@/utils';
 import { computed, onMounted, provide, reactive, ref, watch, nextTick } from 'vue';
-import { NmorphCarouselInjection } from './types';
+import { INmorphCarouselInjection } from './types';
 import NmorphIcon from './../nmorph-icon/NmorphIcon.vue';
-import { NmorphDomElement } from '@/types/common';
+import { NmorphDomElementType } from '@/types/common';
 
 const currentSlide = ref(0);
 
@@ -15,17 +15,17 @@ const nextSlide = () => {
   currentSlide.value = currentSlide.value - 1;
 };
 
-interface IProps {
+interface INmorphProps {
   loop?: boolean;
 }
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   loop: true,
 });
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'change', value: number): void;
 }
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -35,10 +35,10 @@ const modifiers = computed(() =>
 
 const carouselData = ref<string[]>([]);
 const carouselId = generateUUID();
-provide<NmorphCarouselInjection>('carousel-data', { data: carouselData, carouselId });
+provide<INmorphCarouselInjection>('carousel-data', { data: carouselData, carouselId });
 
-const carouselWrapper = ref<NmorphDomElement>(null);
-const slidesRefs = reactive<Record<number, NmorphDomElement>>({});
+const carouselWrapper = ref<NmorphDomElementType>(null);
+const slidesRefs = reactive<Record<number, NmorphDomElementType>>({});
 
 const addInitialCloneSlides = () => {
   const prevSlide = slidesRefs[Object.keys(slidesRefs).length - 1]?.cloneNode(true) as Node;
@@ -77,7 +77,7 @@ watch(currentSlide, (newValue) => {
 });
 
 const setItemRef = (el: unknown, idx: number) => {
-  const element = el as NmorphDomElement;
+  const element = el as NmorphDomElementType;
   slidesRefs[idx] = element;
 };
 
@@ -142,7 +142,7 @@ const elementIndicator = (idx: number) => {
   overflow: hidden;
   height: var(--height);
   position: relative;
-  border: 10px solid var(--main-bg);
+  border: 10px solid var(--main-bg-color);
   border-radius: var(--default-border-radius);
   @include nmorph-outset;
 
@@ -176,7 +176,7 @@ const elementIndicator = (idx: number) => {
   }
 
   .nmorph-carousel__element-indicator--active {
-    background: var(--text-00);
+    background: var(--text-color-00);
   }
 
   .nmorph-carousel__action-btn {
@@ -193,7 +193,7 @@ const elementIndicator = (idx: number) => {
     }
 
     .nmorph-icon {
-      --color: var(--text-00);
+      --color: var(--text-color-00);
     }
   }
 

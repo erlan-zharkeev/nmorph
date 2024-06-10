@@ -5,22 +5,22 @@ import { NmorphCalendar } from '@/components';
 import NmorphDatePickerHeader from './../nmorph-date-picker-header/NmorphDatePickerHeader.vue';
 import NmorphYearMonthPicker from './../nmorph-year-month-picker/NmorphYearMonthPicker.vue';
 import { NmorphInnerPickerType, NmorphSelectionDateType } from '../types';
-import { NmorphDate, NmorphSelectedDateModel } from '@/components/nmorph-calendar/types';
+import { NmorphDateType, NmorphSelectedDateModelType } from '@/components/nmorph-calendar/types';
 
-interface IProps {
+interface INmorphProps {
   initialDate?: Date;
-  selectedValues: NmorphSelectedDateModel;
+  selectedValues: NmorphSelectedDateModelType;
   type?: keyof typeof NmorphSelectionDateType;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   initialDate: () => new Date(),
   type: 'date',
 });
 
-const emit = defineEmits<IEmit>();
-interface IEmit {
-  (e: 'update-selected-value', selectedValue: NmorphDate): void;
+const emit = defineEmits<INmorphEmit>();
+interface INmorphEmit {
+  (e: 'update-selected-value', selectedValue: NmorphDateType): void;
 }
 
 const modifiers = computed(() =>
@@ -70,7 +70,7 @@ const backToYearsHandler = () => {
   selectedPicker.value = 'year';
 };
 
-const updateSelectedDate = (value: NmorphDate) => {
+const updateSelectedDate = (value: NmorphDateType) => {
   emit('update-selected-value', value);
 };
 </script>
@@ -111,5 +111,3 @@ const updateSelectedDate = (value: NmorphDate) => {
     />
   </div>
 </template>
-
-<style lang="scss"></style>

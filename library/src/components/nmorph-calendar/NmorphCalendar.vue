@@ -4,20 +4,20 @@ import { useModifiers } from '@/utils';
 import { NmorphTable, NmorphTableColumn, NmorphTableCell } from '@/components';
 import { getMonthDaysByWeek, hasAnyRangeDateInPrevMonth, hasAnyRangeDateInNextMonth, isTodayInRange } from './utils';
 import NmorphCalendarHeader from './components/nmorph-calendar-header/NmorphCalendarHeader.vue';
-import { NmorphTableDataType } from '../table/types';
-import { NmorphCalendarDate, NmorphCalendarRange, NmorphDate, NmorphSelectedDateModel } from './types';
+import { INmorphCalendarDate, NmorphCalendarRangeType, NmorphDateType, NmorphSelectedDateModelType } from './types';
 import { NmorphSelectionDateType } from '../inputs/nmorph-date-picker/components/types';
+import { NmorphTableDataType } from '../nmorph-table/types';
 
-interface IProps {
+interface INmorphProps {
   markToday?: boolean;
   initialDate?: Date;
-  modelValue?: NmorphDate;
-  range?: NmorphCalendarRange;
+  modelValue?: NmorphDateType;
+  range?: NmorphCalendarRangeType;
   type?: keyof typeof NmorphSelectionDateType;
-  selectedValues?: NmorphSelectedDateModel;
+  selectedValues?: NmorphSelectedDateModelType;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   markToday: true,
   initialDate: () => new Date(),
   modelValue: null,
@@ -26,9 +26,9 @@ const props = withDefaults(defineProps<IProps>(), {
   selectedValues: null,
 });
 
-const emit = defineEmits<IEmit>();
-interface IEmit {
-  (e: 'update:modelValue', date: NmorphDate): void;
+const emit = defineEmits<INmorphEmit>();
+interface INmorphEmit {
+  (e: 'update:modelValue', date: NmorphDateType): void;
   (e: 'update-initial-date', date: Date): void;
 }
 
@@ -50,7 +50,7 @@ const updateCalendar = async () => {
   calendar = [];
   const calendarMatrix = getMonthDaysByWeek(initialDate, props.range);
   calendarMatrix.forEach((week) => {
-    const weekData: Record<string, NmorphCalendarDate> = {};
+    const weekData: Record<string, INmorphCalendarDate> = {};
     week.forEach((day, dayIdx) => {
       const propName = propDaysOfWeek[dayIdx];
       weekData[propName] = day;
@@ -76,7 +76,7 @@ watch(
   }
 );
 
-const dateData = (data: unknown) => data as NmorphCalendarDate;
+const dateData = (data: unknown) => data as INmorphCalendarDate;
 
 const setPreviousMonth = () => {
   initialDate.value = prevMonth.value;
@@ -87,7 +87,7 @@ const setTodayMonth = () => {
 const setNextMonth = () => {
   initialDate.value = nextMonth.value;
 };
-const clickDate = (dateData: NmorphCalendarDate) => {
+const clickDate = (dateData: INmorphCalendarDate) => {
   const { monthType, hidden } = dateData;
   if (hidden) return;
   if (monthType === 'next') setNextMonth();
@@ -114,7 +114,7 @@ const showHeaderButtons = computed(() => {
   };
 });
 
-const isDateInRange = (dateToCheck: Date, range: NmorphDate[]) => {
+const isDateInRange = (dateToCheck: Date, range: NmorphDateType[]) => {
   const startDate = range[0];
   const endDate = range[1];
   if (dateToCheck === startDate || dateToCheck === endDate) return true;
@@ -193,7 +193,7 @@ const isValueSelected = (value: Date) => {
 <style lang="scss">
 .nmorph-calendar {
   --table-data-cell-height: 50px;
-  background: var(--main-bg);
+  background: var(--main-bg-color);
 
   .nmorph-table__table-data-row {
     height: var(--table-data-cell-height);
@@ -223,7 +223,7 @@ const isValueSelected = (value: Date) => {
 
   .nmorph-calendar-date--selected {
     background: var(--accent-color-00);
-    color: var(--text-00);
+    color: var(--text-color-00);
   }
 
   .nmorph-calendar-date--hidden {
@@ -241,3 +241,4 @@ const isValueSelected = (value: Date) => {
   }
 }
 </style>
+../table/nmorph-table/types

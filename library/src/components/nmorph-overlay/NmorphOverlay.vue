@@ -2,13 +2,13 @@
 import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 
-interface IProps {
+interface INmorphProps {
   show: boolean;
   outsideClickEmitEvent?: boolean;
   transparent?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   show: false,
   outsideClickEmitEvent: true,
 });
@@ -27,11 +27,11 @@ const clickHandler = () => {
   emit('on-outside-click');
 };
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'on-outside-click'): void;
 }
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 </script>
 
 <template>

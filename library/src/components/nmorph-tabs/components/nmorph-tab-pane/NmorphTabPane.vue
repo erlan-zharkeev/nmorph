@@ -2,12 +2,12 @@
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { inject } from 'vue';
-import { NmorphTabPaneProps, NmorphTabsDataProvider } from '../../type';
+import { INmorphTabPaneProps, INmorphTabsDataProvider } from '../../type';
 import { onMounted } from 'vue';
 import { getTabContentId, getTabLabelId } from './../../utils';
 
-interface IProps extends NmorphTabPaneProps {}
-const props = withDefaults(defineProps<IProps>(), {
+interface INmorphProps extends INmorphTabPaneProps {}
+const props = withDefaults(defineProps<INmorphProps>(), {
   label: '',
   disabled: false,
 });
@@ -18,7 +18,7 @@ const modifiers = computed(() =>
   })
 );
 
-const providedData = inject<NmorphTabsDataProvider | undefined>('nmorph-tabs-data');
+const providedData = inject<INmorphTabsDataProvider | undefined>('nmorph-tabs-data');
 
 const isMounted = ref(false);
 

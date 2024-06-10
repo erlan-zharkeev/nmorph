@@ -4,7 +4,7 @@ import { NmorphButton } from '@/components';
 import { useModifiers } from '@/utils';
 import { getMonthName } from './../../utils';
 
-interface IProps {
+interface INmorphProps {
   year: number;
   month: number;
   showPreviousMonthButton: boolean;
@@ -12,10 +12,10 @@ interface IProps {
   showTodayButton: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {});
+const props = withDefaults(defineProps<INmorphProps>(), {});
 
-const emit = defineEmits<IEmit>();
-interface IEmit {
+const emit = defineEmits<INmorphEmit>();
+interface INmorphEmit {
   (e: 'click-previous-month'): void;
   (e: 'click-today'): void;
   (e: 'click-next-month'): void;

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed, inject, ref } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphCarouselInjection } from '../../types';
+import { INmorphCarouselInjection } from '../../types';
 import { onMounted } from 'vue';
 
-interface IProps {
+interface INmorphProps {
   name: string;
 }
 
-const props = withDefaults(defineProps<IProps>(), {});
+const props = withDefaults(defineProps<INmorphProps>(), {});
 
 const modifiers = computed(() =>
   useModifiers({
@@ -16,7 +16,7 @@ const modifiers = computed(() =>
   })
 );
 
-const carouselData = inject<NmorphCarouselInjection>('carousel-data');
+const carouselData = inject<INmorphCarouselInjection>('carousel-data');
 
 const isMounted = ref(false);
 

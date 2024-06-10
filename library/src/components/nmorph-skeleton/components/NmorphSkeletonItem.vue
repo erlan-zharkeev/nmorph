@@ -4,10 +4,10 @@ import { useModifiers } from '@/utils';
 import { NmorphSkeletonItemPropsType } from '../types';
 import NmorphIcon from './../../nmorph-icon/NmorphIcon.vue';
 
-interface IProps {
+interface INmorphProps {
   variant?: NmorphSkeletonItemPropsType;
 }
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   variant: 'text',
 });
 

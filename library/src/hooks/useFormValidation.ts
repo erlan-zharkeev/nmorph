@@ -1,9 +1,9 @@
-import { FormValue } from '@/components/form/types';
 import { reactive, watch } from 'vue';
 import { useFieldValidation } from '.';
 import { deepClone } from '@/utils';
+import { NmorphFormValueType } from '@/components/nmorph-form/types';
 
-export const useFormValidation = (formData: FormValue, validateFormOnLoad: boolean = false) => {
+export const useFormValidation = (formData: NmorphFormValueType, validateFormOnLoad: boolean = false) => {
   const fields = reactive<Record<string, ReturnType<typeof useFieldValidation>>>({});
   const formToCompare = reactive(deepClone(formData));
 
@@ -14,7 +14,7 @@ export const useFormValidation = (formData: FormValue, validateFormOnLoad: boole
     });
   };
 
-  const compareFormData = (oldData: FormValue, newData: FormValue) => {
+  const compareFormData = (oldData: NmorphFormValueType, newData: NmorphFormValueType) => {
     const changedFields = Object.keys(newData).filter((key) => {
       const oldValue = oldData[key] ? JSON.stringify(oldData[key]) : null;
       const newValue = JSON.stringify(newData[key]);
@@ -23,7 +23,7 @@ export const useFormValidation = (formData: FormValue, validateFormOnLoad: boole
     return changedFields;
   };
 
-  const formUpdateHandler = (data: FormValue) => {
+  const formUpdateHandler = (data: NmorphFormValueType) => {
     const changedFields = compareFormData(formToCompare, data);
     changedFields.forEach((fieldName) => {
       const fieldData = data[fieldName];

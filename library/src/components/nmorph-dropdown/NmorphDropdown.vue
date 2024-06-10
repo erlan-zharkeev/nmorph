@@ -2,31 +2,31 @@
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { usePlacement } from '@/hooks';
-import { NmorphDomElement } from '@/types/common';
+import { NmorphDomElementType } from '@/types/common';
 import { NmorphOverlay } from '@/components';
 
-interface IProps {
+interface INmorphProps {
   open: boolean;
-  relativeElement: NmorphDomElement;
+  relativeElement: NmorphDomElementType;
   width?: number;
   xOffset?: number;
   yOffset?: number;
   fillWidth?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   width: 160,
   xOffset: 0,
   yOffset: 0,
   fillWidth: true,
 });
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'on-outside-click'): void;
 }
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
-const dropdownDOMRef = ref<NmorphDomElement>(null);
+const dropdownDOMRef = ref<NmorphDomElementType>(null);
 
 const { placementCoords } = usePlacement({
   initialPlacement: 'bottom',

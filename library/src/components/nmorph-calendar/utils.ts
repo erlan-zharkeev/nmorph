@@ -1,4 +1,4 @@
-import { NmorphCalendarDates, NmorphCalendarRange, NmorphSelectedDateModel } from './types';
+import { NmorphCalendarDatesType, NmorphCalendarRangeType, NmorphSelectedDateModelType } from './types';
 import { monthNames } from './locale';
 import { Ref } from 'vue';
 
@@ -11,7 +11,7 @@ export const getDecadeYears = (year: number) => {
   return years;
 };
 
-export const formatDateIntl = (date: NmorphSelectedDateModel) => {
+export const formatDateIntl = (date: NmorphSelectedDateModelType) => {
   if (!date) return;
 
   const locale = 'en-CA';
@@ -35,7 +35,7 @@ export const hasAnyRangeDateInNextMonth = (currentDate: Date, nextMonthRange: Da
   return currentDate.getMonth() < nextMonthRange.getMonth();
 };
 
-export const isTodayInRange = (range: NmorphCalendarRange) => {
+export const isTodayInRange = (range: NmorphCalendarRangeType) => {
   const currentDate = new Date();
   if (!range) return true;
   const prevMonthRange = range && range[0];
@@ -57,8 +57,8 @@ const maxDaysInMonth = (year: number, month: number): number => {
 
 export const getMonthDaysByWeek = (
   selectedDate: Ref<Date>,
-  range: NmorphCalendarRange | undefined
-): NmorphCalendarDates[] => {
+  range: NmorphCalendarRangeType | undefined
+): NmorphCalendarDatesType[] => {
   const isDateHidden = (candidateDate: Date) => {
     return range ? candidateDate < range[0] || candidateDate > range[1] : false;
   };
@@ -82,7 +82,7 @@ export const getMonthDaysByWeek = (
   const prevMonth = month - 1;
   const lastDayInLastMonth = maxDaysInMonth(year, prevMonth);
   let startDayInPrevMonthDates = lastDayInLastMonth - daysQuantityInWeekInPrevMonth;
-  const prevDates: NmorphCalendarDates = [];
+  const prevDates: NmorphCalendarDatesType = [];
   while (startDayInPrevMonthDates < lastDayInLastMonth) {
     startDayInPrevMonthDates++;
     const isToday = todayMonth === prevMonth && todayDate === startDayInPrevMonthDates;
@@ -97,7 +97,7 @@ export const getMonthDaysByWeek = (
   }
 
   const nextMonth = month + 1;
-  const nextDates: NmorphCalendarDates = [];
+  const nextDates: NmorphCalendarDatesType = [];
   let nextMonthDaysCounter = 0;
   while (daysQuantityInWeekInNextMonth) {
     nextMonthDaysCounter++;
@@ -114,7 +114,7 @@ export const getMonthDaysByWeek = (
   }
 
   let daysCounter = 0;
-  const datesInCurrentMonth: NmorphCalendarDates = [];
+  const datesInCurrentMonth: NmorphCalendarDatesType = [];
   while (daysCounter < daysQuantityInMonth) {
     const todayDate = today.getDate();
     daysCounter++;

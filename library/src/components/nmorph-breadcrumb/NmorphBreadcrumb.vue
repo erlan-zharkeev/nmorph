@@ -2,16 +2,16 @@
 import { computed, ref } from 'vue';
 import { generateUUID, useModifiers } from '@/utils';
 import { provide } from 'vue';
-import { NmorphBreadcrumbInjection, NmorphBreadcrumbInjectionItemWithId } from './types';
+import { NmorphBreadcrumbInjection, NmorphBreadcrumbsType } from './types';
 
-interface IProps {
+interface INmorphProps {
   separator?: string;
 }
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   separator: '/',
 });
 
-const breadcrumbs = ref<NmorphBreadcrumbInjectionItemWithId[]>([]);
+const breadcrumbs: NmorphBreadcrumbsType = ref([]);
 
 const breadcrumbId = generateUUID();
 provide<NmorphBreadcrumbInjection>('breadcrumb-data', { breadcrumbs, breadcrumbId });

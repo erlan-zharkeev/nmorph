@@ -1,26 +1,26 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphCommonInputProps, NmorphComponentHeight, NmorphDomElement } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types/common';
 import { NmorphDropdown, NmorphIcon, NmorphDivider } from '@/components';
 import { formatDateIntl } from '@/components/nmorph-calendar/utils';
 import { NmorphSelectionDateType } from './components/types';
 import NmorphDatePickerContent from './components/nmorph-date-picker-content/NmorphDatePickerContent.vue';
-import { NmorphDate, NmorphSelectedDateModel } from '@/components/nmorph-calendar/types';
+import { NmorphDateType, NmorphSelectedDateModelType } from '@/components/nmorph-calendar/types';
 import NmorphClearButton from './../nmorph-clear-button/NmorphClearButton.vue';
 
-interface IProps extends Omit<NmorphCommonInputProps, 'fill'> {
+interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
   placeholder?: string;
   initialStartDate?: Date;
   initialEndDate?: Date;
-  modelValue: NmorphSelectedDateModel;
+  modelValue: NmorphSelectedDateModelType;
   type?: keyof typeof NmorphSelectionDateType;
   textSeparator?: string;
   startDatePlaceholder?: string;
   endDatePlaceholder?: string;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   height: 'default',
   placeholder: 'Pick a date',
@@ -38,11 +38,11 @@ const endDate = ref(
   props.initialEndDate ?? new Date(new Date(props.initialStartDate).setMonth(props.initialStartDate.getMonth() + 1))
 );
 
-const selectedDate = ref<NmorphSelectedDateModel>(props.modelValue);
+const selectedDate = ref<NmorphSelectedDateModelType>(props.modelValue);
 
-const emit = defineEmits<IEmit>();
-interface IEmit {
-  (e: 'update:modelValue', modelValue: NmorphSelectedDateModel): void;
+const emit = defineEmits<INmorphEmit>();
+interface INmorphEmit {
+  (e: 'update:modelValue', modelValue: NmorphSelectedDateModelType): void;
 }
 
 const modifiers = computed(() =>
@@ -53,7 +53,7 @@ const modifiers = computed(() =>
 );
 
 const open = ref(false);
-const nmorphInputDOMRef = ref<NmorphDomElement>(null);
+const nmorphInputDOMRef = ref<NmorphDomElementType>(null);
 
 const closeHandler = () => {
   open.value = false;
@@ -124,13 +124,13 @@ const showClearButton = computed(() => {
   return Boolean(selectedDate.value);
 });
 
-const updateStartDateValue = (value: NmorphDate) => {
+const updateStartDateValue = (value: NmorphDateType) => {
   if (!Array.isArray(selectedDate.value)) return;
   selectedDate.value[0] = value;
   emit('update:modelValue', selectedDate.value);
 };
 
-const updateEndDateValue = (value: NmorphDate) => {
+const updateEndDateValue = (value: NmorphDateType) => {
   if (!Array.isArray(selectedDate.value)) return;
   selectedDate.value[1] = value;
   emit('update:modelValue', selectedDate.value);

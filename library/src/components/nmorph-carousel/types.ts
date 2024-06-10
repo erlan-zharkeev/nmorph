@@ -1,6 +1,6 @@
 import { Ref } from 'vue';
 
-export interface NmorphCarouselInjection {
+export interface INmorphCarouselInjection {
   data: Ref<string[]>;
   carouselId: string;
 }

@@ -4,16 +4,14 @@ import { useModifiers } from '@/utils';
 import { NmorphButton, NmorphIcon } from '@/components';
 import { NmorphSortOrderType } from '@/types/common';
 
-interface IProps {
+interface INmorphProps {
   value: NmorphSortOrderType;
 }
-const props = withDefaults(defineProps<IProps>(), {});
-interface IEmit {
+const props = withDefaults(defineProps<INmorphProps>(), {});
+interface INmorphEmit {
   (e: 'sort', val: NmorphSortOrderType): void;
 }
-const emit = defineEmits<IEmit>();
-interface IEmit {}
-
+const emit = defineEmits<INmorphEmit>();
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-sort-button': [`${props.value}`],
@@ -61,12 +59,12 @@ const iconSize = '10px';
 }
 .nmorph-sort-button--ascending {
   .nmorph-sort-button__icon-up {
-    --color: var(--accent-color-01);
+    --color: var(--accent-color-00);
   }
 }
 .nmorph-sort-button--descending {
   .nmorph-sort-button__icon-down {
-    --color: var(--accent-color-01);
+    --color: var(--accent-color-00);
   }
 }
 </style>

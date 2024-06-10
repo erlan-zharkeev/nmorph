@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import {
-  NmorphDatePicker,
-} from './../../../library/src/components';
-const selectedDate = ref([new Date('2024-05-13'), new Date('2024-06-14')])
+import { ref } from "vue";
+import { NmorphDatePicker } from "./../../../library/src/components";
+const selectedDate = ref([new Date("2024-05-13"), new Date("2024-06-14")]);
 </script>
 
 <template>
@@ -20,6 +18,6 @@ const selectedDate = ref([new Date('2024-05-13'), new Date('2024-06-14')])
 }
 
 html {
-  background: var(--main-bg);
+  background: var(--main-bg-color);
 }
 </style>

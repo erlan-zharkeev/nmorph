@@ -2,18 +2,18 @@
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphAvatarType } from './type';
-import { ImageFit } from '@/types/common';
+import { NmorphImageFit } from '@/types/common';
 
-interface IProps {
+interface INmorphProps {
   size?: number;
   shape?: NmorphAvatarType;
   src?: string;
   srcSet?: string;
   alt?: string;
-  fit?: keyof typeof ImageFit;
+  fit?: keyof typeof NmorphImageFit;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   size: 40,
   shape: 'circle',
   src: '',
@@ -22,11 +22,11 @@ const props = withDefaults(defineProps<IProps>(), {
   fit: 'cover',
 });
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'error'): void;
 }
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const hasError = ref(false);
 

@@ -2,30 +2,35 @@
 import { computed, provide, ref } from 'vue';
 import { NmorphCheckbox } from '@/components';
 import { useModifiers } from '@/utils';
-import { NmorphCommonInputProps, NmorphComponentDirection } from '@/types/common';
-import { ICheckboxOption, ICheckboxStyleType } from '../types';
+import { INmorphCommonInputProps, NmorphComponentDirection } from '@/types/common';
+import {
+  NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType,
+  NmorphCheckboxGroupSelectedValueInjectionType,
+  INmorphCheckboxOption,
+  NmorphCheckboxStyleType,
+} from '../types';
 
-interface IProps extends NmorphCommonInputProps {
+interface INmorphProps extends INmorphCommonInputProps {
   modelValue: string[];
-  options?: ICheckboxOption[];
-  styleType?: keyof typeof ICheckboxStyleType;
+  options?: INmorphCheckboxOption[];
+  styleType?: keyof typeof NmorphCheckboxStyleType;
   direction?: keyof typeof NmorphComponentDirection;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: () => [],
   options: () => [],
   styleType: 'checkbox-style',
   direction: 'row',
 });
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'update:modelValue', val: string[]): void;
 }
 
 const initialValue = ref(props.modelValue);
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const changeHandler = (id: string) => {
   if (initialValue.value.includes(id)) {
@@ -40,8 +45,8 @@ const modifiers = computed(() =>
   })
 );
 
-provide('checkbox-group-selected-value', initialValue);
-provide('change-checkbox-value-handler', changeHandler);
+provide<NmorphCheckboxGroupSelectedValueInjectionType>('checkbox-group-selected-value', initialValue);
+provide<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>('change-checkbox-value-handler', changeHandler);
 </script>
 
 <template>
@@ -95,4 +100,3 @@ provide('change-checkbox-value-handler', changeHandler);
   }
 }
 </style>
-@/types/common

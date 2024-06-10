@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { NmorphCommonInputProps, NmorphComponentHeight, NmorphDomElement } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types/common';
 import { useModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref } from 'vue';
 import { NmorphIcon, NmorphButton } from '@/components';
 
-interface IProps extends NmorphCommonInputProps {
+interface INmorphProps extends INmorphCommonInputProps {
   placeholder?: string;
   typePassword?: boolean;
   modelValue?: string;
   clearable?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   placeholder: '',
   label: '',
   typePassword: false,
@@ -60,16 +60,16 @@ const handleBlur = () => {
   focused.value = false;
 };
 
-const inputDOMRef = ref<NmorphDomElement>(null);
+const inputDOMRef = ref<NmorphDomElementType>(null);
 
-interface IEmit {
-  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
+interface INmorphEmit {
+  (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
   (e: 'update:modelValue', val: string): void;
   (e: 'focus'): void;
   (e: 'blur'): void;
 }
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 onMounted(() => {
   emit('inputDOMRef', inputDOMRef);
@@ -170,15 +170,14 @@ const actionIcon = computed(() => {
 .nmorph-button.nmorph--focused {
   .nmorph-text-input__password-btn {
     .nmorph-icon {
-      --color: var(--text-00);
+      --color: var(--text-color-00);
     }
 
     .nmorph-button:not(:disabled, [loading='true']):hover {
       .nmorph-icon {
-        --color: var(--text-00);
+        --color: var(--text-color-00);
       }
     }
   }
 }
 </style>
-@/types/common

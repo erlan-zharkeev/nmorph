@@ -1,4 +1,4 @@
-import { TimeTuple } from './types';
+import { NmorphTimeTupleType } from './types';
 
 export const formatTimestampToTime = (timestamp: number) => {
   const date = new Date(timestamp);
@@ -8,7 +8,7 @@ export const formatTimestampToTime = (timestamp: number) => {
   return `${hours}:${minutes}:${seconds}`;
 };
 
-export const timeArrayToTimestamp = (timeArray: TimeTuple) => {
+export const timeArrayToTimestamp = (timeArray: NmorphTimeTupleType) => {
   const [hours, minutes, seconds] = timeArray;
   const now = new Date();
   now.setHours(hours);

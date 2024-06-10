@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { ComputedRef, computed, ref } from 'vue';
-import { NmorphIconName } from '../nmorph-icon/types';
 import { NmorphImage, NmorphButton, NmorphIcon, NmorphOverlay } from '@/components';
+import { INmorphAction } from './types';
 
-interface IProps {
+interface INmorphProps {
   show?: boolean;
   alt?: string;
   initialIndex?: number;
@@ -14,7 +14,7 @@ interface IProps {
   maxScaleLevel?: number;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   alt: '',
   show: false,
   initialIndex: 0,
@@ -45,7 +45,7 @@ const closeHandler = () => {
   emit('on-close');
 };
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'on-close'): void;
   (e: 'on-open'): void;
 }
@@ -86,11 +86,6 @@ const shrinkToNormal = () => {
 
 const rotateLevel = ref(0);
 
-interface Action {
-  icon: NmorphIconName;
-  handler: () => void;
-}
-
 const previousHandler = () => {
   const length = props.src.length - 1;
   const value = currentIndex.value - 1;
@@ -105,8 +100,8 @@ const nextHandler = () => {
   else currentIndex.value = value;
 };
 
-const enlargeShrinkActionData: ComputedRef<Action> = computed(() => {
-  let result: Action = {
+const enlargeShrinkActionData: ComputedRef<INmorphAction> = computed(() => {
+  let result: INmorphAction = {
     icon: 'shrink',
     handler: shrinkToNormal,
   };
@@ -119,7 +114,7 @@ const enlargeShrinkActionData: ComputedRef<Action> = computed(() => {
   return result;
 });
 
-const actions: Action[] = [
+const actions: INmorphAction[] = [
   {
     icon: 'rotate-right',
     handler: rotateRight,
@@ -138,7 +133,7 @@ const actions: Action[] = [
   },
 ];
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const multipleSources = computed(() => Array.isArray(props.src) && props.src.length > 0);
 </script>

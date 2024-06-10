@@ -3,7 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphProgressColorType, NmorphProgressType } from './types';
 
-interface IProps {
+interface INmorphProps {
   type?: NmorphProgressType;
   color?: NmorphProgressColorType;
   percentage: number;
@@ -14,7 +14,7 @@ interface IProps {
   strokeWidth?: number;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   type: 'linear',
   color: 'var(--info-color-00)',

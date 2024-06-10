@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { Ref, computed, inject, onMounted, ref, watch } from 'vue';
+import { computed, inject, onMounted, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphCollapseItemProps, NmorphCollapseModel } from '../../types';
-import { NmorphComponentHeight, NmorphDomElement } from '@/types/common';
+import {
+  INmorphCollapseItemProps,
+  NmorphCollapseDataInjectionType,
+  NmorphCollapseUpdateModelInjectionType,
+} from '../../types';
+import { NmorphComponentHeight, NmorphDomElementType } from '@/types/common';
 
-interface IProps extends NmorphCollapseItemProps {
+interface INmorphProps extends INmorphCollapseItemProps {
   height?: keyof typeof NmorphComponentHeight;
 }
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   title: '',
   disabled: false,
 });
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'click-item', data: { id: string; isOpen: boolean }): void;
 }
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const isOpen = ref(false);
 
@@ -32,10 +36,10 @@ const titleModifiers = computed(() =>
   })
 );
 
-const collapseData = inject<Ref<NmorphCollapseModel>>('collapse-data');
-const updateModel = inject<(id: string, value: boolean) => void>('update-model');
+const collapseData = inject<NmorphCollapseDataInjectionType>('collapse-data');
+const updateModel = inject<NmorphCollapseUpdateModelInjectionType>('update-model');
 
-const collapseItemDOMElContent = ref<NmorphDomElement>(null);
+const collapseItemDOMElContent = ref<NmorphDomElementType>(null);
 
 const contentHeight = ref(0);
 

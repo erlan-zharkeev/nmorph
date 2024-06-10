@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { NmorphCommonInputProps, NmorphComponentHeight, NmorphDomElement } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types/common';
 import { useModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref, watch } from 'vue';
 import { NmorphButton, NmorphIcon } from '@/components';
 
-interface IProps extends NmorphCommonInputProps {
+interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: number;
   max?: number;
   min?: number;
@@ -12,7 +12,7 @@ interface IProps extends NmorphCommonInputProps {
   actionBtnPositionRight?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   modelValue: 0,
   max: Infinity,
@@ -65,12 +65,12 @@ const actionBtnIconSize = computed(() => {
   return iconSizeMap[props.height][positionKey];
 });
 
-interface IEmit {
-  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
+interface INmorphEmit {
+  (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
   (e: 'update:modelValue', val: number): void;
 }
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const inputHandler = (event: Event) => {
   const target = event.target as HTMLInputElement;
@@ -98,7 +98,7 @@ onMounted(() => {
   emit('inputDOMRef', inputDOMRef);
 });
 
-const inputDOMRef = ref<NmorphDomElement>(null);
+const inputDOMRef = ref<NmorphDomElementType>(null);
 </script>
 
 <template>
@@ -193,8 +193,8 @@ const inputDOMRef = ref<NmorphDomElement>(null);
     padding: var(--indentation-00) var(--default-indentation-input);
     text-align: center;
     border: none;
-    border-top: 1px solid var(--main-bg);
-    border-bottom: 1px solid var(--main-bg);
+    border-top: 1px solid var(--main-bg-color);
+    border-bottom: 1px solid var(--main-bg-color);
     transition: ease-in-out var(--transition-01) background;
 
     @include nmorph-inset;
@@ -254,4 +254,3 @@ const inputDOMRef = ref<NmorphDomElement>(null);
   }
 }
 </style>
-@/types/common

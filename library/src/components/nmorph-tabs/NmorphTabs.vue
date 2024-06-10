@@ -2,24 +2,24 @@
 import { computed, ref } from 'vue';
 import { generateUUID, useModifiers } from '@/utils';
 import { provide } from 'vue';
-import { NmorphTabPaneProps, NmorphTableModelType, NmorphTabsDataProvider } from './type';
+import { INmorphTabPaneProps, NmorphTableModelType, INmorphTabsDataProvider } from './type';
 import { getTabLabelId, getTabContentId } from './utils';
 
-interface IProps {
+interface INmorphProps {
   modelValue?: NmorphTableModelType;
   stretch?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: 0,
   stretch: false,
 });
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'update:model-value', value: NmorphTableModelType): void;
   (e: 'tab-change', value: NmorphTableModelType): void;
 }
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -27,17 +27,17 @@ const modifiers = computed(() =>
   })
 );
 
-const changeTab = (data: NmorphTabPaneProps) => {
+const changeTab = (data: INmorphTabPaneProps) => {
   if (data.disabled) return;
   const { name } = data;
   emit('update:model-value', name);
   emit('tab-change', name);
 };
 
-const tabsData = ref<NmorphTabPaneProps[]>([]);
+const tabsData = ref<INmorphTabPaneProps[]>([]);
 const tabsIdentifier = generateUUID();
 
-provide<NmorphTabsDataProvider, string>('nmorph-tabs-data', {
+provide<INmorphTabsDataProvider, string>('nmorph-tabs-data', {
   tabsData,
   tabsIdentifier,
 });

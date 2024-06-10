@@ -1,24 +1,17 @@
 <script setup lang="ts">
-import { NmorphCoords, NmorphDomElement } from '@/types/common';
+import { NmorphDomElementType } from '@/types/common';
 import { useModifiers } from '@/utils';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { NmorphCoordsType, NmorphOverflowProp } from './types';
 
-type Coords = NmorphCoords<number>;
-
-enum NmorphOverflowProp {
-  auto = 'auto',
-  hidden = 'hidden',
-  scroll = 'scroll',
-}
-
-interface IProps {
-  modelValue?: Coords;
+interface INmorphProps {
+  modelValue?: NmorphCoordsType;
   scrollYProp?: keyof typeof NmorphOverflowProp;
   scrollXProp?: keyof typeof NmorphOverflowProp;
   scrollEndDelay?: number;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: () => ({
     x: 0,
     y: 0,
@@ -36,13 +29,13 @@ const paddingBottom = computed(() => (props.scrollXProp !== 'hidden' ? '--scroll
 
 let scrollEndTimeout: NodeJS.Timeout;
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'on-scroll', event: Event): void;
-  (e: 'update:modelValue', coords: Coords): void;
+  (e: 'update:modelValue', coords: NmorphCoordsType): void;
   (e: 'on-scroll-end'): void;
 }
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const handleScrollEnd = () => {
   emit('on-scroll-end');
@@ -76,9 +69,9 @@ const modifiers = computed(() =>
   })
 );
 
-const scrollDOMContainer = ref<NmorphDomElement>(null);
+const scrollDOMContainer = ref<NmorphDomElementType>(null);
 
-const scrollTo = (coords: Coords) => {
+const scrollTo = (coords: NmorphCoordsType) => {
   const { x, y } = coords;
   scrollDOMContainer.value?.scrollTo({
     left: x,

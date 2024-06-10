@@ -6,7 +6,7 @@ import NmorphButton from './../nmorph-button/NmorphButton.vue';
 import NmorphIcon from './../nmorph-icon/NmorphIcon.vue';
 import { onMounted } from 'vue';
 
-interface IProps {
+interface INmorphProps {
   total: number;
   range?: [number, number];
   modelValue?: number;
@@ -15,7 +15,7 @@ interface IProps {
   hideOnSinglePage?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   range: () => [1, 10],
   modelValue: 1,
   pagerCount: 2,
@@ -23,14 +23,14 @@ const props = withDefaults(defineProps<IProps>(), {
   hideOnSinglePage: true,
 });
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'prev-click', currentPage: number): void;
   (e: 'next-click', currentPage: number): void;
   (e: 'update:modelValue', currentPage: number): void;
   (e: 'update:range', range: [number, number]): void;
 }
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const range = ref(props.range);
 

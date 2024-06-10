@@ -1,6 +1,6 @@
-export interface NmorphAutocompleteListItem {
+export interface INmorphAutocompleteListItem {
   value: string;
   [key: string]: unknown;
 }
 
-export type NmorphAutocompleteActionCallback = (...args: unknown[]) => Promise<unknown>;
+export type NmorphAutocompleteActionCallbackType = (...args: unknown[]) => Promise<unknown>;

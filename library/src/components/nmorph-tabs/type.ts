@@ -2,13 +2,13 @@ import { Ref } from 'vue';
 
 export type NmorphTableModelType = string | number;
 
-export interface NmorphTabPaneProps {
+export interface INmorphTabPaneProps {
   label?: string;
   name: string;
   disabled?: boolean;
 }
 
-export interface NmorphTabsDataProvider {
-  tabsData: Ref<NmorphTabPaneProps[]>;
+export interface INmorphTabsDataProvider {
+  tabsData: Ref<INmorphTabPaneProps[]>;
   tabsIdentifier: string;
 }

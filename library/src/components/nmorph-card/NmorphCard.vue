@@ -3,11 +3,11 @@ import { NmorphShadowType } from '@/types/common';
 import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 
-interface IProps {
+interface INmorphProps {
   shadowType?: keyof typeof NmorphShadowType;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   shadowType: NmorphShadowType.outset,
 });
 
@@ -69,4 +69,3 @@ const modifiers = computed(() =>
   @include nmorph-combined;
 }
 </style>
-@/types/common

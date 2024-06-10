@@ -5,20 +5,20 @@ import NmorphOverlay from './../nmorph-overlay/NmorphOverlay.vue';
 import NmorphIcon from './../nmorph-icon/NmorphIcon.vue';
 import NmorphButton from './../nmorph-button/NmorphButton.vue';
 
-interface IProps {
+interface INmorphProps {
   modelValue?: boolean;
   title?: string;
 }
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: false,
   title: '',
 });
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'on-close'): void;
   (e: 'update:modelValue', value: boolean): void;
 }
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

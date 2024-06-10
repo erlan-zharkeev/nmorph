@@ -1,44 +1,36 @@
 :root {
-  // Neuromorph
-  --main-bg: #ebf3fa;
-  --darker-color: #c3cad0;
+  --darker-color: #c8c9ca;
+  --main-bg-color: #eaf2f9;
   --lighter-color: #ffffff;
 
-  // Status
-  --info-color-00: #7979795b;
-  --info-color-01: #68686888;
+  --info-color-00: #d4e5edbb;
+  --info-text-color-00: #506c80;
+
+  --success-color-00: #7eee7eb4;
+  --success-text-color-00: #0c7c26;
+
+  --error-color-00: #f78383d1;
+  --error-text-color-00: #af4040;
+
+  --warning-color-00: #ffe572d4;
+  --warning-text-color-00: #8b7514;
+
   --info-color-02: #c9d2de;
 
-  --accent-color-00: #687b9e72;
-  --accent-color-01: #687b9e;
-  --accent-color-02: #687b9e34;
-  --accent-color-03: #5b8ce6;
-  --accent-color-04: #2a60c2;
+  --accent-color-00: #7f95be;
 
-  --success-color-00: rgb(77, 186, 77);
-  --success-color-01: rgb(44, 163, 44);
+  --text-color-00: #ffffff;
+  --text-color-01: #687b9e;
 
-  --error-color-00: rgb(188, 101, 101);
-  --error-color-01: rgb(159, 50, 50);
-
-  --warning-color-00: rgb(214, 191, 90);
-  --warning-color-01: rgb(161, 137, 30);
-
-  // Typography
-  --text-00: #ffffff;
-  --text-01: #687b9e;
-  --text-02: #8498bc;
-
-  // Common
-  // --overlay-background-color: rgba(0, 0, 0, 50%);
-  --overlay-background-color: #ebf3fab3;
-
-  --background-hover: #e1e9ef;
+  --overlay-background-color: #ebf3fa;
 
   &[data-theme='dark'] {
-    $main-bg: #383143;
-    --main-bg: #383143;
-    --darker-color: #{darken($main-bg, 10%)};
-    --lighter-color: #{lighten($main-bg, 10%)};
+    --darker-color: #30353b;
+    --main-bg-color: #3e4959;
+    --lighter-color: #364557;
+
+    --text-color-01: #a1afb8;
+
+    --accent-color-00: #78879c;
   }
 }

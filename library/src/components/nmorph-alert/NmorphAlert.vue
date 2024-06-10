@@ -5,7 +5,7 @@ import NmorphIcon from './../nmorph-icon/NmorphIcon.vue';
 import { NmorphIconName } from '../nmorph-icon/types';
 import { NmorphAlertType } from './types';
 
-interface IProps {
+interface INmorphProps {
   color?: keyof typeof NmorphAlertType;
   closable?: boolean;
   title?: string;
@@ -15,7 +15,7 @@ interface IProps {
   showIcon?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   color: 'info',
   closable: true,
   title: '',
@@ -25,10 +25,10 @@ const props = withDefaults(defineProps<IProps>(), {
   showIcon: true,
 });
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'close'): void;
 }
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const hide = ref(false);
 
@@ -49,7 +49,7 @@ const slots = useSlots();
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div v-if="slots.default || props.title || props.content" :class="modifiers">
     <div class="nmorph-alert__wrapper">
       <div v-if="props.showIcon" class="nmorph-alert__icon">
         <slot name="icon">
@@ -99,8 +99,9 @@ const slots = useSlots();
     margin-right: var(--indentation-03);
   }
   .nmorph-alert__close {
-    margin-left: var(--indentation-02);
+    margin-left: var(--indentation-03);
     align-self: flex-start;
+    cursor: pointer;
   }
 }
 
@@ -112,10 +113,10 @@ const slots = useSlots();
   background: var(--success-color-00);
   .nmorph-alert__content,
   .nmorph-alert__content-title {
-    color: var(--success-color-01);
+    color: var(--success-text-color-00);
   }
   .nmorph-icon {
-    --color: var(--success-color-01);
+    --color: var(--success-text-color-00);
   }
 }
 
@@ -123,10 +124,10 @@ const slots = useSlots();
   background: var(--error-color-00);
   .nmorph-alert__content,
   .nmorph-alert__content-title {
-    color: var(--error-color-01);
+    color: var(--error-text-color-00);
   }
   .nmorph-icon {
-    --color: var(--error-color-01);
+    --color: var(--error-text-color-00);
   }
 }
 
@@ -134,21 +135,22 @@ const slots = useSlots();
   background: var(--warning-color-00);
   .nmorph-alert__content,
   .nmorph-alert__content-title {
-    color: var(--warning-color-01);
+    color: var(--warning-text-color-00);
   }
   .nmorph-icon {
-    --color: var(--warning-color-01);
+    --color: var(--warning-text-color-00);
   }
 }
 
 .nmorph-alert--info {
   background: var(--info-color-00);
+
   .nmorph-alert__content,
   .nmorph-alert__content-title {
-    color: var(--info-color-01);
+    color: var(--info-text-color-00);
   }
   .nmorph-icon {
-    --color: color: var(--info-color-01);
+    --color: var(--info-text-color-00);
   }
 }
 </style>

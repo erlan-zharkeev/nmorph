@@ -1,0 +1,13 @@
+pre {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5; /* или любое другое значение, подходящее вашему дизайну */
+  font-size: 1em; /* для согласования размера шрифта */
+  height: calc(100% - 20px);
+}
+
+code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+}

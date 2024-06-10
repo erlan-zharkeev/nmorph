@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { NmorphCommonInputProps, NmorphComponentHeight, NmorphDomElement } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types/common';
 import { useModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref, watch } from 'vue';
-import { Hour, MinuteSeconds, TimeTuple } from './types';
+import { NmorphHourType, NmorphMinuteSecondsType, NmorphTimeTupleType } from './types';
 import NmorphTimeRoller from './components/NmorphTimeRoller.vue';
 import { NmorphDropdown, NmorphIcon } from '@/components';
 import { formatTimestampToTime, timeArrayToTimestamp } from './utils';
 
-interface IProps extends Omit<NmorphCommonInputProps, 'fill'> {
+interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
   modelValue?: number;
   open?: boolean;
   initWithoutValue?: boolean;
-  disabledHours?: [Hour, Hour] | null;
-  disabledMinutes?: [MinuteSeconds, MinuteSeconds] | null;
-  disabledSeconds?: [MinuteSeconds, MinuteSeconds] | null;
+  disabledHours?: [NmorphHourType, NmorphHourType] | null;
+  disabledMinutes?: [NmorphMinuteSecondsType, NmorphMinuteSecondsType] | null;
+  disabledSeconds?: [NmorphMinuteSecondsType, NmorphMinuteSecondsType] | null;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: 0,
   open: false,
   disabled: false,
@@ -27,18 +27,18 @@ const props = withDefaults(defineProps<IProps>(), {
   disabledSeconds: null,
 });
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
-interface IEmit {
-  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
+interface INmorphEmit {
+  (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
   (e: 'update:modelValue', val: number): void;
   (e: 'on-change-open-close', val: boolean): void;
 }
 
-const timepickerDOMRef = ref<NmorphDomElement>(null);
-const inputDOMRef = ref<NmorphDomElement>(null);
+const timepickerDOMRef = ref<NmorphDomElementType>(null);
+const inputDOMRef = ref<NmorphDomElementType>(null);
 const openDropdown = ref(props.open);
-const timeTuple = ref<TimeTuple>([0, 0, 0]);
+const timeTuple = ref<NmorphTimeTupleType>([0, 0, 0]);
 
 const emptyValue = ref(props.initWithoutValue);
 
@@ -66,19 +66,19 @@ const updateValue = () => {
 };
 
 const hoursChangedHandler = (val: number) => {
-  const hour = val as Hour;
+  const hour = val as NmorphHourType;
   timeTuple.value = [hour, timeTuple.value[1], timeTuple.value[2]];
   updateValue();
 };
 
 const minutesChangedHandler = (val: number) => {
-  const minutes = val as MinuteSeconds;
+  const minutes = val as NmorphMinuteSecondsType;
   timeTuple.value = [timeTuple.value[0], minutes, timeTuple.value[2]];
   updateValue();
 };
 
 const secondsChangedHandler = (val: number) => {
-  const seconds = val as MinuteSeconds;
+  const seconds = val as NmorphMinuteSecondsType;
   timeTuple.value = [timeTuple.value[0], timeTuple.value[1], seconds];
   updateValue();
 };
@@ -95,7 +95,7 @@ const fillTimeTuple = () => {
   if (emptyValue.value) return;
   const initValue = formatTimestampToTime(props.modelValue)
     .split(':')
-    .map((timeEl) => Number(timeEl)) as TimeTuple;
+    .map((timeEl) => Number(timeEl)) as NmorphTimeTupleType;
   timeTuple.value = initValue;
 };
 
@@ -186,7 +186,7 @@ const selectedValue = computed(() => (emptyValue.value ? '——:——:——' 
   }
 
   .nmorph-time-picker__dropdown::after {
-    $line: solid 1px var(--accent-color-01);
+    $line: solid 1px var(--accent-color-00);
 
     width: 100%;
     height: v-bind(cellHeight);

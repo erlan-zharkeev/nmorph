@@ -1,12 +1,12 @@
 export type NmorphCalendarDateType = 'current' | 'previous' | 'next';
-export interface NmorphCalendarDate {
+export interface INmorphCalendarDate {
   monthType: NmorphCalendarDateType;
   value: number;
   isToday: boolean;
   date: Date;
   hidden: boolean;
 }
-export type NmorphCalendarRange = [Date, Date] | undefined;
-export type NmorphCalendarDates = NmorphCalendarDate[];
-export type NmorphDate = Date | null;
-export type NmorphSelectedDateModel = NmorphDate | NmorphDate[];
+export type NmorphCalendarRangeType = [Date, Date] | undefined;
+export type NmorphCalendarDatesType = INmorphCalendarDate[];
+export type NmorphDateType = Date | null;
+export type NmorphSelectedDateModelType = NmorphDateType | NmorphDateType[];

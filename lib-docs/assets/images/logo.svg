@@ -1,0 +1,49 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Фон -->
+  <rect width="1024" height="1024" fill="#E0F7FA" rx="50" ry="50" />
+
+  <!-- Внутренняя тень -->
+  <defs>
+    <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feComponentTransfer in="SourceAlpha">
+        <feFuncA type="table" tableValues="1 0"/>
+      </feComponentTransfer>
+      <feGaussianBlur stdDeviation="10"/>
+      <feOffset dx="-10" dy="-10" result="offsetblur"/>
+      <feFlood flood-color="rgba(0,0,0,0.1)" result="color"/>
+      <feComposite in2="offsetblur" operator="in"/>
+      <feComposite in2="SourceAlpha" operator="in" />
+      <feMerge>
+        <feMergeNode in="SourceGraphic" />
+        <feMergeNode />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Применение внутренней тени -->
+  <rect width="1024" height="1024" fill="#E0F7FA" rx="50" ry="50" filter="url(#innerShadow)" />
+
+  <!-- Текст "NM" -->
+  <text x="50%" y="55%" text-anchor="middle" font-family="Arial, sans-serif" font-size="400" fill="#0288d1" font-weight="bold" style="letter-spacing: -10px;">
+    N
+  </text>
+
+  <!-- Внешняя тень для текста -->
+  <defs>
+    <filter id="outerShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="blur"/>
+      <feOffset in="blur" dx="10" dy="10"/>
+      <feFlood flood-color="rgba(0,0,0,0.2)" result="color"/>
+      <feComposite in2="blur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Применение внешней тени для текста -->
+  <text x="50%" y="55%" text-anchor="middle" font-family="Arial, sans-serif" font-size="400" fill="#0288d1" font-weight="bold" style="letter-spacing: -10px;" filter="url(#outerShadow)">
+    N
+  </text>
+</svg>

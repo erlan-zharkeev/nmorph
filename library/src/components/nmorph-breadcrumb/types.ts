@@ -1,16 +1,18 @@
 import { Ref } from 'vue';
 import { RouteLocationRaw } from 'vue-router';
 
-export interface NmorphBreadcrumbItemProps {
+export interface INmorphBreadcrumbItemProps {
   to?: string | RouteLocationRaw;
   replace?: boolean;
 }
 
-export interface NmorphBreadcrumbInjectionItemWithId extends NmorphBreadcrumbItemProps {
+export interface NmorphBreadcrumbInjectionItemWithId extends INmorphBreadcrumbItemProps {
   itemId: string;
 }
 
+export type NmorphBreadcrumbsType = Ref<NmorphBreadcrumbInjectionItemWithId[]>;
+
 export interface NmorphBreadcrumbInjection {
-  breadcrumbs: Ref<NmorphBreadcrumbInjectionItemWithId[]>;
+  breadcrumbs: NmorphBreadcrumbsType;
   breadcrumbId: string;
 }

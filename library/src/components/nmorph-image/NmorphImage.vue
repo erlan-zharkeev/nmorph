@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { ImageFit } from '@/types/common';
+import { NmorphImageFit } from '@/types/common';
 import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 
-interface IProps {
+interface INmorphProps {
   src: string;
-  fit?: keyof typeof ImageFit;
+  fit?: keyof typeof NmorphImageFit;
   alt?: string;
   loadingText?: string;
   loadFailedText?: string;
   srcset?: string;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   fit: 'cover',
   closeOnOutsideClick: true,
   alt: '',

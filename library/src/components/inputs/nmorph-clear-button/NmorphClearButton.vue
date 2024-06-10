@@ -3,11 +3,11 @@ import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphIcon } from '@/components';
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'clear'): void;
 }
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -21,8 +21,3 @@ const modifiers = computed(() =>
     <NmorphIcon name="error" @click.stop="emit('clear')" />
   </div>
 </template>
-
-<style lang="scss">
-.nmorph-input-clear-button {
-}
-</style>

@@ -1,21 +1,25 @@
 <script setup lang="ts">
 import { computed, ref, Ref, inject, onMounted } from 'vue';
 import { useModifiers } from '@/utils';
-import { ICheckboxOption } from '../types';
-import { NmorphDomElement } from '@/types/common';
+import {
+  INmorphCheckboxOption,
+  NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType,
+  NmorphCheckboxGroupSelectedValueInjectionType,
+} from '../types';
+import { NmorphDomElementType } from '@/types/common';
 
-const groupSelectedValue = inject<Ref<string[]>>('checkbox-group-selected-value');
-const changeValue = inject<(value: string, currentState: string[]) => void>('change-checkbox-value-handler');
+const groupSelectedValue = inject<NmorphCheckboxGroupSelectedValueInjectionType>('checkbox-group-selected-value');
+const changeValue = inject<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>('change-checkbox-value-handler');
 
-const props = withDefaults(defineProps<ICheckboxOption>(), {
+const props = withDefaults(defineProps<INmorphCheckboxOption>(), {
   disabled: false,
   modelValue: false,
   label: '',
   styleType: 'checkbox-style',
 });
 
-interface IEmit {
-  (e: 'inputDOMRef', val: Ref<NmorphDomElement>): void;
+interface INmorphEmit {
+  (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
   (e: 'update:modelValue', val: boolean): void;
 }
 
@@ -23,13 +27,13 @@ onMounted(() => {
   emit('inputDOMRef', inputDOMRef);
 });
 
-const inputDOMRef = ref<NmorphDomElement>(null);
+const inputDOMRef = ref<NmorphDomElementType>(null);
 const hasGroup = groupSelectedValue !== undefined;
 const initialValue = hasGroup ? ref(groupSelectedValue.value) : ref(props.modelValue);
 
 const checked = computed(() => (hasGroup ? groupSelectedValue.value.includes(props.id) : props.modelValue));
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 const handleChange = () => {
   if (props.disabled) return;
   if (!hasGroup) {
@@ -111,7 +115,7 @@ const modifiers = computed(() =>
   .nmorph-checkbox__fake-checked {
     width: 50%;
     height: 50%;
-    background: var(--accent-color-01);
+    background: var(--accent-color-00);
     border-radius: var(--border-radius-20);
 
     @include absolute-center;
