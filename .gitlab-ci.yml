@@ -1,8 +1,15 @@
-# The Docker image that will be used to build your app
 image: node:18
-# Functions that should be executed before the build script is run
-before_script: []
-pages:
+
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+    - lib-docs/node_modules/
+
+build-docs:
+  stage: build
   script:
     - cd lib-docs
     - npm install
@@ -10,9 +17,18 @@ pages:
     - npm run generate
   artifacts:
     paths:
-      # The folder that contains the files to be exposed at the Page URL
-      - public
-  rules:
-    # This ensures that only pushes to the default branch will trigger
-    # a pages deploy
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+      - lib-docs/dist
+  only:
+    - dev
+
+deploy-docs:
+  stage: deploy
+  script:
+    - cd lib-docs
+    - mv dist public
+    - ls -l  # Для проверки содержимого папки перед деплоем
+  artifacts:
+    paths:
+      - lib-docs/public
+  only:
+    - dev
