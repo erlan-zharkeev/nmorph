@@ -17,15 +17,14 @@ build-docs:
     - npm run generate
   artifacts:
     paths:
-      - lib-docs/.output/
+      - lib-docs/.output/public
   only:
     - dev
 
 deploy-docs:
   stage: deploy
   script:
-    - cd lib-docs
-    - mv .output/public/ public/
+    - mv lib-docs/.output/public/ public/
     - ls -l  # Для проверки содержимого папки перед деплоем
   artifacts:
     paths:

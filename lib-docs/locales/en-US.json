@@ -3,6 +3,8 @@
   "components": "Components",
   "about": "About",
   "search": "Search",
+  "attributes": "attributes",
+  "slots": "slots",
   "componentsOverview": {
     "rightAsideTitle": "Contents",
     "styleType": {

@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<IProps>(), {});
     <div class="docs-api-table__attributes" id="content-attributes">
       <h2 class="nmorph-title-1">{{ props.name }} Api</h2>
       <h3 class="docs-api-table__title nmorph-title-2">
-        {{ props.name }} attributes
+        {{ props.name }} {{ $t("attributes") }}
       </h3>
       <NmorphTable :data="props.attributes" bordered :row-hover="false">
         <NmorphTableColumn
@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<IProps>(), {});
           label="Name"
           width="180"
           alignment="start"
-          class="name"
+          class="nmorph-title-2"
         />
         <NmorphTableColumn prop="description" label="Description" width="180" />
         <NmorphTableColumn prop="type" label="Type" />
@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<IProps>(), {});
     </div>
     <div class="docs-api-table__slots" id="content-slots">
       <h3 class="docs-api-table__title nmorph-title-2">
-        {{ props.name }} slots
+        {{ props.name }} {{ $t("attributes") }}
       </h3>
       <NmorphTable :data="props.slots" bordered :row-hover="false">
         <NmorphTableColumn
