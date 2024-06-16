@@ -6,7 +6,7 @@ stages:
 
 cache:
   paths:
-    - node_modules/
+    - lib-docs/node_modules/
 
 build-docs:
   stage: build
@@ -25,9 +25,10 @@ deploy-docs:
   stage: deploy
   script:
     - cd lib-docs
-    - mv public lib-docs
+    - mv dist public  # Предполагаем, что генерация собирает файлы в папку dist
+    - ls -l  # Для проверки содержимого папки перед деплоем
   artifacts:
     paths:
-      - lib-docs
+      - lib-docs/public  # Сохраняем папку public как артефакт
   only:
     - dev
