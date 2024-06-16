@@ -29,12 +29,7 @@ const props = withDefaults(defineProps<IProps>(), {});
         {{ props.name }} {{ $t("attributes") }}
       </h3>
       <NmorphTable :data="props.attributes" bordered :row-hover="false">
-        <NmorphTableColumn
-          prop="name"
-          label="Name"
-          alignment="start"
-          class="nmorph-title-2"
-        />
+        <NmorphTableColumn prop="name" label="Name" alignment="start" />
         <NmorphTableColumn
           prop="description"
           label="Description"
