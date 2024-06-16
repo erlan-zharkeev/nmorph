@@ -1,0 +1,30 @@
+image: node:18
+
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - npm install
+
+build:
+  stage: build
+  script:
+    - npm run generate
+  artifacts:
+    paths:
+      - public/nmorph-lib-docs
+
+pages:
+  stage: deploy
+  script:
+    - mv public/nmorph-lib-docs public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main

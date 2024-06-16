@@ -6,12 +6,25 @@
       :actionCallback="getVariants"
     >
     </NmorphAutocomplete>
+    <NmorphAlert
+      v-for="color in ['info', 'success', 'error', 'warning']"
+      :key="color"
+      content="Hello, im alert content"
+      title="Title is very important"
+      color=""
+      class="additional-class"
+    />
+    <NmorphYearMonthPicker :currentDate="new Date()" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { NmorphAutocomplete } from "./../../../library/src/components";
+import {
+  NmorphAutocomplete,
+  NmorphAlert,
+  NmorphYearMonthPicker,
+} from "./../../../library/src/components";
 
 const value = ref("");
 const variants = ref([]);
@@ -47,6 +60,10 @@ const getVariants = async () => {
 <style lang="scss">
 .wrapper {
   margin: 50px;
+}
+
+.nmorph-alert {
+  margin-right: 8px;
 }
 
 .line {

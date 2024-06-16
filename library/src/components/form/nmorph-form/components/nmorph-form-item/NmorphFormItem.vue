@@ -2,10 +2,10 @@
 import { useModifiers } from '@/utils';
 import { computed, inject } from 'vue';
 import { NmorphComponentHeight } from '@/types/common';
-import { FormValidationData } from '@/components/form/types';
-import { NmorphValidationIcon, NmorphErrorBox } from './components';
+import { NmorphValidationIcon, NmorphErrorBox } from './inner-components';
+import { NmorphFormValidationDataType } from '@/components';
 
-interface IProps {
+interface INmorphProps {
   /**
    * The ID of the form field used to bind to validation data.
    * @type {string}
@@ -18,7 +18,7 @@ interface IProps {
   validate?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   label: '',
   height: 'default',
   showValidationIcon: true,
@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<IProps>(), {
   validate: true,
 });
 
-const formData = inject<FormValidationData>('form-data');
+const formData = inject<NmorphFormValidationDataType>('form-data');
 const validationData = computed(() => formData?.fields[props.id]);
 
 const ableToShowValidation = computed(() => props.validate && validationData.value);
@@ -86,8 +86,7 @@ const modifiers = computed(() =>
 
 .nmorph-form-item--invalid {
   .nmorph-native-input:focus {
-    background: var(--error-color-00);
+    background: var(--error-text-color-00);
   }
 }
 </style>
-@/types/common

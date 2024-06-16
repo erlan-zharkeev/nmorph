@@ -2,15 +2,15 @@
 import { useModifiers } from '@/utils';
 import { computed, provide } from 'vue';
 import { useFormValidation } from '@/hooks';
-import { FormValue } from '../types';
 import { onMounted } from 'vue';
+import { NmorphFormValueType, NmorphFormValidationDataType } from './types';
 
-interface IProps {
-  value: FormValue;
+interface INmorphProps {
+  value: NmorphFormValueType;
   validateImmediately?: boolean;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   validateImmediately: false,
 });
 
@@ -21,15 +21,15 @@ const modifiers = computed(() =>
 );
 const formValidationData = useFormValidation(props.value, props.validateImmediately);
 
-interface IEmit {
+interface INmorphEmit {
   (e: 'formValidator', val: ReturnType<typeof useFormValidation>): void;
 }
 
-const emit = defineEmits<IEmit>();
+const emit = defineEmits<INmorphEmit>();
 onMounted(() => {
   emit('formValidator', formValidationData);
 });
-provide('form-data', formValidationData);
+provide<NmorphFormValidationDataType>('form-data', formValidationData);
 </script>
 
 <template>

@@ -1,0 +1,64 @@
+<script setup lang="ts">
+import NmorphTextInput from './NmorphTextInput.vue';
+import { NmorphComponentHeight } from './../../../types/common';
+
+const setupApp = ({ app }) => {
+  app.use();
+};
+
+const initState = () => ({
+  id: 'identifier',
+  placeholder: 'Placeholder text',
+  typePassword: false,
+  disabled: false,
+  modelValue: '',
+  error: false,
+  rules: [
+    {
+      pattern: '/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/',
+      error: 'not email',
+    },
+    {
+      pattern: '/^.{3,}$/',
+      error: 'too short',
+    },
+  ],
+  height: 'default',
+});
+</script>
+
+<template>
+  <Story title="NmorphTextInput" :setup-app="setupApp" auto-props-disabled>
+    <Variant :init-state="initState">
+      <template #default="{ state }">
+        <div class="text-input-story">
+          <NmorphTextInput
+            :id="state.id"
+            ref="domInputRef"
+            v-model="state.modelValue"
+            :placeholder="state.placeholder"
+            :type-password="state.typePassword"
+            :error="state.error"
+            :disabled="state.disabled"
+            :type="state.typePassword ? 'password' : 'text'"
+            :name="state.id"
+            :rules="state.rules"
+          />
+        </div>
+      </template>
+      <template #controls="{ state }">
+        <HstText v-model="state.modelValue" title="modelValue" />
+        <HstText v-model="state.id" title="identifier/field-name" />
+        <HstText v-model="state.placeholder" title="placeholder" />
+        <HstCheckbox v-model="state.typePassword" title="type password" />
+        <HstCheckbox v-model="state.error" title="error" />
+        <HstCheckbox v-model="state.disabled" title="disabled" />
+        <div v-for="(option, optionIndex) in state.rules" :key="optionIndex">
+          <HstText v-model="option.pattern" :title="'pattern' + (optionIndex + 1)" />
+          <HstText v-model="option.error" :title="'error text' + (optionIndex + 1)" />
+        </div>
+        <HstSelect v-model="state.height" :options="Object.values(NmorphComponentHeight)" title="height" />
+      </template>
+    </Variant>
+  </Story>
+</template>

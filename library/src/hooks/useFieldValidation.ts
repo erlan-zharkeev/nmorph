@@ -1,13 +1,13 @@
-import { AvailableFormValueType } from '@/components/form/types';
+import { NmorphAvailableFormValueType } from '@/components/form/nmorph-form/types';
 import { ref, computed } from 'vue';
 
-export const enum ArrayValidationOperator {
+export const enum NmorphArrayValidationOperator {
   'contains-one' = 'contains-one',
   'not-contains' = 'not-contains',
   'full-eq' = 'full-eq',
 }
 
-export enum NumberCompareOperator {
+export enum NmorphNumberCompareOperator {
   'eq' = 'eq',
   'gte' = 'gte',
   'lte' = 'lte',
@@ -15,49 +15,49 @@ export enum NumberCompareOperator {
   'lt' = 'lt',
 }
 
-export enum BooleanCompareOperator {
+export enum NmorphBooleanCompareOperator {
   'eq' = 'eq',
   'not-eq' = 'not-eq',
 }
 
-export interface IRule {
+export interface INmorphRule {
   pattern?: RegExp;
-  numberCompareType?: keyof typeof NumberCompareOperator;
-  booleanCompareType?: keyof typeof BooleanCompareOperator;
-  arrayCompareType?: keyof typeof ArrayValidationOperator;
+  numberCompareType?: keyof typeof NmorphNumberCompareOperator;
+  booleanCompareType?: keyof typeof NmorphBooleanCompareOperator;
+  arrayCompareType?: keyof typeof NmorphArrayValidationOperator;
   compareValue?: number | string | string[];
   error: string;
 }
 
-export type ValidationInputValue = AvailableFormValueType | null;
+export type NmorphValidationInputValueType = NmorphAvailableFormValueType | null;
 
-export type Rules = IRule[];
+export type NmorphRulesType = INmorphRule[];
 
-export interface IUseValidationPayload {
-  inputValue: ValidationInputValue;
-  rules: Rules | [];
+export interface INmorphUseValidationPayload {
+  inputValue: NmorphValidationInputValueType;
+  rules: NmorphRulesType | [];
 }
 
-export interface ITextValidationRule extends IRule {
+export interface INmorphTextValidationRule extends INmorphRule {
   pattern: RegExp;
 }
 
-export interface INumberValidationRule extends IRule {
-  numberCompareType: keyof typeof NumberCompareOperator;
+export interface INmorphNumberValidationRule extends INmorphRule {
+  numberCompareType: keyof typeof NmorphNumberCompareOperator;
   compareValue: number;
 }
 
-export interface IRadioGroupValidationRule extends IRule {
-  booleanCompareType: BooleanCompareOperator;
+export interface INmorphRadioGroupValidationRule extends INmorphRule {
+  booleanCompareType: NmorphBooleanCompareOperator;
   compareValue: string;
 }
 
-export interface ICheckboxGroupValidationRule extends IRule {
-  arrayCompareType: keyof typeof ArrayValidationOperator;
+export interface INmorphCheckboxGroupValidationRule extends INmorphRule {
+  arrayCompareType: keyof typeof NmorphArrayValidationOperator;
   compareValue: string[];
 }
 
-export const useFieldValidation = (data: IUseValidationPayload) => {
+export const useFieldValidation = (data: INmorphUseValidationPayload) => {
   const { inputValue, rules } = data;
 
   const errors = ref<string[]>([]);
@@ -84,7 +84,7 @@ export const useFieldValidation = (data: IUseValidationPayload) => {
     if (!touched.value) touched.value = true;
 
     if (textValidation) {
-      const typeInferredRules = rules as ITextValidationRule[];
+      const typeInferredRules = rules as INmorphTextValidationRule[];
       errors.value = typeInferredRules.reduce((acc, rule) => {
         const match = value.match(rule.pattern);
         if (!match) acc.push(rule.error);
@@ -96,7 +96,7 @@ export const useFieldValidation = (data: IUseValidationPayload) => {
       const compareValues = (
         inputValue: number,
         compareValue: number,
-        numberCompareType: keyof typeof NumberCompareOperator
+        numberCompareType: keyof typeof NmorphNumberCompareOperator
       ) => {
         switch (numberCompareType) {
           case 'eq':
@@ -113,7 +113,7 @@ export const useFieldValidation = (data: IUseValidationPayload) => {
             break;
         }
       };
-      const typeInferredRules = rules as INumberValidationRule[];
+      const typeInferredRules = rules as INmorphNumberValidationRule[];
       errors.value = typeInferredRules.reduce((acc, rule) => {
         const match = compareValues(value, rule.compareValue, rule.numberCompareType);
         if (match) acc.push(rule.error);
@@ -122,7 +122,7 @@ export const useFieldValidation = (data: IUseValidationPayload) => {
     }
 
     if (booleanValidation) {
-      const typeInferredRules = rules as IRadioGroupValidationRule[];
+      const typeInferredRules = rules as INmorphRadioGroupValidationRule[];
       errors.value = typeInferredRules.reduce((acc, rule) => {
         let match = false;
         const { compareValue, booleanCompareType } = rule;
@@ -138,11 +138,11 @@ export const useFieldValidation = (data: IUseValidationPayload) => {
     }
 
     if (arrayValidation) {
-      const typeInferredRules = rules as ICheckboxGroupValidationRule[];
+      const typeInferredRules = rules as INmorphCheckboxGroupValidationRule[];
       const compareValues = (
         inputValue: string[],
         compareValue: string[],
-        arrayCompareType: keyof typeof ArrayValidationOperator
+        arrayCompareType: keyof typeof NmorphArrayValidationOperator
       ) => {
         switch (arrayCompareType) {
           case 'contains-one':

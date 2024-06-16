@@ -1,9 +1,3 @@
-import { createPinia } from 'pinia';
-import { defineSetupVue3 } from '@histoire/plugin-vue';
-import ElementPlus from 'element-plus';
+// import { defineSetupVue3 } from '@histoire/plugin-vue';
 
-export const setupVue3 = defineSetupVue3(({ app }) => {
-  app.use(ElementPlus);
-  const pinia = createPinia();
-  app.use(pinia);
-});
+// export const setupVue3 = defineSetupVue3(({ app }) => {});

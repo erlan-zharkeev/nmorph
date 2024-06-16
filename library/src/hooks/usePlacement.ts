@@ -1,18 +1,18 @@
-import { NmorphCoords, NmorphDomElement, NmorphPlacement } from '@/types/common';
+import { INmorphCoords, NmorphDomElementType, NmorphPlacementType } from '@/types/common';
 import { Ref, ref, nextTick, onMounted } from 'vue';
 
-interface IUsePlacementPayload {
-  initialPlacement: NmorphPlacement;
-  contentDOMElement: Ref<NmorphDomElement>;
-  relativeElement: NmorphDomElement | Ref<NmorphDomElement>;
+interface INmorphUsePlacementPayload {
+  initialPlacement: NmorphPlacementType;
+  contentDOMElement: Ref<NmorphDomElementType>;
+  relativeElement: NmorphDomElementType | Ref<NmorphDomElementType>;
   yOffset?: number;
   xOffset?: number;
 }
 
-export const usePlacement = (data: IUsePlacementPayload) => {
+export const usePlacement = (data: INmorphUsePlacementPayload) => {
   const { initialPlacement, relativeElement, contentDOMElement, yOffset = 0, xOffset = 0 } = data;
-  const placement = ref<NmorphPlacement>(initialPlacement);
-  const placementCoords = ref<NmorphCoords<string>>({ x: '0px', y: '0px' });
+  const placement = ref<NmorphPlacementType>(initialPlacement);
+  const placementCoords = ref<INmorphCoords<string>>({ x: '0px', y: '0px' });
 
   onMounted(() => {
     adjustPlacement();

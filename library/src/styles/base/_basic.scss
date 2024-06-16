@@ -1,5 +1,5 @@
 * {
-  color: var(--text-01);
+  color: var(--text-color-01);
 }
 
 body {
@@ -30,11 +30,11 @@ body {
 }
 
 .nmorph-native-input:focus {
-  color: var(--text-00);
+  color: var(--text-color-00);
 }
 
 .nmorph-native-input:focus::placeholder {
-  color: var(--text-00);
+  color: var(--text-color-00);
 }
 
 // WIDTH
