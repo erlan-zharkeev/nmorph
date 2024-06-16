@@ -1,0 +1,103 @@
+{
+  "name": "@nmorph/nmorph-ui-kit",
+  "type": "module",
+  "private": false,
+  "version": "0.1.0",
+  "license": "MIT",
+  "engines": {
+    "node": "18.13.0",
+    "npm": "8.19.3"
+  },
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "style": "./dist/style.css",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "tsconfig.base.json",
+    ".eslintrc.base.cjs",
+    ".stylelintrc.base.cjs",
+    ".prettierrc.base.cjs"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.es.js"
+      },
+      "require": "./dist/index.umd.js"
+    },
+    "./dist/index.d.ts": "./dist/index.d.ts",
+    "./dist/style.css": "./dist/style.css",
+    "./dist/styles/abstracts/_variables.scss": "./dist/styles/abstracts/_variables.scss",
+    "./dist/styles/abstracts/_mixins.scss": "./dist/styles/abstracts/_mixins.scss",
+    "./dist/styles/abstracts/_functions.scss": "./dist/styles/abstracts/_functions.scss",
+    "./dist/styles/main.scss": "./dist/styles/main.scss"
+  },
+  "scripts": {
+    "build": "npm run build:types && vite build",
+    "lint:es:check": "eslint --ext .js,.ts,.vue --ignore-path .gitignore src/",
+    "lint:es": "eslint --ext .js,.ts,.vue --ignore-path .gitignore --fix src/",
+    "lint:style:check": "stylelint ./src/**/*.{scss,vue}",
+    "lint:style": "stylelint ./src/**/*.{scss,vue} --fix",
+    "lint:check": "npm run lint:es:check && npm run lint:style:check",
+    "lint": "npm run lint:es && npm run lint:style",
+    "dev:type": "vue-tsc -p ./tsconfig.vue.json",
+    "prepare": "cd .. && husky install ./library/.husky",
+    "validate-branch-name": "node .husky/validate-branch-name.cjs",
+    "validate-commit-msg": "node .husky/validate-commit-msg.cjs",
+    "story:dev": "histoire dev",
+    "story:build": "histoire build",
+    "story:preview": "histoire preview",
+    "test:dev": "npx vitest",
+    "build:types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist"
+  },
+  "dependencies": {
+    "@types/vue-router": "^2.0.0",
+    "normalize.css": "^8.0.1",
+    "vue": "^3.4.7",
+    "vue-i18n": "^9.9.0",
+    "vue-template-es2015-compiler": "^1.9.1"
+  },
+  "devDependencies": {
+    "@histoire/plugin-vue": "^0.17.6",
+    "@types/node": "^20.10.8",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
+    "@vitejs/plugin-vue": "^4.4.0",
+    "@vue/test-utils": "^2.4.3",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-storybook": "^0.6.15",
+    "eslint-plugin-vue": "^9.19.2",
+    "happy-dom": "^13.1.0",
+    "histoire": "^0.17.6",
+    "husky": "^8.0.3",
+    "mitt": "^3.0.1",
+    "prettier": "^3.1.1",
+    "rollup-plugin-ignore": "^1.0.10",
+    "sass": "^1.69.7",
+    "stylelint": "^16.1.0",
+    "stylelint-config-idiomatic-order": "^10.0.0",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-recommended-scss": "^14.0.0",
+    "stylelint-config-recommended-vue": "^1.5.0",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-prettier": "^5.0.0",
+    "stylelint-scss": "^6.0.0",
+    "typescript": "^5.3.3",
+    "vite": "^4.5.0",
+    "vite-plugin-dts": "^3.7.0",
+    "vite-plugin-static-copy": "^0.17.1",
+    "vite-svg-loader": "^5.1.0",
+    "vitest": "^1.2.0",
+    "vue-eslint-parser": "^9.4.0",
+    "vue-tsc": "^1.8.27"
+  }
+}

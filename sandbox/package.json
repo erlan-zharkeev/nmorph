@@ -1,0 +1,57 @@
+{
+  "name": "application",
+  "private": true,
+  "version": "0.0.0",
+  "engines": {
+    "node": "18.13.0",
+    "npm": "8.19.3"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "lint:es": "eslint --ext .js,.ts,.vue --ignore-path .gitignore --fix src/",
+    "lint:style": "stylelint ./src/**/*.{scss,vue} --fix"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.2.0",
+    "@vitejs/plugin-vue-jsx": "^3.0.2",
+    "element-plus": "^2.6.1",
+    "pinia": "^2.1.7",
+    "vue": "^3.3.4",
+    "vue-final-modal": "^4.4.5",
+    "vue-i18n": "^9.5.0",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.16",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/parser": "^5.59.8",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "eslint": "^8.41.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.14.1",
+    "prettier": "^2.8.8",
+    "sass": "^1.69.4",
+    "sass-loader": "^13.3.2",
+    "stylelint": "^14.16.1",
+    "stylelint-config-idiomatic-order": "^9.0.0",
+    "stylelint-config-prettier": "^9.0.5",
+    "stylelint-config-prettier-scss": "^0.0.1",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-recommended-scss": "^8.0.0",
+    "stylelint-config-recommended-vue": "^1.4.0",
+    "stylelint-config-standard": "^29.0.0",
+    "stylelint-config-standard-scss": "^6.1.0",
+    "stylelint-order": "^6.0.3",
+    "stylelint-prettier": "^3.0.0",
+    "stylelint-scss": "^5.0.0",
+    "typescript": "^5.0.4",
+    "vite": "^4.5.0",
+    "vite-plugin-css": "^1.0.4",
+    "vite-svg-loader": "^4.0.0",
+    "vue-tsc": "^1.8.19"
+  }
+}
