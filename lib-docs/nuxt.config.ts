@@ -2,6 +2,15 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ["@nmorph/nmorph-ui-kit/dist/style.css"],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "~/assets/style/global-mixins.scss" as *;',
+        },
+      },
+    },
+  },
   devServer: {
     port: 5551,
   },

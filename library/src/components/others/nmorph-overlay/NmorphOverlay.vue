@@ -9,8 +9,8 @@ interface INmorphProps {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  show: false,
   outsideClickEmitEvent: true,
+  transparent: false,
 });
 
 const modifiers = computed(() =>

@@ -57,18 +57,22 @@ const copyHandler = () => {
 </template>
 
 <style scoped lang="scss">
-.nmorph-collapse-item__inner-wrapper {
+:v-deep .nmorph-collapse-item__inner-wrapper {
   padding-top: 0;
 }
-.nmorph-collapse-item .nmorph-collapse-item__title {
+
+:v-deep .nmorph-collapse-item .nmorph-collapse-item__title {
   display: none;
 }
-.nmorph-collapse-item .nmorph-collapse-item__content {
+
+:v-deep .nmorph-collapse-item .nmorph-collapse-item__content {
   border-radius: 0;
 }
-.nmorph-collapse-item__inner-wrapper {
+
+:v-deep .nmorph-collapse-item__inner-wrapper {
   margin-top: -10px;
 }
+
 .docs-component-block {
   width: 100%;
 }

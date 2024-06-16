@@ -65,6 +65,7 @@ export enum NmorphIconList {
   'copy' = 'copy',
   'code' = 'code',
   'search' = 'search',
+  'burger' = 'burger',
 }
 
 export enum NmorphComponentPosition {

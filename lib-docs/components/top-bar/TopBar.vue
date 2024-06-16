@@ -5,12 +5,23 @@ import {
   NmorphIcon,
   NmorphLink,
   NmorphDropdown,
+  NmorphCheckbox,
 } from "@nmorph/nmorph-ui-kit";
 import MoonIcon from "~/assets/images/moon.svg";
 import SunIcon from "~/assets/images/sun.svg";
 import TranslateIcon from "~/assets/images/translate.svg";
 import GitlabIcon from "~/assets/images/gitlab.svg";
 import { useTheme } from "@nmorph/nmorph-ui-kit";
+
+interface INmorphProps {
+  isMenuOpen: boolean;
+}
+const props = withDefaults(defineProps<INmorphProps>(), {});
+
+interface INmorphEmit {
+  (e: "toggle-menu"): void;
+}
+const emit = defineEmits<INmorphEmit>();
 
 const { isThemeLight, toggleTheme } = useTheme();
 
@@ -34,10 +45,24 @@ const changeLocaleHandler = (locale: string) => {
   open.value = false;
   setLocale(locale);
 };
+const updateMenuHandler = () => {
+  emit("toggle-menu");
+};
 </script>
 <template>
   <header class="docs-top-bar nmorph-outset">
     <div class="docs-top-bar__left">
+      <NmorphCheckbox
+        class="docs-top-bar__burger"
+        :model-value="props.isMenuOpen"
+        @update:model-value="updateMenuHandler"
+        style-type="button-style"
+        label="menu"
+      >
+        <template name="label">
+          <NmorphIcon name="burger" />
+        </template>
+      </NmorphCheckbox>
       <div class="docs-top-bar__logo">
         <NuxtLink :to="localePath('/')">
           <img src="~/assets/images/logo.webp" />
@@ -140,6 +165,7 @@ $top-bar-height: 50px;
 
 .docs-top-bar__left {
   display: flex;
+  align-items: center;
   height: 100%;
 }
 
@@ -204,6 +230,23 @@ $top-bar-height: 50px;
   li {
     list-style-type: none;
     margin-right: 8px;
+  }
+}
+
+.docs-top-bar__burger {
+  margin-right: 8px;
+  display: none;
+}
+
+@include max-width-query(768) {
+  .docs-layout-content__left-aside {
+    display: none;
+  }
+  .docs-layout-content {
+    grid-template-columns: 1fr;
+  }
+  .docs-top-bar__burger {
+    display: block;
   }
 }
 </style>

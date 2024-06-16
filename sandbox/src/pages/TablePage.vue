@@ -20,6 +20,7 @@
       </NmorphTable>
     </NmorphCard>
   </div>
+  <NmorphOverlay show></NmorphOverlay>
 </template>
 
 <script lang="ts" setup>
@@ -29,6 +30,7 @@ import {
   NmorphTableColumn,
   NmorphTable,
   NmorphButton,
+  NmorphOverlay,
   NmorphTableCell,
 } from "./../../../library/src/components";
 

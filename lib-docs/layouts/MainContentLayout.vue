@@ -4,7 +4,9 @@ import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="docs-layout-content">
-    <aside class="docs-layout-content__card nmorph-outset">
+    <aside
+      class="docs-layout-content__card nmorph-outset docs-layout-content__left-aside"
+    >
       <slot name="aside" />
     </aside>
     <NmorphScroll
@@ -40,7 +42,6 @@ import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
 .docs-layout__scroll-container {
   display: flex;
   justify-content: space-between;
-  padding-right: 6px;
   height: var(--container-height);
 }
 
@@ -52,5 +53,20 @@ import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
   position: sticky;
   top: 0;
   width: 200px;
+}
+
+@include max-width-query(1024) {
+  .docs-layout-content__main-aside {
+    display: none;
+  }
+}
+
+@include max-width-query(768) {
+  .docs-layout-content__left-aside {
+    display: none;
+  }
+  .docs-layout-content {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
