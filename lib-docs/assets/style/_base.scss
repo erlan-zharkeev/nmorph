@@ -1,8 +1,8 @@
 pre {
   margin: 0;
   padding: 0;
-  line-height: 1.5; /* или любое другое значение, подходящее вашему дизайну */
-  font-size: 1em; /* для согласования размера шрифта */
+  line-height: 1.5;
+  font-size: 1em;
   height: calc(100% - 20px);
 }
 
@@ -10,4 +10,13 @@ code {
   margin: 0;
   padding: 0;
   white-space: pre;
+}
+
+.component-page {
+  width: 100%;
+  padding: 16px;
+}
+
+.hljs {
+  background: var(--main-bg);
 }

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import TopBar from "./../components/TopBar/TopBar.vue";
-
 interface IProps {}
 const props = withDefaults(defineProps<IProps>(), {});
 

@@ -1,7 +1,7 @@
 import { reactive, watch } from 'vue';
 import { useFieldValidation } from '.';
 import { deepClone } from '@/utils';
-import { NmorphFormValueType } from '@/components/nmorph-form/types';
+import { NmorphFormValueType } from '@/components/form/nmorph-form/types';
 
 export const useFormValidation = (formData: NmorphFormValueType, validateFormOnLoad: boolean = false) => {
   const fields = reactive<Record<string, ReturnType<typeof useFieldValidation>>>({});

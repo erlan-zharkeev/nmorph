@@ -2,6 +2,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ["@nmorph/nmorph-ui-kit/dist/style.css"],
+  devServer: {
+    port: 5551,
+  },
   runtimeConfig: {
     public: {
       NUXT_ENV_GIT_PATH: process.env.NUXT_ENV_GIT_PATH,

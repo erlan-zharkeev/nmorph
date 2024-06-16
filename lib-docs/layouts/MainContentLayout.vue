@@ -1,25 +1,17 @@
 <script setup lang="ts">
 import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
-
-interface IProps {}
-const props = withDefaults(defineProps<IProps>(), {});
 </script>
 
 <template>
   <div class="docs-layout-content">
-    <aside class="docs-layout-content__card nmorph-outset">aside left</aside>
+    <aside class="docs-layout-content__card nmorph-outset">
+      <slot name="aside" />
+    </aside>
     <NmorphScroll
       class="docs-layout__scroll-container nmorph-outset docs-layout-content__card"
     >
       <main class="docs-layout-content__main">
-        <section>
-          <p v-for="_ in 40" :key="_">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni
-            beatae perferendis odio earum, facilis adipisci laboriosam eum
-            molestias deserunt architecto harum amet quae ea maiores. Eaque
-            accusantium labore aliquam commodi.
-          </p>
-        </section>
+        <slot name="default" />
         <footer class="docs-layout-content__card docs-layout-content__bottom">
           footer
         </footer>
@@ -27,7 +19,7 @@ const props = withDefaults(defineProps<IProps>(), {});
       <aside
         class="docs-layout-content__card nmorph-inset docs-layout-content__main-aside"
       >
-        Aside right
+        <slot name="aside-right" />
       </aside>
     </NmorphScroll>
   </div>
@@ -39,7 +31,6 @@ const props = withDefaults(defineProps<IProps>(), {});
   display: grid;
   grid-gap: 8px;
   grid-template-columns: 1fr 4fr;
-  height: calc(100vh - 50px);
 }
 
 .docs-layout-content__card {
@@ -50,7 +41,13 @@ const props = withDefaults(defineProps<IProps>(), {});
   display: flex;
   justify-content: space-between;
   padding-right: 6px;
+  height: var(--container-height);
 }
+
+.docs-layout-content__main {
+  width: 100%;
+}
+
 .docs-layout-content__main-aside {
   position: sticky;
   top: 0;

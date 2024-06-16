@@ -62,6 +62,9 @@ export enum NmorphIconList {
   'cross' = 'cross',
   'info' = 'info',
   'warning' = 'warning',
+  'copy' = 'copy',
+  'code' = 'code',
+  'search' = 'search',
 }
 
 export enum NmorphComponentPosition {

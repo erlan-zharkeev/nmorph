@@ -1,4 +1,4 @@
-import { NmorphAvailableFormValueType } from '@/components/nmorph-form/types';
+import { NmorphAvailableFormValueType } from '@/components/form/nmorph-form/types';
 import { ref, computed } from 'vue';
 
 export const enum NmorphArrayValidationOperator {

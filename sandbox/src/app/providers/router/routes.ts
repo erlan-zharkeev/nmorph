@@ -4,6 +4,7 @@ import TablePage from "./../../../pages/TablePage.vue";
 import DatePickerPage from "./../../../pages/DatePickerPage.vue";
 import CalendarPage from "./../../../pages/CalendarPage.vue";
 import PaginationPage from "./../../../pages/PaginationPage.vue";
+import TestPage from "./../../../pages/TestPage.vue";
 
 import { type RouteRecordRaw } from "vue-router";
 
@@ -48,6 +49,13 @@ export const routes: RouteRecordRaw[] = [
     component: PaginationPage,
     meta: {
       title: "Pagination",
+    },
+  },
+  {
+    path: "/test",
+    component: TestPage,
+    meta: {
+      title: "Test",
     },
   },
 ];

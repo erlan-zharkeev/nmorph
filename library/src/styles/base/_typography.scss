@@ -42,3 +42,27 @@
   font-size: var(--el-font-size-extra-large);
   line-height: var(--line-height-loose);
 }
+
+.nmorph-body-3 {
+  @include body-3;
+}
+
+.nmorph-body-2 {
+  @include body-2;
+}
+
+.nmorph-body-1 {
+  @include body-1;
+}
+
+.nmorph-title-3 {
+  @include title-3;
+}
+
+.nmorph-title-2 {
+  @include title-2;
+}
+
+.nmorph-title-1 {
+  @include title-1;
+}

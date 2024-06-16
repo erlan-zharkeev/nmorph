@@ -2,5 +2,17 @@
   "guide": "Guide",
   "components": "Components",
   "about": "About",
-  "search": "Search"
+  "search": "Search",
+  "componentsOverview": {
+    "rightAsideTitle": "Contents",
+    "styleType": {
+      "subtitle": "Use default or transparent props"
+    },
+    "loading": {
+      "subtitle": "Use true or false to enable or disable loading"
+    },
+    "ripple": {
+      "subtitle": "Use true or false to enable or disable ripple effect on click"
+    }
+  }
 }
