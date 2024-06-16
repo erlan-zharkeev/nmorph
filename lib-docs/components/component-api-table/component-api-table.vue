@@ -29,16 +29,14 @@ const props = withDefaults(defineProps<IProps>(), {});
         {{ props.name }} {{ $t("attributes") }}
       </h3>
       <NmorphTable :data="props.attributes" bordered :row-hover="false">
+        <NmorphTableColumn prop="name" label="Name" alignment="start" />
         <NmorphTableColumn
-          prop="name"
-          label="Name"
-          width="180"
-          alignment="start"
-          class="nmorph-title-2"
+          prop="description"
+          label="Description"
+          alignment="center"
         />
-        <NmorphTableColumn prop="description" label="Description" width="180" />
-        <NmorphTableColumn prop="type" label="Type" />
-        <NmorphTableColumn prop="default" label="Default" />
+        <NmorphTableColumn prop="type" label="Type" alignment="center" />
+        <NmorphTableColumn prop="default" label="Default" alignment="center" />
       </NmorphTable>
     </div>
     <div class="docs-api-table__slots" id="content-slots">
@@ -46,15 +44,12 @@ const props = withDefaults(defineProps<IProps>(), {});
         {{ props.name }} {{ $t("attributes") }}
       </h3>
       <NmorphTable :data="props.slots" bordered :row-hover="false">
+        <NmorphTableColumn prop="name" label="Name" alignment="start" />
         <NmorphTableColumn
-          prop="name"
-          label="Name"
-          width="180"
-          alignment="start"
+          prop="description"
+          label="Description"
+          alignment="center"
         />
-        <NmorphTableColumn prop="description" label="Description" width="180" />
-        <NmorphTableColumn prop="type" label="Type" />
-        <NmorphTableColumn prop="default" label="Default" />
       </NmorphTable>
     </div>
   </div>

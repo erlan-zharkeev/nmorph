@@ -24,11 +24,11 @@ build-docs:
 deploy-docs:
   stage: deploy
   script:
-    - mv lib-docs/.output/public/ public/
+    - mv lib-docs/.output/public public/
     - ls -l  # Для проверки содержимого папки перед деплоем
   artifacts:
     paths:
-      - lib-docs/.output/public/
+      - public/
   only:
     - dev
 
