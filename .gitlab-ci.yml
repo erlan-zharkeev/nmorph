@@ -25,10 +25,11 @@ deploy-docs:
   stage: deploy
   script:
     - cd lib-docs
-    - mv dist public  # Предполагаем, что генерация собирает файлы в папку dist
+    - mv dist public
     - ls -l  # Для проверки содержимого папки перед деплоем
   artifacts:
     paths:
-      - lib-docs/public  # Сохраняем папку public как артефакт
+      - lib-docs/public
   only:
     - dev
+
