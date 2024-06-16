@@ -8,23 +8,26 @@ cache:
   paths:
     - node_modules/
 
-before_script:
-  - npm install
-
-build:
+build-docs:
   stage: build
   script:
+    - cd lib-docs
+    - npm install
+    - npm run build
     - npm run generate
   artifacts:
     paths:
-      - public/nmorph-lib-docs
+      - lib-docs/dist
+  only:
+    - dev
 
-pages:
+deploy-docs:
   stage: deploy
   script:
-    - mv public/nmorph-lib-docs public
+    - cd lib-docs
+    - mv public lib-docs
   artifacts:
     paths:
-      - public
+      - lib-docs
   only:
     - dev
