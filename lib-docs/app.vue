@@ -1,6 +1,6 @@
 <template>
-  <TopBar :isMenuOpen="menuOpen" @toggle-menu="toggleMenu" />
-  <NuxtPage />
+  <top-bar :isMenuOpen="menuOpen" @toggle-menu="toggleMenu" />
+  <nuxt-page />
   <main-menu :isMenuOpen="menuOpen" @menu-click="closeMenuHandler" />
 </template>
 
