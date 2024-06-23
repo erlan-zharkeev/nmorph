@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphIconsMap, NmorphIconName, NmorphIconSize } from '@/components';
+import { NmorphIconsMap, NmorphIconSize } from '@/components';
 import { NmorphIconList } from '@/types/common';
 
 interface INmorphProps {
-  name?: NmorphIconName;
+  name?: keyof typeof NmorphIconList;
   size?: keyof typeof NmorphIconSize;
   width?: string;
   height?: string;
-  path?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -17,7 +16,6 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   size: 'small',
   width: undefined,
   height: undefined,
-  path: undefined,
 });
 
 const modifiers = computed(() =>
@@ -38,9 +36,6 @@ const iconDimension = computed(() => {
   <div :class="modifiers">
     <div v-if="props.name" class="nmorph-icon__content">
       <component :is="NmorphIconsMap[props.name as keyof typeof NmorphIconList]" />
-    </div>
-    <div v-else-if="props.path" class="nmorph-icon__as-image">
-      <img :src="props.path" />
     </div>
     <slot v-else />
   </div>

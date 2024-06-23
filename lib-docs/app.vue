@@ -1,12 +1,24 @@
 <template>
-  <TopBar />
-  <NuxtPage />
+  <top-bar :isMenuOpen="menuOpen" @toggle-menu="toggleMenu" />
+  <nuxt-page />
+  <main-menu :isMenuOpen="menuOpen" @menu-click="closeMenuHandler" />
 </template>
 
-<script setup></script>
+<script setup>
+const menuOpen = ref(false);
+
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value;
+};
+
+const closeMenuHandler = () => {
+  menuOpen.value = false;
+};
+</script>
 
 <style lang="scss">
-@import url(./assets/style/index.scss);
+@use "~/assets/style/index.scss";
+
 html {
   background: var(--main-bg-color);
   overflow: hidden;

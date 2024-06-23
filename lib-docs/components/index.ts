@@ -1,4 +1,4 @@
-import TopBar from "./TopBar/TopBar.vue";
-import CodeBlock from "./CodeBlock/CodeBlock.vue";
+import TopBar from "./top-bar/top-bar.vue";
+import CodeExample from "./code-example/code-example.vue";
 
-export { TopBar, CodeBlock };
+export { TopBar, CodeExample };

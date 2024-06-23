@@ -22,7 +22,7 @@
   --text-color-00: #ffffff;
   --text-color-01: #687b9e;
 
-  --overlay-background-color: #ebf3fa;
+  --overlay-background-color: rgba(0, 0, 0, 0.5);
 
   &[data-theme='dark'] {
     --darker-color: #30353b;

@@ -29,6 +29,8 @@ import Warning from '@/assets/icons/Warning.svg';
 import Copy from '@/assets/icons/copy.svg';
 import Code from '@/assets/icons/code.svg';
 import Search from '@/assets/icons/search.svg';
+import Burger from '@/assets/icons/burger.svg';
+import Logo from '@/assets/icons/logo.svg';
 
 export const NmorphIconsMap: Record<NmorphIconList, string> = {
   [NmorphIconList.eye]: Eye,
@@ -60,4 +62,6 @@ export const NmorphIconsMap: Record<NmorphIconList, string> = {
   [NmorphIconList.copy]: Copy,
   [NmorphIconList.code]: Code,
   [NmorphIconList.search]: Search,
+  [NmorphIconList.burger]: Burger,
+  [NmorphIconList.logo]: Logo,
 };
