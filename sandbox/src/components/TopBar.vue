@@ -1,18 +1,11 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { inject } from "vue";
 import { NmorphSwitch } from "../../../library/src/components";
-import { useTheme } from "../../../library/src/hooks";
 import { router } from "./../app/providers/router/index";
-import { NmorphDropdown } from "../../../library/src/components";
-const { isThemeLight, toggleTheme } = useTheme("dark");
+
+const { setTheme, currentTheme } = inject("nmorph");
 
 const allRoutes = router.getRoutes();
-
-const changeHandler = (v: unknown) => {
-  open.value = false;
-};
-const open = ref(true);
-const translateBtn = ref(null);
 </script>
 <template>
   <div class="top-bar">
@@ -25,20 +18,20 @@ const translateBtn = ref(null);
       >
     </div>
     <NmorphSwitch
-      :model-value="isThemeLight"
-      @update:model-value="toggleTheme"
+      :model-value="currentTheme"
+      @update:model-value="setTheme"
+      active-value="light"
+      inactive-value="dark"
     />
+    {{ $t("custom") }}
   </div>
 </template>
 
 <style lang="scss" scoped>
-.test-wrapper {
-}
 .top-bar {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--main-bg-color);
   padding: 10px;
 }
 

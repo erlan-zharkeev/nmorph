@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, provide, ref, watch } from 'vue';
+import { computed, provide, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import {
   NmorphCollapseDataInjectionType,

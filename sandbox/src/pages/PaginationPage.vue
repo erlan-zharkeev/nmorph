@@ -105,7 +105,7 @@ const tableData = reactive([
 }
 
 .wrapper {
-  background-color: var(--main-bg-color);
+  // background-color: var(--nmorph-main-color);
   height: 100vh;
   padding: 0;
 }

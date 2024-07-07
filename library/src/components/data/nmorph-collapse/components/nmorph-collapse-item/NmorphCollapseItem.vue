@@ -6,18 +6,18 @@ import {
   NmorphCollapseDataInjectionType,
   NmorphCollapseUpdateModelInjectionType,
 } from '@/components';
-import { NmorphComponentHeight, NmorphDomElementType } from '@/types/common';
+import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
 
 interface INmorphProps extends INmorphCollapseItemProps {
   height?: keyof typeof NmorphComponentHeight;
-  closeOnClick?: boolean;
+  block?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   title: '',
   disabled: false,
-  closeOnClick: true,
+  block: true,
 });
 
 interface INmorphEmit {
@@ -39,15 +39,15 @@ const titleModifiers = computed(() =>
   })
 );
 
-const collapseData = inject<NmorphCollapseDataInjectionType>('collapse-data');
-const updateModel = inject<NmorphCollapseUpdateModelInjectionType>('update-model');
+const collapseData = inject<NmorphCollapseDataInjectionType>('collapse-data', undefined);
+const updateModel = inject<NmorphCollapseUpdateModelInjectionType>('update-model', undefined);
 
 const collapseItemDOMElContent = ref<NmorphDomElementType>(null);
 
 const contentHeight = ref(0);
 
 const clickHandler = () => {
-  if (!props.closeOnClick) return;
+  if (!props.block) return;
   isOpen.value = !isOpen.value;
   if (!updateModel) return;
   updateModel(props.name, isOpen.value);
@@ -96,6 +96,7 @@ watch(isOpen, () => {
 <style lang="scss">
 .nmorph-collapse-item {
   --transition-speed: 0.2s;
+
   margin-bottom: var(--indentation-03);
 
   .nmorph-collapse-item__title {
@@ -103,14 +104,16 @@ watch(isOpen, () => {
     align-items: center;
     padding: var(--indentation-02);
     border-radius: var(--default-border-radius);
+
     @include nmorph-outset;
   }
 
   .nmorph-collapse-item__content {
-    overflow: hidden;
-    transition: height var(--transition-speed) ease-in-out;
-    border-radius: var(--default-border-radius);
     box-sizing: content-box;
+    overflow: hidden;
+    border-radius: var(--default-border-radius);
+    transition: height var(--transition-speed) ease-in-out;
+
     @include nmorph-inset;
   }
 }

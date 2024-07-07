@@ -19,7 +19,7 @@ export default defineNuxtConfig({
       NUXT_ENV_GIT_PATH: process.env.NUXT_ENV_GIT_PATH,
     },
   },
-  modules: ["@nuxtjs/i18n"],
+  modules: ["@nuxtjs/i18n", "nuxt-svgo"],
   i18n: {
     lazy: true,
     langDir: "locales",

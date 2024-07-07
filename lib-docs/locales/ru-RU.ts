@@ -3,9 +3,13 @@ export default {
   components: "Компоненты",
   about: "О проекте",
   search: "Поиск",
-  slots: "Слоты",
+  slots: "Cлоты",
   attributes: "Атрибуты",
   rightAsideTitle: "Контент",
+  name: "Имя",
+  description: "Описание",
+  type: "Тип",
+  default: "По умолчанию",
   overview: {
     button: {
       styleType: {

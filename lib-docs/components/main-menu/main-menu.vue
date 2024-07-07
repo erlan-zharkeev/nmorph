@@ -38,7 +38,7 @@ $transition: 0.2s ease-in-out left;
 .docs-main-menu__content {
   width: 30%;
   height: 100vh;
-  background: var(--main-bg-color);
+  background: var(--nmorph-main-color);
   z-index: 100;
   padding: 16px;
 }

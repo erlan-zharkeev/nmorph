@@ -18,6 +18,6 @@ const selectedDate = ref([new Date("2024-05-13"), new Date("2024-06-14")]);
 }
 
 html {
-  background: var(--main-bg-color);
+  // background: var(--nmorph-main-color);
 }
 </style>

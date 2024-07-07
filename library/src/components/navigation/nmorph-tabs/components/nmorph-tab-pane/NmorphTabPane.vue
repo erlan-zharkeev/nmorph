@@ -17,7 +17,7 @@ const modifiers = computed(() =>
   })
 );
 
-const providedData = inject<INmorphTabsDataProvider | undefined>('nmorph-tabs-data');
+const providedData = inject<INmorphTabsDataProvider | undefined>('nmorph-tabs-data', undefined);
 
 const isMounted = ref(false);
 

@@ -2,7 +2,7 @@
 import { computed, inject, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { onMounted, provide } from 'vue';
-import { NmorphDomElementType } from '@/types/common';
+import { NmorphDomElementType } from '@/types';
 import {
   INmorphTableDataInjection,
   INmorphTableColumnProps,
@@ -10,8 +10,8 @@ import {
   NmorphTableColumnPropertyInjectionType,
 } from '@/components';
 
-const data = inject<INmorphTableDataInjection>('table-data');
-const tableIdentifier = inject<NmorphTableIdInjectionType>('table-identifier');
+const data = inject<INmorphTableDataInjection>('table-data', undefined);
+const tableIdentifier = inject<NmorphTableIdInjectionType>('table-identifier', undefined);
 
 interface INmorphProps extends INmorphTableColumnProps {}
 const props = withDefaults(defineProps<INmorphProps>(), {

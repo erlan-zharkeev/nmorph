@@ -8,3 +8,9 @@ export enum NmorphButtonType {
   reset = 'reset',
   button = 'button',
 }
+
+export enum NmorphButtonShape {
+  default = 'default',
+  round = 'round',
+  circle = 'circle',
+}

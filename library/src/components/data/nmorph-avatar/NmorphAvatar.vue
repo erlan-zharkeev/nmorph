@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphAvatarType } from '@/components';
-import { NmorphImageFit } from '@/types/common';
+import { NmorphImageFit } from '@/types';
 
 interface INmorphProps {
   size?: number;
@@ -83,14 +83,15 @@ const size = computed(() => ` ${props.size}px`);
 
   img {
     @include wh100;
+
     object-fit: v-bind(fit);
   }
 
   .nmorph-avatar__image--hide {
-    opacity: 0;
+    display: none;
     width: 0;
     height: 0;
-    display: none;
+    opacity: 0;
   }
 }
 

@@ -88,8 +88,8 @@ const cellHeight = computed(() => `${props.stepHeight}px`);
 
 <style lang="scss">
 .nmorph-time-roller {
-  --hover-bg: var(--accent-color-00);
-  --hover-color: var(--text-color-00);
+  --hover-bg: var(--nmorph-accent-color);
+  --hover-color: var(--nmorph-white-color);
 
   width: 100%;
   margin-left: 2px;
@@ -124,8 +124,8 @@ const cellHeight = computed(() => `${props.stepHeight}px`);
   }
 
   .nmorph-time-roller__value--disabled-value:hover {
+    color: var(--nmorph-accent-color);
     background: transparent;
-    color: var(--accent-color-00);
   }
 }
 </style>

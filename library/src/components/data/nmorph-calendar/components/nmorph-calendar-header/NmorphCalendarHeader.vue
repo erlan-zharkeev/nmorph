@@ -57,8 +57,8 @@ const modifiers = computed(() =>
 <style lang="scss">
 .nmorph-calendar-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .nmorph-calendar-header__actions {

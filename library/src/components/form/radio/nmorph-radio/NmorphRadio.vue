@@ -7,10 +7,13 @@ import {
   NmorphRadioGroupSelectedValueInjectionType,
   NmorphRadioStyleType,
 } from '@/components';
-import { NmorphDomElementType } from '@/types/common';
+import { NmorphDomElementType } from '@/types';
 
-const groupSelectedValue = inject<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value');
-const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-button-value-handler');
+const groupSelectedValue = inject<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value', undefined);
+const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType>(
+  'change-radio-button-value-handler',
+  undefined
+);
 
 interface INmorphProps extends INmorphRadioOption {
   styleType?: keyof typeof NmorphRadioStyleType;
@@ -49,7 +52,14 @@ onMounted(() => {
   <label :class="modifiers" @click.prevent="changeHandler">
     <div v-if="props.styleType === 'radio-style'" class="nmorph-radio__content">
       <div class="nmorph-radio__input-wrapper">
-        <input ref="inputDOMRef" type="radio" :name="props.label" :value="props.value" :checked="checked" />
+        <input
+          ref="inputDOMRef"
+          type="radio"
+          :name="props.label"
+          :value="props.value"
+          :checked="checked"
+          class="nmorph-native-input"
+        />
         <div class="nmorph-radio__fake" />
         <div v-if="checked" class="nmorph-radio__fake-checked" />
       </div>
@@ -66,6 +76,7 @@ onMounted(() => {
         :name="props.label"
         :value="props.value"
         :checked="checked"
+        class="nmorph-native-input"
       />
       <div v-if="props.label" class="nmorph-radio__fake">
         <span> {{ props.label }} </span>
@@ -118,7 +129,7 @@ onMounted(() => {
   .nmorph-radio__fake-checked {
     width: 50%;
     height: 50%;
-    background: var(--accent-color-00);
+    background: var(--nmorph-accent-color);
     border-radius: var(--border-radius-circular);
 
     @include absolute-center;

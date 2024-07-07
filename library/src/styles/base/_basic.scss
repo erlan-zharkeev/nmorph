@@ -1,23 +1,29 @@
 * {
-  color: var(--text-color-01);
+  color: var(--nmorph-text-color);
 }
 
 body {
-  font-family: 'Helvetica', 'Roboto', Arial, sans-serif;
+  font-family: Helvetica, Roboto, Arial, sans-serif;
+
   @include body-1;
 }
 
 // HEIGHT
 .nmorph--default-height-component {
   --height: var(--default-thickness-component);
+
   height: var(--height);
 }
+
 .nmorph--thin-component {
   --height: var(--thin-component);
+
   height: var(--height);
 }
+
 .nmorph--thick-component {
   --height: var(--thick-component);
+
   height: var(--height);
 }
 
@@ -26,18 +32,25 @@ body {
   @include body-3;
 }
 
-.nmorph--focused {
-}
-
 .nmorph-native-input:focus {
-  color: var(--text-color-00);
+  color: var(--nmorph-focus-text-color);
 }
 
 .nmorph-native-input:focus::placeholder {
-  color: var(--text-color-00);
+  color: var(--nmorph-focus-text-color);
+}
+
+.nmorph-native-input::placeholder {
+  color: var(--nmorph-text-color);
 }
 
 // WIDTH
 .nmorph--fill {
   width: 100%;
+}
+
+.nmorph--focused {
+  .nmorph-icon svg {
+    --color: var(--nmorph-focus-text-color);
+  }
 }

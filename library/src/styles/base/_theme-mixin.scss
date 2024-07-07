@@ -1,36 +1,38 @@
 @mixin nmorph-outset() {
-  background: var(--main-bg-color);
+  background: var(--nmorph-main-color);
   box-shadow:
-    var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--darker-color),
-    calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur) var(--lighter-color);
+    var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+    calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+      var(--nmorph-light-shade-color);
 }
 
 @mixin nmorph-inset() {
-  background: var(--main-bg-color);
+  background: var(--nmorph-main-color);
   box-shadow:
-    inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--darker-color),
+    inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
     inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-      var(--lighter-color);
+      var(--nmorph-light-shade-color);
 }
 
 @mixin nmorph-combined() {
-  background: var(--main-bg-color);
+  background: var(--nmorph-main-color);
   box-shadow:
-    var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--darker-color),
-    calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur) var(--lighter-color),
-    inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--darker-color),
+    var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+    calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+      var(--nmorph-light-shade-color),
+    inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
     inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-      var(--lighter-color);
+      var(--nmorph-light-shade-color);
 }
 
 @mixin nmorph-wrapper() {
-  padding: var(--nmorph-wrapper-padding);
   box-sizing: content-box;
+  padding: var(--nmorph-wrapper-padding);
 }
 
 @mixin nmorph-dark-shadow() {
-  background: var(--main-bg-color);
-  box-shadow: 0 0 var(--base-shadow-blur) var(--darker-color);
+  background: var(--nmorph-main-color);
+  box-shadow: 0 0 var(--base-shadow-blur) var(--nmorph-dark-shade-color);
 }
 
 .nmorph-outset {

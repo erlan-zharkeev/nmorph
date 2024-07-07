@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphComponentHeight } from '@/types/common';
+import { NmorphComponentHeight } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphIcon } from '@/components';

@@ -12,8 +12,8 @@
 
 .list-enter-from,
 .list-leave-to {
-  opacity: 0;
   transform: translateX(30px);
+  opacity: 0;
 }
 
 .opacity-enter-active,

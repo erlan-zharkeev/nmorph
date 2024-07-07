@@ -70,16 +70,18 @@ const modifiers = computed(() =>
   padding: var(--indentation-03);
 
   .nmorph-date-picker-header__center-side {
-    border-radius: var(--default-border-radius);
-    margin: 0 var(--indentation-00);
-    width: 165px;
     display: flex;
     justify-content: center;
+    width: 165px;
+    margin: 0 var(--indentation-00);
+    border-radius: var(--default-border-radius);
+
     @include nmorph-inset;
   }
 
   .nmorph-date-picker-header__action-btn {
     margin: 0 var(--indentation-02);
+
     .nmorph-button__content {
       padding: 0 var(--indentation-02);
     }

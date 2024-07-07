@@ -2,13 +2,14 @@
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphIconsMap, NmorphIconSize } from '@/components';
-import { NmorphIconList } from '@/types/common';
+import { NmorphIconList } from '@/types';
 
 interface INmorphProps {
   name?: keyof typeof NmorphIconList;
   size?: keyof typeof NmorphIconSize;
   width?: string;
   height?: string;
+  color?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -16,24 +17,31 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   size: 'small',
   width: undefined,
   height: undefined,
+  color: '--nmorph-text-color',
 });
 
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-icon': [
       `${!props.width && !props.height && props.size}`,
-      `${props.width && 'custom-width'}`,
-      `${props.height && 'custom-height'}`,
+      `${props.width ? 'custom-width' : ''}`,
+      `${props.height ? 'custom-height' : ''}`,
     ],
   })
 );
-const iconDimension = computed(() => {
-  return { width: props.width, height: props.height };
+
+const customStyles = computed(() => {
+  const styles: { [key: string]: string } = {};
+  if (props.width) styles['--width'] = props.width;
+  if (props.height) styles['--height'] = props.height;
+  return styles;
 });
+
+const color = computed(() => `var(${props.color})`);
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="customStyles">
     <div v-if="props.name" class="nmorph-icon__content">
       <component :is="NmorphIconsMap[props.name as keyof typeof NmorphIconList]" />
     </div>
@@ -43,14 +51,14 @@ const iconDimension = computed(() => {
 
 <style lang="scss">
 .nmorph-icon {
-  --color: var(--text-color-01);
+  --color: v-bind(color);
 
-  width: var(--width);
-  height: var(--height);
-  min-width: var(--width);
-  min-height: var(--height);
   display: flex;
   align-items: center;
+  width: var(--width);
+  min-width: var(--width);
+  height: var(--height);
+  min-height: var(--height);
 
   .nmorph-icon__content {
     @include flex-full-center;
@@ -60,15 +68,6 @@ const iconDimension = computed(() => {
     @include wh100;
 
     fill: var(--color);
-  }
-
-  .nmorph-icon__as-image {
-    display: flex;
-  }
-
-  .nmorph-icon__as-image img {
-    width: var(--width);
-    height: var(--height);
   }
 }
 
@@ -85,13 +84,5 @@ const iconDimension = computed(() => {
 .nmorph-icon--large {
   --width: 32px;
   --height: 32px;
-}
-
-.nmorph-icon--custom-width {
-  --width: v-bind(iconDimension.width);
-}
-
-.nmorph-icon--custom-height {
-  --height: v-bind(iconDimension.height);
 }
 </style>

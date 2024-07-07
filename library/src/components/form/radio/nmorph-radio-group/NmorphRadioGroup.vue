@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentDirection } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentDirection } from '@/types';
 import { useModifiers } from '@/utils';
 import { ref, computed, provide, watch } from 'vue';
 import {
@@ -91,9 +91,11 @@ provide<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-but
     margin-bottom: var(--indentation-03);
   }
 }
+
 .nmorph-radio-group--fill {
   width: 100%;
 }
+
 .nmorph-radio-group--column {
   .nmorph-radio-group__content {
     flex-direction: column;

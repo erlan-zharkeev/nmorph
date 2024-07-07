@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphButton, NmorphIcon } from '@/components';
-import { NmorphSortOrderType } from '@/types/common';
+import { NmorphSortOrderType } from '@/types';
 
 interface INmorphProps {
   value: NmorphSortOrderType;
@@ -41,30 +41,34 @@ const iconSize = '10px';
 
   .nmorph-button__content {
     @include flex-full-center;
+
     flex-direction: column;
   }
-  .nmorph-sort-button__icon-up {
-    transform: rotate(180deg);
-  }
-  .nmorph-sort-button__icon-up,
-  .nmorph-sort-button__icon-down {
-    --color: var(--darker-color);
-  }
+
   .nmorph-sort-button__icon-up {
     margin-bottom: -1px;
+    transform: rotate(180deg);
   }
+
+  .nmorph-sort-button__icon-up,
+  .nmorph-sort-button__icon-down {
+    --color: var(--nmorph-dark-shade-color);
+  }
+
   .nmorph-sort-button__icon-down {
     margin-top: -1px;
   }
 }
+
 .nmorph-sort-button--ascending {
   .nmorph-sort-button__icon-up {
-    --color: var(--accent-color-00);
+    --color: var(--nmorph-accent-color);
   }
 }
+
 .nmorph-sort-button--descending {
   .nmorph-sort-button__icon-down {
-    --color: var(--accent-color-00);
+    --color: var(--nmorph-accent-color);
   }
 }
 </style>

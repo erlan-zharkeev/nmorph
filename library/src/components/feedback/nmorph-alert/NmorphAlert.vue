@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { Ref, computed, ref, useSlots } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphIcon, NmorphIconName, NmorphAlertType } from '@/components';
+import { NmorphIcon, NmorphAlertType } from '@/components';
 
 interface INmorphProps {
   color?: keyof typeof NmorphAlertType;
   closable?: boolean;
   title?: string;
   content?: string;
-  fill: boolean;
+  fill?: boolean;
   maxWidth?: number;
   showIcon?: boolean;
 }
@@ -41,7 +41,7 @@ const closeHandler = () => {
   emit('close');
 };
 
-const iconName = computed(() => props.color) as Ref<NmorphIconName>;
+const iconName = computed(() => props.color) as Ref<NmorphAlertType>;
 
 const slots = useSlots();
 </script>
@@ -82,23 +82,24 @@ const slots = useSlots();
 
   .nmorph-alert__content-title {
     font-weight: 600;
+
     @include title-3;
+
     line-height: 1;
   }
 
   .nmorph-alert__wrapper {
     display: flex;
-  }
-  .nmorph-alert__wrapper {
-    display: flex;
     align-items: center;
   }
+
   .nmorph-alert__icon {
     margin-right: var(--indentation-03);
   }
+
   .nmorph-alert__close {
-    margin-left: var(--indentation-03);
     align-self: flex-start;
+    margin-left: var(--indentation-03);
     cursor: pointer;
   }
 }
@@ -108,47 +109,54 @@ const slots = useSlots();
 }
 
 .nmorph-alert--success {
-  background: var(--success-color-00);
+  background: var(--nmorph-success-color);
+
   .nmorph-alert__content,
   .nmorph-alert__content-title {
-    color: var(--success-text-color-00);
+    color: var(--nmorph-black-color);
   }
+
   .nmorph-icon {
-    --color: var(--success-text-color-00);
+    --color: var(--nmorph-success-text-color);
   }
 }
 
 .nmorph-alert--error {
-  background: var(--error-color-00);
+  background: var(--nmorph-error-color);
+
   .nmorph-alert__content,
   .nmorph-alert__content-title {
-    color: var(--error-text-color-00);
+    color: var(--nmorph-black-color);
   }
+
   .nmorph-icon {
-    --color: var(--error-text-color-00);
+    --color: var(--nmorph-error-text-color);
   }
 }
 
 .nmorph-alert--warning {
-  background: var(--warning-color-00);
+  background: var(--nmorph-warn-color);
+
   .nmorph-alert__content,
   .nmorph-alert__content-title {
-    color: var(--warning-text-color-00);
+    color: var(--nmorph-black-color);
   }
+
   .nmorph-icon {
-    --color: var(--warning-text-color-00);
+    --color: var(--nmorph-warn-text-color);
   }
 }
 
 .nmorph-alert--info {
-  background: var(--info-color-00);
+  background: var(--nmorph-info-color);
 
   .nmorph-alert__content,
   .nmorph-alert__content-title {
-    color: var(--info-text-color-00);
+    color: var(--nmorph-black-color);
   }
+
   .nmorph-icon {
-    --color: var(--info-text-color-00);
+    --color: var(--nmorph-info-text-color);
   }
 }
 </style>

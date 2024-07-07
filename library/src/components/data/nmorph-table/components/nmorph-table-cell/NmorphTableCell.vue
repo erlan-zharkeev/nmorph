@@ -4,8 +4,8 @@ import { useModifiers } from '@/utils';
 import { inject } from 'vue';
 import { NmorphTableColumnPropertyInjectionType, NmorphTableIdInjectionType } from '@/components';
 
-const columnProperty = inject<NmorphTableColumnPropertyInjectionType>('column-property');
-const tableIdentifier = inject<NmorphTableIdInjectionType>('table-identifier');
+const columnProperty = inject<NmorphTableColumnPropertyInjectionType>('column-property', undefined);
+const tableIdentifier = inject<NmorphTableIdInjectionType>('table-identifier', undefined);
 
 interface INmorphProps {
   row: number;

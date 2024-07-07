@@ -1,36 +1,3 @@
-:root {
-  --darker-color: #c8c9ca;
-  --main-bg-color: #eaf2f9;
-  --lighter-color: #ffffff;
-
-  --info-color-00: #d4e5edbb;
-  --info-text-color-00: #506c80;
-
-  --success-color-00: #7eee7eb4;
-  --success-text-color-00: #0c7c26;
-
-  --error-color-00: #f78383d1;
-  --error-text-color-00: #af4040;
-
-  --warning-color-00: #ffe572d4;
-  --warning-text-color-00: #8b7514;
-
-  --info-color-02: #c9d2de;
-
-  --accent-color-00: #7f95be;
-
-  --text-color-00: #ffffff;
-  --text-color-01: #687b9e;
-
-  --overlay-background-color: rgba(0, 0, 0, 0.5);
-
-  &[data-theme='dark'] {
-    --darker-color: #30353b;
-    --main-bg-color: #3e4959;
-    --lighter-color: #364557;
-
-    --text-color-01: #a1afb8;
-
-    --accent-color-00: #78879c;
-  }
+html {
+  background: var(--nmorph-main-color);
 }

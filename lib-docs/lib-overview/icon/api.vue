@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { NmorphIconSize } from "@nmorph/nmorph-ui-kit";
+import ApiTable from "~/components/api-table/api-table.vue";
 
 const attributesData = [
   {
@@ -29,9 +30,7 @@ const slotData = [
 ];
 </script>
 <template>
-  <div class="docs-button-api-table">
-    <api name="Icon" :attributes="attributesData" :slots="slotData" />
+  <div class="docs-api-table">
+    <api-table name="Icon" :attributes="attributesData" :slots="slotData" />
   </div>
 </template>
-
-<style lang="scss"></style>

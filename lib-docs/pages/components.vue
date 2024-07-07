@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { ref, watch, nextTick, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import ComponentsList from "~/components/component-list/component-list.vue";
+import { capitalizeFirstChar } from "@nmorph/nmorph-ui-kit";
 
 const componentPage = ref<HTMLElement | null>(null);
 const navigationContents = ref<string[]>([]);
@@ -10,31 +13,58 @@ watch(
   () => router.currentRoute.value,
   () => {
     nextTick(() => {
-      updateAnchor();
+      doUpdate();
     });
   }
 );
 
 onMounted(() => {
-  updateAnchor();
+  observer.value = new IntersectionObserver(updateActiveAnchor, {
+    root: null,
+    rootMargin: "-10px 0px -90% 0px",
+    threshold: 0,
+  });
+  doUpdate();
 });
 
-const updateAnchor = () => {
+onUnmounted(() => {
+  if (!observer.value) return;
+  observer.value.disconnect();
+});
+
+const doUpdate = () => {
   if (!componentPage.value) return;
   const matchedEl = componentPage.value.querySelectorAll('[id^="content-"]');
   navigationContents.value = [];
   matchedEl.forEach((element) => {
     navigationContents.value.push(element.id);
+    if (!observer.value) return;
+    observer.value.observe(element);
+  });
+};
+
+const activeAnchor = ref("");
+const observer = ref<IntersectionObserver | null>(null);
+
+const updateActiveAnchor = (entries: IntersectionObserverEntry[]) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting && entry.intersectionRatio > 0) {
+      activeAnchor.value = entry.target.id;
+    }
   });
 };
 </script>
 
 <template>
   <div class="docs-components-page page">
-    <nuxt-layout name="main-layout">
-      <template #aside><ComponentsList /></template>
+    <NuxtLayout name="main-layout">
+      <template #aside>
+        <ComponentsList />
+      </template>
       <template #default>
-        <section ref="componentPage"><NuxtPage /></section>
+        <section ref="componentPage">
+          <NuxtPage />
+        </section>
       </template>
       <template #aside-right>
         <h3 class="nmorph-title-3 docs-components-page__title">
@@ -42,7 +72,13 @@ const updateAnchor = () => {
         </h3>
         <nav class="docs-components-page__nav">
           <ul>
-            <li v-for="anchor in navigationContents" :key="anchor">
+            <li
+              v-for="anchor in navigationContents"
+              :key="anchor"
+              :class="{
+                'docs-components-page--active': anchor === activeAnchor,
+              }"
+            >
               <a :href="`#${anchor}`">{{
                 capitalizeFirstChar(anchor.substring(8))
               }}</a>
@@ -50,7 +86,7 @@ const updateAnchor = () => {
           </ul>
         </nav>
       </template>
-    </nuxt-layout>
+    </NuxtLayout>
   </div>
 </template>
 
@@ -63,5 +99,9 @@ const updateAnchor = () => {
 }
 .docs-components-page__title {
   text-align: center;
+}
+
+.docs-components-page--active {
+  color: var(--nmorph-accent-color);
 }
 </style>

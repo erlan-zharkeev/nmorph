@@ -42,6 +42,7 @@ const modifiers = computed(() =>
     .nmorph-skeleton-item:first-child:not(.nmorph-skeleton-item--circle) {
       width: 33%;
     }
+
     .nmorph-skeleton-item:last-child:not(.nmorph-skeleton-item--image),
     .nmorph-skeleton-item:last-child:not(.nmorph-skeleton-item--circle) {
       width: 63%;
@@ -51,7 +52,12 @@ const modifiers = computed(() =>
 
 .nmorph-skeleton--loading {
   .nmorph-skeleton-item {
-    background: linear-gradient(90deg, var(--info-color-02) 25%, var(--info-color-01) 37%, var(--info-color-02) 63%);
+    background: linear-gradient(
+      90deg,
+      var(--nmorph-gray-color) 25%,
+      var(--info-color-01) 37%,
+      var(--nmorph-gray-color) 63%
+    );
     background-size: 400% 100%;
     animation: nmorph-skeleton-loading-animation 1.4s ease infinite;
   }
@@ -61,6 +67,7 @@ const modifiers = computed(() =>
   0% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0 50%;
   }

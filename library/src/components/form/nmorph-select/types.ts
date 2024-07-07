@@ -1,4 +1,4 @@
-import { INmorphCommonInputProps } from '@/types/common';
+import { INmorphCommonInputProps } from '@/types';
 import { Ref } from 'vue';
 
 export type NmorphSelectModelValueType = string | string[];

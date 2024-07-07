@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { NmorphButtonType, NmorphButtonStyle } from "@nmorph/nmorph-ui-kit";
 import ApiTable from "~/components/api-table/api-table.vue";
+const { t } = useI18n();
 
 const attributesData = [
   {
     name: "type",
-    description: "Set native button type",
+    description: t("description"),
     type: Object.values(NmorphButtonType).join(", "),
     default: "button",
   },
@@ -71,7 +72,7 @@ const slotData = [
 ];
 </script>
 <template>
-  <div class="docs-button-api-table">
+  <div class="docs-api-table">
     <api-table name="Button" :attributes="attributesData" :slots="slotData" />
   </div>
 </template>

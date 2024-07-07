@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphShadowType } from '@/types/common';
+import { NmorphShadowType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 

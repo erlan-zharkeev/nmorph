@@ -141,27 +141,34 @@ const goToYearsHandler = () => {
     display: flex;
     justify-content: space-between;
     padding-bottom: var(--indentation-04);
-    border-bottom: 1px solid var(--accent-color-00);
+    border-bottom: 1px solid var(--nmorph-accent-color);
   }
+
   .nmorph-year-month-picker__value {
     @include nmorph-inset;
+
     border-radius: var(--default-border-radius);
   }
+
   .nmorph-year-month-picker__values {
     padding-top: var(--indentation-04);
   }
+
   .nmorph-radio-group .nmorph-radio-group__content {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
   }
+
   .nmorph-radio-group .nmorph-radio:not(:last-child) {
-    margin: 0;
     width: 100%;
+    margin: 0;
   }
+
   .nmorph-year-month-picker__chevron-left {
     rotate: 90deg;
   }
+
   .nmorph-year-month-picker__chevron-right {
     rotate: -90deg;
   }

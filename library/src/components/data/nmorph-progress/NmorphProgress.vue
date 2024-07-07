@@ -17,7 +17,7 @@ interface INmorphProps {
 const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   type: 'linear',
-  color: 'var(--info-color-00)',
+  color: 'var(--nmorph-info-color)',
   textInside: false,
   showText: true,
   indeterminate: false,
@@ -99,54 +99,62 @@ const displayPercentage = computed(() => `${props.percentage}%`);
   --animation: slide 2s linear infinite;
 
   .nmorph-progress__linear {
-    height: 100%;
     display: flex;
     align-items: center;
+    height: 100%;
     height: var(--height);
 
     .nmorph-progress__outer {
       width: 100%;
       height: 100%;
-      border-radius: var(--border-radius-circular);
       overflow: hidden;
+      border-radius: var(--border-radius-circular);
+
       @include nmorph-inset;
     }
+
     .nmorph-progress__inner {
       position: relative;
       width: v-bind(innerContentWidth);
+      height: 100%;
       background: v-bind(color);
       border-radius: var(--border-radius-circular);
       transition: var(--width-transition);
-      height: 100%;
       animation: v-bind(animation);
     }
+
     .nmorph-progress__percentage,
     .nmorph-progress__inner-text {
       margin-left: var(--indentation-03);
+
       @include body-3;
     }
+
     .nmorph-progress__inner-text {
       position: absolute;
       top: 50%;
-      transform: translateY(-50%);
       right: var(--indentation-02);
+      color: var(--nmorph-light-shade-color);
+      transform: translateY(-50%);
+
       @include body-3;
-      color: var(--lighter-color);
     }
   }
 
   .nmorph-progress__circle {
+    position: relative;
     width: v-bind(circleContainerSize);
     height: v-bind(circleContainerSize);
     border-radius: var(--border-radius-circular);
-    position: relative;
+
     @include nmorph-inset;
 
-    &:after {
-      content: '';
+    &::after {
       width: 92%;
       height: 92%;
       border-radius: var(--border-radius-circular);
+      content: '';
+
       @include absolute-center;
       @include nmorph-dark-shadow;
     }
@@ -154,16 +162,17 @@ const displayPercentage = computed(() => `${props.percentage}%`);
 
   .nmorph-progress__circle-inner-part {
     z-index: 1;
+
     @include absolute-center;
   }
 
   .nmorph-progress__circle-ring {
-    stroke-width: v-bind(strokeWidth);
-    stroke: v-bind(color);
-    fill: none;
-    transform-origin: center;
     transform: rotate(-90deg);
+    transform-origin: center;
     transition: stroke-dashoffset 0.5s;
+    fill: none;
+    stroke: v-bind(color);
+    stroke-width: v-bind(strokeWidth);
   }
 }
 
@@ -171,6 +180,7 @@ const displayPercentage = computed(() => `${props.percentage}%`);
   from {
     left: -50%;
   }
+
   to {
     left: 100%;
   }

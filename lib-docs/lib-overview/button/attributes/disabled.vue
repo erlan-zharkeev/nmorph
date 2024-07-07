@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
-const scriptData = `
-<script setup lang="ts">
-const loading = true
-<\/script>
-`;
+const scriptData = ``;
 const templateData = `
 <NmorphButton style-type="default" disabled />
 `;

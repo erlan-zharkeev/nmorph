@@ -95,14 +95,16 @@ provide<INmorphTabsDataProvider, string>('nmorph-tabs-data', {
   padding: var(--indentation-02);
   border-top-left-radius: var(--default-border-radius);
   border-top-right-radius: var(--default-border-radius);
+
   @include nmorph-outset;
 }
 
 .nmorph-tabs__label {
+  margin-right: var(--indentation-02);
   padding: var(--indentation-03);
   border-radius: var(--default-border-radius);
   cursor: pointer;
-  margin-right: var(--indentation-02);
+
   @include nmorph-outset;
 }
 
@@ -113,15 +115,19 @@ provide<INmorphTabsDataProvider, string>('nmorph-tabs-data', {
 .nmorph-tabs__label--selected {
   @include nmorph-inset;
 }
+
 .nmorph-tabs__content__wrapper {
   padding: var(--indentation-02);
-  border-bottom-left-radius: var(--default-border-radius);
   border-bottom-right-radius: var(--default-border-radius);
+  border-bottom-left-radius: var(--default-border-radius);
+
   @include nmorph-outset;
 }
+
 .nmorph-tabs__content {
-  border-radius: var(--default-border-radius);
   padding: var(--indentation-03);
+  border-radius: var(--default-border-radius);
+
   @include nmorph-inset;
 }
 </style>

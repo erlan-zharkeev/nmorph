@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphImageFit } from '@/types/common';
+import { NmorphImageFit } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 

@@ -16,7 +16,7 @@ const modifiers = computed(() =>
   })
 );
 
-const breadcrumbData = inject<NmorphBreadcrumbInjection>('breadcrumb-data');
+const breadcrumbData = inject<NmorphBreadcrumbInjection>('breadcrumb-data', undefined);
 const isMounted = ref(false);
 const itemId = generateUUID();
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide } from 'vue';
 import {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref, watch } from 'vue';
 import {
@@ -32,13 +32,13 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   disabledSeconds: null,
 });
 
-const emit = defineEmits<INmorphEmit>();
-
 interface INmorphEmit {
   (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
   (e: 'update:modelValue', val: number): void;
   (e: 'on-change-open-close', val: boolean): void;
 }
+
+const emit = defineEmits<INmorphEmit>();
 
 const timepickerDOMRef = ref<NmorphDomElementType>(null);
 const inputDOMRef = ref<NmorphDomElementType>(null);
@@ -116,7 +116,7 @@ const selectedValue = computed(() => (emptyValue.value ? '——:——:——' 
     <div class="nmorph-time-picker__content">
       <div class="nmorph-time-picker__selected-time">
         <NmorphIcon name="time" class="nmorph-time-picker__time-icon" />
-        <input ref="inputDOMRef" type="time" :value="timeTuple" step="1" />
+        <input ref="inputDOMRef" type="time" :value="timeTuple" step="1" class="nmorph-native-input" />
         <span>{{ selectedValue }}</span>
       </div>
       <NmorphDropdown
@@ -191,7 +191,7 @@ const selectedValue = computed(() => (emptyValue.value ? '——:——:——' 
   }
 
   .nmorph-time-picker__dropdown::after {
-    $line: solid 1px var(--accent-color-00);
+    $line: solid 1px var(--nmorph-accent-color);
 
     width: 100%;
     height: v-bind(cellHeight);

@@ -2,7 +2,7 @@
 import { computed, provide, ref } from 'vue';
 import { NmorphCheckbox } from '@/components';
 import { useModifiers } from '@/utils';
-import { INmorphCommonInputProps, NmorphComponentDirection } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentDirection } from '@/types';
 import {
   NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType,
   NmorphCheckboxGroupSelectedValueInjectionType,

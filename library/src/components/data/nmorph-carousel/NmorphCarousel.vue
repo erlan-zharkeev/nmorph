@@ -2,7 +2,7 @@
 import { generateUUID, useModifiers } from '@/utils';
 import { computed, onMounted, provide, reactive, ref, watch, nextTick } from 'vue';
 import { NmorphIcon, INmorphCarouselInjection } from '@/components';
-import { NmorphDomElementType } from '@/types/common';
+import { NmorphDomElementType } from '@/types';
 
 const currentSlide = ref(0);
 
@@ -138,11 +138,12 @@ const elementIndicator = (idx: number) => {
 .nmorph-carousel {
   --height: 500px;
 
-  overflow: hidden;
-  height: var(--height);
   position: relative;
-  border: 10px solid var(--main-bg-color);
+  height: var(--height);
+  overflow: hidden;
+  border: 10px solid var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
+
   @include nmorph-outset;
 
   .nmorph-carousel__wrapper {
@@ -160,39 +161,39 @@ const elementIndicator = (idx: number) => {
   }
 
   .nmorph-carousel__elements-indicator {
-    width: 100%;
-    display: flex;
-    justify-content: center;
     position: absolute;
     bottom: 16px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
 
   .nmorph-carousel__element-indicator {
     width: 30px;
     height: 2px;
-    background: var(--info-color-02);
     margin-right: var(--indentation-02);
+    background: var(--nmorph-gray-color);
   }
 
   .nmorph-carousel__element-indicator--active {
-    background: var(--text-color-00);
+    background: var(--nmorph-white-color);
   }
 
   .nmorph-carousel__action-btn {
     position: absolute;
-    background: var(--info-color-01);
-    padding: var(--indentation-03);
-    border-radius: var(--default-border-radius);
     top: 50%;
+    padding: var(--indentation-03);
+    background: var(--info-color-01);
+    border-radius: var(--default-border-radius);
     transform: translateY(-50%);
     cursor: pointer;
 
     &:hover {
-      background: var(--info-color-00);
+      background: var(--nmorph-info-color);
     }
 
     .nmorph-icon {
-      --color: var(--text-color-00);
+      --color: var(--nmorph-white-color);
     }
   }
 
@@ -207,9 +208,9 @@ const elementIndicator = (idx: number) => {
   }
 
   .nmorph-carousel__item {
+    flex-shrink: 0;
     width: 100%;
     height: 100%;
-    flex-shrink: 0;
   }
 }
 </style>

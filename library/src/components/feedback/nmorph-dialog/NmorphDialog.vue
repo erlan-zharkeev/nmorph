@@ -55,16 +55,18 @@ const closeHandler = () => {
   --width: 500px;
 
   width: var(--width);
-  border-radius: var(--default-border-radius);
   padding: var(--indentation-04);
+  border-radius: var(--default-border-radius);
+
   @include nmorph-outset;
   @include absolute-center;
 
   .nmorph-dialog__header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     font-weight: 600;
+
     @include title-2;
   }
 }

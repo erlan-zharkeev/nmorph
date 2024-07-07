@@ -5,6 +5,7 @@
 </template>
 
 <script setup>
+// import "~/plugins/nmorph";
 const menuOpen = ref(false);
 
 const toggleMenu = () => {
@@ -20,7 +21,7 @@ const closeMenuHandler = () => {
 @use "~/assets/style/index.scss";
 
 html {
-  background: var(--main-bg-color);
+  // background: var(--nmorph-main-color);
   overflow: hidden;
 }
 </style>

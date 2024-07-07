@@ -28,19 +28,19 @@
 }
 
 @mixin overlay($zIndex: 1) {
-  background: var(--overlay-background-color);
-  z-index: $zIndex;
-  overflow: hidden;
-  transition: ease-in-out var(--transition-02) opacity;
   position: fixed;
-  width: 100vw;
-  height: 100vh;
   top: 0;
   left: 0;
+  z-index: $zIndex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--nmorph-overlay-color);
+  transition: ease-in-out var(--transition-02) opacity;
 }
 
 @mixin ellipsis() {
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }

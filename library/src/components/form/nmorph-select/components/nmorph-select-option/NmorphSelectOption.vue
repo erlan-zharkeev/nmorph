@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight } from '@/types/common';
+import { NmorphComponentHeight } from '@/types';
 import { useModifiers } from '@/utils';
 import { inject, computed } from 'vue';
 import {
@@ -9,8 +9,8 @@ import {
   NmorphSelectSelectedValueInjectionType,
 } from '@/components';
 
-const selectSelectedValue = inject<NmorphSelectSelectedValueInjectionType>('select-selected-value');
-const selectChangeSelectedValue = inject<NmorphSelectChangeSelectedValue>('select-change-selected-value');
+const selectSelectedValue = inject<NmorphSelectSelectedValueInjectionType>('select-selected-value', undefined);
+const selectChangeSelectedValue = inject<NmorphSelectChangeSelectedValue>('select-change-selected-value', undefined);
 
 const props = withDefaults(defineProps<INmorphSelectOption>(), {
   label: '',
@@ -63,8 +63,8 @@ const modifiers = computed(() =>
 
 <style lang="scss">
 .nmorph-select-option {
-  --hover-bg: var(--accent-color-00);
-  --hover-color: var(--text-color-00);
+  --hover-bg: var(--nmorph-accent-color);
+  --hover-color: var(--nmorph-white-color);
 
   display: flex;
   justify-content: space-between;

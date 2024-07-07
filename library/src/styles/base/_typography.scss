@@ -34,15 +34,15 @@
 }
 
 @mixin title-2 {
+  font-weight: 600;
   font-size: var(--el-font-size-large);
   line-height: var(--line-height-loose);
-  font-weight: 600;
 }
 
 @mixin title-1 {
+  font-weight: 800;
   font-size: var(--el-font-size-extra-large);
   line-height: var(--line-height-loose);
-  font-weight: 800;
 }
 
 .nmorph-body-3 {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { computed, inject } from 'vue';
-import { NmorphComponentHeight } from '@/types/common';
+import { NmorphComponentHeight } from '@/types';
 import { NmorphValidationIcon, NmorphErrorBox } from './inner-components';
 import { NmorphFormValidationDataType } from '@/components';
 
@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   validate: true,
 });
 
-const formData = inject<NmorphFormValidationDataType>('form-data');
+const formData = inject<NmorphFormValidationDataType>('form-data', undefined);
 const validationData = computed(() => formData?.fields[props.id]);
 
 const ableToShowValidation = computed(() => props.validate && validationData.value);
@@ -80,13 +80,13 @@ const modifiers = computed(() =>
 
 .nmorph-form-item--valid {
   .nmorph-native-input:focus {
-    background: var(--success-color-00);
+    background: var(--nmorph-success-color);
   }
 }
 
 .nmorph-form-item--invalid {
   .nmorph-native-input:focus {
-    background: var(--error-text-color-00);
+    background: var(--nmorph-error-text-color);
   }
 }
 </style>

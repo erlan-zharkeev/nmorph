@@ -47,11 +47,12 @@ const isRouteExist = (name: string) =>
   a {
     &.router-link-exact-active {
       font-weight: 800;
-      color: var(--accent-color-00);
+      color: var(--nmorph-accent-color);
       padding-left: 8px;
     }
   }
 }
+
 .docs-component-list__scroll {
   height: var(--aside-container-height);
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { usePlacement } from '@/hooks';
-import { INmorphCoords, NmorphDomElementType, NmorphPlacementType } from '@/types/common';
+import { INmorphCoords, NmorphDomElementType, NmorphPlacementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 
@@ -125,7 +125,7 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
   .nmorph-tooltip__triangle {
     top: 100%;
     left: 50%;
-    border-color: var(--main-bg-color) transparent transparent transparent;
+    border-color: var(--nmorph-main-color) transparent transparent transparent;
     border-width: 8px 8px 0;
     transform: translateX(-50%);
   }
@@ -141,7 +141,7 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
   .nmorph-tooltip__triangle {
     top: 50%;
     right: 100%;
-    border-color: transparent var(--main-bg-color) transparent transparent;
+    border-color: transparent var(--nmorph-main-color) transparent transparent;
     border-width: 8px 8px 8px 0;
     transform: translateY(-50%);
   }
@@ -157,7 +157,7 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
   .nmorph-tooltip__triangle {
     bottom: 100%;
     left: 50%;
-    border-color: transparent transparent var(--main-bg-color) transparent;
+    border-color: transparent transparent var(--nmorph-main-color) transparent;
     border-width: 0 8px 8px;
     transform: translateX(-50%);
   }
@@ -173,7 +173,7 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
   .nmorph-tooltip__triangle {
     top: 50%;
     left: 100%;
-    border-color: transparent transparent transparent var(--main-bg-color);
+    border-color: transparent transparent transparent var(--nmorph-main-color);
     border-width: 8px 0 8px 8px;
     transform: translateY(-50%);
   }

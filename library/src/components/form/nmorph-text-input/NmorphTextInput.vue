@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
-import { Ref, computed, onMounted, ref } from 'vue';
+import { Ref, computed, onMounted, ref, useSlots } from 'vue';
 import { NmorphIcon, NmorphButton } from '@/components';
 
 interface INmorphProps extends INmorphCommonInputProps {
@@ -9,7 +9,6 @@ interface INmorphProps extends INmorphCommonInputProps {
   typePassword?: boolean;
   modelValue?: string;
   clearable?: boolean;
-  searchIcon?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -22,7 +21,6 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   fill: true,
   clearable: false,
-  searchIcon: false,
 });
 
 const modifiers = computed(() =>
@@ -69,6 +67,7 @@ interface INmorphEmit {
   (e: 'update:modelValue', val: string): void;
   (e: 'focus'): void;
   (e: 'blur'): void;
+  (e: 'on-enter'): void;
 }
 
 const emit = defineEmits<INmorphEmit>();
@@ -81,13 +80,18 @@ const actionIcon = computed(() => {
   if (props.clearable) return 'error';
   else return showPassword.value ? 'eye-blocked' : 'eye';
 });
-const indentation = computed(() => (props.searchIcon ? '28px' : '8px'));
+
+const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
+
+const slots = useSlots();
 </script>
 
 <template>
   <div :class="modifiers">
     <div class="nmorph-text-input__input-side">
-      <NmorphIcon name="search" v-if="props.searchIcon" class="nmorph-text-input__search-icon" />
+      <div v-if="slots['prepend-icon']" class="nmorph-text-input__prepend-icon">
+        <slot name="prepend-icon" />
+      </div>
       <input
         ref="inputDOMRef"
         class="nmorph-native-input"
@@ -98,6 +102,7 @@ const indentation = computed(() => (props.searchIcon ? '28px' : '8px'));
         @input="handleInput"
         @focus="handleFocus"
         @blur="handleBlur"
+        @keyup.enter="emit('on-enter')"
       />
       <NmorphButton
         v-if="props.typePassword || props.clearable"
@@ -129,7 +134,7 @@ const indentation = computed(() => (props.searchIcon ? '28px' : '8px'));
     width: 100%;
   }
 
-  .nmorph-text-input__search-icon {
+  .nmorph-text-input__prepend-icon {
     position: absolute;
     left: 0;
     margin-left: 8px;
@@ -141,15 +146,15 @@ const indentation = computed(() => (props.searchIcon ? '28px' : '8px'));
     text-indent: v-bind(indentation);
     border: none;
     border-radius: var(--default-border-radius);
-    transition: ease-in-out var(--transition-01) background;
+
     @include nmorph-inset;
   }
 
   input:focus {
-    outline: none;
-
     @include nmorph-outset;
-    background: var(--accent-color-00);
+
+    background: var(--nmorph-accent-color);
+    outline: none;
   }
 
   input:disabled {
@@ -180,12 +185,12 @@ const indentation = computed(() => (props.searchIcon ? '28px' : '8px'));
 .nmorph-button.nmorph--focused {
   .nmorph-text-input__password-btn {
     .nmorph-icon {
-      --color: var(--text-color-00);
+      --color: var(--nmorph-white-color);
     }
 
     .nmorph-button:not(:disabled, [loading='true']):hover {
       .nmorph-icon {
-        --color: var(--text-color-00);
+        --color: var(--nmorph-white-color);
       }
     }
   }

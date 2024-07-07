@@ -42,13 +42,13 @@ const validateIconSize = '18px';
 
 .nmorph-validation-icon--valid {
   .nmorph-validation-icon__content {
-    --color: var(--success-color-00);
+    --color: var(--nmorph-success-color);
   }
 }
 
 .nmorph-validation-icon--invalid {
   .nmorph-validation-icon__content {
-    --color: var(--error-text-color-00);
+    --color: var(--nmorph-error-text-color);
   }
 }
 </style>

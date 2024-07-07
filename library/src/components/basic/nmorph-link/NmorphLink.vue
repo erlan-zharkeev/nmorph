@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { computed } from 'vue';
-import { NmorphIconName, NmorphIcon, NmorphLinkTarget } from '@/components';
-import { NmorphColor } from '@/types/common';
+import { NmorphIcon, NmorphLinkTarget } from '@/components';
+import { NmorphColor, NmorphIconList } from '@/types';
 
 interface INmorphProps {
   color?: keyof typeof NmorphColor;
   underline?: boolean;
   href?: string;
   text?: string;
-  iconName?: NmorphIconName;
+  iconName?: keyof typeof NmorphIconList;
   target?: keyof typeof NmorphLinkTarget;
   disabled?: boolean;
 }
@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   color: NmorphColor.accent,
   href: '',
   underline: false,
-  iconName: '',
+  iconName: undefined,
   text: '',
   target: 'self',
   disabled: false,
@@ -45,7 +45,7 @@ const modifiers = computed(() =>
 
 <style lang="scss">
 .nmorph-link {
-  --link-color: var(--info-color-00);
+  --link-color: var(--nmorph-info-color);
   --hover-color: var(--info-color-01);
 
   display: inline-block;
@@ -85,17 +85,17 @@ const modifiers = computed(() =>
 }
 
 .nmorph-link--success {
-  --link-color: var(--success-color-00);
-  --hover-color: var(--success-color-00);
+  --link-color: var(--nmorph-success-color);
+  --hover-color: var(--nmorph-success-color);
 }
 
 .nmorph-link--warning {
-  --link-color: var(--warning-color-00);
-  --hover-color: var(--warning-color-00);
+  --link-color: var(--nmorph-warn-color);
+  --hover-color: var(--nmorph-warn-color);
 }
 
 .nmorph-link--error {
-  --link-color: var(--error-text-color-00);
-  --hover-color: var(--error-text-color-00);
+  --link-color: var(--nmorph-error-text-color);
+  --hover-color: var(--nmorph-error-text-color);
 }
 </style>

@@ -33,7 +33,7 @@ const modifiers = computed(() =>
 }
 
 .nmorph-divider--vertical {
-  height: auto;
   width: 2px;
+  height: auto;
 }
 </style>

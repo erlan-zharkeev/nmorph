@@ -28,8 +28,8 @@ const modifiers = computed(() =>
 <style lang="scss">
 .nmorph-skeleton-item {
   height: 14px;
-  background: var(--info-color-01);
   margin-bottom: var(--indentation-02);
+  background: var(--info-color-01);
 }
 
 .nmorph-skeleton-item--image {
@@ -37,6 +37,7 @@ const modifiers = computed(() =>
 
   .nmorph-skeleton-item__element {
     @include flex-full-center;
+
     .nmorph-icon {
       --color: var(--info-color-01);
     }
@@ -48,6 +49,6 @@ const modifiers = computed(() =>
 }
 
 .nmorph-skeleton-item--circle {
-  border-radius: 100%;
+  border-radius: var(--border-radius-circular);
 }
 </style>

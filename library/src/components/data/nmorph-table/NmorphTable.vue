@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, provide, ref, watch } from 'vue';
 import { generateUUID, useModifiers } from '@/utils';
-import { NmorphDomElementType, NmorphSortOrderType } from '@/types/common';
+import { NmorphDomElementType, NmorphSortOrderType } from '@/types';
 import {
   NmorphTableDataType,
   NmorphTableSortType,
@@ -189,7 +189,7 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
 </template>
 <style lang="scss">
 .nmorph-table {
-  --border-color: var(--accent-color-00);
+  --border-color: var(--nmorph-accent-color);
   --table-cell-height: auto;
   --table-background-row-hover: #e1e9ef;
 
@@ -200,17 +200,14 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
   .nmorph-table__button-wrapper {
     display: flex;
     align-items: center;
-  }
-
-  .nmorph-table__button-wrapper {
     margin-left: var(--indentation-03);
   }
 
   table {
-    border-collapse: collapse;
-    border-spacing: 0;
     width: calc(100% - 2px);
     margin-left: 1px;
+    border-collapse: collapse;
+    border-spacing: 0;
   }
 
   .nmorph-table__table-data {
@@ -246,8 +243,9 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
 
 .nmorph-table--nmorph {
   @include nmorph-outset;
-  border-radius: var(--default-border-radius);
+
   overflow: hidden;
+  border-radius: var(--default-border-radius);
 
   --border-color: transparent;
 

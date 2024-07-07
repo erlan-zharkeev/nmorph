@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import button from "~/lib-overview/button";
 import icon from "~/lib-overview/icon";
+import { capitalizeFirstChar } from "@nmorph/nmorph-ui-kit";
 
 interface IProps {
   name: string;
@@ -11,8 +12,6 @@ const componentsMap: Record<string, unknown[]> = {
   button,
   icon,
 };
-console.log("sdf");
-debugger;
 </script>
 
 <template>
@@ -26,7 +25,7 @@ debugger;
   </div>
 </template>
 
-<style lang="scsss">
+<style lang="scss">
 .component-overview {
   width: 100%;
   padding: 16px;

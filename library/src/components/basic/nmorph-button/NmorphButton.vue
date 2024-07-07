@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType, NmorphIconList } from '@/types';
 import { useModifiers } from '@/utils';
-import { computed } from 'vue';
-import { NmorphIcon, NmorphButtonStyle, NmorphButtonType, NmorphIconSize } from '@/components';
+import { computed, ref } from 'vue';
+import { NmorphIcon, NmorphButtonStyle, NmorphButtonType, NmorphIconSize, NmorphButtonShape } from '@/components';
 
 interface INmorphProps extends INmorphCommonInputProps {
   type?: keyof typeof NmorphButtonType;
@@ -11,6 +11,8 @@ interface INmorphProps extends INmorphCommonInputProps {
   styleType?: keyof typeof NmorphButtonStyle;
   bgTransparentOnHover?: boolean;
   ripple?: boolean;
+  shape?: keyof typeof NmorphButtonShape;
+  icon?: keyof typeof NmorphIconList;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -21,8 +23,10 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   loading: false,
   styleType: 'default',
   height: 'default',
-  bgTransparentOnHover: false,
+  bgTransparentOnHover: true,
   ripple: true,
+  shape: 'default',
+  icon: undefined,
 });
 
 const modifiers = computed(() =>
@@ -30,12 +34,15 @@ const modifiers = computed(() =>
     nmorph: [NmorphComponentHeight[props.height], `${props.fill && 'fill'}`],
     'nmorph-button': [
       props.styleType,
+      props.shape,
       `${props.disabled && 'disabled'}`,
       `${props.bgTransparentOnHover && 'bg-transparent-on-hover'}`,
       `${props.ripple && 'ripple'}`,
     ],
   })
 );
+
+const buttonRef = ref<NmorphDomElementType>(null);
 
 interface INmorphEmit {
   (e: 'click'): void;
@@ -50,21 +57,27 @@ const iconSizeMap = {
 };
 
 const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIconSize);
+
+defineExpose({ buttonRef });
 </script>
 
 <template>
   <div :class="modifiers">
     <button
+      ref="buttonRef"
       class="nmorph-button__content"
       :disabled="props.disabled"
       :loading="props.loading"
       :type="props.type"
       @click="emit('click')"
     >
-      <slot />
-      <span v-if="!props.loading && props.text !== ''">{{ props.text }}</span>
-      <NmorphIcon v-if="props.loading" name="loader" :size="loadingButtonSize" />
-      <slot name="append" />
+      <NmorphIcon v-if="props.icon" :name="props.icon" />
+      <div v-else>
+        <slot />
+        <span v-if="!props.loading && props.text !== ''">{{ props.text }}</span>
+        <NmorphIcon v-if="props.loading" name="loader" :size="loadingButtonSize" />
+        <slot name="append" />
+      </div>
     </button>
   </div>
 </template>
@@ -75,24 +88,20 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIcon
   width: auto;
 
   .nmorph-button__content {
-    line-height: 0;
     width: 100%;
     height: var(--height);
     padding: var(--indentation-00) var(--indentation-04);
+    line-height: 0;
     border: none;
     border-radius: var(--default-border-radius);
     cursor: pointer;
-    transition:
-      var(--transition-02) ease-in-out background,
-      var(--transition-02) ease-in-out color,
-      var(--transition-02) ease-in-out box-shadow;
 
     @include flex-full-center;
     @include nmorph-outset;
-  }
 
-  span {
-    margin-top: 1px;
+    span {
+      --color: var(--nmorph-white-color);
+    }
   }
 
   .nmorph-button__content:disabled {
@@ -104,17 +113,17 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIcon
   }
 
   .nmorph-button__content:not(:disabled, [loading='true']):hover {
-    color: var(--text-color-00);
-    background: var(--accent-color-00);
+    color: var(--nmorph-white-color);
+    background: var(--nmorph-accent-color);
     box-shadow: none;
   }
 
   .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
-    --color: var(--text-color-00);
+    --color: var(--nmorph-white-color);
   }
 
   .nmorph-button__content:not(:disabled, [loading='true']):hover span {
-    color: var(--text-color-00);
+    color: var(--nmorph-white-color);
   }
 }
 
@@ -134,7 +143,7 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIcon
   }
 
   .nmorph-button__content::after {
-    background-image: radial-gradient(circle, var(--main-bg-color) 10%, transparent 10.01%);
+    background-image: radial-gradient(circle, var(--nmorph-main-color) 10%, transparent 10.01%);
     background-repeat: no-repeat;
     background-position: 50%;
     transform: scale(10, 10);
@@ -161,16 +170,25 @@ const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIcon
 
 .nmorph-button--bg-transparent-on-hover {
   .nmorph-button__content:not(:disabled, [loading='true']):hover {
-    background: inherit;
-    box-shadow: none;
-
-    .nmorph-icon {
-      --color: var(--text-color-01);
-    }
+    @include nmorph-outset;
   }
 }
 
 .nmorph-button--disabled {
   @include disabled;
+}
+
+.nmorph-button--round {
+  .nmorph-button__content {
+    border-radius: var(--border-radius-200);
+  }
+}
+
+.nmorph-button--circle {
+  width: var(--height);
+
+  .nmorph-button__content {
+    border-radius: var(--border-radius-circular);
+  }
 }
 </style>

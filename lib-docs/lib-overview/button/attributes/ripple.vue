@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
-const scriptData = `
-<script setup lang="ts">
-<\/script>
-`;
+const scriptData = ``;
 const templateData = `
 <NmorphButton ripple text="I am ripple" />
 <NmorphButton :ripple="false" text="I am not ripple" />

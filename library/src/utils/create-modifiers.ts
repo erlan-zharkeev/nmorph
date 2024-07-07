@@ -1,19 +1,16 @@
 export const createBlockModifiers = (block: string, modifiers: string[]): string => {
   const stringifiedModifiers = modifiers
-    .filter((mod) => mod !== 'false')
-    .filter((mod) => mod)
-    .map((modifier) => {
-      if (modifier && modifier !== 'undefined') return `${block}--${modifier}`;
-    });
+    .filter((mod) => mod !== 'false' && mod && mod !== 'undefined')
+    .map((modifier) => `${block}--${modifier}`);
 
   stringifiedModifiers.push(block);
-  return stringifiedModifiers.join(' ');
+  return stringifiedModifiers.join(' ').trim().replace(/\s+/g, ' ');
 };
 
 export const useModifiers = (data: { [key: string]: string[] }) => {
   return Object.entries(data)
-    .map(([block, modifiers]) => {
-      return createBlockModifiers(block, modifiers);
-    })
-    .join(' ');
+    .map(([block, modifiers]) => createBlockModifiers(block, modifiers))
+    .join(' ')
+    .trim()
+    .replace(/\s+/g, ' ');
 };

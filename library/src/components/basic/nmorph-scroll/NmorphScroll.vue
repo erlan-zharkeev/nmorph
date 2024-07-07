@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { NmorphDomElementType } from '@/types/common';
+import { NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
-import { NmorphCoordsType, NmorphOverflowProp } from '@/components';
+import { NmorphCoordsType, NmorphOverflowProp, NmorphScrollBehavior } from '@/components';
 
 interface INmorphProps {
   modelValue?: NmorphCoordsType;
   scrollYProp?: keyof typeof NmorphOverflowProp;
   scrollXProp?: keyof typeof NmorphOverflowProp;
   scrollEndDelay?: number;
+  cssScrollBehavior?: keyof typeof NmorphScrollBehavior;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -19,6 +20,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   scrollYProp: 'auto',
   scrollXProp: 'auto',
   scrollEndDelay: 50,
+  cssScrollBehavior: 'smooth',
 });
 
 const overflowY = computed(() => props.scrollYProp);
@@ -91,6 +93,8 @@ watch(
   },
   { deep: true, immediate: true }
 );
+
+const scrollBehavior = computed(() => props.cssScrollBehavior);
 </script>
 
 <template>
@@ -109,6 +113,7 @@ watch(
   padding-right: v-bind(paddingRight);
   padding-bottom: v-bind(paddingBottom);
   overflow: v-bind(overflowX) v-bind(overflowY);
+  scroll-behavior: v-bind(scrollBehavior);
 
   &::-webkit-scrollbar {
     width: var(--scrollbar-height);
@@ -124,7 +129,7 @@ watch(
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--accent-color-00);
+    background-color: var(--nmorph-accent-color);
     border-radius: var(--border-radius-40);
   }
 }

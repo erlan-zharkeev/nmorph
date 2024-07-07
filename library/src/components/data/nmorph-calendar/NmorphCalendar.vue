@@ -203,28 +203,30 @@ const isValueSelected = (value: Date) => {
 <style lang="scss">
 .nmorph-calendar {
   --table-data-cell-height: 50px;
-  background: var(--main-bg-color);
+
+  background: var(--nmorph-main-color);
 
   .nmorph-table__table-data-row {
     height: var(--table-data-cell-height);
   }
+
   .nmorph-table__cell {
     --table-cell-height: var(--table-data-cell-height);
+
+    @include body-3;
   }
 
   .nmorph-calendar-date {
     height: 100%;
+
     @include flex-full-center;
   }
 
   .nmorph-calendar-date--today {
-    color: var(--info-color-00);
+    color: var(--nmorph-info-color);
     font-weight: 700;
-    @include title-3;
-  }
 
-  .nmorph-table__cell {
-    @include body-3;
+    @include title-3;
   }
 
   .nmorph-table .nmorph-table__cell {
@@ -232,8 +234,8 @@ const isValueSelected = (value: Date) => {
   }
 
   .nmorph-calendar-date--selected {
-    background: var(--accent-color-00);
-    color: var(--text-color-00);
+    color: var(--nmorph-white-color);
+    background: var(--nmorph-accent-color);
   }
 
   .nmorph-calendar-date--hidden {
@@ -247,7 +249,8 @@ const isValueSelected = (value: Date) => {
   .nmorph-calendar-date:not(.nmorph-calendar-date--hidden).nmorph-calendar-date--previous,
   .nmorph-calendar-date:not(.nmorph-calendar-date--hidden).nmorph-calendar-date--next {
     @include nmorph-inset;
-    color: var(--accent-color-00);
+
+    color: var(--nmorph-accent-color);
   }
 }
 </style>

@@ -1,4 +1,4 @@
-import { NmorphSortOrderType } from '@/types/common';
+import { NmorphSortOrderType } from '@/types';
 import { Ref } from 'vue';
 
 export type NmorphTableSortType = Record<string, NmorphSortOrderType>;

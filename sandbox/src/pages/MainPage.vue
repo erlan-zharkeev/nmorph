@@ -11,7 +11,7 @@
       :key="color"
       content="Hello, im alert content"
       title="Title is very important"
-      color=""
+      :color="color"
       class="additional-class"
     />
     <NmorphYearMonthPicker :currentDate="new Date()" />
@@ -24,6 +24,7 @@ import {
   NmorphAutocomplete,
   NmorphAlert,
   NmorphYearMonthPicker,
+  NmorphDivider,
 } from "./../../../library/src/components";
 
 const value = ref("");
@@ -58,6 +59,9 @@ const getVariants = async () => {
 </script>
 
 <style lang="scss">
+.nmorph-divider {
+  margin: 0 8px;
+}
 .wrapper {
   margin: 50px;
 }
@@ -77,5 +81,9 @@ img {
   object-fit: cover;
   width: 100%;
   height: 100%;
+}
+.additional-class {
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 </style>

@@ -1,6 +1,6 @@
-import { NmorphIconName } from '@/components';
+import { NmorphIconList } from '@/types';
 
 export interface INmorphAction {
-  icon: NmorphIconName;
+  icon: keyof typeof NmorphIconList;
   handler: () => void;
 }

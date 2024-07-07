@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import NmorphIcon from './NmorphIcon.vue';
 import { NmorphIconSize } from './types';
-import { NmorphIconList } from './../../types/common.enums';
+import { NmorphIconList } from './../../types.enums';
 
 const setupApp = ({ app }) => {
   app.use();

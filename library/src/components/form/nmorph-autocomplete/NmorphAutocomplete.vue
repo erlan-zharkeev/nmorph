@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
-import { INmorphCommonInputProps, NmorphDomElementType } from '@/types/common';
+import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
 import {
   NmorphIcon,
   NmorphDropdown,
@@ -141,14 +141,14 @@ watch(loader, (newValue) => {
 }
 
 .nmorph-autocomplete__loading {
-  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100px;
 }
 
 .nmorph-autocomplete__list-item:hover {
-  background: var(--accent-color-00);
-  color: var(--text-color-00);
+  color: var(--nmorph-white-color);
+  background: var(--nmorph-accent-color);
 }
 </style>

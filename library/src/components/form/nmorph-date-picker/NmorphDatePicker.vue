@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import {
   NmorphDropdown,
   NmorphIcon,
@@ -229,6 +229,7 @@ const updateEndDateValue = (value: NmorphDateType) => {
 <style lang="scss">
 .nmorph-date-picker {
   --width: 200px;
+
   position: relative;
   width: var(--width);
 
@@ -241,15 +242,17 @@ const updateEndDateValue = (value: NmorphDateType) => {
   }
 
   .nmorph-date-picker__input {
-    overflow: hidden;
-    height: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 var(--indentation-03);
+    overflow: hidden;
+
     // TODO сделать общий стиль для радиусов для инпута
     border-radius: var(--default-border-radius);
     cursor: pointer;
-    padding: 0 var(--indentation-03);
+
     @include nmorph-outset;
   }
 

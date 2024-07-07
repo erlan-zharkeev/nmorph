@@ -2,10 +2,7 @@
 import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 import Attribute from "~/components/attribute/attribute.vue";
 
-const scriptData = `
-<script setup lang="ts">
-<\/script>
-`;
+const scriptData = ``;
 const templateData = `
 <NmorphButton style-type="default">Default</NmorphButton>
 <NmorphButton style-type="transparent">Transparent</NmorphButton>

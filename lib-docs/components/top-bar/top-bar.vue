@@ -1,17 +1,27 @@
 <script setup lang="ts">
 import {
   NmorphTextInput,
-  NmorphSwitch,
   NmorphIcon,
   NmorphLink,
   NmorphDropdown,
   NmorphCheckbox,
-  useTheme,
+  NmorphSwitch,
+  useNmorph,
 } from "@nmorph/nmorph-ui-kit";
 import MoonIcon from "~/assets/images/moon.svg";
 import SunIcon from "~/assets/images/sun.svg";
 import TranslateIcon from "~/assets/images/translate.svg";
 import GitlabIcon from "~/assets/images/gitlab.svg";
+
+const nmorphOptions = {};
+const currentTheme = ref<string>("dark");
+const setTheme = ref<(theme: any) => any>(() => {});
+
+onMounted(() => {
+  const nmorph = useNmorph(nmorphOptions);
+  currentTheme.value = nmorph.currentTheme.value;
+  setTheme.value = nmorph.setTheme;
+});
 
 interface INmorphProps {
   isMenuOpen: boolean;
@@ -22,8 +32,6 @@ interface INmorphEmit {
   (e: "toggle-menu"): void;
 }
 const emit = defineEmits<INmorphEmit>();
-
-const { isThemeLight, toggleTheme } = useTheme();
 
 const config = useRuntimeConfig();
 const { setLocale, locales } = useI18n();
@@ -65,49 +73,56 @@ const updateMenuHandler = () => {
       </NmorphCheckbox>
       <div class="docs-top-bar__logo">
         <NuxtLink :to="localePath('/')">
-          <img src="~/assets/images/logo.webp" />
+          <NmorphIcon name="logo" width="40px" />
         </NuxtLink>
       </div>
     </div>
     <div class="docs-top-bar__right">
       <div class="docs-top-bar__search">
-        <NmorphTextInput
-          :placeholder="$t('search')"
-          v-model="searchQuery"
-          search-icon
-        />
+        <NmorphTextInput :placeholder="$t('search')" v-model="searchQuery">
+          <template #prepend-icon>
+            <NmorphIcon name="search" />
+          </template>
+        </NmorphTextInput>
+      </div>
+      <div
+        ref="translateBtn"
+        @click="openTranslates"
+        class="docs-top-bar__translate-btn"
+      >
+        <NmorphCheckbox
+          v-model="open"
+          style-type="button-style"
+          size="small"
+          class="test"
+        >
+          <template #label>
+            <NmorphIcon>
+              <TranslateIcon />
+            </NmorphIcon>
+          </template>
+        </NmorphCheckbox>
+        <NmorphDropdown
+          v-if="translateBtn"
+          :fill-width="false"
+          :open="open"
+          :relative-element="translateBtn"
+          @on-outside-click="closeHandler"
+          :x-offset="-40"
+          :y-offset="10"
+          :width="100"
+        >
+          <ul class="docs-translates__dropdown">
+            <li
+              v-for="localeData in locales"
+              @click="changeLocaleHandler(localeData.code)"
+            >
+              {{ localeData.name }}
+            </li>
+          </ul>
+        </NmorphDropdown>
       </div>
       <nav class="docs-top-bar__nav">
-        <div
-          ref="translateBtn"
-          @click="openTranslates"
-          class="docs-top-bar__translate-btn"
-        >
-          <NmorphIcon
-            :path="TranslateIcon"
-            size="medium"
-            class="docs-top-bar__translate-trigger"
-          />
-          <NmorphDropdown
-            v-if="translateBtn"
-            :fill-width="false"
-            :open="open"
-            :relative-element="translateBtn"
-            @on-outside-click="closeHandler"
-            :x-offset="-40"
-            :y-offset="10"
-            :width="100"
-          >
-            <ul class="docs-translates__dropdown">
-              <li
-                v-for="localeData in locales"
-                @click="changeLocaleHandler(localeData.code)"
-              >
-                {{ localeData.name }}
-              </li>
-            </ul>
-          </NmorphDropdown>
-        </div>
         <ul class="docs-top-bar__nav-list">
           <li>
             <NuxtLink :to="localePath('/guide')">{{ $t("guide") }}</NuxtLink>
@@ -123,15 +138,19 @@ const updateMenuHandler = () => {
         </ul>
       </nav>
       <NmorphSwitch
-        :model-value="isThemeLight"
-        @update:model-value="toggleTheme"
+        :model-value="currentTheme"
+        @update:model-value="setTheme"
+        active-value="light"
+        inactive-value="dark"
         class="docs-top-bar__element"
       >
         <template #thumb-on>
-          <NmorphIcon :path="SunIcon" />
+          <NmorphIcon width="10px" height="10px">
+            <SunIcon class="sun-icon" />
+          </NmorphIcon>
         </template>
         <template #thumb-off>
-          <NmorphIcon :path="MoonIcon" />
+          <NmorphIcon width="10px" height="10px"> <MoonIcon /> </NmorphIcon>
         </template>
       </NmorphSwitch>
       <NmorphLink :href="config.public.NUXT_ENV_GIT_PATH">
@@ -144,12 +163,16 @@ const updateMenuHandler = () => {
 <style lang="scss">
 $top-bar-height: 50px;
 
+.test {
+  --size: 28px;
+}
+
 .docs-top-bar {
   height: $top-bar-height;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 20px 4px 8px;
+  padding: 4px 20px;
   position: sticky;
 }
 
@@ -161,6 +184,9 @@ $top-bar-height: 50px;
 
 .docs-top-bar__element {
   margin-right: 12px;
+  .sun-icon {
+    margin-top: 2px;
+  }
 }
 
 .docs-top-bar__left {
@@ -174,6 +200,8 @@ $top-bar-height: 50px;
   border-radius: 4px;
   overflow: hidden;
   border-radius: 8px;
+  display: flex;
+  align-items: center;
   img {
     object-fit: cover;
     width: 100%;
@@ -184,14 +212,6 @@ $top-bar-height: 50px;
 .docs-top-bar__right {
   display: flex;
   align-items: center;
-}
-
-// TODO удалить после добавления в либу
-.nmorph-icon__as-image {
-  display: flex;
-  svg {
-    color: var(--accent-color-00);
-  }
 }
 
 .docs-translates__dropdown {
@@ -215,7 +235,7 @@ $top-bar-height: 50px;
     width: 100%;
     height: 4px;
     position: absolute;
-    background: var(--accent-color-00);
+    background: var(--nmorph-accent-color);
   }
 }
 

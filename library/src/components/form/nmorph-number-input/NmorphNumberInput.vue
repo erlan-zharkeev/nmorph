@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types/common';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref, watch } from 'vue';
 import { NmorphButton, NmorphIcon } from '@/components';
@@ -193,15 +193,15 @@ const inputDOMRef = ref<NmorphDomElementType>(null);
     padding: var(--indentation-00) var(--default-indentation-input);
     text-align: center;
     border: none;
-    border-top: 1px solid var(--main-bg-color);
-    border-bottom: 1px solid var(--main-bg-color);
+    border-top: 1px solid var(--nmorph-main-color);
+    border-bottom: 1px solid var(--nmorph-main-color);
     transition: ease-in-out var(--transition-01) background;
 
     @include nmorph-inset;
   }
 
   input:focus {
-    background: var(--accent-color-00);
+    background: var(--nmorph-accent-color);
     outline: none;
 
     @include nmorph-outset;

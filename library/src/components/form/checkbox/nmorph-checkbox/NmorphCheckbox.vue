@@ -6,10 +6,16 @@ import {
   NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType,
   NmorphCheckboxGroupSelectedValueInjectionType,
 } from '@/components';
-import { NmorphDomElementType } from '@/types/common';
+import { NmorphDomElementType } from '@/types';
 
-const groupSelectedValue = inject<NmorphCheckboxGroupSelectedValueInjectionType>('checkbox-group-selected-value');
-const changeValue = inject<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>('change-checkbox-value-handler');
+const groupSelectedValue = inject<NmorphCheckboxGroupSelectedValueInjectionType>(
+  'checkbox-group-selected-value',
+  undefined
+);
+const changeValue = inject<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>(
+  'change-checkbox-value-handler',
+  undefined
+);
 
 const props = withDefaults(defineProps<INmorphCheckboxOption>(), {
   disabled: false,
@@ -34,6 +40,7 @@ const initialValue = hasGroup ? ref(groupSelectedValue.value) : ref(props.modelV
 const checked = computed(() => (hasGroup ? groupSelectedValue.value.includes(props.id) : props.modelValue));
 
 const emit = defineEmits<INmorphEmit>();
+
 const handleChange = () => {
   if (props.disabled) return;
   if (!hasGroup) {
@@ -55,7 +62,14 @@ const modifiers = computed(() =>
   <label :class="modifiers">
     <div v-if="props.styleType === 'checkbox-style'" class="nmorph-checkbox__content">
       <div class="nmorph-checkbox__input-wrapper">
-        <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked" @change="handleChange" />
+        <input
+          ref="inputDOMRef"
+          type="checkbox"
+          :disabled="props.disabled"
+          :checked="checked"
+          class="nmorph-native-input"
+          @change="handleChange"
+        />
         <div class="nmorph-checkbox__fake" />
         <div v-if="checked" class="nmorph-checkbox__fake-checked" />
       </div>
@@ -82,6 +96,7 @@ const modifiers = computed(() =>
 .nmorph-checkbox {
   --size: var(--extra-thin-component);
 
+  display: inline-flex;
   cursor: pointer;
 
   .nmorph-checkbox__content {
@@ -115,7 +130,7 @@ const modifiers = computed(() =>
   .nmorph-checkbox__fake-checked {
     width: 50%;
     height: 50%;
-    background: var(--accent-color-00);
+    background: var(--nmorph-accent-color);
     border-radius: var(--border-radius-20);
 
     @include absolute-center;

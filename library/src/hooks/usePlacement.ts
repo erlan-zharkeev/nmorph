@@ -1,4 +1,4 @@
-import { INmorphCoords, NmorphDomElementType, NmorphPlacementType } from '@/types/common';
+import { INmorphCoords, NmorphDomElementType, NmorphPlacementType } from '@/types';
 import { Ref, ref, nextTick, onMounted } from 'vue';
 
 interface INmorphUsePlacementPayload {

@@ -12,7 +12,7 @@ import {
   NmorphImagePreview,
 } from '@/components';
 import { useModifiers } from '@/utils';
-import { NmorphDomElementType, NmorphIconList } from '@/types/common';
+import { NmorphDomElementType, NmorphIconList } from '@/types';
 
 interface INmorphProps {
   modelValue?: INmorphCustomFileData[];
@@ -110,7 +110,13 @@ const modifiers = computed(() =>
 <template>
   <div :class="modifiers">
     <div class="nmorph-file-upload__trigger">
-      <input ref="inputDOMRef" type="file" :multiple="props.multiple" @change="handleFileUpload" />
+      <input
+        ref="inputDOMRef"
+        type="file"
+        :multiple="props.multiple"
+        class="nmorph-native-input"
+        @change="handleFileUpload"
+      />
       <slot name="trigger">
         <NmorphButton text="Select file" fill @click="openFileSelector" />
       </slot>

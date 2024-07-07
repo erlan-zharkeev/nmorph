@@ -2,7 +2,7 @@
 import { computed, onUnmounted, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphButton, NmorphIcon } from '@/components';
-import { NmorphDomElementType } from '@/types/common';
+import { NmorphDomElementType } from '@/types';
 import { onMounted } from 'vue';
 
 interface INmorphProps {
@@ -77,15 +77,17 @@ onUnmounted(() => {
 
 <style lang="scss">
 .nmorph-backtop {
-  opacity: 0;
   position: fixed;
   right: v-bind(offsetRight);
   bottom: v-bind(offsetBottom);
+  opacity: 0;
   transition: opacity 0.2s ease-in-out;
+
   .nmorph-backtop__up-icon {
     transform: rotate(180deg);
   }
 }
+
 .nmorph-backtop--show {
   opacity: 1;
 }

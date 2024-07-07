@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphComponentHeight } from '@/types/common';
+import { NmorphComponentHeight } from '@/types';
 import { useModifiers } from '@/utils';
 import { Ref, computed } from 'vue';
 
@@ -45,7 +45,7 @@ const modifiers = computed(() =>
   .nmorph-error-box__error {
     margin: var(--indentation-00);
     margin-left: var(--default-indentation-input);
-    color: var(--error-text-color-00);
+    color: var(--nmorph-error-text-color);
     text-align: left;
   }
 }

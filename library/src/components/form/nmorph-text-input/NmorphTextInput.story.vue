@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import NmorphTextInput from './NmorphTextInput.vue';
-import { NmorphComponentHeight } from './../../../types/common';
+import { NmorphComponentHeight } from './../../../types';
 
 const setupApp = ({ app }) => {
   app.use();

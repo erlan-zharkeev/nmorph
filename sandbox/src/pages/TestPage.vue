@@ -5,36 +5,43 @@ import {
   NmorphCollapseItem,
   NmorphIcon,
   NmorphButton,
+  NmorphTextInput,
+  NmorphCheckbox,
 } from "./../../../library/src/components";
-interface IProps {}
-const props = withDefaults(defineProps<IProps>(), {});
-const str = ref("");
-const model = ref([""]);
-const update = ref(null);
-
-const clickHandler = () => {
-  // update.value("1", false);
-  model.value = ["1"];
-};
+import Logo from "./../assets/icons/alert-warning.svg";
+const open = ref(false);
 </script>
 
 <template>
   <div class="test">
-    <div class="asdf" @click="clickHandler">trigger</div>
-    <NmorphCollapse v-model="model" @updateCb="($event) => (update = $event)">
-      <NmorphCollapseItem id="1" name="1" :closeOnClick="false">
-      </NmorphCollapseItem>
-    </NmorphCollapse>
-    <NmorphButton style-type="transparent">
-      <NmorphIcon name="code" />
-    </NmorphButton>
+    <NmorphButton icon="eye" class="x" />
+    <NmorphButton text="click" class="x" />
+    <NmorphIcon name="logo" />
   </div>
+  <NmorphCheckbox
+    v-model="open"
+    style-type="button-style"
+    size="small"
+    id="open"
+  >
+    <template #label>
+      <NmorphIcon>
+        <Logo />
+      </NmorphIcon>
+    </template>
+  </NmorphCheckbox>
 </template>
 
 <style lang="scss">
 .test {
   width: 200px;
   padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.x {
+  margin-right: 8px;
 }
 
 html {

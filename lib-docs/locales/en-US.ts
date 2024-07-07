@@ -3,9 +3,23 @@ export default {
   components: "Components",
   about: "About",
   search: "Search",
-  attributes: "attributes",
-  slots: "slots",
+
+  attributes: "Attributes",
+  slots: "Slots",
   rightAsideTitle: "Contents",
+
+  name: "Name",
+  description: "Description",
+  type: "Type",
+  default: "Default",
+
+  basic: "Basic",
+  data: "Data",
+  feedback: "Feedback",
+  form: "Form",
+  navigation: "Navigation",
+  other: "Other",
+
   overview: {
     button: {
       styleType: {
@@ -18,8 +32,19 @@ export default {
         subtitle:
           "Use true or false to enable or disable ripple effect on click",
       },
+      height: {
+        subtitle: "Set height",
+      },
       disabled: {
         subtitle: "Bla bal",
+      },
+    },
+    icon: {
+      size: {
+        subtitle: "Set icon size",
+      },
+      widthHeight: {
+        subtitle: "Set width/height",
       },
     },
   },

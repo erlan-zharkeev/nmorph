@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { usePlacement } from '@/hooks';
-import { NmorphDomElementType } from '@/types/common';
+import { NmorphDomElementType } from '@/types';
 import { NmorphOverlay } from '@/components';
 
 interface INmorphProps {

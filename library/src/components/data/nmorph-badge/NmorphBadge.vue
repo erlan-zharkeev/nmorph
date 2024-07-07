@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphDomElementType } from '@/types/common';
+import { NmorphDomElementType } from '@/types';
 import { onMounted } from 'vue';
 
 interface INmorphProps {
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   max: 99,
   isDot: false,
   hidden: false,
-  color: 'var(--accent-color-00)',
+  color: 'var(--nmorph-accent-color)',
   offsetX: 0,
   offsetY: 0,
 });
@@ -76,19 +76,23 @@ onMounted(() => {
 .nmorph-badge {
   position: relative;
   display: inline-block;
+
   .nmorph-badge__container {
-    background: v-bind(color);
-    opacity: 1;
-    border-radius: var(--default-border-radius);
     position: absolute;
+    background: v-bind(color);
+    border-radius: var(--default-border-radius);
+    opacity: 1;
   }
+
   .nmorph-badge__content {
-    color: var(--lighter-color);
     padding: 2px 4px;
+    color: var(--nmorph-light-shade-color);
   }
+
   .nmorph-badge__container--hidden {
     opacity: 0;
   }
+
   .nmorph-badge__dot {
     width: 4px;
     height: 4px;
