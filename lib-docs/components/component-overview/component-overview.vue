@@ -16,7 +16,7 @@ const componentsMap: Record<string, unknown[]> = {
 
 <template>
   <div class="component-overview">
-    <div class="component-overview__title nmorph-title-2">
+    <div class="component-overview__title nmorph-title-1">
       {{ capitalizeFirstChar(props.name) }}
     </div>
     <div v-for="(el, idx) in componentsMap[props.name]" :key="idx">
@@ -25,9 +25,13 @@ const componentsMap: Record<string, unknown[]> = {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .component-overview {
   width: 100%;
   padding: 16px;
+}
+.component-overview__title {
+  color: var(--nmorph-accent-color);
+  margin-bottom: 8px;
 }
 </style>

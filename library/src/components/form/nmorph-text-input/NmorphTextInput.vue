@@ -137,7 +137,7 @@ const slots = useSlots();
   .nmorph-text-input__prepend-icon {
     position: absolute;
     left: 0;
-    margin-left: 8px;
+    margin-left: 4px;
   }
 
   input {

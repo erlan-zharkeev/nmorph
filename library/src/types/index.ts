@@ -1,3 +1,4 @@
+import { Ref } from 'vue';
 import { I18n } from 'vue-i18n';
 
 export enum NmorphComponentHeight {
@@ -338,7 +339,7 @@ export interface INmorphThemeOptions {
   saveCurrentThemeToLS?: boolean;
   darkShadeGeneratorCoefficient?: number;
   lightShadeGeneratorCoefficient?: number;
-  other: INmorphOtherThemeOptions;
+  other?: INmorphOtherThemeOptions;
 }
 
 export interface INmorphOptions {
@@ -395,4 +396,9 @@ export interface LibraryOptions {
 export interface INmorphApplyTranslation {
   messages?: TranslateType;
   locale?: keyof typeof Locale;
+}
+
+export interface INmorphInstance {
+  setTheme: (theme: string) => void;
+  currentTheme: Readonly<Ref<string>>;
 }

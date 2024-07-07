@@ -1,0 +1,46 @@
+{
+  "guide": "Руководство",
+  "components": "Компоненты",
+  "about": "О нас",
+  "search": "Поиск",
+  "attributes": "Атрибуты",
+  "slots": "Слоты",
+  "rightAsideTitle": "Содержание",
+  "name": "Имя",
+  "description": "Описание",
+  "type": "Тип",
+  "default": "По умолчанию",
+  "basic": "Основное",
+  "data": "Данные",
+  "feedback": "Обратная связь",
+  "form": "Форма",
+  "navigation": "Навигация",
+  "other": "Другое",
+  "overview": {
+    "button": {
+      "styleType": {
+        "subtitle": "Используйте *default* или *transparent* пропсов"
+      },
+      "loading": {
+        "subtitle": "Используйте true или false для включения или отключения загрузки"
+      },
+      "ripple": {
+        "subtitle": "Используйте true или false для включения или отключения эффекта ряби при нажатии"
+      },
+      "height": {
+        "subtitle": "Установите высоту"
+      },
+      "disabled": {
+        "subtitle": "Бла бла"
+      }
+    },
+    "icon": {
+      "size": {
+        "subtitle": "Установите размер иконки"
+      },
+      "widthHeight": {
+        "subtitle": "Установите ширину/высоту"
+      }
+    }
+  }
+}

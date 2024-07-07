@@ -24,7 +24,7 @@ const library: Plugin = {
       Vue.use(i18n);
     }
 
-    const nmorph = useNmorphTheme(options.theme);
+    const nmorph = useNmorphTheme(options.theme) as Plugin<[]>;
     Vue.use(nmorph);
 
     Object.entries(components).forEach(([name, component]) => {

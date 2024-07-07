@@ -5,11 +5,14 @@ import {
   NmorphCollapse,
   NmorphCollapseItem,
 } from "@nmorph/nmorph-ui-kit";
+import { ref, computed } from "vue";
+
 interface IProps {
   header: string;
   subtitle?: string;
   codeToCopy: string[];
 }
+
 const props = withDefaults(defineProps<IProps>(), {});
 const codeOpen = ref("");
 
@@ -21,6 +24,17 @@ const openHandler = () => {
 const copyHandler = () => {
   navigator.clipboard.writeText(props.codeToCopy.join(" "));
 };
+
+function highlightText(str: string) {
+  return str.replace(
+    /\*([a-zA-Z0-9\s]+)\*/g,
+    `<span class="docs-attribute__props">$1</span>`
+  );
+}
+
+const highlightedSubtitle = computed(() =>
+  props.subtitle ? highlightText(props.subtitle) : ""
+);
 </script>
 
 <template>
@@ -28,21 +42,19 @@ const copyHandler = () => {
     <h2 class="docs-attribute__header nmorph-title-3">
       {{ props.header }}
     </h2>
-    <h3 class="docs-attribute__subtitle nmorph-body-2" v-if="props.subtitle">
-      {{ props.subtitle }}
-    </h3>
+    <p
+      class="docs-attribute__subtitle nmorph-body-2"
+      v-if="props.subtitle"
+      v-html="highlightedSubtitle"
+    />
     <div class="docs-components__tips"></div>
     <div class="docs-attribute__wrapper nmorph-outset">
       <div class="docs-component__overview">
         <slot name="overview" />
       </div>
       <div class="docs-component__overview-component-actions">
-        <NmorphButton style-type="transparent" @click="copyHandler">
-          <NmorphIcon name="copy" />
-        </NmorphButton>
-        <NmorphButton style-type="transparent" @click="openHandler">
-          <NmorphIcon name="code" />
-        </NmorphButton>
+        <NmorphButton @click="copyHandler" icon="copy-document" />
+        <NmorphButton @click="openHandler" icon="code" />
       </div>
       <NmorphCollapse :modelValue="codeOpen">
         <NmorphCollapseItem id="1" name="1">
@@ -89,6 +101,11 @@ const copyHandler = () => {
 .docs-component__overview-component-actions {
   display: flex;
   justify-content: flex-end;
-  padding: 4px;
+  padding: 12px 4px;
+}
+
+// TODO Выпилить после добавления в либу
+.nmorph-body-2 {
+  font-weight: 400;
 }
 </style>

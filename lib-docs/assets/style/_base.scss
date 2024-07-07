@@ -13,5 +13,12 @@ code {
 }
 
 .hljs {
-  background: var(--main-bg);
+  background: transparent;
+  margin-top: -12px;
+}
+
+.docs-attribute__props {
+  font-weight: bold;
+  font-style: italic;
+  color: var(--nmorph-accent-color);
 }

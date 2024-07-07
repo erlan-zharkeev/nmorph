@@ -6,7 +6,8 @@ import {
   NmorphDropdown,
   NmorphCheckbox,
   NmorphSwitch,
-  useNmorph,
+  useNmorphTheme,
+  type INmorphInstance,
 } from "@nmorph/nmorph-ui-kit";
 import MoonIcon from "~/assets/images/moon.svg";
 import SunIcon from "~/assets/images/sun.svg";
@@ -18,7 +19,7 @@ const currentTheme = ref<string>("dark");
 const setTheme = ref<(theme: any) => any>(() => {});
 
 onMounted(() => {
-  const nmorph = useNmorph(nmorphOptions);
+  const nmorph = useNmorphTheme(nmorphOptions, true) as INmorphInstance;
   currentTheme.value = nmorph.currentTheme.value;
   setTheme.value = nmorph.setTheme;
 });
@@ -94,7 +95,7 @@ const updateMenuHandler = () => {
           v-model="open"
           style-type="button-style"
           size="small"
-          class="test"
+          class="docs-top-bar__translate-checkbox"
         >
           <template #label>
             <NmorphIcon>
@@ -163,7 +164,7 @@ const updateMenuHandler = () => {
 <style lang="scss">
 $top-bar-height: 50px;
 
-.test {
+.docs-top-bar__translate-checkbox {
   --size: 28px;
 }
 
