@@ -2,9 +2,9 @@
 import { NmorphIcon } from "@nmorph/nmorph-ui-kit";
 const scriptData = ``;
 const templateData = `
-<NmorphIcon size="small" name="eye" />
-<NmorphIcon size="medium" name="eye" />
 <NmorphIcon size="large" name="eye" />
+<NmorphIcon size="medium" name="eye" />
+<NmorphIcon size="small" name="eye" />
 `;
 const cssData = `
 <style lang="scss">
@@ -17,16 +17,16 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-size">
+  <div class="docs-icon" id="content-size">
     <attribute
       header="Size"
-      :subtitle="$t('componentsOverview.styleType.subtitle')"
+      :subtitle="$t('overview.icon.size.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphIcon size="small" name="eye" />
-        <NmorphIcon size="medium" name="eye" />
         <NmorphIcon size="large" name="eye" />
+        <NmorphIcon size="medium" name="eye" />
+        <NmorphIcon size="small" name="eye" />
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -41,8 +41,12 @@ const code = [scriptData, templateData, cssData];
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .nmorph-icon {
   margin: 0 8px;
+}
+
+::v-deep(.docs-component__overview) {
+  align-items: center;
 }
 </style>

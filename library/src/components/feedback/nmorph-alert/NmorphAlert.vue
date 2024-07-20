@@ -1,26 +1,18 @@
 <script setup lang="ts">
-import { Ref, computed, ref, useSlots } from 'vue';
+import { computed, useSlots } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphIcon, NmorphAlertType } from '@/components';
+import { NmorphIcon, NmorphAlertType, INmorphAlertProps } from '@/components';
+import { NmorphIconList } from '@/types';
 
-interface INmorphProps {
-  color?: keyof typeof NmorphAlertType;
-  closable?: boolean;
-  title?: string;
-  content?: string;
-  fill?: boolean;
-  maxWidth?: number;
-  showIcon?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
-  color: 'info',
-  closable: true,
+const props = withDefaults(defineProps<INmorphAlertProps>(), {
+  type: 'info',
+  closable: false,
   title: '',
   content: '',
-  fill: true,
-  maxWidth: 300,
+  fill: false,
   showIcon: true,
+  bordered: true,
+  html: '',
 });
 
 interface INmorphEmit {
@@ -28,40 +20,46 @@ interface INmorphEmit {
 }
 const emit = defineEmits<INmorphEmit>();
 
-const hide = ref(false);
-
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-alert': [props.color, `${hide.value && 'hide'}`],
+    'nmorph-alert': [props.type, `${props.bordered && 'bordered'}`, `${props.fill && 'fill'}`],
   })
 );
 
 const closeHandler = () => {
-  hide.value = true;
   emit('close');
 };
 
-const iconName = computed(() => props.color) as Ref<NmorphAlertType>;
+const iconNameMap: Record<NmorphAlertType, keyof typeof NmorphIconList> = {
+  [NmorphAlertType.success]: 'success-filled',
+  [NmorphAlertType.warning]: 'warn-triangle-filled',
+  [NmorphAlertType.info]: 'info-filled',
+  [NmorphAlertType.error]: 'circle-close-filled',
+};
 
 const slots = useSlots();
 </script>
 
 <template>
   <div v-if="slots.default || props.title || props.content" :class="modifiers">
-    <div class="nmorph-alert__wrapper">
-      <div v-if="props.showIcon" class="nmorph-alert__icon">
-        <slot name="icon">
-          <NmorphIcon :name="iconName" size="medium" />
-        </slot>
-      </div>
-      <div class="nmorph-alert__content-wrapper">
-        <div class="nmorph-alert__content-title">
-          <slot v-if="props.title || slots.title" name="title">{{ props.title }}</slot>
+    <div class="nmorph-alert__wrapper" v-html="props.html" v-if="props.html" />
+    <div class="nmorph-alert__wrapper" v-else>
+      <div class="nmorph-alert__left-side">
+        <div v-if="props.showIcon" class="nmorph-alert__icon">
+          <slot name="icon">
+            <NmorphIcon :name="iconNameMap[props.type]" size="medium" />
+          </slot>
         </div>
-        <div class="nmorph-alert__content">
-          <slot>{{ props.content }}</slot>
+        <div class="nmorph-alert__content-wrapper">
+          <div class="nmorph-alert__content-title">
+            <slot v-if="props.title || slots.title" name="title">{{ props.title }}</slot>
+          </div>
+          <div class="nmorph-alert__content">
+            <slot>{{ props.content }}</slot>
+          </div>
         </div>
       </div>
+
       <div v-if="props.closable" class="nmorph-alert__close" @click="closeHandler">
         <NmorphIcon name="cross" width="14px" height="14px" />
       </div>
@@ -69,10 +67,11 @@ const slots = useSlots();
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .nmorph-alert {
   display: inline-block;
-  padding: var(--indentation-03);
+  padding: var(--indentation-04);
+  background: var(--nmorph-overlay-color);
   border-radius: var(--default-border-radius);
 
   .nmorph-alert__content,
@@ -82,13 +81,17 @@ const slots = useSlots();
 
   .nmorph-alert__content-title {
     font-weight: 600;
+    line-height: 1;
 
     @include title-3;
-
-    line-height: 1;
   }
 
   .nmorph-alert__wrapper {
+    justify-content: space-between;
+  }
+
+  .nmorph-alert__wrapper,
+  .nmorph-alert__left-side {
     display: flex;
     align-items: center;
   }
@@ -104,59 +107,43 @@ const slots = useSlots();
   }
 }
 
-.nmorph-alert--hide {
-  display: none;
-}
-
 .nmorph-alert--success {
-  background: var(--nmorph-success-color);
-
-  .nmorph-alert__content,
-  .nmorph-alert__content-title {
-    color: var(--nmorph-black-color);
-  }
-
-  .nmorph-icon {
-    --color: var(--nmorph-success-text-color);
+  .nmorph-alert__icon {
+    .nmorph-icon {
+      --color: var(--nmorph-success-color);
+    }
   }
 }
 
 .nmorph-alert--error {
-  background: var(--nmorph-error-color);
-
-  .nmorph-alert__content,
-  .nmorph-alert__content-title {
-    color: var(--nmorph-black-color);
-  }
-
-  .nmorph-icon {
-    --color: var(--nmorph-error-text-color);
+  .nmorph-alert__icon {
+    .nmorph-icon {
+      --color: var(--nmorph-error-color);
+    }
   }
 }
 
 .nmorph-alert--warning {
-  background: var(--nmorph-warn-color);
-
-  .nmorph-alert__content,
-  .nmorph-alert__content-title {
-    color: var(--nmorph-black-color);
-  }
-
-  .nmorph-icon {
-    --color: var(--nmorph-warn-text-color);
+  .nmorph-alert__icon {
+    .nmorph-icon {
+      --color: var(--nmorph-warn-color);
+    }
   }
 }
 
 .nmorph-alert--info {
-  background: var(--nmorph-info-color);
-
-  .nmorph-alert__content,
-  .nmorph-alert__content-title {
-    color: var(--nmorph-black-color);
+  .nmorph-alert__icon {
+    .nmorph-icon {
+      --color: var(--nmorph-info-color);
+    }
   }
+}
 
-  .nmorph-icon {
-    --color: var(--nmorph-info-text-color);
-  }
+.nmorph-alert--bordered {
+  border: 1px solid var(--nmorph-info-color);
+}
+
+.nmorph-alert--fill {
+  width: 100%;
 }
 </style>

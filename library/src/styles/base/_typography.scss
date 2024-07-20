@@ -14,21 +14,25 @@
 }
 
 @mixin body-3 {
+  font-weight: 400;
   font-size: var(--el-font-size-extra-small);
   line-height: var(--line-height-regular);
 }
 
 @mixin body-2 {
+  font-weight: 400;
   font-size: var(--el-font-size-small);
   line-height: var(--line-height-regular);
 }
 
 @mixin body-1 {
+  font-weight: 400;
   font-size: var(--el-font-size-base);
   line-height: var(--line-height-regular);
 }
 
 @mixin title-3 {
+  font-weight: 600;
   font-size: var(--el-font-size-medium);
   line-height: var(--line-height-loose);
 }

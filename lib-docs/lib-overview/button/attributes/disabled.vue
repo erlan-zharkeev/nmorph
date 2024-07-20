@@ -3,7 +3,9 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = ``;
 const templateData = `
-<NmorphButton style-type="default" disabled />
+<NmorphButton disabled>Disabled</NmorphButton>
+<NmorphButton disabled height="thin">Disabled thin</NmorphButton>
+<NmorphButton disabled loading />
 `;
 const cssData = `
 <style lang="scss">
@@ -24,6 +26,8 @@ const code = [scriptData, templateData, cssData];
     >
       <template #overview>
         <NmorphButton disabled>Disabled</NmorphButton>
+        <NmorphButton disabled height="thin">Disabled thin</NmorphButton>
+        <NmorphButton disabled loading />
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -41,9 +45,5 @@ const code = [scriptData, templateData, cssData];
 <style lang="scss">
 .nmorph-button {
   margin: 0 8px;
-}
-.docs-component__overview {
-  display: flex;
-  align-items: center;
 }
 </style>

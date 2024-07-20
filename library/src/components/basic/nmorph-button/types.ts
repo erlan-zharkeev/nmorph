@@ -11,6 +11,7 @@ export enum NmorphButtonType {
 
 export enum NmorphButtonShape {
   default = 'default',
+  square = 'square',
   round = 'round',
   circle = 'circle',
 }

@@ -5,12 +5,12 @@ import { computed, ref } from 'vue';
 import { NmorphIcon, NmorphButtonStyle, NmorphButtonType, NmorphIconSize, NmorphButtonShape } from '@/components';
 
 interface INmorphProps extends INmorphCommonInputProps {
+  styleType?: keyof typeof NmorphButtonStyle;
+  loading?: boolean;
+  ripple?: boolean;
   type?: keyof typeof NmorphButtonType;
   text?: string | number;
-  loading?: boolean;
-  styleType?: keyof typeof NmorphButtonStyle;
   bgTransparentOnHover?: boolean;
-  ripple?: boolean;
   shape?: keyof typeof NmorphButtonShape;
   icon?: keyof typeof NmorphIconList;
 }
@@ -38,6 +38,7 @@ const modifiers = computed(() =>
       `${props.disabled && 'disabled'}`,
       `${props.bgTransparentOnHover && 'bg-transparent-on-hover'}`,
       `${props.ripple && 'ripple'}`,
+      `${props.icon && 'icon'}`,
     ],
   })
 );
@@ -127,15 +128,6 @@ defineExpose({ buttonRef });
   }
 }
 
-.nmorph-button--transparent {
-  padding: var(--indentation-00);
-
-  .nmorph-button__content {
-    background: transparent;
-    box-shadow: none;
-  }
-}
-
 .nmorph-button--ripple {
   .nmorph-button__content {
     position: relative;
@@ -190,5 +182,32 @@ defineExpose({ buttonRef });
   .nmorph-button__content {
     border-radius: var(--border-radius-circular);
   }
+}
+
+.nmorph-button--transparent {
+  padding: var(--indentation-00);
+
+  .nmorph-button__content:not(:disabled, [loading='true']):hover {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .nmorph-button__content {
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+@mixin square {
+  width: var(--height);
+  height: var(--height);
+}
+
+.nmorph-button--square {
+  @include square;
+}
+
+.nmorph-button--icon {
+  @include square;
 }
 </style>

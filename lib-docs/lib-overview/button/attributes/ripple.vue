@@ -3,7 +3,13 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = ``;
 const templateData = `
-<NmorphButton ripple text="I am ripple" />
+<NmorphButton style-type="default" ripple text="I am ripple" />
+<NmorphButton
+  style-type="default"
+  ripple
+  :bg-transparent-on-hover="false"
+  text="I am ripple with hover bg"
+/>
 <NmorphButton :ripple="false" text="I am not ripple" />
 `;
 const cssData = `
@@ -25,6 +31,12 @@ const code = [scriptData, templateData, cssData];
     >
       <template #overview>
         <NmorphButton style-type="default" ripple text="I am ripple" />
+        <NmorphButton
+          style-type="default"
+          ripple
+          :bg-transparent-on-hover="false"
+          text="I am ripple with hover bg"
+        />
         <NmorphButton :ripple="false" text="I am not ripple" />
       </template>
       <template #code>

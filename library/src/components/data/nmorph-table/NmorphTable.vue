@@ -191,7 +191,8 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
 .nmorph-table {
   --border-color: var(--nmorph-accent-color);
   --table-cell-height: auto;
-  --table-background-row-hover: #e1e9ef;
+
+  // --table-background-row-hover: var(--nmorph-black-color);
 
   .nmorph-table__header th {
     border-bottom: 0;
@@ -237,7 +238,7 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
   }
 
   .nmorph-table__table-data-row--row-hover:hover {
-    background: var(--table-background-row-hover);
+    // background: var(--table-background-row-hover);
   }
 }
 

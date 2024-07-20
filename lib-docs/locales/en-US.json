@@ -5,6 +5,7 @@
   "search": "Search",
   "attributes": "Attributes",
   "slots": "Slots",
+  "variables": "Variables",
   "rightAsideTitle": "Contents",
   "name": "Name",
   "description": "Description",
@@ -19,27 +20,72 @@
   "overview": {
     "button": {
       "styleType": {
-        "subtitle": "Use *default* or *transparent* props"
+        "subtitle": "Use *default* or *transparent* to define basic style"
       },
       "loading": {
-        "subtitle": "Use true or false to enable or disable loading"
+        "subtitle": "Use *boolean* to enable or disable loading icon"
       },
       "ripple": {
-        "subtitle": "Use true or false to enable or disable ripple effect on click"
+        "subtitle": "Use *boolean* to enable or disable ripple effect on click"
       },
       "height": {
-        "subtitle": "Set height"
+        "subtitle": "Set height, available *thick*, *default*, *thin*"
       },
       "disabled": {
-        "subtitle": "Bla bal"
+        "subtitle": "Use *boolean* to disable button"
+      },
+      "shape": {
+        "subtitle": "Use shape to change button border-radius",
+        "info": {
+          "title": "info",
+          "cont:": "When using round or square, the size is changed using the --height variable",
+          "content": "When using round or square, the size is changed using the --height variable"
+        }
+      },
+      "api": {
+        "type": "Native button type",
+        "text": "Button text",
+        "loading": "Enable/Disable loader inside button",
+        "style-type": "Change button style",
+        "bg-transparent-on-hover": "Enable/Disable background color while hover",
+        "ripple": "Enable/Disable waves on click",
+        "fill": "Button fill container",
+        "disabled": "Disable the button",
+        "height": "Change button height",
+        "shape": "Shape change",
+        "icon": "Set icon from icon list"
+      },
+      "slot": {
+        "default": "Customize button content",
+        "append": "Append you custom content"
+      },
+      "variables": {
+        "height": "Define button height"
       }
     },
     "icon": {
+      "search-icon": "Search icon",
       "size": {
         "subtitle": "Set icon size"
       },
-      "widthHeight": {
+      "width-height": {
         "subtitle": "Set width/height"
+      },
+      "color": {
+        "subtitle": "Set color, you can use custom colors or pass available variable"
+      },
+      "api": {
+        "size": "Icon size ",
+        "width": "Icon width",
+        "height": "Icon height",
+        "color": "Icon color",
+        "icon": "Icon list"
+      },
+      "slot": {
+        "default": "Default icon content"
+      },
+      "variables": {
+        "color": "Icon color"
       }
     }
   }

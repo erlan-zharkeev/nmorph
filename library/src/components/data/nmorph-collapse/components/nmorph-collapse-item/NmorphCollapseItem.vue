@@ -47,7 +47,7 @@ const collapseItemDOMElContent = ref<NmorphDomElementType>(null);
 const contentHeight = ref(0);
 
 const clickHandler = () => {
-  if (!props.block) return;
+  if (props.block) return;
   isOpen.value = !isOpen.value;
   if (!updateModel) return;
   updateModel(props.name, isOpen.value);

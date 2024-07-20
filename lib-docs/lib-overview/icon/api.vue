@@ -4,33 +4,51 @@ import ApiTable from "~/components/api-table/api-table.vue";
 
 const attributesData = [
   {
+    name: "icon",
+    type: `<a class="docs-enum" href="/components/icon">Icons</a>`,
+    default: "-",
+  },
+  {
     name: "size",
-    description: "Set native button type",
     type: Object.values(NmorphIconSize).join(", "),
     default: "small",
   },
   {
     name: "width",
-    description: "Button text",
     type: "String(css value)",
     default: "-",
   },
   {
     name: "height",
-    description: "Enable/Disable loader inside button",
     type: "String(css value)",
     default: "-",
   },
+  {
+    name: "color",
+    type: "String(css value/css variable)",
+    default: "-",
+  },
 ];
+
 const slotData = [
   {
     name: "default",
-    description: "Customize button content",
+  },
+];
+
+const variablesData = [
+  {
+    name: "color",
   },
 ];
 </script>
 <template>
   <div class="docs-api-table">
-    <api-table name="Icon" :attributes="attributesData" :slots="slotData" />
+    <api-table
+      name="icon"
+      :variables="variablesData"
+      :attributes="attributesData"
+      :slots="slotData"
+    />
   </div>
 </template>

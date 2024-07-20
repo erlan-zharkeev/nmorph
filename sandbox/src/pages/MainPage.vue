@@ -10,12 +10,16 @@
       v-for="color in ['info', 'success', 'error', 'warning']"
       :key="color"
       content="Hello, im alert content"
-      title="Title is very important"
-      :color="color"
+      title="Hi, Title is very important"
+      :type="color"
       class="additional-class"
     />
     <NmorphYearMonthPicker :currentDate="new Date()" />
+    <NmorphButton class="btn" @click="addNotification"
+      >Add notification</NmorphButton
+    >
   </div>
+  <NmorphNotificationProvider :notifications="notifications" :quantity="3" />
 </template>
 
 <script lang="ts" setup>
@@ -24,8 +28,23 @@ import {
   NmorphAutocomplete,
   NmorphAlert,
   NmorphYearMonthPicker,
-  NmorphDivider,
+  NmorphButton,
 } from "./../../../library/src/components";
+import NmorphNotificationProvider from "./../../../library/src/components/providers/nmorph-notification-provider/NmorphNotificationProvider.vue";
+import { useNmorphNotification } from "./../../../library/src/hooks";
+
+const { notifications, notify } = useNmorphNotification();
+const count = ref(8);
+
+const addNotification = () => {
+  count.value += 1;
+  notify({
+    content: `Yay!, ${count.value}`,
+    duration: 0,
+    title: "Title",
+    type: "error",
+  });
+};
 
 const value = ref("");
 const variants = ref([]);
@@ -59,6 +78,9 @@ const getVariants = async () => {
 </script>
 
 <style lang="scss">
+.btn {
+  margin-top: 40px;
+}
 .nmorph-divider {
   margin: 0 8px;
 }

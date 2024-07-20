@@ -1,6 +1,6 @@
 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g transform="translate(50,50)">
-    <circle cx="0" cy="-30" r="5" fill="currentColor">
+    <circle cx="0" cy="-30" r="5" >
       <animateTransform
         attributeName="transform"
         type="rotate"
@@ -10,7 +10,7 @@
         repeatCount="indefinite"
       />
     </circle>
-    <circle cx="21.21" cy="-21.21" r="5" fill="currentColor" opacity="0.875">
+    <circle cx="21.21" cy="-21.21" r="5"  opacity="0.875">
       <animateTransform
         attributeName="transform"
         type="rotate"
@@ -20,7 +20,7 @@
         repeatCount="indefinite"
       />
     </circle>
-    <circle cx="30" cy="0" r="5" fill="currentColor" opacity="0.75">
+    <circle cx="30" cy="0" r="5"  opacity="0.75">
       <animateTransform
         attributeName="transform"
         type="rotate"
@@ -30,7 +30,7 @@
         repeatCount="indefinite"
       />
     </circle>
-    <circle cx="21.21" cy="21.21" r="5" fill="currentColor" opacity="0.625">
+    <circle cx="21.21" cy="21.21" r="5"  opacity="0.625">
       <animateTransform
         attributeName="transform"
         type="rotate"
@@ -40,7 +40,7 @@
         repeatCount="indefinite"
       />
     </circle>
-    <circle cx="0" cy="30" r="5" fill="currentColor" opacity="0.5">
+    <circle cx="0" cy="30" r="5"  opacity="0.5">
       <animateTransform
         attributeName="transform"
         type="rotate"
@@ -50,7 +50,7 @@
         repeatCount="indefinite"
       />
     </circle>
-    <circle cx="-21.21" cy="21.21" r="5" fill="currentColor" opacity="0.375">
+    <circle cx="-21.21" cy="21.21" r="5"  opacity="0.375">
       <animateTransform
         attributeName="transform"
         type="rotate"
@@ -60,7 +60,7 @@
         repeatCount="indefinite"
       />
     </circle>
-    <circle cx="-30" cy="0" r="5" fill="currentColor" opacity="0.25">
+    <circle cx="-30" cy="0" r="5"  opacity="0.25">
       <animateTransform
         attributeName="transform"
         type="rotate"
@@ -70,7 +70,7 @@
         repeatCount="indefinite"
       />
     </circle>
-    <circle cx="-21.21" cy="-21.21" r="5" fill="currentColor" opacity="0.125">
+    <circle cx="-21.21" cy="-21.21" r="5"  opacity="0.125">
       <animateTransform
         attributeName="transform"
         type="rotate"

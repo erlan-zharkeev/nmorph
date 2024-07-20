@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useModifiers } from '@/utils';
-import { inject } from 'vue';
+import { inject, nextTick } from 'vue';
 import { NmorphTableColumnPropertyInjectionType, NmorphTableIdInjectionType } from '@/components';
 
 const columnProperty = inject<NmorphTableColumnPropertyInjectionType>('column-property', undefined);
@@ -19,7 +19,10 @@ const modifiers = computed(() =>
 const targetId = computed(() => `#table-cell-${tableIdentifier}-${props.row}-${columnProperty}`);
 
 const isMounted = ref(false);
-onMounted(() => {
+onMounted(async () => {
+  await nextTick();
+  const targetElement = document.querySelector(targetId.value);
+  if (targetElement) targetElement.innerHTML = '';
   isMounted.value = true;
 });
 </script>

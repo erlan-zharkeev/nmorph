@@ -4,3 +4,4 @@ export * from './usePlacement';
 export * from './useEventManager';
 export * from './useNmorphTheme';
 export * from './useNmorphTranslation';
+export * from './useNmorphNotification';

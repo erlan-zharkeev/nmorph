@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-  NmorphIcon,
   NmorphButton,
   NmorphCollapse,
   NmorphCollapseItem,
@@ -9,6 +8,7 @@ import { ref, computed } from "vue";
 
 interface IProps {
   header: string;
+  name?: string;
   subtitle?: string;
   codeToCopy: string[];
 }
@@ -35,6 +35,10 @@ function highlightText(str: string) {
 const highlightedSubtitle = computed(() =>
   props.subtitle ? highlightText(props.subtitle) : ""
 );
+
+const { t } = useI18n();
+
+const infoData = `overview.${props.name}.info`;
 </script>
 
 <template>
@@ -42,6 +46,11 @@ const highlightedSubtitle = computed(() =>
     <h2 class="docs-attribute__header nmorph-title-3">
       {{ props.header }}
     </h2>
+    <info
+      v-if="props.name"
+      :title="t(`${infoData}.title`)"
+      :content="t(`${infoData}.content`)"
+    />
     <p
       class="docs-attribute__subtitle nmorph-body-2"
       v-if="props.subtitle"
@@ -74,10 +83,6 @@ const highlightedSubtitle = computed(() =>
   display: none;
 }
 
-::v-deep .nmorph-collapse-item .nmorph-collapse-item__content {
-  border-radius: 0;
-}
-
 ::v-deep .nmorph-collapse-item__inner-wrapper {
   margin-top: -10px;
 }
@@ -88,6 +93,8 @@ const highlightedSubtitle = computed(() =>
 }
 .docs-component__overview {
   padding: 16px 8px 0px 8px;
+  display: flex;
+  align-items: baseline;
 }
 .docs-attribute__header {
   margin-bottom: 4px;
@@ -102,10 +109,5 @@ const highlightedSubtitle = computed(() =>
   display: flex;
   justify-content: flex-end;
   padding: 12px 4px;
-}
-
-// TODO Выпилить после добавления в либу
-.nmorph-body-2 {
-  font-weight: 400;
 }
 </style>

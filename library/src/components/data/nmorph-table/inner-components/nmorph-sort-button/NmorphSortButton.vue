@@ -52,7 +52,7 @@ const iconSize = '10px';
 
   .nmorph-sort-button__icon-up,
   .nmorph-sort-button__icon-down {
-    --color: var(--nmorph-dark-shade-color);
+    // --color: var(--nmorph-dark-shade-color);
   }
 
   .nmorph-sort-button__icon-down {

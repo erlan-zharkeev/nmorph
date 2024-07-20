@@ -4,3 +4,4 @@ export * from './feedback';
 export * from './form';
 export * from './navigation';
 export * from './others';
+export * from './providers';

@@ -19,6 +19,7 @@ const componentsMap: Record<string, unknown[]> = {
     <div class="component-overview__title nmorph-title-1">
       {{ capitalizeFirstChar(props.name) }}
     </div>
+    <slot />
     <div v-for="(el, idx) in componentsMap[props.name]" :key="idx">
       <component :is="el" />
     </div>

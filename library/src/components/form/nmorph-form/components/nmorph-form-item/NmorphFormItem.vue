@@ -66,8 +66,9 @@ const modifiers = computed(() =>
 
   .nmorph-form-item__content {
     position: relative;
-    display: flex;
-    align-items: center;
+
+    // display: inline-flex;
+    // align-items: center;
     width: 100%;
   }
 }

@@ -20,7 +20,7 @@ const code = [scriptData, templateData, cssData];
   <div class="docs-button" id="content-width-height">
     <attribute
       header="Width/Height"
-      :subtitle="$t('componentsOverview.styleType.subtitle')"
+      :subtitle="$t('overview.icon.width-height.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
@@ -41,8 +41,11 @@ const code = [scriptData, templateData, cssData];
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .nmorph-icon {
   margin: 0 8px;
+}
+::v-deep(.docs-component__overview) {
+  align-items: center;
 }
 </style>

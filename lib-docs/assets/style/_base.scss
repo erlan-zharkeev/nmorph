@@ -22,3 +22,27 @@ code {
   font-style: italic;
   color: var(--nmorph-accent-color);
 }
+
+.hljs-name {
+  color: #569cd6;
+}
+
+.hljs-attr {
+  color: #9cdcfe;
+}
+
+.hljs-string {
+  color: #ce723b;
+}
+
+.hljs-selector-class {
+  color: #569cd6;
+}
+
+.hljs-attribute {
+  color: #d7983c;
+}
+
+.hljs-number {
+  color: #ce9178;
+}

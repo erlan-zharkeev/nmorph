@@ -1,0 +1,71 @@
+<script setup lang="ts">
+import { NmorphButton } from "@nmorph/nmorph-ui-kit";
+
+const scriptData = ``;
+
+const templateData = `
+<NmorphButton>Default</NmorphButton>
+<NmorphButton shape="circle" class="custom-circle-button">Circle</NmorphButton>
+<NmorphButton shape="round">Round</NmorphButton>
+<NmorphButton shape="square" class="custom-square-button">Square</NmorphButton>`;
+
+const cssData = `
+<style lang="scss">
+.nmorph-button {
+  margin: 0 8px;
+}
+.custom-circle-button {
+  --height: 50px;
+}
+.custom-square-button {
+  --height: 70px;
+}
+</style>
+`;
+const code = [scriptData, templateData, cssData];
+</script>
+
+<template>
+  <div class="docs-button" id="content-shape">
+    <attribute
+      name="button.shape"
+      header="Shape"
+      :subtitle="$t('overview.button.shape.subtitle')"
+      :codeToCopy="code"
+    >
+      <template #overview>
+        <NmorphButton>Default</NmorphButton>
+        <NmorphButton shape="circle" class="custom-circle-button"
+          >Circle</NmorphButton
+        >
+        <NmorphButton shape="round">Round</NmorphButton>
+        <NmorphButton shape="square" class="custom-square-button"
+          >Square</NmorphButton
+        >
+      </template>
+      <template #code>
+        <code-example v-if="templateData" lang="html">{{
+          templateData
+        }}</code-example>
+        <code-example v-if="scriptData" lang="javascript">{{
+          scriptData
+        }}</code-example>
+        <code-example v-if="cssData" lang="css">{{ cssData }}</code-example>
+      </template>
+    </attribute>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-button {
+  margin: 0 8px;
+}
+
+.custom-circle-button {
+  --height: 50px;
+}
+
+.custom-square-button {
+  --height: 70px;
+}
+</style>
