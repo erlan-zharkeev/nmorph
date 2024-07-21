@@ -42,8 +42,8 @@ const slots = useSlots();
 
 <template>
   <div v-if="slots.default || props.title || props.content" :class="modifiers">
-    <div class="nmorph-alert__wrapper" v-html="props.html" v-if="props.html" />
-    <div class="nmorph-alert__wrapper" v-else>
+    <div v-if="props.html" class="nmorph-alert__wrapper" v-html="props.html" />
+    <div v-else class="nmorph-alert__wrapper">
       <div class="nmorph-alert__left-side">
         <div v-if="props.showIcon" class="nmorph-alert__icon">
           <slot name="icon">
