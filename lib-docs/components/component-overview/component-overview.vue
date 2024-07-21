@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import button from "~/lib-overview/button";
 import icon from "~/lib-overview/icon";
+import link from "~/lib-overview/link";
+
 import { capitalizeFirstChar } from "@nmorph/nmorph-ui-kit";
 
 interface IProps {
@@ -11,6 +13,7 @@ const props = withDefaults(defineProps<IProps>(), {});
 const componentsMap: Record<string, unknown[]> = {
   button,
   icon,
+  link,
 };
 </script>
 
@@ -31,8 +34,8 @@ const componentsMap: Record<string, unknown[]> = {
   width: 100%;
   padding: 16px;
 }
+
 .component-overview__title {
-  color: var(--nmorph-accent-color);
   margin-bottom: 8px;
 }
 </style>

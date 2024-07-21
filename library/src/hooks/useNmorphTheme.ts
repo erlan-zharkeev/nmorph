@@ -21,10 +21,10 @@ const DEFAULT_THEME_COLORS: INmorphColorVariable[] = [
   { name: '--nmorph-error-text-color', color: '#8d3333' },
   { name: '--nmorph-warn-color', color: '#E6A21C' },
   { name: '--nmorph-warn-text-color', color: '#7a6712' },
-  { name: '--nmorph-gray-color', color: '#c9d2de' },
+  { name: '--nmorph-gray-color', color: '#c9d2dee6' },
   { name: '--nmorph-white-color', color: '#ffffff' },
   { name: '--nmorph-black-color', color: '#000000' },
-  { name: '--nmorph-overlay-color', color: '#00000080' },
+  { name: '--nmorph-overlay-color', color: '#00000095' },
 ];
 
 const DEFAULT_LIGHT_THEME_COLORS = {
@@ -32,7 +32,7 @@ const DEFAULT_LIGHT_THEME_COLORS = {
   main: '#eaf2f9',
   lightShade: '#ffffff',
   text: '#687b9e',
-  accent: '#7f95be',
+  accent: '#4a90e2',
   focusText: '#ffffff',
 };
 

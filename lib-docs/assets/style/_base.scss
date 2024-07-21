@@ -18,8 +18,7 @@ code {
 }
 
 .docs-attribute__props {
-  font-weight: bold;
-  font-style: italic;
+  font-weight: 800;
   color: var(--nmorph-accent-color);
 }
 
@@ -45,4 +44,14 @@ code {
 
 .hljs-number {
   color: #ce9178;
+}
+
+:root[nmorph-data-theme="light"] {
+  .hljs-attr {
+    color: #0070ac;
+  }
+
+  .hljs {
+    color: rgb(108, 108, 108);
+  }
 }

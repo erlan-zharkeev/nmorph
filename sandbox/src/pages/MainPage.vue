@@ -1,5 +1,12 @@
 <template>
   <div class="wrapper">
+    <div class="docs-top-bar__search">
+      <NmorphTextInput placeholder="search" v-model="searchQuery">
+        <template #prepend-icon>
+          <NmorphIcon name="search" />
+        </template>
+      </NmorphTextInput>
+    </div>
     <NmorphAutocomplete
       v-model="value"
       :list="variants"
@@ -18,6 +25,33 @@
     <NmorphButton class="btn" @click="addNotification"
       >Add notification</NmorphButton
     >
+    <!-- <NmorphButton
+      style-type="default"
+      ripple
+      text="I am ripple"
+      accentBgOnHover
+    /> -->
+    <!-- <NmorphIcon name="eye" color="var(--nmorph-accent-color)" />
+    <NmorphCheckbox
+      class="docs-top-bar__burger"
+      v-model="n"
+      style-type="button-style"
+      label="menu"
+    /> -->
+    <div class="element">
+      <NmorphLink disabled type="accent">Accent</NmorphLink>
+      <NmorphLink disabled type="success">Success</NmorphLink>
+      <NmorphLink disabled type="warning">Warning</NmorphLink>
+      <NmorphLink disabled type="error">Error</NmorphLink>
+      <NmorphLink disabled underline>Underlined</NmorphLink>
+
+      <!-- <NmorphIcon
+        class="nmorph-link__icon"
+        name="eye"
+        width="10px"
+        height="10px"
+      /> -->
+    </div>
   </div>
   <NmorphNotificationProvider :notifications="notifications" :quantity="3" />
 </template>
@@ -29,9 +63,13 @@ import {
   NmorphAlert,
   NmorphYearMonthPicker,
   NmorphButton,
+  NmorphTextInput,
+  NmorphIcon,
 } from "./../../../library/src/components";
 import NmorphNotificationProvider from "./../../../library/src/components/providers/nmorph-notification-provider/NmorphNotificationProvider.vue";
 import { useNmorphNotification } from "./../../../library/src/hooks";
+
+const searchQuery = ref("");
 
 const { notifications, notify } = useNmorphNotification();
 const count = ref(8);
@@ -45,6 +83,8 @@ const addNotification = () => {
     type: "error",
   });
 };
+
+const n = ref(false);
 
 const value = ref("");
 const variants = ref([]);
@@ -78,6 +118,9 @@ const getVariants = async () => {
 </script>
 
 <style lang="scss">
+.element {
+  margin: 1rem;
+}
 .btn {
   margin-top: 40px;
 }
@@ -91,7 +134,9 @@ const getVariants = async () => {
 .nmorph-alert {
   margin-right: 8px;
 }
-
+.nmorph-link {
+  margin-right: 8px;
+}
 .line {
   display: flex;
   .ml-2 {

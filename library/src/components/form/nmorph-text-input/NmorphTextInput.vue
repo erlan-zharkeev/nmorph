@@ -109,7 +109,6 @@ const slots = useSlots();
         class="nmorph-text-input__password-btn"
         style-type="transparent"
         width="32px"
-        bg-transparent-on-hover
         :height="props.height"
         @click="actionButtonClickHandler"
       >
@@ -124,7 +123,7 @@ const slots = useSlots();
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  --search-indent: 8px;
+  --prepend-icon-indent: 8px;
 
   .nmorph-text-input__input-side {
     position: relative;
@@ -137,7 +136,7 @@ const slots = useSlots();
   .nmorph-text-input__prepend-icon {
     position: absolute;
     left: 0;
-    margin-left: 4px;
+    margin-left: var(--prepend-icon-indent);
   }
 
   input {

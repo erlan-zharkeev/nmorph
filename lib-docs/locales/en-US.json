@@ -47,7 +47,7 @@
         "text": "Button text",
         "loading": "Enable/Disable loader inside button",
         "style-type": "Change button style",
-        "bg-transparent-on-hover": "Enable/Disable background color while hover",
+        "accent-bg-on-hover": "Enable/Disable background color while hover",
         "ripple": "Enable/Disable waves on click",
         "fill": "Button fill container",
         "disabled": "Disable the button",
@@ -57,7 +57,7 @@
       },
       "slot": {
         "default": "Customize button content",
-        "append": "Append you custom content"
+        "append": "Append your custom content"
       },
       "variables": {
         "height": "Define button height"
@@ -86,6 +86,35 @@
       },
       "variables": {
         "color": "Icon color"
+      }
+    },
+    "link": {
+      "type": {
+        "subtitle": "Choose color type: *accent*, *success*, *error*, *warning*"
+      },
+      "underline": {
+        "subtitle": "Underline of link"
+      },
+      "disabled": {
+        "subtitle": "Disabled state of link"
+      },
+      "icon-name": {
+        "subtitle": "Link with icon"
+      },
+      "api": {
+        "type": "Color type",
+        "href": "Native href attribute",
+        "underline": "Show underline on hover",
+        "icon-name": "Icon list",
+        "target": "Native target attribute",
+        "disabled": "Disable link"
+      },
+      "slot": {
+        "default": "Customize link content",
+        "prepend": "Prepend custom content"
+      },
+      "variables": {
+        "link-color": "Link color"
       }
     }
   }

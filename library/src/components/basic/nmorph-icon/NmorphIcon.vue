@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   size: 'small',
   width: undefined,
   height: undefined,
-  color: '--nmorph-text-color',
+  color: 'var(--nmorph-text-color)',
 });
 
 const modifiers = computed(() =>
@@ -37,7 +37,7 @@ const customStyles = computed(() => {
   return styles;
 });
 
-const color = computed(() => `var(${props.color})`);
+const color = computed(() => props.color);
 </script>
 
 <template>

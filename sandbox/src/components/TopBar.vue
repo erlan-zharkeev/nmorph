@@ -20,10 +20,9 @@ const allRoutes = router.getRoutes();
     <NmorphSwitch
       :model-value="currentTheme"
       @update:model-value="setTheme"
-      active-value="light"
-      inactive-value="dark"
+      active-value="dark"
+      inactive-value="light"
     />
-    {{ $t("custom") }}
   </div>
 </template>
 

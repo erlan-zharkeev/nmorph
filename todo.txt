@@ -3,3 +3,10 @@
 icon color не работает
 сделать так чтбы можно было кастмную иконку прокинуть
 validation icon убрать по умолчанию
+style-type в checkbox ошибка <NmorphCheckbox
+        class="docs-top-bar__burger"
+        :model-value="props.isMenuOpen"
+        @update:model-value="updateMenuHandler"
+        style-type="button-style"
+        label="menu"
+      >

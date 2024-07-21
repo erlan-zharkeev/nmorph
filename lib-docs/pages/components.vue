@@ -102,6 +102,6 @@ const updateActiveAnchor = (entries: IntersectionObserverEntry[]) => {
 }
 
 .docs-components-page--active {
-  color: var(--nmorph-accent-color);
+  font-weight: 800;
 }
 </style>

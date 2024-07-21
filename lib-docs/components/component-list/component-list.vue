@@ -47,7 +47,6 @@ const isRouteExist = (name: string) =>
   a {
     &.router-link-exact-active {
       font-weight: 800;
-      color: var(--nmorph-accent-color);
       padding-left: 8px;
     }
   }

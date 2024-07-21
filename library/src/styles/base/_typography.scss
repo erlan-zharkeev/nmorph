@@ -1,4 +1,6 @@
 :root {
+  --el-font-size-tiny: 10px;
+
   --el-font-size-extra-small: 12px;
   --el-font-size-small: 13px;
   --el-font-size-base: 14px;
@@ -11,6 +13,12 @@
   --line-height-compact: 1.3;
   --line-height-regular: 1.5;
   --line-height-loose: 1.7;
+}
+
+@mixin body-4 {
+  font-weight: 400;
+  font-size: var(--el-font-size-tiny);
+  line-height: var(--line-height-regular);
 }
 
 @mixin body-3 {

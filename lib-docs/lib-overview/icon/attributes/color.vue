@@ -2,9 +2,13 @@
 import { NmorphIcon } from "@nmorph/nmorph-ui-kit";
 const scriptData = ``;
 const templateData = `
-<NmorphIcon name="loader" width="8%" height="8%" />
-<NmorphIcon name="loader" width="23px" height="23px" />
-<NmorphIcon name="loader" width="12px" height="12px" />
+<NmorphIcon
+  name="add-location"
+  color="var(--nmorph-accent-color)"
+  size="large"
+/>
+<NmorphIcon name="avatar" color="#694295" size="large" />
+<NmorphIcon name="archive" color="hsl(148, 60%, 39%)" size="large" />
 `;
 const cssData = `
 <style lang="scss">
@@ -26,11 +30,11 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <NmorphIcon
           name="add-location"
-          color="--nmorph-accent-color"
+          color="var(--nmorph-accent-color)"
           size="large"
         />
-        <NmorphIcon name="avatar" color="red" size="large" />
-        <NmorphIcon name="archive" color="orange" size="large" />
+        <NmorphIcon name="avatar" color="#694295" size="large" />
+        <NmorphIcon name="archive" color="hsl(148, 60%, 39%)" size="large" />
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{

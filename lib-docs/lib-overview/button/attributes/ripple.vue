@@ -7,7 +7,7 @@ const templateData = `
 <NmorphButton
   style-type="default"
   ripple
-  :bg-transparent-on-hover="false"
+  accent-bg-on-hover
   text="I am ripple with hover bg"
 />
 <NmorphButton :ripple="false" text="I am not ripple" />
@@ -34,7 +34,7 @@ const code = [scriptData, templateData, cssData];
         <NmorphButton
           style-type="default"
           ripple
-          :bg-transparent-on-hover="false"
+          accent-bg-on-hover
           text="I am ripple with hover bg"
         />
         <NmorphButton :ripple="false" text="I am not ripple" />

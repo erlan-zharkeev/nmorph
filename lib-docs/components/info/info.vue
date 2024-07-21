@@ -64,9 +64,4 @@ enum DocsInfo {
 .docs-info__title {
   margin-bottom: 8px;
 }
-
-.docs-info__title,
-.docs-info__content {
-  color: var(--nmorph-white-color);
-}
 </style>

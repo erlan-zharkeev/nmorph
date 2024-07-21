@@ -2,10 +2,16 @@
   <top-bar :isMenuOpen="menuOpen" @toggle-menu="toggleMenu" />
   <nuxt-page />
   <main-menu :isMenuOpen="menuOpen" @menu-click="closeMenuHandler" />
+  <nmorph-notification-provider
+    :notifications="notificationProvider.notifications.value"
+    placement="top-center"
+  />
 </template>
 
 <script setup>
-// import "~/plugins/nmorph";
+import { NmorphNotificationProvider } from "@nmorph/nmorph-ui-kit";
+import { notificationProvider } from "~/providers";
+
 const menuOpen = ref(false);
 
 const toggleMenu = () => {
@@ -21,7 +27,6 @@ const closeMenuHandler = () => {
 @use "~/assets/style/index.scss";
 
 html {
-  // background: var(--nmorph-main-color);
   overflow: hidden;
 }
 </style>

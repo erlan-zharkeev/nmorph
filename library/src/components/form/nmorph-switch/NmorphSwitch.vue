@@ -70,10 +70,14 @@ watch(
         :disabled="props.disabled"
         class="nmorph-native-input"
       />
+      <div class="nmorph-switch__bg-content" :class="{ 'nmorph-switch__bg-content--enable': initialValue }">
+        <slot v-if="initialValue" name="bg-on" />
+        <slot v-else name="bg-off" />
+      </div>
       <div class="nmorph-switch-thumb">
-        <NmorphIcon v-if="props.loading" name="loader" width="16px" height="16px" />
-        <slot v-else-if="initialValue" name="thumb-on">{{ $t('NmorphSwitch.on') }}</slot>
-        <slot v-else name="thumb-off">{{ $t('NmorphSwitch.off') }}</slot>
+        <NmorphIcon v-if="props.loading" name="loader" width="14px" height="14px" />
+        <slot v-else-if="initialValue" name="thumb-on" />
+        <slot v-else name="thumb-off" />
       </div>
     </div>
   </div>
@@ -82,8 +86,8 @@ watch(
 <style lang="scss">
 .nmorph-switch {
   --height: 20px;
-  --offset: 2px;
-  --thumb-height: 16px;
+  --offset: 3px;
+  --thumb-height: 14px;
 
   width: 40px;
   height: var(--height);
@@ -94,12 +98,12 @@ watch(
   .nmorph-switch__content {
     position: relative;
     height: 100%;
-    font-size: 8px;
     border-radius: var(--border-radius-999);
     transition:
       background ease-in-out var(--transition-02),
       box-shadow ease-in-out var(--transition-02);
 
+    @include body-4;
     @include nmorph-inset;
   }
 
@@ -145,12 +149,29 @@ watch(
   }
 
   .nmorph-switch-thumb {
-    left: calc(100% - 16px - 2px);
+    left: calc(100% - 16px);
     box-shadow: none;
   }
 }
 
 .nmorph-switch--loading {
   @include nmorph-switch-disabled;
+}
+
+.nmorph-switch__bg-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+}
+
+.nmorph-switch__bg-content--enable {
+  justify-content: flex-start;
+  color: var(--nmorph-focus-text-color);
 }
 </style>

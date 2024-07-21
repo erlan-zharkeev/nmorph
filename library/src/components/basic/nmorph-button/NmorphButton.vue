@@ -10,7 +10,7 @@ interface INmorphProps extends INmorphCommonInputProps {
   ripple?: boolean;
   type?: keyof typeof NmorphButtonType;
   text?: string | number;
-  bgTransparentOnHover?: boolean;
+  accentBgOnHover?: boolean;
   shape?: keyof typeof NmorphButtonShape;
   icon?: keyof typeof NmorphIconList;
 }
@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   loading: false,
   styleType: 'default',
   height: 'default',
-  bgTransparentOnHover: true,
+  accentBgOnHover: false,
   ripple: true,
   shape: 'default',
   icon: undefined,
@@ -36,7 +36,7 @@ const modifiers = computed(() =>
       props.styleType,
       props.shape,
       `${props.disabled && 'disabled'}`,
-      `${props.bgTransparentOnHover && 'bg-transparent-on-hover'}`,
+      `${props.accentBgOnHover && 'accent-bg-on-hover'}`,
       `${props.ripple && 'ripple'}`,
       `${props.icon && 'icon'}`,
     ],
@@ -112,20 +112,6 @@ defineExpose({ buttonRef });
   .nmorph-button__content[loading='true'] {
     cursor: default;
   }
-
-  .nmorph-button__content:not(:disabled, [loading='true']):hover {
-    color: var(--nmorph-white-color);
-    background: var(--nmorph-accent-color);
-    box-shadow: none;
-  }
-
-  .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
-    --color: var(--nmorph-white-color);
-  }
-
-  .nmorph-button__content:not(:disabled, [loading='true']):hover span {
-    color: var(--nmorph-white-color);
-  }
 }
 
 .nmorph-button--ripple {
@@ -160,9 +146,18 @@ defineExpose({ buttonRef });
   @include body-3;
 }
 
-.nmorph-button--bg-transparent-on-hover {
+.nmorph-button--accent-bg-on-hover {
   .nmorph-button__content:not(:disabled, [loading='true']):hover {
-    @include nmorph-outset;
+    background: var(--nmorph-accent-color);
+    box-shadow: none;
+  }
+
+  .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
+    --color: var(--nmorph-white-color);
+  }
+
+  .nmorph-button__content:not(:disabled, [loading='true']):hover span {
+    color: var(--nmorph-white-color);
   }
 }
 

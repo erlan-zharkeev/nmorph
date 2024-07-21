@@ -5,6 +5,7 @@ import {
   NmorphCollapseItem,
 } from "@nmorph/nmorph-ui-kit";
 import { ref, computed } from "vue";
+import { notificationProvider } from "~/providers";
 
 interface IProps {
   header: string;
@@ -23,6 +24,14 @@ const openHandler = () => {
 
 const copyHandler = () => {
   navigator.clipboard.writeText(props.codeToCopy.join(" "));
+  notificationProvider.notify({
+    content: `Copied`,
+    duration: 2000,
+    type: "success",
+    width: "fit-content",
+    closable: false,
+    bordered: false,
+  });
 };
 
 function highlightText(str: string) {

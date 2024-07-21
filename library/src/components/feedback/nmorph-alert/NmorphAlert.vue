@@ -70,12 +70,13 @@ const slots = useSlots();
 <style scoped lang="scss">
 .nmorph-alert {
   display: inline-block;
-  padding: var(--indentation-04);
+  padding: var(--indentation-03) var(--indentation-04);
   background: var(--nmorph-overlay-color);
   border-radius: var(--default-border-radius);
 
   .nmorph-alert__content,
   .nmorph-alert__content-title {
+    color: var(--nmorph-gray-color);
     white-space: pre-line;
   }
 
@@ -104,6 +105,10 @@ const slots = useSlots();
     align-self: flex-start;
     margin-left: var(--indentation-03);
     cursor: pointer;
+
+    .nmorph-icon {
+      --color: var(--nmorph-gray-color);
+    }
   }
 }
 
@@ -140,7 +145,7 @@ const slots = useSlots();
 }
 
 .nmorph-alert--bordered {
-  border: 1px solid var(--nmorph-info-color);
+  border: 1px solid var(--nmorph-gray-color);
 }
 
 .nmorph-alert--fill {

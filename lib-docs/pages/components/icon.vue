@@ -5,10 +5,9 @@ import {
   NmorphIconList,
   NmorphTextInput,
   NmorphIcon,
-  useNmorphNotification,
-  NmorphNotificationProvider,
 } from "@nmorph/nmorph-ui-kit";
 import { reactive } from "vue";
+import { notificationProvider } from "~/providers";
 
 const form = reactive({
   searchText: {
@@ -20,7 +19,7 @@ const form = reactive({
 const clickIconHandler = (iconName: string) => {
   const value = `<NmorphIcon name="${iconName}" />`;
   navigator.clipboard.writeText(value);
-  notify({
+  notificationProvider.notify({
     content: `Copied`,
     duration: 2000,
     type: "success",
@@ -38,8 +37,6 @@ const iconList = computed(() => {
     el.toLowerCase().includes(form.searchText.value.toLowerCase())
   );
 });
-
-const { notifications, notify } = useNmorphNotification();
 </script>
 
 <template>
@@ -74,11 +71,6 @@ const { notifications, notify } = useNmorphNotification();
       </div>
     </template>
   </component-overview>
-  <NmorphNotificationProvider
-    :notifications="notifications"
-    placement="top-center"
-    :quantity="3"
-  />
 </template>
 
 <style lang="scss" scoped>

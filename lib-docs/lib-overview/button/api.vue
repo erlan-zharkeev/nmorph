@@ -29,9 +29,9 @@ const attributesData = [
     default: "default",
   },
   {
-    name: "bg-transparent-on-hover",
+    name: "accent-bg-on-hover",
     type: "Boolean",
-    default: "true",
+    default: "false",
   },
   {
     name: "ripple",

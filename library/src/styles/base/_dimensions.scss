@@ -14,8 +14,6 @@
   --indentation-03: 8px;
   --indentation-04: 16px;
 
-  // --base-shadow-width: 2px;
-  // --base-shadow-blur-coefficient: 2.5;
   --base-shadow-blur: calc(var(--base-shadow-width) * var(--base-shadow-blur-coefficient));
   --nmorph-wrapper-padding: calc(var(--base-shadow-width) * 1.5);
 }
