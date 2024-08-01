@@ -68,7 +68,7 @@ const cellHeight = computed(() => `${props.stepHeight}px`);
 
 <template>
   <div :class="modifiers">
-    <NmorphScroll v-model="coords" @on-scroll-end="setValueToCenter">
+    <NmorphScroll v-model="coords" height="140px" @on-scroll-end="setValueToCenter">
       <div
         v-for="timeVal in transformedValues"
         :key="timeVal"
@@ -96,8 +96,6 @@ const cellHeight = computed(() => `${props.stepHeight}px`);
 
   .nmorph-scroll {
     --padding-right: 8px;
-
-    height: 140px;
   }
 
   .nmorph-time-roller__value {

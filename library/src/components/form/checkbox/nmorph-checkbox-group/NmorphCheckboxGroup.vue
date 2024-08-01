@@ -20,7 +20,7 @@ interface INmorphProps extends INmorphCommonInputProps {
 const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: () => [],
   options: () => [],
-  styleType: 'checkbox-style',
+  styleType: 'checkbox',
   direction: 'row',
 });
 

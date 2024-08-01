@@ -34,12 +34,7 @@ const openHandler = () => {
       </NmorphCollapseItem>
     </NmorphCollapse>
   </div>
-  <NmorphCheckbox
-    v-model="open"
-    style-type="button-style"
-    size="small"
-    id="open"
-  >
+  <NmorphCheckbox v-model="open" style-type="button" size="small" id="open">
     <template #label>
       <NmorphIcon>
         <Logo />

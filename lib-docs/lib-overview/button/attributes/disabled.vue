@@ -18,16 +18,18 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-disabled">
+  <div id="content-disabled">
     <attribute
       header="Disabled"
       :subtitle="$t('overview.button.disabled.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphButton disabled>Disabled</NmorphButton>
-        <NmorphButton disabled height="thin">Disabled thin</NmorphButton>
-        <NmorphButton disabled loading />
+        <div class="button-disabled-overview">
+          <NmorphButton disabled>Disabled</NmorphButton>
+          <NmorphButton disabled height="thin">Disabled thin</NmorphButton>
+          <NmorphButton disabled loading />
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -43,7 +45,9 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.nmorph-button {
-  margin: 0 8px;
+.button-disabled-overview {
+  .nmorph-button {
+    margin: 0 8px;
+  }
 }
 </style>

@@ -19,15 +19,17 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-style-type">
+  <div id="content-style-type">
     <attribute
       header="Style type"
       :subtitle="$t('overview.button.styleType.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphButton style-type="default">Default</NmorphButton>
-        <NmorphButton style-type="transparent">Transparent</NmorphButton>
+        <div class="button-type-overview">
+          <NmorphButton style-type="default">Default</NmorphButton>
+          <NmorphButton style-type="transparent">Transparent</NmorphButton>
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -43,7 +45,9 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.nmorph-button {
-  margin: 0 8px;
+.button-type-overview {
+  .nmorph-button {
+    margin: 0 8px;
+  }
 }
 </style>

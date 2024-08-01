@@ -402,3 +402,9 @@ export interface INmorphInstance {
   setTheme: (theme: string) => void;
   currentTheme: Readonly<Ref<string>>;
 }
+
+export interface INmorphA11yProps {
+  role?: string;
+  ariaLabel?: string;
+  ariaOrientation?: string;
+}

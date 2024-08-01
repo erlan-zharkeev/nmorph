@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<INmorphCheckboxOption>(), {
   disabled: false,
   modelValue: false,
   label: '',
-  styleType: 'checkbox-style',
+  design: 'checkbox',
 });
 
 interface INmorphEmit {
@@ -53,14 +53,14 @@ const handleChange = () => {
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-checkbox': [`${checked.value && 'checked'}`, `${props.disabled && 'disabled'}`, props.styleType],
+    'nmorph-checkbox': [`${checked.value && 'checked'}`, `${props.disabled && 'disabled'}`, props.design],
   })
 );
 </script>
 
 <template>
   <label :class="modifiers">
-    <div v-if="props.styleType === 'checkbox-style'" class="nmorph-checkbox__content">
+    <div v-if="props.design === 'checkbox'" class="nmorph-checkbox__content">
       <div class="nmorph-checkbox__input-wrapper">
         <input
           ref="inputDOMRef"
@@ -80,7 +80,7 @@ const modifiers = computed(() =>
         <slot />
       </div>
     </div>
-    <div v-if="props.styleType === 'button-style'" class="nmorph-checkbox__content">
+    <div v-if="props.design === 'button'" class="nmorph-checkbox__content">
       <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked" @change="handleChange" />
       <div v-if="props.label" class="nmorph-checkbox__fake">
         <span> {{ props.label }} </span>
@@ -145,7 +145,7 @@ const modifiers = computed(() =>
   }
 }
 
-.nmorph-checkbox--button-style {
+.nmorph-checkbox--button {
   --size: var(--thick-component);
 
   .nmorph-checkbox__fake {

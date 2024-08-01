@@ -22,7 +22,7 @@ interface INmorphProps extends INmorphRadioOption {
 const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   label: '',
-  styleType: 'button-style',
+  styleType: 'button',
 });
 
 const changeHandler = () => {
@@ -68,7 +68,7 @@ onMounted(() => {
       </span>
       <slot v-else name="label" />
     </div>
-    <div v-if="props.styleType === 'button-style'" class="nmorph-radio__content">
+    <div v-if="props.styleType === 'button'" class="nmorph-radio__content">
       <input
         ref="inputDOMRef"
         type="radio"
@@ -140,7 +140,7 @@ onMounted(() => {
   }
 }
 
-.nmorph-radio--button-style {
+.nmorph-radio--button {
   --size: var(--default-thickness-component);
 
   .nmorph-radio__fake {

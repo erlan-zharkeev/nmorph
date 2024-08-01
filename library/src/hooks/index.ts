@@ -5,3 +5,4 @@ export * from './useEventManager';
 export * from './useNmorphTheme';
 export * from './useNmorphTranslation';
 export * from './useNmorphNotification';
+export * from './useA11yProps';

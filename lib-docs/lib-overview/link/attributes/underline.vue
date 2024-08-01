@@ -19,15 +19,17 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-underline">
+  <div id="content-underline">
     <attribute
       header="Underline"
       :subtitle="$t('overview.link.underline.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphLink>Without underline</NmorphLink>
-        <NmorphLink underline>Underlined</NmorphLink>
+        <div class="link-underline-overview">
+          <NmorphLink>Without underline</NmorphLink>
+          <NmorphLink underline>Underlined</NmorphLink>
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -43,7 +45,9 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.nmorph-link {
-  margin: 0 8px;
+.link-underline-overview {
+  .nmorph-link {
+    margin: 0 8px;
+  }
 }
 </style>

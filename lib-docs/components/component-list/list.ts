@@ -1,7 +1,7 @@
 export default [
   {
     name: "basic",
-    components: ["NmorphButton", "NmorphIcon", "NmorphLink"],
+    components: ["NmorphButton", "NmorphIcon", "NmorphLink", "NmorphScroll"],
   },
   // {
   //   name: "basic",

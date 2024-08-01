@@ -19,7 +19,7 @@ interface INmorphProps extends INmorphCommonInputProps {
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: '',
-  styleType: 'button-style',
+  styleType: 'button',
   options: () => [],
   direction: 'row',
   label: '',

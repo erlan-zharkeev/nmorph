@@ -45,6 +45,13 @@ watch(thumbValue, () => {
   emit('update:modelValue', thumbValue.value);
 });
 
+watch(
+  () => props.modelValue,
+  (updatedValue) => {
+    thumbValue.value = updatedValue;
+  }
+);
+
 const thumbXPercentPosition = computed(() => {
   const resizeRecomputeTrigger = windowWidth.value - windowWidth.value;
   const range = props.max - props.min + resizeRecomputeTrigger;
@@ -61,23 +68,30 @@ const thumbXPercentPosition = computed(() => {
   };
 });
 
-const windowWidth = ref(window.innerWidth);
-const windowHeight = ref(window.innerHeight);
+const windowWidth = ref(0);
+const windowHeight = ref(0);
 const resizeWindowHandler = () => {
   windowWidth.value = window.innerWidth;
   windowHeight.value = window.innerHeight;
 };
 
 onMounted(() => {
-  window.addEventListener('resize', resizeWindowHandler);
+  if (typeof window !== 'undefined') {
+    windowWidth.value = window.innerWidth;
+    windowHeight.value = window.innerHeight;
+    window.addEventListener('resize', resizeWindowHandler);
+  }
 });
 
 onUnmounted(() => {
-  document.removeEventListener('mouseup', mouseUp);
-  window.removeEventListener('resize', resizeWindowHandler);
+  if (typeof window !== 'undefined') {
+    document.removeEventListener('mouseup', mouseUp);
+    window.removeEventListener('resize', resizeWindowHandler);
+  }
 });
 
 const mouseMove = (event: MouseEvent) => {
+  transitionEnabled.value = false;
   const rect = sliderContainer.value?.getBoundingClientRect();
   let percent = 0;
   if (rect) {
@@ -93,6 +107,7 @@ const mouseMove = (event: MouseEvent) => {
 const mouseUp = () => {
   document.removeEventListener('mousemove', mouseMove);
   document.removeEventListener('mouseup', mouseUp);
+  transitionEnabled.value = true;
 };
 
 const mousedownHandler = () => {
@@ -109,6 +124,13 @@ const handleMouseEnter = () => {
 const handleMouseLeave = () => {
   if (props.showTooltip) tooltipVisible.value = false;
 };
+
+const nativeInputHandler = (event: Event): void => {
+  const target = event.target as HTMLInputElement;
+  thumbValue.value = Number(target.value);
+};
+
+const transitionEnabled = ref(true);
 </script>
 
 <template>
@@ -127,9 +149,19 @@ const handleMouseLeave = () => {
             ref="sliderFirst"
             class="nmorph-slider__thumb"
             :style="{ left: thumbXPercentPosition.thumb }"
+            :class="{ 'nmorph-slider__thumb--smooth': transitionEnabled }"
             @mouseenter="handleMouseEnter"
             @mouseleave="handleMouseLeave"
             @mousedown="mousedownHandler"
+          />
+          <input
+            class="nmorph-slide__native-input"
+            type="range"
+            :value="thumbValue"
+            :min="props.min"
+            :max="props.max"
+            :step="props.step"
+            @input="nativeInputHandler"
           />
         </div>
       </div>
@@ -139,6 +171,13 @@ const handleMouseLeave = () => {
 
 <style lang="scss">
 .nmorph-slider {
+  @mixin thumb {
+    width: v-bind(thumbWidthCss);
+    height: 20px;
+  }
+
+  position: relative;
+  --slider-height: 24px;
   --value-fixed-container-width: 18px;
 
   cursor: pointer;
@@ -163,17 +202,21 @@ const handleMouseLeave = () => {
     display: flex;
     align-items: center;
     width: 100%;
-    height: 24px;
+    height: var(--slider-height);
   }
 
   .nmorph-slider__thumb {
     position: absolute;
-    width: v-bind(thumbWidthCss);
-    height: 20px;
+    z-index: 2;
     border: 0;
     border-radius: var(--default-border-radius);
 
+    @include thumb;
     @include nmorph-outset;
+  }
+
+  .nmorph-slider__thumb--smooth {
+    transition: left ease-in-out 0.2s;
   }
 
   .nmorph-slider__value {
@@ -181,6 +224,32 @@ const handleMouseLeave = () => {
     justify-content: center;
     width: var(--value-fixed-container-width);
     margin-left: var(--indentation-04);
+  }
+
+  .nmorph-slide__native-input {
+    @include absolute-center;
+
+    width: 100%;
+    background: transparent;
+    appearance: none;
+  }
+
+  .nmorph-slide__native-input::-webkit-slider-runnable-track {
+    height: var(--slider-height);
+    background: transparent;
+  }
+
+  .nmorph-slide__native-input::-moz-range-track {
+    height: var(--slider-height);
+    background: transparent;
+  }
+
+  .nmorph-slide__native-input::-webkit-slider-thumb {
+    visibility: hidden;
+  }
+
+  .nmorph-slide__native-input::-moz-range-thumb {
+    visibility: hidden;
   }
 }
 

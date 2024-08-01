@@ -50,10 +50,6 @@ const emit = defineEmits<INmorphEmit>();
   @include overlay;
 }
 
-.nmorph-overlay--outside-click {
-  cursor: pointer;
-}
-
 .nmorph-overlay--transparent {
   background: transparent;
 }

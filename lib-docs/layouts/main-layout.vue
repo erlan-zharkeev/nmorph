@@ -26,7 +26,7 @@ import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
 
 <style lang="scss">
 .docs-main-layout {
-  padding: 10px 8px;
+  padding: 10px 24px 10px 8px;
   display: grid;
   grid-gap: 8px;
   grid-template-columns: 1fr 4fr;
@@ -36,6 +36,7 @@ import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
   border-radius: 4px;
   padding: 8px;
 }
+
 .docs-main-layout__scroll-container {
   display: flex;
   justify-content: space-between;

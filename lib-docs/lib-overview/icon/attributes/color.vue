@@ -21,20 +21,22 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-color">
+  <div id="content-color">
     <attribute
       header="Color"
       :subtitle="$t('overview.icon.color.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphIcon
-          name="add-location"
-          color="var(--nmorph-accent-color)"
-          size="large"
-        />
-        <NmorphIcon name="avatar" color="#694295" size="large" />
-        <NmorphIcon name="archive" color="hsl(148, 60%, 39%)" size="large" />
+        <div class="icon-color-overview">
+          <NmorphIcon
+            name="add-location"
+            color="var(--nmorph-accent-color)"
+            size="large"
+          />
+          <NmorphIcon name="avatar" color="#694295" size="large" />
+          <NmorphIcon name="archive" color="hsl(148, 60%, 39%)" size="large" />
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -49,11 +51,12 @@ const code = [scriptData, templateData, cssData];
   </div>
 </template>
 
-<style lang="scss" scoped>
-.nmorph-icon {
-  margin: 0 8px;
-}
-::v-deep(.docs-component__overview) {
-  align-items: center;
+<style lang="scss">
+.icon-color-overview {
+  display: flex;
+
+  .nmorph-icon {
+    margin: 0 8px;
+  }
 }
 </style>

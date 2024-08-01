@@ -1,2 +1,2 @@
-export * from "./capitalize-first-char";
 export * from "./component-path-by-name";
+export * from "./a11yPropsApi";

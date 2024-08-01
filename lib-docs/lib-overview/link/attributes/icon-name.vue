@@ -19,15 +19,17 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-icon-name">
+  <div id="content-icon-name">
     <attribute
       header="Icon name"
       :subtitle="$t('overview.link.icon-name.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphLink icon-name="edit">Edit</NmorphLink>
-        <NmorphLink icon-name="eye" underline text="Check" />
+        <div class="link-icon-name-overview">
+          <NmorphLink icon-name="edit">Edit</NmorphLink>
+          <NmorphLink icon-name="eye" underline text="Check" />
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -43,7 +45,9 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.nmorph-link {
-  margin: 0 8px;
+.link-icon-name-overview {
+  .nmorph-link {
+    margin: 0 8px;
+  }
 }
 </style>

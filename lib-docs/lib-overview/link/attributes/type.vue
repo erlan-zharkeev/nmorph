@@ -21,17 +21,19 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-type">
+  <div id="content-type">
     <attribute
       header="Type"
       :subtitle="$t('overview.link.type.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphLink type="accent">Accent</NmorphLink>
-        <NmorphLink type="success">Success</NmorphLink>
-        <NmorphLink type="warning">Warning</NmorphLink>
-        <NmorphLink type="error">Error</NmorphLink>
+        <div class="link-type-overview">
+          <NmorphLink type="accent">Accent</NmorphLink>
+          <NmorphLink type="success">Success</NmorphLink>
+          <NmorphLink type="warning">Warning</NmorphLink>
+          <NmorphLink type="error">Error</NmorphLink>
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -47,7 +49,9 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.nmorph-link {
-  margin: 0 8px;
+.link-type-overview {
+  .nmorph-link {
+    margin: 0 8px;
+  }
 }
 </style>

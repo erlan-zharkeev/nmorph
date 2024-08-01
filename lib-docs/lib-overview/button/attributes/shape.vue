@@ -26,7 +26,7 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-shape">
+  <div id="content-shape">
     <attribute
       name="button.shape"
       header="Shape"
@@ -34,14 +34,16 @@ const code = [scriptData, templateData, cssData];
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphButton>Default</NmorphButton>
-        <NmorphButton shape="circle" class="custom-circle-button"
-          >Circle</NmorphButton
-        >
-        <NmorphButton shape="round">Round</NmorphButton>
-        <NmorphButton shape="square" class="custom-square-button"
-          >Square</NmorphButton
-        >
+        <div class="button-shape-overview">
+          <NmorphButton>Default</NmorphButton>
+          <NmorphButton shape="circle" class="custom-circle-button"
+            >Circle</NmorphButton
+          >
+          <NmorphButton shape="round">Round</NmorphButton>
+          <NmorphButton shape="square" class="custom-square-button"
+            >Square</NmorphButton
+          >
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -57,15 +59,17 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.nmorph-button {
-  margin: 0 8px;
-}
+.button-shape-overview {
+  .nmorph-button {
+    margin: 0 8px;
+  }
 
-.custom-circle-button {
-  --height: 50px;
-}
+  .custom-circle-button {
+    --height: 50px;
+  }
 
-.custom-square-button {
-  --height: 70px;
+  .custom-square-button {
+    --height: 70px;
+  }
 }
 </style>

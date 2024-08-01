@@ -65,7 +65,7 @@ const updateMenuHandler = () => {
         class="docs-top-bar__burger"
         :model-value="props.isMenuOpen"
         @update:model-value="updateMenuHandler"
-        style-type="button-style"
+        design="button"
         label="menu"
       >
         <template name="label">
@@ -93,7 +93,7 @@ const updateMenuHandler = () => {
       >
         <NmorphCheckbox
           v-model="open"
-          style-type="button-style"
+          design="button"
           size="small"
           class="docs-top-bar__translate-checkbox"
         >

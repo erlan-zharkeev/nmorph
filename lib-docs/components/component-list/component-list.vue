@@ -40,6 +40,7 @@ const isRouteExist = (name: string) =>
 .docs-component-list__element-title {
   text-transform: capitalize;
 }
+
 .docs-component-list__element-name {
   padding-left: 16px;
   padding: 4px 4px 4px 16px;
@@ -47,7 +48,6 @@ const isRouteExist = (name: string) =>
   a {
     &.router-link-exact-active {
       font-weight: 800;
-      padding-left: 8px;
     }
   }
 }

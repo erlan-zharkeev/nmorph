@@ -1,26 +1,33 @@
 <script setup lang="ts">
-import { NmorphDomElementType } from '@/types';
+import { INmorphA11yProps, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { NmorphCoordsType, NmorphOverflowProp, NmorphScrollBehavior } from '@/components';
+import { useA11yProps } from '@/main';
 
-interface INmorphProps {
+interface INmorphProps extends INmorphA11yProps {
+  height?: string;
+  maxHeight?: string;
   modelValue?: NmorphCoordsType;
   scrollYProp?: keyof typeof NmorphOverflowProp;
   scrollXProp?: keyof typeof NmorphOverflowProp;
-  scrollEndDelay?: number;
   cssScrollBehavior?: keyof typeof NmorphScrollBehavior;
+  scrollEndDelay?: number;
+  updateOnlyOnScrollEnd?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
+  height: 'auto',
+  maxHeight: 'none',
   modelValue: () => ({
     x: 0,
     y: 0,
   }),
   scrollYProp: 'auto',
   scrollXProp: 'auto',
-  scrollEndDelay: 50,
   cssScrollBehavior: 'smooth',
+  scrollEndDelay: 50,
+  updateOnlyOnScrollEnd: false,
 });
 
 const overflowY = computed(() => props.scrollYProp);
@@ -39,6 +46,12 @@ interface INmorphEmit {
 
 const emit = defineEmits<INmorphEmit>();
 
+const updateValue = () => {
+  const x = Math.trunc(scrollDOMContainer.value.scrollLeft);
+  const y = Math.trunc(scrollDOMContainer.value.scrollTop);
+  emit('update:modelValue', { x, y });
+};
+
 const handleScrollEnd = () => {
   emit('on-scroll-end');
 };
@@ -48,13 +61,14 @@ const scrollHandler = (event: Event) => {
 
   if (!scrollDOMContainer.value) return;
 
-  const x = scrollDOMContainer.value.scrollLeft;
-  const y = scrollDOMContainer.value.scrollTop;
-  emit('update:modelValue', { x, y });
+  if (!props.updateOnlyOnScrollEnd) updateValue();
+
   if (scrollEndTimeout !== undefined) {
     clearTimeout(scrollEndTimeout);
   }
+
   scrollEndTimeout = setTimeout(() => {
+    if (props.updateOnlyOnScrollEnd) updateValue();
     handleScrollEnd();
   }, props.scrollEndDelay);
 };
@@ -73,7 +87,7 @@ const modifiers = computed(() =>
 
 const scrollDOMContainer = ref<NmorphDomElementType>(null);
 
-const scrollTo = (coords: NmorphCoordsType) => {
+const moveTo = (coords: NmorphCoordsType) => {
   const { x, y } = coords;
   scrollDOMContainer.value?.scrollTo({
     left: x,
@@ -83,33 +97,45 @@ const scrollTo = (coords: NmorphCoordsType) => {
 };
 
 onMounted(() => {
-  scrollTo(props.modelValue);
+  moveTo(props.modelValue);
 });
 
 watch(
   () => props.modelValue,
   (newCoords) => {
-    scrollTo(newCoords);
+    moveTo(newCoords);
   },
   { deep: true, immediate: true }
 );
 
 const scrollBehavior = computed(() => props.cssScrollBehavior);
+const scrollHeight = computed(() => props.height);
+const maxHeight = computed(() => props.maxHeight);
+
+const a11yProps = useA11yProps(props);
+
+defineExpose({ scrollDOMContainer, moveTo });
 </script>
 
 <template>
-  <div ref="scrollDOMContainer" :class="modifiers" @wheel.passive="scrollHandler">
+  <div ref="scrollDOMContainer" :class="modifiers" v-bind="a11yProps" @scroll="scrollHandler">
     <slot />
   </div>
 </template>
 
 <style lang="scss">
 .nmorph-scroll {
+  --height: v-bind(scrollHeight);
+  --max-height: v-bind(maxHeight);
+
   --scrollbar-width: 8px;
   --scrollbar-height: 8px;
+
   --padding-right: var(--scrollbar-width);
   --padding-bottom: var(--scrollbar-height);
 
+  height: var(--height);
+  max-height: var(--max-height);
   padding-right: v-bind(paddingRight);
   padding-bottom: v-bind(paddingBottom);
   overflow: v-bind(overflowX) v-bind(overflowY);

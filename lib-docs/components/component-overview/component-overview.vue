@@ -2,6 +2,7 @@
 import button from "~/lib-overview/button";
 import icon from "~/lib-overview/icon";
 import link from "~/lib-overview/link";
+import scroll from "~/lib-overview/scroll";
 
 import { capitalizeFirstChar } from "@nmorph/nmorph-ui-kit";
 
@@ -14,6 +15,7 @@ const componentsMap: Record<string, unknown[]> = {
   button,
   icon,
   link,
+  scroll
 };
 </script>
 

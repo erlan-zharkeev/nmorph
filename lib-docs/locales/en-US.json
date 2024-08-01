@@ -116,6 +116,39 @@
       "variables": {
         "link-color": "Link color"
       }
+    },
+    "scroll": {
+      "height": {
+        "subtitle": "Use *height* property to set the height of the container, without setting the height, the scroll will not be activated"
+      },
+      "max-height": {
+        "subtitle": "The scroll is displayed only when the element height exceeds the max height."
+      },
+      "value": {
+        "subtitle": "Bind and update model value to change scroll position"
+      },
+      "horizontal-scroll": {
+        "subtitle": "If the width of the element exceeds the width of the scrollbar, a horizontal scrollbar appears"
+      },
+      "api": {
+        "height": "Sets the scroll container's height, supporting both static and dynamic values.",
+        "max-height": "Specifies the maximum height of the scroll container, limiting its vertical size.",
+        "model-value": "Holds the current scroll position, used for two-way binding and scroll control.",
+        "scroll-y-prop": "Determines the vertical scroll behavior, such as auto or hidden.",
+        "scroll-x-prop": "Sets the horizontal scroll behavior, controlling the visibility and functionality of the horizontal scroll.",
+        "css-scroll-behavior": "Defines the scroll's animation behavior, such as smooth for a gradual scrolling effect.",
+        "update-only-on-scroll-end": "When set to true, updates the model-value only after scrolling has ended.",
+        "role": "role of view",
+        "aria-label": "aria-label of view",
+        "aria-orientation": "aria-orientation of view"
+      },
+      "slot": {
+        "default": "Scroll content"
+      },
+      "variables": {
+        "width": "Scroll width",
+        "height": "Scroll height"
+      }
     }
   }
 }

@@ -17,16 +17,18 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-width-height">
+  <div id="content-width-height">
     <attribute
       header="Width/Height"
       :subtitle="$t('overview.icon.width-height.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphIcon name="loader" width="8%" height="8%" />
-        <NmorphIcon name="loader" width="23px" height="23px" />
-        <NmorphIcon name="loader" width="12px" height="12px" />
+        <div class="icon-width-height-overview">
+          <NmorphIcon name="loader" width="8%" height="8%" />
+          <NmorphIcon name="loader" width="23px" height="23px" />
+          <NmorphIcon name="loader" width="12px" height="12px" />
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -41,11 +43,13 @@ const code = [scriptData, templateData, cssData];
   </div>
 </template>
 
-<style lang="scss" scoped>
-.nmorph-icon {
-  margin: 0 8px;
-}
-::v-deep(.docs-component__overview) {
+<style lang="scss">
+.icon-width-height-overview {
+  display: flex;
   align-items: center;
+
+  .nmorph-icon {
+    margin: 0 8px;
+  }
 }
 </style>

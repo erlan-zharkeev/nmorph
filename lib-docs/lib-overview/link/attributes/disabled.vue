@@ -22,18 +22,19 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-disabled">
+  <div id="content-disabled">
     <attribute
       header="Disabled"
       :subtitle="$t('overview.link.disabled.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphLink disabled type="accent">Accent</NmorphLink>
-        <NmorphLink disabled type="success">Success</NmorphLink>
-        <NmorphLink disabled type="warning">Warning</NmorphLink>
-        <NmorphLink disabled type="error">Error</NmorphLink>
-        <NmorphLink disabled underline>Underlined</NmorphLink>
+        <div class="link-disabled-overview">
+          <NmorphLink disabled type="accent">Accent</NmorphLink>
+          <NmorphLink disabled type="success">Success</NmorphLink>
+          <NmorphLink disabled type="warning">Warning</NmorphLink>
+          <NmorphLink disabled type="error">Error</NmorphLink>
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -49,7 +50,9 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.nmorph-link {
-  margin: 0 8px;
+.link-disabled-overview {
+  .nmorph-link {
+    margin: 0 8px;
+  }
 }
 </style>

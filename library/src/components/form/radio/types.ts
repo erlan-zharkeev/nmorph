@@ -8,7 +8,7 @@ export interface INmorphRadioOption {
 
 export enum NmorphRadioStyleType {
   'radio-style' = 'radio-style',
-  'button-style' = 'button-style',
+  'button' = 'button',
 }
 
 export type NmorphRadioGroupSelectedValueInjectionType = Ref<string>;

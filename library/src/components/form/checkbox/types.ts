@@ -1,16 +1,16 @@
 import { Ref } from 'vue';
 
 export interface INmorphCheckboxOption {
-  id: string;
+  id?: string;
   disabled?: boolean;
   modelValue?: boolean;
   label?: string;
-  styleType?: keyof typeof NmorphCheckboxStyleType;
+  design?: keyof typeof NmorphCheckboxStyleType;
 }
 
 export enum NmorphCheckboxStyleType {
-  'checkbox-style' = 'checkbox-style',
-  'button-style' = 'button-style',
+  checkbox = 'checkbox',
+  button = 'button',
 }
 
 export type NmorphCheckboxGroupSelectedValueInjectionType = Ref<string[]>;

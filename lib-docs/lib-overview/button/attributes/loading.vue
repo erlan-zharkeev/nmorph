@@ -21,15 +21,17 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-loading">
+  <div id="content-loading">
     <attribute
       header="Loading"
       :subtitle="$t('overview.button.loading.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphButton style-type="default" loading />
-        <NmorphButton style-type="transparent" loading />
+        <div class="button-loading-overview">
+          <NmorphButton style-type="default" loading />
+          <NmorphButton style-type="transparent" loading />
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -45,7 +47,9 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.nmorph-button {
-  margin: 0 8px;
+.button-loading-overview {
+  .nmorph-button {
+    margin: 0 8px;
+  }
 }
 </style>

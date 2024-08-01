@@ -17,16 +17,18 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-icon" id="content-size">
+  <div id="content-size">
     <attribute
       header="Size"
       :subtitle="$t('overview.icon.size.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphIcon size="large" name="eye" />
-        <NmorphIcon size="medium" name="eye" />
-        <NmorphIcon size="small" name="eye" />
+        <div class="icon-size-overview">
+          <NmorphIcon size="large" name="eye" />
+          <NmorphIcon size="medium" name="eye" />
+          <NmorphIcon size="small" name="eye" />
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -41,12 +43,13 @@ const code = [scriptData, templateData, cssData];
   </div>
 </template>
 
-<style lang="scss" scoped>
-.nmorph-icon {
-  margin: 0 8px;
-}
-
-::v-deep(.docs-component__overview) {
+<style lang="scss">
+.icon-size-overview {
+  display: flex;
   align-items: center;
+
+  .nmorph-icon {
+    margin: 0 8px;
+  }
 }
 </style>

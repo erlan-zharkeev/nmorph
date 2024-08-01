@@ -17,16 +17,18 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-height">
+  <div id="content-height">
     <attribute
       header="Height"
       :subtitle="$t('overview.button.styleType.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphButton height="thick">Thick</NmorphButton>
-        <NmorphButton height="default">Default</NmorphButton>
-        <NmorphButton height="thin">Thin</NmorphButton>
+        <div class="button-height-overview">
+          <NmorphButton height="thick">Thick</NmorphButton>
+          <NmorphButton height="default">Default</NmorphButton>
+          <NmorphButton height="thin">Thin</NmorphButton>
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -42,7 +44,9 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.nmorph-button {
-  margin: 0 8px;
+.button-height-overview {
+  .nmorph-button {
+    margin: 0 8px;
+  }
 }
 </style>

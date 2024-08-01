@@ -25,33 +25,46 @@
     <NmorphButton class="btn" @click="addNotification"
       >Add notification</NmorphButton
     >
-    <!-- <NmorphButton
-      style-type="default"
-      ripple
-      text="I am ripple"
-      accentBgOnHover
-    /> -->
-    <!-- <NmorphIcon name="eye" color="var(--nmorph-accent-color)" />
-    <NmorphCheckbox
-      class="docs-top-bar__burger"
-      v-model="n"
-      style-type="button-style"
-      label="menu"
-    /> -->
+    <NmorphButton class="btn" @click="openModal">Open modal</NmorphButton>
     <div class="element">
       <NmorphLink disabled type="accent">Accent</NmorphLink>
       <NmorphLink disabled type="success">Success</NmorphLink>
       <NmorphLink disabled type="warning">Warning</NmorphLink>
       <NmorphLink disabled type="error">Error</NmorphLink>
       <NmorphLink disabled underline>Underlined</NmorphLink>
-
-      <!-- <NmorphIcon
-        class="nmorph-link__icon"
-        name="eye"
-        width="10px"
-        height="10px"
-      /> -->
     </div>
+    <div class="slider">
+      <div class="docs-top-bar__left">
+      <NmorphCheckbox
+        class="docs-top-bar__burger"
+        style-type="button"
+        label="menu"
+      >
+        <template name="label">
+          <NmorphIcon name="burger" />
+        </template>
+      </NmorphCheckbox>
+      <NmorphSlider
+        :show-tooltip="true"
+        :model-value="coords.y"
+        :min="0"
+        :max="560"
+        :step="20"
+        @update:model-value="updateSliderHandler"
+      />
+      <div class="slider__value">{{ coords.y }}px</div>
+    </div>
+    <NmorphScroll
+      height="300px"
+      class="docs-scroll__scroll"
+      update-only-on-end
+      v-model="coords"
+      ref="scroll"
+    >
+      <div class="docs-scroll__box" v-for="i in elements" :key="i">
+        {{ i }}
+      </div>
+    </NmorphScroll>
   </div>
   <NmorphNotificationProvider :notifications="notifications" :quantity="3" />
 </template>
@@ -65,9 +78,28 @@ import {
   NmorphButton,
   NmorphTextInput,
   NmorphIcon,
+  NmorphCheckbox
 } from "./../../../library/src/components";
 import NmorphNotificationProvider from "./../../../library/src/components/providers/nmorph-notification-provider/NmorphNotificationProvider.vue";
 import { useNmorphNotification } from "./../../../library/src/hooks";
+
+interface ICoords {
+  x: number;
+  y: number;
+}
+
+const elements = ref(30);
+const coords = ref<ICoords>({ x: 0, y: 0 });
+
+const updateSliderHandler = (value: number) => {
+  if (scroll.value) scroll.value.moveTo({ x: 0, y: value });
+};
+
+const updateScrollHandler = (newValue: ICoords) => {
+  coords.value = newValue;
+};
+
+const scroll = ref(null);
 
 const searchQuery = ref("");
 
@@ -84,7 +116,11 @@ const addNotification = () => {
   });
 };
 
-const n = ref(false);
+const showDialog = ref(false);
+
+const openModal = () => {
+  showDialog.value = true;
+};
 
 const value = ref("");
 const variants = ref([]);
@@ -105,28 +141,21 @@ const getVariants = async () => {
       });
     });
 };
-
-// const variants = [
-//   { value: "vue", link: "https://github.com/vuejs/vue" },
-//   { value: "element", link: "https://github.com/ElemeFE/element" },
-//   { value: "cooking", link: "https://github.com/ElemeFE/cooking" },
-//   { value: "mint-ui", link: "https://github.com/ElemeFE/mint-ui" },
-//   { value: "vuex", link: "https://github.com/vuejs/vuex" },
-//   { value: "vue-router", link: "https://github.com/vuejs/vue-router" },
-//   { value: "babel", link: "https://github.com/babel/babel" },
-// ];
 </script>
 
 <style lang="scss">
 .element {
   margin: 1rem;
 }
+
 .btn {
-  margin-top: 40px;
+  margin: 40px;
 }
+
 .nmorph-divider {
   margin: 0 8px;
 }
+
 .wrapper {
   margin: 50px;
 }
@@ -134,9 +163,11 @@ const getVariants = async () => {
 .nmorph-alert {
   margin-right: 8px;
 }
+
 .nmorph-link {
   margin-right: 8px;
 }
+
 .line {
   display: flex;
   .ml-2 {
@@ -149,8 +180,31 @@ img {
   width: 100%;
   height: 100%;
 }
+
 .additional-class {
   margin-top: 24px;
   margin-bottom: 24px;
+}
+
+.slider {
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.slider__value {
+  padding: 0 24px 0 12px;
+  font-weight: 600;
+}
+
+.docs-scroll__box {
+  background: var(--nmorph-accent-color);
+  margin-bottom: 8px;
+  color: var(--nmorph-focus-text-color);
+}
+
+.docs-scroll__scroll {
+  text-align: center;
+  padding-right: 8px;
 }
 </style>

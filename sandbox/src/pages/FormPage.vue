@@ -29,7 +29,7 @@
             :key="option.id"
             :label="option.label"
             :disabled="option.disabled"
-            style-type="button-style"
+            style-type="button"
           />
         </NmorphCheckboxGroup>
       </NmorphFormItem>

@@ -23,21 +23,23 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div class="docs-button" id="content-ripple">
+  <div id="content-ripple">
     <attribute
       header="Ripple"
       :subtitle="$t('overview.button.ripple.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <NmorphButton style-type="default" ripple text="I am ripple" />
-        <NmorphButton
-          style-type="default"
-          ripple
-          accent-bg-on-hover
-          text="I am ripple with hover bg"
-        />
-        <NmorphButton :ripple="false" text="I am not ripple" />
+        <div class="button-ripple-overview">
+          <NmorphButton style-type="default" ripple text="I am ripple" />
+          <NmorphButton
+            style-type="default"
+            ripple
+            accent-bg-on-hover
+            text="I am ripple with hover bg"
+          />
+          <NmorphButton :ripple="false" text="I am not ripple" />
+        </div>
       </template>
       <template #code>
         <code-example v-if="templateData" lang="html">{{
@@ -53,7 +55,9 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.nmorph-button {
-  margin: 0 8px;
+.button-ripple-overview {
+  .nmorph-button {
+    margin: 0 8px;
+  }
 }
 </style>
