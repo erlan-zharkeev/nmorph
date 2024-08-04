@@ -21,7 +21,7 @@ build-docs:
   only:
     - dev
 
-deploy-docs:
+pages:
   stage: deploy
   script:
     - mv lib-docs/.output/public public/
