@@ -13,14 +13,14 @@ import {
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue: string[];
   options?: INmorphCheckboxOption[];
-  styleType?: keyof typeof NmorphCheckboxStyleType;
+  design?: keyof typeof NmorphCheckboxStyleType;
   direction?: keyof typeof NmorphComponentDirection;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: () => [],
   options: () => [],
-  styleType: 'checkbox',
+  design: 'checkbox',
   direction: 'row',
 });
 
@@ -41,7 +41,7 @@ const changeHandler = (id: string) => {
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-checkbox-group': [props.styleType, props.direction],
+    'nmorph-checkbox-group': [props.design, props.direction],
   })
 );
 
@@ -60,7 +60,7 @@ provide<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>('change-chec
           :label="option.label"
           :model-value="option.modelValue"
           :disabled="option.disabled"
-          :style-type="props.styleType"
+          :design="props.design"
         />
         <slot />
       </div>

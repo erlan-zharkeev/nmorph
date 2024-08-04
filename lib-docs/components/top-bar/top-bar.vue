@@ -6,22 +6,21 @@ import {
   NmorphDropdown,
   NmorphCheckbox,
   NmorphSwitch,
-  useNmorphTheme,
-  type INmorphInstance,
+  useNmorph,
 } from "@nmorph/nmorph-ui-kit";
 import MoonIcon from "~/assets/images/moon.svg";
 import SunIcon from "~/assets/images/sun.svg";
 import TranslateIcon from "~/assets/images/translate.svg";
 import GitlabIcon from "~/assets/images/gitlab.svg";
 
-const nmorphOptions = {};
+const nmorph = useNmorph();
+
 const currentTheme = ref<string>("dark");
 const setTheme = ref<(theme: any) => any>(() => {});
 
 onMounted(() => {
-  const nmorph = useNmorphTheme(nmorphOptions, true) as INmorphInstance;
-  currentTheme.value = nmorph.currentTheme.value;
-  setTheme.value = nmorph.setTheme;
+  currentTheme.value = nmorph.theme.currentTheme.value;
+  setTheme.value = nmorph.theme.setTheme;
 });
 
 interface INmorphProps {
@@ -65,8 +64,8 @@ const updateMenuHandler = () => {
         class="docs-top-bar__burger"
         :model-value="props.isMenuOpen"
         @update:model-value="updateMenuHandler"
-        design="button"
         label="menu"
+        design="button"
       >
         <template name="label">
           <NmorphIcon name="burger" />

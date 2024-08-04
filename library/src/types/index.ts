@@ -345,6 +345,7 @@ export interface INmorphThemeOptions {
 export interface INmorphOptions {
   theme?: INmorphThemeOptions;
   i18n?: INmorphApplyTranslation;
+  components?: string[];
 }
 
 export type NmorphThemeOptionsType = Record<string, INmorphThemeOptions>;
@@ -398,7 +399,7 @@ export interface INmorphApplyTranslation {
   locale?: keyof typeof Locale;
 }
 
-export interface INmorphInstance {
+export interface INmorphThemeInstance {
   setTheme: (theme: string) => void;
   currentTheme: Readonly<Ref<string>>;
 }
@@ -407,4 +408,16 @@ export interface INmorphA11yProps {
   role?: string;
   ariaLabel?: string;
   ariaOrientation?: string;
+}
+
+export interface INmorphDimensions {
+  width: number;
+  height: number;
+}
+
+export interface INmorphInstance {
+  theme: INmorphThemeInstance;
+  browser: {
+    dimensions: Ref<INmorphDimensions>;
+  };
 }

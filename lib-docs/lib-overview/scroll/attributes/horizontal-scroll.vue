@@ -5,7 +5,7 @@ import Attribute from "~/components/attribute/attribute.vue";
 const scriptData = ``;
 const templateData = `
 <NmorphScroll class="scroll" ref="scroll">
-  <div class="scroll__box-item" v-for="i in elements" :key="i">
+  <div class="scroll__box-item" v-for="i in 20" :key="i">
     {{ i }}
   </div>
 </NmorphScroll>
@@ -30,6 +30,7 @@ const cssData = `
   }
 
   .scroll {
+    width: 99%;
     display: flex;
     text-align: center;
   }
@@ -37,11 +38,10 @@ const cssData = `
 </style>
 `;
 const code = [scriptData, templateData, cssData];
-const elements = 20;
 </script>
 
 <template>
-  <div id="content-value">
+  <div id="content-horizontal-scroll">
     <attribute
       header="Horizontal scroll"
       :subtitle="$t('overview.scroll.horizontal-scroll.subtitle')"
@@ -50,7 +50,7 @@ const elements = 20;
       <template #overview>
         <div class="horizontal-scroll-overview">
           <NmorphScroll class="scroll" ref="scroll">
-            <div class="scroll__box-item" v-for="i in elements" :key="i">
+            <div class="scroll__box-item" v-for="i in 20" :key="i">
               {{ i }}
             </div>
           </NmorphScroll>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { inject } from "vue";
 import { NmorphSwitch } from "../../../library/src/components";
+import { useNmorph } from "../../../library/src/providers";
 import { router } from "./../app/providers/router/index";
 
-const { setTheme, currentTheme } = inject("nmorph");
+const nmorph = useNmorph();
 
 const allRoutes = router.getRoutes();
 </script>
@@ -18,8 +18,8 @@ const allRoutes = router.getRoutes();
       >
     </div>
     <NmorphSwitch
-      :model-value="currentTheme"
-      @update:model-value="setTheme"
+      :model-value="nmorph.theme.currentTheme"
+      @update:model-value="nmorph.theme.setTheme"
       active-value="dark"
       inactive-value="light"
     />

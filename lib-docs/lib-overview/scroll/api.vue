@@ -47,6 +47,26 @@ const attributesData = [
     type: "Boolean",
     default: "false",
   },
+  {
+    name: "y-bar-width-in-px",
+    type: "Number",
+    default: "6",
+  },
+  {
+    name: "x-bar-width-in-px",
+    type: "Number",
+    default: "6",
+  },
+  {
+    name: "y-gap-in-px",
+    type: "Number",
+    default: "4",
+  },
+  {
+    name: "x-gap-in-px",
+    type: "Number",
+    default: "4",
+  },
   ...a11yPropsApi,
 ];
 
@@ -58,12 +78,8 @@ const slotData = [
 
 const variables = [
   {
-    name: "width",
-    default: "var(--scrollbar-width)",
-  },
-  {
-    name: "height",
-    default: "var(--scrollbar-height)",
+    name: "thumb-color",
+    default: "var(--thumb-color)",
   },
 ];
 </script>

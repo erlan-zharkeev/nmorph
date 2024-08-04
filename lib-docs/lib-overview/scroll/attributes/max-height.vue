@@ -2,7 +2,13 @@
 import { NmorphButton, NmorphScroll } from "@nmorph/nmorph-ui-kit";
 import Attribute from "~/components/attribute/attribute.vue";
 
-const scriptData = ``;
+const scriptData = `
+<script setup lang="ts">
+const elements = ref(10);
+const addItem = () => (elements.value += 1);
+const removeItem = () => (elements.value -= 1);
+</\script>
+`;
 const templateData = `
 <div class="actions">
   <NmorphButton @click="addItem">Add</NmorphButton>

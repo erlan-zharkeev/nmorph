@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { INmorphA11yProps, NmorphDomElementType } from '@/types';
+import { INmorphA11yProps, INmorphInstance, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue';
 import { NmorphCoordsType, NmorphOverflowProp, NmorphScrollBehavior } from '@/components';
 import { useA11yProps } from '@/main';
+import { nextTick } from 'vue';
 
 interface INmorphProps extends INmorphA11yProps {
   height?: string;
@@ -14,6 +15,10 @@ interface INmorphProps extends INmorphA11yProps {
   cssScrollBehavior?: keyof typeof NmorphScrollBehavior;
   scrollEndDelay?: number;
   updateOnlyOnScrollEnd?: boolean;
+  yBarWidthInPx?: number;
+  xBarWidthInPx?: number;
+  xGapInPx?: number;
+  yGapInPx?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -28,14 +33,38 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   cssScrollBehavior: 'smooth',
   scrollEndDelay: 50,
   updateOnlyOnScrollEnd: false,
+  yBarWidthInPx: 6,
+  xBarWidthInPx: 6,
+  yGapInPx: 4,
+  xGapInPx: 4,
 });
 
 const overflowY = computed(() => props.scrollYProp);
 const overflowX = computed(() => props.scrollXProp);
 
-const paddingRight = computed(() => (props.scrollYProp !== 'hidden' ? '--scrollbar-width' : '0'));
-const paddingBottom = computed(() => (props.scrollXProp !== 'hidden' ? '--scrollbar-height' : '0'));
+const hasVerticalScroll = ref(false);
+const hasHorizontalScroll = ref(false);
 
+const updateScrollableState = () => {
+  hasVerticalScroll.value = scrollDOMContainer.value.scrollHeight > scrollDOMContainer.value.clientHeight;
+  hasHorizontalScroll.value = scrollDOMContainer.value.scrollWidth > scrollDOMContainer.value.clientWidth;
+};
+
+const paddingRightCandidate = computed(() => props.yBarWidthInPx + props.yGapInPx);
+const paddingBottomCandidate = computed(() => props.xBarWidthInPx + props.xGapInPx);
+
+const paddingRight = computed(() =>
+  props.scrollYProp === 'hidden' || !hasVerticalScroll.value ? '0' : `${paddingRightCandidate.value}px`
+);
+
+const paddingBottom = computed(() =>
+  props.scrollXProp === 'hidden' || !hasHorizontalScroll.value ? '0' : `${paddingBottomCandidate.value}px`
+);
+
+const barWidth = computed(() => `${props.yBarWidthInPx}px`);
+const barHeight = computed(() => `${props.xBarWidthInPx}px`);
+
+const nmorph = inject('nmorph') as INmorphInstance;
 let scrollEndTimeout: NodeJS.Timeout;
 
 interface INmorphEmit {
@@ -79,6 +108,8 @@ onUnmounted(() => {
   }
 });
 
+const show = ref(false);
+
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-scroll': [],
@@ -98,12 +129,21 @@ const moveTo = (coords: NmorphCoordsType) => {
 
 onMounted(() => {
   moveTo(props.modelValue);
+  nextTick(updateScrollableState);
 });
 
 watch(
   () => props.modelValue,
   (newCoords) => {
     moveTo(newCoords);
+  },
+  { deep: true, immediate: true }
+);
+
+watch(
+  () => nmorph.browser.dimensions,
+  () => {
+    nextTick(updateScrollableState);
   },
   { deep: true, immediate: true }
 );
@@ -115,48 +155,62 @@ const maxHeight = computed(() => props.maxHeight);
 const a11yProps = useA11yProps(props);
 
 defineExpose({ scrollDOMContainer, moveTo });
+
+const mouseEnterHandler = () => {
+  show.value = true;
+};
+
+const mouseLeaveHandler = () => {
+  show.value = false;
+};
 </script>
 
 <template>
-  <div ref="scrollDOMContainer" :class="modifiers" v-bind="a11yProps" @scroll="scrollHandler">
+  <div
+    ref="scrollDOMContainer"
+    :class="modifiers"
+    v-bind="a11yProps"
+    @scroll="scrollHandler"
+    @mouseenter="mouseEnterHandler"
+    @mouseleave="mouseLeaveHandler"
+  >
     <slot />
   </div>
 </template>
 
 <style lang="scss">
 .nmorph-scroll {
-  --height: v-bind(scrollHeight);
-  --max-height: v-bind(maxHeight);
+  --thumb-color: var(--nmorph-accent-color);
 
-  --scrollbar-width: 8px;
-  --scrollbar-height: 8px;
+  height: v-bind(scrollHeight);
+  max-height: v-bind(maxHeight);
 
-  --padding-right: var(--scrollbar-width);
-  --padding-bottom: var(--scrollbar-height);
-
-  height: var(--height);
-  max-height: var(--max-height);
   padding-right: v-bind(paddingRight);
   padding-bottom: v-bind(paddingBottom);
+
   overflow: v-bind(overflowX) v-bind(overflowY);
   scroll-behavior: v-bind(scrollBehavior);
 
   &::-webkit-scrollbar {
-    width: var(--scrollbar-height);
-    height: var(--scrollbar-height);
+    width: v-bind(barWidth);
+    height: v-bind(barHeight);
     background-color: transparent;
     cursor: pointer;
+    transition: width ease-in-out 0.2s;
   }
 
   &::-webkit-scrollbar-track {
     @include nmorph-inset;
-
     border-radius: var(--border-radius-40);
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--nmorph-accent-color);
+    background-color: var(--thumb-color);
     border-radius: var(--border-radius-40);
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
   }
 }
 </style>

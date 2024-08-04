@@ -11,12 +11,11 @@
       v-model="value"
       :list="variants"
       :actionCallback="getVariants"
-    >
-    </NmorphAutocomplete>
+    />
     <NmorphAlert
       v-for="color in ['info', 'success', 'error', 'warning']"
       :key="color"
-      content="Hello, im alert content"
+      content="Hello, I'm alert content"
       title="Hi, Title is very important"
       :type="color"
       class="additional-class"
@@ -35,36 +34,37 @@
     </div>
     <div class="slider">
       <div class="docs-top-bar__left">
-      <NmorphCheckbox
-        class="docs-top-bar__burger"
-        style-type="button"
-        label="menu"
-      >
-        <template name="label">
-          <NmorphIcon name="burger" />
-        </template>
-      </NmorphCheckbox>
-      <NmorphSlider
-        :show-tooltip="true"
-        :model-value="coords.y"
-        :min="0"
-        :max="560"
-        :step="20"
-        @update:model-value="updateSliderHandler"
-      />
-      <div class="slider__value">{{ coords.y }}px</div>
-    </div>
-    <NmorphScroll
-      height="300px"
-      class="docs-scroll__scroll"
-      update-only-on-end
-      v-model="coords"
-      ref="scroll"
-    >
-      <div class="docs-scroll__box" v-for="i in elements" :key="i">
-        {{ i }}
+        <NmorphCheckbox
+          class="docs-top-bar__burger"
+          style-type="button"
+          label="menu"
+        >
+          <template #label>
+            <NmorphIcon name="burger" />
+          </template>
+        </NmorphCheckbox>
+        <!-- <NmorphSlider
+          :show-tooltip="true"
+          :model-value="coords.y"
+          :min="0"
+          :max="560"
+          :step="20"
+          @update:model-value="updateSliderHandler"
+        />
+        <div class="slider__value">{{ coords.y }}px</div> -->
       </div>
-    </NmorphScroll>
+      <NmorphScroll
+        height="300px"
+        class="docs-scroll__scroll"
+        update-only-on-end
+        v-model="coords"
+        ref="scroll"
+      >
+        <div class="docs-scroll__box" v-for="i in elements" :key="i">
+          {{ i }}
+        </div>
+      </NmorphScroll>
+    </div>
   </div>
   <NmorphNotificationProvider :notifications="notifications" :quantity="3" />
 </template>
@@ -78,7 +78,7 @@ import {
   NmorphButton,
   NmorphTextInput,
   NmorphIcon,
-  NmorphCheckbox
+  NmorphCheckbox,
 } from "./../../../library/src/components";
 import NmorphNotificationProvider from "./../../../library/src/components/providers/nmorph-notification-provider/NmorphNotificationProvider.vue";
 import { useNmorphNotification } from "./../../../library/src/hooks";
@@ -144,6 +144,22 @@ const getVariants = async () => {
 </script>
 
 <style lang="scss">
+// .nmorph-scroll {
+//   height: 300px;
+// }
+
+.docs-scroll__scroll {
+  align-items: center;
+  overflow-x: scroll;
+  width: 200px;
+}
+
+.docs-scroll__box {
+  margin-top: 1rem;
+  width: 250px;
+  background: #000;
+}
+
 .element {
   margin: 1rem;
 }
@@ -157,7 +173,7 @@ const getVariants = async () => {
 }
 
 .wrapper {
-  margin: 50px;
+  // margin: 50px;
 }
 
 .nmorph-alert {
@@ -197,14 +213,12 @@ img {
   font-weight: 600;
 }
 
-.docs-scroll__box {
-  background: var(--nmorph-accent-color);
-  margin-bottom: 8px;
-  color: var(--nmorph-focus-text-color);
-}
-
 .docs-scroll__scroll {
   text-align: center;
-  padding-right: 8px;
+  // padding-right: 8px;
+}
+.slider {
+  display: flex;
+  flex-direction: column;
 }
 </style>

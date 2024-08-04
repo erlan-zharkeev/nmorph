@@ -28,7 +28,7 @@ const selectedValue = ref([new Date(2024, 3, 30)]);
 
 .wrapper {
   // background-color: var(--nmorph-main-color);
-  height: 100vh;
-  padding: 0;
+  // height: 100vh;
+  // padding: 0;
 }
 </style>

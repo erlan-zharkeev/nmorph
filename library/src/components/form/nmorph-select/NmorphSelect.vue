@@ -96,10 +96,12 @@ const closeHandler = () => {
 onMounted(() => {
   if (!optionsDOMRef.value) return;
   optionsHeight.value = `${optionsDOMRef.value.clientHeight}px`;
+  console.log(document, 'select');
   document.addEventListener('click', closeHandler);
 });
 
 onUnmounted(() => {
+  console.log(document, 'select unm');
   document.removeEventListener('click', closeHandler);
 });
 

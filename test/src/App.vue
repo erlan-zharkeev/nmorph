@@ -24,6 +24,17 @@ nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
-<script setup>
-import { NmorphYearMonthPicker } from "@nmorph/nmorph-ui-kit";
+
+<script setup lang="ts">
+import {
+  INmorphInstance,
+  NmorphYearMonthPicker,
+  useNmorph,
+} from "@nmorph/nmorph-ui-kit";
+import { inject } from "vue";
+
+// const { setTheme, currentTheme } = inject<INmorphInstance>("nmorph");
+const nmorph = useNmorph();
+
+console.log(nmorph.theme);
 </script>

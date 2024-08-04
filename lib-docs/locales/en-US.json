@@ -131,13 +131,17 @@
         "subtitle": "If the width of the element exceeds the width of the scrollbar, a horizontal scrollbar appears"
       },
       "api": {
-        "height": "Sets the scroll container's height, supporting both static and dynamic values.",
-        "max-height": "Specifies the maximum height of the scroll container, limiting its vertical size.",
-        "model-value": "Holds the current scroll position, used for two-way binding and scroll control.",
-        "scroll-y-prop": "Determines the vertical scroll behavior, such as auto or hidden.",
-        "scroll-x-prop": "Sets the horizontal scroll behavior, controlling the visibility and functionality of the horizontal scroll.",
-        "css-scroll-behavior": "Defines the scroll's animation behavior, such as smooth for a gradual scrolling effect.",
-        "update-only-on-scroll-end": "When set to true, updates the model-value only after scrolling has ended.",
+        "height": "Sets the scroll container's height, supporting both static and dynamic values",
+        "max-height": "Specifies the maximum height of the scroll container, limiting its vertical size",
+        "model-value": "Holds the current scroll position, used for two-way binding and scroll control",
+        "scroll-y-prop": "Determines the vertical scroll behavior, such as auto or hidden",
+        "scroll-x-prop": "Sets the horizontal scroll behavior, controlling the visibility and functionality of the horizontal scroll",
+        "css-scroll-behavior": "Defines the scroll's animation behavior, such as smooth for a gradual scrolling effect",
+        "update-only-on-scroll-end": "When set to true, updates the model-value only after scrolling has ended",
+        "y-bar-width-in-px": "Y scrollbar width",
+        "x-bar-width-in-px": "X scrollbar width",
+        "y-gap-in-px": "Y scrollbar content indentation",
+        "x-gap-in-px": "X scrollbar content indentation",
         "role": "role of view",
         "aria-label": "aria-label of view",
         "aria-orientation": "aria-orientation of view"
@@ -146,8 +150,7 @@
         "default": "Scroll content"
       },
       "variables": {
-        "width": "Scroll width",
-        "height": "Scroll height"
+        "thumb-color": "Thumb color"
       }
     }
   }

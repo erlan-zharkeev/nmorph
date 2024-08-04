@@ -44,7 +44,7 @@ import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
 }
 
 .docs-main-layout__center {
-  width: 100%;
+  width: calc(100% - 200px);
 }
 
 .docs-main-layout__center-aside {

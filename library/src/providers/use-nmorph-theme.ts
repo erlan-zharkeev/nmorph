@@ -7,9 +7,9 @@ import {
   log,
   INmorphOtherThemeOptions,
   INmorphThemeOptions,
-  INmorphInstance,
+  INmorphThemeInstance,
 } from '@/main';
-import { readonly, ref, App } from 'vue';
+import { readonly, ref } from 'vue';
 import packageData from '../../package.json';
 
 const DEFAULT_THEME_COLORS: INmorphColorVariable[] = [
@@ -110,7 +110,7 @@ const shadeColor = (color: string, percent: number): HexColor => {
   return `#${RR}${GG}${BB}`;
 };
 
-export const useNmorphTheme = (customOptions: INmorphThemeOptions, ssr: boolean = false) => {
+export const useNmorphTheme = (customOptions: INmorphThemeOptions): INmorphThemeInstance => {
   log('warn', `NMORPH(v${packageData.version})`);
   const options = { ...DEFAULT_OPTIONS, ...customOptions };
 
@@ -200,12 +200,5 @@ export const useNmorphTheme = (customOptions: INmorphThemeOptions, ssr: boolean 
   }
 
   setTheme(currentTheme.value);
-  const payload: INmorphInstance = { setTheme, currentTheme: readonly(currentTheme) };
-  if (ssr) return payload;
-  else
-    return {
-      install(Vue: App) {
-        Vue.provide('nmorph', payload);
-      },
-    };
+  return { setTheme, currentTheme: readonly(currentTheme) };
 };

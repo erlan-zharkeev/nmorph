@@ -1,6 +1,7 @@
 import { App, Component, Plugin } from 'vue';
 import * as components from './components';
-import { useNmorphTheme, useNmorphTranslation } from './hooks';
+import { useNmorphTranslation } from './hooks';
+import { useNmorphBrowser, useNmorphTheme } from './providers';
 import { INmorphOptions } from './types/index.ts';
 
 const library: Plugin = {
@@ -24,12 +25,21 @@ const library: Plugin = {
       Vue.use(i18n);
     }
 
-    const nmorph = useNmorphTheme(options.theme) as Plugin<[]>;
-    Vue.use(nmorph);
+    const theme = useNmorphTheme(options.theme);
+    const browser = useNmorphBrowser();
+
+    const nmorph = { theme, browser };
+    Vue.provide('nmorph', nmorph);
 
     Object.entries(components).forEach(([name, component]) => {
       if (isVueComponent(component)) {
-        Vue.component(name, component);
+        if (options.components === undefined) {
+          Vue.component(name, component);
+        } else {
+          const componentExist = options.components.includes(name);
+          if (!componentExist) return;
+          Vue.component(name, component);
+        }
       }
     });
     return Vue;
@@ -49,5 +59,6 @@ export * from './components';
 export * from './utils';
 export * from './hooks';
 export * from './locales';
+export * from './providers';
 
 export default library;
