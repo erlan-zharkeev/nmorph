@@ -184,10 +184,8 @@ const mouseLeaveHandler = () => {
 
   height: v-bind(scrollHeight);
   max-height: v-bind(maxHeight);
-
   padding-right: v-bind(paddingRight);
   padding-bottom: v-bind(paddingBottom);
-
   overflow: v-bind(overflowX) v-bind(overflowY);
   scroll-behavior: v-bind(scrollBehavior);
 
@@ -201,6 +199,7 @@ const mouseLeaveHandler = () => {
 
   &::-webkit-scrollbar-track {
     @include nmorph-inset;
+
     border-radius: var(--border-radius-40);
   }
 

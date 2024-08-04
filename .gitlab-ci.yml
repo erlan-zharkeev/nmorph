@@ -25,7 +25,7 @@ deploy-docs:
   stage: deploy
   script:
     - mv lib-docs/.output/public public/
-    - ls -l  # Для проверки содержимого папки перед деплоем
+    - ls -l public
   artifacts:
     paths:
       - public/
