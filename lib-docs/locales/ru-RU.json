@@ -5,7 +5,7 @@
   "search": "Поиск",
   "attributes": "Атрибуты",
   "slots": "Слоты",
-  "rightAsideTitle": "Содержание",
+  "right-aside-title": "Содержание",
   "name": "Имя",
   "description": "Описание",
   "type": "Тип",
@@ -18,7 +18,7 @@
   "other": "Другое",
   "overview": {
     "button": {
-      "styleType": {
+      "style-type": {
         "subtitle": "Используйте *default* или *transparent* пропсов"
       },
       "loading": {
@@ -38,7 +38,7 @@
       "size": {
         "subtitle": "Установите размер иконки"
       },
-      "widthHeight": {
+      "width-height": {
         "subtitle": "Установите ширину/высоту"
       }
     }

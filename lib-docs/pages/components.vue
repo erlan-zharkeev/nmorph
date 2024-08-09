@@ -68,7 +68,7 @@ const updateActiveAnchor = (entries: IntersectionObserverEntry[]) => {
       </template>
       <template #aside-right>
         <h3 class="nmorph-title-3 docs-components-page__title">
-          {{ $t("rightAsideTitle") }}
+          {{ $t("right-aside-title") }}
         </h3>
         <nav class="docs-components-page__nav">
           <ul>

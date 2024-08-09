@@ -6,7 +6,7 @@
   "attributes": "Attributes",
   "slots": "Slots",
   "variables": "Variables",
-  "rightAsideTitle": "Contents",
+  "right-aside-title": "Contents",
   "name": "Name",
   "description": "Description",
   "type": "Type",
@@ -19,7 +19,7 @@
   "other": "Other",
   "overview": {
     "button": {
-      "styleType": {
+      "style-type": {
         "subtitle": "Use *default* or *transparent* to define basic style"
       },
       "loading": {
