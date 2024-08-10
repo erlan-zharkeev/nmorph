@@ -10,6 +10,18 @@ export default defineNuxtConfig({
         },
       },
     },
+    build: {
+      cssCodeSplit: false,
+      cssMinify: false,
+      minify: false,
+      sourcemap: true,
+      rollupOptions: {
+        output: {
+          chunkFileNames: (chunkInfo) => `${chunkInfo.name}-nmorph`,
+          manualChunks: {},
+        },
+      },
+    },
   },
   devServer: {
     port: 5551,
