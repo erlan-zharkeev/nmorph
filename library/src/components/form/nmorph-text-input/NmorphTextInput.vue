@@ -4,6 +4,8 @@ import { useModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref, useSlots } from 'vue';
 import { NmorphIcon, NmorphButton } from '@/components';
 
+const slots = useSlots();
+
 interface INmorphProps extends INmorphCommonInputProps {
   placeholder?: string;
   typePassword?: boolean;
@@ -81,9 +83,11 @@ const actionIcon = computed(() => {
   else return showPassword.value ? 'eye-blocked' : 'eye';
 });
 
+
 const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
 
-const slots = useSlots();
+console.log('Slots:', slots);
+console.log('Prepend-icon slot:', slots['prepend-icon']);
 </script>
 
 <template>
@@ -170,6 +174,7 @@ const slots = useSlots();
     }
   }
 }
+
 
 .nmorph-button.nmorph--thin-component {
   .nmorph-text-input__password-btn {

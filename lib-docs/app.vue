@@ -9,8 +9,13 @@
 </template>
 
 <script setup>
-import { NmorphNotificationProvider } from "@nmorph/nmorph-ui-kit";
+import QRCode from "qrcode";
+import { ref, onMounted } from "vue";
+import { NmorphNotificationProvider, log } from "@nmorph/nmorph-ui-kit";
 import { notificationProvider } from "~/providers";
+import projectData from "./package.json";
+
+const qrcodeCanvas = ref(null);
 
 const menuOpen = ref(false);
 
@@ -21,6 +26,13 @@ const toggleMenu = () => {
 const closeMenuHandler = () => {
   menuOpen.value = false;
 };
+
+onMounted(async () => {
+  log("success", `NMORPH DOCS (v${projectData.version})`);
+  const url = `http://212.154.212.66:2222`;
+  const code = await QRCode.toDataURL(url, { version: 2 });
+  console.log('code for mobile', code);
+});
 </script>
 
 <style lang="scss">

@@ -39,6 +39,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   xGapInPx: 4,
 });
 
+const scrollDOMContainer = ref<NmorphDomElementType>(null);
+
 const overflowY = computed(() => props.scrollYProp);
 const overflowX = computed(() => props.scrollXProp);
 
@@ -116,8 +118,6 @@ const modifiers = computed(() =>
   })
 );
 
-const scrollDOMContainer = ref<NmorphDomElementType>(null);
-
 const moveTo = (coords: NmorphCoordsType) => {
   const { x, y } = coords;
   scrollDOMContainer.value?.scrollTo({
@@ -141,7 +141,7 @@ watch(
 );
 
 watch(
-  () => nmorph.browser.dimensions,
+  () => nmorph?.browser.dimensions,
   () => {
     nextTick(updateScrollableState);
   },
