@@ -29,7 +29,7 @@ onMounted(async () => {
   log("success", `NMORPH DOCS (v${projectData.version})`);
   const url = `http://192.168.1.5:2222`;
   const code = await QRCode.toDataURL(url, { version: 2 });
-  log("success", `Mobile dev link: ${code}`);
+  if (import.meta.dev) log("success", `Mobile dev link: ${code}`);
 });
 </script>
 

@@ -14,13 +14,18 @@ import TranslateIcon from "~/assets/images/translate.svg";
 import GitlabIcon from "~/assets/images/gitlab.svg";
 
 const nmorph = useNmorph();
+const { setLocale, locales, locale } = useI18n();
 
 const currentTheme = ref<string>("dark");
 const setTheme = ref<(theme: any) => any>(() => {});
+const i18nReady = ref(false);
 
 onMounted(() => {
   currentTheme.value = nmorph.theme.currentTheme.value;
   setTheme.value = nmorph.theme.setTheme;
+  if (locale.value) {
+    i18nReady.value = true; // i18n готов к использованию
+  }
 });
 
 interface INmorphProps {
@@ -34,7 +39,6 @@ interface INmorphEmit {
 const emit = defineEmits<INmorphEmit>();
 
 const config = useRuntimeConfig();
-const { setLocale, locales } = useI18n();
 const localePath = useLocalePath();
 
 const searchQuery = ref("");
@@ -57,8 +61,9 @@ const updateMenuHandler = () => {
   emit("toggle-menu");
 };
 </script>
+
 <template>
-  <header class="docs-top-bar nmorph-outset">
+  <header class="docs-top-bar nmorph-outset" v-if="i18nReady">
     <div class="docs-top-bar__left">
       <NmorphCheckbox
         class="docs-top-bar__burger"
@@ -123,7 +128,6 @@ const updateMenuHandler = () => {
         </NmorphDropdown>
       </div>
       <nav class="docs-top-bar__nav">
-        {{ $t('search') }}
         <ul class="docs-top-bar__nav-list">
           <li>
             <NuxtLink :to="localePath('/guide')">{{ $t('search') }}</NuxtLink>
