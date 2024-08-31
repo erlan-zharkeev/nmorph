@@ -84,9 +84,6 @@ const actionIcon = computed(() => {
 });
 
 const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
-
-console.log('Slots:', slots);
-console.log('Prepend-icon slot:', slots['prepend-icon']);
 </script>
 
 <template>

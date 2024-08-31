@@ -15,8 +15,6 @@ import { NmorphNotificationProvider, log } from "@nmorph/nmorph-ui-kit";
 import { notificationProvider } from "~/providers";
 import projectData from "./package.json";
 
-const qrcodeCanvas = ref(null);
-
 const menuOpen = ref(false);
 
 const toggleMenu = () => {
@@ -29,7 +27,7 @@ const closeMenuHandler = () => {
 
 onMounted(async () => {
   log("success", `NMORPH DOCS (v${projectData.version})`);
-  const url = `http://212.154.212.66:2222`;
+  const url = `http://192.168.1.5:2222`;
   const code = await QRCode.toDataURL(url, { version: 2 });
   log("success", `Mobile dev link: ${code}`);
 });

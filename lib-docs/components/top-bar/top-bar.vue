@@ -123,9 +123,10 @@ const updateMenuHandler = () => {
         </NmorphDropdown>
       </div>
       <nav class="docs-top-bar__nav">
+        {{ $t('search') }}
         <ul class="docs-top-bar__nav-list">
           <li>
-            <NuxtLink :to="localePath('/guide')">{{ $t("guide") }}</NuxtLink>
+            <NuxtLink :to="localePath('/guide')">{{ $t('search') }}</NuxtLink>
           </li>
           <li>
             <NuxtLink :to="localePath('/components')">{{

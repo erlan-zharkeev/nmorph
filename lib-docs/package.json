@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --no-qr",
     "update-component-list": "node ./components/component-list/create-component-list.js ",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -13,7 +13,7 @@
     "deploy": "nuxt generate && gh-pages -d dist"
   },
   "dependencies": {
-    "@nmorph/nmorph-ui-kit": "^0.2.42",
+    "@nmorph/nmorph-ui-kit": "^0.2.43",
     "@nuxtjs/i18n": "^8.3.1",
     "nuxt": "^3.11.2",
     "nuxt-svgo": "^4.0.1",
