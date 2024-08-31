@@ -39,18 +39,27 @@ export default defineNuxtConfig({
         },
       },
     },
-    build: {
-      cssCodeSplit: false,
-      cssMinify: false,
-      minify: false,
-      sourcemap: true,
-      rollupOptions: {
-        output: {
-          chunkFileNames: (chunkInfo) => `${chunkInfo.name}-nmorph`,
-          manualChunks: {},
-        },
-      },
-    },
+    // build: {
+    //   rollupOptions: {
+    //     output: {
+    //       entryFileNames: '[name].js',
+    //       chunkFileNames: '[name].js',
+    //       assetFileNames: '[name].[ext]',
+    //     },
+    //   },
+    // },
+    // build: {
+    //   cssCodeSplit: false,
+    //   cssMinify: false,
+    //   minify: false,
+    //   sourcemap: true,
+    //   rollupOptions: {
+    //     output: {
+    //       chunkFileNames: (chunkInfo) => `${chunkInfo.name}-nmorph`,
+    //       manualChunks: {},
+    //     },
+    //   },
+    // },
   },
   devServer: {
     port: 2222,

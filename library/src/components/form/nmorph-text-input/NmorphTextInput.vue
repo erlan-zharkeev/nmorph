@@ -83,7 +83,6 @@ const actionIcon = computed(() => {
   else return showPassword.value ? 'eye-blocked' : 'eye';
 });
 
-
 const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
 
 console.log('Slots:', slots);
@@ -174,7 +173,6 @@ console.log('Prepend-icon slot:', slots['prepend-icon']);
     }
   }
 }
-
 
 .nmorph-button.nmorph--thin-component {
   .nmorph-text-input__password-btn {

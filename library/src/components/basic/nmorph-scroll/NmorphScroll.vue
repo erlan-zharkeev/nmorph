@@ -48,8 +48,8 @@ const hasVerticalScroll = ref(false);
 const hasHorizontalScroll = ref(false);
 
 const updateScrollableState = () => {
-  hasVerticalScroll.value = scrollDOMContainer.value.scrollHeight > scrollDOMContainer.value.clientHeight;
-  hasHorizontalScroll.value = scrollDOMContainer.value.scrollWidth > scrollDOMContainer.value.clientWidth;
+  hasVerticalScroll.value = scrollDOMContainer.value?.scrollHeight > scrollDOMContainer.value?.clientHeight;
+  hasHorizontalScroll.value = scrollDOMContainer.value?.scrollWidth > scrollDOMContainer.value?.clientWidth;
 };
 
 const paddingRightCandidate = computed(() => props.yBarWidthInPx + props.yGapInPx);
@@ -78,8 +78,8 @@ interface INmorphEmit {
 const emit = defineEmits<INmorphEmit>();
 
 const updateValue = () => {
-  const x = Math.trunc(scrollDOMContainer.value.scrollLeft);
-  const y = Math.trunc(scrollDOMContainer.value.scrollTop);
+  const x = Math.trunc(scrollDOMContainer.value?.scrollLeft);
+  const y = Math.trunc(scrollDOMContainer.value?.scrollTop);
   emit('update:modelValue', { x, y });
 };
 
