@@ -3,7 +3,7 @@ interface ConsoleColorElement {
   text: string;
 }
 
-type ConsoleType = 'error' | 'success' | 'warn';
+type ConsoleType = 'error' | 'success' | 'warn' | 'info';
 
 const consoleColorMap: Record<string, ConsoleColorElement> = {
   error: {
@@ -17,6 +17,10 @@ const consoleColorMap: Record<string, ConsoleColorElement> = {
   warn: {
     bg: '#000000',
     text: 'orange',
+  },
+  info: {
+    bg: '#000000',
+    text: 'blue',
   },
 };
 

@@ -13,18 +13,16 @@ import SunIcon from "~/assets/images/sun.svg";
 import TranslateIcon from "~/assets/images/translate.svg";
 import GitlabIcon from "~/assets/images/gitlab.svg";
 
-const nmorph = useNmorph();
-const { setLocale, locales, locale } = useI18n();
+const { setLocale, locales } = useI18n();
 
 const currentTheme = ref<string>("dark");
-const setTheme = ref<(theme: any) => any>(() => {});
-const i18nReady = ref(false);
+const setTheme = ref<(val: any) => void>(() => {});
 
 onMounted(() => {
-  currentTheme.value = nmorph.theme.currentTheme.value;
-  setTheme.value = nmorph.theme.setTheme;
-  if (locale.value) {
-    i18nReady.value = true; // i18n готов к использованию
+  if (import.meta.client) {
+    const nmorph = useNmorph();
+    currentTheme.value = nmorph.theme.currentTheme.value;
+    setTheme.value = nmorph.theme.setTheme;
   }
 });
 
@@ -63,7 +61,7 @@ const updateMenuHandler = () => {
 </script>
 
 <template>
-  <header class="docs-top-bar nmorph-outset" v-if="i18nReady">
+  <header class="docs-top-bar nmorph-outset">
     <div class="docs-top-bar__left">
       <NmorphCheckbox
         class="docs-top-bar__burger"
@@ -73,12 +71,16 @@ const updateMenuHandler = () => {
         design="button"
       >
         <template name="label">
-          <NmorphIcon name="burger" />
+          <ClientOnly>
+            <NmorphIcon name="burger" />
+          </ClientOnly>
         </template>
       </NmorphCheckbox>
       <div class="docs-top-bar__logo">
         <NuxtLink :to="localePath('/')">
-          <NmorphIcon name="logo" width="40px" />
+          <ClientOnly>
+            <NmorphIcon name="logo" width="40px" />
+          </ClientOnly>
         </NuxtLink>
       </div>
     </div>
@@ -86,7 +88,9 @@ const updateMenuHandler = () => {
       <div class="docs-top-bar__search">
         <NmorphTextInput :placeholder="$t('search')" v-model="searchQuery">
           <template #prepend-icon>
-            <NmorphIcon name="search" />
+            <ClientOnly>
+              <NmorphIcon name="search" />
+            </ClientOnly>
           </template>
         </NmorphTextInput>
       </div>
@@ -97,14 +101,16 @@ const updateMenuHandler = () => {
       >
         <NmorphCheckbox
           v-model="open"
-          design="button"
           size="small"
           class="docs-top-bar__translate-checkbox"
+          design="button"
         >
           <template #label>
-            <NmorphIcon>
-              <TranslateIcon />
-            </NmorphIcon>
+            <ClientOnly>
+              <NmorphIcon>
+                <TranslateIcon />
+              </NmorphIcon>
+            </ClientOnly>
           </template>
         </NmorphCheckbox>
         <NmorphDropdown
@@ -118,19 +124,21 @@ const updateMenuHandler = () => {
           :width="100"
         >
           <ul class="docs-translates__dropdown">
-            <li
-              v-for="localeData in locales"
-              @click="changeLocaleHandler(localeData.code)"
-            >
-              {{ localeData.name }}
-            </li>
+            <ClientOnly>
+              <li
+                v-for="localeData in locales"
+                @click="changeLocaleHandler(localeData.code)"
+              >
+                {{ localeData.name }}
+              </li>
+            </ClientOnly>
           </ul>
         </NmorphDropdown>
       </div>
       <nav class="docs-top-bar__nav">
         <ul class="docs-top-bar__nav-list">
           <li>
-            <NuxtLink :to="localePath('/guide')">{{ $t('search') }}</NuxtLink>
+            <NuxtLink :to="localePath('/guide')">{{ $t("guide") }}</NuxtLink>
           </li>
           <li>
             <NuxtLink :to="localePath('/components')">{{
@@ -150,16 +158,22 @@ const updateMenuHandler = () => {
         class="docs-top-bar__element"
       >
         <template #thumb-on>
-          <NmorphIcon width="10px" height="10px">
-            <SunIcon class="sun-icon" />
-          </NmorphIcon>
+          <ClientOnly>
+            <NmorphIcon width="10px" height="10px">
+              <SunIcon class="sun-icon" />
+            </NmorphIcon>
+          </ClientOnly>
         </template>
         <template #thumb-off>
-          <NmorphIcon width="10px" height="10px"> <MoonIcon /> </NmorphIcon>
+          <ClientOnly>
+            <NmorphIcon width="10px" height="10px"> <MoonIcon /> </NmorphIcon>
+          </ClientOnly>
         </template>
       </NmorphSwitch>
       <NmorphLink :href="config.public.NUXT_ENV_GIT_PATH">
-        <NmorphIcon :path="GitlabIcon" size="medium" />
+        <ClientOnly>
+          <NmorphIcon :path="GitlabIcon" size="medium" />
+        </ClientOnly>
       </NmorphLink>
     </div>
   </header>
@@ -190,7 +204,7 @@ $top-bar-height: 50px;
 .docs-top-bar__element {
   margin-right: 12px;
   .sun-icon {
-    margin-top: 2px;
+    margin-top: 1px;
   }
 }
 

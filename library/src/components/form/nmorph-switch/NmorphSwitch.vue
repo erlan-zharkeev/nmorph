@@ -4,13 +4,11 @@ import { useModifiers } from '@/utils';
 import { Ref, computed, onMounted, ref, watch } from 'vue';
 import { NmorphIcon } from '@/components';
 
-type ValueType = boolean | string | number;
-
 interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
-  modelValue?: ValueType;
+  modelValue?: boolean | string | number;
   loading?: boolean;
-  activeValue?: ValueType;
-  inactiveValue?: ValueType;
+  activeValue?: boolean | string | number;
+  inactiveValue?: boolean | string | number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -45,7 +43,7 @@ const changeHandler = () => {
 
 interface INmorphEmit {
   (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
-  (e: 'update:modelValue', val: ValueType): void;
+  (e: 'update:modelValue', val: boolean | string | number): void;
 }
 const inputDOMRef = ref<NmorphDomElementType>(null);
 onMounted(() => {

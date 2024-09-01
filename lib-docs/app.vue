@@ -1,4 +1,4 @@
-<template>
+<template v-if="i18nReady">
   <top-bar :isMenuOpen="menuOpen" @toggle-menu="toggleMenu" />
   <nuxt-page />
   <main-menu :isMenuOpen="menuOpen" @menu-click="closeMenuHandler" />
@@ -15,6 +15,10 @@ import { NmorphNotificationProvider, log } from "@nmorph/nmorph-ui-kit";
 import { notificationProvider } from "~/providers";
 import projectData from "./package.json";
 
+const { locale } = useI18n();
+
+const i18nReady = ref(false);
+
 const menuOpen = ref(false);
 
 const toggleMenu = () => {
@@ -24,6 +28,11 @@ const toggleMenu = () => {
 const closeMenuHandler = () => {
   menuOpen.value = false;
 };
+
+watch(locale, (newLocale, oldLocale) => {
+  log("info", `Локаль изменилась с ${oldLocale} на ${newLocale}`);
+  i18nReady.value = true
+});
 
 onMounted(async () => {
   log("success", `NMORPH DOCS (v${projectData.version})`);

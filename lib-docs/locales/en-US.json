@@ -35,12 +35,11 @@
         "subtitle": "Use *boolean* to disable button"
       },
       "shape": {
-        "subtitle": "Use shape to change button border-radius",
         "info": {
-          "title": "info",
-          "cont:": "When using round or square, the size is changed using the --height variable",
+          "title": "Info",
           "content": "When using round or square, the size is changed using the --height variable"
-        }
+        },
+        "subtitle": "Use shape to change button border-radius"
       },
       "api": {
         "type": "Native button type",

@@ -57,7 +57,7 @@ const updateActiveAnchor = (entries: IntersectionObserverEntry[]) => {
 
 <template>
   <div class="docs-components-page page">
-    <NuxtLayout name="main-layout">
+    <MainContentPart>
       <template #aside>
         <ComponentsList />
       </template>
@@ -86,7 +86,7 @@ const updateActiveAnchor = (entries: IntersectionObserverEntry[]) => {
           </ul>
         </nav>
       </template>
-    </NuxtLayout>
+    </MainContentPart>
   </div>
 </template>
 

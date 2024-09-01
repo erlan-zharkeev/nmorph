@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import { computed, provide, ref } from 'vue';
-import { NmorphCheckbox } from '@/components';
+import { NmorphCheckbox, NmorphCheckboxDesignType } from '@/components';
 import { useModifiers } from '@/utils';
 import { INmorphCommonInputProps, NmorphComponentDirection } from '@/types';
 import {
   NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType,
   NmorphCheckboxGroupSelectedValueInjectionType,
   INmorphCheckboxOption,
-  NmorphCheckboxStyleType,
 } from '@/components';
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue: string[];
   options?: INmorphCheckboxOption[];
-  design?: keyof typeof NmorphCheckboxStyleType;
+  design?: NmorphCheckboxDesignType;
   direction?: keyof typeof NmorphComponentDirection;
 }
 

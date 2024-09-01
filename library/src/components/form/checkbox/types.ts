@@ -5,13 +5,10 @@ export interface INmorphCheckboxOption {
   disabled?: boolean;
   modelValue?: boolean;
   label?: string;
-  design?: keyof typeof NmorphCheckboxStyleType;
+  design?: NmorphCheckboxDesignType;
 }
 
-export enum NmorphCheckboxStyleType {
-  checkbox = 'checkbox',
-  button = 'button',
-}
+export type NmorphCheckboxDesignType = 'button' | 'checkbox';
 
 export type NmorphCheckboxGroupSelectedValueInjectionType = Ref<string[]>;
 export type NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType = (

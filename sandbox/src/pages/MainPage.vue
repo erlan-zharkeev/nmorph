@@ -36,8 +36,8 @@
       <div class="docs-top-bar__left">
         <NmorphCheckbox
           class="docs-top-bar__burger"
-          style-type="button"
           label="menu"
+          design="button"
         >
           <template #label>
             <NmorphIcon name="burger" />
