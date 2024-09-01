@@ -13,10 +13,14 @@ import SunIcon from "~/assets/images/sun.svg";
 import TranslateIcon from "~/assets/images/translate.svg";
 import GitlabIcon from "~/assets/images/gitlab.svg";
 
-const { setLocale, locales } = useI18n();
+const { setLocale, locales, t } = useI18n();
 
 const currentTheme = ref<string>("dark");
 const setTheme = ref<(val: any) => void>(() => {});
+
+console.log(locales.value.map((el) => el.code));
+console.log(t);
+console.log(locales.value.map((el) => el.files));
 
 onMounted(() => {
   if (import.meta.client) {
