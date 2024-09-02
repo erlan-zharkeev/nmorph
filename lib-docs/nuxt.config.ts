@@ -59,5 +59,9 @@ export default defineNuxtConfig({
       { code: "ru-RU", iso: "ru-RU", name: "Русский", file: "ru-RU.json" },
     ],
     defaultLocale: "en-US",
+    detectBrowserLanguage: {
+      useCookie: true,
+      alwaysRedirect: true
+    }
   },
 });

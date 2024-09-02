@@ -20,8 +20,6 @@ const { locale, locales, t } = useI18n();
 const currentTheme = ref<string>("dark");
 const setTheme = ref<(val: any) => void>(() => {});
 
-console.log(locales);
-
 onMounted(() => {
   if (import.meta.client) {
     const nmorph = useNmorph();
@@ -60,11 +58,12 @@ watch(locale, (newLocale, oldLocale) => {
   open.value = false;
 });
 
+const ggg = computed(() => t('guide'))
 </script>
 
 <template>
   <header class="docs-top-bar nmorph-outset">
-    {{ t('guide') }}
+    {{ ggg }}
     <div class="docs-top-bar__left">
       <NmorphCheckbox
         class="docs-top-bar__burger"
