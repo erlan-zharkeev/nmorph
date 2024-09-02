@@ -13,10 +13,14 @@ import SunIcon from "~/assets/images/sun.svg";
 import TranslateIcon from "~/assets/images/translate.svg";
 import GitlabIcon from "~/assets/images/gitlab.svg";
 
-const { setLocale, locales } = useI18n();
+const switchLocalePath = useSwitchLocalePath()
 
+const { locale, locales } = useI18n();
+// ЕБала в том что локалей на проде нет
 const currentTheme = ref<string>("dark");
 const setTheme = ref<(val: any) => void>(() => {});
+
+console.log(locales);
 
 onMounted(() => {
   if (import.meta.client) {
@@ -47,138 +51,126 @@ const open = ref(false);
 const closeHandler = () => {
   open.value = false;
 };
-const openTranslates = () => {
-  open.value = !open.value;
-};
 
-const changeLocaleHandler = (locale: string) => {
-  open.value = false;
-  setLocale(locale);
-};
 const updateMenuHandler = () => {
   emit("toggle-menu");
 };
+
+watch(locale, (newLocale, oldLocale) => {
+  open.value = false;
+});
+
 </script>
 
 <template>
-  <ClientOnly>
-    <header class="docs-top-bar nmorph-outset">
-      <div class="docs-top-bar__left">
-        <NmorphCheckbox
-          class="docs-top-bar__burger"
-          :model-value="props.isMenuOpen"
-          @update:model-value="updateMenuHandler"
-          label="menu"
-          design="button"
-        >
-          <template name="label">
+  <header class="docs-top-bar nmorph-outset">
+    <div class="docs-top-bar__left">
+      <NmorphCheckbox
+        class="docs-top-bar__burger"
+        :model-value="props.isMenuOpen"
+        @update:model-value="updateMenuHandler"
+        label="menu"
+        design="button"
+      >
+        <template name="label">
+          <ClientOnly>
+            <NmorphIcon name="burger" />
+          </ClientOnly>
+        </template>
+      </NmorphCheckbox>
+      <div class="docs-top-bar__logo">
+        <NuxtLink :to="localePath('/')">
+          <ClientOnly>
+            <NmorphIcon name="logo" width="40px" />
+          </ClientOnly>
+        </NuxtLink>
+      </div>
+    </div>
+    <div class="docs-top-bar__right">
+      <div class="docs-top-bar__search">
+        <NmorphTextInput :placeholder="$t('search')" v-model="searchQuery">
+          <template #prepend-icon>
             <ClientOnly>
-              <NmorphIcon name="burger" />
+              <NmorphIcon name="search" />
             </ClientOnly>
           </template>
-        </NmorphCheckbox>
-        <div class="docs-top-bar__logo">
-          <NuxtLink :to="localePath('/')">
-            <ClientOnly>
-              <NmorphIcon name="logo" width="40px" />
-            </ClientOnly>
-          </NuxtLink>
-        </div>
+        </NmorphTextInput>
       </div>
-      <div class="docs-top-bar__right">
-        <div class="docs-top-bar__search">
-          <NmorphTextInput :placeholder="$t('search')" v-model="searchQuery">
-            <template #prepend-icon>
-              <ClientOnly>
-                <NmorphIcon name="search" />
-              </ClientOnly>
-            </template>
-          </NmorphTextInput>
-        </div>
-        <div
-          ref="translateBtn"
-          @click="openTranslates"
-          class="docs-top-bar__translate-btn"
+      <div
+        ref="translateBtn"
+        class="docs-top-bar__translate-btn"
+      >
+        <NmorphCheckbox
+          v-model="open"
+          size="small"
+          class="docs-top-bar__translate-checkbox"
+          design="button"
         >
-          <NmorphCheckbox
-            v-model="open"
-            size="small"
-            class="docs-top-bar__translate-checkbox"
-            design="button"
-          >
-            <template #label>
-              <ClientOnly>
-                <NmorphIcon>
-                  <TranslateIcon />
-                </NmorphIcon>
-              </ClientOnly>
-            </template>
-          </NmorphCheckbox>
-          <NmorphDropdown
-            v-if="translateBtn"
-            :fill-width="false"
-            :open="open"
-            :relative-element="translateBtn"
-            @on-outside-click="closeHandler"
-            :x-offset="-40"
-            :y-offset="10"
-            :width="100"
-          >
-            <ul class="docs-translates__dropdown">
-              <ClientOnly>
-                <li
-                  v-for="localeData in locales"
-                  @click="changeLocaleHandler(localeData.code)"
-                >
-                  {{ localeData.name }}
-                </li>
-              </ClientOnly>
-            </ul>
-          </NmorphDropdown>
-        </div>
-        <nav class="docs-top-bar__nav">
-          <ul class="docs-top-bar__nav-list">
-            <li>
-              <NuxtLink :to="localePath('/guide')">{{ $t("guide") }}</NuxtLink>
-            </li>
-            <li>
-              <NuxtLink :to="localePath('/components')">{{
-                $t("components")
-              }}</NuxtLink>
-            </li>
-            <li>
-              <NuxtLink :to="localePath('/about')">{{ $t("about") }}</NuxtLink>
-            </li>
-          </ul>
-        </nav>
-        <NmorphSwitch
-          :model-value="currentTheme"
-          @update:model-value="setTheme"
-          active-value="light"
-          inactive-value="dark"
-          class="docs-top-bar__element"
-        >
-          <template #thumb-on>
+          <template #label>
             <ClientOnly>
-              <NmorphIcon width="10px" height="10px">
-                <SunIcon class="sun-icon" />
+              <NmorphIcon>
+                <TranslateIcon />
               </NmorphIcon>
             </ClientOnly>
           </template>
-          <template #thumb-off>
-            <ClientOnly>
-              <NmorphIcon width="10px" height="10px"> <MoonIcon /> </NmorphIcon>
-            </ClientOnly>
-          </template>
-        </NmorphSwitch>
-        <NmorphLink :href="config.public.NUXT_ENV_GIT_PATH">
-          <ClientOnly>
-            <NmorphIcon :path="GitlabIcon" size="medium" />
-          </ClientOnly>
-        </NmorphLink>
+        </NmorphCheckbox>
+        <NmorphDropdown
+          v-if="translateBtn"
+          :fill-width="false"
+          :open="open"
+          :relative-element="translateBtn"
+          @on-outside-click="closeHandler"
+          :x-offset="-40"
+          :y-offset="10"
+          :width="100"
+        >
+          <ul class="docs-translates__dropdown">
+            <NuxtLink :to="switchLocalePath(localeData.code)" v-for="localeData in locales" @click="closeHandler">{{ localeData.name }}</NuxtLink>
+          </ul>
+        </NmorphDropdown>
       </div>
-    </header>
-  </ClientOnly>
+      <nav class="docs-top-bar__nav">
+        <ul class="docs-top-bar__nav-list">
+          <li>
+            <NuxtLink :to="localePath('/guide')">{{ $t("guide") }}</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink :to="localePath('/components')">{{
+              $t("components")
+            }}</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink :to="localePath('/about')">{{ $t("about") }}</NuxtLink>
+          </li>
+        </ul>
+      </nav>
+      <NmorphSwitch
+        :model-value="currentTheme"
+        @update:model-value="setTheme"
+        active-value="light"
+        inactive-value="dark"
+        class="docs-top-bar__element"
+      >
+        <template #thumb-on>
+          <ClientOnly>
+            <NmorphIcon width="10px" height="10px">
+              <SunIcon class="sun-icon" />
+            </NmorphIcon>
+          </ClientOnly>
+        </template>
+        <template #thumb-off>
+          <ClientOnly>
+            <NmorphIcon width="10px" height="10px"> <MoonIcon /> </NmorphIcon>
+          </ClientOnly>
+        </template>
+      </NmorphSwitch>
+      <NmorphLink :href="config.public.NUXT_ENV_GIT_PATH">
+        <ClientOnly>
+          <NmorphIcon :path="GitlabIcon" size="medium" />
+        </ClientOnly>
+      </NmorphLink>
+    </div>
+  </header>
 </template>
 
 <style lang="scss">
