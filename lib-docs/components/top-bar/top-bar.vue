@@ -13,16 +13,16 @@ import SunIcon from "~/assets/images/sun.svg";
 import TranslateIcon from "~/assets/images/translate.svg";
 import GitlabIcon from "~/assets/images/gitlab.svg";
 
-const switchLocalePath = useSwitchLocalePath()
+const switchLocalePath = useSwitchLocalePath();
 
-const { locale, locales, t, loadLocaleMessages } = useI18n();
-// ЕБала в том что локалей на проде нет
+const { locale, locales } = useI18n();
+
 const currentTheme = ref<string>("dark");
 const setTheme = ref<(val: any) => void>(() => {});
 
 const availableLocales = computed(() => {
-  return locales.value.filter(i => i.code !== locale.value)
-})
+  return locales.value.filter((i) => i.code !== locale.value);
+});
 
 onMounted(() => {
   if (import.meta.client) {
@@ -58,18 +58,18 @@ const updateMenuHandler = () => {
   emit("toggle-menu");
 };
 
-watch(locale, (newLocale, oldLocale) => {
-  open.value = false;
-});
+// watch(locale, () => {
+//   open.value = false;
+// });
 
-await loadLocaleMessages('en')
-
-const ggg = computed(() => t('guide'))
+// const availableLocales = [
+//   { code: "en-EN", name: "English" },
+//   { code: "ru-RU", name: "Русский" },
+// ];
 </script>
 
 <template>
   <header class="docs-top-bar nmorph-outset">
-    {{ ggg }}
     <div class="docs-top-bar__left">
       <NmorphCheckbox
         class="docs-top-bar__burger"
@@ -102,10 +102,7 @@ const ggg = computed(() => t('guide'))
           </template>
         </NmorphTextInput>
       </div>
-      <div
-        ref="translateBtn"
-        class="docs-top-bar__translate-btn"
-      >
+      <div ref="translateBtn" class="docs-top-bar__translate-btn">
         <NmorphCheckbox
           v-model="open"
           size="small"
@@ -131,7 +128,12 @@ const ggg = computed(() => t('guide'))
           :width="100"
         >
           <ul class="docs-translates__dropdown">
-            <NuxtLink :to="switchLocalePath(localeData.code)" v-for="localeData in availableLocales" @click="closeHandler">{{ localeData.name }}</NuxtLink>
+            <NuxtLink
+              :to="switchLocalePath(localeData.code)"
+              v-for="localeData in availableLocales"
+              @click="closeHandler"
+              >{{ localeData.name }}</NuxtLink
+            >
           </ul>
         </NmorphDropdown>
       </div>

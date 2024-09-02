@@ -1,29 +1,28 @@
 import { App, Component, Plugin } from 'vue';
 import * as components from './components';
-import { useNmorphTranslation } from './hooks';
+// import { useNmorphTranslation } from './hooks';
 import { useNmorphBrowser, useNmorphTheme } from './providers';
 import { INmorphOptions } from './types/index.ts';
 
 const library: Plugin = {
   install(Vue: App, options: INmorphOptions = {}): App {
-    const i18n = useNmorphTranslation(options.i18n);
-    // @ts-expect-error ///
-    const vueI18nInstance = Vue.__VUE_I18N__;
-    if (vueI18nInstance) {
-      if (i18n.global.messages) {
-        Object.entries(i18n.global.messages).forEach(([locale, translates]) => {
-          vueI18nInstance.global.messages.value[locale] = {
-            ...vueI18nInstance.global.messages.value[locale],
-            ...translates,
-          };
-        });
-      }
-      if (i18n.global.locale) {
-        vueI18nInstance.global.locale.value = i18n.global.locale;
-      }
-    } else {
-      Vue.use(i18n);
-    }
+    // const i18n = useNmorphTranslation(options.i18n);
+    // const vueI18nInstance = Vue.__VUE_I18N__;
+    // if (vueI18nInstance) {
+    //   if (i18n.global.messages) {
+    //     Object.entries(i18n.global.messages).forEach(([locale, translates]) => {
+    //       vueI18nInstance.global.messages.value[locale] = {
+    //         ...vueI18nInstance.global.messages.value[locale],
+    //         ...translates,
+    //       };
+    //     });
+    //   }
+    //   if (i18n.global.locale) {
+    //     vueI18nInstance.global.locale.value = i18n.global.locale;
+    //   }
+    // } else {
+    //   Vue.use(i18n);
+    // }
 
     const theme = useNmorphTheme(options.theme);
     const browser = useNmorphBrowser();
