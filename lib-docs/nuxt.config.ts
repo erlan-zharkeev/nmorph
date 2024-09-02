@@ -51,7 +51,7 @@ export default defineNuxtConfig({
   },
   modules: ["@nuxtjs/i18n", "nuxt-svgo"],
   i18n: {
-    lazy: true,
+    lazy: false,
     langDir: "locales",
     strategy: "prefix_except_default",
     locales: [
