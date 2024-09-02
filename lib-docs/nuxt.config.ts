@@ -41,7 +41,7 @@ export default defineNuxtConfig({
     },
   },
   devServer: {
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     port: 2222,
   },
   runtimeConfig: {
@@ -61,7 +61,7 @@ export default defineNuxtConfig({
     defaultLocale: "en-US",
     detectBrowserLanguage: {
       useCookie: true,
-      alwaysRedirect: true
-    }
+      alwaysRedirect: true,
+    },
   },
 });
