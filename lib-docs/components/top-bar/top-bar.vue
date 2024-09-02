@@ -15,7 +15,7 @@ import GitlabIcon from "~/assets/images/gitlab.svg";
 
 const switchLocalePath = useSwitchLocalePath()
 
-const { locale, locales } = useI18n();
+const { locale, locales, t } = useI18n();
 // ЕБала в том что локалей на проде нет
 const currentTheme = ref<string>("dark");
 const setTheme = ref<(val: any) => void>(() => {});
@@ -64,6 +64,7 @@ watch(locale, (newLocale, oldLocale) => {
 
 <template>
   <header class="docs-top-bar nmorph-outset">
+    {{ t('guide') }}
     <div class="docs-top-bar__left">
       <NmorphCheckbox
         class="docs-top-bar__burger"
