@@ -15,10 +15,14 @@ import GitlabIcon from "~/assets/images/gitlab.svg";
 
 const switchLocalePath = useSwitchLocalePath()
 
-const { locale, locales, t } = useI18n();
+const { locale, locales, t, loadLocaleMessages } = useI18n();
 // ЕБала в том что локалей на проде нет
 const currentTheme = ref<string>("dark");
 const setTheme = ref<(val: any) => void>(() => {});
+
+const availableLocales = computed(() => {
+  return locales.value.filter(i => i.code !== locale.value)
+})
 
 onMounted(() => {
   if (import.meta.client) {
@@ -57,6 +61,8 @@ const updateMenuHandler = () => {
 watch(locale, (newLocale, oldLocale) => {
   open.value = false;
 });
+
+await loadLocaleMessages('en')
 
 const ggg = computed(() => t('guide'))
 </script>
@@ -125,7 +131,7 @@ const ggg = computed(() => t('guide'))
           :width="100"
         >
           <ul class="docs-translates__dropdown">
-            <NuxtLink :to="switchLocalePath(localeData.code)" v-for="localeData in locales" @click="closeHandler">{{ localeData.name }}</NuxtLink>
+            <NuxtLink :to="switchLocalePath(localeData.code)" v-for="localeData in availableLocales" @click="closeHandler">{{ localeData.name }}</NuxtLink>
           </ul>
         </NmorphDropdown>
       </div>
