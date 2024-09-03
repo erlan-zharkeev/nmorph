@@ -9,7 +9,7 @@ const library: Plugin = {
     const i18n = useNmorphTranslation(options.i18n);
     // @ts-expect-error ///
     const vueI18nInstance = Vue.__VUE_I18N__;
-    console.log(vueI18nInstance, 'vue i18n instance');
+    console.log(vueI18nInstance, 'vue i18n instance', Vue);
     if (vueI18nInstance) {
       if (i18n.global.messages) {
         console.log(i18n.global.messages, 'messages');
