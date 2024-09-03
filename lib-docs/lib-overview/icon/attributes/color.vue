@@ -29,13 +29,19 @@ const code = [scriptData, templateData, cssData];
     >
       <template #overview>
         <div class="icon-color-overview">
-          <NmorphIcon
-            name="add-location"
-            color="var(--nmorph-accent-color)"
-            size="large"
-          />
-          <NmorphIcon name="avatar" color="#694295" size="large" />
-          <NmorphIcon name="archive" color="hsl(148, 60%, 39%)" size="large" />
+          <ClientOnly>
+            <NmorphIcon
+              name="add-location"
+              color="var(--nmorph-accent-color)"
+              size="large"
+            />
+            <NmorphIcon name="avatar" color="#694295" size="large" />
+            <NmorphIcon
+              name="archive"
+              color="hsl(148, 60%, 39%)"
+              size="large"
+            />
+          </ClientOnly>
         </div>
       </template>
       <template #code>

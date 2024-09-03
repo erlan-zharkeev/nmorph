@@ -39,6 +39,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   xGapInPx: 4,
 });
 
+const scrollDOMContainer = ref<NmorphDomElementType>(null);
+
 const overflowY = computed(() => props.scrollYProp);
 const overflowX = computed(() => props.scrollXProp);
 
@@ -46,8 +48,8 @@ const hasVerticalScroll = ref(false);
 const hasHorizontalScroll = ref(false);
 
 const updateScrollableState = () => {
-  hasVerticalScroll.value = scrollDOMContainer.value.scrollHeight > scrollDOMContainer.value.clientHeight;
-  hasHorizontalScroll.value = scrollDOMContainer.value.scrollWidth > scrollDOMContainer.value.clientWidth;
+  hasVerticalScroll.value = scrollDOMContainer.value?.scrollHeight > scrollDOMContainer.value?.clientHeight;
+  hasHorizontalScroll.value = scrollDOMContainer.value?.scrollWidth > scrollDOMContainer.value?.clientWidth;
 };
 
 const paddingRightCandidate = computed(() => props.yBarWidthInPx + props.yGapInPx);
@@ -76,8 +78,8 @@ interface INmorphEmit {
 const emit = defineEmits<INmorphEmit>();
 
 const updateValue = () => {
-  const x = Math.trunc(scrollDOMContainer.value.scrollLeft);
-  const y = Math.trunc(scrollDOMContainer.value.scrollTop);
+  const x = Math.trunc(scrollDOMContainer.value?.scrollLeft);
+  const y = Math.trunc(scrollDOMContainer.value?.scrollTop);
   emit('update:modelValue', { x, y });
 };
 
@@ -116,8 +118,6 @@ const modifiers = computed(() =>
   })
 );
 
-const scrollDOMContainer = ref<NmorphDomElementType>(null);
-
 const moveTo = (coords: NmorphCoordsType) => {
   const { x, y } = coords;
   scrollDOMContainer.value?.scrollTo({
@@ -141,7 +141,7 @@ watch(
 );
 
 watch(
-  () => nmorph.browser.dimensions,
+  () => nmorph?.browser.dimensions,
   () => {
     nextTick(updateScrollableState);
   },

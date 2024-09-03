@@ -9,8 +9,10 @@ const library: Plugin = {
     const i18n = useNmorphTranslation(options.i18n);
     // @ts-expect-error ///
     const vueI18nInstance = Vue.__VUE_I18N__;
+    console.log(vueI18nInstance, 'vue i18n instance', Vue);
     if (vueI18nInstance) {
       if (i18n.global.messages) {
+        console.log(i18n.global.messages, 'messages');
         Object.entries(i18n.global.messages).forEach(([locale, translates]) => {
           vueI18nInstance.global.messages.value[locale] = {
             ...vueI18nInstance.global.messages.value[locale],
@@ -19,10 +21,12 @@ const library: Plugin = {
         });
       }
       if (i18n.global.locale) {
+        console.log(i18n.global.locale, 'locale');
         vueI18nInstance.global.locale.value = i18n.global.locale;
       }
     } else {
       Vue.use(i18n);
+      console.log('use i18n', i18n);
     }
 
     const theme = useNmorphTheme(options.theme);

@@ -40,7 +40,7 @@ const iconList = computed(() => {
 </script>
 
 <template>
-  <component-overview name="icon">
+  <ComponentOverview name="icon">
     <template #default>
       <div class="docs-icon" id="content-icon-list">
         <NmorphForm :value="form" class="docs-icon__search-icon-form">
@@ -61,16 +61,18 @@ const iconList = computed(() => {
             :key="idx"
             @click="() => clickIconHandler(String(el))"
           >
-            <NmorphIcon
-              :name="(el as keyof typeof NmorphIconList)"
-              size="medium"
-            />
+            <ClientOnly>
+              <NmorphIcon
+                :name="(el as keyof typeof NmorphIconList)"
+                size="medium"
+              />
+            </ClientOnly>
             <span class="docs-icon__icon-name">{{ el }}</span>
           </div>
         </div>
       </div>
     </template>
-  </component-overview>
+  </ComponentOverview>
 </template>
 
 <style lang="scss" scoped>
@@ -82,20 +84,20 @@ const iconList = computed(() => {
   display: block;
 }
 
-::v-deep(.docs-icon__search-field) {
+:deep(.docs-icon__search-field) {
   width: 100%;
 }
 
-::v-deep(.nmorph-form__content) {
+:deep(.nmorph-form__content) {
   width: 100%;
   display: flex;
 }
 
-::v-deep(.nmorph-alert) {
+:deep(.nmorph-alert) {
   padding: 8px;
 }
 
-::v-deep(.nmorph-alert .nmorph-alert__icon) {
+:deep(.nmorph-alert .nmorph-alert__icon) {
   margin-right: 4px;
 }
 
@@ -123,7 +125,7 @@ const iconList = computed(() => {
 }
 
 // TODO удалить после добавления в либу
-::v-deep(.nmorph-validation-icon) {
+:deep(.nmorph-validation-icon) {
   display: none;
 }
 </style>

@@ -2,9 +2,11 @@
   "name": "nmorph-lib-docs",
   "private": true,
   "type": "module",
+  "version": "0.0.2",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --no-qr",
+    "clean": "rm -rf .nuxt node_modules && npm install",
     "update-component-list": "node ./components/component-list/create-component-list.js ",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -12,12 +14,12 @@
     "deploy": "nuxt generate && gh-pages -d dist"
   },
   "dependencies": {
-    "@nmorph/nmorph-ui-kit": "^0.2.38",
+    "@nmorph/nmorph-ui-kit": "^0.2.50",
     "@nuxtjs/i18n": "^8.3.1",
     "nuxt": "^3.11.2",
     "nuxt-svgo": "^4.0.1",
+    "qrcode": "^1.5.4",
     "vue": "^3.4.27",
-    "vue-i18n": "^9.13.1",
     "vue-router": "^4.3.2",
     "vue3-highlightjs": "^1.0.5"
   },

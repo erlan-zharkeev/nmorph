@@ -28,7 +28,9 @@ const code = [scriptData, templateData, cssData];
         <div class="button-disabled-overview">
           <NmorphButton disabled>Disabled</NmorphButton>
           <NmorphButton disabled height="thin">Disabled thin</NmorphButton>
-          <NmorphButton disabled loading />
+          <ClientOnly>
+            <NmorphButton disabled loading />
+          </ClientOnly>
         </div>
       </template>
       <template #code>

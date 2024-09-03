@@ -6,6 +6,7 @@ import { router } from "./../app/providers/router/index";
 const nmorph = useNmorph();
 
 const allRoutes = router.getRoutes();
+console.log(nmorph.theme.currentTheme.value);
 </script>
 <template>
   <div class="top-bar">
@@ -18,7 +19,7 @@ const allRoutes = router.getRoutes();
       >
     </div>
     <NmorphSwitch
-      :model-value="nmorph.theme.currentTheme"
+      :model-value="nmorph.theme.currentTheme.value"
       @update:model-value="nmorph.theme.setTheme"
       active-value="dark"
       inactive-value="light"

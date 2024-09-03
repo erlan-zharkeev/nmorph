@@ -22,7 +22,7 @@ const code = [scriptData, templateData, cssData];
   <div id="content-style-type">
     <attribute
       header="Style type"
-      :subtitle="$t('overview.button.styleType.subtitle')"
+      :subtitle="$t('overview.button.style-type.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>

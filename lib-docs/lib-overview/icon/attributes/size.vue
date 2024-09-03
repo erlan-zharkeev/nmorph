@@ -25,9 +25,11 @@ const code = [scriptData, templateData, cssData];
     >
       <template #overview>
         <div class="icon-size-overview">
-          <NmorphIcon size="large" name="eye" />
-          <NmorphIcon size="medium" name="eye" />
-          <NmorphIcon size="small" name="eye" />
+          <ClientOnly>
+            <NmorphIcon size="large" name="eye" />
+            <NmorphIcon size="medium" name="eye" />
+            <NmorphIcon size="small" name="eye" />
+          </ClientOnly>
         </div>
       </template>
       <template #code>

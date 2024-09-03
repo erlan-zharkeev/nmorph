@@ -23,7 +23,6 @@ export default defineConfig(({ mode }) => {
     ],
     build: {
       target: 'esnext',
-      minify: false,
       lib: {
         entry: resolve(__dirname, 'src', 'main.ts'),
         name: 'library',
