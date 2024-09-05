@@ -11,7 +11,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     // };
     // console.log(nuxtApp.$i18n.locales.value, "app");
     const options = {
-      i18n: { messages: { ru }, locale: "en" },
+      // i18n: { messages: { ru }, locale: "en" },
+      i18n: {
+        outsideMessagesMerge: true,
+      },
     };
 
     nuxtApp.vueApp.use(NmorphLibrary, options);

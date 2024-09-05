@@ -1,3 +1,4 @@
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
@@ -32,6 +33,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["@nmorph/nmorph-ui-kit/dist/style.css"],
   vite: {
+    resolve: {
+      preserveSymlinks: true,
+    },
     css: {
       preprocessorOptions: {
         scss: {
@@ -50,18 +54,5 @@ export default defineNuxtConfig({
     },
   },
   modules: ["@nuxtjs/i18n", "nuxt-svgo"],
-  i18n: {
-    lazy: true,
-    langDir: "./locales",
-    strategy: "prefix_except_default",
-    locales: [
-      { code: "en", iso: "en-US", name: "English", file: "en.json" },
-      { code: "ru", iso: "ru-RU", name: "Русский", file: "ru.json" },
-    ],
-    defaultLocale: "en",
-    // detectBrowserLanguage: {
-    //   useCookie: true,
-    //   alwaysRedirect: true,
-    // },
-  },
+  i18n: { vueI18n: './i18n.config.ts' }
 });
