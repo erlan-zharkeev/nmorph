@@ -60,7 +60,6 @@ watch(
 
 <template>
   <div :class="modifiers">
-    {{ $t('NmorphSwitch.on') }}
     <div class="nmorph-switch__content" @click="changeHandler">
       <input
         ref="inputDOMRef"

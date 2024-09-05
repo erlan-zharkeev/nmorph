@@ -6,7 +6,6 @@ import { router } from "./../app/providers/router/index";
 const nmorph = useNmorph();
 
 const allRoutes = router.getRoutes();
-console.log(nmorph.theme.currentTheme.value);
 </script>
 <template>
   <div class="top-bar">
