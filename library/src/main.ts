@@ -6,27 +6,28 @@ import { INmorphOptions } from './types/index.ts';
 
 const library: Plugin = {
   install(Vue: App, options: INmorphOptions = {}): App {
-    const i18n = useNmorphTranslation(options.i18n);
+    const libTranslates = useNmorphTranslation(options.i18n);
     // @ts-expect-error ///
     const vueI18nInstance = Vue.__VUE_I18N__;
-    console.log(vueI18nInstance, 'vue i18n instance', Vue);
+    console.log(libTranslates.global.messages, 'сообщения либы');
+    console.log(Vue, 'vue инстанс');
+    console.log(vueI18nInstance.global.messages.value, 'сообщение app i18n');
+    console.log(vueI18nInstance.global, 'global data app i18n');
+    // Object.entries(vueI18nInstance.global.messages)
+    // const appMessages = vueI18nInstance.global.messages
+    // Object.entries(vueI18nInstance.global.messages)
     if (vueI18nInstance) {
-      if (i18n.global.messages) {
-        console.log(i18n.global.messages, 'messages');
-        Object.entries(i18n.global.messages).forEach(([locale, translates]) => {
-          vueI18nInstance.global.messages.value[locale] = {
-            ...vueI18nInstance.global.messages.value[locale],
-            ...translates,
-          };
+      if (libTranslates.global.messages) {
+        Object.entries(libTranslates.global.messages).forEach(([locale, messages]) => {
+          console.log(locale, messages, 'locale');
+          // vueI18nInstance.global.mergeLocaleMessage(locale, messages);
         });
       }
-      if (i18n.global.locale) {
-        console.log(i18n.global.locale, 'locale');
-        vueI18nInstance.global.locale.value = i18n.global.locale;
+      if (libTranslates.global.locale) {
+        vueI18nInstance.global.locale.value = libTranslates.global.locale;
       }
     } else {
-      Vue.use(i18n);
-      console.log('use i18n', i18n);
+      Vue.use(libTranslates);
     }
 
     const theme = useNmorphTheme(options.theme);

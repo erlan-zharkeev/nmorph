@@ -26,9 +26,10 @@ const availableLocales = computed(() => {
 
 onMounted(() => {
   if (import.meta.client) {
-    const nmorph = useNmorph();
-    currentTheme.value = nmorph.theme.currentTheme.value;
-    setTheme.value = nmorph.theme.setTheme;
+    // const nmorph = useNmorph();
+    // console.log(nmorph, "nmorph");
+    // currentTheme.value = nmorph.theme.currentTheme.value;
+    // setTheme.value = nmorph.theme.setTheme;
   }
 });
 

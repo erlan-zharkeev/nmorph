@@ -13,6 +13,6 @@ const app = createApp(App);
 app.use(router);
 app.use(i18n);
 app.use(vfm);
-app.use(store);
 app.use(NmorphLibrary, { i18n: { messages: { ru }, locale: "en" } });
+app.use(store);
 app.mount("#app");

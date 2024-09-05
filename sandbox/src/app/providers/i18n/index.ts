@@ -1,16 +1,16 @@
 import { createI18n } from "vue-i18n";
 
 export const i18n = createI18n({
-  locale: "ru",
+  locale: "en",
   fallbackLocale: "en",
   globalInjection: true,
   legacy: false,
   messages: {
     ru: {
-      custom: "kastom",
+      custom: "RU KUSTOM",
     },
     en: {
-      custom: "custom",
+      custom: "ENG CUSTOM",
     },
   },
 });

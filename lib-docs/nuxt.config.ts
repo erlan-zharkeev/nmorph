@@ -55,13 +55,13 @@ export default defineNuxtConfig({
     langDir: "./locales",
     strategy: "prefix_except_default",
     locales: [
-      { code: "en-US", iso: "en-US", name: "English", file: "en-US.json" },
-      { code: "ru-RU", iso: "ru-RU", name: "Русский", file: "ru-RU.json" },
+      { code: "en", iso: "en-US", name: "English", file: "en.json" },
+      { code: "ru", iso: "ru-RU", name: "Русский", file: "ru.json" },
     ],
-    defaultLocale: "en-US",
-    detectBrowserLanguage: {
-      useCookie: true,
-      alwaysRedirect: true,
-    },
+    defaultLocale: "en",
+    // detectBrowserLanguage: {
+    //   useCookie: true,
+    //   alwaysRedirect: true,
+    // },
   },
 });
