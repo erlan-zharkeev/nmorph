@@ -1,6 +1,4 @@
-import { en } from '@nmorph/nmorph-ui-kit';
 export default {
-  ...en,
   "guide": "Guide",
   "components": "Components",
   "about": "About",

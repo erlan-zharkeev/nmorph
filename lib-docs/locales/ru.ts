@@ -1,7 +1,4 @@
-import { ru } from '@nmorph/nmorph-ui-kit';
-
 export default {
-  ...ru,
   "guide": "Руководство",
   "components": "Компоненты",
   "about": "О нас",
