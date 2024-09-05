@@ -1,4 +1,4 @@
-{
+export default {
   "guide": "Руководство",
   "components": "Компоненты",
   "about": "О нас",

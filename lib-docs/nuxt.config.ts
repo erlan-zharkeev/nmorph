@@ -1,5 +1,9 @@
+import fs from 'fs';
+import path from 'path';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  compatibilityDate: '2024-09-05',
   app: {
     head: {
       link: [
@@ -32,11 +36,20 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["@nmorph/nmorph-ui-kit/dist/style.css"],
   vite: {
+    resolve: {
+      preserveSymlinks: true,
+    },
     css: {
       preprocessorOptions: {
         scss: {
           additionalData: '@use "~/assets/style/global-mixins.scss" as *;',
         },
+      },
+    },
+    server: {
+      https: {
+        key: fs.readFileSync(path.resolve(__dirname, 'certs/key.pem')),
+        cert: fs.readFileSync(path.resolve(__dirname, 'certs/cert.pem')),
       },
     },
   },
@@ -55,13 +68,14 @@ export default defineNuxtConfig({
     langDir: "./locales",
     strategy: "prefix_except_default",
     locales: [
-      { code: "en-US", iso: "en-US", name: "English", file: "en-US.json" },
-      { code: "ru-RU", iso: "ru-RU", name: "Русский", file: "ru-RU.json" },
+      { code: "en", name: "English", file: "en.ts" },
+      { code: "ru", name: "Русский", file: "ru.ts" },
     ],
-    defaultLocale: "en-US",
+    defaultLocale: "en",
     detectBrowserLanguage: {
       useCookie: true,
       alwaysRedirect: true,
     },
+    vueI18n: './i18n.config.ts'
   },
 });

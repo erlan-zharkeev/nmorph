@@ -1,4 +1,4 @@
-{
+export default {
   "guide": "Guide",
   "components": "Components",
   "about": "About",

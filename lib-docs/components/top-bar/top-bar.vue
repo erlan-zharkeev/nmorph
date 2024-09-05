@@ -58,14 +58,6 @@ const updateMenuHandler = () => {
   emit("toggle-menu");
 };
 
-// watch(locale, () => {
-//   open.value = false;
-// });
-
-// const availableLocales = [
-//   { code: "en-EN", name: "English" },
-//   { code: "ru-RU", name: "Русский" },
-// ];
 </script>
 
 <template>

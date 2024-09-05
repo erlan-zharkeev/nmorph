@@ -65,5 +65,6 @@ module.exports = {
         allowBinding: true,
       },
     ],
+    'vue/no-v-html': 'off'
   },
 };

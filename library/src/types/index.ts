@@ -395,6 +395,7 @@ export interface LibraryOptions {
 }
 
 export interface INmorphApplyTranslation {
+  outsideMessagesMerge?: boolean;
   messages?: TranslateType;
   locale?: keyof typeof Locale;
 }
