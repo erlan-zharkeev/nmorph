@@ -1,18 +1,18 @@
 import { App, Component, Plugin } from 'vue';
 import * as components from './components';
-import { useNmorphTranslation } from './hooks';
+// import { useNmorphTranslation } from './hooks';
 import { useNmorphBrowser, useNmorphTheme } from './providers';
 import { INmorphOptions } from './types/index.ts';
 
 const library: Plugin = {
   install(Vue: App, options: INmorphOptions = {}): App {
-    const libTranslates = useNmorphTranslation(options.i18n);
-    // @ts-expect-error ///
-    const vueI18nInstance = Vue.__VUE_I18N__;
-    console.log(libTranslates.global.messages, 'сообщения либы');
+    // const libTranslates = useNmorphTranslation(options.i18n);
+    // // @ts-expect-error ///
+    // const vueI18nInstance = Vue.__VUE_I18N__;
+    // console.log(libTranslates.global.messages, 'сообщения либы');
     console.log(Vue, 'vue инстанс');
-    console.log(vueI18nInstance.global.messages.value, 'сообщение app i18n');
-    console.log(vueI18nInstance.global, 'global data app i18n');
+    // console.log(vueI18nInstance.global.messages.value, 'сообщение app i18n');
+    // console.log(vueI18nInstance.global, 'global data app i18n');
     // Object.entries(vueI18nInstance.global.messages)
     // const appMessages = vueI18nInstance.global.messages
     // Object.entries(vueI18nInstance.global.messages)
