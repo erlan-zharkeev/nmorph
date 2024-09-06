@@ -52,7 +52,7 @@ $transition: 0.2s ease-in-out left;
   z-index: 2;
 }
 
-::v-deep(.docs-components-list__scroll) {
+:deep(.docs-components-list__scroll) {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;

@@ -6,23 +6,22 @@ import { INmorphOptions } from './types/index.ts';
 
 const library: Plugin = {
   install(Vue: App, options: INmorphOptions = {}): App {
-    const i18n = useNmorphTranslation(options.i18n);
-    // @ts-expect-error ///
-    const vueI18nInstance = Vue.__VUE_I18N__;
-    if (vueI18nInstance) {
-      if (i18n.global.messages) {
-        Object.entries(i18n.global.messages).forEach(([locale, translates]) => {
-          vueI18nInstance.global.messages.value[locale] = {
-            ...vueI18nInstance.global.messages.value[locale],
-            ...translates,
-          };
-        });
+    if (!options.i18n.outsideMessagesMerge) {
+      const libTranslates = useNmorphTranslation(options.i18n);
+      // @ts-expect-error ///
+      const vueI18nInstance = Vue.__VUE_I18N__;
+      if (vueI18nInstance) {
+        if (libTranslates.global.messages) {
+          Object.entries(libTranslates.global.messages).forEach(([locale, messages]) => {
+            vueI18nInstance.global.mergeLocaleMessage(locale, messages);
+          });
+        }
+        if (libTranslates.global.locale) {
+          vueI18nInstance.global.locale.value = libTranslates.global.locale;
+        }
+      } else {
+        Vue.use(libTranslates);
       }
-      if (i18n.global.locale) {
-        vueI18nInstance.global.locale.value = i18n.global.locale;
-      }
-    } else {
-      Vue.use(i18n);
     }
 
     const theme = useNmorphTheme(options.theme);

@@ -20,7 +20,7 @@ const code = [scriptData, templateData, cssData];
   <div id="content-height">
     <attribute
       header="Height"
-      :subtitle="$t('overview.button.style-type.subtitle')"
+      :subtitle="$t('overview.button.height.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>

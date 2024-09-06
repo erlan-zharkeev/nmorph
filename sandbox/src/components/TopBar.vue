@@ -18,7 +18,7 @@ const allRoutes = router.getRoutes();
       >
     </div>
     <NmorphSwitch
-      :model-value="nmorph.theme.currentTheme"
+      :model-value="nmorph.theme.currentTheme.value"
       @update:model-value="nmorph.theme.setTheme"
       active-value="dark"
       inactive-value="light"

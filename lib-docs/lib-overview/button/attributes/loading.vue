@@ -29,8 +29,10 @@ const code = [scriptData, templateData, cssData];
     >
       <template #overview>
         <div class="button-loading-overview">
-          <NmorphButton style-type="default" loading />
-          <NmorphButton style-type="transparent" loading />
+          <ClientOnly>
+            <NmorphButton style-type="default" loading />
+            <NmorphButton style-type="transparent" loading />
+          </ClientOnly>
         </div>
       </template>
       <template #code>

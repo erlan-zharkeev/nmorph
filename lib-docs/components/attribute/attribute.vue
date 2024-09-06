@@ -45,8 +45,6 @@ const highlightedSubtitle = computed(() =>
   props.subtitle ? highlightText(props.subtitle) : ""
 );
 
-const { t } = useI18n();
-
 const infoData = `overview.${props.name}.info`;
 </script>
 
@@ -57,8 +55,8 @@ const infoData = `overview.${props.name}.info`;
     </h2>
     <info
       v-if="props.name"
-      :title="t(`${infoData}.title`)"
-      :content="t(`${infoData}.content`)"
+      :title="$t(`${infoData}.title`)"
+      :content="$t(`${infoData}.content`)"
     />
     <p
       class="docs-attribute__subtitle nmorph-body-2"
@@ -71,8 +69,10 @@ const infoData = `overview.${props.name}.info`;
         <slot name="overview" />
       </div>
       <div class="docs-component__overview-component-actions">
-        <NmorphButton @click="copyHandler" icon="copy-document" />
-        <NmorphButton @click="openHandler" icon="code" />
+        <ClientOnly>
+          <NmorphButton @click="copyHandler" icon="copy-document" />
+          <NmorphButton @click="openHandler" icon="code" />
+        </ClientOnly>
       </div>
       <NmorphCollapse :modelValue="codeOpen">
         <NmorphCollapseItem id="1" name="1">
@@ -84,15 +84,15 @@ const infoData = `overview.${props.name}.info`;
 </template>
 
 <style scoped lang="scss">
-::v-deep .nmorph-collapse-item__inner-wrapper {
+:deep(.nmorph-collapse-item__inner-wrapper) {
   padding-top: 0;
 }
 
-::v-deep .nmorph-collapse-item .nmorph-collapse-item__title {
+:deep(.nmorph-collapse-item .nmorph-collapse-item__title) {
   display: none;
 }
 
-::v-deep .nmorph-collapse-item__inner-wrapper {
+:deep(.nmorph-collapse-item__inner-wrapper) {
   margin-top: -10px;
 }
 

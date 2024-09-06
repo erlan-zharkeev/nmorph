@@ -31,13 +31,14 @@
       <NmorphLink disabled type="warning">Warning</NmorphLink>
       <NmorphLink disabled type="error">Error</NmorphLink>
       <NmorphLink disabled underline>Underlined</NmorphLink>
+      {{ $t("custom") }}
     </div>
     <div class="slider">
       <div class="docs-top-bar__left">
         <NmorphCheckbox
           class="docs-top-bar__burger"
-          style-type="button"
           label="menu"
+          design="button"
         >
           <template #label>
             <NmorphIcon name="burger" />

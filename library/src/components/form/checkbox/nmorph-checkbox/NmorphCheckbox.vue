@@ -12,6 +12,7 @@ const groupSelectedValue = inject<NmorphCheckboxGroupSelectedValueInjectionType>
   'checkbox-group-selected-value',
   undefined
 );
+
 const changeValue = inject<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>(
   'change-checkbox-value-handler',
   undefined
@@ -53,7 +54,11 @@ const handleChange = () => {
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-checkbox': [`${checked.value && 'checked'}`, `${props.disabled && 'disabled'}`, props.design],
+    'nmorph-checkbox': [
+      `${checked.value && 'checked'}`,
+      `${props.disabled && 'disabled'}`,
+      `${props.design === 'button' && 'button'}`,
+    ],
   })
 );
 </script>
@@ -83,7 +88,7 @@ const modifiers = computed(() =>
     <div v-if="props.design === 'button'" class="nmorph-checkbox__content">
       <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked" @change="handleChange" />
       <div v-if="props.label" class="nmorph-checkbox__fake">
-        <span> {{ props.label }} </span>
+        <span>{{ props.label }}</span>
       </div>
       <div v-else class="nmorph-checkbox__fake">
         <slot name="label" />
@@ -141,7 +146,7 @@ const modifiers = computed(() =>
   }
 
   .nmorph-checkbox__fake span {
-    margin-top: 2px;
+    line-height: 0.8;
   }
 }
 
