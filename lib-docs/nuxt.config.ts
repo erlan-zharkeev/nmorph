@@ -1,9 +1,9 @@
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-09-05',
+  compatibilityDate: "2024-09-05",
   app: {
     head: {
       link: [
@@ -48,8 +48,8 @@ export default defineNuxtConfig({
     },
     server: {
       https: {
-        key: fs.readFileSync(path.resolve(__dirname, 'certs/key.pem')),
-        cert: fs.readFileSync(path.resolve(__dirname, 'certs/cert.pem')),
+        key: fs.readFileSync(path.resolve(__dirname, "certs/key.pem")),
+        cert: fs.readFileSync(path.resolve(__dirname, "certs/cert.pem")),
       },
     },
   },
@@ -68,14 +68,14 @@ export default defineNuxtConfig({
     langDir: "./locales",
     strategy: "prefix_except_default",
     locales: [
-      { code: "en", name: "English", file: "en.ts" },
-      { code: "ru", name: "Русский", file: "ru.ts" },
+      { code: "en", name: "English", file: "en.js" },
+      { code: "ru", name: "Русский", file: "ru.js" },
     ],
     defaultLocale: "en",
     detectBrowserLanguage: {
       useCookie: true,
       alwaysRedirect: true,
     },
-    vueI18n: './i18n.config.ts'
+    vueI18n: "./i18n.config.ts",
   },
 });

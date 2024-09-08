@@ -25,7 +25,6 @@ const closeMenuHandler = () => {
   menuOpen.value = false;
 };
 
-
 onMounted(async () => {
   log("success", `NMORPH DOCS (v${projectData.version})`);
   const url = `http://192.168.1.5:2222`;

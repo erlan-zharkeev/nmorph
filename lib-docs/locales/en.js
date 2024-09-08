@@ -136,6 +136,7 @@ export default {
         "scroll-y-prop": "Determines the vertical scroll behavior, such as auto or hidden",
         "scroll-x-prop": "Sets the horizontal scroll behavior, controlling the visibility and functionality of the horizontal scroll",
         "css-scroll-behavior": "Defines the scroll's animation behavior, such as smooth for a gradual scrolling effect",
+        "scroll-end-delay": "Scroll end delay in ms",
         "update-only-on-scroll-end": "When set to true, updates the model-value only after scrolling has ended",
         "y-bar-width-in-px": "Y scrollbar width",
         "x-bar-width-in-px": "X scrollbar width",
@@ -151,6 +152,36 @@ export default {
       "variables": {
         "thumb-color": "Thumb color"
       }
+    },
+    "avatar": {
+      "size": {
+        "subtitle": ""
+      },
+      "shape": {
+        "subtitle": ""
+      },
+      "src": {
+        "subtitle": ""
+      },
+      "src-set": {
+        "subtitle": ""
+      },
+      "alt": {
+        "subtitle": ""
+      },
+      "fit": {
+        "subtitle": ""
+      },
+      "api": {
+        "size": "",
+        "shape": "",
+        "src": "",
+        "src-set": "",
+        "alt": "",
+        "fit": ""
+      },
+      "slot": {},
+      "variables": {}
     }
   }
-}
+};

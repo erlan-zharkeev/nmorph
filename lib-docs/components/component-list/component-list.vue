@@ -1,82 +1,16 @@
-
 <script setup lang="ts">
 import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
 
-const list: {
-  name: string;
-  components: string[];
-}[] =  [
+const list: { name: string; components: string[] }[] = [
   {
     name: "basic",
     components: ["NmorphButton", "NmorphIcon", "NmorphLink", "NmorphScroll"],
   },
-  // {
-  //   name: "data",
-  //   components: [
-  //     "NmorphAvatar",
-  //     "NmorphBadge",
-  //     "NmorphCalendar",
-  //     "NmorphCalendarHeader",
-  //     "NmorphCard",
-  //     "NmorphCarousel",
-  //     "NmorphCarouselItem",
-  //     "NmorphCollapse",
-  //     "NmorphCollapseItem",
-  //     "NmorphImage",
-  //     "NmorphImagePreview",
-  //     "NmorphPagination",
-  //     "NmorphProgress",
-  //     "NmorphSkeleton",
-  //     "NmorphSkeletonItem",
-  //     "NmorphTable",
-  //     "NmorphTableCell",
-  //     "NmorphTableColumn",
-  //     "NmorphTag",
-  //   ],
-  // },
-  // {
-  //   name: "feedback",
-  //   components: ["NmorphAlert", "NmorphDialog", "NmorphTooltip"],
-  // },
-  // {
-  //   name: "form",
-  //   components: [
-  //     "NmorphCheckbox",
-  //     "NmorphCheckboxGroup",
-  //     "NmorphAutocomplete",
-  //     "NmorphDatePicker",
-  //     "NmorphDatePickerContent",
-  //     "NmorphDatePickerHeader",
-  //     "NmorphYearMonthPicker",
-  //     "NmorphFileUpload",
-  //     "NmorphForm",
-  //     "NmorphFormItem",
-  //     "NmorphNumberInput",
-  //     "NmorphSelect",
-  //     "NmorphSelectOption",
-  //     "NmorphSlider",
-  //     "NmorphSwitch",
-  //     "NmorphTextInput",
-  //     "NmorphTimePicker",
-  //     "NmorphRadio",
-  //     "NmorphRadioGroup",
-  //   ],
-  // },
-  // {
-  //   name: "navigation",
-  //   components: [
-  //     "NmorphBacktop",
-  //     "NmorphBreadcrumb",
-  //     "NmorphBreadcrumbItem",
-  //     "NmorphDropdown",
-  //     "NmorphTabs",
-  //     "NmorphTabPane",
-  //   ],
-  // },
-  // {
-  //   name: "others",
-  //   components: ["NmorphDivider", "NmorphOverlay"],
-  // },
+
+  {
+    name: "data",
+    components: ["NmorphAvatar"]
+  },
 ];
 
 const localePath = useLocalePath();
