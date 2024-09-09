@@ -1,6 +1,4 @@
 export { default as NmorphAvatar } from './nmorph-avatar/NmorphAvatar.vue';
-export * from './nmorph-avatar/type';
-
 export { default as NmorphBadge } from './nmorph-badge/NmorphBadge.vue';
 export { default as NmorphCalendar } from './nmorph-calendar/NmorphCalendar.vue';
 export * from './nmorph-calendar/types';

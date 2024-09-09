@@ -6,11 +6,12 @@ import {
   NmorphButtonShape,
 } from "@nmorph/nmorph-ui-kit";
 import ApiTable from "~/components/api-table/api-table.vue";
+import { enumToString } from "~/utils";
 
 const attributesData = [
   {
     name: "type",
-    type: Object.keys(NmorphButtonType).join(", "),
+    type: enumToString(NmorphButtonType),
     default: "button",
   },
   {
@@ -25,7 +26,7 @@ const attributesData = [
   },
   {
     name: "style-type",
-    type: Object.keys(NmorphButtonStyle).join(", "),
+    type: enumToString(NmorphButtonStyle),
     default: "default",
   },
   {
@@ -50,12 +51,12 @@ const attributesData = [
   },
   {
     name: "shape",
-    type: Object.keys(NmorphButtonShape).join(", "),
+    type: enumToString(NmorphButtonShape),
     default: "default",
   },
   {
     name: "height",
-    type: Object.keys(NmorphComponentHeight).join(", "),
+    type: enumToString(NmorphComponentHeight),
     default: "default",
   },
   {

@@ -9,6 +9,11 @@ export enum NmorphComponentHeight {
 
 export type NmorphSortOrderType = keyof typeof NmorphSortOrder | undefined;
 
+export enum AvatarShapeType {
+  circle = 'circle',
+  square = 'square',
+}
+
 export enum NmorphSortOrder {
   ascending = 'ascending',
   descending = 'descending',
@@ -421,4 +426,11 @@ export interface INmorphInstance {
   browser: {
     dimensions: Ref<INmorphDimensions>;
   };
+}
+
+export interface INmorphImage {
+  src: string;
+  srcSet?: string;
+  fit?: keyof typeof NmorphImageFit;
+  alt?: string;
 }

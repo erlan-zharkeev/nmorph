@@ -1,17 +1,14 @@
-import { capitalizeFirstChar, camelToKebab } from "@nmorph/nmorph-ui-kit"
+import { capitalizeFirstChar, camelToKebab, camelToTitle } from "@nmorph/nmorph-ui-kit"
 
 export const generateAttribute = (componentName, attribute) => `
 <script setup lang="ts">
 import { Nmorph${capitalizeFirstChar(componentName)} } from "@nmorph/nmorph-ui-kit";
 
-const scriptData = \`
-\`;
+const scriptData = ``;
 
-const templateData = \`\`;
+const templateData = ``;
 
-const cssData = \`
-// <style lang="scss"></style>
-\`;
+const cssData = ``;
 
 const code = [scriptData, templateData, cssData];
 
@@ -20,7 +17,7 @@ const code = [scriptData, templateData, cssData];
 <template>
   <div id="content-${camelToKebab(attribute)}">
     <attribute
-      header="${camelToKebab(attribute)}"
+      header="${camelToTitle(attribute)}"
       :subtitle="$t('overview.${componentName}.${camelToKebab(attribute)}.subtitle')"
       :codeToCopy="code"
     >
@@ -61,17 +58,22 @@ export default [...Attributes, Api];
 export const generateApiContent = (attributes, componentName) =>
 `
 <script setup lang="ts">
+import {
+  type IAttributesTableData,
+  type ISlotsTableData,
+  type IVariablesTableData,
+} from "~/types";
 import ApiTable from "~/components/api-table/api-table.vue";
 
-const attributesData = [${attributes.map((attr) => `{
+const attributesData: IAttributesTableData[] = [${attributes.map((attr) => `{
   name: "${camelToKebab(attr)}",
   type: "",
   default: "",
 }`)}];
 
-const slotData = [];
+const slotData: ISlotsTableData[] = [];
 
-const variables = [];
+const variables: IVariablesTableData[] = [];
 </script>
 
 <template>

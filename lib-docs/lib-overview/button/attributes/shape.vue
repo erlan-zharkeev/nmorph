@@ -9,19 +9,7 @@ const templateData = `
 <NmorphButton shape="round">Round</NmorphButton>
 <NmorphButton shape="square" class="custom-square-button">Square</NmorphButton>`;
 
-const cssData = `
-<style lang="scss">
-.nmorph-button {
-  margin: 0 8px;
-}
-.custom-circle-button {
-  --height: 50px;
-}
-.custom-square-button {
-  --height: 70px;
-}
-</style>
-`;
+const cssData = ``;
 const code = [scriptData, templateData, cssData];
 </script>
 

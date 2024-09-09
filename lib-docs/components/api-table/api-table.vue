@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import {
+  type IAttributesTableData,
+  type ISlotsTableData,
+  type IVariablesTableData,
+} from "~/types";
+import {
   NmorphTable,
   NmorphTableColumn,
   NmorphTableCell,
@@ -7,18 +12,6 @@ import {
 } from "@nmorph/nmorph-ui-kit";
 
 const { t } = useI18n();
-
-interface IAttributesTableData {
-  name: string;
-  type: string;
-  default: string;
-}
-
-interface ISlotsTableData {
-  name: string;
-}
-
-interface IVariablesTableData extends ISlotsTableData {}
 
 interface IProps {
   name: string;
@@ -86,7 +79,11 @@ const updatedVariables = getDescriptions(props.variables, "variables");
         </NmorphTable>
       </ClientOnly>
     </div>
-    <div v-if="updatedSlots" class="docs-api-table__slots" id="content-slots">
+    <div
+      v-if="updatedSlots?.length"
+      class="docs-api-table__slots"
+      id="content-slots"
+    >
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("slots") }}
       </h3>
@@ -102,7 +99,7 @@ const updatedVariables = getDescriptions(props.variables, "variables");
       </ClientOnly>
     </div>
     <div
-      v-if="updatedVariables"
+      v-if="updatedVariables?.length"
       class="docs-api-table__variables"
       id="content-variables"
     >

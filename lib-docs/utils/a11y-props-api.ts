@@ -2,16 +2,16 @@ export const a11yPropsApi = [
   {
     name: "role",
     type: "String",
-    default: "undefined",
+    default: "-",
   },
   {
     name: "aria-label",
     type: "String",
-    default: "undefined",
+    default: "-",
   },
   {
     name: "aria-orientation",
     type: "String",
-    default: "undefined",
+    default: "-",
   },
 ];

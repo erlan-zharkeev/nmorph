@@ -10,13 +10,7 @@ const templateData = `
 <NmorphIcon name="avatar" color="#694295" size="large" />
 <NmorphIcon name="archive" color="hsl(148, 60%, 39%)" size="large" />
 `;
-const cssData = `
-<style lang="scss">
-.nmorph-icon {
-  margin: 0 8px;
-}
-</style>
-`;
+const cssData = ``;
 const code = [scriptData, templateData, cssData];
 </script>
 

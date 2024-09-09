@@ -6,13 +6,7 @@ const templateData = `
 <NmorphIcon name="loader" width="23px" height="23px" />
 <NmorphIcon name="loader" width="12px" height="12px" />
 `;
-const cssData = `
-<style lang="scss">
-.nmorph-icon {
-  margin: 0 8px;
-}
-</style>
-`;
+const cssData = ``;
 const code = [scriptData, templateData, cssData];
 </script>
 

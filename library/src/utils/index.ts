@@ -6,3 +6,4 @@ export * from './capitalize-first-char';
 export * from './camel-to-kebab';
 export * from './log';
 export * from './any-to-pascal';
+export * from './camel-to-title';

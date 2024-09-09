@@ -6,13 +6,7 @@ const templateData = `
 <NmorphButton height="default">Default</NmorphButton>
 <NmorphButton height="thin">Thin</NmorphButton>
 `;
-const cssData = `
-<style lang="scss">
-.nmorph-button {
-  margin: 0 8px;
-}
-</style>
-`;
+const cssData = ``;
 const code = [scriptData, templateData, cssData];
 </script>
 

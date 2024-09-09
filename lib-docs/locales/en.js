@@ -74,7 +74,7 @@ export default {
         "subtitle": "Set color, you can use custom colors or pass available variable"
       },
       "api": {
-        "size": "Icon size ",
+        "size": "Icon size",
         "width": "Icon width",
         "height": "Icon height",
         "color": "Icon color",
@@ -155,32 +155,25 @@ export default {
     },
     "avatar": {
       "size": {
-        "subtitle": ""
+        "subtitle": "Specifies the size of the avatar, accept only *number*."
       },
       "shape": {
-        "subtitle": ""
-      },
-      "src": {
-        "subtitle": ""
-      },
-      "src-set": {
-        "subtitle": ""
-      },
-      "alt": {
-        "subtitle": ""
+        "subtitle": "Determines the shape of the avatar. Can be *circle* or *square*."
       },
       "fit": {
-        "subtitle": ""
+        "subtitle": "Defines how the image fits into the container."
       },
       "api": {
-        "size": "",
-        "shape": "",
-        "src": "",
-        "src-set": "",
-        "alt": "",
-        "fit": ""
+        "size": "Specifies the avatar's size.",
+        "shape": "Defines the shape of the avatar.",
+        "src": "URL of the avatar image.",
+        "src-set": "List of image sources.",
+        "alt": "Text description for the image.",
+        "fit": "Specifies how the image fills the container."
       },
-      "slot": {},
+      "slot": {
+        "error": "Slot for displaying load errors"
+      },
       "variables": {}
     }
   }

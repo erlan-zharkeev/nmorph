@@ -75,10 +75,7 @@ const iconList = computed(() => {
   </ComponentOverview>
 </template>
 
-<style lang="scss" scoped>
-.docs-icon {
-}
-
+<style lang="scss">
 // TODO удалить после добавления в либу
 .nmorph-form-item .nmorph-form-item__content {
   display: block;
@@ -99,6 +96,11 @@ const iconList = computed(() => {
 
 :deep(.nmorph-alert .nmorph-alert__icon) {
   margin-right: 4px;
+}
+
+// TODO удалить после добавления в либу
+:deep(.nmorph-validation-icon) {
+  display: none;
 }
 
 .docs-icon__list-content {
@@ -122,10 +124,5 @@ const iconList = computed(() => {
 
 .docs-icon__icon-name {
   margin-top: 4px;
-}
-
-// TODO удалить после добавления в либу
-:deep(.nmorph-validation-icon) {
-  display: none;
 }
 </style>

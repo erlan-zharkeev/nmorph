@@ -12,13 +12,7 @@ const templateData = `
 />
 <NmorphButton :ripple="false" text="I am not ripple" />
 `;
-const cssData = `
-<style lang="scss">
-.nmorph-button {
-  margin: 0 8px;
-}
-</style>
-`;
+const cssData = ``;
 const code = [scriptData, templateData, cssData];
 </script>
 

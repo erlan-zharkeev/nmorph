@@ -18,7 +18,7 @@ interface INmorphProps extends INmorphCommonInputProps {
 const props = withDefaults(defineProps<INmorphProps>(), {
   type: 'button',
   fill: false,
-  text: '',
+  text: undefined,
   disabled: false,
   loading: false,
   styleType: 'default',
@@ -75,7 +75,7 @@ defineExpose({ buttonRef });
       <NmorphIcon v-if="props.icon" :name="props.icon" />
       <div v-else>
         <slot />
-        <span v-if="!props.loading && props.text !== ''">{{ props.text }}</span>
+        <span v-if="!props.loading && props.text !== undefined">{{ props.text }}</span>
         <NmorphIcon v-if="props.loading" name="loader" :size="loadingButtonSize" />
         <slot name="append" />
       </div>

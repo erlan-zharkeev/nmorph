@@ -1,29 +1,22 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphAvatarType } from '@/components';
-import { NmorphImageFit } from '@/types';
+import { NmorphImage, NmorphIcon } from '@/components';
+import { INmorphImage, AvatarShapeType } from '@/types';
 
-interface INmorphProps {
+interface INmorphProps extends INmorphImage {
   size?: number;
-  shape?: NmorphAvatarType;
-  src?: string;
-  srcSet?: string;
-  alt?: string;
-  fit?: keyof typeof NmorphImageFit;
+  shape?: keyof typeof AvatarShapeType;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   size: 40,
   shape: 'circle',
-  src: '',
-  srcSet: '',
-  alt: '',
-  fit: 'cover',
 });
 
 interface INmorphEmit {
-  (e: 'error'): void;
+  (e: 'error', event: Event): void;
+  (e: 'load', event: Event): void;
 }
 
 const emit = defineEmits<INmorphEmit>();
@@ -36,36 +29,35 @@ const modifiers = computed(() =>
   })
 );
 
-const imgModifiers = computed(() =>
-  useModifiers({
-    'nmorph-avatar__image': [`${hasError.value && 'hide'}`],
-  })
-);
-
-const onImageError = () => {
-  emit('error');
+const onImageError = (e: Event) => {
+  emit('error', e);
   hasError.value = true;
 };
 
-const onImageLoad = () => {
+const onImageLoad = (e: Event) => {
+  emit('load', e);
   hasError.value = false;
 };
 
 const size = computed(() => ` ${props.size}px`);
+const stubIconSize = computed(() => `${(props.size / 100) * 60}px`);
+const radius = computed(() => (props.shape === 'circle' ? '50%' : '4px'));
+const borderPadding = computed(() => `${(props.size / 100) * 3}px`);
 </script>
 <template>
   <div :class="modifiers">
-    <img
-      :src="props.src"
-      :srcset="props.srcSet"
-      :alt="props.alt"
-      :class="imgModifiers"
+    <NmorphImage
       @load="onImageLoad"
       @error="onImageError"
-    />
-    <div v-show="hasError" class="nmorph-avatar__fallback">
-      <slot />
-    </div>
+      :fit="props.fit"
+      :src="props.src"
+      :src-set="props.srcSet"
+      :alt="props.alt"
+    >
+      <template #error>
+        <NmorphIcon name="avatar" :width="stubIconSize" />
+      </template>
+    </NmorphImage>
   </div>
 </template>
 
@@ -74,24 +66,20 @@ const size = computed(() => ` ${props.size}px`);
   width: v-bind(size);
   height: v-bind(size);
   overflow: hidden;
+  @include flex-full-center;
 
-  .nmorph-avatar__image,
-  .nmorph-avatar__fallback {
-    width: 100%;
-    height: 100%;
-  }
+  @include nmorph-combined;
 
-  img {
-    @include wh100;
+  .nmorph-image {
+    --width: v-bind(size);
+    --height: v-bind(size);
 
-    object-fit: v-bind(fit);
-  }
+    padding: v-bind(borderPadding);
+    transform: translate(0.4px, 0.4px);
 
-  .nmorph-avatar__image--hide {
-    display: none;
-    width: 0;
-    height: 0;
-    opacity: 0;
+    img {
+      border-radius: v-bind(radius);
+    }
   }
 }
 

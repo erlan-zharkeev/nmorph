@@ -10,7 +10,7 @@ const attributesData = [
   },
   {
     name: "size",
-    type: Object.values(NmorphIconSize).join(", "),
+    type: enumToString(NmorphIconSize),
     default: "small",
   },
   {

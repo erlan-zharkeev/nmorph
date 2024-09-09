@@ -4,7 +4,7 @@ import {
   NmorphScrollBehavior,
 } from "@nmorph/nmorph-ui-kit";
 import ApiTable from "~/components/api-table/api-table.vue";
-import { a11yPropsApi } from "~/utils/a11yPropsApi";
+import { a11yPropsApi } from "~/utils";
 
 const attributesData = [
   {
@@ -24,17 +24,17 @@ const attributesData = [
   },
   {
     name: "scroll-y-prop",
-    type: Object.keys(NmorphOverflowProp).join(", "),
+    type: enumToString(NmorphOverflowProp),
     default: "auto",
   },
   {
     name: "scroll-x-prop",
-    type: Object.keys(NmorphOverflowProp).join(", "),
+    type: enumToString(NmorphOverflowProp),
     default: "auto",
   },
   {
     name: "css-scroll-behavior",
-    type: Object.keys(NmorphScrollBehavior).join(", "),
+    type: enumToString(NmorphScrollBehavior),
     default: "smooth",
   },
   {

@@ -141,9 +141,7 @@ watch(loader, (newValue) => {
 }
 
 .nmorph-autocomplete__loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-full-center;
   height: 100px;
 }
 

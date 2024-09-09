@@ -8,10 +8,10 @@ import {
   NmorphSwitch,
   useNmorph,
 } from "@nmorph/nmorph-ui-kit";
-import MoonIcon from "~/assets/images/moon.svg";
-import SunIcon from "~/assets/images/sun.svg";
-import TranslateIcon from "~/assets/images/translate.svg";
-import GitlabIcon from "~/assets/images/gitlab.svg";
+import MoonIcon from "~/assets/icons/moon.svg";
+import SunIcon from "~/assets/icons/sun.svg";
+import TranslateIcon from "~/assets/icons/translate.svg";
+import GitlabIcon from "~/assets/icons/gitlab.svg";
 
 const switchLocalePath = useSwitchLocalePath();
 
@@ -57,7 +57,6 @@ const closeHandler = () => {
 const updateMenuHandler = () => {
   emit("toggle-menu");
 };
-
 </script>
 
 <template>

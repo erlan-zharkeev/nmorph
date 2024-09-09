@@ -1,11 +1,15 @@
 <template>
   <div class="wrapper">
     <div class="docs-top-bar__search">
-      <NmorphTextInput placeholder="search" v-model="searchQuery">
-        <template #prepend-icon>
-          <NmorphIcon name="search" />
-        </template>
-      </NmorphTextInput>
+      <NmorphAvatar :src="'./'" :size="250" class="avatar" shape="square" />
+      <NmorphAvatar :src="cat" :size="250" class="avatar" shape="square" />
+      <NmorphAvatar
+        :src="cat"
+        :size="250"
+        class="avatar"
+        shape="circle"
+        fit="contain"
+      />
     </div>
     <NmorphAutocomplete
       v-model="value"
@@ -80,9 +84,11 @@ import {
   NmorphTextInput,
   NmorphIcon,
   NmorphCheckbox,
+  NmorphAvatar,
 } from "./../../../library/src/components";
 import NmorphNotificationProvider from "./../../../library/src/components/providers/nmorph-notification-provider/NmorphNotificationProvider.vue";
 import { useNmorphNotification } from "./../../../library/src/hooks";
+import cat from "./../assets/images/cat.png";
 
 interface ICoords {
   x: number;
@@ -149,6 +155,9 @@ const getVariants = async () => {
 //   height: 300px;
 // }
 
+.avatar {
+  margin: 1rem;
+}
 .docs-scroll__scroll {
   align-items: center;
   overflow-x: scroll;
