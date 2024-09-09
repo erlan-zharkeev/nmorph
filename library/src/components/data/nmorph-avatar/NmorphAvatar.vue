@@ -47,12 +47,12 @@ const borderPadding = computed(() => `${(props.size / 100) * 3}px`);
 <template>
   <div :class="modifiers">
     <NmorphImage
-      @load="onImageLoad"
-      @error="onImageError"
       :fit="props.fit"
       :src="props.src"
       :src-set="props.srcSet"
       :alt="props.alt"
+      @load="onImageLoad"
+      @error="onImageError"
     >
       <template #error>
         <NmorphIcon name="avatar" :width="stubIconSize" />
@@ -66,8 +66,8 @@ const borderPadding = computed(() => `${(props.size / 100) * 3}px`);
   width: v-bind(size);
   height: v-bind(size);
   overflow: hidden;
-  @include flex-full-center;
 
+  @include flex-full-center;
   @include nmorph-combined;
 
   .nmorph-image {

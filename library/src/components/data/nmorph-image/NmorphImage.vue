@@ -70,19 +70,21 @@ const objectFit = computed(() => props.fit);
 
   width: var(--width);
   height: var(--height);
+
   @include flex-full-center;
 
   img {
     @include wh100;
-    overflow: hidden;
+
     object-fit: v-bind(objectFit);
+    overflow: hidden;
   }
 
   &--hide {
     img {
-      opacity: 0;
       width: 0;
       height: 0;
+      opacity: 0;
     }
   }
 }
