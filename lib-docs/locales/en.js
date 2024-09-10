@@ -175,6 +175,41 @@ export default {
         "error": "Slot for displaying load errors"
       },
       "variables": {}
+    },
+    "badge": {
+      "value": {
+        "subtitle": "The displayed value on the badge, can be a *string* or *number*."
+      },
+      "max": {
+        "subtitle": "Maximum value for the badge. If exceeded, it will display as *max+*."
+      },
+      "is-dot": {
+        "subtitle": "Displays the badge as a small dot if set to *true*."
+      },
+      "hidden": {
+        "subtitle": "Controls whether the badge is hidden."
+      },
+      "color": {
+        "subtitle": "The background color of the badge."
+      },
+      "offset-y": {
+        "subtitle": "Vertical offset of the badge relative to its parent element."
+      },
+      "offset-x": {
+        "subtitle": "Horizontal offset of the badge relative to its parent element."
+      },
+      "api": {
+        "value": "Displayed value on the badge.",
+        "max": "Maximum value that can be displayed.",
+        "is-dot": "Displays the badge as a dot.",
+        "hidden": "Hides the badge.",
+        "color": "Sets the background color of the badge.",
+        "offset-y": "Vertical position offset for the badge.",
+        "offset-x": "Horizontal position offset for the badge."
+      },
+      "slot": {
+        "default": "Relative content for badge"
+      },
     }
   }
 };

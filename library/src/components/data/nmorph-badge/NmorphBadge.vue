@@ -5,7 +5,7 @@ import { NmorphDomElementType } from '@/types';
 import { onMounted } from 'vue';
 
 interface INmorphProps {
-  value?: number | string;
+  value: number | string;
   max?: number;
   isDot?: boolean;
   hidden?: boolean;

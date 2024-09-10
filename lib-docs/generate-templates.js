@@ -4,11 +4,11 @@ export const generateAttribute = (componentName, attribute) => `
 <script setup lang="ts">
 import { Nmorph${capitalizeFirstChar(componentName)} } from "@nmorph/nmorph-ui-kit";
 
-const scriptData = ``;
+const scriptData = "";
 
-const templateData = ``;
+const templateData = "";
 
-const cssData = ``;
+const cssData = "";
 
 const code = [scriptData, templateData, cssData];
 
