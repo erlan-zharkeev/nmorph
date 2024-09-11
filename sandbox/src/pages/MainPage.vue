@@ -1,15 +1,16 @@
 <template>
   <div class="wrapper">
     <div class="docs-top-bar__search">
-      <NmorphAvatar :src="'./'" :size="250" class="avatar" shape="square" />
-      <NmorphAvatar :src="cat" :size="250" class="avatar" shape="square" />
-      <NmorphAvatar
-        :src="cat"
-        :size="250"
-        class="avatar"
-        shape="circle"
-        fit="contain"
-      />
+      <div class="badge-value-overview__element">
+        <NmorphBadge :value="1">
+          <NmorphButton text="button" />
+        </NmorphBadge>
+      </div>
+      <!-- <div class="badge-value-overview__element">
+        <NmorphBadge value="abc" :offsetX="-25" :offsetY="-15">
+          <NmorphButton text="button" />
+        </NmorphBadge>
+      </div> -->
     </div>
     <NmorphAutocomplete
       v-model="value"
@@ -85,6 +86,7 @@ import {
   NmorphIcon,
   NmorphCheckbox,
   NmorphAvatar,
+  NmorphBadge,
 } from "./../../../library/src/components";
 import NmorphNotificationProvider from "./../../../library/src/components/providers/nmorph-notification-provider/NmorphNotificationProvider.vue";
 import { useNmorphNotification } from "./../../../library/src/hooks";
@@ -154,6 +156,14 @@ const getVariants = async () => {
 // .nmorph-scroll {
 //   height: 300px;
 // }
+.docs-top-bar__search {
+  display: flex;
+  padding: 40px;
+}
+
+.nmorph-badge {
+  --dot-size: 8px;
+}
 
 .avatar {
   margin: 1rem;

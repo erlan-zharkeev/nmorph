@@ -6,6 +6,7 @@ import link from "~/lib-overview/link";
 import scroll from "~/lib-overview/scroll";
 import avatar from "~/lib-overview/avatar";
 import badge from "~/lib-overview/badge";
+import card from "~/lib-overview/card";
 
 interface IProps {
   name: string;
@@ -19,6 +20,7 @@ const componentsMap: Record<string, unknown[]> = {
   scroll,
   avatar,
   badge,
+  card,
 };
 </script>
 

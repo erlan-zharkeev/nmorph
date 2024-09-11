@@ -42,8 +42,8 @@ const displayValue = computed(() => {
 });
 
 const appliedOffset = computed(() => {
-  const x = `-${badgeWidth?.value / 2 + props.offsetX}px`;
-  const y = `-${badgeHeight?.value / 2 + props.offsetY}px`;
+  const x = `${(badgeWidth?.value / 2 + props.offsetX) * -1}px`;
+  const y = `${(badgeHeight?.value / 2 + props.offsetY) * -1}px`;
   return {
     x,
     y,
@@ -76,6 +76,7 @@ onMounted(() => {
 .nmorph-badge {
   position: relative;
   display: inline-block;
+  --dot-size: 4px;
 
   .nmorph-badge__container {
     position: absolute;
@@ -94,8 +95,8 @@ onMounted(() => {
   }
 
   .nmorph-badge__dot {
-    width: 4px;
-    height: 4px;
+    width: var(--dot-size);
+    height: var(--dot-size);
     border-radius: var(--border-radius-circular);
   }
 }

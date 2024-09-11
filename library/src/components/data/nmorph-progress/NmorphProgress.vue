@@ -108,7 +108,7 @@ const displayPercentage = computed(() => `${props.percentage}%`);
       width: 100%;
       height: 100%;
       overflow: hidden;
-      border-radius: var(--border-radius-circular);
+      border-radius: var(--border-radius-40);
 
       @include nmorph-inset;
     }
@@ -118,7 +118,7 @@ const displayPercentage = computed(() => `${props.percentage}%`);
       width: v-bind(innerContentWidth);
       height: 100%;
       background: v-bind(color);
-      border-radius: var(--border-radius-circular);
+      border-radius: var(--border-radius-40);
       transition: var(--width-transition);
       animation: v-bind(animation);
     }

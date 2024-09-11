@@ -53,6 +53,7 @@ const modifiers = computed(() =>
   .nmorph-card__footer {
     @include body-3;
 
+    margin-top: 4px;
     height: fit-content;
   }
 }

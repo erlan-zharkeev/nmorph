@@ -9,7 +9,7 @@ const list: { name: string; components: string[] }[] = [
 
   {
     name: "data",
-    components: ["NmorphAvatar", "NmorphBadge"]
+    components: ["NmorphAvatar", "NmorphBadge", "NmorphCard"]
   },
 ];
 

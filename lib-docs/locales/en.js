@@ -173,7 +173,7 @@ export default {
       },
       "slot": {
         "error": "Slot for displaying load errors"
-      },
+      }
     },
     "badge": {
       "value": {
@@ -208,6 +208,21 @@ export default {
       },
       "variables": {
         "dot-size": "Width and height"
+      }
+    },
+    "card": {
+      "shadow-type": {
+        "subtitle": "Specifies the type of shadow effect for the card. Accepts values like *always*, *hover*, or *never*."
+      },
+      "api": {
+        "shadow-type": "Defines the shadow visibility on the card."
+      },
+      "slot": {
+        "header": "Card header",
+        "footer": "Card footer"
+      },
+      "variables": {
+        "card-padding": "Indentation for all edges"
       }
     }
   }
