@@ -83,7 +83,13 @@ const infoData = `overview.${props.name}.info`;
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+.docs-component__overview-component-actions {
+  .nmorph-button {
+    margin: 0 8px;
+  }
+}
+
 :deep(.nmorph-collapse-item__inner-wrapper) {
   padding-top: 0;
 }

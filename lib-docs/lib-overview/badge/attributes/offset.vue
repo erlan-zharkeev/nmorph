@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
+import { NmorphBadge } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
 const templateData = `
-<NmorphBadge is-dot color="red">
-  <NmorphButton text="button" />
-</NmorphBadge>
-<NmorphBadge color="green" value="abc">
-  <NmorphButton text="button" />
-</NmorphBadge>
-<NmorphBadge color="var(--nmorph-warn-color)" :value="1">
-  <NmorphButton text="button" />
-</NmorphBadge>
+<div class="badge-value-overview__element">
+  <NmorphBadge :value="1" :offsetX="10" :offsetY="10">
+    <NmorphButton text="button" />
+  </NmorphBadge>
+</div>
+<div class="badge-value-overview__element">
+  <NmorphBadge value="abc" :offsetX="-70" :offsetY="-35">
+    <NmorphButton text="button" />
+  </NmorphBadge>
+</div>
 `;
 
 const cssData = `
 <style lang="scss">
 .badge-value-overview__element {
-  margin-right: 30px;
+  margin-right: 24px;
 }
 </style>
 `;
@@ -27,27 +28,22 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div id="content-color">
+  <div id="content-offset">
     <attribute
-      header="Color"
-      :subtitle="$t('overview.badge.color.subtitle')"
+      header="Offset"
+      :subtitle="$t('overview.badge.offset.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <div class="badge-color-overview">
+        <div class="badge-offset-overview">
           <ClientOnly>
             <div class="badge-value-overview__element">
-              <NmorphBadge is-dot color="red">
+              <NmorphBadge :value="1" :offsetX="10" :offsetY="10">
                 <NmorphButton text="button" />
               </NmorphBadge>
             </div>
             <div class="badge-value-overview__element">
-              <NmorphBadge color="green" value="abc">
-                <NmorphButton text="button" />
-              </NmorphBadge>
-            </div>
-            <div class="badge-value-overview__element">
-              <NmorphBadge color="var(--nmorph-warn-color)" :value="1">
+              <NmorphBadge value="abc" :offsetX="-70" :offsetY="-35">
                 <NmorphButton text="button" />
               </NmorphBadge>
             </div>
@@ -68,10 +64,10 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.badge-color-overview {
+.badge-offset-overview {
   display: flex;
   .badge-value-overview__element {
-    margin-right: 30px;
+    margin-right: 24px;
   }
 }
 </style>

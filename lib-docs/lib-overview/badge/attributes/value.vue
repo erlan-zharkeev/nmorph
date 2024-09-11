@@ -18,9 +18,9 @@ const templateData = `
 
 const cssData = `
 <style lang="scss">
-  .badge-value-overview__element {
-    margin-right: 24px;
-  }
+.badge-value-overview__element {
+  margin-right: 24px;
+}
 </style>
 `;
 

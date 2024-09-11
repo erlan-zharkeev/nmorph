@@ -121,10 +121,6 @@ const updatedVariables = getDescriptions(props.variables, "variables");
 </template>
 
 <style lang="scss">
-.nmorph-button {
-  margin: 0 8px;
-}
-
 .docs-api-table__title {
   margin-bottom: 8px;
 }

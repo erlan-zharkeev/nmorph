@@ -46,7 +46,7 @@ const attributesData: IAttributesTableData[] = [
 
 const slotData: ISlotsTableData[] = [{ name: "default" }];
 
-const variables: IVariablesTableData[] = [];
+const variables: IVariablesTableData[] = [{ name: "dot-size" }];
 </script>
 
 <template>

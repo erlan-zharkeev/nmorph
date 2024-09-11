@@ -174,7 +174,6 @@ export default {
       "slot": {
         "error": "Slot for displaying load errors"
       },
-      "variables": {}
     },
     "badge": {
       "value": {
@@ -192,11 +191,8 @@ export default {
       "color": {
         "subtitle": "The background color of the badge."
       },
-      "offset-y": {
-        "subtitle": "Vertical offset of the badge relative to its parent element."
-      },
-      "offset-x": {
-        "subtitle": "Horizontal offset of the badge relative to its parent element."
+      "offset": {
+        "subtitle": "Horizontal/Vertical offset of the badge relative to its parent element."
       },
       "api": {
         "value": "Displayed value on the badge.",
@@ -210,6 +206,9 @@ export default {
       "slot": {
         "default": "Relative content for badge"
       },
+      "variables": {
+        "dot-size": "Width and height"
+      }
     }
   }
 };

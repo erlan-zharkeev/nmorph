@@ -1,15 +1,23 @@
-
 <script setup lang="ts">
-import { NmorphBadge } from "@nmorph/nmorph-ui-kit";
+import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
-const templateData = "";
+const templateData = `
+<NmorphBadge is-dot>
+  <NmorphButton text="button" />
+</NmorphBadge>
+`;
 
-const cssData = "";
+const cssData = `
+<style lang="scss">
+.nmorph-badge {
+  --dot-size: 8px;
+}
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
-
 </script>
 
 <template>
@@ -22,13 +30,19 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="badge-is-dot-overview">
           <ClientOnly>
-            <NmorphBadge />
+            <NmorphBadge is-dot>
+              <NmorphButton text="button" />
+            </NmorphBadge>
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-example v-if="templateData" lang="html">{{ templateData }}</code-example>
-        <code-example v-if="scriptData" lang="javascript">{{ scriptData }}</code-example>
+        <code-example v-if="templateData" lang="html">{{
+          templateData
+        }}</code-example>
+        <code-example v-if="scriptData" lang="javascript">{{
+          scriptData
+        }}</code-example>
         <code-example v-if="cssData" lang="css">{{ cssData }}</code-example>
       </template>
     </attribute>
@@ -36,5 +50,9 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.badge-is-dot-overview {}
+.badge-is-dot-overview {
+  .nmorph-badge {
+    --dot-size: 8px;
+  }
+}
 </style>
