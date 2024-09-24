@@ -52,11 +52,11 @@ const iconList = computed(() => {
           </NmorphFormItem>
         </NmorphForm>
         <div
-          class="docs-icon__list-content nmorph-outset"
+          class="docs-icon__list-content nmorph--shadow-outset"
           v-if="Object.keys(iconList).length"
         >
           <div
-            class="docs-icon__list-el nmorph-outset"
+            class="docs-icon__list-el nmorph--shadow-outset"
             v-for="(el, idx) in iconList"
             :key="idx"
             @click="() => clickIconHandler(String(el))"

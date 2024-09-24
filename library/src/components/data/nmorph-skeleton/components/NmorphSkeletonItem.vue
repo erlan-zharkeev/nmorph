@@ -4,10 +4,15 @@ import { useModifiers } from '@/utils';
 import { NmorphIcon, NmorphSkeletonItemPropsType } from '@/components';
 
 interface INmorphProps {
-  variant?: NmorphSkeletonItemPropsType;
+  variant: keyof typeof NmorphSkeletonItemPropsType;
+  width: string;
+  height: string;
 }
+
 const props = withDefaults(defineProps<INmorphProps>(), {
-  variant: 'text',
+  variant: 'rect',
+  width: 'auto',
+  height: 'auto',
 });
 
 const modifiers = computed(() =>
@@ -15,37 +20,36 @@ const modifiers = computed(() =>
     'nmorph-skeleton-item': [props.variant],
   })
 );
+
+const cssWidth = computed(() => props.width);
+const cssHeight = computed(() => props.height);
 </script>
 
 <template>
   <div :class="modifiers">
     <div class="nmorph-skeleton-item__element">
-      <NmorphIcon v-if="props.variant === 'image'" name="image" width="50%" />
+      <NmorphIcon v-if="props.variant === 'image'" name="image" :width="props.width" :height="props.height" />
     </div>
   </div>
 </template>
 
 <style lang="scss">
 .nmorph-skeleton-item {
-  height: 14px;
   margin-bottom: var(--indentation-02);
-  background: var(--info-color-01);
+  background: var(--nmorph-text-color);
+  position: relative;
+  width: v-bind(cssWidth);
+  height: v-bind(cssHeight);
 }
 
 .nmorph-skeleton-item--image {
-  @include flex-full-center;
+  background: none;
 
   .nmorph-skeleton-item__element {
-    @include flex-full-center;
-
     .nmorph-icon {
-      --color: var(--info-color-01);
+      --color: var(--nmorph-text-color);
     }
   }
-}
-
-.nmorph-skeleton-item--h1 {
-  height: 18px;
 }
 
 .nmorph-skeleton-item--circle {

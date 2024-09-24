@@ -8,6 +8,7 @@ interface INmorphProps {
   loading?: boolean;
   rows?: number;
 }
+
 const props = withDefaults(defineProps<INmorphProps>(), {
   animated: true,
   loading: true,
@@ -24,42 +25,37 @@ const modifiers = computed(() =>
 <template>
   <div :class="modifiers">
     <div v-if="props.rows && props.loading" class="nmorph-skeleton__rows">
-      <NmorphSkeletonItem v-for="row in props.rows" :key="row" />
+      <NmorphSkeletonItem v-for="row in props.rows" :key="row" width="100%" height="14px" />
     </div>
-    <div v-else-if="props.loading" class="nmorph-skeleton__template">
+    <div v-show="!props.rows && props.loading" class="nmorph-skeleton__template">
       <slot name="template" />
     </div>
-    <div v-else class="nmorph-skeleton__default">
+    <div v-show="!props.loading" class="nmorph-skeleton__default">
       <slot name="default" />
     </div>
   </div>
 </template>
 
 <style lang="scss">
-.nmorph-skeleton {
-  .nmorph-skeleton__template {
-    .nmorph-skeleton-item:first-child:not(.nmorph-skeleton-item--image),
-    .nmorph-skeleton-item:first-child:not(.nmorph-skeleton-item--circle) {
-      width: 33%;
-    }
-
-    .nmorph-skeleton-item:last-child:not(.nmorph-skeleton-item--image),
-    .nmorph-skeleton-item:last-child:not(.nmorph-skeleton-item--circle) {
-      width: 63%;
-    }
-  }
-}
-
 .nmorph-skeleton--loading {
-  .nmorph-skeleton-item {
-    background: linear-gradient(
-      90deg,
-      var(--nmorph-gray-color) 25%,
-      var(--info-color-01) 37%,
-      var(--nmorph-gray-color) 63%
-    );
+  --loading-gradient: linear-gradient(
+    90deg,
+    var(--nmorph-text-color) 25%,
+    var(--nmorph-white-color) 37%,
+    var(--nmorph-text-color) 63%
+  );
+  .nmorph-skeleton-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--loading-gradient);
     background-size: 400% 100%;
-    animation: nmorph-skeleton-loading-animation 1.4s ease infinite;
+    animation: nmorph-skeleton-loading-animation 2.4s ease infinite;
+    pointer-events: none;
+    opacity: 0.3;
   }
 }
 

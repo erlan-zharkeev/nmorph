@@ -71,7 +71,7 @@ let scrollEndTimeout: NodeJS.Timeout;
 
 interface INmorphEmit {
   (e: 'on-scroll', event: Event): void;
-  (e: 'update:modelValue', coords: NmorphCoordsType): void;
+  (e: 'update:model-value', coords: NmorphCoordsType): void;
   (e: 'on-scroll-end'): void;
 }
 
@@ -80,7 +80,7 @@ const emit = defineEmits<INmorphEmit>();
 const updateValue = () => {
   const x = Math.trunc(scrollDOMContainer.value?.scrollLeft);
   const y = Math.trunc(scrollDOMContainer.value?.scrollTop);
-  emit('update:modelValue', { x, y });
+  emit('update:model-value', { x, y });
 };
 
 const handleScrollEnd = () => {

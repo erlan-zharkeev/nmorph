@@ -47,7 +47,7 @@ const selectedDate = ref<NmorphSelectedDateModelType>(props.modelValue);
 
 const emit = defineEmits<INmorphEmit>();
 interface INmorphEmit {
-  (e: 'update:modelValue', modelValue: NmorphSelectedDateModelType): void;
+  (e: 'update:model-value', modelValue: NmorphSelectedDateModelType): void;
 }
 
 const modifiers = computed(() =>
@@ -94,7 +94,7 @@ const displayValues = computed(() => {
 const clearHandler = () => {
   const result = Array.isArray(selectedDate.value) ? [] : null;
   selectedDate.value = result;
-  emit('update:modelValue', selectedDate.value);
+  emit('update:model-value', selectedDate.value);
 };
 
 if (props.type === 'date' && Array.isArray(selectedDate.value)) {
@@ -119,7 +119,7 @@ const updateSelectedDateHandler = (value: unknown) => {
   } else {
     selectedDate.value = val;
   }
-  emit('update:modelValue', selectedDate.value);
+  emit('update:model-value', selectedDate.value);
 };
 
 const showClearButton = computed(() => {
@@ -132,13 +132,13 @@ const showClearButton = computed(() => {
 const updateStartDateValue = (value: NmorphDateType) => {
   if (!Array.isArray(selectedDate.value)) return;
   selectedDate.value[0] = value;
-  emit('update:modelValue', selectedDate.value);
+  emit('update:model-value', selectedDate.value);
 };
 
 const updateEndDateValue = (value: NmorphDateType) => {
   if (!Array.isArray(selectedDate.value)) return;
   selectedDate.value[1] = value;
-  emit('update:modelValue', selectedDate.value);
+  emit('update:model-value', selectedDate.value);
 };
 </script>
 

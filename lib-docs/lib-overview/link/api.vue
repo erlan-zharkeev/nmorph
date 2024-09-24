@@ -20,7 +20,7 @@ const attributesData = [
   },
   {
     name: "icon-name",
-    type: `<a class="docs-enum" href="/components/icon">Icons</a>`,
+    type: docsLink("Icons", "/components/icon"),
     default: "-",
   },
   {

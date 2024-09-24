@@ -61,7 +61,7 @@ const attributesData = [
   },
   {
     name: "icon",
-    type: `<a class="docs-enum" href="/components/icon">Icons</a>`,
+    type: docsLink("Icons", "/components/icon"),
     default: "-",
   },
 ];
@@ -81,6 +81,12 @@ const variables = [
     default: "30px",
   },
 ];
+
+const exposes = [
+  {
+    name: "buttonDOMElement",
+  },
+];
 </script>
 
 <template>
@@ -90,6 +96,7 @@ const variables = [
       :attributes="attributesData"
       :slots="slotData"
       :variables="variables"
+      :exposes="exposes"
     />
   </div>
 </template>

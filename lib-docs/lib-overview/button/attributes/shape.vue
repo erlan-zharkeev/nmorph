@@ -16,7 +16,7 @@ const code = [scriptData, templateData, cssData];
 <template>
   <div id="content-shape">
     <attribute
-      name="button.shape"
+      info-name="button.shape"
       header="Shape"
       :subtitle="$t('overview.button.shape.subtitle')"
       :codeToCopy="code"

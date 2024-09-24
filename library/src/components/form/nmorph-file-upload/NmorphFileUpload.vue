@@ -73,7 +73,7 @@ const handleFileUpload = (event: Event) => {
 
 const filesChanged = () => {
   emit(
-    'update:modelValue',
+    'update:model-value',
     files.map((file) => file.data)
   );
 };
@@ -93,7 +93,7 @@ onMounted(() => {
 
 interface INmorphEmit {
   (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
-  (e: 'update:modelValue', val: File[]): void;
+  (e: 'update:model-value', val: File[]): void;
   (e: 'on-unsupported-file-type-error', val: string): void;
 }
 

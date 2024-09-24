@@ -43,7 +43,7 @@ const modifiers = computed(() =>
   })
 );
 
-const buttonRef = ref<NmorphDomElementType>(null);
+const buttonDOMElement = ref<NmorphDomElementType>(null);
 
 interface INmorphEmit {
   (e: 'click'): void;
@@ -59,13 +59,13 @@ const iconSizeMap = {
 
 const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIconSize);
 
-defineExpose({ buttonRef });
+defineExpose({ buttonDOMElement });
 </script>
 
 <template>
   <div :class="modifiers">
     <button
-      ref="buttonRef"
+      ref="buttonDOMElement"
       class="nmorph-button__content"
       :disabled="props.disabled"
       :loading="props.loading"

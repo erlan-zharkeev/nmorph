@@ -34,7 +34,7 @@ const updateValue = (id: string, value: boolean) => {
       if (!value && index !== -1) initialValue.value.splice(index, 1);
     }
   } else initialValue.value = value ? [id] : [];
-  emit('update:modelValue', initialValue.value);
+  emit('update:model-value', initialValue.value);
 };
 
 provide<NmorphCollapseDataInjectionType>('collapse-data', initialValue);
@@ -42,7 +42,7 @@ provide<NmorphCollapseUpdateModelInjectionType>('update-model', updateValue);
 
 const emit = defineEmits<INmorphEmit>();
 interface INmorphEmit {
-  (e: 'update:modelValue', value: NmorphCollapseModelType): void;
+  (e: 'update:model-value', value: NmorphCollapseModelType): void;
 }
 
 const modifiers = computed(() =>

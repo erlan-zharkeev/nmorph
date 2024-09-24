@@ -38,12 +38,12 @@ const changeHandler = () => {
   if (props.disabled) return;
   initialValue.value = !initialValue.value;
   const value = initialValue.value ? props.activeValue : props.inactiveValue;
-  emit('update:modelValue', value);
+  emit('update:model-value', value);
 };
 
 interface INmorphEmit {
   (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
-  (e: 'update:modelValue', val: boolean | string | number): void;
+  (e: 'update:model-value', val: boolean | string | number): void;
 }
 const inputDOMRef = ref<NmorphDomElementType>(null);
 onMounted(() => {

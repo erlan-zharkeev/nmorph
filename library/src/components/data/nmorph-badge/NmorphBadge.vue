@@ -12,6 +12,7 @@ interface INmorphProps {
   color?: string;
   offsetY?: number;
   offsetX?: number;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -22,6 +23,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   color: 'var(--nmorph-accent-color)',
   offsetX: 0,
   offsetY: 0,
+  disabled: false,
 });
 
 const modifiers = computed(() =>
@@ -63,13 +65,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div v-if="!props.disabled" :class="modifiers">
     <slot />
     <div ref="badge" :class="containerModifiers" :style="{ right: appliedOffset.x, top: appliedOffset.y }">
       <div v-if="props.isDot" class="nmorph-badge__dot" />
-      <div v-else class="nmorph-badge__content">{{ displayValue }}</div>
+      <div v-else class="nmorph-badge__content">
+        <slot name="value"> {{ displayValue }} </slot>
+      </div>
     </div>
   </div>
+  <slot v-else />
 </template>
 
 <style lang="scss">

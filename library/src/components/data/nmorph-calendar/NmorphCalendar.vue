@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 
 const emit = defineEmits<INmorphEmit>();
 interface INmorphEmit {
-  (e: 'update:modelValue', date: NmorphDateType): void;
+  (e: 'update:model-value', date: NmorphDateType): void;
   (e: 'update-initial-date', date: Date): void;
 }
 
@@ -104,7 +104,7 @@ const clickDate = (dateData: INmorphCalendarDate) => {
   if (monthType === 'previous') setPreviousMonth();
   const { date } = dateData;
   selectedValue.value = date;
-  emit('update:modelValue', selectedValue.value);
+  emit('update:model-value', selectedValue.value);
 };
 
 const prevMonth = computed(() => new Date(initialDate.value.setMonth(initialDate.value.getMonth() - 1)));

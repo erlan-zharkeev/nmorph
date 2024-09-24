@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 interface INmorphEmit {
   (e: 'prev-click', currentPage: number): void;
   (e: 'next-click', currentPage: number): void;
-  (e: 'update:modelValue', currentPage: number): void;
+  (e: 'update:model-value', currentPage: number): void;
   (e: 'update:range', range: [number, number]): void;
 }
 
@@ -58,7 +58,7 @@ const pages = computed(() => {
 const show = computed(() => props.hideOnSinglePage || props.total / props.pagerCount > 1);
 
 watch(selectedPage, (newValue) => {
-  emit('update:modelValue', Number(newValue));
+  emit('update:model-value', Number(newValue));
   updateRange();
 });
 

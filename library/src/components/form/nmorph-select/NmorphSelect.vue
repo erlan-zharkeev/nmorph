@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 });
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', val: NmorphSelectModelValueType): void;
+  (e: 'update:model-value', val: NmorphSelectModelValueType): void;
 }>();
 
 const initialValue = ref<NmorphSelectModelValueType>(props.modelValue);
@@ -53,7 +53,7 @@ const changeHandler = (value: string) => {
   if (typeof initialValue.value === 'string') {
     if (!props.valueRequired && initialValue.value === value) initialValue.value = '';
     else initialValue.value = value;
-    emit('update:modelValue', initialValue.value);
+    emit('update:model-value', initialValue.value);
   }
   if (Array.isArray(initialValue.value)) {
     const hasValue = initialValue.value.includes(value);
@@ -65,7 +65,7 @@ const changeHandler = (value: string) => {
       initialValue.value = initialValue.value.filter((currentValue) => currentValue !== value);
     }
   }
-  emit('update:modelValue', initialValue.value);
+  emit('update:model-value', initialValue.value);
 };
 
 const modifiers = computed(() =>
@@ -219,4 +219,3 @@ const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
   }
 }
 </style>
-./components/nmorph-select-option/NmorphSelectOption.vue./components/nmorph-select-option/types

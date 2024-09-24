@@ -9,7 +9,7 @@ import { notificationProvider } from "~/providers";
 
 interface IProps {
   header: string;
-  name?: string;
+  infoName?: string;
   subtitle?: string;
   codeToCopy: string[];
 }
@@ -45,16 +45,14 @@ const highlightedSubtitle = computed(() =>
   props.subtitle ? highlightText(props.subtitle) : ""
 );
 
-const infoData = `overview.${props.name}.info`;
+const infoData = `overview.${props.infoName}.info`;
 </script>
 
 <template>
   <div class="docs-attribute">
-    <h2 class="docs-attribute__header nmorph-title-3">
-      {{ props.header }}
-    </h2>
+    <h2 class="docs-attribute__header nmorph-title-3">{{ props.header }}</h2>
     <info
-      v-if="props.name"
+      v-if="props.infoName"
       :title="$t(`${infoData}.title`)"
       :content="$t(`${infoData}.content`)"
     />
@@ -64,7 +62,7 @@ const infoData = `overview.${props.name}.info`;
       v-html="highlightedSubtitle"
     />
     <div class="docs-components__tips"></div>
-    <div class="docs-attribute__wrapper nmorph-outset">
+    <div class="docs-attribute__wrapper nmorph--shadow-outset">
       <div class="docs-component__overview">
         <slot name="overview" />
       </div>

@@ -7,11 +7,15 @@ import { INmorphImage, AvatarShapeType } from '@/types';
 interface INmorphProps extends INmorphImage {
   size?: number;
   shape?: keyof typeof AvatarShapeType;
+  frameBorder?: number;
+  imagePadding?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  size: 40,
+  size: 48,
   shape: 'circle',
+  frameBorder: 2,
+  imagePadding: 4,
 });
 
 interface INmorphEmit {
@@ -25,6 +29,7 @@ const hasError = ref(false);
 
 const modifiers = computed(() =>
   useModifiers({
+    nmorph: [`${props.frameBorder > 0 && 'shadow-combined'}`],
     'nmorph-avatar': [props.shape],
   })
 );
@@ -39,11 +44,13 @@ const onImageLoad = (e: Event) => {
   hasError.value = false;
 };
 
+const imagePadding = computed(() => `${props.imagePadding}px`);
 const size = computed(() => ` ${props.size}px`);
 const stubIconSize = computed(() => `${(props.size / 100) * 60}px`);
 const radius = computed(() => (props.shape === 'circle' ? '50%' : '4px'));
-const borderPadding = computed(() => `${(props.size / 100) * 3}px`);
+const frameBorder = computed(() => `${props.frameBorder}px`);
 </script>
+
 <template>
   <div :class="modifiers">
     <NmorphImage
@@ -51,6 +58,7 @@ const borderPadding = computed(() => `${(props.size / 100) * 3}px`);
       :src="props.src"
       :src-set="props.srcSet"
       :alt="props.alt"
+      :frame-border="0"
       @load="onImageLoad"
       @error="onImageError"
     >
@@ -61,21 +69,26 @@ const borderPadding = computed(() => `${(props.size / 100) * 3}px`);
   </div>
 </template>
 
+<style lang="scss" scoped>
+.nmorph--shadow-combined {
+  @include nmorph-combined(v-bind(frameBorder), true);
+}
+</style>
+
 <style lang="scss">
 .nmorph-avatar {
   width: v-bind(size);
   height: v-bind(size);
   overflow: hidden;
-
+  position: relative;
   @include flex-full-center;
-  @include nmorph-combined;
 
   .nmorph-image {
     --width: v-bind(size);
     --height: v-bind(size);
-
-    padding: v-bind(borderPadding);
-    transform: translate(0.4px, 0.4px);
+    border-radius: v-bind(radius);
+    padding: v-bind(imagePadding);
+    position: absolute;
 
     img {
       border-radius: v-bind(radius);

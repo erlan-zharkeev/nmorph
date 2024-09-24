@@ -21,8 +21,8 @@ const DEFAULT_THEME_COLORS: INmorphColorVariable[] = [
   { name: '--nmorph-error-text-color', color: '#8d3333' },
   { name: '--nmorph-warn-color', color: '#E6A21C' },
   { name: '--nmorph-warn-text-color', color: '#7a6712' },
-  { name: '--nmorph-gray-color', color: '#c9d2dee6' },
   { name: '--nmorph-white-color', color: '#ffffff' },
+  { name: '--nmorph-gray-color', color: '#c9d2dee6' },
   { name: '--nmorph-black-color', color: '#000000' },
   { name: '--nmorph-overlay-color', color: '#00000095' },
 ];

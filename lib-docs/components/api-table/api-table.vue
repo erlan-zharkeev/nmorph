@@ -3,6 +3,8 @@ import {
   type IAttributesTableData,
   type ISlotsTableData,
   type IVariablesTableData,
+  type IExposesTableData,
+  type IEventsTableData,
 } from "~/types";
 import {
   NmorphTable,
@@ -18,6 +20,8 @@ interface IProps {
   attributes: IAttributesTableData[];
   slots?: ISlotsTableData[];
   variables?: IVariablesTableData[];
+  exposes?: IExposesTableData[];
+  events?: IEventsTableData[];
 }
 
 const props = withDefaults(defineProps<IProps>(), {});
@@ -28,7 +32,7 @@ const getDescriptions = (
     | ISlotsTableData[]
     | IVariablesTableData[]
     | undefined,
-  block: "api" | "slot" | "variables"
+  block: "api" | "slot" | "variables" | "exposes" | "events"
 ) => {
   if (!data) return null;
   return data.map((el) => {
@@ -42,6 +46,8 @@ const getDescriptions = (
 const updatedAttributes = getDescriptions(props.attributes, "api");
 const updatedSlots = getDescriptions(props.slots, "slot");
 const updatedVariables = getDescriptions(props.variables, "variables");
+const updatedExposes = getDescriptions(props.exposes, "exposes");
+const updatedEvents = getDescriptions(props.events, "events");
 </script>
 
 <template>
@@ -67,7 +73,7 @@ const updatedVariables = getDescriptions(props.variables, "variables");
           <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
             <template #default="{ scope }">
               <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
-                <p v-html="row.type" />
+                <p v-html="row.type" class="no-wrap" />
               </NmorphTableCell>
             </template>
           </NmorphTableColumn>
@@ -117,20 +123,77 @@ const updatedVariables = getDescriptions(props.variables, "variables");
         </NmorphTable>
       </ClientOnly>
     </div>
+    <div
+      v-if="updatedExposes?.length"
+      class="docs-api-table__exposes"
+      id="content-exposes"
+    >
+      <h3 class="docs-api-table__title nmorph-title-2">
+        {{ $t("exposes") }}
+      </h3>
+      <ClientOnly>
+        <NmorphTable :data="updatedExposes" bordered :row-hover="false">
+          <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
+          <NmorphTableColumn
+            prop="type"
+            :label="$t('type')"
+            alignment="center"
+          />
+          <NmorphTableColumn
+            prop="description"
+            :label="$t('description')"
+            alignment="right"
+          />
+        </NmorphTable>
+      </ClientOnly>
+    </div>
+    <div
+      v-if="updatedEvents?.length"
+      class="docs-api-table__events"
+      id="content-events"
+    >
+      <h3 class="docs-api-table__title nmorph-title-2">
+        {{ $t("events") }}
+      </h3>
+      <ClientOnly>
+        <NmorphTable :data="updatedEvents" bordered :row-hover="false">
+          <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
+          <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
+            <template #default="{ scope }">
+              <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
+                <p v-html="row.type" class="no-wrap" />
+              </NmorphTableCell>
+            </template>
+          </NmorphTableColumn>
+          <NmorphTableColumn
+            prop="description"
+            :label="$t('description')"
+            alignment="right"
+          />
+        </NmorphTable>
+      </ClientOnly>
+    </div>
   </div>
 </template>
 
 <style lang="scss">
+.no-wrap {
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
 .docs-api-table__title {
   margin-bottom: 8px;
 }
 
 .docs-api-table__slots,
-.docs-api-table__variables {
+.docs-api-table__variables,
+.docs-api-table__exposes,
+.docs-api-table__events {
   margin-top: 16px;
 }
 
-.docs-enum {
+.docs-link {
   background-color: var(--nmorph-accent-color);
   color: var(--nmorph-white-color);
   text-transform: uppercase;

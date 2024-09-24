@@ -5,17 +5,22 @@ import { computed } from 'vue';
 
 interface INmorphProps {
   shadowType?: keyof typeof NmorphShadowType;
+  combinedShadowBorderWidth?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  shadowType: NmorphShadowType.outset,
+  shadowType: 'outset',
+  combinedShadowBorderWidth: 0,
 });
 
 const modifiers = computed(() =>
   useModifiers({
+    nmorph: [NmorphShadowType[props.shadowType]],
     'nmorph-card': [props.shadowType],
   })
 );
+
+const combinedShadowBorderWidth = computed(() => `${props.combinedShadowBorderWidth}px`);
 </script>
 
 <template>
@@ -31,6 +36,12 @@ const modifiers = computed(() =>
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.nmorph--shadow-combined {
+  @include nmorph-combined(v-bind(combinedShadowBorderWidth));
+}
+</style>
 
 <style lang="scss">
 .nmorph-card {
@@ -53,20 +64,8 @@ const modifiers = computed(() =>
   .nmorph-card__footer {
     @include body-3;
 
-    margin-top: 4px;
     height: fit-content;
+    margin-top: 4px;
   }
-}
-
-.nmorph-card--inset {
-  @include nmorph-inset;
-}
-
-.nmorph-card--outset {
-  @include nmorph-outset;
-}
-
-.nmorph-card--combined {
-  @include nmorph-combined;
 }
 </style>

@@ -6,8 +6,10 @@ export default {
   "attributes": "Attributes",
   "slots": "Slots",
   "variables": "Variables",
+  "exposes": 'Exposes',
   "right-aside-title": "Contents",
   "name": "Name",
+  "events": "Events",
   "description": "Description",
   "type": "Type",
   "default": "Default",
@@ -60,6 +62,9 @@ export default {
       },
       "variables": {
         "height": "Define button height"
+      },
+      "exposes": {
+        "buttonDOMElement": "Original button DOM element"
       }
     },
     "icon": {
@@ -151,6 +156,15 @@ export default {
       },
       "variables": {
         "thumb-color": "Thumb color"
+      },
+      "exposes": {
+        "scrollDOMContainer": "Container element",
+        "moveTo": "fn to pass new coordinates"
+      },
+      "events": {
+        "update:model-value": "Event for intercepting two-way binding",
+        "on-scroll-end": "Event are triggered after the end of the scrolling animation",
+        "on-scroll": "Scroll event"
       }
     },
     "avatar": {
@@ -173,6 +187,10 @@ export default {
       },
       "slot": {
         "error": "Slot for displaying load errors"
+      },
+      "events": {
+        "error": "Native img error event",
+        "load": "Native img load event",
       }
     },
     "badge": {
@@ -224,6 +242,100 @@ export default {
       "variables": {
         "card-padding": "Indentation for all edges"
       }
+    },
+    "image": {
+      "fit": {
+        "subtitle": "Defines how the image fits within its container. Accepts values like *fill*, *contain*, *cover*, *none*, *scale-down*.",
+        "info": {
+          "title": "Info",
+          "content": "To display fit property correctly, make sure that you have limited size the wrapper"
+        }
+      },
+      "close-on-outside-click": {
+        "subtitle": "Closes the image preview when clicking outside of it, if set to *true*."
+      },
+      "alt": {
+        "subtitle": "Alternative text for the image when it cannot be displayed."
+      },
+      "loading-text": {
+        "subtitle": "Text displayed while the image is loading."
+      },
+      "load-failed-text": {
+        "subtitle": "Text displayed when the image fails to load."
+      },
+      "api": {
+        "fit": "Specifies how the image should fit within its container.",
+        "close-on-outside-click": "Closes the preview when clicking outside of it.",
+        "alt": "Text description for the image.",
+        "loading-text": "Text displayed during image loading.",
+        "load-failed-text": "Text shown if the image load fails.",
+        "frame-border": "Define border thickness",
+        "image-padding": "Define image padding",
+        "src": "URL of the image.",
+        "src-set": "List of image sources."
+      },
+      "slot": {
+        "loading": "Slot for custom content to display during image loading.",
+        "error": "Slot for custom content to display when the image fails to load."
+      },
+      "variables": {
+        "width": "Defines the width of the image.",
+        "height": "Defines the height of the image.",
+        "background-color": "Defines the background-color of the image"
+      },
+      "events": {
+        "error": "Native error event",
+        "load": "Native load event",
+      }
+    },
+    "tag": {
+      "value": {
+        "subtitle": "The value assigned to the component, typically *string* or *number*."
+      },
+      "text": {
+        "subtitle": "Defines the text content displayed in the component."
+      },
+      "removable": {
+        "subtitle": "Determines if the component can be removed by the user. Accepts only *boolean*.",
+        "info": {
+          "title": "Info",
+          "content": "If you want the tag rendering to be handled automatically, you can wrap the component in NmorphTagList."
+        }
+      },
+      "height": {
+        "subtitle": "Specifies the height of the component."
+      },
+      "transparent": {
+        "subtitle": "If set to *true*, the component will be rendered without shadow."
+      },
+      "api": {
+        "value": "Defines the value for the component.",
+        "text": "Sets the text displayed inside the component.",
+        "removable": "Indicates whether the component can be removed. Automatically works when wrapped in NmorphTagList.",
+        "transparent": "Specifies whether the component is transparent.",
+        "height": "Define component height"
+      },
+      "events": {
+        "close": "Return tag value"
+      }
+    },
+    "skeleton": {
+      "animated": {
+        "subtitle": "Enables animation for the skeleton component when set to *true*."
+      },
+      "loading": {
+        "subtitle": "Controls whether the skeleton is displayed, typically based on a loading state."
+      },
+      "rows": {
+        "subtitle": "Specifies the number of rows in the skeleton, usually for simulating text content."
+      },
+      "api": {
+        "animated": "Toggles animation for the skeleton component.",
+        "loading": "Determines whether the skeleton is shown based on the loading state.",
+        "rows": "Defines the number of rows in the skeleton layout."
+      },
+      "slot": {},
+      "variables": {}
     }
   }
 };

@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 });
 
 interface INmorphEmit {
-  (e: 'update:modelValue', val: string[]): void;
+  (e: 'update:model-value', val: string[]): void;
 }
 
 const initialValue = ref(props.modelValue);
@@ -35,7 +35,7 @@ const changeHandler = (id: string) => {
   if (initialValue.value.includes(id)) {
     initialValue.value = initialValue.value.filter((checkboxId) => checkboxId !== id);
   } else initialValue.value.push(id);
-  emit('update:modelValue', initialValue.value);
+  emit('update:model-value', initialValue.value);
 };
 
 const modifiers = computed(() =>

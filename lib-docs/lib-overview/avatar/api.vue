@@ -24,6 +24,16 @@ const attributesData: IAttributesTableData[] = [
     default: "-",
   },
   {
+    name: "frame-border",
+    type: "Number",
+    default: "2",
+  },
+  {
+    name: "image-padding",
+    type: "Number",
+    default: "4",
+  },
+  {
     name: "src-set",
     type: "String",
     default: "-",
@@ -35,7 +45,10 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "fit",
-    type: `<a class="docs-enum" target="_blank" href="https://developer.mozilla.org/ru/docs/Web/CSS/object-fit">object-fit</a>`,
+    type: docsLink(
+      "object-fit",
+      "https://developer.mozilla.org/ru/docs/Web/CSS/object-fit"
+    ),
     default: "cover",
   },
 ];
@@ -49,6 +62,23 @@ const slotData: ISlotsTableData[] = [
 ];
 
 const variables: IVariablesTableData[] = [];
+
+const events = [
+  {
+    name: "error",
+    type: docsLink(
+      "Event",
+      "https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event"
+    ),
+  },
+  {
+    name: "load",
+    type: docsLink(
+      "Event",
+      "https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event"
+    ),
+  },
+];
 </script>
 
 <template>
@@ -58,6 +88,7 @@ const variables: IVariablesTableData[] = [];
       :attributes="attributesData"
       :slots="slotData"
       :variables="variables"
+      :events="events"
     />
   </div>
 </template>

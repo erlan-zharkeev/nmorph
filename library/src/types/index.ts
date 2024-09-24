@@ -31,9 +31,10 @@ export interface INmorphCommonInputProps {
 }
 
 export enum NmorphShadowType {
-  inset = 'inset',
-  outset = 'outset',
-  combined = 'combined',
+  inset = 'shadow-inset',
+  outset = 'shadow-outset',
+  combined = 'shadow-combined',
+  'not-defined' = 'shadow-not-defined',
 }
 
 export enum NmorphColor {

@@ -7,6 +7,9 @@ import scroll from "~/lib-overview/scroll";
 import avatar from "~/lib-overview/avatar";
 import badge from "~/lib-overview/badge";
 import card from "~/lib-overview/card";
+import image from "~/lib-overview/image";
+import tag from "~/lib-overview/tag";
+import skeleton from "~/lib-overview/skeleton";
 
 interface IProps {
   name: string;
@@ -21,6 +24,9 @@ const componentsMap: Record<string, unknown[]> = {
   avatar,
   badge,
   card,
+  image,
+  tag,
+  skeleton,
 };
 </script>
 

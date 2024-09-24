@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 const initialValue = ref(props.modelValue);
 
 interface INmorphEmit {
-  (e: 'update:modelValue', value: string): void;
+  (e: 'update:model-value', value: string): void;
   (e: 'select', value: unknown): void;
 }
 const emit = defineEmits<INmorphEmit>();
@@ -45,7 +45,7 @@ const modifiers = computed(() =>
 
 const updateValueHandler = (value: string) => {
   initialValue.value = value;
-  emit('update:modelValue', initialValue.value);
+  emit('update:model-value', initialValue.value);
 };
 
 const open = ref(false);

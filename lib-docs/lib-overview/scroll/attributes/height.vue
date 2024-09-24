@@ -57,6 +57,7 @@ const code = [scriptData, templateData, cssData];
 <style lang="scss">
 .scroll-height-overview {
   width: 100%;
+  margin-left: 8px;
 
   .docs-scroll__box {
     background: var(--nmorph-accent-color);

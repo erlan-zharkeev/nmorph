@@ -5,18 +5,18 @@ import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
 <template>
   <div class="docs-main-layout">
     <aside
-      class="docs-main-layout__card nmorph-outset docs-main-layout__left-aside"
+      class="docs-main-layout__card nmorph--shadow-outset docs-main-layout__left-aside"
     >
       <slot name="aside" />
     </aside>
     <NmorphScroll
-      class="docs-main-layout__scroll-container nmorph-outset docs-main-layout__card"
+      class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card"
     >
       <main class="docs-main-layout__center">
         <slot name="default" />
       </main>
       <aside
-        class="docs-main-layout__card nmorph-inset docs-main-layout__center-aside"
+        class="docs-main-layout__card nmorph--shadow-inset docs-main-layout__center-aside"
       >
         <slot name="aside-right" />
       </aside>

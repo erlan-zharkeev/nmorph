@@ -60,7 +60,7 @@ const updateMenuHandler = () => {
 </script>
 
 <template>
-  <header class="docs-top-bar nmorph-outset">
+  <header class="docs-top-bar nmorph--shadow-outset">
     <div class="docs-top-bar__left">
       <NmorphCheckbox
         class="docs-top-bar__burger"

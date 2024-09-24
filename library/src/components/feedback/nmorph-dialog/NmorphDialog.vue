@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 
 interface INmorphEmit {
   (e: 'on-close'): void;
-  (e: 'update:modelValue', value: boolean): void;
+  (e: 'update:model-value', value: boolean): void;
 }
 const emit = defineEmits<INmorphEmit>();
 
@@ -66,7 +66,7 @@ const closeHandler = () => {
   emit('on-close');
   if (openTimeout) clearTimeout(openTimeout);
   closeTimeout = setTimeout(() => {
-    emit('update:modelValue', false);
+    emit('update:model-value', false);
   }, props.closeDelay);
 };
 </script>

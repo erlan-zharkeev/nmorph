@@ -5,7 +5,7 @@ import ApiTable from "~/components/api-table/api-table.vue";
 const attributesData = [
   {
     name: "icon",
-    type: `<a class="docs-enum" href="/components/icon">Icons</a>`,
+    type: docsLink("Icons", "/components/icon"),
     default: "-",
   },
   {

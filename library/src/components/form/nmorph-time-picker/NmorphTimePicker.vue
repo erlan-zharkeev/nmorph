@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 
 interface INmorphEmit {
   (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
-  (e: 'update:modelValue', val: number): void;
+  (e: 'update:model-value', val: number): void;
   (e: 'on-change-open-close', val: boolean): void;
 }
 
@@ -67,7 +67,7 @@ const minutesSeconds = Array.from({ length: 60 }, (_, index) => index);
 
 const updateValue = () => {
   emptyValue.value = false;
-  emit('update:modelValue', timeArrayToTimestamp(timeTuple.value));
+  emit('update:model-value', timeArrayToTimestamp(timeTuple.value));
 };
 
 const hoursChangedHandler = (val: number) => {

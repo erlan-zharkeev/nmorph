@@ -24,8 +24,8 @@ const modifiers = computed(() =>
   useModifiers({
     'nmorph-icon': [
       `${!props.width && !props.height && props.size}`,
-      `${props.width ? 'custom-width' : ''}`,
-      `${props.height ? 'custom-height' : ''}`,
+      `${props.width && 'custom-width'}`,
+      `${props.height && 'custom-height'}`,
     ],
   })
 );
@@ -51,23 +51,33 @@ const color = computed(() => props.color);
 
 <style lang="scss">
 .nmorph-icon {
+  @mixin dimensions {
+    width: var(--width);
+    min-width: var(--width);
+    height: var(--height);
+    min-height: var(--height);
+  }
+
+  @include dimensions;
   --color: v-bind(color);
 
   display: flex;
   align-items: center;
-  width: var(--width);
-  min-width: var(--width);
-  height: var(--height);
-  min-height: var(--height);
 
   .nmorph-icon__content {
     @include flex-full-center;
+    @include dimensions;
   }
 
   svg {
     @include wh100;
 
     fill: var(--color);
+    stroke-width: 0;
+  }
+
+  path {
+    stroke: var(--color);
   }
 }
 

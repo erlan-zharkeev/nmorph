@@ -6,15 +6,16 @@ import { computed, ref } from 'vue';
 interface INmorphProps extends INmorphImage {
   loadingText?: string;
   loadFailedText?: string;
+  frameBorder?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   fit: 'cover',
-  closeOnOutsideClick: true,
   alt: '',
   loadingText: 'Loading ...',
   loadFailedText: 'Image loading failed',
   srcSet: '',
+  frameBorder: 4,
 });
 
 const imageLoadFinished = ref(false);
@@ -38,21 +39,23 @@ const onImageError = (e: Event) => {
   emit('error', e);
 };
 
-const hide = computed(() => imageLoadFinished.value && imageLoadError.value);
+const loadingFailed = computed(() => imageLoadFinished.value && imageLoadError.value);
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-image': [`${hide.value && 'hide'}`],
+    nmorph: [`${props.frameBorder > 0 && 'shadow-combined'}`],
+    'nmorph-image': [`${(loadingFailed.value || !imageLoadFinished.value) && 'hide'}`],
   })
 );
 
 const objectFit = computed(() => props.fit);
+const frameBorder = computed(() => `${props.frameBorder}px`);
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div v-if="props.src" :class="modifiers">
     <img :src="props.src" :alt="props.alt" :srcset="props.srcSet" @load="onImageLoad" @error="onImageError" />
-    <div v-if="hide" class="nmorph-image__load-failed">
+    <div v-if="loadingFailed" class="nmorph-image__load-failed">
       <slot name="error">
         {{ props.loadFailedText }}
       </slot>
@@ -62,6 +65,12 @@ const objectFit = computed(() => props.fit);
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.nmorph {
+  @include nmorph-border(v-bind(frameBorder));
+}
+</style>
 
 <style lang="scss">
 .nmorph-image {
@@ -77,7 +86,6 @@ const objectFit = computed(() => props.fit);
     @include wh100;
 
     object-fit: v-bind(objectFit);
-    overflow: hidden;
   }
 
   &--hide {
@@ -86,6 +94,10 @@ const objectFit = computed(() => props.fit);
       height: 0;
       opacity: 0;
     }
+  }
+  .nmorph-image__loading,
+  .nmorph-image__load-failed {
+    padding: 1rem;
   }
 }
 </style>

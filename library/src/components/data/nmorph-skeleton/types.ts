@@ -1,1 +1,5 @@
-export type NmorphSkeletonItemPropsType = 'text' | 'h1' | 'image' | 'circle';
+export enum NmorphSkeletonItemPropsType {
+  image = 'image',
+  circle = 'circle',
+  rect = 'rect',
+}

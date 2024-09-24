@@ -34,14 +34,14 @@ const modifiers = computed(() =>
 
 const handleInput = (event: Event): void => {
   const target = event.target as HTMLInputElement;
-  emit('update:modelValue', target.value);
+  emit('update:model-value', target.value);
 };
 
 const showPassword = ref(false);
 
 const actionButtonClickHandler = () => {
   if (props.clearable) {
-    emit('update:modelValue', '');
+    emit('update:model-value', '');
   } else {
     showPassword.value = !showPassword.value;
   }
@@ -66,7 +66,7 @@ const inputDOMRef = ref<NmorphDomElementType>(null);
 
 interface INmorphEmit {
   (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
-  (e: 'update:modelValue', val: string): void;
+  (e: 'update:model-value', val: string): void;
   (e: 'focus'): void;
   (e: 'blur'): void;
   (e: 'on-enter'): void;

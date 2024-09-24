@@ -1,3 +1,7 @@
+@mixin nmorph-border($border-width: 0) {
+  border: $border-width solid var(--nmorph-main-color);
+}
+
 @mixin nmorph-outset() {
   background: var(--nmorph-main-color);
   box-shadow:
@@ -14,15 +18,19 @@
       var(--nmorph-light-shade-color);
 }
 
-@mixin nmorph-combined() {
+@mixin nmorph-combined($border-width: 0, $isInsetDark: false) {
+  @include nmorph-border($border-width);
   background: var(--nmorph-main-color);
   box-shadow:
     var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
     calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
       var(--nmorph-light-shade-color),
     inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-    inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-      var(--nmorph-light-shade-color);
+    inset calc(-1 * var(--base-shadow-width)) calc(-0.5 * var(--base-shadow-width)) var(--base-shadow-blur) #{if(
+        $isInsetDark,
+        var(--nmorph-dark-shade-color),
+        var(--nmorph-light-shade-color)
+      )};
 }
 
 @mixin nmorph-wrapper() {
@@ -35,14 +43,14 @@
   box-shadow: 0 0 var(--base-shadow-blur) var(--nmorph-dark-shade-color);
 }
 
-.nmorph-outset {
+.nmorph--shadow-outset {
   @include nmorph-outset;
 }
 
-.nmorph-inset {
+.nmorph--shadow-inset {
   @include nmorph-inset;
 }
 
-.nmorph-combined {
+.nmorph--shadow-combined {
   @include nmorph-combined;
 }

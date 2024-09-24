@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<INmorphCheckboxOption>(), {
 
 interface INmorphEmit {
   (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
-  (e: 'update:modelValue', val: boolean): void;
+  (e: 'update:model-value', val: boolean): void;
 }
 
 onMounted(() => {
@@ -46,7 +46,7 @@ const handleChange = () => {
   if (props.disabled) return;
   if (!hasGroup) {
     initialValue.value = !initialValue.value;
-    emit('update:modelValue', initialValue.value);
+    emit('update:model-value', initialValue.value);
     return;
   }
   if (changeValue && Array.isArray(initialValue.value)) changeValue(props.id, initialValue.value);

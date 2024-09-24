@@ -82,6 +82,35 @@ const variables = [
     default: "var(--thumb-color)",
   },
 ];
+
+const exposes = [
+  {
+    name: "scrollDOMContainer",
+    type: "-",
+  },
+  {
+    name: "moveTo",
+    type: "{ x: number, y: number }",
+  },
+];
+
+const events = [
+  {
+    name: "update:model-value",
+    type: "{ x: number, y: number }",
+  },
+  {
+    name: "on-scroll-end",
+    type: "-",
+  },
+  {
+    name: "on-scroll",
+    type: docsLink(
+      "Event",
+      "https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event"
+    ),
+  },
+];
 </script>
 
 <template>
@@ -91,6 +120,8 @@ const variables = [
       :attributes="attributesData"
       :slots="slotData"
       :variables="variables"
+      :exposes="exposes"
+      :events="events"
     />
   </div>
 </template>

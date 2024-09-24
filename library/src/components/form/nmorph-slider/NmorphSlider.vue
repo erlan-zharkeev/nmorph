@@ -34,7 +34,7 @@ const thumbWidthCss = `${thumbWidth}px`;
 const tooltipVisible = ref(props.showTooltip);
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', val: number): void;
+  (e: 'update:model-value', val: number): void;
 }>();
 
 const thumbValue = ref(props.modelValue);
@@ -42,7 +42,7 @@ const thumbValue = ref(props.modelValue);
 const sliderContainer = ref<NmorphDomElementType>(null);
 
 watch(thumbValue, () => {
-  emit('update:modelValue', thumbValue.value);
+  emit('update:model-value', thumbValue.value);
 });
 
 watch(
