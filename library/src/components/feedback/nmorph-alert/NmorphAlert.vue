@@ -4,7 +4,9 @@ import { useModifiers } from '@/utils';
 import { NmorphIcon, NmorphAlertType, INmorphAlertProps } from '@/components';
 import { NmorphIconList } from '@/types';
 
-const props = withDefaults(defineProps<INmorphAlertProps>(), {
+interface INmorphProps extends INmorphAlertProps {}
+
+const props = withDefaults(defineProps<INmorphProps>(), {
   type: 'info',
   closable: false,
   title: '',

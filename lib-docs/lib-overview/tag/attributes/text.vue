@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { NmorphTag } from "@nmorph/nmorph-ui-kit";
+import { NmorphTagItem } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
 const templateData = `
-<NmorphTag value="1" text="tag one" :removable="false" />
-<NmorphTag value="2" text="tag two" :removable="false" />
+<NmorphTagItem value="1" text="tag one" :removable="false" />
+<NmorphTagItem value="2" text="tag two" :removable="false" />
 `;
 
 const cssData = "";
@@ -17,14 +17,14 @@ const code = [scriptData, templateData, cssData];
   <div id="content-text">
     <attribute
       header="Text"
-      :subtitle="$t('overview.tag.text.subtitle')"
+      :subtitle="$t('overview.tag-item.text.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
         <div class="tag-text-overview">
           <ClientOnly>
-            <NmorphTag value="1" text="tag one" :removable="false" />
-            <NmorphTag value="2" text="tag two" :removable="false" />
+            <NmorphTagItem value="1" text="tag one" :removable="false" />
+            <NmorphTagItem value="2" text="tag two" :removable="false" />
           </ClientOnly>
         </div>
       </template>
@@ -43,7 +43,7 @@ const code = [scriptData, templateData, cssData];
 
 <style lang="scss">
 .tag-text-overview {
-  .nmorph-tag {
+  .nmorph-tag-item {
     margin-right: 8px;
   }
 }

@@ -53,6 +53,14 @@ const updateActiveAnchor = (entries: IntersectionObserverEntry[]) => {
     }
   });
 };
+
+const linkName = (anchor: string) => {
+  return anchor
+    .substring(8)
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
 </script>
 
 <template>
@@ -79,9 +87,7 @@ const updateActiveAnchor = (entries: IntersectionObserverEntry[]) => {
                 'docs-components-page--active': anchor === activeAnchor,
               }"
             >
-              <a :href="`#${anchor}`">{{
-                capitalizeFirstChar(anchor.substring(8))
-              }}</a>
+              <a :href="`#${anchor}`">{{ linkName(anchor) }}</a>
             </li>
           </ul>
         </nav>

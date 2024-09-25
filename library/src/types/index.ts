@@ -314,6 +314,8 @@ export type NmorphPlacementType = keyof typeof NmorphComponentPosition;
 
 export type NmorphDomElementType = HTMLElement | null;
 
+export type NmorphElementDesignType = 'nmorph' | 'common';
+
 export interface INmorphCoords<T> {
   x: T;
   y: T;

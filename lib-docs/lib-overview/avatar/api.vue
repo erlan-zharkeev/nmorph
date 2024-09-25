@@ -22,6 +22,7 @@ const attributesData: IAttributesTableData[] = [
     name: "src",
     type: "String",
     default: "-",
+    required: true,
   },
   {
     name: "frame-border",
@@ -46,7 +47,7 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "fit",
     type: docsLink(
-      "object-fit",
+      "Object-fit",
       "https://developer.mozilla.org/ru/docs/Web/CSS/object-fit"
     ),
     default: "cover",
@@ -84,6 +85,7 @@ const events = [
 <template>
   <div class="docs-api-table">
     <api-table
+      title="NmorphAvatar"
       name="avatar"
       :attributes="attributesData"
       :slots="slotData"

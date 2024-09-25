@@ -13,7 +13,9 @@ import {
 const data = inject<INmorphTableDataInjection>('table-data', undefined);
 const tableIdentifier = inject<NmorphTableIdInjectionType>('table-identifier', undefined);
 
-const props = withDefaults(defineProps<INmorphTableColumnProps>(), {
+interface INmorphProps extends INmorphTableColumnProps {}
+
+const props = withDefaults(defineProps<INmorphProps>(), {
   label: '',
   width: '',
   alignment: 'center',

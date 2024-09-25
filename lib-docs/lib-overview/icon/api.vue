@@ -15,12 +15,18 @@ const attributesData = [
   },
   {
     name: "width",
-    type: "String(css value)",
+    type: docsLink(
+      "Width",
+      "https://developer.mozilla.org/ru/docs/Web/CSS/width"
+    ),
     default: "-",
   },
   {
     name: "height",
-    type: "String(css value)",
+    type: docsLink(
+      "Height",
+      "https://developer.mozilla.org/ru/docs/Web/CSS/height"
+    ),
     default: "-",
   },
   {
@@ -45,6 +51,7 @@ const variablesData = [
 <template>
   <div class="docs-api-table">
     <api-table
+      title="NmorphIcon"
       name="icon"
       :variables="variablesData"
       :attributes="attributesData"

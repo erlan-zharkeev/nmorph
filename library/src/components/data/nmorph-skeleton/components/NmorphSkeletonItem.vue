@@ -2,22 +2,25 @@
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphIcon, NmorphSkeletonItemPropsType } from '@/components';
+import { NmorphElementDesignType } from '@/types';
 
 interface INmorphProps {
   variant: keyof typeof NmorphSkeletonItemPropsType;
   width: string;
   height: string;
+  design?: NmorphElementDesignType;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   variant: 'rect',
   width: 'auto',
   height: 'auto',
+  design: 'nmorph',
 });
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-skeleton-item': [props.variant],
+    'nmorph-skeleton-item': [props.variant, `${props.design === 'nmorph' ? 'nmorph-design' : ''}`],
   })
 );
 
@@ -35,11 +38,16 @@ const cssHeight = computed(() => props.height);
 
 <style lang="scss">
 .nmorph-skeleton-item {
-  margin-bottom: var(--indentation-02);
-  background: var(--nmorph-text-color);
   position: relative;
   width: v-bind(cssWidth);
   height: v-bind(cssHeight);
+  margin-bottom: var(--indentation-02);
+  background: var(--nmorph-text-color);
+  overflow: hidden;
+}
+
+.nmorph-skeleton-item--nmorph-design {
+  @include nmorph-inset();
 }
 
 .nmorph-skeleton-item--image {

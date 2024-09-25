@@ -2,10 +2,10 @@
 import { NmorphOverlay } from "@nmorph/nmorph-ui-kit";
 import ComponentList from "~/components/component-list/component-list.vue";
 
-interface INmorphProps {
+interface IProps {
   isMenuOpen: boolean;
 }
-const props = withDefaults(defineProps<INmorphProps>(), {});
+const props = withDefaults(defineProps<IProps>(), {});
 interface INmorphEmit {
   (e: "menu-click"): void;
 }

@@ -95,6 +95,7 @@ const frameBorder = computed(() => `${props.frameBorder}px`);
       opacity: 0;
     }
   }
+
   .nmorph-image__loading,
   .nmorph-image__load-failed {
     padding: 1rem;

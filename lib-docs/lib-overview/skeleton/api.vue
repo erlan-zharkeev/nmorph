@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import {
   type IAttributesTableData,
@@ -6,33 +5,82 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/api-table.vue";
+import { NmorphSkeletonItemPropsType } from "@nmorph/nmorph-ui-kit";
 
-const attributesData: IAttributesTableData[] = [{
-  name: "animated",
-  type: "",
-  default: "",
-},{
-  name: "loading",
-  type: "",
-  default: "",
-},{
-  name: "rows",
-  type: "",
-  default: "",
-}];
+const attributesData: IAttributesTableData[] = [
+  {
+    name: "animated",
+    type: "Boolean",
+    default: "true",
+  },
+  {
+    name: "loading",
+    type: "Boolean",
+    default: "true",
+  },
+  {
+    name: "rows",
+    type: "Number",
+    default: "0",
+  },
+];
 
-const slotData: ISlotsTableData[] = [];
+const itemAttributesData: IAttributesTableData[] = [
+  {
+    name: "variant",
+    type: enumToString(NmorphSkeletonItemPropsType),
+    default: "rect",
+  },
+  {
+    name: "design",
+    type: "nmorph, common",
+    default: "nmorph",
+  },
+  {
+    name: "width",
+    type: docsLink(
+      "Width",
+      "https://developer.mozilla.org/ru/docs/Web/CSS/width"
+    ),
+    default: "auto",
+  },
+  {
+    name: "height",
+    type: docsLink(
+      "Height",
+      "https://developer.mozilla.org/ru/docs/Web/CSS/height"
+    ),
+    default: "auto",
+  },
+];
 
-const variables: IVariablesTableData[] = [];
+const slotData: ISlotsTableData[] = [{ name: "template" }, { name: "default" }];
+const variables: IVariablesTableData[] = [{ name: "loading-gradient" }];
 </script>
 
 <template>
-<div class="docs-api-table">
-  <api-table
-    name="skeleton"
-    :attributes="attributesData"
-    :slots="slotData"
-    :variables="variables"
-  />
-</div>
+  <div class="docs-api-table">
+    <api-table
+      title="NmorphSkeleton"
+      name="skeleton"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+    />
+  </div>
+  <NmorphDivider />
+  <div class="docs-api-table">
+    <api-table
+      title="NmorphSkeletonItem"
+      name="skeleton-item"
+      :attributes="itemAttributesData"
+      additional-id="skeleton-item"
+    />
+  </div>
 </template>
+
+<style scoped>
+.docs-api-table {
+  margin: 16px 0;
+}
+</style>

@@ -1,5 +1,5 @@
 import Text from "./text.vue";
 import Removable from "./removable.vue";
-import Transparent from "./transparent.vue";
+import Design from "./design.vue";
 
-export const Attributes = [Text, Removable, Transparent];
+export const Attributes = [Text, Removable, Design];

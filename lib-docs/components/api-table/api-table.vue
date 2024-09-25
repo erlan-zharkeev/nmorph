@@ -16,15 +16,19 @@ import {
 const { t } = useI18n();
 
 interface IProps {
+  title: string;
   name: string;
   attributes: IAttributesTableData[];
   slots?: ISlotsTableData[];
   variables?: IVariablesTableData[];
   exposes?: IExposesTableData[];
   events?: IEventsTableData[];
+  additionalId?: string;
 }
 
-const props = withDefaults(defineProps<IProps>(), {});
+const props = withDefaults(defineProps<IProps>(), {
+  additionalId: "",
+});
 
 const getDescriptions = (
   data:
@@ -48,12 +52,21 @@ const updatedSlots = getDescriptions(props.slots, "slot");
 const updatedVariables = getDescriptions(props.variables, "variables");
 const updatedExposes = getDescriptions(props.exposes, "exposes");
 const updatedEvents = getDescriptions(props.events, "events");
+
+const getID = (name: string) => {
+  return `content-${
+    props.additionalId ? `${props.additionalId}-${name}` : name
+  }`;
+};
+
+const attributeNameLabel = (name: string, required: boolean) =>
+  required ? `${name}*` : name;
 </script>
 
 <template>
-  <div class="docs-api-table" id="content-api">
-    <div class="docs-api-table__attributes" id="content-attributes">
-      <h2 class="nmorph-title-1">{{ capitalizeFirstChar(props.name) }} Api</h2>
+  <div class="docs-api-table" :id="getID('api')">
+    <div class="docs-api-table__attributes" :id="getID('attributes')">
+      <h2 class="nmorph-title-1">{{ props.title }} Api</h2>
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("attributes") }}
       </h3>
@@ -64,7 +77,15 @@ const updatedEvents = getDescriptions(props.events, "events");
           bordered
           :row-hover="false"
         >
-          <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
+          <NmorphTableColumn prop="name" :label="$t('name')" alignment="left">
+            <template #default="{ scope }">
+              <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
+                {{
+                  attributeNameLabel(row.name as string, Boolean(row.required))
+                }}
+              </NmorphTableCell>
+            </template>
+          </NmorphTableColumn>
           <NmorphTableColumn
             prop="description"
             :label="$t('description')"
@@ -88,7 +109,7 @@ const updatedEvents = getDescriptions(props.events, "events");
     <div
       v-if="updatedSlots?.length"
       class="docs-api-table__slots"
-      id="content-slots"
+      :id="getID('slots')"
     >
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("slots") }}
@@ -107,7 +128,7 @@ const updatedEvents = getDescriptions(props.events, "events");
     <div
       v-if="updatedVariables?.length"
       class="docs-api-table__variables"
-      id="content-variables"
+      :id="getID('variables')"
     >
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("variables") }}
@@ -126,7 +147,7 @@ const updatedEvents = getDescriptions(props.events, "events");
     <div
       v-if="updatedExposes?.length"
       class="docs-api-table__exposes"
-      id="content-exposes"
+      :id="getID('exposes')"
     >
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("exposes") }}
@@ -150,7 +171,7 @@ const updatedEvents = getDescriptions(props.events, "events");
     <div
       v-if="updatedEvents?.length"
       class="docs-api-table__events"
-      id="content-events"
+      :id="getID('events')"
     >
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("events") }}
@@ -196,7 +217,6 @@ const updatedEvents = getDescriptions(props.events, "events");
 .docs-link {
   background-color: var(--nmorph-accent-color);
   color: var(--nmorph-white-color);
-  text-transform: uppercase;
   padding: 2px 4px;
   border-radius: 4px;
 }

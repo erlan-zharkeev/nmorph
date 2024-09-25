@@ -1,27 +1,22 @@
 <script setup lang="ts">
-import { NmorphComponentHeight } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphIcon } from '@/components';
+import { NmorphComponentHeight } from '@/types';
+import { INmorphTagItemProps } from './types';
 
-interface INmorphProps {
-  value: string;
-  text: string;
-  removable?: boolean;
-  height?: keyof typeof NmorphComponentHeight;
-  transparent?: boolean;
-}
+interface INmorphProps extends INmorphTagItemProps {}
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   removable: true,
-  transparent: false,
+  design: 'nmorph',
 });
 
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
-    'nmorph-tag': [`${props.transparent && 'transparent'}`],
+    'nmorph-tag-item': [`${props.design === 'nmorph' ? 'nmorph-design' : ''}`],
   })
 );
 
@@ -38,36 +33,40 @@ const closeHandler = () => {
 
 <template>
   <div :class="modifiers">
-    <div class="nmorph-tag__content">
+    <div class="nmorph-tag-item__content">
       <span>{{ text }}</span>
-      <NmorphIcon v-if="props.removable" class="nmorph-tag__close-icon" name="error" @click.stop="closeHandler" />
+      <NmorphIcon v-if="props.removable" class="nmorph-tag-item__close-icon" name="error" @click.stop="closeHandler" />
     </div>
   </div>
 </template>
 
 <style lang="scss">
-.nmorph-tag {
+.nmorph-tag-item {
   display: inline-flex;
   margin-right: var(--indentation-02);
   padding: var(--indentation-00) var(--indentation-03);
   border-radius: var(--default-border-radius);
   cursor: default;
+  border: solid 2px var(--nmorph-text-color);
 
-  @include nmorph-inset;
-
-  .nmorph-tag__content {
+  .nmorph-tag-item__content {
     display: flex;
     align-items: center;
     height: 100%;
   }
 
-  .nmorph-tag__close-icon {
+  .nmorph-tag-item__close-icon {
     margin-left: var(--indentation-02);
     cursor: pointer;
   }
 }
 
-.nmorph-tag--thin {
+.nmorph-tag-item--nmorph-design {
+  @include nmorph-inset;
+  border: none;
+}
+
+.nmorph-tag-item--thin {
   --height: var(--thin-component);
 
   span {
@@ -75,12 +74,7 @@ const closeHandler = () => {
   }
 }
 
-.nmorph-tag--thick {
+.nmorph-tag-item--thick {
   --height: var(--thick-component);
-}
-
-.nmorph-tag--transparent {
-  background: transparent;
-  box-shadow: none;
 }
 </style>

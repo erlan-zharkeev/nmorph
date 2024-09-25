@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { NmorphTag } from "@nmorph/nmorph-ui-kit";
+import { NmorphTagItem } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
 const templateData = `
-<NmorphTag value="1" text="tag one" transparent />
-<NmorphTag value="2" text="tag two" transparent />
+<NmorphTagItem value="1" text="tag one" design="nmorph" />
+<NmorphTagItem value="2" text="tag two" design="common" />
 `;
 
 const cssData = "";
@@ -14,17 +14,17 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div id="content-transparent">
+  <div id="content-design">
     <attribute
-      header="Transparent"
-      :subtitle="$t('overview.tag.transparent.subtitle')"
+      header="Design"
+      :subtitle="$t('overview.tag-item.design.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <div class="tag-transparent-overview">
+        <div class="tag-design-overview">
           <ClientOnly>
-            <NmorphTag value="1" text="tag one" transparent />
-            <NmorphTag value="2" text="tag two" transparent />
+            <NmorphTagItem value="1" text="tag one" design="nmorph" />
+            <NmorphTagItem value="2" text="tag two" design="common" />
           </ClientOnly>
         </div>
       </template>
@@ -42,6 +42,6 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.tag-transparent-overview {
+.tag-design-overview {
 }
 </style>

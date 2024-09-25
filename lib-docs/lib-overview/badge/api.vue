@@ -52,6 +52,7 @@ const variables: IVariablesTableData[] = [{ name: "dot-size" }];
 <template>
   <div class="docs-api-table">
     <api-table
+      title="NmorphBadge"
       name="badge"
       :attributes="attributesData"
       :slots="slotData"

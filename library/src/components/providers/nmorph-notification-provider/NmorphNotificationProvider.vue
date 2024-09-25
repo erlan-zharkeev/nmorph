@@ -31,14 +31,14 @@ const closeHandler = (id: number) => {
   removedIds.value = [...removedIds.value, id];
 };
 
-interface IProps {
+interface INmorphProps {
   notifications: INmorphNotification[];
   placement?: keyof typeof NmorphNotificationPlacement;
   zIndex?: number;
   quantity?: number;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<INmorphProps>(), {
   placement: 'top-right',
   zIndex: 1000,
   quantity: 100,

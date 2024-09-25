@@ -55,6 +55,7 @@ const variables = [
 <template>
   <div class="docs-api-table">
     <api-table
+      title="NmorphLink"
       name="link"
       :attributes="attributesData"
       :slots="slotData"

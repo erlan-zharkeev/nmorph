@@ -77,18 +77,20 @@ const frameBorder = computed(() => `${props.frameBorder}px`);
 
 <style lang="scss">
 .nmorph-avatar {
+  position: relative;
   width: v-bind(size);
   height: v-bind(size);
   overflow: hidden;
-  position: relative;
+
   @include flex-full-center;
 
   .nmorph-image {
     --width: v-bind(size);
     --height: v-bind(size);
-    border-radius: v-bind(radius);
-    padding: v-bind(imagePadding);
+
     position: absolute;
+    padding: v-bind(imagePadding);
+    border-radius: v-bind(radius);
 
     img {
       border-radius: v-bind(radius);

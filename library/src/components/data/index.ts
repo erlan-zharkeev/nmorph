@@ -25,4 +25,5 @@ export { default as NmorphTable } from './nmorph-table/NmorphTable.vue';
 export * from './nmorph-table/types';
 export { default as NmorphTableCell } from './nmorph-table/components/nmorph-table-cell/NmorphTableCell.vue';
 export { default as NmorphTableColumn } from './nmorph-table/components/nmorph-table-column/NmorphTableColumn.vue';
-export { default as NmorphTag } from './nmorph-tag/NmorphTag.vue';
+export { default as NmorphTagList } from './nmorph-tag-list/NmorphTagList.vue';
+export { default as NmorphTagItem } from './nmorph-tag-item/NmorphTagItem.vue';

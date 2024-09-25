@@ -116,6 +116,7 @@ const events = [
 <template>
   <div class="docs-api-table">
     <api-table
+      title="NmorphScroll"
       name="scroll"
       :attributes="attributesData"
       :slots="slotData"

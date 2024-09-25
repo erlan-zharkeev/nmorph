@@ -32,10 +32,11 @@ onMounted(() => {
   }
 });
 
-interface INmorphProps {
+interface IProps {
   isMenuOpen: boolean;
 }
-const props = withDefaults(defineProps<INmorphProps>(), {});
+
+const props = withDefaults(defineProps<IProps>(), {});
 
 interface INmorphEmit {
   (e: "toggle-menu"): void;

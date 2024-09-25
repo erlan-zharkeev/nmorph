@@ -23,6 +23,7 @@ const variables: IVariablesTableData[] = [{ name: "card-padding" }];
 <template>
   <div class="docs-api-table">
     <api-table
+      title="NmorphCard"
       name="card"
       :attributes="attributesData"
       :slots="slotData"

@@ -1,56 +1,35 @@
 <template>
   <div class="main">
-    <!-- <NmorphSkeleton :rows="2"> </NmorphSkeleton> -->
-    <!-- <NmorphSkeleton :loading="false" :animated="false">
+    <!-- <NmorphSkeleton loading :animated="true">
       <template #template>
-        <NmorphSkeletonItem variant="image" width="200px" height="200px" />
-        <NmorphSkeletonItem variant="rect" width="100%" height="14px" />
-        <NmorphSkeletonItem variant="circle" width="140px" height="140px" />
-      </template>
-      <template #default>
-        <img
-          src="./../assets/images/cat.png"
-          style="
-             {
-              width: 200px;
-              height: 200px;
-            }
-          "
-        />
-        <p>Paragraph</p>
-      </template>
-    </NmorphSkeleton> -->
-    <NmorphSkeleton :loading="loading" :rows="4" />
-    <NmorphSkeleton :loading="loading">
-      <template #template>
-        <NmorphSkeletonItem variant="image" width="200px" height="200px" />
-        <NmorphSkeletonItem variant="rect" width="100%" height="14px" />
-        <NmorphSkeletonItem variant="rect" width="100%" height="14px" />
-      </template>
-      <template #default>
-        <div class="x">
-          <NmorphImage :src="Cat" @load="loadHandler" />
-        </div>
-        <p>Paragraph</p>
+        <NmorphSkeletonItem variant="image" width="40px" height="40px" />
+        <NmorphSkeletonItem variant="circle" width="40px" height="40px" />
+        <NmorphSkeletonItem variant="rect" width="40px" height="40px" />
       </template>
     </NmorphSkeleton>
+    <NmorphSkeleton loading :animated="false">
+      <template #template>
+        <NmorphSkeletonItem variant="image" width="40px" height="40px" />
+        <NmorphSkeletonItem variant="circle" width="40px" height="40px" />
+        <NmorphSkeletonItem variant="rect" width="40px" height="40px" />
+      </template>
+    </NmorphSkeleton> -->
+    <NmorphTagItem value="1" text="One" transparent />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
 import {
-  NmorphSkeleton,
+  NmorphTagItem,
   NmorphSkeletonItem,
-  NmorphImage,
 } from "./../../../library/src/components";
-import Cat from "./../assets/images/cat.png";
-const loading = ref(true);
+import NmorphSkeleton from "../../../library/src/components/data/nmorph-skeleton/NmorphSkeleton.vue";
 
-const loadHandler = () => {
-  console.log("object");
-  // loading.value = false;
-};
+const list = ref([
+  { value: "1", text: "1" },
+  { value: "2", text: "2" },
+]);
 </script>
 
 <style lang="scss">

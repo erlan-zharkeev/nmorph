@@ -44,8 +44,8 @@ const modifiers = computed(() =>
     var(--nmorph-white-color) 37%,
     var(--nmorph-text-color) 63%
   );
+
   .nmorph-skeleton-item::before {
-    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -53,9 +53,10 @@ const modifiers = computed(() =>
     height: 100%;
     background: var(--loading-gradient);
     background-size: 400% 100%;
-    animation: nmorph-skeleton-loading-animation 2.4s ease infinite;
-    pointer-events: none;
     opacity: 0.3;
+    animation: nmorph-skeleton-loading-animation 2.4s ease infinite;
+    content: '';
+    pointer-events: none;
   }
 }
 

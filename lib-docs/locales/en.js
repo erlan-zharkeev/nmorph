@@ -288,7 +288,16 @@ export default {
         "load": "Native load event",
       }
     },
-    "tag": {
+    "tag-list": {
+      "api": {
+        "model-value": "List of tag element objects",
+      },
+      "events": {
+        "update:model-value": "Event for intercepting two-way binding",
+        "close": "Return closed tag value",
+      }
+    },
+    "tag-item": {
       "value": {
         "subtitle": "The value assigned to the component, typically *string* or *number*."
       },
@@ -305,18 +314,18 @@ export default {
       "height": {
         "subtitle": "Specifies the height of the component."
       },
-      "transparent": {
-        "subtitle": "If set to *true*, the component will be rendered without shadow."
+      "design": {
+        "subtitle": "If set to *common*, the component will be rendered with border"
       },
       "api": {
         "value": "Defines the value for the component.",
         "text": "Sets the text displayed inside the component.",
         "removable": "Indicates whether the component can be removed. Automatically works when wrapped in NmorphTagList.",
-        "transparent": "Specifies whether the component is transparent.",
+        "design": "Specifies component style",
         "height": "Define component height"
       },
       "events": {
-        "close": "Return tag value"
+        "close": "Return closed tag value"
       }
     },
     "skeleton": {
@@ -334,8 +343,20 @@ export default {
         "loading": "Determines whether the skeleton is shown based on the loading state.",
         "rows": "Defines the number of rows in the skeleton layout."
       },
-      "slot": {},
-      "variables": {}
+      "slot": {
+        "template": "Slot for custom skeleton structure when loading.",
+        "default": "Default slot content when not loading."
+      },
+      "variables": {
+        "loading-gradient": "Defines the gradient color used during skeleton loading animation."
+      }
+    },
+    "skeleton-item": {
+      "api": {
+        "variant": "Defines the type of skeleton to render, like text or circular.",
+        "design": "Sets the design of the skeleton item, such as color or borders.",
+        "width": "Specifies the width of the skeleton item."
+      }
     }
   }
 };

@@ -3,7 +3,7 @@ import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } 
 import { useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide } from 'vue';
 import {
-  NmorphTag,
+  NmorphTagItem,
   NmorphIcon,
   NmorphSelectOption,
   NmorphDropdown,
@@ -147,7 +147,7 @@ const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
           {{ props.noElementPlaceholder }}
         </div>
         <div v-else class="nmorph-select__selected-value">
-          <NmorphTag
+          <NmorphTagItem
             v-for="tag in tags"
             :key="tag.value"
             v-bind="tag"

@@ -92,6 +92,7 @@ const exposes = [
 <template>
   <div class="docs-api-table">
     <api-table
+      title="NmorphButton"
       name="button"
       :attributes="attributesData"
       :slots="slotData"

@@ -79,6 +79,7 @@ const variables: IVariablesTableData[] = [];
 <template>
 <div class="docs-api-table">
   <api-table
+    title="${componentName}"
     name="${componentName}"
     :attributes="attributesData"
     :slots="slotData"

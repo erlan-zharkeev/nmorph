@@ -9,6 +9,7 @@ export interface IBasicApiTableData {
 
 export interface IAttributesTableData extends IBasicApiTableData {
   default: string;
+  required?: boolean;
 }
 
 export interface IVariablesTableData extends ISlotsTableData {}

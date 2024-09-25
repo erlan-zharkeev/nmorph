@@ -20,6 +20,7 @@
 
 @mixin nmorph-combined($border-width: 0, $isInsetDark: false) {
   @include nmorph-border($border-width);
+
   background: var(--nmorph-main-color);
   box-shadow:
     var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),

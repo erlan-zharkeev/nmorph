@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphBadge, NmorphScroll } from "@nmorph/nmorph-ui-kit";
+import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
 
 const list: { name: string; components: string[] }[] = [
   {
@@ -19,11 +19,6 @@ const list: { name: string; components: string[] }[] = [
     ],
   },
 ];
-
-const tagData: { [key in string]: "E" | "W" } = {
-  NmorphTag: "E",
-  NmorphSkeleton: "W",
-};
 
 const localePath = useLocalePath();
 const router = useRouter();
@@ -52,12 +47,6 @@ const isRouteExist = (name: string) =>
               <NuxtLink :to="localePath(componentPathByName(componentName))">
                 {{ componentName.substring(6) }}
               </NuxtLink>
-              <div
-                v-if="tagData[componentName]"
-                class="docs-component-list__tag-text"
-              >
-                {{ tagData[componentName] }}
-              </div>
             </div>
           </div>
         </div>
@@ -88,17 +77,5 @@ const isRouteExist = (name: string) =>
 
 .docs-component-list__scroll {
   height: var(--aside-container-height);
-}
-
-.docs-component-list__tag-text {
-  color: unset;
-  margin-left: 8px;
-  background-color: var(--nmorph-success-color);
-  padding: 0 6px;
-  border-radius: 4px;
-  color: var(--nmorph-white-color);
-  font-size: 10px;
-  display: flex;
-  align-items: center;
 }
 </style>
