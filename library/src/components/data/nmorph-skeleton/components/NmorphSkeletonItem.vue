@@ -42,12 +42,12 @@ const cssHeight = computed(() => props.height);
   width: v-bind(cssWidth);
   height: v-bind(cssHeight);
   margin-bottom: var(--indentation-02);
-  background: var(--nmorph-text-color);
   overflow: hidden;
+  background: var(--nmorph-text-color);
 }
 
 .nmorph-skeleton-item--nmorph-design {
-  @include nmorph-inset();
+  @include nmorph-inset;
 }
 
 .nmorph-skeleton-item--image {

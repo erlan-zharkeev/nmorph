@@ -45,9 +45,9 @@ const closeHandler = () => {
   display: inline-flex;
   margin-right: var(--indentation-02);
   padding: var(--indentation-00) var(--indentation-03);
+  border: solid 2px var(--nmorph-text-color);
   border-radius: var(--default-border-radius);
   cursor: default;
-  border: solid 2px var(--nmorph-text-color);
 
   .nmorph-tag-item__content {
     display: flex;
@@ -63,6 +63,7 @@ const closeHandler = () => {
 
 .nmorph-tag-item--nmorph-design {
   @include nmorph-inset;
+
   border: none;
 }
 
