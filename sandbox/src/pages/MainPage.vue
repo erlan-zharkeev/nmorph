@@ -1,20 +1,34 @@
 <template>
-  <div class="main">
-    <!-- <NmorphSkeleton loading :animated="true">
-      <template #template>
-        <NmorphSkeletonItem variant="image" width="40px" height="40px" />
-        <NmorphSkeletonItem variant="circle" width="40px" height="40px" />
-        <NmorphSkeletonItem variant="rect" width="40px" height="40px" />
+  <div ref="translateBtn" class="docs-top-bar__translate-btn">
+    <NmorphCheckbox
+      v-model="open"
+      size="small"
+      class="docs-top-bar__translate-checkbox"
+      design="button"
+      @click="clickHandler"
+      @update:model-value="update"
+    >
+      <template #label>
+        <ClientOnly>
+          <NmorphIcon> T </NmorphIcon>
+        </ClientOnly>
       </template>
-    </NmorphSkeleton>
-    <NmorphSkeleton loading :animated="false">
-      <template #template>
-        <NmorphSkeletonItem variant="image" width="40px" height="40px" />
-        <NmorphSkeletonItem variant="circle" width="40px" height="40px" />
-        <NmorphSkeletonItem variant="rect" width="40px" height="40px" />
-      </template>
-    </NmorphSkeleton> -->
-    <NmorphTagItem value="1" text="One" transparent />
+    </NmorphCheckbox>
+    <NmorphDropdown
+      v-if="translateBtn"
+      :fill-width="false"
+      :open="open"
+      :relative-element="translateBtn"
+      @on-outside-click="closeHandler"
+      :x-offset="-40"
+      :y-offset="10"
+      :width="100"
+    >
+      <ul class="docs-translates__dropdown">
+        <li>First</li>
+        <li>Second</li>
+      </ul>
+    </NmorphDropdown>
   </div>
 </template>
 
@@ -26,24 +40,22 @@ import {
 } from "./../../../library/src/components";
 import NmorphSkeleton from "../../../library/src/components/data/nmorph-skeleton/NmorphSkeleton.vue";
 
-const list = ref([
-  { value: "1", text: "1" },
-  { value: "2", text: "2" },
-]);
+const translateBtn = ref(null);
+const open = ref(false);
+const closeHandler = () => {
+  open.value = false;
+};
+const clickHandler = (e) => {
+  console.log("click", e);
+};
+const update = (e) => {
+  open.value = e;
+  console.log("click", e);
+};
 </script>
 
 <style lang="scss">
-.main {
+.docs-top-bar__translate-btn {
   padding: 20px;
-}
-
-.x {
-  width: 200px;
-  height: 200px;
-}
-
-.nmorph-card {
-  margin-left: 100px;
-  width: 200px;
 }
 </style>

@@ -39,7 +39,6 @@ $transition: 0.2s ease-in-out left;
   width: 30%;
   height: 100vh;
   background: var(--nmorph-main-color);
-  z-index: 100;
   padding: 16px;
 }
 

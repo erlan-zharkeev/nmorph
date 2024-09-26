@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, Ref, inject, onMounted } from 'vue';
+import { computed, ref, Ref, inject, onMounted, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import {
   INmorphCheckboxOption,
@@ -33,6 +33,13 @@ interface INmorphEmit {
 onMounted(() => {
   emit('inputDOMRef', inputDOMRef);
 });
+
+watch(
+  () => props.modelValue,
+  (updatedValue) => {
+    initialValue.value = updatedValue;
+  }
+);
 
 const inputDOMRef = ref<NmorphDomElementType>(null);
 const hasGroup = groupSelectedValue !== undefined;

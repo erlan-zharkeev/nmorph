@@ -231,6 +231,9 @@ $top-bar-height: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  ul {
+    background: var(--nmorph-main-bg);
+  }
   li {
     padding: 4px;
     width: 100%;

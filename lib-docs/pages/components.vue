@@ -6,7 +6,7 @@ import { capitalizeFirstChar } from "@nmorph/nmorph-ui-kit";
 
 const componentPage = ref<HTMLElement | null>(null);
 const navigationContents = ref<string[]>([]);
-
+const timeoutScrollId = ref(null);
 const router = useRouter();
 
 watch(
@@ -18,6 +18,22 @@ watch(
   }
 );
 
+const scrollToAnchor = (anchor: string) => {
+  const offsetFromCurrent = document
+    .getElementById(anchor)
+    .getBoundingClientRect().top;
+  const y =
+    offsetFromCurrent + scroll.value.scroll.scrollDOMContainer.scrollTop;
+  scroll.value.scroll.moveTo({ x: 0, y });
+};
+
+watch(
+  () => router.currentRoute.value.hash,
+  () => {
+    scrollToAnchor(router.currentRoute.value.hash.substring(1));
+  }
+);
+
 onMounted(() => {
   observer.value = new IntersectionObserver(updateActiveAnchor, {
     root: null,
@@ -25,11 +41,14 @@ onMounted(() => {
     threshold: 0,
   });
   doUpdate();
+  const timeoutScrollId = setTimeout(() => {
+    scrollToAnchor(router.currentRoute.value.hash.substring(1));
+  }, 400);
 });
 
 onUnmounted(() => {
-  if (!observer.value) return;
-  observer.value.disconnect();
+  if (timeoutScrollId.value !== null) clearTimeout(timeoutScrollId.value);
+  if (observer.value) observer.value.disconnect();
 });
 
 const doUpdate = () => {
@@ -45,6 +64,7 @@ const doUpdate = () => {
 
 const activeAnchor = ref("");
 const observer = ref<IntersectionObserver | null>(null);
+const scroll = ref(null);
 
 const updateActiveAnchor = (entries: IntersectionObserverEntry[]) => {
   entries.forEach((entry) => {
@@ -65,7 +85,7 @@ const linkName = (anchor: string) => {
 
 <template>
   <div class="docs-components-page page">
-    <MainContentPart>
+    <MainContentPart ref="scroll">
       <template #aside>
         <ComponentsList />
       </template>

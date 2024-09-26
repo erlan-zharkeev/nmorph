@@ -69,6 +69,7 @@ export default defineNuxtConfig({
     locales: [
       { code: "en", name: "English", file: "en.js" },
       { code: "ru", name: "Русский", file: "ru.js" },
+      { code: "ch", name: "中国语文科", file: "ch.js" },
     ],
     defaultLocale: "en",
     detectBrowserLanguage: {

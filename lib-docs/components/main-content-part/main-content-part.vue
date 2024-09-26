@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
+const scroll = ref(null);
+defineExpose({ scroll });
 </script>
 
 <template>
@@ -10,6 +12,7 @@ import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
       <slot name="aside" />
     </aside>
     <NmorphScroll
+      ref="scroll"
       class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card"
     >
       <main class="docs-main-layout__center">
