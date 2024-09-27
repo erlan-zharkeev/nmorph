@@ -10,6 +10,7 @@ import card from "~/lib-overview/card";
 import image from "~/lib-overview/image";
 import tag from "~/lib-overview/tag";
 import skeleton from "~/lib-overview/skeleton";
+import progress from "~/lib-overview/progress";
 
 interface IProps {
   name: string;
@@ -27,6 +28,7 @@ const componentsMap: Record<string, unknown[]> = {
   image,
   tag,
   skeleton,
+  progress,
 };
 </script>
 

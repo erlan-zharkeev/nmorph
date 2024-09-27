@@ -1,44 +1,17 @@
 <template>
   <div ref="translateBtn" class="docs-top-bar__translate-btn">
-    <NmorphCheckbox
-      v-model="open"
-      size="small"
-      class="docs-top-bar__translate-checkbox"
-      design="button"
-      @click="clickHandler"
-      @update:model-value="update"
-    >
-      <template #label>
-        <ClientOnly>
-          <NmorphIcon> T </NmorphIcon>
-        </ClientOnly>
-      </template>
-    </NmorphCheckbox>
-    <NmorphDropdown
-      v-if="translateBtn"
-      :fill-width="false"
-      :open="open"
-      :relative-element="translateBtn"
-      @on-outside-click="closeHandler"
-      :x-offset="-40"
-      :y-offset="10"
-      :width="100"
-    >
-      <ul class="docs-translates__dropdown">
-        <li>First</li>
-        <li>Second</li>
-      </ul>
-    </NmorphDropdown>
+    <NmorphProgress
+      :percentage="33"
+      :circle-size="100"
+      type="circle"
+      color="cyan"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import {
-  NmorphTagItem,
-  NmorphSkeletonItem,
-} from "./../../../library/src/components";
-import NmorphSkeleton from "../../../library/src/components/data/nmorph-skeleton/NmorphSkeleton.vue";
+import { NmorphProgress } from "./../../../library/src/components";
 
 const translateBtn = ref(null);
 const open = ref(false);

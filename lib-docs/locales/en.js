@@ -6,7 +6,7 @@ export default {
   "attributes": "Attributes",
   "slots": "Slots",
   "variables": "Variables",
-  "exposes": 'Exposes',
+  "exposes": "Exposes",
   "right-aside-title": "Contents",
   "name": "Name",
   "events": "Events",
@@ -190,7 +190,7 @@ export default {
       },
       "events": {
         "error": "Native img error event",
-        "load": "Native img load event",
+        "load": "Native img load event"
       }
     },
     "badge": {
@@ -285,16 +285,16 @@ export default {
       },
       "events": {
         "error": "Native error event",
-        "load": "Native load event",
+        "load": "Native load event"
       }
     },
     "tag-list": {
       "api": {
-        "model-value": "List of tag element objects",
+        "model-value": "List of tag element objects"
       },
       "events": {
         "update:model-value": "Event for intercepting two-way binding",
-        "close": "Return closed tag value",
+        "close": "Return closed tag value"
       }
     },
     "tag-item": {
@@ -356,6 +356,52 @@ export default {
         "variant": "Defines the type of skeleton to render, like text or circular.",
         "design": "Sets the design of the skeleton item, such as color or borders.",
         "width": "Specifies the width of the skeleton item."
+      }
+    },
+    "progress": {
+      "type": {
+        "subtitle": "Specifies the type of progress bar, e.g., *line* or *circle*."
+      },
+      "color": {
+        "subtitle": "Sets the color of the progress bar."
+      },
+      "percentage": {
+        "subtitle": "Defines the percentage of progress completed.",
+        "info": {
+          "title": "Info",
+          "content": "Make sure to specify the width of the wrapper container for proper display."
+        }
+      },
+      "value-inside": {
+        "subtitle": "Displays the progress text inside the bar if set to *true*."
+      },
+      "value-right-side": {
+        "subtitle": "Shows or hides the percentage text alongside the progress bar."
+      },
+      "indeterminate": {
+        "subtitle": "Shows an indeterminate progress animation when set to *true*."
+      },
+      "circle-size": {
+        "subtitle": "Specifies the size of the circular progress bar."
+      },
+      "api": {
+        "type": "Specifies the type of progress indicator.",
+        "color": "Defines the color of the progress bar.",
+        "percentage": "Sets the progress percentage value.",
+        "value-inside": "Displays progress text inside the bar.",
+        "value-right-side": "Shows or hides percentage text.",
+        "indeterminate": "Enables indeterminate progress animation.",
+        "circle-size": "Defines the size of the circular progress bar.",
+      },
+      "slot": {
+        "inner-text": "Slot for custom content inside the progress bar.",
+        "right-side": "Slot for custom content on the right side of the progress bar.",
+        "circle-inner-part": "Slot for custom content inside the circular progress."
+      },
+      "variables": {
+        "height": "Defines the height of the progress bar.",
+        "width-transition": "Sets the transition animation for width changes.",
+        "animation": "Controls the animation settings for the progress bar."
       }
     }
   }

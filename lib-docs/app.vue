@@ -1,7 +1,7 @@
 <template>
   <div class="loader" v-if="!loaded">
     <nmorph-progress
-      :show-text="false"
+      :value-right-side="false"
       indeterminate
       color="var(--nmorph-accent-color)"
     />

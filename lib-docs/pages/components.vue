@@ -2,7 +2,6 @@
 import { ref, watch, nextTick, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import ComponentsList from "~/components/component-list/component-list.vue";
-import { capitalizeFirstChar } from "@nmorph/nmorph-ui-kit";
 
 const componentPage = ref<HTMLElement | null>(null);
 const navigationContents = ref<string[]>([]);
@@ -19,8 +18,9 @@ watch(
 );
 
 const scrollToAnchor = (anchor: string) => {
+  if (!document || !scroll.value || !anchor) return;
   const offsetFromCurrent = document
-    .getElementById(anchor)
+    ?.getElementById(anchor)
     .getBoundingClientRect().top;
   const y =
     offsetFromCurrent + scroll.value.scroll.scrollDOMContainer.scrollTop;

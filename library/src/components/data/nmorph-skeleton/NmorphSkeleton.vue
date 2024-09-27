@@ -25,7 +25,7 @@ const modifiers = computed(() =>
 <template>
   <div :class="modifiers">
     <div v-if="props.rows && props.loading" class="nmorph-skeleton__rows">
-      <NmorphSkeletonItem v-for="row in props.rows" :key="row" width="100%" height="14px" />
+      <NmorphSkeletonItem v-for="row in props.rows" :key="row" width="100%" height="14px" variant="rect" />
     </div>
     <div v-show="!props.rows && props.loading" class="nmorph-skeleton__template">
       <slot name="template" />

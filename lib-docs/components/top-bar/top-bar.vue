@@ -186,7 +186,6 @@ $top-bar-height: 50px;
   align-items: center;
   justify-content: space-between;
   padding: 4px 20px;
-  position: sticky;
 }
 
 .docs-top-bar__translate-btn {

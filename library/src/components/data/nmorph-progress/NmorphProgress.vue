@@ -7,22 +7,20 @@ interface INmorphProps {
   type?: NmorphProgressType;
   color?: NmorphProgressColorType;
   percentage: number;
-  textInside?: boolean;
-  showText?: boolean;
+  valueInside?: boolean;
+  valueRightSide?: boolean;
   indeterminate?: boolean;
   circleSize?: number;
-  strokeWidth?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   type: 'linear',
   color: 'var(--nmorph-info-color)',
-  textInside: false,
-  showText: true,
+  valueInside: false,
+  valueRightSide: true,
   indeterminate: false,
   circleSize: 120,
-  strokeWidth: 4,
 });
 
 const modifiers = computed(() =>
@@ -64,13 +62,13 @@ const displayPercentage = computed(() => `${props.percentage}%`);
     <div v-if="props.type === 'linear'" class="nmorph-progress__linear">
       <div class="nmorph-progress__outer">
         <div class="nmorph-progress__inner">
-          <div v-if="textInside" class="nmorph-progress__inner-text">
+          <div v-if="valueInside" class="nmorph-progress__inner-text">
             <slot name="inner-text"> {{ displayPercentage }} </slot>
           </div>
         </div>
       </div>
-      <div v-if="showText" class="nmorph-progress__percentage">
-        <slot name="right-sight">{{ displayPercentage }}</slot>
+      <div v-if="valueRightSide" class="nmorph-progress__percentage">
+        <slot name="right-side">{{ displayPercentage }}</slot>
       </div>
     </div>
     <div v-if="props.type === 'circle'" class="nmorph-progress__circle">
@@ -97,6 +95,7 @@ const displayPercentage = computed(() => `${props.percentage}%`);
   --height: 8px;
   --width-transition: 0.4s ease-in-out width;
   --animation: slide 2s linear infinite;
+  display: inline;
 
   .nmorph-progress__linear {
     display: flex;
@@ -172,7 +171,7 @@ const displayPercentage = computed(() => `${props.percentage}%`);
     transition: stroke-dashoffset 0.5s;
     fill: none;
     stroke: v-bind(color);
-    stroke-width: v-bind(strokeWidth);
+    stroke-width: 4px;
   }
 }
 

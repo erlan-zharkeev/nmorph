@@ -16,6 +16,7 @@ const list: { name: string; components: string[] }[] = [
       "NmorphImage",
       "NmorphTag",
       "NmorphSkeleton",
+      "NmorphProgress",
     ],
   },
 ];
