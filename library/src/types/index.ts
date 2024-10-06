@@ -390,6 +390,7 @@ export type NmorphThemeMapType = Record<string, INmorphColorVariable[]>;
 export enum Locale {
   en = 'en',
   ru = 'ru',
+  zh = 'zh',
 }
 
 export type TranslateType = Record<keyof typeof Locale, TranslateMessages>;

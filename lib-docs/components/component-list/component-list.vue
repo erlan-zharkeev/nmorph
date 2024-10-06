@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
+import { NmorphScroll, pascalToSpace } from "@nmorph/nmorph-ui-kit";
 
 const list: { name: string; components: string[] }[] = [
   {
@@ -17,14 +17,17 @@ const list: { name: string; components: string[] }[] = [
       "NmorphTag",
       "NmorphSkeleton",
       "NmorphProgress",
+      "NmorphCalendar",
+      "NmorphImagePreview",
     ],
   },
 ];
 
 const localePath = useLocalePath();
 const router = useRouter();
-const isRouteExist = (name: string) =>
-  router.resolve(componentPathByName(name)).matched.length > 0;
+const isRouteExist = (name: string) => {
+  return router.resolve(componentPathByName(name)).matched.length > 0;
+};
 </script>
 
 <template>
@@ -46,7 +49,7 @@ const isRouteExist = (name: string) =>
           <div v-if="isRouteExist(componentName)">
             <div class="docs-component-list__name-element">
               <NuxtLink :to="localePath(componentPathByName(componentName))">
-                {{ componentName.substring(6) }}
+                {{ pascalToSpace(componentName.substring(6)) }}
               </NuxtLink>
             </div>
           </div>

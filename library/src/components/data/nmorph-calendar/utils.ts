@@ -1,5 +1,5 @@
 import { NmorphCalendarDatesType, NmorphCalendarRangeType, NmorphSelectedDateModelType } from './types';
-import { monthNames } from './locale';
+import { useCalendarTexts } from './hooks';
 import { Ref } from 'vue';
 
 export const getDecadeYears = (year: number) => {
@@ -35,7 +35,7 @@ export const hasAnyRangeDateInNextMonth = (currentDate: Date, nextMonthRange: Da
   return currentDate.getMonth() < nextMonthRange.getMonth();
 };
 
-export const isTodayInRange = (range: NmorphCalendarRangeType) => {
+export const isTodayInMonthRange = (range: NmorphCalendarRangeType) => {
   const currentDate = new Date();
   if (!range) return true;
   const prevMonthRange = range && range[0];
@@ -43,7 +43,10 @@ export const isTodayInRange = (range: NmorphCalendarRangeType) => {
   return currentDate >= prevMonthRange && currentDate <= nextMonthRange;
 };
 
-export const getMonthName = (monthIndex: number) => monthNames[monthIndex];
+export const getMonthName = (monthIndex: number) => {
+  const { months } = useCalendarTexts();
+  return months[monthIndex];
+};
 
 const isLeapYear = (year: number): boolean => {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
@@ -55,12 +58,14 @@ const maxDaysInMonth = (year: number, month: number): number => {
   return isLeapYear(year) ? 29 : 28;
 };
 
+export const resetTimeToZero = (date: Date): Date => new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
 export const getMonthDaysByWeek = (
   selectedDate: Ref<Date>,
   range: NmorphCalendarRangeType | undefined
 ): NmorphCalendarDatesType[] => {
   const isDateHidden = (candidateDate: Date) => {
-    return range ? candidateDate < range[0] || candidateDate > range[1] : false;
+    return range ? candidateDate < resetTimeToZero(range[0]) || candidateDate > resetTimeToZero(range[1]) : false;
   };
 
   const year: number = selectedDate.value.getFullYear();

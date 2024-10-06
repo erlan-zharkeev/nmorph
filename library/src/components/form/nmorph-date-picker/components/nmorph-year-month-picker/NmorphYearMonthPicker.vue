@@ -6,8 +6,8 @@ import {
   NmorphIcon,
   NmorphRadioGroup,
   INmorphRadioOption,
-  monthNames,
   getDecadeYears,
+  useCalendarTexts,
 } from '@/components';
 import { ControlsType } from '../types';
 
@@ -16,7 +16,9 @@ interface INmorphProps {
   type?: 'year' | 'month';
 }
 
-const initialMonthData: INmorphRadioOption[] = monthNames.map((monthName, idx) => {
+const { months } = useCalendarTexts();
+
+const initialMonthData: INmorphRadioOption[] = months.map((monthName, idx) => {
   const label = monthName.substring(0, 3);
   return {
     label,

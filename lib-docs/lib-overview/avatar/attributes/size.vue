@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { NmorphAvatar } from "@nmorph/nmorph-ui-kit";
-import Bear from "~/assets/images/bear.webp";
-import Fox from "~/assets/images/fox.webp";
-import Cat from "~/assets/images/cat.webp";
+import { Cat, Dog, Racoon } from "~/assets/images";
 
 const scriptData = ``;
 
@@ -27,9 +25,9 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="avatar-size-overview">
           <ClientOnly>
-            <NmorphAvatar :src="Bear" :size="70" />
+            <NmorphAvatar :src="Dog" :size="70" />
             <NmorphAvatar :src="Cat" :size="50" />
-            <NmorphAvatar :src="Fox" :size="40" />
+            <NmorphAvatar :src="Racoon" :size="40" />
           </ClientOnly>
         </div>
       </template>

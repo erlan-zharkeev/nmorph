@@ -173,7 +173,7 @@ const updateMenuHandler = () => {
   </header>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 $top-bar-height: 50px;
 
 .docs-top-bar__translate-checkbox {
@@ -230,14 +230,28 @@ $top-bar-height: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
   ul {
     background: var(--nmorph-main-bg);
   }
-  li {
+  a {
     padding: 4px;
     width: 100%;
     text-align: center;
     cursor: pointer;
+  }
+
+  a:hover {
+    background: var(--nmorph-accent-color);
+    color: var(--nmorph-white-color);
+  }
+  a:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  a:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 }
 

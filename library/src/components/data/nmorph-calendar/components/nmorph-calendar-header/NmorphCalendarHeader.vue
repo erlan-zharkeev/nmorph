@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { NmorphButton, getMonthName } from '@/components';
+import { NmorphButton, getMonthName, NmorphIcon } from '@/components';
 import { useModifiers } from '@/utils';
 
 interface INmorphProps {
@@ -30,14 +30,15 @@ const modifiers = computed(() =>
 <template>
   <div :class="modifiers">
     <slot>
-      <h2 class="nmorph-calendar-header">{{ props.year }} {{ getMonthName(props.month) }}</h2>
+      <div class="nmorph-calendar-header__text">{{ props.year }} {{ getMonthName(props.month) }}</div>
       <div class="nmorph-calendar-header__actions">
         <NmorphButton
           v-if="showPreviousMonthButton"
           class="nmorph-calendar-header__action"
-          text="Previous month"
           @click="emit('click-previous-month')"
-        />
+        >
+          <NmorphIcon name="arrow-left" />
+        </NmorphButton>
         <NmorphButton
           v-if="showTodayButton"
           class="nmorph-calendar-header__action"
@@ -47,9 +48,10 @@ const modifiers = computed(() =>
         <NmorphButton
           v-if="showNextMonthButton"
           class="nmorph-calendar-header__action"
-          text="Next month"
           @click="emit('click-next-month')"
-        />
+        >
+          <NmorphIcon name="arrow-right" />
+        </NmorphButton>
       </div>
     </slot>
   </div>
@@ -59,6 +61,7 @@ const modifiers = computed(() =>
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 8px;
 }
 
 .nmorph-calendar-header__actions {
@@ -67,5 +70,11 @@ const modifiers = computed(() =>
 
 .nmorph-calendar-header__action:nth-child(2) {
   margin: 0 var(--indentation-03);
+}
+
+.nmorph-calendar-header__text {
+  @include title-1;
+  margin-right: 8px;
+  width: 160px;
 }
 </style>

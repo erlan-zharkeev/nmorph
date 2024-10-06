@@ -1,10 +1,10 @@
-import Autumn from "./autumn.webp";
-import Bear from "./bear.webp";
+import Autumn from "./autumn.jpg";
 import CatReal from "./cat-real.png";
-import Cat from "./cat.webp";
-import Fox from "./fox.webp";
-import Spring from "./spring.webp";
-import Summer from "./summer.webp";
-import Winter from "./winter.webp";
+import Cat from "./cat.jpg";
+import Dog from "./dog.jpg";
+import Racoon from "./racoon.jpg";
+import Spring from "./spring.jpg";
+import Summer from "./summer.jpg";
+import Winter from "./winter.jpg";
 
-export { Autumn, Bear, CatReal, Cat, Fox, Spring, Summer, Winter };
+export { Autumn, Dog, Racoon, CatReal, Cat, Spring, Summer, Winter };

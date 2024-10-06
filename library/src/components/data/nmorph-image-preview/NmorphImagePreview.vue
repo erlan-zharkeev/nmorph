@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
-import { ComputedRef, computed, ref } from 'vue';
+import { ComputedRef, computed, ref, watch } from 'vue';
 import { NmorphImage, NmorphButton, NmorphIcon, NmorphOverlay, INmorphAction } from '@/components';
 
 interface INmorphProps {
-  show?: boolean;
+  modelValue?: boolean;
   alt?: string;
   initialIndex?: number;
   src: string | string[];
@@ -15,14 +15,20 @@ interface INmorphProps {
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   alt: '',
-  show: false,
+  modelValue: false,
   initialIndex: 0,
   scaleStep: 0.2,
   minScaleLevel: 0.2,
   maxScaleLevel: 4,
 });
 
-const open = ref(props.show);
+const open = ref(props.modelValue);
+
+watch(
+  () => props.modelValue,
+  (newValue) => (open.value = newValue)
+);
+
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-image-preview': [`${open.value && 'opened'}`],
@@ -36,17 +42,16 @@ const scaleLevel = ref(1);
 
 const clickHandler = () => {
   open.value = true;
-  emit('on-open');
+  emit('update:model-value', open.value);
 };
 
 const closeHandler = () => {
   open.value = false;
-  emit('on-close');
+  emit('update:model-value', open.value);
 };
 
 interface INmorphEmit {
-  (e: 'on-close'): void;
-  (e: 'on-open'): void;
+  (e: 'update:model-value', value: boolean): void;
 }
 
 const rotateRight = () => {

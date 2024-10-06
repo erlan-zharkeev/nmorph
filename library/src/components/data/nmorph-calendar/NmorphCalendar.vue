@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import {
   NmorphTable,
@@ -9,84 +9,36 @@ import {
   getMonthDaysByWeek,
   hasAnyRangeDateInPrevMonth,
   hasAnyRangeDateInNextMonth,
-  isTodayInRange,
+  isTodayInMonthRange,
   INmorphCalendarDate,
   NmorphCalendarRangeType,
   NmorphDateType,
   NmorphSelectedDateModelType,
   NmorphSelectionDateType,
   NmorphTableDataType,
+  resetTimeToZero,
 } from '@/components';
-
+import { useCalendarTexts } from './hooks';
 interface INmorphProps {
   markToday?: boolean;
   initialDate?: Date;
-  modelValue?: NmorphDateType;
   range?: NmorphCalendarRangeType;
   type?: keyof typeof NmorphSelectionDateType;
-  selectedValues?: NmorphSelectedDateModelType;
+  modelValue?: NmorphSelectedDateModelType;
 }
-
 const props = withDefaults(defineProps<INmorphProps>(), {
   markToday: true,
   initialDate: () => new Date(),
-  modelValue: null,
   range: undefined,
   type: 'date',
-  selectedValues: null,
+  modelValue: null,
 });
-
 const emit = defineEmits<INmorphEmit>();
 interface INmorphEmit {
-  (e: 'update:model-value', date: NmorphDateType): void;
+  (e: 'update:model-value', date: NmorphSelectedDateModelType): void;
   (e: 'update-initial-date', date: Date): void;
 }
-
-const modifiers = computed(() =>
-  useModifiers({
-    'nmorph-calendar': [],
-  })
-);
-
-const initialDate = ref(props.initialDate);
-
-const propDaysOfWeek = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-
-const selectedValue = ref(props.modelValue);
-
-let calendar = reactive<NmorphTableDataType>([]);
-
-const updateCalendar = async () => {
-  calendar = [];
-  const calendarMatrix = getMonthDaysByWeek(initialDate, props.range);
-  calendarMatrix.forEach((week) => {
-    const weekData: Record<string, INmorphCalendarDate> = {};
-    week.forEach((day, dayIdx) => {
-      const propName = propDaysOfWeek[dayIdx];
-      weekData[propName] = day;
-    });
-    calendar.push(weekData);
-  });
-};
-
-updateCalendar();
-
-watch(initialDate, () => {
-  updateCalendar();
-  emit('update-initial-date', initialDate.value);
-});
-
-watch(
-  () => props.initialDate,
-  (newValue) => {
-    initialDate.value = newValue;
-  },
-  {
-    deep: true,
-  }
-);
-
-const dateData = (data: unknown) => data as INmorphCalendarDate;
+const { days } = useCalendarTexts();
 
 const setPreviousMonth = () => {
   initialDate.value = prevMonth.value;
@@ -97,25 +49,147 @@ const setTodayMonth = () => {
 const setNextMonth = () => {
   initialDate.value = nextMonth.value;
 };
+const wrongType = () => {
+  throw new Error(`model value and type prop not matched`);
+};
+
+const convertValue = (value: NmorphSelectedDateModelType) => {
+  if (value === null) return null;
+  if (props.type === 'date') {
+    if (value instanceof Date) {
+      return resetTimeToZero(value);
+    } else wrongType();
+  }
+  const isArrayOfDates = Array.isArray(value) && value.every((date) => date instanceof Date);
+  if (props.type === 'dates') {
+    if (isArrayOfDates) {
+      return value.map((date) => resetTimeToZero(date));
+    } else wrongType();
+  }
+  if (props.type === 'daterange') {
+    if (isArrayOfDates) {
+      return value.map((date) => resetTimeToZero(date)).slice(0, 2);
+    } else wrongType();
+  }
+};
+
 const clickDate = (dateData: INmorphCalendarDate) => {
+  if (selectedValue.value === null) return;
   const { monthType, hidden } = dateData;
   if (hidden) return;
   if (monthType === 'next') setNextMonth();
   if (monthType === 'previous') setPreviousMonth();
   const { date } = dateData;
-  selectedValue.value = date;
-  emit('update:model-value', selectedValue.value);
+  if (props.type === 'date') {
+    selectedValue.value = date;
+    emit('update:model-value', selectedValue.value);
+  }
+  if (props.type === 'dates') {
+    if (!Array.isArray(selectedValue.value)) return wrongType();
+    const convertedDate = date.toDateString();
+    const selectedDatesToString = selectedValue.value.map((dateEl) => dateEl.toDateString());
+    const index = selectedDatesToString.indexOf(convertedDate);
+    const elementExist = index !== -1;
+    if (elementExist) selectedValue.value.splice(index, 1);
+    else selectedValue.value.push(date);
+    emit('update:model-value', selectedValue.value);
+  }
+  if (props.type === 'daterange') {
+    if (!Array.isArray(selectedValue.value)) return wrongType();
+    if (selectedValue.value.length === 0) {
+      selectedValue.value.push(date);
+    } else if (selectedValue.value.length === 1) {
+      if (date < selectedValue.value[0]) {
+        selectedValue.value = [date, selectedValue.value[0]];
+      } else {
+        selectedValue.value.push(date);
+      }
+    } else {
+      selectedValue.value = [date];
+    }
+    emit('update:model-value', selectedValue.value.slice(0, 2));
+  }
 };
+
+const isDateInRange = (dateToCheck: Date, range: NmorphDateType[]) => {
+  const [startDate, endDate] = range;
+  if (range.length === 1) {
+    return dateToCheck.toDateString() === startDate.toDateString();
+  }
+  if (startDate && endDate) {
+    return dateToCheck >= resetTimeToZero(startDate) && dateToCheck <= resetTimeToZero(endDate);
+  }
+  return false;
+};
+
+const isValueSelected = (value: Date) => {
+  if (selectedValue.value === null) return false;
+  if (props.type === 'date') {
+    if (Array.isArray(selectedValue.value)) return wrongType();
+    return selectedValue.value.toDateString() === value.toDateString();
+  }
+  if (props.type === 'dates') {
+    if (!Array.isArray(selectedValue.value)) return wrongType();
+    const matched = selectedValue.value.find((dateEl) => dateEl.toDateString() === value.toDateString());
+    return Boolean(matched);
+  }
+  if (props.type === 'daterange') {
+    if (!Array.isArray(selectedValue.value)) return wrongType();
+    return isDateInRange(value, selectedValue.value);
+  }
+};
+
+const initialDate = ref(props.initialDate);
+
+const selectedValue = ref<NmorphSelectedDateModelType>(convertValue(props.modelValue));
+
+onMounted(() => {
+  emit('update:model-value', selectedValue.value);
+});
+
+let calendar = reactive<NmorphTableDataType>([]);
+
+const updateCalendar = () => {
+  calendar = [];
+  const calendarMatrix = getMonthDaysByWeek(initialDate, props.range);
+  calendarMatrix.forEach((week) => {
+    const weekData: Record<string, INmorphCalendarDate> = {};
+    week.forEach((day, dayIdx) => {
+      const propName = days[dayIdx];
+      weekData[propName] = day;
+    });
+    calendar.push(weekData);
+  });
+};
+
+watch(
+  () => props.initialDate,
+  (newValue) => {
+    initialDate.value = newValue;
+  },
+  {
+    deep: true,
+  }
+);
+watch(initialDate, () => {
+  updateCalendar();
+  emit('update-initial-date', initialDate.value);
+});
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    selectedValue.value = convertValue(newValue);
+  }
+);
 
 const prevMonth = computed(() => new Date(initialDate.value.setMonth(initialDate.value.getMonth() - 1)));
 const nextMonth = computed(() => new Date(initialDate.value.setMonth(initialDate.value.getMonth() + 1)));
-
 const showHeaderButtons = computed(() => {
   const { range } = props;
   const showPreviousMonthButton = range ? hasAnyRangeDateInPrevMonth(initialDate.value, range[0]) : true;
   const showNextMonthButton = range ? hasAnyRangeDateInNextMonth(initialDate.value, range[1]) : true;
 
-  const showTodayButton = isTodayInRange(props.range);
+  const showTodayButton = isTodayInMonthRange(range);
 
   return {
     showPreviousMonthButton,
@@ -123,26 +197,14 @@ const showHeaderButtons = computed(() => {
     showTodayButton,
   };
 });
+const modifiers = computed(() =>
+  useModifiers({
+    'nmorph-calendar': [],
+  })
+);
+const dateData = (data: unknown) => data as INmorphCalendarDate;
 
-const isDateInRange = (dateToCheck: Date, range: NmorphDateType[]) => {
-  const startDate = range[0];
-  const endDate = range[1];
-  if (dateToCheck === startDate || dateToCheck === endDate) return true;
-  if (!startDate || !endDate || startDate > endDate) return false;
-  return dateToCheck >= startDate && dateToCheck <= endDate;
-};
-
-const isValueSelected = (value: Date) => {
-  if (Array.isArray(props.selectedValues)) {
-    if (props.type === 'daterange') {
-      return isDateInRange(value, props.selectedValues);
-    } else {
-      return props.selectedValues.includes(value);
-    }
-  } else {
-    return props.selectedValues?.toDateString() === value.toDateString();
-  }
-};
+updateCalendar();
 </script>
 
 <template>
@@ -162,7 +224,7 @@ const isValueSelected = (value: Date) => {
     <slot name="content">
       <NmorphTable :data="calendar" bordered :row-hover="false">
         <NmorphTableColumn
-          v-for="columnName in propDaysOfWeek"
+          v-for="columnName in days"
           :key="`${columnName}`"
           :prop="columnName"
           :label="columnName.toUpperCase()"
@@ -174,7 +236,10 @@ const isValueSelected = (value: Date) => {
                 :class="[
                   'nmorph-calendar-date',
                   `nmorph-calendar-date--${dateData(row[columnName]).monthType}`,
-                  { 'nmorph-calendar-date--today': props.markToday && dateData(row[columnName]).isToday },
+                  {
+                    'nmorph-calendar-date--today':
+                      dateData(row[columnName]).isToday && !dateData(row[columnName]).hidden && props.markToday,
+                  },
                   { 'nmorph-calendar-date--hidden': dateData(row[columnName]).hidden },
                   {
                     'nmorph-calendar-date--selected': isValueSelected(dateData(row[columnName]).date),
@@ -223,7 +288,7 @@ const isValueSelected = (value: Date) => {
   }
 
   .nmorph-calendar-date--today {
-    color: var(--nmorph-info-color);
+    color: var(--nmorph-text-color);
     font-weight: 700;
 
     @include title-3;
@@ -231,11 +296,6 @@ const isValueSelected = (value: Date) => {
 
   .nmorph-table .nmorph-table__cell {
     padding: 0 var(--indentation-01);
-  }
-
-  .nmorph-calendar-date--selected {
-    color: var(--nmorph-white-color);
-    background: var(--nmorph-accent-color);
   }
 
   .nmorph-calendar-date--hidden {
@@ -246,12 +306,20 @@ const isValueSelected = (value: Date) => {
     cursor: pointer;
   }
 
-  .nmorph-calendar-date:not(.nmorph-calendar-date--hidden).nmorph-calendar-date--previous,
-  .nmorph-calendar-date:not(.nmorph-calendar-date--hidden).nmorph-calendar-date--next {
+  .nmorph-calendar-date:not(
+      .nmorph-calendar-date--hidden,
+      .nmorph-calendar-date--selected
+    ).nmorph-calendar-date--previous,
+  .nmorph-calendar-date:not(.nmorph-calendar-date--hidden, .nmorph-calendar-date--selected).nmorph-calendar-date--next {
     @include nmorph-inset;
 
     color: var(--nmorph-accent-color);
   }
+
+  .nmorph-calendar-date--selected {
+    color: var(--nmorph-white-color);
+    box-shadow: none;
+    background: var(--nmorph-accent-color);
+  }
 }
 </style>
-../table/nmorph-table/types

@@ -1,8 +1,9 @@
-import { en, ru } from '@nmorph/nmorph-ui-kit';
+import { en, ru, zh } from "@nmorph/nmorph-ui-kit";
 
 export default defineI18nConfig(() => ({
   messages: {
     en,
-    ru
-  }
-}))
+    ru,
+    zh,
+  },
+}));

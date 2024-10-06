@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { capitalizeFirstChar } from "@nmorph/nmorph-ui-kit";
+import { anyToPascalCase, pascalToSpace } from "@nmorph/nmorph-ui-kit";
 import button from "~/lib-overview/button";
 import icon from "~/lib-overview/icon";
 import link from "~/lib-overview/link";
@@ -11,6 +11,8 @@ import image from "~/lib-overview/image";
 import tag from "~/lib-overview/tag";
 import skeleton from "~/lib-overview/skeleton";
 import progress from "~/lib-overview/progress";
+import calendar from "~/lib-overview/calendar";
+import imagePreview from "~/lib-overview/image-preview";
 
 interface IProps {
   name: string;
@@ -29,13 +31,15 @@ const componentsMap: Record<string, unknown[]> = {
   tag,
   skeleton,
   progress,
+  calendar,
+  "image-preview": imagePreview,
 };
 </script>
 
 <template>
   <div class="component-overview">
     <div class="component-overview__title nmorph-title-1">
-      {{ capitalizeFirstChar(props.name) }}
+      {{ pascalToSpace(anyToPascalCase(props.name)) }}
     </div>
     <slot />
     <div v-for="(el, idx) in componentsMap[props.name]" :key="idx">

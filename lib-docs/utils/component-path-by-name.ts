@@ -1,3 +1,5 @@
+import { pascalToKebab } from "@nmorph/nmorph-ui-kit";
+
 export const componentPathByName = (name: string) => {
-  return `/components/${name.substring(6).toLowerCase()}`;
+  return `/components/${pascalToKebab(name).substring(7).toLowerCase()}`;
 };

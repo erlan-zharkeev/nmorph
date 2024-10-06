@@ -10,7 +10,6 @@ import {
   NmorphTable,
   NmorphTableColumn,
   NmorphTableCell,
-  capitalizeFirstChar,
 } from "@nmorph/nmorph-ui-kit";
 
 const { t } = useI18n();
@@ -139,7 +138,7 @@ const attributeNameLabel = (name: string, required: boolean) =>
           <NmorphTableColumn
             prop="description"
             :label="$t('description')"
-            alignment="center"
+            alignment="right"
           />
         </NmorphTable>
       </ClientOnly>

@@ -9,4 +9,8 @@ export const translate: TranslateType = {
     on: 'Вкл',
     off: 'Выкл',
   },
+  [Locale.zh]: {
+    on: '开',
+    off: '关',
+  },
 };

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
-import { INmorphTagItemProps } from '../nmorph-tag-item/types';
+import { INmorphTagItemProps } from './types';
 import { NmorphTagItem } from '@/components';
 
 interface INmorphProps {

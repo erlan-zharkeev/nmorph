@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphCard, NmorphImage } from "@nmorph/nmorph-ui-kit";
-import Summer from "~/assets/images/summer.webp";
+import { Summer } from "~/assets/images";
 const scriptData = "";
 
 const templateData = `

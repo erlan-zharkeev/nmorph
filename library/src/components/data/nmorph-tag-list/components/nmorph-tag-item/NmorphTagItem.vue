@@ -3,7 +3,7 @@ import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphIcon } from '@/components';
 import { NmorphComponentHeight } from '@/types';
-import { INmorphTagItemProps } from './types';
+import { INmorphTagItemProps } from './../../types';
 
 interface INmorphProps extends INmorphTagItemProps {}
 

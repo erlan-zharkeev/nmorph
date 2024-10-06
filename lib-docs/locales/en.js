@@ -391,7 +391,7 @@ export default {
         "value-inside": "Displays progress text inside the bar.",
         "value-right-side": "Shows or hides percentage text.",
         "indeterminate": "Enables indeterminate progress animation.",
-        "circle-size": "Defines the size of the circular progress bar.",
+        "circle-size": "Defines the size of the circular progress bar."
       },
       "slot": {
         "inner-text": "Slot for custom content inside the progress bar.",
@@ -402,6 +402,53 @@ export default {
         "height": "Defines the height of the progress bar.",
         "width-transition": "Sets the transition animation for width changes.",
         "animation": "Controls the animation settings for the progress bar."
+      }
+    },
+    "calendar": {
+      "type": {
+        "subtitle": "Defines the calendar type, such as *single* or *multiple* selection."
+      },
+      "range": {
+        "subtitle": "Determines whether the calendar operates in range selection mode."
+      },
+      "api": {
+        "mark-today": "Highlights today's date.",
+        "initial-date": "Sets the initial date displayed in the calendar.",
+        "model-value": "Represents the selected date(s) in the calendar.",
+        "type": "Defines the calendar selection type.",
+        "range": "Enables range selection mode in the calendar, allowing selection of a date range."
+      },
+      "slot": {
+        "header": "Slot for customizing the calendar header.",
+        "content": "Slot for customizing the calendar content."
+      },
+      "variables": {
+        "table-data-cell-height": "Defines the height of each date cell in the calendar."
+      }
+    },
+    "image-preview": {
+      "model-value": {
+        "subtitle": "Controls the visibility of the image preview."
+      },
+      "initial-index": {
+        "subtitle": "Defines the initial image index when multiple images are present."
+      },
+      "src": {
+        "subtitle": "The source URL of the image to be previewed."
+      },
+      "api": {
+        "model-value": "Boolean that toggles the visibility of the image preview.",
+        "alt": "Alternative text that describes the image when it cannot be loaded.",
+        "initial-index": "Index of the first image displayed in a set of images.",
+        "src": "URL of the image to be displayed in the preview.",
+        "scale-step": "Increment step for scaling (zooming) the image.",
+        "min-scale-level": "Defines the minimum zoom level allowed for the image.",
+        "max-scale-level": "Defines the maximum zoom level allowed for the image."
+      },
+      "slot": {},
+      "variables": {
+        "width": "Defines the width of the image preview.",
+        "height": "Defines the height of the image preview."
       }
     }
   }

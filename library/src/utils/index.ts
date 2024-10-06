@@ -7,3 +7,5 @@ export * from './camel-to-kebab';
 export * from './log';
 export * from './any-to-pascal';
 export * from './camel-to-title';
+export * from './pascal-to-kebab';
+export * from './pascal-to-space';
