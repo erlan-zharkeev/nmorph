@@ -449,6 +449,73 @@ export default {
       "variables": {
         "width": "Defines the width of the image preview.",
         "height": "Defines the height of the image preview."
+      },
+      "events": {
+        "update:model-value": "Event for intercepting two-way binding"
+      }
+    },
+    "pagination": {
+      "basic-usage": {
+        "subtitle": "Basic usage of the pagination component, allowing navigation between pages."
+      },
+      "api": {
+        "total-elements-quantity": "Total number of items for pagination.",
+        "model-value": "The current active page number.",
+        "elements-quantity-on-page": "Number of elements displayed on each page.",
+        "disabled": "Boolean that disables the pagination component.",
+        "hide-on-single-page": "Hides the pagination component if there is only one page.",
+        "max-visible-pages": "Defines how many pages are visible in the pagination control.",
+        "fast-forward-step": "Determines how many pages are skipped when fast forwarding."
+      },
+      "slot": {},
+      "variables": {},
+      "events": {
+        "update:model-value": "Emitted when the current page number changes."
+      }
+    },
+    "table": {
+      "basic-usage": {
+        "subtitle": "Demonstrates the basic functionality of the table component."
+      },
+      "row-hover": {
+        "subtitle": "Enables a hover effect on table rows."
+      },
+      "bordered": {
+        "subtitle": "Displays borders around table cells."
+      },
+      "sort": {
+        "subtitle": "Allows sorting of table columns."
+      },
+      "design": {
+        "subtitle": "Applies custom styles to the table."
+      },
+      "api": {
+        "data": "Defines the data to be displayed in the table.",
+        "row-hover": "Boolean that toggles the hover effect on table rows.",
+        "bordered": "Boolean that enables or disables borders around table cells. Works only if the 'design' property is set to 'common'.",
+        "sort": "Defines sorting behavior for table columns.",
+        "design": "Allows customization of table styles."
+      },
+      "slot": {},
+      "variables": {
+        "border-color": "Sets the border color of the table.",
+        "table-cell-height": "Defines the height of table cells."
+      }
+    },
+    "table-column": {
+      "api": {
+        "prop": "Specifies the property name from the data source to be displayed in this column.",
+        "label": "The header label for the column, displayed in the table's header.",
+        "width": "Defines the width of the column in a css value",
+        "alignment": "Sets the text alignment in the column. Accepts 'left', 'center', or 'right'."
+      }
+    },
+    "table-cell": {
+      "api": {
+        "row": "Required property. Passes the row index from the scope, representing the current row being rendered."
+      },
+      "slot": {
+        "default": "The default slot used to customize the content inside each cell of the column. Provides access to the row data and other relevant scope properties."
       }
     }
   }

@@ -13,6 +13,8 @@ import skeleton from "~/lib-overview/skeleton";
 import progress from "~/lib-overview/progress";
 import calendar from "~/lib-overview/calendar";
 import imagePreview from "~/lib-overview/image-preview";
+import pagination from "~/lib-overview/pagination";
+import table from "~/lib-overview/table";
 
 interface IProps {
   name: string;
@@ -33,6 +35,8 @@ const componentsMap: Record<string, unknown[]> = {
   progress,
   calendar,
   "image-preview": imagePreview,
+  pagination,
+  table,
 };
 </script>
 

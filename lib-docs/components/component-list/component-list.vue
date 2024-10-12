@@ -19,7 +19,8 @@ const list: { name: string; components: string[] }[] = [
       "NmorphProgress",
       "NmorphCalendar",
       "NmorphImagePreview",
-    ],
+      "NmorphPagination"
+    , "NmorphTable"],
   },
 ];
 
