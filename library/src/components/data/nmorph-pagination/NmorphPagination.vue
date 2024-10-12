@@ -1,36 +1,32 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphRadioGroup, NmorphButton, NmorphIcon } from '@/components';
-import { onMounted } from 'vue';
+import { NmorphRadioGroup, NmorphButton, NmorphIcon, NmorphRadio } from '@/components';
 
 interface INmorphProps {
-  total: number;
-  range?: [number, number];
+  totalElementsQuantity: number;
   modelValue?: number;
-  pagerCount?: number;
+  elementsQuantityOnPage?: number;
   disabled?: boolean;
   hideOnSinglePage?: boolean;
+  maxVisiblePages?: number;
+  fastForwardStep?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  range: () => [1, 10],
   modelValue: 1,
-  pagerCount: 2,
+  elementsQuantityOnPage: 2,
   disabled: false,
   hideOnSinglePage: true,
+  maxVisiblePages: 9,
+  fastForwardStep: 5,
 });
 
 interface INmorphEmit {
-  (e: 'prev-click', currentPage: number): void;
-  (e: 'next-click', currentPage: number): void;
   (e: 'update:model-value', currentPage: number): void;
-  (e: 'update:range', range: [number, number]): void;
 }
 
 const emit = defineEmits<INmorphEmit>();
-
-const range = ref(props.range);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -48,26 +44,19 @@ const nextClick = () => {
 const selectedPage = ref(String(props.modelValue));
 
 const pages = computed(() => {
-  const preResult = props.total / props.pagerCount + 1;
+  const preResult = props.totalElementsQuantity / props.elementsQuantityOnPage + 1;
   const errorRate = preResult % 1 === 0 ? -1 : 0;
-  return Array.from({ length: preResult + errorRate }, (_, index) => {
+  const result = Array.from({ length: preResult + errorRate }, (_, index) => {
     return { value: String(index + 1), label: String(index + 1) };
   });
+  return result;
 });
 
-const show = computed(() => props.hideOnSinglePage || props.total / props.pagerCount > 1);
+const show = computed(() => props.hideOnSinglePage || props.totalElementsQuantity / props.elementsQuantityOnPage > 1);
 
 watch(selectedPage, (newValue) => {
   emit('update:model-value', Number(newValue));
-  updateRange();
 });
-
-watch(
-  () => props.pagerCount,
-  () => {
-    updateRange();
-  }
-);
 
 const updateSelectedValue = (value: string) => {
   selectedPage.value = value;
@@ -76,32 +65,70 @@ const updateSelectedValue = (value: string) => {
 const blockPrevButton = computed(() => Number(selectedPage.value) === 1);
 const blockNextButton = computed(() => pages.value.length === Number(selectedPage.value));
 
-const updateRange = () => {
-  const max = Number(selectedPage.value) * props.pagerCount;
-  const min = max - props.pagerCount;
-  range.value = [min, max];
-  emit('update:range', range.value);
-};
-
-onMounted(() => {
-  updateRange();
+const visiblePages = computed(() => {
+  const total = pages.value.length;
+  const currentPage = Number(selectedPage.value);
+  const maxVisiblePages = props.maxVisiblePages;
+  if (total <= maxVisiblePages) {
+    return pages.value;
+  }
+  const half = Math.floor(maxVisiblePages / 2);
+  if (currentPage <= half) {
+    return [...pages.value.slice(0, maxVisiblePages - 2), { value: 'next', label: '...' }, pages.value[total - 1]];
+  } else if (currentPage >= total - half) {
+    return [pages.value[0], { value: 'prev', label: '...' }, ...pages.value.slice(total - (maxVisiblePages - 2))];
+  } else {
+    return [
+      pages.value[0],
+      { value: 'prev', label: '...' },
+      ...pages.value.slice(currentPage - half, currentPage + half - 1),
+      { value: 'next', label: '...' },
+      pages.value[total - 1],
+    ];
+  }
 });
+
+const bigStepUpdate = (direction: 'prev' | 'next') => {
+  const selected = Number(selectedPage.value);
+  let result = direction === 'prev' ? selected - props.fastForwardStep : selected + props.fastForwardStep;
+  if (result <= 0) result = 1;
+  if (result >= pages.value.length) result = pages.value.length;
+  selectedPage.value = String(result);
+};
 </script>
 
 <template>
   <div v-if="show" :class="modifiers">
-    <NmorphButton class="nmorph-pagination__btn" :disabled="blockPrevButton || props.disabled" @click="prevClick">
-      <NmorphIcon name="chevron-down" class="nmorph-pagination__prev" />
+    <NmorphButton
+      class="nmorph-pagination__btn nmorph-pagination__prev-btn"
+      :disabled="blockPrevButton || props.disabled"
+      @click="prevClick"
+    >
+      <NmorphIcon name="chevron-down" class="nmorph-pagination__prev-icon" />
     </NmorphButton>
     <NmorphRadioGroup
       :model-value="selectedPage"
-      :options="pages"
-      class="nmorph-pagination__page"
+      class="nmorph-pagination__page-group"
       :disabled="props.disabled"
       @update:model-value="updateSelectedValue"
-    />
-    <NmorphButton class="nmorph-pagination__btn" :disabled="blockNextButton || props.disabled" @click="nextClick">
-      <NmorphIcon name="chevron-down" class="nmorph-pagination__next" />
+    >
+      <div v-for="page in visiblePages" :key="page.value" class="nmorph-pagination__page-btn-wrapper">
+        <NmorphButton
+          v-if="page.value === 'prev' || page.value === 'next'"
+          :class="`nmorph-pagination__page-btn nmorph-pagination__${page.value}`"
+          :text="page.label"
+          :disabled="props.disabled"
+          @click="bigStepUpdate(page.value)"
+        />
+        <NmorphRadio v-else v-bind="page" class="nmorph-pagination__page-btn" :disabled="props.disabled" />
+      </div>
+    </NmorphRadioGroup>
+    <NmorphButton
+      class="nmorph-pagination__btn nmorph-pagination__next-btn"
+      :disabled="blockNextButton || props.disabled"
+      @click="nextClick"
+    >
+      <NmorphIcon name="chevron-down" class="nmorph-pagination__next-icon" />
     </NmorphButton>
   </div>
 </template>
@@ -111,6 +138,11 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   margin-top: var(--indentation-04);
+  .nmorph-radio-group__content {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
 
   .nmorph-radio-group {
     display: inline-flex;
@@ -119,22 +151,44 @@ onMounted(() => {
 
   .nmorph-radio-group .nmorph-radio:not(:last-child) {
     margin-bottom: 0;
+    margin-right: 0;
   }
 
-  .nmorph-pagination__page {
+  .nmorph-pagination__page-group {
     margin: 0 var(--indentation-01);
   }
 
-  .nmorph-pagination__btn {
-    margin: var(--indentation-03);
-  }
-
-  .nmorph-pagination__prev {
+  .nmorph-pagination__prev-icon {
     rotate: 90deg;
   }
 
-  .nmorph-pagination__next {
+  .nmorph-pagination__next-icon {
     rotate: -90deg;
+  }
+
+  .nmorph-pagination__prev-btn {
+    margin-right: 8px;
+  }
+
+  .nmorph-pagination__next-btn {
+    margin-left: 8px;
+  }
+
+  .nmorph-pagination__page-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nmorph-pagination__page-btn-wrapper {
+    display: flex;
+  }
+
+  .nmorph-pagination__prev-secondary-btn {
+    margin-right: 8px;
+  }
+
+  .nmorph-pagination__next-secondary-btn {
+    margin-left: 8px;
   }
 }
 </style>

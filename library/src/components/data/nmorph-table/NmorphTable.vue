@@ -16,26 +16,20 @@ interface INmorphProps {
   rowHover?: boolean;
   bordered?: boolean;
   sort?: NmorphTableSortType;
-  style?: 'nmorph' | 'common';
+  design?: 'nmorph' | 'common';
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  /**
-   * @description table data
-   */
   data: () => [],
   bordered: false,
   sort: undefined,
-  style: 'nmorph',
+  design: 'nmorph',
   rowHover: true,
 });
 
-// const emit = defineEmits<INmorphEmit>();
-// interface INmorphEmit {};
-
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-table': [`${props.style}`],
+    'nmorph-table': [`${props.design}`],
   })
 );
 
@@ -189,10 +183,9 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
 </template>
 <style lang="scss">
 .nmorph-table {
-  --border-color: var(--nmorph-accent-color);
+  --border-color: var(--nmorph-info-text-color);
   --table-cell-height: auto;
-
-  // --table-background-row-hover: var(--nmorph-black-color);
+  --table-background-row-hover: var(--nmorph-info-color);
 
   .nmorph-table__header th {
     border-bottom: 0;
@@ -238,7 +231,7 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
   }
 
   .nmorph-table__table-data-row--row-hover:hover {
-    // background: var(--table-background-row-hover);
+    background: var(--table-background-row-hover);
   }
 }
 
