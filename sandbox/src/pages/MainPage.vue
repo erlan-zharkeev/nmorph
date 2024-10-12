@@ -1,27 +1,61 @@
 <template>
-  <div ref="translateBtn" class="docs-top-bar__translate-btn">
-    <NmorphImagePreview
-      :src="[image, image2]"
-      v-model="model"
-      :initial-index="1"
+  <div class="cards">
+    <div class="loader" v-if="loading">Loading...</div>
+    <div class="card-container" v-else>
+      <div class="card" v-for="card in data" :key="card.id">
+        <p>{{ card.id }} - {{ card.body }}</p>
+      </div>
+    </div>
+    <NmorphPagination
+      :total-elements-quantity="totalElementsQuantity"
+      :elements-quantity-on-page="elementsQuantityOnPage"
+      :model-value="currentPage"
+      :disabled="true"
+      @update:model-value="changePageHandler"
     />
-    <button @click="() => (model = !model)">click me</button>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import NmorphImagePreview from "../../../library/src/components/data/nmorph-image-preview/NmorphImagePreview.vue";
-import image from "./../assets/images/cat.png";
-import image2 from "./../assets/images/cat2.webp";
+import { NmorphPagination } from "./../../../library/src/components";
 
-const date2 = new Date(1989, 11, 19);
+const loading = ref(false);
+const data = ref<Array<{ id: string; body: string }>>([]);
+const totalElementsQuantity = 209;
+const currentPage = ref(1);
+const elementsQuantityOnPage = ref(5);
 
-date2.setDate(date2.getDate() + 2);
-const model = ref(false);
+const fetchPaginatedData = async (page = 1) => {
+  loading.value = true;
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${elementsQuantityOnPage.value}`
+  );
+  const apiData = await response.json();
+  data.value = apiData.map((el: { id: string; body: string }) => {
+    const { id, body } = el;
+    return {
+      id,
+      body,
+    };
+  });
+  loading.value = false;
+};
+
+fetchPaginatedData();
+
+const changePageHandler = (value: number) => {
+  fetchPaginatedData(value);
+};
 </script>
 
 <style lang="scss">
+.card-container {
+  display: grid;
+}
+.cards {
+  padding: 16px;
+}
 .docs-top-bar__translate-btn {
   padding: 20px;
   display: flex;

@@ -1,7 +1,12 @@
 <template>
   <div class="wrapper">
     <NmorphCard>
-      <NmorphTable :data="data" bordered :sort="defaultSort">
+      <NmorphTable
+        :data="tableData"
+        bordered
+        :sort="defaultSort"
+        design="common"
+      >
         <NmorphTableColumn
           prop="date"
           label="Date"
@@ -19,7 +24,7 @@
         </NmorphTableColumn>
       </NmorphTable>
       <NmorphPagination
-        :total="tableData.length"
+        :total-elements-quantity="tableData.length"
         :model-value="selectedPage"
         @update:model-value="selectedPageHandler"
         v-model:range="currentRange"
