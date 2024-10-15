@@ -61,7 +61,6 @@ const slots = useSlots();
           </div>
         </div>
       </div>
-
       <div v-if="props.closable" class="nmorph-alert__close" @click="closeHandler">
         <NmorphIcon name="cross" width="14px" height="14px" />
       </div>

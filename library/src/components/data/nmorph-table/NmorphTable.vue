@@ -230,6 +230,10 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
     position: relative;
   }
 
+  // .nmorph-table__table-data-row {
+  //   background: transparent;
+  // }
+
   .nmorph-table__table-data-row--row-hover:hover {
     background: var(--table-background-row-hover);
   }

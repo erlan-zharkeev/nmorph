@@ -23,14 +23,17 @@ const tooltipDOMRef = ref<NmorphDomElementType>(null);
 const slotDOMRef = ref<NmorphDomElementType>(null);
 
 const { placement } = usePlacement({
-  initialPlacement: 'top',
+  initialPlacement: props.position,
   contentDOMElement: tooltipDOMRef,
   relativeElement: slotDOMRef,
 });
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-tooltip': [placement.value],
+    'nmorph-tooltip': [
+      placement.value,
+      `${Boolean(props.forceCoordinate?.x) && Boolean(props.forceCoordinate?.y) && 'force-coords'}`,
+    ],
   })
 );
 
@@ -64,7 +67,7 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
           :style="{ left: forceCoordinate?.x, bottom: forceCoordinate?.y }"
         >
           <div class="nmorph-tooltip__shadow-content">
-            <div class="nmorph-tooltip__triangle" />
+            <div v-if="!props.forceCoordinate" class="nmorph-tooltip__triangle" />
             <span>{{ text }}</span>
           </div>
         </div>
@@ -86,6 +89,9 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
 .nmorph-tooltip {
   --max-width: 120px;
 
+  --width: fit-content;
+  --height: fit-content;
+
   display: inline-block;
   width: v-bind(width);
 
@@ -98,8 +104,10 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
     max-width: var(--max-width);
     padding: var(--indentation-03);
     border-radius: var(--default-border-radius);
-
-    @include nmorph-dark-shadow;
+    box-shadow: 0px 0px 20px var(--nmorph-dark-shade-color);
+    width: var(--width);
+    height: var(--height);
+    background: var(--nmorph-main-color);
   }
 
   span {
@@ -176,6 +184,12 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
     border-color: transparent transparent transparent var(--nmorph-main-color);
     border-width: 8px 0 8px 8px;
     transform: translateY(-50%);
+  }
+}
+
+.nmorph-tooltip--force-coords {
+  .nmorph-tooltip__info-content {
+    transform: none;
   }
 }
 </style>
