@@ -6,10 +6,12 @@ import {
 } from "@nmorph/nmorph-ui-kit";
 import { ref, computed } from "vue";
 import { notificationProvider } from "~/providers";
+import type { DocsInfo } from "~/types";
 
 interface IProps {
   header: string;
   infoName?: string;
+  infoType?: keyof typeof DocsInfo;
   subtitle?: string;
   codeToCopy: string[];
 }
@@ -55,6 +57,7 @@ const infoData = `overview.${props.infoName}.info`;
       v-if="props.infoName"
       :title="$t(`${infoData}.title`)"
       :content="$t(`${infoData}.content`)"
+      :type="props.infoType"
     />
     <p
       class="docs-attribute__subtitle nmorph-body-2"

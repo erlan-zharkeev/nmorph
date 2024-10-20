@@ -1,63 +1,63 @@
 <template>
-  <div class="cards">
-    <div class="loader" v-if="loading">Loading...</div>
-    <div class="card-container" v-else>
-      <div class="card" v-for="card in data" :key="card.id">
-        <p>{{ card.id }} - {{ card.body }}</p>
-      </div>
-    </div>
-    <NmorphPagination
-      :total-elements-quantity="totalElementsQuantity"
-      :elements-quantity-on-page="elementsQuantityOnPage"
-      :model-value="currentPage"
-      :disabled="true"
-      @update:model-value="changePageHandler"
-    />
+  <div>
+    <NmorphTabs v-model="activeTab" :stretch="true">
+      <NmorphTabPane v-for="tab in tabs" :key="tab.name" v-bind="tab">
+        <template #label="{ scope }">
+          <div v-if="scope.name === 'tab-2'">Custom label</div>
+          <div v-else>{{ scope.label }}</div>
+        </template>
+        <template #default="{ scope }"
+          >custom content for {{ scope.name }}</template
+        >
+      </NmorphTabPane>
+    </NmorphTabs>
+    <NmorphTabs v-model="activeTab" :panes="tabs" stretch />
   </div>
 </template>
 
-<script lang="ts" setup>
-import { ref } from "vue";
-import { NmorphPagination } from "./../../../library/src/components";
+<script setup lang="ts">
+import { ref, onMounted, nextTick } from "vue";
+import { NmorphTabs, NmorphTabPane } from "./../../../library/src/components";
 
-const loading = ref(false);
-const data = ref<Array<{ id: string; body: string }>>([]);
-const totalElementsQuantity = 209;
-const currentPage = ref(1);
-const elementsQuantityOnPage = ref(5);
+const activeTab = ref("tab-1");
+const tabs = ref([
+  { name: "tab-1", label: "Вкладка 1", content: "Контент для вкладки 1" },
+  {
+    name: "tab-2",
+    label: "Вкладка 2",
+    content: "Контент для вкладки 2",
+    disabled: true,
+  },
+  {
+    name: "tab-3",
+    label: "Вкладка 3",
+    content: "Контент для вкладки 3",
+  },
+]);
 
-const fetchPaginatedData = async (page = 1) => {
-  loading.value = true;
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${elementsQuantityOnPage.value}`
-  );
-  const apiData = await response.json();
-  data.value = apiData.map((el: { id: string; body: string }) => {
-    const { id, body } = el;
-    return {
-      id,
-      body,
-    };
-  });
-  loading.value = false;
+// Обработчик события 'tab-change'
+const handleTabChange = (newValue: string) => {
+  console.log(`Вкладка изменена, новая вкладка: ${newValue}`);
+  // Дополнительная логика для выполнения при смене вкладки
 };
 
-fetchPaginatedData();
-
-const changePageHandler = (value: number) => {
-  fetchPaginatedData(value);
-};
+onMounted(async () => {
+  await nextTick();
+  // Здесь можно добавить логику, которая работает с DOM
+});
 </script>
 
-<style lang="scss">
-.card-container {
-  display: grid;
-}
-.cards {
+<style scoped>
+.nmorph-tab-content {
   padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 8px;
 }
-.docs-top-bar__translate-btn {
-  padding: 20px;
-  display: flex;
+
+.nmorph-tabs__label {
+  cursor: pointer;
+  font-weight: bold;
+  padding: 8px 0;
 }
 </style>

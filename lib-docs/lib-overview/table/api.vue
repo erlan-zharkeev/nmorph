@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import {
-  type IAttributesTableData,
-  type ISlotsTableData,
-  type IVariablesTableData,
-} from "~/types";
+import { type IAttributesTableData, type IVariablesTableData } from "~/types";
 import ApiTable from "~/components/api-table/api-table.vue";
 import { NmorphSortOrder, NmorphDivider } from "@nmorph/nmorph-ui-kit";
 

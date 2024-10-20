@@ -13,7 +13,7 @@ export const useNmorphNotification = () => {
 
   const notify = (options: INmorphNotification) => {
     const defaultOptions = {
-      id: Date.now(),
+      id: String(Date.now()),
       ...initOptions,
     };
 
@@ -29,7 +29,7 @@ export const useNmorphNotification = () => {
     }
   };
 
-  const removeNotification = (id: number) => {
+  const removeNotification = (id: string) => {
     notifications.value = notifications.value.filter((n) => n.id !== id);
   };
 

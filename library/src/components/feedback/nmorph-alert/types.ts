@@ -6,7 +6,7 @@ export enum NmorphAlertType {
 }
 
 export interface INmorphAlertProps {
-  id?: number;
+  id?: string;
   type?: keyof typeof NmorphAlertType;
   closable?: boolean;
   title?: string;
@@ -15,4 +15,5 @@ export interface INmorphAlertProps {
   showIcon?: boolean;
   bordered?: boolean;
   html?: string;
+  closeIconPosition?: string;
 }

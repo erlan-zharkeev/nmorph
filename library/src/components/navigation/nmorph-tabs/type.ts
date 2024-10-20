@@ -6,6 +6,7 @@ export interface INmorphTabPaneProps {
   label?: string;
   name: string;
   disabled?: boolean;
+  content?: string;
 }
 
 export interface INmorphTabsDataProvider {

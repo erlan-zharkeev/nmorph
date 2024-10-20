@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { NmorphTable } from "@nmorph/nmorph-ui-kit";
+import { NmorphDropdown } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
@@ -13,16 +13,16 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div id="content-row-hover">
+  <div id="content-open">
     <attribute
-      header="Row-hover"
-      :subtitle="$t('overview.table.row-hover.subtitle')"
+      header="Open"
+      :subtitle="$t('overview.dropdown.open.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <div class="table-row-hover-overview">
+        <div class="dropdown-open-overview">
           <ClientOnly>
-            <NmorphTable />
+            <NmorphDropdown />
           </ClientOnly>
         </div>
       </template>
@@ -36,5 +36,5 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.table-row-hover-overview {}
+.dropdown-open-overview {}
 </style>

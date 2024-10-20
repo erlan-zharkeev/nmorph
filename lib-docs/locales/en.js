@@ -20,6 +20,7 @@ export default {
   "navigation": "Navigation",
   "other": "Other",
   "overview": {
+    "basic-usage": "Basic usage",
     "button": {
       "style-type": {
         "subtitle": "Use *default* or *transparent* to define basic style"
@@ -475,19 +476,14 @@ export default {
     },
     "table": {
       "basic-usage": {
-        "subtitle": "Demonstrates the basic functionality of the table component."
-      },
-      "row-hover": {
-        "subtitle": "Enables a hover effect on table rows."
-      },
-      "bordered": {
-        "subtitle": "Displays borders around table cells."
-      },
-      "sort": {
-        "subtitle": "Allows sorting of table columns."
-      },
-      "design": {
-        "subtitle": "Applies custom styles to the table."
+        "subtitle": "",
+        "enable-row-highlight": "Enable row highlight on hover",
+        "disable-row-highlight": "Disable row highlight on hover",
+        "click-me-text": "Click me!",
+        "info": {
+          "title": "Important Information",
+          "content": "The 'bordered' property works only if the 'design' property is set to 'common'. Additionally, sorting currently works only with two values: 'ascending' and 'descending'.\nPlease note that table is still under active development and may contain some wrong behavior."
+        }
       },
       "api": {
         "data": "Defines the data to be displayed in the table.",
@@ -517,6 +513,201 @@ export default {
       "slot": {
         "default": "The default slot used to customize the content inside each cell of the column. Provides access to the row data and other relevant scope properties."
       }
+    },
+    "tooltip": {
+      "text": {
+        "subtitle": "The content to be displayed inside the tooltip.",
+        "hover-me": "Hover me",
+        "i-am-tooltip": "I am tooltip",
+        "tooltip": "Tooltip",
+        "button": "Button"
+      },
+      "position": {
+        "subtitle": "Specifies the position of the tooltip relative to the target element. Accepts values such as 'top', 'bottom', 'left', 'right'."
+      },
+      "force-coordinate": {
+        "subtitle": "Overrides the default positioning logic and allows specifying exact coordinates for the tooltip."
+      },
+      "api": {
+        "text": "Defines the text content for the tooltip.",
+        "position": "Sets the position of the tooltip relative to its target.",
+        "force-show": "Boolean that forces the tooltip to be shown.",
+        "force-coordinate": "Allows manual control of the tooltip's coordinates."
+      },
+      "slot": {},
+      "variables": {
+        "max-width": "Sets the maximum width of the tooltip content. It helps to prevent the tooltip from becoming too wide.",
+        "width": "Sets the width of the tooltip content. Allows controlling the horizontal size of the tooltip.",
+        "height": "Sets the height of the tooltip content. Allows controlling the vertical size of the tooltip."
+      }
+    },
+    "alert": {
+      "basic-usage": {
+        "title": "Any title",
+        "content": "Content for alert",
+        "info": {
+          "title": "Additional Information",
+          "content": "For managing multiple alerts efficiently, use the 'NmorphNotificationProvider' component, which allows grouping and controlling alert notifications centrally."
+        }
+      },
+      "use-provider": {
+        "subtitle": "To use the provider, the hook needs to be imported from the library."
+      },
+      "api": {
+        "id": "Unique identifier for the alert component.",
+        "type": "Defines the type of alert (e.g., success, error, warning, info).",
+        "closable": "Boolean that determines whether the alert can be closed by the user.",
+        "title": "Title text displayed at the top of the alert.",
+        "content": "Main message or content of the alert.",
+        "fill": "Determines if the alert should occupy the full width of its container.",
+        "max-width": "Maximum width of the alert component.",
+        "show-icon": "Boolean that shows an icon based on the alert type.",
+        "bordered": "Adds a border around the alert to make it stand out.",
+        "html": "Allows HTML content in the alert body. Use carefully to avoid XSS vulnerabilities."
+      },
+      "slot": {
+        "icon": "Slot to customize the icon displayed in the alert.",
+        "title": "Slot to customize the title content of the alert.",
+        "default": "Slot to customize the main content of the alert."
+      },
+      "variables": {},
+      "events": {
+        "close": "Emitted when the alert is closed by the user."
+      }
+    },
+    "dialog": {
+      "basic-usage": {
+        "subtitle": "",
+        "show-modal": "Show modal"
+      },
+      "api": {
+        "model-value": "Boolean that controls the visibility of the dialog.",
+        "title": "Defines the title text of the dialog.",
+        "width": "Sets the width of the dialog box.",
+        "open-delay": "The delay time in milliseconds before opening the dialog.",
+        "close-delay": "The delay time in milliseconds before closing the dialog.",
+        "close-on-click-modal": "Boolean that allows the dialog to close when clicking outside.",
+        "show-close": "Boolean that displays the close button in the dialog.",
+        "z-index": "Defines the z-index for the dialog to manage stacking context.",
+        "close-on-overlay": "Boolean that specifies if the dialog should close when clicking on the overlay area."
+      },
+      "slot": {
+        "header": "Slot to customize the content of the dialog header.",
+        "default": "Slot to define the main content of the dialog."
+      },
+      "events": {
+        "on-close": "Emitted when the dialog is closed by the user.",
+        "update:model-value": "Emitted when the visibility of the dialog changes."
+      },
+      "variables": {
+        "width": "Defines the width of the dialog component."
+      }
+    },
+    "divider": {
+      "direction": {
+        "subtitle": "Specifies the direction of the divider. Accepts 'horizontal' or 'vertical' values."
+      },
+      "api": {
+        "direction": "Defines the orientation of the divider, either 'horizontal' or 'vertical'."
+      },
+      "slot": {},
+      "variables": {}
+    },
+    "overlay": {
+      "basic-usage": {
+        "subtitle": "",
+        "show-default": "Show default",
+        "show-transparent": "Show transparent"
+      },
+      "api": {
+        "show": "Controls the visibility of the component. Set to *true* to show it, *false* to hide.",
+        "transparent": "Boolean that sets the component's background to be transparent if enabled."
+      },
+      "slot": {
+        "default": "Default slot for customizing the content inside the component."
+      },
+      "events": {
+        "on-outside-click": "Emitted when a user clicks outside of the component."
+      },
+      "variables": {}
+    },
+    "notification-provider": {
+      "notifications": {
+        "subtitle": ""
+      },
+      "placement": {
+        "subtitle": "Defines the position of the notifications on the screen. Accepts values like 'top-right', 'bottom-left', etc."
+      },
+      "z-index": {
+        "subtitle": "Sets the z-index for the notifications to control their stacking order."
+      },
+      "quantity": {
+        "subtitle": "Limits the maximum number of notifications that can be displayed simultaneously."
+      },
+      "api": {
+        "notifications": "Array containing the notifications to be displayed.",
+        "placement": "Specifies where the notifications will appear on the screen.",
+        "z-index": "Defines the stacking order of the notifications.",
+        "quantity": "Maximum number of notifications allowed on the screen at one time.",
+        "close-icon-position": "Determines the location of the close button"
+      },
+      "slot": {},
+      "variables": {}
+    },
+    "tabs": {
+      "api": {
+        "model-value": "Controls the active state of the component, typically used to bind the selected value.",
+        "stretch": "Boolean that determines if the component should stretch to fill the available space."
+      },
+      "slot": {
+        "default": "Slot to customize the content inside each tab."
+      },
+      "variables": {},
+      "events": {
+        "update:model-value": "Emitted when the active tab changes.",
+        "tab-change": "Emitted when a user changes tabs, indicating the new active tab."
+      }
+    },
+    "tab-pane": {
+      "api": {
+        "label": "The text label for the tab, displayed in the tab navigation.",
+        "name": "A unique identifier for the tab, used for managing the active tab.",
+        "disabled": "Boolean that indicates whether the tab is disabled and cannot be selected."
+      },
+      "slot": {
+        "label": "Slot to customize the label of the tab.",
+        "default": "Slot to define the main content of the tab."
+      }
+    },
+    "dropdown": {
+      "open": {
+        "subtitle": ""
+      },
+      "relative-element": {
+        "subtitle": ""
+      },
+      "width": {
+        "subtitle": ""
+      },
+      "x-offset": {
+        "subtitle": ""
+      },
+      "y-offset": {
+        "subtitle": ""
+      },
+      "fill-width": {
+        "subtitle": ""
+      },
+      "api": {
+        "open": "",
+        "relative-element": "",
+        "width": "",
+        "x-offset": "",
+        "y-offset": "",
+        "fill-width": ""
+      },
+      "slot": {},
+      "variables": {}
     }
   }
 };

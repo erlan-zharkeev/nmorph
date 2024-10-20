@@ -119,7 +119,7 @@ const attributeNameLabel = (name: string, required: boolean) =>
           <NmorphTableColumn
             prop="description"
             :label="$t('description')"
-            alignment="center"
+            alignment="right"
           />
         </NmorphTable>
       </ClientOnly>

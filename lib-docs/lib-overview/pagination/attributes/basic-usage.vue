@@ -49,7 +49,6 @@ const getData = async (page: number) => {
     const data = await fetchFakeData(page);
     elements.value = data.elements;
     total.value = data.totalElementsQuantity;
-    console.log(data);
   } catch (error) {
     console.error("Error fetching data:", error);
   } finally {
@@ -177,7 +176,6 @@ const getData = async (page: number) => {
     const data = await fetchFakeData(page);
     elements.value = data.elements;
     total.value = data.totalElementsQuantity;
-    console.log(data);
   } catch (error) {
     console.error("Error fetching data:", error);
   } finally {
@@ -201,7 +199,7 @@ getData(0);
 <template>
   <div id="content-basic-usage">
     <attribute
-      header="Basic usage"
+      :header="$t('overview.basic-usage')"
       :subtitle="$t('overview.pagination.basic-usage.subtitle')"
       :codeToCopy="code"
     >

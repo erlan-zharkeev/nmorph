@@ -506,10 +506,10 @@
     "@netlify/node-cookies" "^0.1.0"
     "urlpattern-polyfill" "8.0.2"
 
-"@nmorph/nmorph-ui-kit@^0.2.112":
-  "integrity" "sha512-v+lqnSPrJ62EC6jlYXdRM/lNMOprxcavV2GqGsScMiGdoAYC3Wpbsq8K/kySXJWzFqgvG7MMUo+Gpai9/fqsRQ=="
-  "resolved" "https://registry.npmjs.org/@nmorph/nmorph-ui-kit/-/nmorph-ui-kit-0.2.112.tgz"
-  "version" "0.2.112"
+"@nmorph/nmorph-ui-kit@^0.2.125":
+  "integrity" "sha512-94Bs7tyKbjt2VWGvOFsGPp9tobII6eeMxFqNtVMx5LXcmP7pXjQnUN54K3VnsYK+comUPYAKg6wHAr+FEuxbMQ=="
+  "resolved" "https://registry.npmjs.org/@nmorph/nmorph-ui-kit/-/nmorph-ui-kit-0.2.125.tgz"
+  "version" "0.2.125"
   dependencies:
     "@types/vue-router" "^2.0.0"
     "normalize.css" "^8.0.1"

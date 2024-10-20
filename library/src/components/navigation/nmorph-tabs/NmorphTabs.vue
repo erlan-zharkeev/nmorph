@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, useSlots } from 'vue';
 import { generateUUID, useModifiers } from '@/utils';
 import { provide } from 'vue';
 import {
@@ -13,11 +13,13 @@ import {
 interface INmorphProps {
   modelValue?: NmorphTableModelType;
   stretch?: boolean;
+  panes?: Array<INmorphTabPaneProps>;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: 0,
   stretch: false,
+  panes: () => [],
 });
 
 interface INmorphEmit {
@@ -46,6 +48,12 @@ provide<INmorphTabsDataProvider, string>('nmorph-tabs-data', {
   tabsData,
   tabsIdentifier,
 });
+
+const updatedPanes = computed(() => {
+  return props.panes.length > 0 ? props.panes : tabsData.value;
+});
+
+const slots = useSlots();
 </script>
 
 <template>
@@ -53,7 +61,7 @@ provide<INmorphTabsDataProvider, string>('nmorph-tabs-data', {
     <slot />
     <div class="nmorph-tabs__label-list">
       <div
-        v-for="tabData in tabsData"
+        v-for="tabData in updatedPanes"
         :id="getTabLabelId(tabsIdentifier, tabData.name)"
         :key="tabData.name"
         class="nmorph-tabs__label"
@@ -62,18 +70,21 @@ provide<INmorphTabsDataProvider, string>('nmorph-tabs-data', {
           { 'nmorph-tabs__label--disabled': tabData.disabled },
         ]"
         @click="changeTab(tabData)"
+        :custom="tabData.disabled"
       >
-        {{ tabData.label }}
+        <div v-if="!slots.default">{{ tabData.label }}</div>
       </div>
     </div>
     <div class="nmorph-tabs__content__wrapper">
       <div class="nmorph-tabs__content">
         <div
-          v-for="tabData in tabsData"
+          v-for="tabData in updatedPanes"
           v-show="tabData.name === props.modelValue"
           :id="getTabContentId(tabsIdentifier, tabData.name)"
           :key="tabData.name"
-        />
+        >
+          <div v-if="!slots.default">{{ tabData.content }}</div>
+        </div>
       </div>
     </div>
   </div>

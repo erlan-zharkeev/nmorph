@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { NmorphTable } from "@nmorph/nmorph-ui-kit";
+import { NmorphDropdown } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
@@ -13,16 +13,16 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div id="content-sort">
+  <div id="content-width">
     <attribute
-      header="Sort"
-      :subtitle="$t('overview.table.sort.subtitle')"
+      header="Width"
+      :subtitle="$t('overview.dropdown.width.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <div class="table-sort-overview">
+        <div class="dropdown-width-overview">
           <ClientOnly>
-            <NmorphTable />
+            <NmorphDropdown />
           </ClientOnly>
         </div>
       </template>
@@ -36,5 +36,5 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.table-sort-overview {}
+.dropdown-width-overview {}
 </style>

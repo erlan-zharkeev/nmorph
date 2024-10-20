@@ -7,6 +7,7 @@ import { NmorphIconList } from '@/types';
 interface INmorphProps extends INmorphAlertProps {}
 
 const props = withDefaults(defineProps<INmorphProps>(), {
+  id: undefined,
   type: 'info',
   closable: false,
   title: '',
@@ -15,6 +16,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   showIcon: true,
   bordered: true,
   html: '',
+  closeIconPosition: 'center',
 });
 
 interface INmorphEmit {
@@ -40,11 +42,13 @@ const iconNameMap: Record<NmorphAlertType, keyof typeof NmorphIconList> = {
 };
 
 const slots = useSlots();
+
+const closeButtonPosition = computed(() => props.closeIconPosition);
 </script>
 
 <template>
-  <div v-if="slots.default || props.title || props.content" :class="modifiers">
-    <div v-if="props.html" class="nmorph-alert__wrapper" v-html="props.html" />
+  <div v-if="slots.default || props.title || props.content || props.html" :class="modifiers">
+    <div v-if="props.html" class="nmorph-alert__html-wrapper" v-html="props.html" />
     <div v-else class="nmorph-alert__wrapper">
       <div class="nmorph-alert__left-side">
         <div v-if="props.showIcon" class="nmorph-alert__icon">
@@ -68,11 +72,13 @@ const slots = useSlots();
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .nmorph-alert {
+  --background-color: var(--nmorph-overlay-color);
+
   display: inline-block;
   padding: var(--indentation-03) var(--indentation-04);
-  background: var(--nmorph-overlay-color);
+  background: var(--background-color);
   border-radius: var(--default-border-radius);
 
   .nmorph-alert__content,
@@ -86,6 +92,10 @@ const slots = useSlots();
     line-height: 1;
 
     @include title-3;
+  }
+
+  .nmorph-alert__html-wrapper {
+    display: block;
   }
 
   .nmorph-alert__wrapper {
@@ -103,7 +113,8 @@ const slots = useSlots();
   }
 
   .nmorph-alert__close {
-    align-self: flex-start;
+    align-self: v-bind(closeButtonPosition);
+
     margin-left: var(--indentation-03);
     cursor: pointer;
 

@@ -1,7 +1,7 @@
 import { INmorphAlertProps } from '@/main';
 
 export interface INmorphNotification extends INmorphAlertProps {
-  id?: number;
+  id?: string;
   duration?: number;
   width?: string;
 }

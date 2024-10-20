@@ -4,22 +4,16 @@ import { computed } from 'vue';
 
 interface INmorphProps {
   show: boolean;
-  outsideClickEmitEvent?: boolean;
   transparent?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  outsideClickEmitEvent: true,
   transparent: false,
 });
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-overlay': [
-      `${props.outsideClickEmitEvent && 'outside-click'}`,
-      `${props.show && 'show'}`,
-      `${props.transparent && 'transparent'}`,
-    ],
+    'nmorph-overlay': [`${props.show && 'show'}`, `${props.transparent && 'transparent'}`],
   })
 );
 

@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, inject, onMounted, nextTick } from 'vue';
 import { useModifiers } from '@/utils';
-import { inject } from 'vue';
 import { INmorphTabPaneProps, INmorphTabsDataProvider, getTabContentId, getTabLabelId } from '@/components';
-import { onMounted } from 'vue';
 
 interface INmorphProps extends INmorphTabPaneProps {}
 const props = withDefaults(defineProps<INmorphProps>(), {
   label: '',
   disabled: false,
+  content: '',
 });
 
 const modifiers = computed(() =>
@@ -18,23 +17,23 @@ const modifiers = computed(() =>
 );
 
 const providedData = inject<INmorphTabsDataProvider | undefined>('nmorph-tabs-data', undefined);
-
 const isMounted = ref(false);
 
 onMounted(() => {
   isMounted.value = true;
-  if (!providedData) return;
-  providedData.tabsData.value.push(props);
 });
+
+providedData.tabsData.value.push(props);
+const scopeProperties = props as INmorphTabPaneProps;
 </script>
 
 <template>
   <div v-if="isMounted" :class="modifiers">
     <teleport :to="`#${getTabLabelId(providedData?.tabsIdentifier, props.name)}`">
-      <slot name="label" />
+      <slot name="label" :scope="scopeProperties" />
     </teleport>
     <teleport :to="`#${getTabContentId(providedData?.tabsIdentifier, props.name)}`">
-      <slot />
+      <slot :scope="scopeProperties" />
     </teleport>
   </div>
 </template>

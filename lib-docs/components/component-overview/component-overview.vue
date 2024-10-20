@@ -15,6 +15,14 @@ import calendar from "~/lib-overview/calendar";
 import imagePreview from "~/lib-overview/image-preview";
 import pagination from "~/lib-overview/pagination";
 import table from "~/lib-overview/table";
+import tooltip from "~/lib-overview/tooltip";
+import alert from "~/lib-overview/alert";
+import dialog from "~/lib-overview/dialog";
+import divider from "~/lib-overview/divider";
+import overlay from "~/lib-overview/overlay";
+import notificationProvider from "~/lib-overview/notification-provider";
+import tabs from "~/lib-overview/tabs";
+import dropdown from "~/lib-overview/dropdown";
 
 interface IProps {
   name: string;
@@ -37,6 +45,14 @@ const componentsMap: Record<string, unknown[]> = {
   "image-preview": imagePreview,
   pagination,
   table,
+  tooltip,
+  alert,
+  dialog,
+  divider,
+  overlay,
+  "notification-provider": notificationProvider,
+  tabs,
+  dropdown,
 };
 </script>
 

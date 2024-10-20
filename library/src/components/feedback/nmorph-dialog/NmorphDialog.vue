@@ -12,6 +12,7 @@ interface INmorphProps {
   closeOnClickModal?: boolean;
   showClose?: boolean;
   zIndex?: number;
+  closeOnOverlay?: boolean;
 }
 const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: false,
@@ -22,6 +23,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   closeOnClickModal: true,
   showClose: true,
   zIndex: 999,
+  closeOnOverlay: true,
 });
 
 interface INmorphEmit {
@@ -69,10 +71,15 @@ const closeHandler = () => {
     emit('update:model-value', false);
   }, props.closeDelay);
 };
+
+const clickOnOverlay = () => {
+  if (!props.closeOnOverlay) return;
+  closeHandler();
+};
 </script>
 
 <template>
-  <NmorphOverlay :show="isVisible" @on-outside-click="closeHandler">
+  <NmorphOverlay :show="isVisible" @on-outside-click="clickOnOverlay">
     <div :class="modifiers">
       <div class="nmorph-dialog__header">
         <slot name="header">

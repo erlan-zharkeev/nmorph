@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { NmorphTable } from "@nmorph/nmorph-ui-kit";
+import { NmorphDropdown } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
@@ -13,16 +13,16 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div id="content-bordered">
+  <div id="content-relative-element">
     <attribute
-      header="Bordered"
-      :subtitle="$t('overview.table.bordered.subtitle')"
+      header="Relative-element"
+      :subtitle="$t('overview.dropdown.relative-element.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <div class="table-bordered-overview">
+        <div class="dropdown-relative-element-overview">
           <ClientOnly>
-            <NmorphTable />
+            <NmorphDropdown />
           </ClientOnly>
         </div>
       </template>
@@ -36,5 +36,5 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.table-bordered-overview {}
+.dropdown-relative-element-overview {}
 </style>

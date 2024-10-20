@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { DocsInfo } from "~/types";
+
 interface IProps {
   type?: keyof typeof DocsInfo;
   title: string;
@@ -8,19 +10,12 @@ interface IProps {
 const props = withDefaults(defineProps<IProps>(), {
   type: "info",
 });
-
-enum DocsInfo {
-  warning = "warning",
-  info = "info",
-}
 </script>
 
 <template>
   <div class="docs-info" :class="`docs-info--${props.type}`">
     <div class="docs-info__title nmorph-title-3">{{ props.title }}</div>
-    <div class="docs-info__content nmorph-body-3">
-      {{ props.content }}
-    </div>
+    <div class="docs-info__content nmorph-body-3">{{ props.content }}</div>
   </div>
 </template>
 
@@ -56,12 +51,17 @@ enum DocsInfo {
 .docs-info--warning {
   background: rgba(var(--nmorph-warn-color), 0.5);
 
-  &:before {
+  &:before,
+  &:after {
     background: var(--nmorph-warn-color);
   }
 }
 
 .docs-info__title {
   margin-bottom: 8px;
+}
+
+.docs-info__content {
+  white-space: pre-wrap;
 }
 </style>

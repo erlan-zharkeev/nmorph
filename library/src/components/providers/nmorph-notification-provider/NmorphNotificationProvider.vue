@@ -1,24 +1,9 @@
-<template>
-  <div :class="`nmorph-notification-provider nmorph-notification-provider--${props.placement}`" :style="{ zIndex }">
-    <transition-group name="nmorph-notification" tag="div">
-      <div
-        v-for="notification in visibleNotifications"
-        :key="notification.id"
-        :style="{ width: notification.width }"
-        class="nmorph-notification-provider__notification"
-      >
-        <NmorphAlert v-bind="notification" @close="() => closeHandler(notification.id)" />
-      </div>
-    </transition-group>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { INmorphNotification, NmorphNotificationPlacement } from '@/components/providers';
 import { NmorphAlert } from '@/components';
 import { computed, ref } from 'vue';
 
-const removedIds = ref<number[]>([]);
+const removedIds = ref<string[]>([]);
 
 const notificationElements = computed(() => props.notifications.filter((el) => !removedIds.value.includes(el.id)));
 
@@ -27,7 +12,7 @@ const visibleNotifications = computed(() => {
   return notificationElements.value.slice(start);
 });
 
-const closeHandler = (id: number) => {
+const closeHandler = (id: string) => {
   removedIds.value = [...removedIds.value, id];
 };
 
@@ -46,6 +31,21 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 
 const zIndex = computed(() => props.zIndex);
 </script>
+
+<template>
+  <div :class="`nmorph-notification-provider nmorph-notification-provider--${props.placement}`" :style="{ zIndex }">
+    <transition-group name="nmorph-notification" tag="div">
+      <div
+        v-for="notification in visibleNotifications"
+        :key="notification.id"
+        :style="{ width: notification.width }"
+        class="nmorph-notification-provider__notification"
+      >
+        <NmorphAlert v-bind="notification" @close="() => closeHandler(notification.id)" />
+      </div>
+    </transition-group>
+  </div>
+</template>
 
 <style scoped lang="scss">
 .nmorph-notification-enter-from,
