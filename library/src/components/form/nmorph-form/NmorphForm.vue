@@ -22,12 +22,12 @@ const modifiers = computed(() =>
 const formValidationData = useFormValidation(props.value, props.validateImmediately);
 
 interface INmorphEmit {
-  (e: 'formValidator', val: ReturnType<typeof useFormValidation>): void;
+  (e: 'form-validator', val: ReturnType<typeof useFormValidation>): void;
 }
 
 const emit = defineEmits<INmorphEmit>();
 onMounted(() => {
-  emit('formValidator', formValidationData);
+  emit('form-validator', formValidationData);
 });
 provide<NmorphFormValidationDataType>('form-data', formValidationData);
 </script>

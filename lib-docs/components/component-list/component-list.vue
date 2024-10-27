@@ -41,7 +41,31 @@ const list: { name: string; components: string[] }[] = [
 
   {
     name: "navigation",
-    components: ["NmorphTabs", "NmorphDropdown"]
+    components: [
+      "NmorphTabs",
+      "NmorphDropdown",
+      "NmorphBacktop",
+      "NmorphBreadcrumb",
+    ],
+  },
+
+  {
+    name: "form",
+    components: [
+      "NmorphTextInput",
+      "NmorphSwitch",
+      "NmorphCheckbox",
+      "NmorphCheckboxGroup",
+      "NmorphAutocomplete",
+      "NmorphFileUpload",
+      "NmorphNumberInput",
+      "NmorphSelect",
+      "NmorphSlider",
+      "NmorphTimePicker",
+      "NmorphRadio",
+      "NmorphRadioGroup",
+      "NmorphForm",
+    ],
   },
 ];
 

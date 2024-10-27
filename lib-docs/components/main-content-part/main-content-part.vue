@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
+import { NmorphScroll, NmorphBacktop } from "@nmorph/nmorph-ui-kit";
 const scroll = ref(null);
 defineExpose({ scroll });
 </script>
@@ -23,6 +23,7 @@ defineExpose({ scroll });
       >
         <slot name="aside-right" />
       </aside>
+      <NmorphBacktop design="common" />
     </NmorphScroll>
   </div>
 </template>

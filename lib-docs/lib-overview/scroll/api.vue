@@ -86,7 +86,10 @@ const variables = [
 const exposes = [
   {
     name: "scrollDOMContainer",
-    type: "-",
+    type: `${docsLink(
+      "HTMLElement",
+      "https://developer.mozilla.org/ru/docs/Web/API/HTMLElement"
+    )} | null`,
   },
   {
     name: "moveTo",

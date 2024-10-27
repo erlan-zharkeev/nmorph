@@ -680,34 +680,604 @@ export default {
       }
     },
     "dropdown": {
-      "open": {
-        "subtitle": ""
-      },
-      "relative-element": {
-        "subtitle": ""
-      },
-      "width": {
-        "subtitle": ""
-      },
-      "x-offset": {
-        "subtitle": ""
-      },
-      "y-offset": {
-        "subtitle": ""
-      },
-      "fill-width": {
-        "subtitle": ""
+      "basic-usage": {
+        "subtitle": "Controls whether the dropdown is open. Set to *true* to open, *false* to close.",
+        "first-menu": "First menu",
+        "second-menu": "Second menu"
       },
       "api": {
-        "open": "",
-        "relative-element": "",
-        "width": "",
-        "x-offset": "",
-        "y-offset": "",
-        "fill-width": ""
+        "open": "Boolean that controls the visibility of the dropdown.",
+        "relative-element": "Defines the element relative to which the dropdown will be positioned.",
+        "width": "Specifies the width of the dropdown.",
+        "x-offset": "Horizontal offset in pixels for adjusting the dropdown's position.",
+        "y-offset": "Vertical offset in pixels for adjusting the dropdown's position.",
+        "fill-width": "Boolean that determines if the dropdown should occupy the full width of the container."
+      },
+      "slot": {
+        "default": "Slot to customize the content inside the dropdown."
+      },
+      "variables": {},
+      "events": {
+        "on-outside-click": "Emitted when the user clicks outside of the dropdown, which can be used to close it."
+      }
+    },
+    "backtop": {
+      "basic-usage": {
+        "info": {
+          "title": "Info",
+          "content": "Make sure that the scroll container height is defined."
+        },
+        "scroll-down": "Scroll down"
+      },
+      "api": {
+        "right": "Specifies the distance from the right edge of the screen.",
+        "bottom": "Specifies the distance from the bottom edge of the screen.",
+        "visibility-height": "Defines the scroll height at which the Backtop button becomes visible. Accepts a number in pixels.",
+        "design": "Common style or neuromorphic"
+      },
+      "slot": {
+        "default": "Slot to customize the content of the Backtop button."
+      },
+      "events": {
+        "click": "Emitted when the Backtop button is clicked."
+      },
+      "variables": {}
+    },
+    "breadcrumb": {
+      "separator": {
+        "subtitle": "Defines the character or symbol used to separate breadcrumb items."
+      },
+      "api": {
+        "separator": "Specifies the separator symbol between breadcrumb items."
+      }
+    },
+    "breadcrumb-item": {
+      "api": {
+        "to": "Specifies the target route for navigation. Accepts a string path or a route object.",
+        "replace": "Boolean that determines if navigation should replace the current history entry instead of adding a new one."
+      }
+    },
+    "text-input": {
+      "height": {
+        "subtitle": "Sets the height of the input field."
+      },
+      "fill": {
+        "subtitle": "If true, the input field will fill the available width of its container."
+      },
+      "disabled": {
+        "subtitle": "Disables the input field if set to true."
+      },
+      "placeholder": {
+        "subtitle": "Specifies the placeholder text that appears when the input field is empty."
+      },
+      "type-password": {
+        "subtitle": "If set to true, the input field will mask the text as a password."
+      },
+      "model-value": {
+        "subtitle": "Represents the value of the input field, typically used for two-way data binding."
+      },
+      "clearable": {
+        "subtitle": "If true, a clear button will appear to reset the input field."
+      },
+      "api": {
+        "height": "Defines the height of the text input.",
+        "fill": "Boolean that determines whether the input should fill its container.",
+        "disabled": "Boolean that disables the text input.",
+        "placeholder": "The text that appears as a hint when the input is empty.",
+        "type-password": "Boolean that turns the input into a password field.",
+        "model-value": "Current value of the input field.",
+        "clearable": "Boolean that adds a button to clear the input value."
+      },
+      "slot": {
+        "prepend-icon": "Slot for adding an icon to the beginning of the input field."
+      },
+      "variables": {
+        "prepend-icon-indent": "Defines the indentation for the prepend icon."
+      },
+      "events": {
+        "update:model-value": "Emitted when the value of the input field changes.",
+        "focus": "Emitted when the input field gains focus.",
+        "blur": "Emitted when the input field loses focus.",
+        "on-enter": "Emitted when the Enter key is pressed."
+      },
+      "exposes": {
+        "inputDOMRef": "Original input DOM element"
+      }
+    },
+    "switch": {
+      "height": {
+        "subtitle": "Defines the height of the switch component."
+      },
+      "disabled": {
+        "subtitle": "Disables the switch if set to true."
+      },
+      "model-value": {
+        "subtitle": "Controls the on/off state of the switch."
+      },
+      "loading": {
+        "subtitle": "Shows a loading state on the switch if set to true."
+      },
+      "active-value": {
+        "subtitle": "Specifies the value when the switch is active."
+      },
+      "inactive-value": {
+        "subtitle": "Specifies the value when the switch is inactive."
+      },
+      "api": {
+        "height": "Specifies the height of the switch.",
+        "disabled": "Boolean that disables the switch component.",
+        "model-value": "Controls the switch state.",
+        "loading": "Boolean that shows a loading spinner on the switch.",
+        "active-value": "The value when the switch is on.",
+        "inactive-value": "The value when the switch is off."
+      },
+      "slot": {
+        "bg-on": "Slot for customizing the background when the switch is on.",
+        "bg-off": "Slot for customizing the background when the switch is off.",
+        "thumb-on": "Slot for customizing the thumb when the switch is on.",
+        "thumb-off": "Slot for customizing the thumb when the switch is off."
+      },
+      "variables": {
+        "height": "Defines the height of the switch.",
+        "offset": "Specifies the offset for the thumb.",
+        "thumb-height": "Defines the height of the switch thumb."
+      },
+      "events": {
+        "update:model-value": "Emitted when the switch changes its state."
+      },
+      "exposes": {
+        "inputDOMRef": "Original input DOM element"
+      }
+    },
+    "checkbox": {
+      "id": {
+        "subtitle": "The unique identifier for the checkbox."
+      },
+      "disabled": {
+        "subtitle": "Disables the checkbox if set to true."
+      },
+      "model-value": {
+        "subtitle": "Represents the checked state of the checkbox."
+      },
+      "label": {
+        "subtitle": "Specifies the label text for the checkbox."
+      },
+      "design": {
+        "subtitle": "Defines the design style for the checkbox, such as standard or outlined."
+      },
+      "api": {
+        "id": "Unique identifier for the checkbox.",
+        "disabled": "Boolean that disables the checkbox.",
+        "model-value": "Checked state of the checkbox.",
+        "label": "The label displayed next to the checkbox.",
+        "design": "Specifies the design style of the checkbox."
+      },
+      "slot": {
+        "default": "Slot for customizing the content of the checkbox.",
+        "label": "Slot for customizing the label of the checkbox."
+      },
+      "variables": {
+        "size": "Defines the size of the checkbox."
+      },
+      "events": {
+        "update:model-value": "Emitted when the checked state of the checkbox changes."
+      },
+      "exposes": {
+        "inputDOMRef": "Original input DOM element"
+      }
+    },
+    "checkbox-group": {
+      "height": {
+        "subtitle": "Specifies the height of the checkbox group container."
+      },
+      "fill": {
+        "subtitle": "If set to true, the container will fill the available space."
+      },
+      "disabled": {
+        "subtitle": "Disables all checkboxes within the group if set to true."
+      },
+      "model-value": {
+        "subtitle": "Array of selected values in the checkbox group."
+      },
+      "options": {
+        "subtitle": "Defines the options for the checkboxes within the group."
+      },
+      "design": {
+        "subtitle": "Sets the design style for the checkbox group."
+      },
+      "direction": {
+        "subtitle": "Specifies the direction (horizontal or vertical) for the checkbox group."
+      },
+      "api": {
+        "height": "Height of the checkbox group container.",
+        "fill": "Boolean that allows the container to fill the available space.",
+        "disabled": "Disables all checkboxes within the group.",
+        "model-value": "Array of selected values.",
+        "options": "Options for the checkboxes.",
+        "design": "Design style of the checkbox group.",
+        "direction": "Direction of the checkbox group layout."
+      },
+      "slot": {
+        "default": "Slot for customizing the content of the checkbox group."
+      },
+      "variables": {},
+      "events": {
+        "update:model-value": "Emitted when the selected values in the checkbox group change."
+      }
+    },
+    "autocomplete": {
+      "height": {
+        "subtitle": "Defines the height of the autocomplete input field."
+      },
+      "fill": {
+        "subtitle": "If true, the autocomplete field will fill its container."
+      },
+      "disabled": {
+        "subtitle": "Disables the autocomplete input if set to true."
+      },
+      "model-value": {
+        "subtitle": "Represents the value entered by the user."
+      },
+      "placeholder": {
+        "subtitle": "Text displayed when the input field is empty."
+      },
+      "clearable": {
+        "subtitle": "If true, a clear button will be shown to reset the input field."
+      },
+      "list": {
+        "subtitle": "Specifies the list of options for autocomplete suggestions."
+      },
+      "action-callback": {
+        "subtitle": "Function called when an option is selected from the list."
+      },
+      "api": {
+        "height": "Height of the autocomplete input field.",
+        "fill": "Boolean that allows the field to fill its container.",
+        "disabled": "Disables the autocomplete input.",
+        "model-value": "Current value of the input field.",
+        "placeholder": "Placeholder text displayed when the input is empty.",
+        "clearable": "Boolean that adds a button to clear the input value.",
+        "list": "List of suggestions for the input.",
+        "action-callback": "Callback function triggered on option selection."
+      },
+      "slot": {
+        "loader": "Slot for adding a custom loader during data fetching."
+      },
+      "variables": {},
+      "events": {
+        "update:model-value": "Emitted when the value of the autocomplete field changes.",
+        "select": "Emitted when a suggestion is selected."
+      }
+    },
+    "file-upload": {
+      "model-value": {
+        "subtitle": "Represents the uploaded files."
+      },
+      "disabled": {
+        "subtitle": "Disables the file upload component if set to true."
+      },
+      "multiple": {
+        "subtitle": "Allows multiple files to be uploaded if set to true."
+      },
+      "allowed-types": {
+        "subtitle": "Specifies the allowed file types for upload."
+      },
+      "photo-with-preview": {
+        "subtitle": "If true, uploaded photos will be displayed with a preview."
+      },
+      "fill": {
+        "subtitle": "If true, the file upload button will fill the container."
+      },
+      "api": {
+        "model-value": "Represents the uploaded files.",
+        "disabled": "Boolean that disables the file upload component.",
+        "multiple": "Boolean that allows multiple files to be selected.",
+        "allowed-types": "Specifies the types of files that can be uploaded.",
+        "photo-with-preview": "Shows preview of uploaded images.",
+        "fill": "Allows the upload button to fill its container."
+      },
+      "slot": {
+        "trigger": "Slot for customizing the trigger button for file upload."
+      },
+      "variables": {},
+      "events": {
+        "on-unsupported-file-type-error": "Emitted when a user tries to upload an unsupported file type.",
+        "update:model-value": "Emitted when the file selection changes."
+      },
+      "exposes": {
+        "inputDOMRef": "Original input DOM element"
+      }
+    },
+    "number-input": {
+      "height": {
+        "subtitle": "Defines the height of the number input field."
+      },
+      "fill": {
+        "subtitle": "If true, the number input will fill its container."
+      },
+      "disabled": {
+        "subtitle": "Disables the number input if set to true."
+      },
+      "model-value": {
+        "subtitle": "Represents the current numeric value of the input field."
+      },
+      "max": {
+        "subtitle": "Specifies the maximum value for the input."
+      },
+      "min": {
+        "subtitle": "Specifies the minimum value for the input."
+      },
+      "step": {
+        "subtitle": "Defines the step size for incrementing or decrementing the value."
+      },
+      "action-btn-position-right": {
+        "subtitle": "If true, the increment and decrement buttons are positioned to the right."
+      },
+      "api": {
+        "height": "Height of the number input field.",
+        "fill": "Boolean that allows the field to fill its container.",
+        "disabled": "Boolean that disables the input field.",
+        "model-value": "Current value of the number input.",
+        "max": "Maximum allowable value.",
+        "min": "Minimum allowable value.",
+        "step": "Step size for value increment or decrement.",
+        "action-btn-position-right": "Positions action buttons to the right if true."
       },
       "slot": {},
-      "variables": {}
+      "variables": {},
+      "events": {
+        "update:model-value": "Emitted when the value of the number input changes."
+      }
+    },
+    "select": {
+      "height": {
+        "subtitle": "Sets the height of the select dropdown."
+      },
+      "fill": {
+        "subtitle": "If true, the select component will fill the available container width."
+      },
+      "disabled": {
+        "subtitle": "Disables the select component if set to true."
+      },
+      "no-element-placeholder": {
+        "subtitle": "Text shown when there are no selectable options."
+      },
+      "value-required": {
+        "subtitle": "Specifies if a value must be selected before proceeding."
+      },
+      "options": {
+        "subtitle": "Defines the list of selectable options."
+      },
+      "options-map": {
+        "subtitle": "Specifies an object to map options with labels and values."
+      },
+      "model-value": {
+        "subtitle": "Represents the selected value of the select component."
+      },
+      "loading": {
+        "subtitle": "Displays a loading indicator if set to true."
+      },
+      "open": {
+        "subtitle": "Controls whether the select dropdown is open."
+      },
+      "api": {
+        "height": "Height of the select dropdown.",
+        "fill": "Boolean to allow the dropdown to fill its container.",
+        "disabled": "Disables the select dropdown.",
+        "no-element-placeholder": "Placeholder text when no options are available.",
+        "value-required": "Enforces value selection.",
+        "options": "List of selectable options.",
+        "options-map": "Object for mapping options.",
+        "model-value": "The selected value of the dropdown.",
+        "loading": "Shows a loading state.",
+        "open": "Boolean to control dropdown visibility."
+      },
+      "slot": {
+        "default": "Slot to customize the options within the select."
+      },
+      "variables": {
+        "base-width": "Specifies the base width for the select component."
+      },
+      "events": {
+        "update:model-value": "Emitted when the selected value changes."
+      }
+    },
+    "select-option": {
+      "api": {
+        "label": "Defines the label of the option, which is displayed in the select dropdown.",
+        "height": "Specifies the height of the select option.",
+        "disabled": "Boolean that determines if the option is disabled and cannot be selected."
+      },
+      "slot": {
+        "default": "Slot to customize the content displayed for this option."
+      },
+      "variables": {
+        "hover-bg": "Sets the background color when the option is hovered.",
+        "hover-color": "Defines the text color when the option is hovered."
+      },
+      "events": {
+        "change-value": "Emitted when the option value changes."
+      }
+    },
+    "slider": {
+      "fill": {
+        "subtitle": "If true, the slider track will fill the container."
+      },
+      "disabled": {
+        "subtitle": "Disables the slider if set to true."
+      },
+      "model-value": {
+        "subtitle": "Represents the current value of the slider."
+      },
+      "max": {
+        "subtitle": "Specifies the maximum value for the slider."
+      },
+      "min": {
+        "subtitle": "Specifies the minimum value for the slider."
+      },
+      "step": {
+        "subtitle": "Defines the step size for the slider."
+      },
+      "show-tooltip": {
+        "subtitle": "If true, shows a tooltip displaying the current value."
+      },
+      "api": {
+        "fill": "Boolean that allows the slider to fill its container.",
+        "disabled": "Disables the slider component.",
+        "model-value": "Current value of the slider.",
+        "max": "Maximum value for the slider.",
+        "min": "Minimum value for the slider.",
+        "step": "Step size for value increment or decrement.",
+        "show-tooltip": "Boolean to control tooltip visibility."
+      },
+      "slot": {},
+      "variables": {
+        "slider-height": "Defines the height of the slider.",
+        "value-fixed-container-width": "Sets the width of the container for displaying the value."
+      },
+      "events": {
+        "update:model-value": "Emitted when the slider value changes."
+      }
+    },
+    "time-picker": {
+      "disabled": {
+        "subtitle": "Disables the time picker if set to true."
+      },
+      "model-value": {
+        "subtitle": "Represents the selected time value."
+      },
+      "open": {
+        "subtitle": "Controls whether the time picker dropdown is open."
+      },
+      "init-without-value": {
+        "subtitle": "If true, the time picker will initialize without a default value."
+      },
+      "disabled-hours": {
+        "subtitle": "Specifies which hours should be disabled for selection."
+      },
+      "disabled-minutes": {
+        "subtitle": "Specifies which minutes should be disabled for selection."
+      },
+      "disabled-seconds": {
+        "subtitle": "Specifies which seconds should be disabled for selection."
+      },
+      "api": {
+        "disabled": "Disables the time picker.",
+        "model-value": "The selected time value.",
+        "open": "Boolean to control visibility of the dropdown.",
+        "init-without-value": "Initializes the time picker without a value.",
+        "disabled-hours": "Hours that are not selectable.",
+        "disabled-minutes": "Minutes that are not selectable.",
+        "disabled-seconds": "Seconds that are not selectable."
+      },
+      "slot": {},
+      "variables": {},
+      "events": {
+        "update:model-value": "Emitted when the selected time changes.",
+        "on-change-open-close": "Emitted when the time picker is opened or closed."
+      },
+      "exposes": {
+        "inputDOMRef": "Original input DOM element"
+      }
+    },
+    "radio": {
+      "disabled": {
+        "subtitle": "Disables the radio button if set to true."
+      },
+      "label": {
+        "subtitle": "Defines the label text for the radio button."
+      },
+      "value": {
+        "subtitle": "Specifies the value of the radio button."
+      },
+      "style-type": {
+        "subtitle": "Defines the style of the radio button, such as outlined or standard."
+      },
+      "api": {
+        "disabled": "Boolean that disables the radio button.",
+        "label": "Label text displayed next to the radio button.",
+        "value": "The value assigned to the radio button.",
+        "style-type": "Specifies the visual style of the radio button."
+      },
+      "slot": {
+        "label": "Slot to customize the label of the radio button."
+      },
+      "variables": {
+        "size": "Specifies the size of the radio button."
+      },
+      "exposes": {
+        "inputDOMRef": "Original input DOM element"
+      }
+    },
+    "radio-group": {
+      "height": {
+        "subtitle": "Defines the height of the radio group container."
+      },
+      "fill": {
+        "subtitle": "If true, the radio group will fill the available container space."
+      },
+      "disabled": {
+        "subtitle": "Disables all radio buttons within the group if set to true."
+      },
+      "model-value": {
+        "subtitle": "Represents the selected value in the radio group."
+      },
+      "options": {
+        "subtitle": "Defines the list of options available for selection."
+      },
+      "style-type": {
+        "subtitle": "Specifies the visual style of the radio buttons in the group."
+      },
+      "direction": {
+        "subtitle": "Sets the direction of the radio buttons, either horizontal or vertical."
+      },
+      "api": {
+        "height": "Height of the radio group container.",
+        "fill": "Boolean that allows the group to fill the container.",
+        "disabled": "Disables all radio buttons within the group.",
+        "model-value": "The selected value of the radio group.",
+        "options": "List of options for selection.",
+        "style-type": "Visual style of the radio buttons.",
+        "direction": "Direction of the radio buttons layout."
+      },
+      "slot": {
+        "default": "Slot to customize the radio buttons in the group."
+      },
+      "variables": {},
+      "events": {
+        "update:model-value": "Emitted when the selected value changes."
+      }
+    },
+    "form": {
+      "value": {
+        "subtitle": "Represents the form values for all input elements."
+      },
+      "validate-immediately": {
+        "subtitle": "If true, the form will validate its fields immediately after rendering."
+      },
+      "api": {
+        "value": "The form values for input elements.",
+        "validate-immediately": "Boolean that controls whether validation occurs on load."
+      },
+      "slot": {
+        "default": "Slot for customizing the content of the form."
+      },
+      "variables": {},
+      "events": {
+        "form-validator": "Emitted when the form is validated."
+      }
+    },
+    "form-item": {
+      "api": {
+        "id": "Specifies the unique identifier for the form item.",
+        "height": "Sets the height of the form item container.",
+        "show-validation-icon": "Boolean that controls whether a validation icon is displayed for this form item.",
+        "static-error-box-space": "Defines a static space for displaying an error box, ensuring consistent spacing regardless of validation state.",
+        "validate": "Defines the validation rules for the form item."
+      },
+      "slots": {
+        "default": "Slot to customize the content of the form item, typically input elements or other form controls."
+      }
     }
   }
 };

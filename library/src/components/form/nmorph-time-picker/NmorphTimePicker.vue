@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
-import { Ref, computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import {
   NmorphDropdown,
   NmorphIcon,
@@ -33,7 +33,6 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 });
 
 interface INmorphEmit {
-  (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
   (e: 'update:model-value', val: number): void;
   (e: 'on-change-open-close', val: boolean): void;
 }
@@ -41,15 +40,14 @@ interface INmorphEmit {
 const emit = defineEmits<INmorphEmit>();
 
 const timepickerDOMRef = ref<NmorphDomElementType>(null);
+
 const inputDOMRef = ref<NmorphDomElementType>(null);
+defineExpose({ inputDOMRef });
+
 const openDropdown = ref(props.open);
 const timeTuple = ref<NmorphTimeTupleType>([0, 0, 0]);
 
 const emptyValue = ref(props.initWithoutValue);
-
-onMounted(() => {
-  emit('inputDOMRef', inputDOMRef);
-});
 
 const clickHandler = () => {
   openDropdown.value = !openDropdown.value;

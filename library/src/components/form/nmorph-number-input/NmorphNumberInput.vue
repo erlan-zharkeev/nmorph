@@ -66,7 +66,6 @@ const actionBtnIconSize = computed(() => {
 });
 
 interface INmorphEmit {
-  (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
   (e: 'update:model-value', val: number): void;
 }
 
@@ -94,11 +93,8 @@ watch(initialValue, (updatedValue) => {
   emit('update:model-value', updatedValue);
 });
 
-onMounted(() => {
-  emit('inputDOMRef', inputDOMRef);
-});
-
 const inputDOMRef = ref<NmorphDomElementType>(null);
+defineExpose({ inputDOMRef });
 </script>
 
 <template>

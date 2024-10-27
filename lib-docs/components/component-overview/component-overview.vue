@@ -23,6 +23,21 @@ import overlay from "~/lib-overview/overlay";
 import notificationProvider from "~/lib-overview/notification-provider";
 import tabs from "~/lib-overview/tabs";
 import dropdown from "~/lib-overview/dropdown";
+import backtop from "~/lib-overview/backtop";
+import breadcrumb from "~/lib-overview/breadcrumb";
+import textInput from "~/lib-overview/text-input";
+import switchInput from "~/lib-overview/switch";
+import checkbox from "~/lib-overview/checkbox";
+import checkboxGroup from "~/lib-overview/checkbox-group";
+import autocomplete from "~/lib-overview/autocomplete";
+import fileUpload from "~/lib-overview/file-upload";
+import numberInput from "~/lib-overview/number-input";
+import select from "~/lib-overview/select";
+import slider from "~/lib-overview/slider";
+import timePicker from "~/lib-overview/time-picker";
+import radio from "~/lib-overview/radio";
+import radioGroup from "~/lib-overview/radio-group";
+import form from "~/lib-overview/form";
 
 interface IProps {
   name: string;
@@ -53,6 +68,21 @@ const componentsMap: Record<string, unknown[]> = {
   "notification-provider": notificationProvider,
   tabs,
   dropdown,
+  backtop,
+  breadcrumb,
+  "text-input": textInput,
+  switch: switchInput,
+  checkbox,
+  "checkbox-group": checkboxGroup,
+  autocomplete,
+  "file-upload": fileUpload,
+  "number-input": numberInput,
+  select,
+  slider,
+  "time-picker": timePicker,
+  radio,
+  "radio-group": radioGroup,
+  form,
 };
 </script>
 

@@ -1,13 +1,8 @@
-export { default as NmorphCheckbox } from './checkbox/nmorph-checkbox/NmorphCheckbox.vue';
-export * from './checkbox/types';
-export { default as NmorphCheckboxGroup } from './checkbox/nmorph-checkbox-group/NmorphCheckboxGroup.vue';
+export { default as NmorphCheckbox } from './nmorph-checkbox/NmorphCheckbox.vue';
+export { default as NmorphCheckboxGroup } from './nmorph-checkbox-group/NmorphCheckboxGroup.vue';
 export { default as NmorphAutocomplete } from './nmorph-autocomplete/NmorphAutocomplete.vue';
 export * from './nmorph-autocomplete/types';
 export { default as NmorphDatePicker } from './nmorph-date-picker/NmorphDatePicker.vue';
-export * from './nmorph-date-picker/components/types';
-export { default as NmorphYearMonthPicker } from './nmorph-date-picker/components/nmorph-year-month-picker/NmorphYearMonthPicker.vue';
-export { default as NmorphDatePickerContent } from './nmorph-date-picker/components/nmorph-date-picker-content/NmorphDatePickerContent.vue';
-export { default as NmorphDatePickerHeader } from './nmorph-date-picker/components/nmorph-date-picker-header/NmorphDatePickerHeader.vue';
 export { default as NmorphFileUpload } from './nmorph-file-upload/NmorphFileUpload.vue';
 export * from './nmorph-file-upload/types';
 export { default as NmorphForm } from './nmorph-form/NmorphForm.vue';
@@ -23,6 +18,5 @@ export { default as NmorphTextInput } from './nmorph-text-input/NmorphTextInput.
 export { default as NmorphTimePicker } from './nmorph-time-picker/NmorphTimePicker.vue';
 export * from './nmorph-time-picker/types';
 export * from './nmorph-time-picker/utils';
-export { default as NmorphRadio } from './radio/nmorph-radio/NmorphRadio.vue';
-export * from './radio/types';
-export { default as NmorphRadioGroup } from './radio/nmorph-radio-group/NmorphRadioGroup.vue';
+export { default as NmorphRadio } from './nmorph-radio/NmorphRadio.vue';
+export { default as NmorphRadioGroup } from './nmorph-radio-group/NmorphRadioGroup.vue';

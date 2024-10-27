@@ -154,11 +154,13 @@ const attributeNameLabel = (name: string, required: boolean) =>
       <ClientOnly>
         <NmorphTable :data="updatedExposes" bordered :row-hover="false">
           <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
-          <NmorphTableColumn
-            prop="type"
-            :label="$t('type')"
-            alignment="center"
-          />
+          <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
+            <template #default="{ scope }">
+              <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
+                <p v-html="row.type" class="no-wrap" />
+              </NmorphTableCell>
+            </template>
+          </NmorphTableColumn>
           <NmorphTableColumn
             prop="description"
             :label="$t('description')"

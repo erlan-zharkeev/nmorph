@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
-import { Ref, computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { NmorphIcon } from '@/components';
 
 interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
@@ -42,13 +42,10 @@ const changeHandler = () => {
 };
 
 interface INmorphEmit {
-  (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
   (e: 'update:model-value', val: boolean | string | number): void;
 }
 const inputDOMRef = ref<NmorphDomElementType>(null);
-onMounted(() => {
-  emit('inputDOMRef', inputDOMRef);
-});
+defineExpose({ inputDOMRef });
 
 watch(
   () => props.modelValue,

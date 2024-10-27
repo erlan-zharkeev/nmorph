@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import {
   type IAttributesTableData,
@@ -7,45 +6,55 @@ import {
 } from "~/types";
 import ApiTable from "~/components/api-table/api-table.vue";
 
-const attributesData: IAttributesTableData[] = [{
-  name: "open",
-  type: "",
-  default: "",
-},{
-  name: "relative-element",
-  type: "",
-  default: "",
-},{
-  name: "width",
-  type: "",
-  default: "",
-},{
-  name: "x-offset",
-  type: "",
-  default: "",
-},{
-  name: "y-offset",
-  type: "",
-  default: "",
-},{
-  name: "fill-width",
-  type: "",
-  default: "",
-}];
+const attributesData: IAttributesTableData[] = [
+  {
+    name: "open",
+    type: "Boolean",
+    default: "-",
+    required: true,
+  },
+  {
+    name: "relative-element",
+    type: "HTMLElement | null",
+    default: "null",
+    required: true,
+  },
+  {
+    name: "width",
+    type: "Number",
+    default: "160",
+  },
+  {
+    name: "x-offset",
+    type: "Number",
+    default: "0",
+  },
+  {
+    name: "y-offset",
+    type: "Number",
+    default: "0",
+  },
+  {
+    name: "fill-width",
+    type: "Boolean",
+    default: "true",
+  },
+];
 
-const slotData: ISlotsTableData[] = [];
-
+const slotData: ISlotsTableData[] = [{ name: "default" }];
 const variables: IVariablesTableData[] = [];
+const eventsData = [{ name: "on-outside-click", type: "() => void" }];
 </script>
 
 <template>
-<div class="docs-api-table">
-  <api-table
-    title="dropdown"
-    name="dropdown"
-    :attributes="attributesData"
-    :slots="slotData"
-    :variables="variables"
-  />
-</div>
+  <div class="docs-api-table">
+    <api-table
+      title="NmorphDropdown"
+      name="dropdown"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+      :events="eventsData"
+    />
+  </div>
 </template>

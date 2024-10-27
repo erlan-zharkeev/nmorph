@@ -9,3 +9,4 @@ loading Добавить перевод для image
 
 <style lang="scss"></style>
 Проверить все event ли есть особенно v-model
+Добавить значения variables по умолчанию

@@ -6,10 +6,6 @@ import { NmorphValidationIcon, NmorphErrorBox } from './inner-components';
 import { NmorphFormValidationDataType } from '@/components';
 
 interface INmorphProps {
-  /**
-   * The ID of the form field used to bind to validation data.
-   * @type {string}
-   */
   id: string;
   height?: keyof typeof NmorphComponentHeight;
   label?: string;
@@ -66,9 +62,6 @@ const modifiers = computed(() =>
 
   .nmorph-form-item__content {
     position: relative;
-
-    // display: inline-flex;
-    // align-items: center;
     width: 100%;
   }
 }

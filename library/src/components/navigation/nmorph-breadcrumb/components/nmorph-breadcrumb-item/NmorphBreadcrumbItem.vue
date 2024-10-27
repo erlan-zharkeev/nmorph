@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue';
+import { computed, inject, nextTick, ref } from 'vue';
 import { generateUUID, useModifiers } from '@/utils';
 import { onMounted } from 'vue';
 import { NmorphBreadcrumbInjection, INmorphBreadcrumbItemProps } from '@/components';
@@ -22,21 +22,15 @@ const itemId = generateUUID();
 
 onMounted(() => {
   isMounted.value = true;
-  if (!breadcrumbData) return;
-  breadcrumbData.breadcrumbs.value.push({ ...props, itemId });
 });
+
+breadcrumbData.breadcrumbs.value.push({ ...props, itemId });
 </script>
 
 <template>
-  <div v-if="isMounted" :class="modifiers">
+  <div v-if="isMounted && itemId" :class="modifiers">
     <teleport :to="`#nmorph-breadcrumb-${breadcrumbData?.breadcrumbId}-${itemId}-element`">
       <router-link :to="to" :replace="replace" class="fill-height"> <slot /> </router-link>
     </teleport>
   </div>
 </template>
-
-<style lang="scss">
-.nmorph-breadcrumb-item {
-  // display: none;
-}
-</style>

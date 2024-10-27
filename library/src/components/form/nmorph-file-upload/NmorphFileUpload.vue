@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, computed, onMounted, reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import {
   INmorphCustomFileData,
   NmorphArchiveResolution,
@@ -87,16 +87,12 @@ const removeFile = (fileName: string) => {
   }
 };
 
-onMounted(() => {
-  emit('inputDOMRef', inputDOMRef);
-});
-
 interface INmorphEmit {
-  (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
   (e: 'update:model-value', val: File[]): void;
   (e: 'on-unsupported-file-type-error', val: string): void;
 }
 
+defineExpose({ inputDOMRef });
 const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>

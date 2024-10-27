@@ -85,6 +85,10 @@ const variables = [
 const exposes = [
   {
     name: "buttonDOMElement",
+    type: `${docsLink(
+      "HTMLElement",
+      "https://developer.mozilla.org/ru/docs/Web/API/HTMLElement"
+    )} | null`,
   },
 ];
 </script>

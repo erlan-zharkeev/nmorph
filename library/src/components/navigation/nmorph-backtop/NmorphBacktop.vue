@@ -2,19 +2,21 @@
 import { computed, onUnmounted, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphButton, NmorphIcon } from '@/components';
-import { NmorphDomElementType } from '@/types';
+import { NmorphDomElementType, NmorphElementDesignType } from '@/types';
 import { onMounted } from 'vue';
 
 interface INmorphProps {
   right?: number;
   bottom?: number;
   visibilityHeight?: number;
+  design?: NmorphElementDesignType;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   right: 40,
   bottom: 40,
   visibilityHeight: 200,
+  design: 'nmorph',
 });
 
 interface INmorphEmit {
@@ -27,7 +29,7 @@ const offsetBottom = computed(() => `${props.bottom}px`);
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-backtop': [`${showButton.value && 'show'}`],
+    'nmorph-backtop': [`${showButton.value && 'show'}`, props.design],
   })
 );
 
@@ -67,8 +69,12 @@ onUnmounted(() => {
   <div ref="selfDOMEl" :class="modifiers">
     <div @click.stop="scrollToTopHandler">
       <slot>
-        <NmorphButton>
-          <NmorphIcon name="chevron-down" class="nmorph-backtop__up-icon" />
+        <NmorphButton :style-type="props.design === 'nmorph' ? 'default' : 'transparent'">
+          <NmorphIcon
+            name="chevron-down"
+            class="nmorph-backtop__up-icon"
+            :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-white-color)'"
+          />
         </NmorphButton>
       </slot>
     </div>
@@ -91,5 +97,11 @@ onUnmounted(() => {
 .nmorph-backtop--show {
   opacity: 1;
 }
+
+.nmorph-backtop--common {
+  .nmorph-button {
+    background: var(--nmorph-overlay-color);
+    border-radius: 4px;
+  }
+}
 </style>
-// TODO md/ make shure that scroll container have set relative value and height setted

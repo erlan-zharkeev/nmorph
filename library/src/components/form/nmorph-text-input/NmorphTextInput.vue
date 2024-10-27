@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
-import { Ref, computed, onMounted, ref, useSlots } from 'vue';
+import { computed, ref, useSlots } from 'vue';
 import { NmorphIcon, NmorphButton } from '@/components';
 
 const slots = useSlots();
@@ -65,18 +65,15 @@ const handleBlur = () => {
 const inputDOMRef = ref<NmorphDomElementType>(null);
 
 interface INmorphEmit {
-  (e: 'inputDOMRef', val: Ref<NmorphDomElementType>): void;
   (e: 'update:model-value', val: string): void;
   (e: 'focus'): void;
   (e: 'blur'): void;
   (e: 'on-enter'): void;
 }
 
-const emit = defineEmits<INmorphEmit>();
+defineExpose({ inputDOMRef });
 
-onMounted(() => {
-  emit('inputDOMRef', inputDOMRef);
-});
+const emit = defineEmits<INmorphEmit>();
 
 const actionIcon = computed(() => {
   if (props.clearable) return 'error';
