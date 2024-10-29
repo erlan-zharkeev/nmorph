@@ -55,7 +55,7 @@ const events = [{ name: "update:model-value", type: "Number" }];
 <template>
   <div class="docs-api-table">
     <api-table
-      title="slider"
+      title="NmorphSlider"
       name="slider"
       :attributes="attributesData"
       :slots="slotData"

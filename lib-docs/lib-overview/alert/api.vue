@@ -69,7 +69,7 @@ const slotData: ISlotsTableData[] = [
   { name: "default" },
 ];
 const variables: IVariablesTableData[] = [];
-const events = [{ name: "close", type: "() => void" }];
+const events = [{ name: "close", type: "void" }];
 </script>
 
 <template>

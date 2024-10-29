@@ -9,7 +9,7 @@ import ApiTable from "~/components/api-table/api-table.vue";
 const attributesData: IAttributesTableData[] = [
   {
     name: "model-value",
-    type: "boolean",
+    type: "Boolean",
     default: "false",
   },
   {
@@ -55,8 +55,8 @@ const attributesData: IAttributesTableData[] = [
 const slotData: ISlotsTableData[] = [{ name: "header" }, { name: "default" }];
 const variables: IVariablesTableData[] = [{ name: "width" }];
 const events = [
-  { name: "on-close", type: "() => void" },
-  { name: "update:model-value", type: "(value: boolean) => void" },
+  { name: "on-close", type: "void" },
+  { name: "update:model-value", type: "Boolean" },
 ];
 </script>
 

@@ -6,7 +6,7 @@ import { NmorphIcon, NmorphButton } from '@/components';
 
 const slots = useSlots();
 
-interface INmorphProps extends INmorphCommonInputProps {
+interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
   placeholder?: string;
   typePassword?: boolean;
   modelValue?: string;
@@ -21,13 +21,12 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: '',
   rules: () => [],
   height: 'default',
-  fill: true,
   clearable: false,
 });
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], `${focused.value && 'focused'}`, `${props.fill && 'fill'}`],
+    nmorph: [NmorphComponentHeight[props.height], `${focused.value && 'focused'}`],
     'nmorph-text-input': [`${props.typePassword && 'password'}`],
   })
 );

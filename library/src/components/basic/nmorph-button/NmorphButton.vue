@@ -45,12 +45,6 @@ const modifiers = computed(() =>
 
 const buttonDOMElement = ref<NmorphDomElementType>(null);
 
-interface INmorphEmit {
-  (e: 'click'): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
-
 const iconSizeMap = {
   thin: 'small',
   default: 'medium',
@@ -70,7 +64,6 @@ defineExpose({ buttonDOMElement });
       :disabled="props.disabled"
       :loading="props.loading"
       :type="props.type"
-      @click="emit('click')"
     >
       <NmorphIcon v-if="props.icon" :name="props.icon" />
       <div v-else>

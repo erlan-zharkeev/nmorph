@@ -51,7 +51,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "model-value",
-    type: "string | Array&lt;string&gt;",
+    type: "String | Array&lt;String&gt;",
     default: "-",
   },
   {
@@ -69,7 +69,7 @@ const attributesData: IAttributesTableData[] = [
 const slotData: ISlotsTableData[] = [{ name: "default" }];
 const variables: IVariablesTableData[] = [{ name: "base-width" }];
 const events = [
-  { name: "update:model-value", type: "string | Array&lt;string&gt;" },
+  { name: "update:model-value", type: "String | Array&lt;String&gt;" },
 ];
 
 const selectOptionAttr = [
@@ -94,7 +94,7 @@ const variablesSelectOption: IVariablesTableData[] = [
   { name: "hover-bg" },
   { name: "hover-color" },
 ];
-const eventsSelectOption = [{ name: "change-value", type: "string" }];
+const eventsSelectOption = [{ name: "change-value", type: "String" }];
 </script>
 
 <template>

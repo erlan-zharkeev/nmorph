@@ -8,6 +8,12 @@ import ApiTable from "~/components/api-table/api-table.vue";
 
 const attributesData: IAttributesTableData[] = [
   {
+    name: "src",
+    type: "String | Array&lt;String&gt;",
+    default: "-",
+    required: true,
+  },
+  {
     name: "model-value",
     type: "Boolean",
     default: "false",
@@ -21,12 +27,6 @@ const attributesData: IAttributesTableData[] = [
     name: "initial-index",
     type: "Number",
     default: "0",
-  },
-  {
-    name: "src",
-    type: "string | string[]",
-    default: "-",
-    required: true,
   },
   {
     name: "scale-step",

@@ -6,7 +6,7 @@ import { NmorphComponentHeight, NmorphDivider } from "@nmorph/nmorph-ui-kit";
 const attributesData: IAttributesTableData[] = [
   {
     name: "value",
-    type: "Record<string, { value: string | string[] | number; rules: NmorphRulesType }>",
+    type: "Record<String, { value: String | String[] | Number; rules: NmorphRulesType }>",
     default: "-",
     required: true,
   },
@@ -21,7 +21,7 @@ const slotData: ISlotsTableData[] = [{ name: "default" }];
 const events = [
   {
     name: "form-validator",
-    type: "{ fields: Record<string, { touched: Ref<boolean, boolean>; valid: ComputedRef<boolean>; errors: Ref<string[], string[]>; validate: () => any;}>; }",
+    type: "{ fields: Record&lt;String, { touched: Ref&lt;boolean, boolean&gt;; valid: ComputedRef&lt;boolean&gt;; errors: Ref&lt;String[], String[]&gt;; validate: () =&gt; any;}&gt; }",
   },
 ];
 

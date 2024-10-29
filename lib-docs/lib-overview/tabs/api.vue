@@ -26,21 +26,21 @@ const tabsAttributesData: IAttributesTableData[] = [
 ];
 const tabsSlotData: ISlotsTableData[] = [{ name: "default" }];
 const tabsEvents = [
-  { name: "update:model-value", type: "(value: String | Number) => void" },
+  { name: "update:model-value", type: "String | Number" },
   { name: "tab-change", type: "String | Number" },
 ];
 
 const tabAttributesData: IAttributesTableData[] = [
   {
-    name: "label",
-    type: "String",
-    default: "-",
-  },
-  {
     name: "name",
     type: "String",
     default: "-",
     required: true,
+  },
+  {
+    name: "label",
+    type: "String",
+    default: "-",
   },
   {
     name: "disabled",

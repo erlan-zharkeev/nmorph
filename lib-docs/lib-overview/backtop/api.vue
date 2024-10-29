@@ -30,7 +30,7 @@ const attributesData: IAttributesTableData[] = [
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "default" }];
-const events = [{ name: "click", type: "() => void" }];
+const events = [{ name: "click", type: "void" }];
 const variables: IVariablesTableData[] = [];
 </script>
 

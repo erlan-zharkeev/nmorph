@@ -13,7 +13,7 @@ const attributesData: IAttributesTableData[] = [
     type: `Array<{ data: ${docsLink(
       "File",
       "https://developer.mozilla.org/ru/docs/Web/API/File"
-    )}, previewUrl: string }>`,
+    )}, previewUrl: String }>`,
     default: "",
   },
   {
@@ -61,7 +61,7 @@ const events = [
     type: `Array<{ data: ${docsLink(
       "File",
       "https://developer.mozilla.org/ru/docs/Web/API/File"
-    )}, previewUrl: string }>`,
+    )}, previewUrl: String }>`,
   },
 ];
 </script>
@@ -69,7 +69,7 @@ const events = [
 <template>
   <div class="docs-api-table">
     <api-table
-      title="file-upload"
+      title="NmorphFileUpload"
       name="file-upload"
       :attributes="attributesData"
       :slots="slotData"

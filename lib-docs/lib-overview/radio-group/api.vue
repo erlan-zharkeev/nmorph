@@ -9,6 +9,12 @@ import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
+    name: "model-value",
+    type: "String",
+    default: "-",
+    required: true,
+  },
+  {
     name: "height",
     type: enumToString(NmorphComponentHeight),
     default: "default",
@@ -22,12 +28,6 @@ const attributesData: IAttributesTableData[] = [
     name: "disabled",
     type: "Boolean",
     default: "false",
-  },
-  {
-    name: "model-value",
-    type: "String",
-    default: "-",
-    required: true,
   },
   {
     name: "options",

@@ -2,9 +2,9 @@
 import { NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
-
-const templateData = "";
-
+const templateData = `
+<NmorphTextInput placeholder="I'm disabled" disabled />
+`;
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
@@ -20,7 +20,7 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="text-input-disabled-overview">
           <ClientOnly>
-            <NmorphTextInput />
+            <NmorphTextInput placeholder="I'm disabled" disabled />
           </ClientOnly>
         </div>
       </template>

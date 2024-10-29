@@ -47,9 +47,7 @@ const attributesData: IAttributesTableData[] = [
 
 const slotData: ISlotsTableData[] = [];
 const variables: IVariablesTableData[] = [];
-const events = [
-  { name: "update:model-value", type: "(value: Number) => void" },
-];
+const events = [{ name: "update:model-value", type: "Number" }];
 </script>
 
 <template>

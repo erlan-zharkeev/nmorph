@@ -14,11 +14,6 @@ const attributesData: IAttributesTableData[] = [
     default: "default",
   },
   {
-    name: "fill",
-    type: "Boolean",
-    default: "true",
-  },
-  {
     name: "disabled",
     type: "Boolean",
     default: "false",
@@ -53,7 +48,7 @@ const attributesData: IAttributesTableData[] = [
 const slotData: ISlotsTableData[] = [{ name: "prepend-icon" }];
 const variables: IVariablesTableData[] = [{ name: "prepend-icon-indent" }];
 const events = [
-  { name: "update:model-value", type: "string" },
+  { name: "update:model-value", type: "String" },
   { name: "focus", type: "void" },
   { name: "blur", type: "void" },
   { name: "on-enter", type: "void" },

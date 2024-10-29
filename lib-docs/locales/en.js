@@ -741,14 +741,8 @@ export default {
       "height": {
         "subtitle": "Sets the height of the input field."
       },
-      "fill": {
-        "subtitle": "If true, the input field will fill the available width of its container."
-      },
       "disabled": {
         "subtitle": "Disables the input field if set to true."
-      },
-      "placeholder": {
-        "subtitle": "Specifies the placeholder text that appears when the input field is empty."
       },
       "type-password": {
         "subtitle": "If set to true, the input field will mask the text as a password."
@@ -761,7 +755,6 @@ export default {
       },
       "api": {
         "height": "Defines the height of the text input.",
-        "fill": "Boolean that determines whether the input should fill its container.",
         "disabled": "Boolean that disables the text input.",
         "placeholder": "The text that appears as a hint when the input is empty.",
         "type-password": "Boolean that turns the input into a password field.",
@@ -778,7 +771,7 @@ export default {
         "update:model-value": "Emitted when the value of the input field changes.",
         "focus": "Emitted when the input field gains focus.",
         "blur": "Emitted when the input field loses focus.",
-        "on-enter": "Emitted when the Enter key is pressed."
+        "on-enter": "Emitted when the enter key is pressed."
       },
       "exposes": {
         "inputDOMRef": "Original input DOM element"
@@ -837,7 +830,8 @@ export default {
         "subtitle": "Disables the checkbox if set to true."
       },
       "model-value": {
-        "subtitle": "Represents the checked state of the checkbox."
+        "subtitle": "Represents the checked state of the checkbox.",
+        "label": "Label"
       },
       "label": {
         "subtitle": "Specifies the label text for the checkbox."
@@ -1025,6 +1019,9 @@ export default {
       },
       "slot": {},
       "variables": {},
+      "exposes": {
+        "inputDOMRef": "Original input dom element"
+      },
       "events": {
         "update:model-value": "Emitted when the value of the number input changes."
       }
@@ -1271,11 +1268,12 @@ export default {
       "api": {
         "id": "Specifies the unique identifier for the form item.",
         "height": "Sets the height of the form item container.",
+        "label": "Defines the label text associated with the form item, providing context to the user.",
         "show-validation-icon": "Boolean that controls whether a validation icon is displayed for this form item.",
         "static-error-box-space": "Defines a static space for displaying an error box, ensuring consistent spacing regardless of validation state.",
         "validate": "Defines the validation rules for the form item."
       },
-      "slots": {
+      "slot": {
         "default": "Slot to customize the content of the form item, typically input elements or other form controls."
       }
     }

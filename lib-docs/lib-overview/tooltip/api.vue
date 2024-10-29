@@ -24,7 +24,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "force-coordinate",
-    type: "{ x: string, y: string } | null",
+    type: "{ x: String, y: String } | null",
     default: "null",
   },
 ];

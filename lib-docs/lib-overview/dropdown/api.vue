@@ -43,7 +43,7 @@ const attributesData: IAttributesTableData[] = [
 
 const slotData: ISlotsTableData[] = [{ name: "default" }];
 const variables: IVariablesTableData[] = [];
-const eventsData = [{ name: "on-outside-click", type: "() => void" }];
+const eventsData = [{ name: "on-outside-click", type: "void" }];
 </script>
 
 <template>

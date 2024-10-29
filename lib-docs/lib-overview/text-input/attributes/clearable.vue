@@ -1,13 +1,22 @@
 <script setup lang="ts">
 import { NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 
-const scriptData = "";
+const scriptData = `
+<script lang="ts">
+  const text = ref("Initial text");
+<\/script>
+`;
 
-const templateData = "";
+const templateData = `
+<template>
+  <NmorphTextInput clearable v-model="text" />
+</template>
+`;
 
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
+const text = ref("Initial text");
 </script>
 
 <template>
@@ -20,7 +29,7 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="text-input-clearable-overview">
           <ClientOnly>
-            <NmorphTextInput />
+            <NmorphTextInput clearable v-model="text" />
           </ClientOnly>
         </div>
       </template>

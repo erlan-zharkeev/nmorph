@@ -19,7 +19,7 @@ const attributesData = [
   },
   {
     name: "model-value",
-    type: "{ x: number, y: number }",
+    type: "{ x: Number, y: Number }",
     default: "{ x: 0, y: 0 }",
   },
   {
@@ -93,18 +93,18 @@ const exposes = [
   },
   {
     name: "moveTo",
-    type: "{ x: number, y: number }",
+    type: "({ x: Number, y: Number }) => void",
   },
 ];
 
 const events = [
   {
     name: "update:model-value",
-    type: "{ x: number, y: number }",
+    type: "{ x: Number, y: Number }",
   },
   {
     name: "on-scroll-end",
-    type: "-",
+    type: "void",
   },
   {
     name: "on-scroll",

@@ -9,7 +9,7 @@ import ApiTable from "~/components/api-table/api-table.vue";
 const attributesData: IAttributesTableData[] = [
   {
     name: "show",
-    type: "boolean",
+    type: "Boolean",
     default: "-",
     required: true,
   },
@@ -22,7 +22,7 @@ const attributesData: IAttributesTableData[] = [
 
 const slotData: ISlotsTableData[] = [{ name: "default" }];
 const variables: IVariablesTableData[] = [];
-const events = [{ name: "on-outside-click", type: "() => void" }];
+const events = [{ name: "on-outside-click", type: "void" }];
 </script>
 
 <template>

@@ -8,6 +8,12 @@ import ApiTable from "~/components/api-table/api-table.vue";
 
 const attributesData: IAttributesTableData[] = [
   {
+    name: "percentage",
+    type: "Number",
+    default: "-",
+    required: true,
+  },
+  {
     name: "type",
     type: "linear | circle",
     default: "linear",
@@ -16,12 +22,6 @@ const attributesData: IAttributesTableData[] = [
     name: "color",
     type: "String",
     default: "var(--nmorph-info-color)",
-  },
-  {
-    name: "percentage",
-    type: "Number",
-    default: "-",
-    required: true,
   },
   {
     name: "value-inside",

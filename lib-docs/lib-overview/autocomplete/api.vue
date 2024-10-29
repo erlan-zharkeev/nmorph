@@ -40,7 +40,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "list",
-    type: "Array<{ value: string; [key: string]: unknown }>",
+    type: "Array<{ value: String; [key: String]: unknown }>",
     default: "[]",
   },
   {
@@ -61,7 +61,7 @@ const events = [
 <template>
   <div class="docs-api-table">
     <api-table
-      title="autocomplete"
+      title="NmorphAutocomplete"
       name="autocomplete"
       :attributes="attributesData"
       :slots="slotData"

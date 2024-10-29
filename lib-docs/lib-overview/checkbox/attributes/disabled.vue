@@ -1,15 +1,17 @@
-
 <script setup lang="ts">
 import { NmorphCheckbox } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
-const templateData = "";
+const templateData = `
+<template>
+  <NmorphCheckbox disabled :model-value="true"/>
+</template>
+`;
 
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
-
 </script>
 
 <template>
@@ -22,13 +24,17 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="checkbox-disabled-overview">
           <ClientOnly>
-            <NmorphCheckbox />
+            <NmorphCheckbox disabled :model-value="true" id="3" />
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-example v-if="templateData" lang="html">{{ templateData }}</code-example>
-        <code-example v-if="scriptData" lang="javascript">{{ scriptData }}</code-example>
+        <code-example v-if="templateData" lang="html">{{
+          templateData
+        }}</code-example>
+        <code-example v-if="scriptData" lang="javascript">{{
+          scriptData
+        }}</code-example>
         <code-example v-if="cssData" lang="css">{{ cssData }}</code-example>
       </template>
     </attribute>
@@ -36,5 +42,6 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.checkbox-disabled-overview {}
+.checkbox-disabled-overview {
+}
 </style>

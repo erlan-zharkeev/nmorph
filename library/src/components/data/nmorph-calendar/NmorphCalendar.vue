@@ -14,11 +14,11 @@ import {
   NmorphCalendarRangeType,
   NmorphDateType,
   NmorphSelectedDateModelType,
-  NmorphSelectionDateType,
   NmorphTableDataType,
   resetTimeToZero,
 } from '@/components';
 import { useCalendarTexts } from './hooks';
+import { NmorphSelectionDateType } from '@/types';
 interface INmorphProps {
   markToday?: boolean;
   initialDate?: Date;

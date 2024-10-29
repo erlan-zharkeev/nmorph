@@ -2,9 +2,13 @@
 import { NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
-
-const templateData = "";
-
+const templateData = `
+<template>
+  <NmorphTextInput height="thick" placeholder="Enter text" />
+  <NmorphTextInput height="default" placeholder="Enter text" />
+  <NmorphTextInput height="thin" placeholder="Enter text" />
+</template>
+`;
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
@@ -20,7 +24,9 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="text-input-height-overview">
           <ClientOnly>
-            <NmorphTextInput />
+            <NmorphTextInput height="thick" placeholder="Enter text" />
+            <NmorphTextInput height="default" placeholder="Enter text" />
+            <NmorphTextInput height="thin" placeholder="Enter text" />
           </ClientOnly>
         </div>
       </template>
@@ -39,5 +45,10 @@ const code = [scriptData, templateData, cssData];
 
 <style lang="scss">
 .text-input-height-overview {
+  display: flex;
+  align-items: center;
+  .nmorph-text-input {
+    margin-right: 8px;
+  }
 }
 </style>

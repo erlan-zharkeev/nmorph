@@ -51,7 +51,7 @@ const exposes = [
 <template>
   <div class="docs-api-table">
     <api-table
-      title="checkbox"
+      title="NmorphCheckbox"
       name="checkbox"
       :attributes="attributesData"
       :slots="slotData"

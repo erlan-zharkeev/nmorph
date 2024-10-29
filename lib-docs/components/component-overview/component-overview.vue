@@ -26,12 +26,12 @@ import dropdown from "~/lib-overview/dropdown";
 import backtop from "~/lib-overview/backtop";
 import breadcrumb from "~/lib-overview/breadcrumb";
 import textInput from "~/lib-overview/text-input";
+import numberInput from "~/lib-overview/number-input";
 import switchInput from "~/lib-overview/switch";
 import checkbox from "~/lib-overview/checkbox";
 import checkboxGroup from "~/lib-overview/checkbox-group";
 import autocomplete from "~/lib-overview/autocomplete";
 import fileUpload from "~/lib-overview/file-upload";
-import numberInput from "~/lib-overview/number-input";
 import select from "~/lib-overview/select";
 import slider from "~/lib-overview/slider";
 import timePicker from "~/lib-overview/time-picker";
@@ -71,12 +71,12 @@ const componentsMap: Record<string, unknown[]> = {
   backtop,
   breadcrumb,
   "text-input": textInput,
+  "number-input": numberInput,
   switch: switchInput,
   checkbox,
   "checkbox-group": checkboxGroup,
   autocomplete,
   "file-upload": fileUpload,
-  "number-input": numberInput,
   select,
   slider,
   "time-picker": timePicker,

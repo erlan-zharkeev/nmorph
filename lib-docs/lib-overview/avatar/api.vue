@@ -9,6 +9,12 @@ import { AvatarShapeType } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
+    name: "src",
+    type: "String",
+    default: "-",
+    required: true,
+  },
+  {
     name: "size",
     type: "Number",
     default: "40",
@@ -17,12 +23,6 @@ const attributesData: IAttributesTableData[] = [
     name: "shape",
     type: enumToString(AvatarShapeType),
     default: "circle",
-  },
-  {
-    name: "src",
-    type: "String",
-    default: "-",
-    required: true,
   },
   {
     name: "frame-border",

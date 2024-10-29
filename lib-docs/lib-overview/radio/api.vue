@@ -9,6 +9,12 @@ import { NmorphRadioStyleType } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
+    name: "value",
+    type: "String",
+    default: "-",
+    required: true,
+  },
+  {
     name: "disabled",
     type: "Boolean",
     default: "false",
@@ -17,12 +23,6 @@ const attributesData: IAttributesTableData[] = [
     name: "label",
     type: "String",
     default: "-",
-  },
-  {
-    name: "value",
-    type: "String",
-    default: "-",
-    required: true,
   },
   {
     name: "style-type",

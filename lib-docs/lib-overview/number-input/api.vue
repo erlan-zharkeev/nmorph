@@ -67,7 +67,7 @@ const exposes = [
 <template>
   <div class="docs-api-table">
     <api-table
-      title="number-input"
+      title="NmorphNumberInput"
       name="number-input"
       :attributes="attributesData"
       :slots="slotData"

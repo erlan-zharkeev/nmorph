@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { NmorphTextInput } from "@nmorph/nmorph-ui-kit";
+import { NmorphButton, NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
-
 const templateData = "";
-
 const cssData = "";
-
 const code = [scriptData, templateData, cssData];
+
+const typePassword = ref(true);
 </script>
 
 <template>
@@ -20,7 +19,12 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="text-input-type-password-overview">
           <ClientOnly>
-            <NmorphTextInput />
+            <NmorphButton
+              :text="typePassword ? 'Common type' : 'Password type'"
+              @click="typePassword = !typePassword"
+              class="type-input-button"
+            />
+            <NmorphTextInput :type-password="typePassword" />
           </ClientOnly>
         </div>
       </template>
@@ -39,5 +43,8 @@ const code = [scriptData, templateData, cssData];
 
 <style lang="scss">
 .text-input-type-password-overview {
+  .type-input-button {
+    margin-bottom: 8px;
+  }
 }
 </style>

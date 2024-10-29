@@ -4,7 +4,7 @@ import { useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import { NmorphIcon } from '@/components';
 
-interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
+interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill' | 'height'> {
   modelValue?: boolean | string | number;
   loading?: boolean;
   activeValue?: boolean | string | number;
@@ -15,7 +15,6 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: false,
   loading: false,
   disabled: false,
-  height: 'default',
   activeValue: true,
   inactiveValue: false,
 });

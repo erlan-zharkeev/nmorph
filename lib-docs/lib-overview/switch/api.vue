@@ -5,14 +5,8 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/api-table.vue";
-import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
-  {
-    name: "height",
-    type: enumToString(NmorphComponentHeight),
-    default: "default",
-  },
   {
     name: "disabled",
     type: "Boolean",
@@ -67,7 +61,7 @@ const exposes = [
 <template>
   <div class="docs-api-table">
     <api-table
-      title="switch"
+      title="NmorphSwitch"
       name="switch"
       :attributes="attributesData"
       :slots="slotData"

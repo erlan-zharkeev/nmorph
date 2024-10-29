@@ -6,7 +6,7 @@ import { NmorphSortOrder, NmorphDivider } from "@nmorph/nmorph-ui-kit";
 const tableAttributesData: IAttributesTableData[] = [
   {
     name: "data",
-    type: "Record&lt;string, unknown&gt;[]",
+    type: "Record&lt;String, unknown&gt;[]",
     default: "[]",
   },
   {
@@ -21,7 +21,7 @@ const tableAttributesData: IAttributesTableData[] = [
   },
   {
     name: "sort",
-    type: `Record&lt;string, ${enumToString(NmorphSortOrder)}&gt;`,
+    type: `Record&lt;String, ${enumToString(NmorphSortOrder)}&gt;`,
     default: "-",
   },
   {
