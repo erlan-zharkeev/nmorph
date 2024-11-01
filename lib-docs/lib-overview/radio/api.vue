@@ -29,6 +29,11 @@ const attributesData: IAttributesTableData[] = [
     type: enumToString(NmorphRadioStyleType),
     default: "button",
   },
+  {
+    name: "checked",
+    type: "Boolean",
+    default: "false",
+  },
 ];
 const slotData: ISlotsTableData[] = [{ name: "label" }];
 const variables: IVariablesTableData[] = [{ name: "size" }];

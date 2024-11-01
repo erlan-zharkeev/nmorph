@@ -1,26 +1,31 @@
 <script setup lang="ts">
-import { NmorphRadioGroup } from "@nmorph/nmorph-ui-kit";
+import { NmorphNumberInput } from "@nmorph/nmorph-ui-kit";
 
-const scriptData = "";
+const scriptData = `
+<script lang="ts" setup>
+  const value = ref(3);
+<\/script>
+`;
 
-const templateData = "";
+const templateData = `
+<template>
+  <NmorphNumberInput v-model="value" :max="5" :min="1" :step="1" />
+</template>
+`;
 
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
+const value = ref(3);
 </script>
 
 <template>
-  <div id="content-height">
-    <attribute
-      header="Height"
-      :subtitle="$t('overview.radio-group.height.subtitle')"
-      :codeToCopy="code"
-    >
+  <div id="content-basic-usage">
+    <attribute :header="$t('overview.basic-usage')" :codeToCopy="code">
       <template #overview>
-        <div class="radio-group-height-overview">
+        <div class="number-input-basic-usage-overview">
           <ClientOnly>
-            <NmorphRadioGroup />
+            <NmorphNumberInput v-model="value" :max="5" :min="1" :step="1" />
           </ClientOnly>
         </div>
       </template>
@@ -38,6 +43,7 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.radio-group-height-overview {
+.number-input-basic-usage-overview {
+  width: 200px;
 }
 </style>

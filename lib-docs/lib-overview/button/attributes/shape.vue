@@ -4,10 +4,13 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 const scriptData = ``;
 
 const templateData = `
-<NmorphButton>Default</NmorphButton>
-<NmorphButton shape="circle" class="custom-circle-button">Circle</NmorphButton>
-<NmorphButton shape="round">Round</NmorphButton>
-<NmorphButton shape="square" class="custom-square-button">Square</NmorphButton>`;
+<template>
+  <NmorphButton>Default</NmorphButton>
+  <NmorphButton shape="circle" class="custom-circle-button">Circle</NmorphButton>
+  <NmorphButton shape="round">Round</NmorphButton>
+  <NmorphButton shape="square" class="custom-square-button">Square</NmorphButton>
+</template>
+`;
 
 const cssData = ``;
 const code = [scriptData, templateData, cssData];

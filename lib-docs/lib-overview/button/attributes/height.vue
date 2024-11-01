@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 const scriptData = ``;
+
 const templateData = `
-<NmorphButton height="thick">Thick</NmorphButton>
-<NmorphButton height="default">Default</NmorphButton>
-<NmorphButton height="thin">Thin</NmorphButton>
+<template>
+  <NmorphButton height="thick">Thick</NmorphButton>
+  <NmorphButton height="default">Default</NmorphButton>
+  <NmorphButton height="thin">Thin</NmorphButton>
+</template>
 `;
 const cssData = ``;
 const code = [scriptData, templateData, cssData];

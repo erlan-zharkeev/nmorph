@@ -4,10 +4,12 @@ import Attribute from "~/components/attribute/attribute.vue";
 
 const scriptData = ``;
 const templateData = `
-<NmorphLink type="accent">Accent</NmorphLink>
-<NmorphLink type="success">Success</NmorphLink>
-<NmorphLink type="warning">Warning</NmorphLink>
-<NmorphLink type="error">Error</NmorphLink>
+<template>
+  <NmorphLink type="accent">Accent</NmorphLink>
+  <NmorphLink type="success">Success</NmorphLink>
+  <NmorphLink type="warning">Warning</NmorphLink>
+  <NmorphLink type="error">Error</NmorphLink>
+</template>
 `;
 const cssData = `
 <style lang="scss">

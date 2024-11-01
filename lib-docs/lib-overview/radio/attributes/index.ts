@@ -1,6 +1,3 @@
-import Disabled from "./disabled.vue";
-import Label from "./label.vue";
-import Value from "./value.vue";
-import StyelType from "./style-type.vue";
+import BasicUsage from "./basic-usage.vue";
 
-export const Attributes = [Disabled, Label, Value, StyelType];
+export const Attributes = [BasicUsage];

@@ -1,15 +1,45 @@
-
 <script setup lang="ts">
 import { NmorphSelect } from "@nmorph/nmorph-ui-kit";
+const { t } = useI18n();
 
-const scriptData = "";
-
-const templateData = "";
+const scriptData = `
+<script lang="ts" setup>
+  const value = ref("one");
+  const options = ref([
+    { label: "One", value: "one" },
+    { label: "Two", value: "two" },
+    { label: "Three", value: "three" },
+  ]);
+  const multipleValue = ["one", "two"];
+<\/script>
+`;
+const templateData = `
+<template>
+  <div class="select-element">
+    <NmorphSelect v-model="value" :options="options" />
+  </div>
+  <div class="select-element">
+    <NmorphSelect
+      v-model="multipleValue"
+      :options="options"
+      :no-element-placeholder="
+        Choose values
+      "
+    />
+  </div>
+</template>
+`;
 
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
-
+const value = ref("one");
+const options = ref([
+  { value: "one", label: t("overview.one") },
+  { value: "two", label: t("overview.two") },
+  { value: "three", label: t("overview.three") },
+]);
+const multipleValue = ["one", "two"];
 </script>
 
 <template>
@@ -22,13 +52,28 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="select-model-value-overview">
           <ClientOnly>
-            <NmorphSelect />
+            <div class="select-element">
+              <NmorphSelect v-model="value" :options="options" />
+            </div>
+            <div class="select-element">
+              <NmorphSelect
+                v-model="multipleValue"
+                :options="options"
+                :no-element-placeholder="
+                  $t('overview.select.model-value.multiple')
+                "
+              />
+            </div>
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-example v-if="templateData" lang="html">{{ templateData }}</code-example>
-        <code-example v-if="scriptData" lang="javascript">{{ scriptData }}</code-example>
+        <code-example v-if="templateData" lang="html">{{
+          templateData
+        }}</code-example>
+        <code-example v-if="scriptData" lang="javascript">{{
+          scriptData
+        }}</code-example>
         <code-example v-if="cssData" lang="css">{{ cssData }}</code-example>
       </template>
     </attribute>
@@ -36,5 +81,10 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.select-model-value-overview {}
+.select-model-value-overview {
+  display: flex;
+  .nmorph-select {
+    margin-right: 8px;
+  }
+}
 </style>

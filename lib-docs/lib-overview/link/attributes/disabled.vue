@@ -4,11 +4,13 @@ import Attribute from "~/components/attribute/attribute.vue";
 
 const scriptData = ``;
 const templateData = `
-<NmorphLink disabled type="accent">Accent</NmorphLink>
-<NmorphLink disabled type="success">Success</NmorphLink>
-<NmorphLink disabled type="warning">Warning</NmorphLink>
-<NmorphLink disabled type="error">Error</NmorphLink>
-<NmorphLink disabled underline>Underlined</NmorphLink>
+<template>
+  <NmorphLink disabled type="accent">Accent</NmorphLink>
+  <NmorphLink disabled type="success">Success</NmorphLink>
+  <NmorphLink disabled type="warning">Warning</NmorphLink>
+  <NmorphLink disabled type="error">Error</NmorphLink>
+  <NmorphLink disabled underline>Underlined</NmorphLink>
+</template>
 `;
 const cssData = `
 <style lang="scss">

@@ -2,13 +2,15 @@
 import { NmorphIcon } from "@nmorph/nmorph-ui-kit";
 const scriptData = ``;
 const templateData = `
-<NmorphIcon
+<template>
+  <NmorphIcon
   name="add-location"
   color="var(--nmorph-accent-color)"
   size="large"
-/>
-<NmorphIcon name="avatar" color="#694295" size="large" />
-<NmorphIcon name="archive" color="hsl(148, 60%, 39%)" size="large" />
+  />
+  <NmorphIcon name="avatar" color="#694295" size="large" />
+  <NmorphIcon name="archive" color="hsl(148, 60%, 39%)" size="large" />
+</template>
 `;
 const cssData = ``;
 const code = [scriptData, templateData, cssData];

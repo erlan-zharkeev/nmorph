@@ -1,35 +1,31 @@
 <template>
   <div class="wrapper">
-    <NmorphCheckboxGroup
-      v-model="value"
-      :options="options"
-      direction="column"
-    />
-    <NmorphCheckboxGroup
-      v-model="value"
-      :options="options"
-      direction="row"
-      design="button"
-    />
+    <NmorphRadio value="3" />
+    <NmorphRadio label="first" value="1" />
+    <NmorphRadio label="second" style-type="radio-style" value="2" checked />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import NmorphCheckboxGroup from "../../../library/src/components/form/nmorph-checkbox-group/NmorphCheckboxGroup.vue";
 
 const options = [
-  { id: "1", disabled: true, label: "1" },
-  { id: "2", label: "2" },
-  { id: "3", label: "3" },
+  { value: "one", label: "One" },
+  { value: "two", label: "Two", disabled: true },
+  { value: "three", label: "Three" },
 ];
 
-const value = ref(["2"]);
+const value = ref("three");
 </script>
 
 <style scoped>
 .wrapper {
-  width: 50%;
+  width: 700px;
+  display: flex;
+  margin-top: 50px;
+}
+.nmorph-slider {
+  --value-fixed-container-width: 300px;
 }
 .nmorph-tab-content {
   padding: 16px;

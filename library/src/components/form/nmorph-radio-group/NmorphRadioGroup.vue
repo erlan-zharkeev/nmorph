@@ -10,9 +10,11 @@ import {
 import { useModifiers } from '@/utils';
 import { ref, computed, provide, watch } from 'vue';
 
+type NmorphListRadioOptionElementType = Omit<INmorphRadioOption, 'checked'>;
+
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue: string;
-  options?: INmorphRadioOption[];
+  options?: NmorphListRadioOptionElementType[];
   styleType?: keyof typeof NmorphRadioStyleType;
   direction?: keyof typeof NmorphComponentDirection;
 }
@@ -45,9 +47,7 @@ const changeHandler = (value: string) => {
   emit('update:model-value', initialValue.value);
 };
 
-const modifiers = computed(() =>
-  useModifiers({ 'nmorph-radio-group': [props.styleType, props.direction, `${props.fill && 'fill'}`] })
-);
+const modifiers = computed(() => useModifiers({ 'nmorph-radio-group': [props.styleType, props.direction] }));
 
 provide<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value', initialValue);
 provide<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-button-value-handler', changeHandler);
@@ -92,13 +92,10 @@ provide<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-but
   }
 }
 
-.nmorph-radio-group--fill {
-  width: 100%;
-}
-
 .nmorph-radio-group--column {
   .nmorph-radio-group__content {
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .nmorph-radio:not(:last-child) {

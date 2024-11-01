@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { NmorphIcon } from "@nmorph/nmorph-ui-kit";
 const scriptData = ``;
+
 const templateData = `
-<NmorphIcon name="loader" width="8%" height="8%" />
-<NmorphIcon name="loader" width="23px" height="23px" />
-<NmorphIcon name="loader" width="12px" height="12px" />
+<template>
+  <NmorphIcon name="loader" width="33px" height="33px" />
+  <NmorphIcon name="loader" width="23px" height="23px" />
+  <NmorphIcon name="loader" width="12px" height="12px" />
+</template>
 `;
 const cssData = ``;
 const code = [scriptData, templateData, cssData];
@@ -20,7 +23,7 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="icon-width-height-overview">
           <ClientOnly>
-            <NmorphIcon name="loader" width="8%" height="8%" />
+            <NmorphIcon name="loader" width="33px" height="33px" />
             <NmorphIcon name="loader" width="23px" height="23px" />
             <NmorphIcon name="loader" width="12px" height="12px" />
           </ClientOnly>

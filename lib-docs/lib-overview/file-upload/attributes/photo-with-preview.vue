@@ -3,8 +3,11 @@ import { NmorphFileUpload } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
-const templateData = "";
-
+const templateData = `
+<template>
+  <NmorphFileUpload photo-with-preview />
+</template>
+`;
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
@@ -20,7 +23,7 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="file-upload-photo-with-preview-overview">
           <ClientOnly>
-            <NmorphFile-upload />
+            <NmorphFileUpload photo-with-preview />
           </ClientOnly>
         </div>
       </template>
@@ -39,5 +42,6 @@ const code = [scriptData, templateData, cssData];
 
 <style lang="scss">
 .file-upload-photo-with-preview-overview {
+  width: 300px;
 }
 </style>

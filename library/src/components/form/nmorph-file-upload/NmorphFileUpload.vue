@@ -20,7 +20,6 @@ interface INmorphProps {
   multiple?: boolean;
   allowedTypes?: NmorphResolutionType[];
   photoWithPreview?: boolean;
-  fill?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -29,7 +28,6 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   multiple: false,
   allowedTypes: () => ['jpg', 'jpeg', 'png'],
   photoWithPreview: true,
-  fill: true,
 });
 
 const getPlainType = (resolution: string) => resolution.split('/')[1];
@@ -97,7 +95,6 @@ const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [`${props.fill && 'fill'}`],
     'nmorph-file-upload': [`${props.disabled && 'disabled'}`],
   })
 );
@@ -114,7 +111,7 @@ const modifiers = computed(() =>
         @change="handleFileUpload"
       />
       <slot name="trigger">
-        <NmorphButton text="Select file" fill @click="openFileSelector" />
+        <NmorphButton text="Select file" fill @click="openFileSelector" :disabled="props.disabled" />
       </slot>
     </div>
     <div class="nmorph-file-upload__list">

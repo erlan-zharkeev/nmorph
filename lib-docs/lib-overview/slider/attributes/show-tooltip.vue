@@ -1,15 +1,14 @@
-
 <script setup lang="ts">
 import { NmorphSlider } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
-
-const templateData = "";
-
+const templateData = `
+<template>
+  <NmorphSlider :show-tooltip="false" :model-value="50" />
+</template>
+`;
 const cssData = "";
-
 const code = [scriptData, templateData, cssData];
-
 </script>
 
 <template>
@@ -22,13 +21,17 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="slider-show-tooltip-overview">
           <ClientOnly>
-            <NmorphSlider />
+            <NmorphSlider :show-tooltip="false" :model-value="50" />
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-example v-if="templateData" lang="html">{{ templateData }}</code-example>
-        <code-example v-if="scriptData" lang="javascript">{{ scriptData }}</code-example>
+        <code-example v-if="templateData" lang="html">{{
+          templateData
+        }}</code-example>
+        <code-example v-if="scriptData" lang="javascript">{{
+          scriptData
+        }}</code-example>
         <code-example v-if="cssData" lang="css">{{ cssData }}</code-example>
       </template>
     </attribute>
@@ -36,5 +39,8 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.slider-show-tooltip-overview {}
+.slider-show-tooltip-overview {
+  width: 300px;
+  min-height: 40px;
+}
 </style>

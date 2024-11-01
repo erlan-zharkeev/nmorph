@@ -2,10 +2,13 @@
 import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = ``;
+
 const templateData = `
-<NmorphButton disabled>Disabled</NmorphButton>
-<NmorphButton disabled height="thin">Disabled thin</NmorphButton>
-<NmorphButton disabled loading />
+<template>
+  <NmorphButton disabled>Disabled</NmorphButton>
+  <NmorphButton disabled height="thin">Disabled thin</NmorphButton>
+  <NmorphButton disabled loading />
+</template>
 `;
 const cssData = ``;
 const code = [scriptData, templateData, cssData];

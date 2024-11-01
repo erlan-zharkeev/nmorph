@@ -3,7 +3,11 @@ import { NmorphFileUpload } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
-const templateData = "";
+const templateData = `
+<template>
+  <NmorphFileUpload disabled />
+</template>
+`;
 
 const cssData = "";
 
@@ -20,7 +24,7 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="file-upload-disabled-overview">
           <ClientOnly>
-            <NmorphFile-upload />
+            <NmorphFileUpload disabled />
           </ClientOnly>
         </div>
       </template>

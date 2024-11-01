@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { useModifiers } from '@/utils';
+import { generateUUID, useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide } from 'vue';
 import {
   NmorphTagItem,
@@ -29,8 +29,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   options: () => [],
   optionsMap: () => [],
   modelValue: '',
-  loading: true,
-  fill: false,
+  loading: false,
   height: 'default',
   disabled: false,
   open: false,
@@ -70,11 +69,11 @@ const changeHandler = (value: string) => {
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], `${props.fill && 'fill'}`],
+    nmorph: [NmorphComponentHeight[props.height]],
     'nmorph-select': [
       `${props.disabled && 'disabled'}`,
       `${props.modelValue ? 'on' : 'off'}`,
-      `${props.modelValue && 'loading'}`,
+      `${props.loading && 'loading'}`,
       `${open.value && 'open'}`,
       `${selectedLineOutset.value ? 'selected-line-outset' : 'selected-line-inset'}`,
     ],
@@ -82,12 +81,17 @@ const modifiers = computed(() =>
 );
 
 const clickHandler = () => {
+  if (props.disabled) return;
   open.value = !open.value;
 };
 
-watch(open, (newValue) => {
-  if (newValue) selectedLineOutset.value = false;
-});
+watch(
+  open,
+  (newValue) => {
+    if (newValue) selectedLineOutset.value = false;
+  },
+  { immediate: true }
+);
 
 const closeHandler = () => {
   open.value = false;
@@ -108,7 +112,7 @@ const selectedValueTitle = computed(() => {
     if (initialValue.value === '') return props.noElementPlaceholder;
     return props.options.find((option) => option.value === initialValue.value)?.label;
   }
-  return initialValue.value;
+  return props.options.find((option) => option.value === initialValue.value)?.label;
 });
 
 const optionsMap = computed(() => (props.options.length > 0 ? props.options : props.optionsMap));
@@ -143,7 +147,7 @@ const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
         <div v-if="typeof initialValue === 'string'" class="nmorph-select__selected-value">
           {{ selectedValueTitle }}
         </div>
-        <div v-if="initialValue.length <= 0" class="nmorph-select__selected-value">
+        <div v-else-if="initialValue.length === 0" class="nmorph-select__selected-value">
           {{ props.noElementPlaceholder }}
         </div>
         <div v-else class="nmorph-select__selected-value">
@@ -157,17 +161,24 @@ const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
             @close="changeHandler"
           />
         </div>
-        <NmorphIcon name="chevron-down" class="nmorph-select__chevron" />
+        <NmorphIcon :name="props.loading ? 'loader' : 'chevron-down'" class="nmorph-select__chevron" />
       </div>
     </div>
     <NmorphDropdown
-      v-if="nmorphSelectDOMRef"
+      v-if="nmorphSelectDOMRef && !props.disabled"
       :open="open"
       :relative-element="nmorphSelectDOMRef"
       @on-outside-click="closeHandler"
     >
       <div ref="optionsDOMRef" class="nmorph-select__options">
-        <NmorphSelectOption v-for="option in options" :key="option.value" v-bind="option" :height="props.height" />
+        <NmorphIcon v-if="props.loading" name="loader" class="nmorph-select__chevron" size="medium" />
+        <NmorphSelectOption
+          v-else
+          v-for="option in options"
+          :key="option.value"
+          v-bind="option"
+          :height="props.height"
+        />
         <slot />
       </div>
     </NmorphDropdown>
@@ -185,7 +196,6 @@ const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
   .nmorph-select__content {
     position: relative;
     height: 100%;
-
     @include nmorph-outset;
   }
 
@@ -201,6 +211,18 @@ const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
   .nmorph-select__selected-value {
     @include ellipsis;
   }
+}
+
+.nmorph-select--loading {
+  .nmorph-select__options {
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+  }
+}
+
+.nmorph-select--disabled {
+  @include disabled;
 }
 
 .nmorph-select--open {

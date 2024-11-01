@@ -47,6 +47,8 @@ const handleMouseLeave = () => {
 };
 
 const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
+const tooltipBody = ref<NmorphDomElementType>(null);
+defineExpose({ tooltipBody });
 </script>
 
 <template>
@@ -65,6 +67,7 @@ const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
           v-if="showTooltip && props.text"
           class="nmorph-tooltip__info-content"
           :style="{ left: forceCoordinate?.x, bottom: forceCoordinate?.y }"
+          ref="tooltipBody"
         >
           <div class="nmorph-tooltip__shadow-content">
             <div v-if="!props.forceCoordinate" class="nmorph-tooltip__triangle" />

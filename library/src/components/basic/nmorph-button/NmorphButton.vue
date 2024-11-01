@@ -13,6 +13,7 @@ interface INmorphProps extends INmorphCommonInputProps {
   accentBgOnHover?: boolean;
   shape?: keyof typeof NmorphButtonShape;
   icon?: keyof typeof NmorphIconList;
+  fill?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {

@@ -35,6 +35,15 @@ const variables: IVariablesTableData[] = [
   { name: "width" },
   { name: "height" },
 ];
+const exposes = [
+  {
+    name: "tooltipBody",
+    type: `${docsLink(
+      "HTMLElement",
+      "https://developer.mozilla.org/ru/docs/Web/API/HTMLElement"
+    )} | null`,
+  },
+];
 </script>
 
 <template>
@@ -45,6 +54,7 @@ const variables: IVariablesTableData[] = [
       :attributes="attributesData"
       :slots="slotData"
       :variables="variables"
+      :exposes="exposes"
     />
   </div>
 </template>

@@ -4,8 +4,10 @@ import Attribute from "~/components/attribute/attribute.vue";
 
 const scriptData = ``;
 const templateData = `
-<NmorphButton style-type="default">Default</NmorphButton>
-<NmorphButton style-type="transparent">Transparent</NmorphButton>
+<template>
+  <NmorphButton style-type="default">Default</NmorphButton>
+  <NmorphButton style-type="transparent">Transparent</NmorphButton>
+</template>
 `;
 const cssData = ``;
 

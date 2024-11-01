@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
-import { Ref, computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { NmorphButton, NmorphIcon } from '@/components';
 
-interface INmorphProps extends INmorphCommonInputProps {
+interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
   modelValue?: number;
   max?: number;
   min?: number;
@@ -20,12 +20,11 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   step: 1,
   disabled: false,
   actionBtnPositionRight: false,
-  fill: true,
 });
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], `${props.fill && 'fill'}`],
+    nmorph: [NmorphComponentHeight[props.height]],
     'nmorph-number-input': [
       `${props.disabled && 'disabled'}`,
       `${props.actionBtnPositionRight && 'action-btn-position-right'}`,

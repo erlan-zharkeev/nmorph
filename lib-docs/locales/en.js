@@ -21,6 +21,10 @@ export default {
   "other": "Other",
   "overview": {
     "basic-usage": "Basic usage",
+    "one": "One",
+    "two": "Two",
+    "three": "Three",
+    "four": "Four",
     "button": {
       "style-type": {
         "subtitle": "Use *default* or *transparent* to define basic style"
@@ -745,7 +749,8 @@ export default {
         "subtitle": "Disables the input field if set to true."
       },
       "type-password": {
-        "subtitle": "If set to true, the input field will mask the text as a password."
+        "subtitle": "If set to true, the input field will mask the text as a password.",
+        "toggle": "Toggle type"
       },
       "model-value": {
         "subtitle": "Represents the value of the input field, typically used for two-way data binding."
@@ -900,6 +905,9 @@ export default {
       }
     },
     "autocomplete": {
+      "basic-usage": {
+        "placeholder": "Type some..."
+      },
       "height": {
         "subtitle": "Defines the height of the autocomplete input field."
       },
@@ -908,9 +916,6 @@ export default {
       },
       "disabled": {
         "subtitle": "Disables the autocomplete input if set to true."
-      },
-      "model-value": {
-        "subtitle": "Represents the value entered by the user."
       },
       "placeholder": {
         "subtitle": "Text displayed when the input field is empty."
@@ -944,9 +949,7 @@ export default {
       }
     },
     "file-upload": {
-      "model-value": {
-        "subtitle": "Represents the uploaded files."
-      },
+      "model-value": {},
       "disabled": {
         "subtitle": "Disables the file upload component if set to true."
       },
@@ -983,6 +986,9 @@ export default {
       }
     },
     "number-input": {
+      "basic-usage": {
+        "subtitle": "Represents the current numeric value of the input field."
+      },
       "height": {
         "subtitle": "Defines the height of the number input field."
       },
@@ -991,9 +997,6 @@ export default {
       },
       "disabled": {
         "subtitle": "Disables the number input if set to true."
-      },
-      "model-value": {
-        "subtitle": "Represents the current numeric value of the input field."
       },
       "max": {
         "subtitle": "Specifies the maximum value for the input."
@@ -1049,7 +1052,8 @@ export default {
         "subtitle": "Specifies an object to map options with labels and values."
       },
       "model-value": {
-        "subtitle": "Represents the selected value of the select component."
+        "subtitle": "Represents the selected value of the select component.",
+        "multiple": "Multiple values"
       },
       "loading": {
         "subtitle": "Displays a loading indicator if set to true."
@@ -1130,71 +1134,66 @@ export default {
       "slot": {},
       "variables": {
         "slider-height": "Defines the height of the slider.",
-        "value-fixed-container-width": "Sets the width of the container for displaying the value."
+        "value-fixed-container-height": "Sets the height of the container for displaying the value."
       },
       "events": {
         "update:model-value": "Emitted when the slider value changes."
       }
     },
-    "time-picker": {
-      "disabled": {
-        "subtitle": "Disables the time picker if set to true."
-      },
-      "model-value": {
-        "subtitle": "Represents the selected time value."
-      },
-      "open": {
-        "subtitle": "Controls whether the time picker dropdown is open."
-      },
-      "init-without-value": {
-        "subtitle": "If true, the time picker will initialize without a default value."
-      },
-      "disabled-hours": {
-        "subtitle": "Specifies which hours should be disabled for selection."
-      },
-      "disabled-minutes": {
-        "subtitle": "Specifies which minutes should be disabled for selection."
-      },
-      "disabled-seconds": {
-        "subtitle": "Specifies which seconds should be disabled for selection."
-      },
-      "api": {
-        "disabled": "Disables the time picker.",
-        "model-value": "The selected time value.",
-        "open": "Boolean to control visibility of the dropdown.",
-        "init-without-value": "Initializes the time picker without a value.",
-        "disabled-hours": "Hours that are not selectable.",
-        "disabled-minutes": "Minutes that are not selectable.",
-        "disabled-seconds": "Seconds that are not selectable."
-      },
-      "slot": {},
-      "variables": {},
-      "events": {
-        "update:model-value": "Emitted when the selected time changes.",
-        "on-change-open-close": "Emitted when the time picker is opened or closed."
-      },
-      "exposes": {
-        "inputDOMRef": "Original input DOM element"
-      }
-    },
+    // "time-picker": {
+    //   "disabled": {
+    //     "subtitle": "Disables the time picker if set to true."
+    //   },
+    //   "model-value": {
+    //     "subtitle": "Represents the selected time value."
+    //   },
+    //   "open": {
+    //     "subtitle": "Controls whether the time picker dropdown is open."
+    //   },
+    //   "init-without-value": {
+    //     "subtitle": "If true, the time picker will initialize without a default value."
+    //   },
+    //   "disabled-hours": {
+    //     "subtitle": "Specifies which hours should be disabled for selection."
+    //   },
+    //   "disabled-minutes": {
+    //     "subtitle": "Specifies which minutes should be disabled for selection."
+    //   },
+    //   "disabled-seconds": {
+    //     "subtitle": "Specifies which seconds should be disabled for selection."
+    //   },
+    //   "api": {
+    //     "disabled": "Disables the time picker.",
+    //     "model-value": "The selected time value.",
+    //     "open": "Boolean to control visibility of the dropdown.",
+    //     "init-without-value": "Initializes the time picker without a value.",
+    //     "disabled-hours": "Hours that are not selectable.",
+    //     "disabled-minutes": "Minutes that are not selectable.",
+    //     "disabled-seconds": "Seconds that are not selectable."
+    //   },
+    //   "slot": {},
+    //   "variables": {},
+    //   "events": {
+    //     "update:model-value": "Emitted when the selected time changes.",
+    //     "on-change-open-close": "Emitted when the time picker is opened or closed."
+    //   },
+    //   "exposes": {
+    //     "inputDOMRef": "Original input DOM element"
+    //   }
+    // },
     "radio": {
-      "disabled": {
-        "subtitle": "Disables the radio button if set to true."
-      },
-      "label": {
-        "subtitle": "Defines the label text for the radio button."
-      },
-      "value": {
-        "subtitle": "Specifies the value of the radio button."
-      },
-      "style-type": {
-        "subtitle": "Defines the style of the radio button, such as outlined or standard."
+      "basic-usage": {
+        "info": {
+          "title": "Radio Group Usage",
+          "content": "Typically used within a radio group to allow users to select one option from a set. Once a radio button is selected, it cannot be unchecked by clicking on it again—only by selecting another radio button in the group to change the checked state. For proper display, when using the 'style-type' as 'button', a label should be provided."
+        }
       },
       "api": {
         "disabled": "Boolean that disables the radio button.",
         "label": "Label text displayed next to the radio button.",
         "value": "The value assigned to the radio button.",
-        "style-type": "Specifies the visual style of the radio button."
+        "style-type": "Specifies the visual style of the radio button.",
+        "checked": "Mark radio button as checked"
       },
       "slot": {
         "label": "Slot to customize the label of the radio button."

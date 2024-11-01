@@ -3,14 +3,16 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = ``;
 const templateData = `
-<NmorphButton style-type="default" ripple text="I am ripple" />
-<NmorphButton
-  style-type="default"
-  ripple
-  accent-bg-on-hover
-  text="I am ripple with hover bg"
-/>
-<NmorphButton :ripple="false" text="I am not ripple" />
+<template>
+  <NmorphButton style-type="default" ripple text="I am ripple" />
+  <NmorphButton
+    style-type="default"
+    ripple
+    accent-bg-on-hover
+    text="I am ripple with hover bg"
+  />
+  <NmorphButton :ripple="false" text="I am not ripple" />
+</template>
 `;
 const cssData = ``;
 const code = [scriptData, templateData, cssData];

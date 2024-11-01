@@ -34,7 +34,7 @@ import autocomplete from "~/lib-overview/autocomplete";
 import fileUpload from "~/lib-overview/file-upload";
 import select from "~/lib-overview/select";
 import slider from "~/lib-overview/slider";
-import timePicker from "~/lib-overview/time-picker";
+// import timePicker from "~/lib-overview/time-picker";
 import radio from "~/lib-overview/radio";
 import radioGroup from "~/lib-overview/radio-group";
 import form from "~/lib-overview/form";
@@ -79,7 +79,7 @@ const componentsMap: Record<string, unknown[]> = {
   "file-upload": fileUpload,
   select,
   slider,
-  "time-picker": timePicker,
+  // "time-picker": timePicker,
   radio,
   "radio-group": radioGroup,
   form,

@@ -26,7 +26,6 @@ export enum NmorphComponentDirection {
 
 export interface INmorphCommonInputProps {
   height?: keyof typeof NmorphComponentHeight;
-  fill?: boolean;
   disabled?: boolean;
 }
 

@@ -2,11 +2,12 @@
 import { NmorphFileUpload } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
-
-const templateData = "";
-
+const templateData = `
+<template>
+  <NmorphFileUpload multiple />
+</template>
+`;
 const cssData = "";
-
 const code = [scriptData, templateData, cssData];
 </script>
 
@@ -20,7 +21,7 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="file-upload-multiple-overview">
           <ClientOnly>
-            <NmorphFile-upload />
+            <NmorphFileUpload multiple />
           </ClientOnly>
         </div>
       </template>
@@ -39,5 +40,6 @@ const code = [scriptData, templateData, cssData];
 
 <style lang="scss">
 .file-upload-multiple-overview {
+  width: 300px;
 }
 </style>

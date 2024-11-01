@@ -10,31 +10,32 @@ const scriptData = `
 
 const templateData = `
 <template>
-  <NmorphAutocomplete height="thick" v-model="text" :list="list" />
-  <NmorphAutocomplete height="default" :list="list" />
-  <NmorphAutocomplete height="thin" :list="list" />
+  <NmorphAutocomplete
+    v-model="text"
+    :list="list"
+    :placeholder="$t('overview.autocomplete.basic-usage.placeholder')"
+  />
 </template>
 `;
-const cssData = "";
-const code = [scriptData, templateData, cssData];
 
+const cssData = "";
+
+const code = [scriptData, templateData, cssData];
 const text = ref("");
 const list = ref([{ value: "First" }, { value: "Second" }, { value: "Third" }]);
 </script>
 
 <template>
-  <div id="content-height">
-    <attribute
-      header="Height"
-      :subtitle="$t('overview.autocomplete.height.subtitle')"
-      :codeToCopy="code"
-    >
+  <div id="content-basic-usage">
+    <attribute :header="$t('overview.basic-usage')" :codeToCopy="code">
       <template #overview>
-        <div class="autocomplete-height-overview">
+        <div class="autocomplete-basic-usage-overview">
           <ClientOnly>
-            <NmorphAutocomplete height="thick" v-model="text" :list="list" />
-            <NmorphAutocomplete height="default" :list="list" />
-            <NmorphAutocomplete height="thin" :list="list" />
+            <NmorphAutocomplete
+              v-model="text"
+              :list="list"
+              :placeholder="$t('overview.autocomplete.basic-usage.placeholder')"
+            />
           </ClientOnly>
         </div>
       </template>
@@ -52,11 +53,6 @@ const list = ref([{ value: "First" }, { value: "Second" }, { value: "Third" }]);
 </template>
 
 <style lang="scss">
-.autocomplete-height-overview {
-  display: flex;
-  align-items: center;
-  .nmorph-autocomplete {
-    margin-right: 8px;
-  }
+.autocomplete-basic-usage-overview {
 }
 </style>

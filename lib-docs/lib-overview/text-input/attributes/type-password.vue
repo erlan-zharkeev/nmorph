@@ -1,8 +1,22 @@
 <script setup lang="ts">
 import { NmorphButton, NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 
-const scriptData = "";
-const templateData = "";
+const scriptData = `
+<script lang="ts" setup>
+  const typePassword = ref(true);
+<\/script>
+`;
+
+const templateData = `
+<template>
+  <NmorphButton
+    :text="$t('overview.text-input.type-password.toggle')"
+    @click="typePassword = !typePassword"
+    class="type-input-button"
+  />
+  <NmorphTextInput :type-password="typePassword" />
+</template>
+`;
 const cssData = "";
 const code = [scriptData, templateData, cssData];
 
@@ -20,7 +34,7 @@ const typePassword = ref(true);
         <div class="text-input-type-password-overview">
           <ClientOnly>
             <NmorphButton
-              :text="typePassword ? 'Common type' : 'Password type'"
+              :text="$t('overview.text-input.type-password.toggle')"
               @click="typePassword = !typePassword"
               class="type-input-button"
             />

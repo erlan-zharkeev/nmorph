@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { NmorphIcon } from "@nmorph/nmorph-ui-kit";
 const scriptData = ``;
+
 const templateData = `
-<NmorphIcon size="large" name="eye" />
-<NmorphIcon size="medium" name="eye" />
-<NmorphIcon size="small" name="eye" />
+<template>
+  <NmorphIcon size="large" name="eye" />
+  <NmorphIcon size="medium" name="eye" />
+  <NmorphIcon size="small" name="eye" />
+</template>
 `;
 const cssData = ``;
 const code = [scriptData, templateData, cssData];

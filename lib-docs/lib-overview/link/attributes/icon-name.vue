@@ -3,9 +3,12 @@ import { NmorphLink } from "@nmorph/nmorph-ui-kit";
 import Attribute from "~/components/attribute/attribute.vue";
 
 const scriptData = ``;
+
 const templateData = `
-<NmorphLink icon-name="edit">Edit</NmorphLink>
-<NmorphLink icon-name="eye" underline text="Check" />
+<template>
+  <NmorphLink icon-name="edit">Edit</NmorphLink>
+  <NmorphLink icon-name="eye" underline text="Check" />
+</template>
 `;
 const cssData = `
 <style lang="scss">

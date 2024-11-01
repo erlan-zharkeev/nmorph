@@ -1,15 +1,10 @@
-
 <script setup lang="ts">
 import { NmorphSelect } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
-
 const templateData = "";
-
 const cssData = "";
-
 const code = [scriptData, templateData, cssData];
-
 </script>
 
 <template>
@@ -22,13 +17,17 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="select-disabled-overview">
           <ClientOnly>
-            <NmorphSelect />
+            <NmorphSelect disabled />
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-example v-if="templateData" lang="html">{{ templateData }}</code-example>
-        <code-example v-if="scriptData" lang="javascript">{{ scriptData }}</code-example>
+        <code-example v-if="templateData" lang="html">{{
+          templateData
+        }}</code-example>
+        <code-example v-if="scriptData" lang="javascript">{{
+          scriptData
+        }}</code-example>
         <code-example v-if="cssData" lang="css">{{ cssData }}</code-example>
       </template>
     </attribute>
@@ -36,5 +35,6 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.select-disabled-overview {}
+.select-disabled-overview {
+}
 </style>

@@ -30,7 +30,7 @@ defineExpose({ scroll });
 
 <style lang="scss">
 .docs-main-layout {
-  padding: 10px 24px 10px 8px;
+  padding: 10px 10px 10px 8px;
   display: grid;
   grid-gap: 8px;
   grid-template-columns: 1fr 4fr;

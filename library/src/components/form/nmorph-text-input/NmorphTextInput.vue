@@ -102,6 +102,7 @@ const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
       />
       <NmorphButton
         v-if="props.typePassword || props.clearable"
+        :disabled="props.disabled"
         class="nmorph-text-input__password-btn"
         style-type="transparent"
         width="32px"

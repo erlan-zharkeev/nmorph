@@ -17,19 +17,21 @@ const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType
 
 interface INmorphProps extends INmorphRadioOption {
   styleType?: keyof typeof NmorphRadioStyleType;
+  checked?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   label: '',
   styleType: 'button',
+  checked: false,
 });
 
 const changeHandler = () => {
   if (changeValue && !props.disabled) changeValue(props.value);
 };
 
-const checked = computed(() => groupSelectedValue?.value === props.value);
+const checked = computed(() => groupSelectedValue?.value === props.value || props.checked);
 
 const modifiers = computed(() =>
   useModifiers({

@@ -4,9 +4,12 @@ import Attribute from "~/components/attribute/attribute.vue";
 
 const scriptData = ``;
 const templateData = `
-<NmorphLink>Without underline</NmorphLink>
-<NmorphLink underline>Underlined</NmorphLink>
+<template>
+  <NmorphLink>Without underline</NmorphLink>
+  <NmorphLink underline>Underlined</NmorphLink>
+</template>
 `;
+
 const cssData = `
 <style lang="scss">
 .nmorph-link {

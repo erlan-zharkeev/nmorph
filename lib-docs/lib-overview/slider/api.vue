@@ -47,7 +47,7 @@ const attributesData: IAttributesTableData[] = [
 const slotData: ISlotsTableData[] = [];
 const variables: IVariablesTableData[] = [
   { name: "slider-height" },
-  { name: "value-fixed-container-width" },
+  { name: "value-fixed-container-height" },
 ];
 const events = [{ name: "update:model-value", type: "Number" }];
 </script>

@@ -1,13 +1,22 @@
 <script setup lang="ts">
 import { NmorphNumberInput } from "@nmorph/nmorph-ui-kit";
 
-const scriptData = "";
+const scriptData = `
+<script lang="ts" setup>
+  const value = ref("");
+<\/script>
+`;
 
-const templateData = "";
+const templateData = `
+<template>
+  <NmorphNumberInput action-btn-position-right v-model="value" />
+</template>
+`;
 
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
+const value = ref(2);
 </script>
 
 <template>
@@ -20,7 +29,11 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="number-input-action-btn-position-right-overview">
           <ClientOnly>
-            <NmorphNumberInput />
+            <NmorphNumberInput
+              action-btn-position-right
+              v-model="value"
+              height="thick"
+            />
           </ClientOnly>
         </div>
       </template>

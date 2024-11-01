@@ -1,26 +1,30 @@
 <script setup lang="ts">
 import { NmorphFileUpload } from "@nmorph/nmorph-ui-kit";
 
-const scriptData = "";
+const scriptData = `
+<script lang="ts" setup>
+  const value = ref([]);
+<\/script>
+`;
 
-const templateData = "";
-
+const templateData = `
+<template>
+  <NmorphFileUpload v-model="value" />
+</template>
+`;
 const cssData = "";
-
 const code = [scriptData, templateData, cssData];
+
+const value = ref([]);
 </script>
 
 <template>
   <div id="content-model-value">
-    <attribute
-      header="Model-value"
-      :subtitle="$t('overview.file-upload.model-value.subtitle')"
-      :codeToCopy="code"
-    >
+    <attribute header="Model-value" :codeToCopy="code">
       <template #overview>
         <div class="file-upload-model-value-overview">
           <ClientOnly>
-            <NmorphFile-upload />
+            <NmorphFileUpload v-model="value" />
           </ClientOnly>
         </div>
       </template>
@@ -39,5 +43,6 @@ const code = [scriptData, templateData, cssData];
 
 <style lang="scss">
 .file-upload-model-value-overview {
+  width: 300px;
 }
 </style>

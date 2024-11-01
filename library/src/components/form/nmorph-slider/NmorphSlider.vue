@@ -24,12 +24,12 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [`${props.fill && 'fill'}`],
+    nmorph: [],
     'nmorph-slider': [`${props.disabled && 'disabled'}`],
   })
 );
 
-const thumbWidth = 40;
+const thumbWidth = 50;
 const thumbWidthCss = `${thumbWidth}px`;
 const tooltipVisible = ref(props.showTooltip);
 
@@ -52,6 +52,8 @@ watch(
   }
 );
 
+const tooltipRootRef = ref<InstanceType<typeof NmorphTooltip> | null>(null);
+
 const thumbXPercentPosition = computed(() => {
   const resizeRecomputeTrigger = windowWidth.value - windowWidth.value;
   const range = props.max - props.min + resizeRecomputeTrigger;
@@ -60,8 +62,20 @@ const thumbXPercentPosition = computed(() => {
   const thumbPercentWidth = (thumbWidth / containerWidth) * 100;
   const halfThumbPercent = thumbPercentWidth / 2;
   let adjustedPosition = basePosition - halfThumbPercent;
-  const thumb = `${Math.max(0, Math.min(100 - thumbPercentWidth, adjustedPosition))}%`;
-  const tooltip = `${adjustedPosition + halfThumbPercent}%`;
+  const thumbPosition = Math.max(0, Math.min(100 - thumbPercentWidth, adjustedPosition));
+  const thumb = `${thumbPosition}%`;
+
+  const onePercentInPx = containerWidth / 100;
+  const halfThumbInPx = thumbWidth / 2;
+  const tooltipOffsetInPercent = halfThumbInPx / onePercentInPx;
+
+  const selfWidthInPx = tooltipRootRef.value?.tooltipBody.clientWidth ?? 24;
+  const halfSelfOffsetInPx = selfWidthInPx / 2;
+
+  const selfOffsetCandidate = halfSelfOffsetInPx / onePercentInPx;
+  const selfOffsetInPercent = selfOffsetCandidate === Infinity ? 1.714 : selfOffsetCandidate;
+
+  const tooltip = `${parseFloat(thumb) + tooltipOffsetInPercent - selfOffsetInPercent}%`;
   return {
     thumb,
     tooltip,
@@ -139,6 +153,7 @@ const transitionEnabled = ref(true);
       <div class="nmorph-slider__input-wrapper">
         <div ref="sliderContainer" class="nmorph-slider__input-container">
           <NmorphTooltip
+            ref="tooltipRootRef"
             v-if="tooltipVisible && !props.disabled"
             :text="String(thumbValue)"
             force-show
@@ -161,6 +176,7 @@ const transitionEnabled = ref(true);
             :min="props.min"
             :max="props.max"
             :step="props.step"
+            :disabled="props.disabled"
             @input="nativeInputHandler"
           />
         </div>
@@ -177,8 +193,11 @@ const transitionEnabled = ref(true);
   }
 
   position: relative;
+  width: 100%;
+  height: 20px;
+
   --slider-height: 24px;
-  --value-fixed-container-width: 18px;
+  --value-fixed-container-height: 18px;
 
   cursor: pointer;
 
@@ -191,7 +210,7 @@ const transitionEnabled = ref(true);
     display: flex;
     align-items: center;
     width: 100%;
-    height: var(--value-fixed-container-width);
+    height: var(--value-fixed-container-height);
     border-radius: var(--default-border-radius);
 
     @include nmorph-inset;

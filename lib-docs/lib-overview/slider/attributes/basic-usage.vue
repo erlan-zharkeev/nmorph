@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphNumberInput } from "@nmorph/nmorph-ui-kit";
+import { NmorphSlider } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
@@ -8,19 +8,16 @@ const templateData = "";
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
+const value = ref(3);
 </script>
 
 <template>
-  <div id="content-step">
-    <attribute
-      header="Step"
-      :subtitle="$t('overview.number-input.step.subtitle')"
-      :codeToCopy="code"
-    >
+  <div id="content-basic-usage">
+    <attribute :header="$t('overview.basic-usage')" :codeToCopy="code">
       <template #overview>
-        <div class="number-input-step-overview">
+        <div class="slider-basic-usage-overview">
           <ClientOnly>
-            <NmorphNumberInput />
+            <NmorphSlider :min="1" :max="22" :step="1" v-model="value" />
           </ClientOnly>
         </div>
       </template>
@@ -38,6 +35,8 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.number-input-step-overview {
+.slider-basic-usage-overview {
+  width: 300px;
+  min-height: 40px;
 }
 </style>

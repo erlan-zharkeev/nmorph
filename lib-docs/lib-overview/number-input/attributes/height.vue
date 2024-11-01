@@ -20,7 +20,9 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="number-input-height-overview">
           <ClientOnly>
-            <NmorphNumberInput />
+            <NmorphNumberInput height="thick" />
+            <NmorphNumberInput height="default" />
+            <NmorphNumberInput height="thin" />
           </ClientOnly>
         </div>
       </template>
@@ -39,5 +41,10 @@ const code = [scriptData, templateData, cssData];
 
 <style lang="scss">
 .number-input-height-overview {
+  display: flex;
+  align-items: center;
+  .nmorph-number-input {
+    margin-right: 8px;
+  }
 }
 </style>

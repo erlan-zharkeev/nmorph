@@ -3,8 +3,11 @@ import { NmorphNumberInput } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
-const templateData = "";
-
+const templateData = `
+<template>
+  <NmorphNumberInput disabled />
+</template>
+`;
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
@@ -20,7 +23,7 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="number-input-disabled-overview">
           <ClientOnly>
-            <NmorphNumberInput />
+            <NmorphNumberInput disabled />
           </ClientOnly>
         </div>
       </template>

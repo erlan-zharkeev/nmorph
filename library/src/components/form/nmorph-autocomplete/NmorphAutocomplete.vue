@@ -10,7 +10,7 @@ import {
   INmorphAutocompleteListItem,
 } from '@/components';
 
-interface INmorphProps extends INmorphCommonInputProps {
+interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
   modelValue?: string;
   placeholder?: string;
   clearable?: boolean;
@@ -21,7 +21,6 @@ interface INmorphProps extends INmorphCommonInputProps {
 const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: '',
   placeholder: 'Type ...',
-  fill: true,
   height: 'default',
   disabled: false,
   clearable: true,
@@ -98,7 +97,6 @@ watch(loader, (newValue) => {
     <div class="nmorph-autocomplete__input-content">
       <div ref="nmorphAutocompleteDOMRef" class="nmorph-autocomplete__input">
         <NmorphTextInput
-          :fill="props.fill"
           :height="props.height"
           :disabled="props.disabled"
           :model-value="initialValue"
@@ -114,6 +112,7 @@ watch(loader, (newValue) => {
       :open="open"
       :relative-element="nmorphAutocompleteDOMRef"
       @on-outside-click="closeHandler"
+      :y-offset="1"
     >
       <div v-if="loader" class="nmorph-autocomplete__loading">
         <slot name="loader">
@@ -136,8 +135,13 @@ watch(loader, (newValue) => {
 
 <style lang="scss">
 .nmorph-autocomplete__list-item {
-  margin-bottom: var(--indentation-01);
   padding: var(--indentation-02) var(--indentation-04);
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom-left-radius: var(--indentation-02);
+    border-bottom-right-radius: var(--indentation-02);
+  }
 }
 
 .nmorph-autocomplete__loading {
