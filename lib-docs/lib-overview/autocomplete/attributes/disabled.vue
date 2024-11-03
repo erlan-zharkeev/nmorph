@@ -3,8 +3,11 @@ import { NmorphAutocomplete } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
-const templateData = "";
-
+const templateData = `
+<template>
+  <NmorphAutocomplete disabled />
+</template>
+`;
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];

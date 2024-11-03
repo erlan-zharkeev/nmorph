@@ -2,8 +2,8 @@
 import { NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = `
-<script lang="ts">
-  const text = ref("Initial text");
+<script lang="ts" setup>
+  const text = ref("Lorem ipsum");
 <\/script>
 `;
 
@@ -16,7 +16,7 @@ const templateData = `
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
-const text = ref("Initial text");
+const text = ref("Lorem ipsum");
 </script>
 
 <template>

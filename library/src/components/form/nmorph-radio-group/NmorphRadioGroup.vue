@@ -88,7 +88,7 @@ provide<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-but
 
   .nmorph-radio:not(:last-child) {
     margin-right: var(--indentation-03);
-    margin-bottom: var(--indentation-03);
+    // margin-bottom: var(--indentation-03);
   }
 }
 

@@ -4,21 +4,26 @@ import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
 const scriptData = "";
 
 const templateData = `
-<NmorphBadge is-dot color="red">
-  <NmorphButton text="button" />
-</NmorphBadge>
-<NmorphBadge color="green" value="abc">
-  <NmorphButton text="button" />
-</NmorphBadge>
-<NmorphBadge color="var(--nmorph-warn-color)" :value="1">
-  <NmorphButton text="button" />
-</NmorphBadge>
+<template>
+  <NmorphBadge is-dot color="red">
+    <NmorphButton text="button" />
+  </NmorphBadge>
+  <NmorphBadge color="green" value="abc">
+    <NmorphButton text="button" />
+  </NmorphBadge>
+  <NmorphBadge color="var(--nmorph-warn-color)" :value="1">
+    <NmorphButton text="button" />
+  </NmorphBadge>
+</template>
 `;
 
 const cssData = `
 <style lang="scss">
-.badge-value-overview__element {
-  margin-right: 30px;
+.badge-color-overview {
+  display: flex;
+  .badge-value-overview__element {
+    margin-right: 30px;
+  }
 }
 </style>
 `;

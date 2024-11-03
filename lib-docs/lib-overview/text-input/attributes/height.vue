@@ -9,7 +9,17 @@ const templateData = `
   <NmorphTextInput height="thin" placeholder="Enter text" />
 </template>
 `;
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .text-input-height-overview {
+    display: flex;
+    align-items: center;
+    .nmorph-text-input {
+      margin-right: 8px;
+    }
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 </script>
@@ -24,9 +34,18 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="text-input-height-overview">
           <ClientOnly>
-            <NmorphTextInput height="thick" placeholder="Enter text" />
-            <NmorphTextInput height="default" placeholder="Enter text" />
-            <NmorphTextInput height="thin" placeholder="Enter text" />
+            <NmorphTextInput
+              height="thick"
+              :placeholder="$t('overview.enter-text')"
+            />
+            <NmorphTextInput
+              height="default"
+              :placeholder="$t('overview.enter-text')"
+            />
+            <NmorphTextInput
+              height="thin"
+              :placeholder="$t('overview.enter-text')"
+            />
           </ClientOnly>
         </div>
       </template>

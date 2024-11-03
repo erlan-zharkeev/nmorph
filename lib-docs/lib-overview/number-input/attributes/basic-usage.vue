@@ -9,11 +9,20 @@ const scriptData = `
 
 const templateData = `
 <template>
-  <NmorphNumberInput v-model="value" :max="5" :min="1" :step="1" />
+  <NmorphNumberInput v-model="value" :max="5" :min="1" :step="1" height="thin" />
 </template>
 `;
 
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .number-input-basic-usage-overview {
+    width: 200px;
+    .nmorph-number-input {
+      width: 100%;
+    }
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 const value = ref(3);
@@ -25,7 +34,13 @@ const value = ref(3);
       <template #overview>
         <div class="number-input-basic-usage-overview">
           <ClientOnly>
-            <NmorphNumberInput v-model="value" :max="5" :min="1" :step="1" />
+            <NmorphNumberInput
+              v-model="value"
+              :max="5"
+              :min="1"
+              :step="1"
+              height="thin"
+            />
           </ClientOnly>
         </div>
       </template>
@@ -44,6 +59,9 @@ const value = ref(3);
 
 <style lang="scss">
 .number-input-basic-usage-overview {
-  width: 200px;
+  width: 150px;
+  .nmorph-number-input {
+    width: 100%;
+  }
 }
 </style>

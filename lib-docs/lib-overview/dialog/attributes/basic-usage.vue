@@ -2,11 +2,13 @@
 import { NmorphDialog } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = `
-const dialogVisibility = ref(false);
+<script lang="ts" setup>
+  const dialogVisibility = ref(false);
 
-const showModalHandler = () => {
-  dialogVisibility.value = true;
-};
+  const showModalHandler = () => {
+    dialogVisibility.value = true;
+  };
+<\/script>
 `;
 
 const templateData = `

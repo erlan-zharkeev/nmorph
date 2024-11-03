@@ -12,7 +12,13 @@ const templateData = `
   <NmorphFileUpload v-model="value" />
 </template>
 `;
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .file-upload-model-value-overview {
+    width: 300px;
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 
 const value = ref([]);

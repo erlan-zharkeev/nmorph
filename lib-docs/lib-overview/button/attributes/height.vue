@@ -9,7 +9,16 @@ const templateData = `
   <NmorphButton height="thin">Thin</NmorphButton>
 </template>
 `;
-const cssData = ``;
+const cssData = `
+<style lang="scss">
+  .button-height-overview {
+    .nmorph-button {
+      margin: 0 8px;
+    }
+  }
+</style>
+
+`;
 const code = [scriptData, templateData, cssData];
 </script>
 
@@ -22,9 +31,11 @@ const code = [scriptData, templateData, cssData];
     >
       <template #overview>
         <div class="button-height-overview">
-          <NmorphButton height="thick">Thick</NmorphButton>
-          <NmorphButton height="default">Default</NmorphButton>
-          <NmorphButton height="thin">Thin</NmorphButton>
+          <NmorphButton height="thick">{{ $t("overview.thick") }}</NmorphButton>
+          <NmorphButton height="default">{{
+            $t("overview.default")
+          }}</NmorphButton>
+          <NmorphButton height="thin">{{ $t("overview.thin") }}</NmorphButton>
         </div>
       </template>
       <template #code>

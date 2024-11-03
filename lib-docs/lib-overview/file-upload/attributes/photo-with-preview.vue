@@ -8,7 +8,13 @@ const templateData = `
   <NmorphFileUpload photo-with-preview />
 </template>
 `;
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .file-upload-photo-with-preview-overview {
+    width: 300px;
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 </script>

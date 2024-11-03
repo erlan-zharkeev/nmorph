@@ -125,7 +125,7 @@ const goToYearsHandler = () => {
       </NmorphButton>
     </div>
     <div class="nmorph-year-month-picker__values">
-      <NmorphRadioGroup :model-value="selectedValue" :options="values" fill @update:model-value="updateModelValue" />
+      <NmorphRadioGroup :model-value="selectedValue" :options="values" @update:model-value="updateModelValue" />
     </div>
   </div>
 </template>

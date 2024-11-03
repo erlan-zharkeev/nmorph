@@ -61,6 +61,9 @@ defineExpose({ scroll });
   .docs-main-layout__center-aside {
     display: none;
   }
+  .docs-main-layout__center {
+    width: 100%;
+  }
 }
 
 @include max-width-query(768) {

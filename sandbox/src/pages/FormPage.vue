@@ -1,30 +1,38 @@
 <template>
   <div class="wrapper">
     <NmorphForm :value="form">
-      <NmorphFormItem id="username" label="Username">
-        <NmorphTextInput v-model="form.username.value" type-password fill />
-      </NmorphFormItem>
-
+      <!-- <select>
+        <option
+          v-for="option in food"
+          :key="option.value"
+          :value="option.value"
+          tabindex="0"
+        />
+      </select> -->
+      <!-- <NmorphFormItem id="username" label="Username">
+        <NmorphTextInput v-model="form.username.value" type-password />
+      </NmorphFormItem> -->
+      <!--
       <NmorphFormItem id="years" label="Years old">
-        <NmorphNumberInput v-model="form.years.value" :min="2" :max="8" fill />
-      </NmorphFormItem>
+        <NmorphNumberInput v-model="form.years.value" :min="18" :max="150" />
+      </NmorphFormItem> -->
 
-      <NmorphFormItem id="gender" label="Gender">
-        <NmorphRadioGroup v-model="form.gender.value">
+      <!-- <NmorphFormItem id="drink" label="Preferred drink">
+        <NmorphRadioGroup v-model="form.drink.value">
           <NmorphRadio
-            v-for="option in genders"
+            v-for="option in drinks"
             :key="option.value"
             :label="option.label"
             :value="option.value"
             :disabled="option.disabled"
           />
         </NmorphRadioGroup>
-      </NmorphFormItem>
+      </NmorphFormItem> -->
 
-      <NmorphFormItem id="roles" label="Roles">
-        <NmorphCheckboxGroup v-model="form.roles.value">
+      <!-- <NmorphFormItem id="browsers" label="Browsers">
+        <NmorphCheckboxGroup v-model="form.browsers.value">
           <NmorphCheckbox
-            v-for="option in roles"
+            v-for="option in browsers"
             :id="option.id"
             :key="option.id"
             :label="option.label"
@@ -32,9 +40,9 @@
             style-type="button"
           />
         </NmorphCheckboxGroup>
-      </NmorphFormItem>
+      </NmorphFormItem> -->
 
-      <NmorphFormItem id="agreement" label="Agreement">
+      <!-- <NmorphFormItem id="agreement" label="Agreement">
         <NmorphSwitch v-model="form.agreement.value">
           <template #thumb-on
             ><NmorphIcon name="eye" width="10px" height="10px"
@@ -43,18 +51,18 @@
             ><NmorphIcon name="eye-blocked" width="10px" height="10px"
           /></template>
         </NmorphSwitch>
-      </NmorphFormItem>
+      </NmorphFormItem> -->
 
-      <NmorphFormItem id="weight" label="Weight">
+      <!-- <NmorphFormItem id="someValue" label="Some value">
         <NmorphSlider
-          v-model="form.weight.value"
+          v-model="form.someValue.value"
           :step="1"
-          :max="150"
-          :min="30"
+          :min="0"
+          :max="100"
         />
-      </NmorphFormItem>
+      </NmorphFormItem> -->
 
-      <NmorphFormItem id="food" label="Favorite food">
+      <!-- <NmorphFormItem id="food" label="Favorite food">
         <NmorphSelect
           v-model="form.food.value"
           value-required
@@ -68,28 +76,19 @@
             :value="option.value"
           />
         </NmorphSelect>
-      </NmorphFormItem>
-
-      <NmorphFormItem id="time" label="Choose time">
-        <NmorphTimePicker
-          v-model="form.time.value"
-          :disabled-hours="[10, 20]"
-          :disabled-minutes="[2, 5]"
-          :disabled-seconds="[6, 9]"
-        />
-      </NmorphFormItem>
+      </NmorphFormItem> -->
 
       <NmorphFormItem id="date" label="Choose date">
         <NmorphDatePicker v-model="form.date.value" />
       </NmorphFormItem>
 
-      <NmorphFormItem id="photo" label="Photo">
+      <!-- <NmorphFormItem id="photo" label="Photo">
         <NmorphFileUpload v-model="form.photo.value" multiple />
-      </NmorphFormItem>
+      </NmorphFormItem> -->
 
-      <NmorphFormItem id="send" label="Send form">
+      <!-- <NmorphFormItem id="send" label="Send form">
         <NmorphButton text="Click me" width="100px" fill />
-      </NmorphFormItem>
+      </NmorphFormItem> -->
     </NmorphForm>
   </div>
 </template>
@@ -110,7 +109,6 @@ import {
   NmorphCheckbox,
   NmorphCheckboxGroup,
   NmorphSelectOption,
-  NmorphTimePicker,
   NmorphDatePicker,
 } from "./../../../library/src/components";
 import { reactive } from "vue";
@@ -121,26 +119,26 @@ const form = reactive({
     rules: [{ pattern: /.{5,}/, error: "Too short" }],
   },
   years: {
-    value: 0,
-    rules: [{ compareValue: 5, numberCompareType: "eq", error: "Wrong age" }],
+    value: 18,
+    rules: [{ compareValue: 150, numberCompareType: "eq", error: "Wrong age" }],
   },
-  gender: {
-    value: "male",
+  drink: {
+    value: "coffee",
     rules: [
       {
-        compareValue: "non-binary",
-        booleanCompareType: "not-eq",
-        error: "Wrong sex",
+        compareValue: "kombucha",
+        booleanCompareType: "eq",
+        error: "We don't have Kombucha(",
       },
     ],
   },
-  roles: {
-    value: ["developer", "reviewer"],
+  browsers: {
+    value: ["Chrome", "Firefox"],
     rules: [
       {
-        compareValue: ["maintainer"],
+        compareValue: ["ie"],
         arrayCompareType: "not-contains",
-        error: "You cant be a maintainer",
+        error: "IE not supported",
       },
     ],
   },
@@ -154,18 +152,18 @@ const form = reactive({
       },
     ],
   },
-  weight: {
-    value: 55,
+  someValue: {
+    value: 50,
     rules: [
       {
-        compareValue: 50,
+        compareValue: 30,
         numberCompareType: "lt",
-        error: "Weight must be greater than 50",
+        error: "Value must be greater than 30",
       },
       {
-        compareValue: 110,
+        compareValue: 80,
         numberCompareType: "gt",
-        error: "Weight must be less than 110",
+        error: "Value must be less than 80",
       },
     ],
   },
@@ -193,48 +191,48 @@ const form = reactive({
   },
 });
 
-const genders = [
+const drinks = [
   {
     disabled: false,
-    label: "Male",
-    value: "male",
+    label: "Coffee",
+    value: "coffee",
   },
   {
     disabled: false,
-    label: "Female",
-    value: "female",
+    label: "Tea",
+    value: "tea",
   },
   {
     disabled: false,
-    label: "Non-binary asdfa asdf s",
-    value: "non-binary",
+    label: "Kombucha",
+    value: "kombucha",
   },
 ];
 
-const roles = [
+const browsers = [
   {
-    id: "maintainer",
+    id: "chrome",
     disabled: false,
     modelValue: true,
-    label: "Maintainer",
+    label: "Chrome",
   },
   {
     id: "unknown",
     disabled: true,
     modelValue: false,
-    label: "unknown",
+    label: "Unknown",
   },
   {
-    id: "developer",
+    id: "firefox",
     disabled: false,
     modelValue: false,
-    label: "Developer",
+    label: "Firefox",
   },
   {
-    id: "reviewer",
+    id: "ie",
     disabled: false,
     modelValue: false,
-    label: "Reviewer",
+    label: "IE",
   },
 ];
 
@@ -261,5 +259,9 @@ const food = [
 
 form {
   max-width: 400px;
+}
+
+.nmorph-number-input {
+  width: 100%;
 }
 </style>

@@ -1,14 +1,31 @@
 <script setup lang="ts">
 import { NmorphCard, NmorphImage } from "@nmorph/nmorph-ui-kit";
 import { Summer } from "~/assets/images";
-const scriptData = "";
 
+const scriptData = "";
 const templateData = `
-<div class="card-shadow-type-overview__left">
-  <div class="card-shadow-type-overview__element">
-    <NmorphCard>
-      <template #header>Card title</template>
-      <template #default>
+<template>
+  <div class="card-shadow-type-overview__left">
+    <div class="card-shadow-type-overview__element">
+      <NmorphCard>
+        <template #header>Card title</template>
+        <template #default>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+            Neque culpa assumenda, earum repellendus blanditiis
+            explicabo laborum ipsam quia reiciendis autem hic
+            cupiditate, illum incidunt quod voluptate, sequi accusamus
+            ipsa quis.
+          </p>
+        </template>
+        <template #footer
+          >&copy; {{ new Date().getFullYear() }} NMORPH. All rights
+          reserved.</template
+        >
+      </NmorphCard>
+    </div>
+    <div class="card-shadow-type-overview__element">
+      <NmorphCard shadow-type="combined">
         <p>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit.
           Neque culpa assumenda, earum repellendus blanditiis
@@ -16,38 +33,33 @@ const templateData = `
           cupiditate, illum incidunt quod voluptate, sequi accusamus
           ipsa quis.
         </p>
-      </template>
-      <template #footer
-        >&copy; {{ new Date().getFullYear() }} NMORPH. All rights
-        reserved.</template
-      >
-    </NmorphCard>
+      </NmorphCard>
+    </div>
   </div>
-  <div class="card-shadow-type-overview__element">
-    <NmorphCard shadow-type="combined">
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-        Neque culpa assumenda, earum repellendus blanditiis
-        explicabo laborum ipsam quia reiciendis autem hic
-        cupiditate, illum incidunt quod voluptate, sequi accusamus
-        ipsa quis.
-      </p>
-    </NmorphCard>
+  <div class="card-shadow-type-overview__right">
+    <div class="card-shadow-type-overview__element">
+      <NmorphCard shadow-type="inset">
+        <template #header>Summer</template>
+        <template #default>
+          <NmorphImage :src="Summer" />
+        </template>
+      </NmorphCard>
+    </div>
   </div>
-</div>
-<div class="card-shadow-type-overview__right">
-  <div class="card-shadow-type-overview__element">
-    <NmorphCard shadow-type="inset">
-      <template #header>Summer</template>
-      <template #default>
-        <NmorphImage :src="Summer" />
-      </template>
-    </NmorphCard>
-  </div>
-</div>
+</template>
 `;
+const cssData = `
+<style lang="scss">
+  .card-shadow-type-overview {
+    display: flex;
 
-const cssData = "";
+    .card-shadow-type-overview__element {
+      margin: 8px;
+      width: 33.333%;
+    }
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 </script>
@@ -64,7 +76,7 @@ const code = [scriptData, templateData, cssData];
           <ClientOnly>
             <div class="card-shadow-type-overview__element">
               <NmorphCard>
-                <template #header>Card title</template>
+                <template #header>Lorem ipsum</template>
                 <template #default>
                   <p>
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit.
@@ -92,7 +104,7 @@ const code = [scriptData, templateData, cssData];
             </div>
             <div class="card-shadow-type-overview__element">
               <NmorphCard shadow-type="inset">
-                <template #header>Summer</template>
+                <template #header>{{ $t("overview.summer") }}</template>
                 <template #default>
                   <NmorphImage :src="Summer" />
                 </template>

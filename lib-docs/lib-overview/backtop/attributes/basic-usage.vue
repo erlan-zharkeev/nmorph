@@ -14,7 +14,13 @@ const templateData = `
   </NmorphScroll>
 </template>
 `;
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .backtop-basic-usage-overview {
+    width: 100%;
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 </script>
 

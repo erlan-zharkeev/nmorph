@@ -54,36 +54,36 @@ const templateData = `
 
 const cssData = `
 <style lang="scss">
-.divider-wrapper {
-  display: flex;
-}
-
-.divider-horizontal {
-  margin-right: 24px;
-  .nmorph-divider {
-    margin: 16px 0;
+  .divider-wrapper {
+    display: flex;
   }
-}
 
-.divider-vertical {
-  display: flex;
-  .nmorph-divider {
-    margin: 0 16px;
+  .divider-horizontal {
+    margin-right: 24px;
+    .nmorph-divider {
+      margin: 16px 0;
+    }
   }
-}
 
-.horizontal-elements {
-  display: grid;
-  gap: 8px;
-  grid-template-columns: repeat(2, 1fr);
-}
+  .divider-vertical {
+    display: flex;
+    .nmorph-divider {
+      margin: 0 16px;
+    }
+  }
 
-.vertical-elements {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 8px;
-}
+  .horizontal-elements {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vertical-elements {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 8px;
+  }
 </style>
 `;
 

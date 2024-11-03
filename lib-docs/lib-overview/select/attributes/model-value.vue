@@ -30,7 +30,16 @@ const templateData = `
 </template>
 `;
 
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .select-model-value-overview {
+    display: flex;
+    .nmorph-select {
+      margin-right: 8px;
+    }
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 const value = ref("one");

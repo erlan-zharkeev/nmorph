@@ -9,7 +9,18 @@ const templateData = `
   <NmorphIcon name="loader" width="12px" height="12px" />
 </template>
 `;
-const cssData = ``;
+const cssData = `
+<style lang="scss">
+  .icon-width-height-overview {
+    display: flex;
+    align-items: center;
+
+    .nmorph-icon {
+      margin: 0 8px;
+    }
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 </script>
 

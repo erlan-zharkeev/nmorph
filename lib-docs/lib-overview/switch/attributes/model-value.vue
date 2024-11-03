@@ -2,46 +2,56 @@
 import { NmorphSwitch } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = `
-<script setup="ts">
-const firstSwitch = ref(false);
-const secondSwitch = ref("off");
-const thirdSwitch = ref(1);
+<script lang="ts" setup>
+  const firstSwitch = ref(false);
+  const secondSwitch = ref("off");
+  const thirdSwitch = ref(1);
 <\/script>
 `;
-const templateData = "";
-const cssData = `
+const templateData = `
 <template>
   <div class="switch-model-value-overview">
-    <ClientOnly>
-      <div class="switch-el">
-        <p class="switch-value nmorph-title-3">
-          First switch value: {{ firstSwitch }}
-        </p>
-        <NmorphSwitch v-model="firstSwitch" />
-      </div>
-      <div class="switch-el">
-        <p class="switch-value nmorph-title-3">
-          Second switch value: {{ secondSwitch }}
-        </p>
-        <NmorphSwitch
-          v-model="secondSwitch"
-          active-value="on"
-          inactive-value="off"
-        />
-      </div>
-      <div class="switch-el">
-        <p class="switch-value nmorph-title-3">
-          Third switch value: {{ thirdSwitch }}
-        </p>
-        <NmorphSwitch
-          v-model="thirdSwitch"
-          :active-value="1"
-          :inactive-value="0"
-        />
-      </div>
-    </ClientOnly>
+    <div class="switch-el">
+      <p class="switch-value nmorph-title-3">
+        First switch value: {{ firstSwitch }}
+      </p>
+      <NmorphSwitch v-model="firstSwitch" />
+    </div>
+    <div class="switch-el">
+      <p class="switch-value nmorph-title-3">
+        Second switch value: {{ secondSwitch }}
+      </p>
+      <NmorphSwitch
+        v-model="secondSwitch"
+        active-value="on"
+        inactive-value="off"
+      />
+    </div>
+    <div class="switch-el">
+      <p class="switch-value nmorph-title-3">
+        Third switch value: {{ thirdSwitch }}
+      </p>
+      <NmorphSwitch
+        v-model="thirdSwitch"
+        :active-value="1"
+        :inactive-value="0"
+      />
+    </div>
   </div>
 </template>
+`;
+const cssData = `
+<style lang="scss">
+  .switch-model-value-overview {
+    display: flex;
+    .switch-el {
+      margin-right: 8px;
+    }
+    .switch-value {
+      margin-bottom: 8px;
+    }
+  }
+</style>
 `;
 const code = [scriptData, templateData, cssData];
 
@@ -62,13 +72,13 @@ const thirdSwitch = ref(1);
           <ClientOnly>
             <div class="switch-el">
               <p class="switch-value nmorph-title-3">
-                value: {{ firstSwitch }}
+                {{ $t("overview.value") }} {{ firstSwitch }}
               </p>
               <NmorphSwitch v-model="firstSwitch" />
             </div>
             <div class="switch-el">
               <p class="switch-value nmorph-title-3">
-                value: {{ secondSwitch }}
+                {{ $t("overview.value") }} {{ secondSwitch }}
               </p>
               <NmorphSwitch
                 v-model="secondSwitch"
@@ -78,7 +88,7 @@ const thirdSwitch = ref(1);
             </div>
             <div class="switch-el">
               <p class="switch-value nmorph-title-3">
-                value: {{ thirdSwitch }}
+                {{ $t("overview.value") }} {{ thirdSwitch }}
               </p>
               <NmorphSwitch
                 v-model="thirdSwitch"

@@ -2,8 +2,8 @@
 import { NmorphCheckbox } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = `
-<script lang="ts">
-const value = ref(true);
+<script lang="ts" setup>
+  const value = ref(true);
 <\/script>
 `;
 

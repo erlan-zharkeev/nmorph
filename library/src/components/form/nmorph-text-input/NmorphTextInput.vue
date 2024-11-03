@@ -6,7 +6,7 @@ import { NmorphIcon, NmorphButton } from '@/components';
 
 const slots = useSlots();
 
-interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
+interface INmorphProps extends INmorphCommonInputProps {
   placeholder?: string;
   typePassword?: boolean;
   modelValue?: string;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { generateUUID, useModifiers } from '@/utils';
-import { ref, computed, watch, onMounted, onUnmounted, provide } from 'vue';
+import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick } from 'vue';
 import {
   NmorphTagItem,
   NmorphIcon,
@@ -21,6 +21,8 @@ interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: NmorphSelectModelValueType;
   loading?: boolean;
   open?: boolean;
+  id?: string;
+  name?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -33,6 +35,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   disabled: false,
   open: false,
+  id: '',
+  name: '',
 });
 
 const emit = defineEmits<{
@@ -45,6 +49,9 @@ const open = ref(props.open);
 const optionsDOMRef = ref<NmorphDomElementType>(null);
 const optionsHeight = ref<string | null>(null);
 const selectedLineOutset = ref(true);
+
+const id = props.id ? props.id : generateUUID();
+const name = props.name ? props.name : generateUUID();
 
 const changeHandler = (value: string) => {
   if (props.disabled) return;
@@ -67,6 +74,14 @@ const changeHandler = (value: string) => {
   emit('update:model-value', initialValue.value);
 };
 
+const focus = ref(false);
+const focusHandler = () => {
+  focus.value = true;
+};
+const blurHandler = () => {
+  focus.value = false;
+};
+
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
@@ -76,6 +91,7 @@ const modifiers = computed(() =>
       `${props.loading && 'loading'}`,
       `${open.value && 'open'}`,
       `${selectedLineOutset.value ? 'selected-line-outset' : 'selected-line-inset'}`,
+      `${focus.value && 'focus'}`,
     ],
   })
 );
@@ -97,8 +113,33 @@ const closeHandler = () => {
   open.value = false;
 };
 
-onMounted(() => {
+const nodeOptions = ref<NodeListOf<Element>>();
+const domOptions = ref<Array<string>>([]);
+
+const currentIndex = ref(0);
+const currentFocusedEl = ref('');
+
+watch(currentIndex, (newValue) => {
+  currentFocusedEl.value = domOptions.value[newValue];
+  nodeOptions.value.forEach((nodeOption) => {
+    const elementValue = nodeOption.getAttribute('value');
+    const action = elementValue === currentFocusedEl.value ? 'add' : 'remove';
+    nodeOption.classList[action]('nmorph-select-option--focused');
+  });
+});
+
+onMounted(async () => {
+  await nextTick();
   if (!optionsDOMRef.value) return;
+
+  nodeOptions.value = optionsDOMRef.value.querySelectorAll('.nmorph-select-option');
+  nodeOptions.value.forEach((el) => {
+    const element = el.getAttribute('value');
+    if (element) domOptions.value.push(element);
+  });
+
+  currentFocusedEl.value = domOptions.value[currentIndex.value];
+
   optionsHeight.value = `${optionsDOMRef.value.clientHeight}px`;
   document.addEventListener('click', closeHandler);
 });
@@ -138,11 +179,40 @@ provide<NmorphSelectSelectedValueInjectionType>('select-selected-value', initial
 provide<NmorphSelectChangeSelectedValue>('select-change-selected-value', changeHandler);
 
 const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
+
+const spaceHandler = () => {
+  open.value = !open.value;
+};
+
+const arrowDownHandler = () => {
+  currentIndex.value = (currentIndex.value + 1) % domOptions.value.length;
+};
+
+const arrowUpHandler = () => {
+  currentIndex.value = (currentIndex.value - 1 + domOptions.value.length) % domOptions.value.length;
+};
+
+const enterHandler = () => {
+  if (!open.value) return;
+  changeHandler(currentFocusedEl.value);
+};
 </script>
 
 <template>
   <div :class="modifiers">
     <div class="nmorph-select__content">
+      <select
+        :id="id"
+        :name="name"
+        @focus="focusHandler"
+        @blur="blurHandler"
+        @keydown.space="spaceHandler"
+        @keydown.arrow-down="arrowDownHandler"
+        @keydown.arrow-up="arrowUpHandler"
+        @keydown.enter="enterHandler"
+      >
+        <option v-for="option in domOptions" :key="option" :value="option" />
+      </select>
       <div ref="nmorphSelectDOMRef" class="nmorph-select__selected-values-line" @click.stop="clickHandler">
         <div v-if="typeof initialValue === 'string'" class="nmorph-select__selected-value">
           {{ selectedValueTitle }}
@@ -211,6 +281,16 @@ const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
   .nmorph-select__selected-value {
     @include ellipsis;
   }
+
+  select,
+  option {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    border: none;
+    padding: 0;
+    position: absolute;
+  }
 }
 
 .nmorph-select--loading {
@@ -238,6 +318,13 @@ const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
 .nmorph-select--selected-line-outset {
   .nmorph-select__content {
     @include nmorph-outset;
+  }
+}
+
+.nmorph-select--focus {
+  outline: 2px var(--nmorph-accent-color) solid;
+  .nmorph-select__content {
+    box-shadow: none;
   }
 }
 </style>

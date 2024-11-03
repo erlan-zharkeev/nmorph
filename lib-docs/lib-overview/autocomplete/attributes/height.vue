@@ -15,7 +15,19 @@ const templateData = `
   <NmorphAutocomplete height="thin" :list="list" />
 </template>
 `;
-const cssData = "";
+
+const cssData = `
+<style lang="scss">
+  .autocomplete-height-overview {
+    display: flex;
+    align-items: center;
+    .nmorph-autocomplete {
+      margin-right: 8px;
+    }
+  }
+</style>
+`;
+
 const code = [scriptData, templateData, cssData];
 
 const text = ref("");

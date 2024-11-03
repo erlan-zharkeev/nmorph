@@ -2,15 +2,33 @@
 import { NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = `
-<script lang="ts">
-  const text = ref("Initial text");
+<script lang="ts" setup>
+  const text = ref("Lorem ipsum"");
 <\/script>
 `;
-const templateData = "";
-const cssData = "";
+
+const templateData = `
+<template>
+  <p class="nmorph-title-3">Model-text: {{ text }}</p>
+  <NmorphTextInput v-model="text" />
+</template>
+`;
+
+const cssData = `
+<style lang="scss">
+  .text-input-model-value-overview {
+    .nmorph-text-input {
+      width: 300px;
+    }
+    p {
+      margin-bottom: 8px;
+    }
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 
-const text = ref("Initial text");
+const text = ref("Lorem ipsum");
 </script>
 
 <template>
@@ -23,7 +41,9 @@ const text = ref("Initial text");
       <template #overview>
         <div class="text-input-model-value-overview">
           <ClientOnly>
-            <p class="nmorph-title-3">Model-text: {{ text }}</p>
+            <p class="nmorph-title-3">
+              {{ $t("overview.model-text") }} {{ text }}
+            </p>
             <NmorphTextInput v-model="text" />
           </ClientOnly>
         </div>

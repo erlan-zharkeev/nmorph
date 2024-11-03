@@ -9,7 +9,16 @@ const templateData = `
 </template>
 `;
 
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .switch-loading-overview {
+    .nmorph-switch {
+      --height: 24px;
+      --thumb-height: 18px;
+    }
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 </script>

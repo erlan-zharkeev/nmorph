@@ -3,40 +3,54 @@ import { NmorphButton, NmorphScroll } from "@nmorph/nmorph-ui-kit";
 import Attribute from "~/components/attribute/attribute.vue";
 
 const scriptData = `
-<script setup lang="ts">
+<script lang="ts" setup>
 const elements = ref(10);
 const addItem = () => (elements.value += 1);
 const removeItem = () => (elements.value -= 1);
 </\script>
 `;
+
 const templateData = `
-<div class="actions">
-  <NmorphButton @click="addItem">Add</NmorphButton>
-  <NmorphButton @click="removeItem">Remove</NmorphButton>
-</div>
-<NmorphScroll max-height="300px" class="docs-scroll__scroll">
-  <div class="docs-scroll__box" v-for="i in elements" :key="i">
-    {{ i }}
+<template>
+  <div class="actions">
+    <NmorphButton @click="addItem">Add</NmorphButton>
+    <NmorphButton @click="removeItem">Remove</NmorphButton>
   </div>
-</NmorphScroll>
+  <NmorphScroll max-height="300px" class="docs-scroll__scroll">
+    <div class="docs-scroll__box" v-for="i in elements" :key="i">
+      {{ i }}
+    </div>
+  </NmorphScroll>
+</template>
 `;
 const cssData = `
 <style lang="scss">
-.actions {
-  margin-bottom: 12px;
-}
+  .scroll-max-height-overview {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 8px;
 
-.docs-scroll__box {
-  background: var(--nmorph-accent-color);
-  margin-bottom: 8px;
-  color: var(--nmorph-focus-text-color);
-}
+    .nmorph-button {
+      margin-right: 8px;
+    }
 
-.docs-scroll__scroll {
-  width: 100%;
-  text-align: center;
-  padding-right: 8px;
-}
+    .actions {
+      margin-bottom: 12px;
+    }
+
+    .docs-scroll__box {
+      background: var(--nmorph-accent-color);
+      margin-bottom: 8px;
+      color: var(--nmorph-focus-text-color);
+    }
+
+    .docs-scroll__scroll {
+      width: 100%;
+      text-align: center;
+      padding-right: 8px;
+    }
+  }
 </style>
 `;
 const code = [scriptData, templateData, cssData];
@@ -56,8 +70,12 @@ const removeItem = () => (elements.value -= 1);
       <template #overview>
         <div class="scroll-max-height-overview">
           <div class="actions">
-            <NmorphButton @click="addItem">Add</NmorphButton>
-            <NmorphButton @click="removeItem">Remove</NmorphButton>
+            <NmorphButton @click="addItem">{{
+              $t("overview.add")
+            }}</NmorphButton>
+            <NmorphButton @click="removeItem">{{
+              $t("overview.remove")
+            }}</NmorphButton>
           </div>
           <NmorphScroll max-height="300px" class="docs-scroll__scroll">
             <div class="docs-scroll__box" v-for="i in elements" :key="i">

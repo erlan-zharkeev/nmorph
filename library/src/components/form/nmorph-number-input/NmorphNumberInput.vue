@@ -4,7 +4,7 @@ import { useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import { NmorphButton, NmorphIcon } from '@/components';
 
-interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
+interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: number;
   max?: number;
   min?: number;
@@ -199,7 +199,7 @@ defineExpose({ inputDOMRef });
     background: var(--nmorph-accent-color);
     outline: none;
 
-    @include nmorph-outset;
+    // @include nmorph-outset;
   }
 
   .nmorph-number-input__action-btns {

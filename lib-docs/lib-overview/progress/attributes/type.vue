@@ -4,28 +4,32 @@ import { NmorphProgress } from "@nmorph/nmorph-ui-kit";
 const scriptData = "";
 
 const templateData = `
-<NmorphProgress :percentage="50" />
-<NmorphProgress
-  type="circle"
-  :percentage="50"
-  class="circle-progress"
-/>
+<template>
+  <NmorphProgress :percentage="50" />
+  <NmorphProgress
+    type="circle"
+    :percentage="50"
+    class="circle-progress"
+  />
+</template>
 `;
 
 const cssData = `
-.progress-type-overview {
-  width: 100%;
-  display: flex;
-  align-items: center;
-
-  .nmorph-progress {
-    width: 50%;
-  }
-  .circle-progress {
+<style lang="scss">
+  .progress-type-overview {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    align-items: center;
+
+    .nmorph-progress {
+      width: 50%;
+    }
+    .circle-progress {
+      display: flex;
+      justify-content: center;
+    }
   }
-}
+</style>
 `;
 
 const code = [scriptData, templateData, cssData];

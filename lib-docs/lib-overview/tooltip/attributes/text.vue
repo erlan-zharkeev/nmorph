@@ -4,12 +4,13 @@ import { NmorphTooltip, NmorphButton } from "@nmorph/nmorph-ui-kit";
 const scriptData = "";
 
 const templateData = `
-<NmorphTooltip text="i am tooltip">
-  <NmorphButton text="hover-me" />
-</NmorphTooltip>
+<template>
+  <NmorphTooltip text="i am tooltip">
+    <NmorphButton text="hover-me" />
+  </NmorphTooltip>
+</template>
 `;
 const cssData = "";
-
 const code = [scriptData, templateData, cssData];
 </script>
 

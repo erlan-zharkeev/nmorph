@@ -2,15 +2,18 @@
 import { NmorphTooltip, NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
+
 const templateData = `
-<NmorphTooltip
-  text="Tooltip"
-  force-show
-  position="right"
-  :force-coordinate="{ x: '200px', y: '50px' }"
->
-  <NmorphButton text="OK" />
-</NmorphTooltip>
+<template>
+  <NmorphTooltip
+    text="Tooltip"
+    force-show
+    position="right"
+    :force-coordinate="{ x: '200px', y: '50px' }"
+  >
+    <NmorphButton text="OK" />
+  </NmorphTooltip>
+</template>
 `;
 const cssData = "";
 const code = [scriptData, templateData, cssData];

@@ -4,10 +4,18 @@ import { NmorphSkeleton } from "@nmorph/nmorph-ui-kit";
 const scriptData = "";
 
 const templateData = `
-<NmorphSkeleton :rows="3" :loading="true" />
+<template>
+  <NmorphSkeleton :rows="3" :loading="true" />
+</template>
 `;
-
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .skeleton-rows-overview {
+    width: 100%;
+    padding: 0 8px;
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 </script>

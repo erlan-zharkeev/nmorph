@@ -7,7 +7,14 @@ const templateData = `
   <NmorphSlider :show-tooltip="false" :model-value="50" />
 </template>
 `;
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .slider-show-tooltip-overview {
+    width: 300px;
+    min-height: 40px;
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 </script>
 

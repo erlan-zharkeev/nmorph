@@ -51,12 +51,12 @@ const templateData = `
 
 const cssData = `
 <style lang="scss">
-.elements {
-  display: flex;
-}
-.elements__element {
-  margin-right: 8px;
-}
+  .elements {
+    display: flex;
+  }
+  .elements__element {
+    margin-right: 8px;
+  }
 </style>
 `;
 const code = [scriptData, templateData, cssData];

@@ -49,10 +49,6 @@
     "prepare": "cd .. && husky install ./library/.husky",
     "validate-branch-name": "node .husky/validate-branch-name.cjs",
     "validate-commit-msg": "node .husky/validate-commit-msg.cjs",
-    "story:dev": "histoire dev",
-    "story:build": "histoire build",
-    "story:preview": "histoire preview",
-    "test:dev": "npx vitest",
     "build:types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist"
   },
   "dependencies": {
@@ -63,22 +59,18 @@
     "vue-template-es2015-compiler": "^1.9.1"
   },
   "devDependencies": {
-    "@histoire/plugin-vue": "^0.17.6",
     "@types/node": "^20.10.8",
     "@types/vue": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
     "@vitejs/plugin-vue": "^4.4.0",
-    "@vue/test-utils": "^2.4.3",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-storybook": "^0.6.15",
     "eslint-plugin-vue": "^9.19.2",
     "happy-dom": "^13.1.0",
-    "histoire": "^0.17.6",
     "husky": "^8.0.3",
-    "mitt": "^3.0.1",
     "prettier": "^3.1.1",
     "rollup-plugin-ignore": "^1.0.10",
     "sass": "^1.69.7",

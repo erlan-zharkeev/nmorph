@@ -17,7 +17,15 @@ const templateData = `
   <NmorphTextInput :type-password="typePassword" />
 </template>
 `;
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .text-input-type-password-overview {
+    .type-input-button {
+      margin-bottom: 8px;
+    }
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 
 const typePassword = ref(true);

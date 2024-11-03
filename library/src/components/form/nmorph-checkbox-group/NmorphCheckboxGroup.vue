@@ -85,7 +85,7 @@ provide<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>('change-chec
   }
 
   .nmorph-checkbox {
-    margin-bottom: var(--indentation-03);
+    // margin-bottom: var(--indentation-03);
   }
 
   .nmorph-checkbox:not(:last-child) {

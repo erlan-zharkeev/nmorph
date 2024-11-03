@@ -29,7 +29,15 @@ const templateData = `
 </template>
 `;
 
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .radio-group-model-value-overview {
+    .radio-group-el {
+      margin-bottom: 8px;
+    }
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 const options = [

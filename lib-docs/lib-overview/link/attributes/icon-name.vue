@@ -12,9 +12,11 @@ const templateData = `
 `;
 const cssData = `
 <style lang="scss">
-.nmorph-link {
-  margin: 0 8px;
-}
+  .link-icon-name-overview {
+    .nmorph-link {
+      margin: 0 8px;
+    }
+  }
 </style>
 `;
 
@@ -30,8 +32,8 @@ const code = [scriptData, templateData, cssData];
     >
       <template #overview>
         <div class="link-icon-name-overview">
-          <NmorphLink icon-name="edit">Edit</NmorphLink>
-          <NmorphLink icon-name="eye" underline text="Check" />
+          <NmorphLink icon-name="edit">{{ $t("overview.edit") }}</NmorphLink>
+          <NmorphLink icon-name="eye" underline text="Lorem ipsum" />
         </div>
       </template>
       <template #code>

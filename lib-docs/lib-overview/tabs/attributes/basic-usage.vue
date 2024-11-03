@@ -2,24 +2,24 @@
 import { NmorphTabPane, NmorphTabs } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = `
-<script lang="scss">
-const activeTab = ref("tab-1");
-const customActiveTab = ref("tab-1");
+<script lang="scss" setup>
+  const activeTab = ref("tab-1");
+  const customActiveTab = ref("tab-1");
 
-const tabs = ref([
-  { name: "tab-1", label: "Вкладка 1", content: "Контент для вкладки 1" },
-  {
-    name: "tab-2",
-    label: "Вкладка 2",
-    content: "Контент для вкладки 2",
-    disabled: true,
-  },
-  {
-    name: "tab-3",
-    label: "Вкладка 3",
-    content: "Контент для вкладки 3",
-  },
-]);
+  const tabs = ref([
+    { name: "tab-1", label: "Tab 1", content: "Lorem ipsum 1" },
+    {
+      name: "tab-2",
+      label: "Tab 2",
+      content: "Lorem ipsum 2",
+      disabled: true,
+    },
+    {
+      name: "tab-3",
+      label: "Tab 3",
+      content: "Lorem ipsum 3",
+    },
+  ]);
 <\/script>
 `;
 
@@ -52,12 +52,14 @@ const templateData = `
 
 const cssData = `
 <style lang="scss">
-  .elements {
-    display: flex;
-  }
+  .tabs-basic-usage-overview {
+    .elements {
+      display: flex;
+    }
 
-  .elements__element {
-    margin-right: 24px;
+    .elements__element {
+      margin-right: 24px;
+    }
   }
 </style>
 `;
@@ -68,17 +70,17 @@ const activeTab = ref("tab-1");
 const customActiveTab = ref("tab-1");
 
 const tabs = ref([
-  { name: "tab-1", label: "Вкладка 1", content: "Контент для вкладки 1" },
+  { name: "tab-1", label: "Tab 1", content: "Lorem ipsum 1" },
   {
     name: "tab-2",
-    label: "Вкладка 2",
-    content: "Контент для вкладки 2",
+    label: "Tab 2",
+    content: "Lorem ipsum 2",
     disabled: true,
   },
   {
     name: "tab-3",
-    label: "Вкладка 3",
-    content: "Контент для вкладки 3",
+    label: "Tab 3",
+    content: "Lorem ipsum 3",
   },
 ]);
 </script>
@@ -98,11 +100,14 @@ const tabs = ref([
                     v-bind="tab"
                   >
                     <template #label="{ scope }">
-                      <div v-if="scope.name === 'tab-2'">Custom label</div>
+                      <div v-if="scope.name === 'tab-2'">
+                        {{ $t("overview.custom-label") }}
+                      </div>
                       <div v-else>{{ scope.label }}</div>
                     </template>
-                    <template #default="{ scope }"
-                      >custom content for {{ scope.name }}</template
+                    <template #default="{ scope }">
+                      {{ $t("overview.custom-content-for") }}
+                      {{ scope.name }}</template
                     >
                   </NmorphTabPane>
                 </NmorphTabs>

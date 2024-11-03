@@ -4,15 +4,18 @@ import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
 const scriptData = "";
 
 const templateData = `
-<NmorphBadge is-dot>
-  <NmorphButton text="button" />
-</NmorphBadge>
+<template>
+  <NmorphBadge is-dot>
+    <NmorphButton text="button" />
+  </NmorphBadge>
+</template>
 `;
-
 const cssData = `
 <style lang="scss">
-.nmorph-badge {
-  --dot-size: 8px;
+.badge-is-dot-overview {
+  .nmorph-badge {
+    --dot-size: 8px;
+  }
 }
 </style>
 `;

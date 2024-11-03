@@ -4,33 +4,35 @@ import Attribute from "~/components/attribute/attribute.vue";
 
 const scriptData = ``;
 const templateData = `
-<NmorphScroll class="scroll" ref="scroll">
-  <div class="scroll__box-item" v-for="i in 20" :key="i">
-    {{ i }}
-  </div>
-</NmorphScroll>
+<template>
+  <NmorphScroll class="scroll" ref="scroll">
+    <div class="scroll__box-item" v-for="i in 20" :key="i">
+      {{ i }}
+    </div>
+  </NmorphScroll>
+</template>
 `;
 const cssData = `
 <style lang="scss">
-.scroll__box-item {
-  background: var(--nmorph-accent-color);
-  color: var(--nmorph-focus-text-color);
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  height: 50px;
-  margin: 10px;
-  text-align: center;
-  border-radius: 4px;
-}
+  .scroll__box-item {
+    background: var(--nmorph-accent-color);
+    color: var(--nmorph-focus-text-color);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 50px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 4px;
+  }
 
-.scroll {
-  width: 99%;
-  display: flex;
-  text-align: center;
-}
+  .scroll {
+    width: 99%;
+    display: flex;
+    text-align: center;
+  }
 </style>
 `;
 const code = [scriptData, templateData, cssData];

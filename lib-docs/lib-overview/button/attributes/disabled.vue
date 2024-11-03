@@ -10,7 +10,15 @@ const templateData = `
   <NmorphButton disabled loading />
 </template>
 `;
-const cssData = ``;
+const cssData = `
+<style lang="scss">
+  .button-disabled-overview {
+    .nmorph-button {
+      margin: 0 8px;
+    }
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 </script>
 
@@ -23,8 +31,10 @@ const code = [scriptData, templateData, cssData];
     >
       <template #overview>
         <div class="button-disabled-overview">
-          <NmorphButton disabled>Disabled</NmorphButton>
-          <NmorphButton disabled height="thin">Disabled thin</NmorphButton>
+          <NmorphButton disabled>{{ $t("overview.disabled") }}</NmorphButton>
+          <NmorphButton disabled height="thin">{{
+            $t("overview.disabled-thin")
+          }}</NmorphButton>
           <ClientOnly>
             <NmorphButton disabled loading />
           </ClientOnly>

@@ -3,9 +3,18 @@ import { NmorphSlider } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
-const templateData = "";
-
-const cssData = "";
+const templateData = `
+<template>
+  <NmorphSlider :min="1" :max="22" :step="1" v-model="value" />
+</template>
+`;
+const cssData = `
+<style lang="scss">
+  .slider-disabled-overview {
+    width: 300px;
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 </script>

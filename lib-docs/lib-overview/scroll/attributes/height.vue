@@ -4,23 +4,25 @@ import Attribute from "~/components/attribute/attribute.vue";
 
 const scriptData = ``;
 const templateData = `
-<NmorphScroll height="300px" class="docs-scroll__scroll">
-  <div class="docs-scroll__box" v-for="i in 20" :key="i">{{ i }}</div>
-</NmorphScroll>
+<template>
+  <NmorphScroll height="300px" class="docs-scroll__scroll">
+    <div class="docs-scroll__box" v-for="i in 20" :key="i">{{ i }}</div>
+  </NmorphScroll>
+</template>
 `;
 const cssData = `
 <style lang="scss">
-.docs-scroll__box {
-  background: var(--nmorph-accent-color);
-  margin-bottom: 8px;
-  color: var(--nmorph-focus-text-color);
-}
+  .docs-scroll__box {
+    background: var(--nmorph-accent-color);
+    margin-bottom: 8px;
+    color: var(--nmorph-focus-text-color);
+  }
 
-.docs-scroll__scroll {
-  width: 100%;
-  text-align: center;
-  padding-right: 8px;
-}
+  .docs-scroll__scroll {
+    width: 100%;
+    text-align: center;
+    padding-right: 8px;
+  }
 </style>
 `;
 

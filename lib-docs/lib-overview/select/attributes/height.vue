@@ -21,7 +21,19 @@ const templateData = `
   />
 </template>
 `;
-const cssData = "";
+
+const cssData = `
+<style lang="scss">
+  .select-height-overview {
+    display: flex;
+    align-items: center;
+    .nmorph-select {
+      --base-width: 150px;
+      margin-right: 8px;
+    }
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 const options = ref([

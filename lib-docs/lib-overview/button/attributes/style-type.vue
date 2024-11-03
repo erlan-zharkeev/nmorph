@@ -9,7 +9,15 @@ const templateData = `
   <NmorphButton style-type="transparent">Transparent</NmorphButton>
 </template>
 `;
-const cssData = ``;
+const cssData = `
+<style lang="scss">
+  .button-type-overview {
+    .nmorph-button {
+      margin: 0 8px;
+    }
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 </script>
@@ -23,8 +31,12 @@ const code = [scriptData, templateData, cssData];
     >
       <template #overview>
         <div class="button-type-overview">
-          <NmorphButton style-type="default">Default</NmorphButton>
-          <NmorphButton style-type="transparent">Transparent</NmorphButton>
+          <NmorphButton style-type="default">{{
+            $t("overview.default")
+          }}</NmorphButton>
+          <NmorphButton style-type="transparent">{{
+            $t("overview.transparent")
+          }}</NmorphButton>
         </div>
       </template>
       <template #code>

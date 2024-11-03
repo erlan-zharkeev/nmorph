@@ -3,14 +3,24 @@ import { NmorphAvatar } from "@nmorph/nmorph-ui-kit";
 import { Dog, Racoon } from "~/assets/images";
 
 const scriptData = ``;
-
 const templateData = `
-<NmorphAvatar :src="./bear.jpg" :size="70" shape="square" />
-<NmorphAvatar :src="./cat.jpg" :size="70" shape="circle" />
+<template>
+  <NmorphAvatar :src="./bear.jpg" :size="70" shape="square" />
+  <NmorphAvatar :src="./cat.jpg" :size="70" shape="circle" />
+</template>
 `;
 
-const cssData = ``;
-
+const cssData = `
+<style lang="scss">
+  .avatar-shape-overview {
+    display: flex;
+    align-items: center;
+    .nmorph-avatar {
+      margin-right: 12px;
+    }
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 </script>
 

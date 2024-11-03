@@ -3,9 +3,24 @@ import { NmorphNumberInput } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
-const templateData = "";
-
-const cssData = "";
+const templateData = `
+<template>
+  <NmorphNumberInput height="thick" />
+  <NmorphNumberInput height="default" />
+  <NmorphNumberInput height="thin" />
+</template>
+`;
+const cssData = `
+<style lang="scss">
+  .number-input-height-overview {
+    display: flex;
+    align-items: center;
+    .nmorph-number-input {
+      margin-right: 8px;
+    }
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 </script>

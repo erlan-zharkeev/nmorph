@@ -4,21 +4,29 @@ import { NmorphImage } from "@nmorph/nmorph-ui-kit";
 const scriptData = "";
 
 const templateData = `
-<NmorphImage
-  src="./loading.jpg"
-  loading-text="Custom loading text"
-/>
-<NmorphImage src="./loading.jpg">
-  <template #loading>The download is in progress</template>
-</NmorphImage>
+<template>
+  <NmorphImage
+    src="./loading.jpg"
+    loading-text="Custom loading text"
+  />
+  <NmorphImage src="./loading.jpg">
+    <template #loading>The download is in progress</template>
+  </NmorphImage>
+</template>
 `;
 
 const cssData = `
-.nmorph-image {
-  --width: 300px;
-  --height: 300px;
-  margin-right: 16px;
-}
+<style lang="scss">
+  .image-loading-text-overview {
+    display: flex;
+    width: 100%;
+    .nmorph-image {
+      --width: 300px;
+      --height: 300px;
+      margin-right: 16px;
+    }
+  }
+</style>
 `;
 
 const code = [scriptData, templateData, cssData];
@@ -45,12 +53,14 @@ const imageKey = ref(0);
               :src="imageSrc"
               @error="errorHandler"
               :key="imageKey"
-              loading-text="Custom loading text"
+              :loading-text="$t('overview.custom-loading-text')"
             />
           </ClientOnly>
           <ClientOnly>
             <NmorphImage :src="imageSrc" @error="errorHandler" :key="imageKey">
-              <template #loading>The download is in progress</template>
+              <template #loading>{{
+                $t("overview.download-in-progress")
+              }}</template>
             </NmorphImage>
           </ClientOnly>
         </div>

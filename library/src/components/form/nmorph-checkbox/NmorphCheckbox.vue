@@ -129,6 +129,12 @@ const modifiers = computed(() =>
     @include wh100;
   }
 
+  input:focus-visible {
+    opacity: 1;
+    outline: var(--nmorph-accent-color) solid 2px;
+    scale: 0.95;
+  }
+
   .nmorph-checkbox__fake {
     border-radius: var(--default-border-radius);
 
@@ -148,6 +154,7 @@ const modifiers = computed(() =>
 
   .nmorph-checkbox__label {
     margin-left: var(--indentation-02);
+    line-height: 1;
   }
 
   .nmorph-checkbox__fake span {

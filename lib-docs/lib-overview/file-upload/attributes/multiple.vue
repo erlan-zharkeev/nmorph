@@ -7,7 +7,13 @@ const templateData = `
   <NmorphFileUpload multiple />
 </template>
 `;
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .file-upload-multiple-overview {
+    width: 300px;
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 </script>
 

@@ -52,7 +52,7 @@ const modifiers = computed(() =>
 </script>
 
 <template>
-  <div :class="modifiers" @click="clickHandler">
+  <div :class="modifiers" @click="clickHandler" :value="props.value">
     <div class="nmorph-select-option__content">
       <span>{{ props.label }}</span>
       <slot />
@@ -80,6 +80,20 @@ const modifiers = computed(() =>
   }
 
   &:not(.nmorph-select-option--disabled):hover .nmorph-select-option__checked {
+    --color: var(--hover-color);
+  }
+}
+
+.nmorph-select-option--focused {
+  &:not(.nmorph-select-option--disabled) {
+    background: var(--hover-bg);
+  }
+
+  &:not(.nmorph-select-option--disabled) span {
+    color: var(--hover-color);
+  }
+
+  &:not(.nmorph-select-option--disabled) .nmorph-select-option__checked {
     --color: var(--hover-color);
   }
 }

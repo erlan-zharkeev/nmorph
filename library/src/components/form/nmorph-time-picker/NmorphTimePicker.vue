@@ -12,7 +12,7 @@ import {
   timeArrayToTimestamp,
 } from '@/components';
 
-interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
+interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: number;
   open?: boolean;
   initWithoutValue?: boolean;

@@ -2,23 +2,30 @@
 import { NmorphImage } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
-
 const templateData = `
-<NmorphImage
-  src="./error.jpg"
-  load-failed-text="Custom error text"
-/>
-<NmorphImage src="./error.jpg">
-  <template #loading>Load error</template>
-</NmorphImage>
+<template>
+  <NmorphImage
+    src="./error.jpg"
+    load-failed-text="Custom error text"
+  />
+  <NmorphImage src="./error.jpg">
+    <template #loading>Load error</template>
+  </NmorphImage>
+</template>
 `;
 
 const cssData = `
-.nmorph-image {
-  --width: 300px;
-  --height: 300px;
-  margin-right: 16px;
-}
+<style lang="scss">
+  .image-load-failed-text-overview {
+    display: flex;
+    width: 100%;
+    .nmorph-image {
+      --width: 300px;
+      --height: 300px;
+      margin-right: 16px;
+    }
+  }
+</style>
 `;
 
 const code = [scriptData, templateData, cssData];
@@ -42,7 +49,7 @@ const code = [scriptData, templateData, cssData];
             </ClientOnly>
             <ClientOnly>
               <NmorphImage src="./error.jpg">
-                <template #error>Load error</template>
+                <template #error>{{ $t("overview.load-error") }}</template>
               </NmorphImage>
             </ClientOnly>
           </ClientOnly>

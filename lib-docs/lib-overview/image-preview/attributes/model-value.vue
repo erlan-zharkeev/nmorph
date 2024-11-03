@@ -3,28 +3,36 @@ import { NmorphImagePreview, NmorphButton } from "@nmorph/nmorph-ui-kit";
 import { Winter } from "@/assets/images";
 
 const scriptData = `
-const show = ref(false);
+<script lang="ts" setup>
+  const show = ref(false);
 
-const showHandler = () => {
-  show.value = true;
-};
+  const showHandler = () => {
+    show.value = true;
+  };
+<\/script>
 `;
 
 const templateData = `
-<NmorphImagePreview :src="Winter" :model-value="show" />
-<NmorphButton text="SHOW" @click="showHandler" />
+<template>
+  <NmorphImagePreview :src="Winter" :model-value="show" />
+  <NmorphButton text="SHOW" @click="showHandler" />
+</template>
 `;
 
 const cssData = `
-.nmorph-image-preview {
-  --width: 200px;
-  --height: 200px;
-}
+<style lang="scss">
+  .image-preview-model-value-overview {
+    .nmorph-image-preview {
+      --width: 200px;
+      --height: 200px;
+    }
 
-.nmorph-button {
-  margin-top: 8px;
-  width: 100%;
-}
+    .nmorph-button {
+      margin-top: 8px;
+      width: 100%;
+    }
+  }
+</style>
 `;
 
 const code = [scriptData, templateData, cssData];
@@ -47,7 +55,7 @@ const showHandler = () => {
         <div class="image-preview-model-value-overview">
           <ClientOnly>
             <NmorphImagePreview :src="Winter" :model-value="show" />
-            <NmorphButton text="SHOW" @click="showHandler" />
+            <NmorphButton :text="$t('overview.show')" @click="showHandler" />
           </ClientOnly>
         </div>
       </template>

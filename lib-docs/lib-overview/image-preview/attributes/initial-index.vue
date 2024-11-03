@@ -5,14 +5,20 @@ import { Spring, Summer, Autumn, Winter } from "@/assets/images";
 const scriptData = "";
 
 const templateData = `
-<NmorphImagePreview :src="[Summer, Spring, Winter, Autumn]" :initial-index="1" />
+<template>
+  <NmorphImagePreview :src="[Summer, Spring, Winter, Autumn]" :initial-index="1" />
+</template>
 `;
 
 const cssData = `
-.nmorph-image-preview {
-  --width: 200px;
-  --height: 200px;
-}
+<style lang="scss">
+  .image-preview-initial-index-overview {
+    .nmorph-image-preview {
+      --width: 200px;
+      --height: 200px;
+    }
+  }
+</style>
 `;
 
 const code = [scriptData, templateData, cssData];

@@ -3,8 +3,15 @@
   --container-height: calc(100vh - 70px);
   --aside-container-height: calc(100vh - 90px);
 }
+
 @mixin max-width-query($breakpoint) {
   @media (max-width: #{$breakpoint}px) {
     @content;
+  }
+}
+
+@include max-width-query(768) {
+  :root {
+    --aside-container-height: calc(100vh - 70px);
   }
 }

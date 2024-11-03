@@ -2,7 +2,11 @@
 import { NmorphSelect } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
-const templateData = "";
+const templateData = `
+<template>
+  <NmorphSelect disabled />
+</template>
+`;
 const cssData = "";
 const code = [scriptData, templateData, cssData];
 </script>

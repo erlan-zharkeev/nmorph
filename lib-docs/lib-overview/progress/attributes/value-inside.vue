@@ -1,35 +1,44 @@
 <script setup lang="ts">
 import { NmorphProgress } from "@nmorph/nmorph-ui-kit";
-const percentage = 33;
 
-const scriptData = "";
+const scriptData = `
+<script lang="ts" setup>
+  const percentage = 33;
+<\/script>
+`;
 
 const templateData = `
-<div class="progress-value-inside-overview">
-  <ClientOnly>
-    <NmorphProgress
-      :percentage="percentage"
-      value-inside
-      :value-right-side="false"
-    >
-      <template #inner-text>
-        <span>i'm slot prefix {{ percentage }}%</span>
-      </template>
-    </NmorphProgress>
-  </ClientOnly>
-</div>
+<template>
+  <div class="progress-value-inside-overview">
+    <ClientOnly>
+      <NmorphProgress
+        :percentage="percentage"
+        value-inside
+        :value-right-side="false"
+      >
+        <template #inner-text>
+          <span>i'm slot prefix {{ percentage }}%</span>
+        </template>
+      </NmorphProgress>
+    </ClientOnly>
+  </div>
+</template>
 `;
 
 const cssData = `
-.progress-value-inside-overview {
-  width: 100%;
-  .nmorph-progress {
-    --height: 16px;
+<style lang="scss">
+  .progress-value-inside-overview {
+    width: 100%;
+    .nmorph-progress {
+      --height: 16px;
+    }
   }
-}
+</style>
 `;
 
 const code = [scriptData, templateData, cssData];
+
+const percentage = 33;
 </script>
 
 <template>
@@ -48,7 +57,9 @@ const code = [scriptData, templateData, cssData];
               :value-right-side="false"
             >
               <template #inner-text>
-                <span>i'm slot prefix {{ percentage }}%</span>
+                <span
+                  >{{ $t("overview.i-am-slot-prefix") }} {{ percentage }}%</span
+                >
               </template>
             </NmorphProgress>
           </ClientOnly>

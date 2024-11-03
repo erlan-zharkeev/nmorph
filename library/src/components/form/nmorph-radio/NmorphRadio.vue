@@ -107,10 +107,14 @@ defineExpose({ inputDOMRef });
   }
 
   input {
-    opacity: 0;
+    // opacity: 0;
 
     @include absolute-zero;
     @include wh100;
+  }
+
+  input:focus-visible {
+    outline: var(--nmorph-accent-color) solid 2px;
   }
 
   .nmorph-radio__fake {

@@ -1,8 +1,27 @@
 <script setup lang="ts">
 import { NmorphBreadcrumb, NmorphBreadcrumbItem } from "@nmorph/nmorph-ui-kit";
 
-const scriptData = "";
-const templateData = "";
+const scriptData = `
+<script lang="ts" setup>
+  const elements = [
+    { name: "main", path: "/" },
+    { name: "components", path: "/components" },
+    { name: "breadcrumb", path: "/components/breadcrumb" },
+  ];
+<\/script>
+`;
+const templateData = `
+<template>
+  <NmorphBreadcrumb separator="/">
+  <NmorphBreadcrumbItem
+    v-for="el in elements"
+    :key="el.path"
+    :to="el.path"
+    >{{ el.name }}</NmorphBreadcrumbItem
+  >
+  </NmorphBreadcrumb>
+</template>
+`;
 const cssData = "";
 const code = [scriptData, templateData, cssData];
 

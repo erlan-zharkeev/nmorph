@@ -2,26 +2,28 @@
 import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
-
 const templateData = `
-<div class="badge-value-overview__element">
-  <NmorphBadge value="abc">
-    <NmorphButton text="button" />
-  </NmorphBadge>
-</div>
-<div class="badge-value-overview__element">
-  <NmorphBadge :value="99">
-    <NmorphButton text="button" />
-  </NmorphBadge>
-</div>
+<template>
+  <div class="badge-value-overview__element">
+    <NmorphBadge value="abc">
+      <NmorphButton text="button" />
+    </NmorphBadge>
+  </div>
+  <div class="badge-value-overview__element">
+    <NmorphBadge :value="99">
+      <NmorphButton text="button" />
+    </NmorphBadge>
+  </div>
+</template>
 `;
-
 const cssData = `
-<style lang="scss">
-.badge-value-overview__element {
-  margin-right: 24px;
+.badge-value-overview {
+  display: flex;
+
+  .badge-value-overview__element {
+    margin-right: 24px;
+  }
 }
-</style>
 `;
 
 const code = [scriptData, templateData, cssData];

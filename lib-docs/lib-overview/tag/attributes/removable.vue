@@ -1,50 +1,66 @@
 <script setup lang="ts">
 import { NmorphTagItem, NmorphTagList } from "@nmorph/nmorph-ui-kit";
-const showTag1 = ref(true);
-const showTag2 = ref(true);
-const list = ref([
-  { value: "3", text: "I m tag 3 from list" },
-  { value: "4", text: "I m tag 4 from list" },
-  { value: "5", text: "I m tag 5 from list", removable: false },
-]);
 
 const scriptData = `
-const showTag1 = ref(true);
-const showTag2 = ref(true);
-const list = ref([
-  { value: "3", text: "I m tag 3 from list" },
-  { value: "4", text: "I m tag 4 from list" },
-  { value: "5", text: "I m tag 5 from list", removable: false },
-]);
+<script lang="ts" setup>
+  const showTag1 = ref(true);
+  const showTag2 = ref(true);
+  const list = ref([
+    { value: "3", text: "Lorem ipsum" },
+    { value: "4", text: "Neque porro quisquam" },
+    { value: "5", text: "There is no one who loves ", removable: false },
+  ]);
+<\/script>
 `;
 
 const templateData = `
-<NmorphTagItem
-  v-show="showTag1"
-  value="0"
-  text="tag zero"
-  :removable="false"
-/>
-<NmorphTagItem
-  v-show="showTag1"
-  value="1"
-  text="tag one"
-  removable
-  @close="showTag1 = false"
-/>
-<NmorphTagItem
-  v-show="showTag2"
-  value="2"
-  text="tag two"
-  removable
-  @close="showTag2 = false"
-/>
-<NmorphTagList v-model="list" />
+<template>
+  <NmorphTagItem
+    v-show="showTag1"
+    value="0"
+    text="tag zero"
+    :removable="false"
+  />
+  <NmorphTagItem
+    v-show="showTag1"
+    value="1"
+    text="tag one"
+    removable
+    @close="showTag1 = false"
+  />
+  <NmorphTagItem
+    v-show="showTag2"
+    value="2"
+    text="tag two"
+    removable
+    @close="showTag2 = false"
+  />
+  <NmorphTagList v-model="list" />
+</template>
 `;
 
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .tag-removable-overview {
+    .nmorph-tag-item {
+      margin-right: 8px;
+    }
+    .tag-list {
+      margin-top: 8px;
+    }
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
+
+const showTag1 = ref(true);
+const showTag2 = ref(true);
+const list = ref([
+  { value: "3", text: "Lorem ipsum" },
+  { value: "4", text: "Neque porro quisquam" },
+  { value: "5", text: "There is no one who loves ", removable: false },
+]);
 </script>
 
 <template>
@@ -61,20 +77,20 @@ const code = [scriptData, templateData, cssData];
             <NmorphTagItem
               v-show="showTag1"
               value="0"
-              text="tag zero"
+              :text="$t('overview.tag-zero')"
               :removable="false"
             />
             <NmorphTagItem
               v-show="showTag1"
               value="1"
-              text="tag one"
+              :text="$t('overview.tag-one')"
               removable
               @close="showTag1 = false"
             />
             <NmorphTagItem
               v-show="showTag2"
               value="2"
-              text="tag two"
+              :text="$t('overview.tag-two')"
               removable
               @close="showTag2 = false"
             />

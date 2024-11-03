@@ -9,7 +9,15 @@ const templateData = `
   <NmorphButton style-type="transparent" loading />
 </template>
 `;
-const cssData = ``;
+const cssData = `
+<style lang="scss">
+  .button-loading-overview {
+    .nmorph-button {
+      margin: 0 8px;
+    }
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 </script>
 

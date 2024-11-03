@@ -7,66 +7,66 @@ import {
 } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = `
-<script lang="ts">
-const quantityElementsOnPage = ref(10);
-const elements = ref<Elements>([]);
-const total = ref<number>(0);
-const loading = ref(false);
-const currentPage = ref(1);
-const disabled = ref(false);
+<script lang="ts" setup>
+  const quantityElementsOnPage = ref(10);
+  const elements = ref<Elements>([]);
+  const total = ref<number>(0);
+  const loading = ref(false);
+  const currentPage = ref(1);
+  const disabled = ref(false);
 
-type Elements = Array<{ id: string; body: string }>;
-interface SomeResponse {
-  totalElementsQuantity: number;
-  elements: Elements;
-}
-
-const fetchFakeData = async (page: number): Promise<SomeResponse> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const startIndex = page * 10;
-      resolve({
-        totalElementsQuantity: 40,
-        elements: Array.from(
-          { length: quantityElementsOnPage.value },
-          (_, index) => {
-            const id = (startIndex + index).toString();
-            return {
-              id,
-              body: 'Element ' + id,
-            };
-          }
-        ),
-      });
-    }, 2000);
-  });
-};
-
-const getData = async (page: number) => {
-  try {
-    loading.value = true;
-    disabled.value = true;
-    const data = await fetchFakeData(page);
-    elements.value = data.elements;
-    total.value = data.totalElementsQuantity;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  } finally {
-    disabled.value = false;
-    loading.value = false;
+  type Elements = Array<{ id: string; body: string }>;
+  interface SomeResponse {
+    totalElementsQuantity: number;
+    elements: Elements;
   }
-};
 
-const toggleDisabled = () => {
-  disabled.value = !disabled.value;
-};
+  const fetchFakeData = async (page: number): Promise<SomeResponse> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const startIndex = page * 10;
+        resolve({
+          totalElementsQuantity: 40,
+          elements: Array.from(
+            { length: quantityElementsOnPage.value },
+            (_, index) => {
+              const id = (startIndex + index).toString();
+              return {
+                id,
+                body: 'Element ' + id,
+              };
+            }
+          ),
+        });
+      }, 2000);
+    });
+  };
 
-const changeQuantityElementsOnPageHandler = (value: number) => {
-  quantityElementsOnPage.value = value;
-  getData(currentPage.value);
-};
+  const getData = async (page: number) => {
+    try {
+      loading.value = true;
+      disabled.value = true;
+      const data = await fetchFakeData(page);
+      elements.value = data.elements;
+      total.value = data.totalElementsQuantity;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      disabled.value = false;
+      loading.value = false;
+    }
+  };
 
-getData(0);
+  const toggleDisabled = () => {
+    disabled.value = !disabled.value;
+  };
+
+  const changeQuantityElementsOnPageHandler = (value: number) => {
+    quantityElementsOnPage.value = value;
+    getData(currentPage.value);
+  };
+
+  getData(0);
 <\/script>
 `;
 
@@ -113,23 +113,23 @@ const templateData = `
 
 const cssData = `
 <style lang="scss">
-.cards__container {
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  gap: 8px;
-}
-.actions {
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-}
-.actions__element {
-  margin-right: 8px;
-}
-.cards__loader {
-  margin-top: 16px;
-  text-align: center;
-}
+  .cards__container {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 8px;
+  }
+  .actions {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+  }
+  .actions__element {
+    margin-right: 8px;
+  }
+  .cards__loader {
+    margin-top: 16px;
+    text-align: center;
+  }
 </scss>
 `;
 
@@ -208,7 +208,7 @@ getData(0);
           <ClientOnly>
             <div class="actions">
               <div class="actions__element">
-                <p>Selected page: {{ currentPage }}</p>
+                <p>{{ $t("overview.selected-page") }} {{ currentPage }}</p>
               </div>
               <div class="actions__element">
                 <NmorphButton text="Toggle disabled" @click="toggleDisabled" />
@@ -223,7 +223,7 @@ getData(0);
             </div>
             <div class="cards">
               <div class="cards__loader nmorph-title-3" v-if="loading">
-                Loading...
+                {{ $t("overview.loading") }}
               </div>
               <div class="cards__container" v-else>
                 <div

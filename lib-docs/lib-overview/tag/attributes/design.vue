@@ -2,12 +2,12 @@
 import { NmorphTagItem } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
-
 const templateData = `
-<NmorphTagItem value="1" text="tag one" design="nmorph" />
-<NmorphTagItem value="2" text="tag two" design="common" />
+<template>
+  <NmorphTagItem value="1" text="tag one" design="nmorph" />
+  <NmorphTagItem value="2" text="tag two" design="common" />
+</template>
 `;
-
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
@@ -23,8 +23,16 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="tag-design-overview">
           <ClientOnly>
-            <NmorphTagItem value="1" text="tag one" design="nmorph" />
-            <NmorphTagItem value="2" text="tag two" design="common" />
+            <NmorphTagItem
+              value="1"
+              :text="$t('overview.tag-one')"
+              design="nmorph"
+            />
+            <NmorphTagItem
+              value="2"
+              :text="$t('overview.tag-two')"
+              design="common"
+            />
           </ClientOnly>
         </div>
       </template>

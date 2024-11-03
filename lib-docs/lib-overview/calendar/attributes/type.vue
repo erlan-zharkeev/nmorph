@@ -16,24 +16,40 @@ const shortDate = (value: Date) => value.toLocaleDateString('current-locale');
 `;
 
 const templateData = `
-<div class="calendar-type-overview__element">
-  <p>Date</p>
-  <p>{{ shortDate(date) }}</p>
-  <NmorphCalendar v-model="date" />
-</div>
-<div class="calendar-type-overview__element">
-  <p>Date</p>
-  <p>{{ dates.map((date) => shortDate(date)).join("~") }}</p>
-  <NmorphCalendar v-model="dates" type="dates" />
-</div>
-<div class="calendar-type-overview__element">
-  <p>Date</p>
-  <p>{{ range.map((date) => shortDate(date)).join("~") }}</p>
-  <NmorphCalendar v-model="range" type="daterange" />
-</div>
+<template>
+  <div class="calendar-type-overview__element">
+    <p>Date</p>
+    <p>{{ shortDate(date) }}</p>
+    <NmorphCalendar v-model="date" />
+  </div>
+  <div class="calendar-type-overview__element">
+    <p>Date</p>
+    <p>{{ dates.map((date) => shortDate(date)).join("~") }}</p>
+    <NmorphCalendar v-model="dates" type="dates" />
+  </div>
+  <div class="calendar-type-overview__element">
+    <p>Date</p>
+    <p>{{ range.map((date) => shortDate(date)).join("~") }}</p>
+    <NmorphCalendar v-model="range" type="daterange" />
+  </div>
+</template>
 `;
 
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .calendar-type-overview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    .calendar-type-overview__element {
+      max-width: 33.333%;
+    }
+    p {
+      margin-bottom: 8px;
+    }
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 
@@ -60,12 +76,12 @@ const shortDate = (value: Date) => value.toLocaleDateString(locale.value);
         <div class="calendar-type-overview">
           <ClientOnly>
             <div class="calendar-type-overview__element">
-              <p>Date</p>
+              <p>{{ $t("overview.date") }}</p>
               <p>{{ shortDate(date) }}</p>
               <NmorphCalendar v-model="date" />
             </div>
             <div class="calendar-type-overview__element">
-              <p>Dates</p>
+              <p>{{ $t("overview.dates") }}</p>
               <p>{{ dates.map((date) => shortDate(date)).join("~") }}</p>
               <NmorphCalendar
                 v-model="dates"
@@ -74,7 +90,7 @@ const shortDate = (value: Date) => value.toLocaleDateString(locale.value);
               />
             </div>
             <div class="calendar-type-overview__element">
-              <p>Date range</p>
+              <p>{{ $t("overview.date-range") }}</p>
               <p>{{ range.map((date) => shortDate(date)).join("~") }}</p>
               <NmorphCalendar
                 v-model="range"

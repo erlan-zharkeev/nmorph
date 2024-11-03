@@ -12,9 +12,11 @@ const templateData = `
 
 const cssData = `
 <style lang="scss">
-.nmorph-link {
-  margin: 0 8px;
-}
+  .link-underline-overview {
+    .nmorph-link {
+      margin: 0 8px;
+    }
+  }
 </style>
 `;
 
@@ -30,8 +32,8 @@ const code = [scriptData, templateData, cssData];
     >
       <template #overview>
         <div class="link-underline-overview">
-          <NmorphLink>Without underline</NmorphLink>
-          <NmorphLink underline>Underlined</NmorphLink>
+          <NmorphLink>{{ $t("overview.without-underline") }}</NmorphLink>
+          <NmorphLink underline>{{ $t("overview.underlined") }}</NmorphLink>
         </div>
       </template>
       <template #code>

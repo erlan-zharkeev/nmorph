@@ -5,28 +5,39 @@ import CatReal from "~/assets/images/cat-real.png";
 const scriptData = ``;
 
 const templateData = `
-<NmorphAvatar
-  :src="CatReal"
-  :size="100"
-  shape="square"
-  fit="cover"
-/>
-<NmorphAvatar
-  :src="CatReal"
-  :size="100"
-  shape="square"
-  fit="contain"
-/>
-<NmorphAvatar
-  :src="CatReal"
-  :size="100"
-  shape="square"
-  fit="fill"
-/>
+<template>
+  <NmorphAvatar
+    :src="CatReal"
+    :size="100"
+    shape="square"
+    fit="cover"
+  />
+  <NmorphAvatar
+    :src="CatReal"
+    :size="100"
+    shape="square"
+    fit="contain"
+  />
+  <NmorphAvatar
+    :src="CatReal"
+    :size="100"
+    shape="square"
+    fit="fill"
+  />
+</template>
 `;
 
-const cssData = ``;
-
+const cssData = `
+<style lang="scss">
+  .avatar-fit-overview {
+    display: flex;
+    align-items: center;
+    .nmorph-avatar {
+      margin-right: 12px;
+    }
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 </script>
 

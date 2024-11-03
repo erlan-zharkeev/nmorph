@@ -4,15 +4,25 @@ const scriptData = ``;
 const templateData = `
 <template>
   <NmorphIcon
-  name="add-location"
-  color="var(--nmorph-accent-color)"
-  size="large"
+    name="add-location"
+    color="var(--nmorph-accent-color)"
+    size="large"
   />
   <NmorphIcon name="avatar" color="#694295" size="large" />
   <NmorphIcon name="archive" color="hsl(148, 60%, 39%)" size="large" />
 </template>
 `;
-const cssData = ``;
+const cssData = `
+<style lang="scss">
+  .icon-color-overview {
+    display: flex;
+
+    .nmorph-icon {
+      margin: 0 8px;
+    }
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 </script>
 

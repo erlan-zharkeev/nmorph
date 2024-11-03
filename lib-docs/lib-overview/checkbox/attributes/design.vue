@@ -2,8 +2,8 @@
 import { NmorphCheckbox } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = `
-<script lang="ts">
-const value = ref(false);
+<script lang="ts" setup>
+  const value = ref(false);
 <\/script>
 `;
 
@@ -19,7 +19,15 @@ const templateData = `
 </template>
 `;
 
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .checkbox-design-overview {
+    .nmorph-checkbox {
+      margin-right: 8px;
+    }
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 
 const value = ref(false);

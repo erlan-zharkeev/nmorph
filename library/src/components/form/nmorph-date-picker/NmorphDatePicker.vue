@@ -12,7 +12,7 @@ import {
 } from '@/components';
 import NmorphClearButton from './inner-components/nmorph-clear-button/NmorphClearButton.vue';
 
-interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill'> {
+interface INmorphProps extends INmorphCommonInputProps {
   placeholder?: string;
   initialStartDate?: Date;
   initialEndDate?: Date;

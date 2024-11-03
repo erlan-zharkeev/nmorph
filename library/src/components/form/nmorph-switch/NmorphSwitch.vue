@@ -4,7 +4,7 @@ import { useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import { NmorphIcon } from '@/components';
 
-interface INmorphProps extends Omit<INmorphCommonInputProps, 'fill' | 'height'> {
+interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
   modelValue?: boolean | string | number;
   loading?: boolean;
   activeValue?: boolean | string | number;
@@ -19,17 +19,26 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   inactiveValue: false,
 });
 
+const emit = defineEmits<INmorphEmit>();
+
+const focus = ref(false);
+const focusHandler = () => {
+  focus.value = true;
+};
+const blurHandler = () => {
+  focus.value = false;
+};
+
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-switch': [
       `${props.disabled && 'disabled'}`,
       `${initialValue.value ? 'on' : 'off'}`,
       `${props.loading && 'loading'}`,
+      `${focus.value && 'focus'}`,
     ],
   })
 );
-
-const emit = defineEmits<INmorphEmit>();
 
 const initialValue = ref<boolean>(props.modelValue === props.activeValue);
 
@@ -63,6 +72,8 @@ watch(
         :value="initialValue"
         :disabled="props.disabled"
         class="nmorph-native-input"
+        @focus="focusHandler"
+        @blur="blurHandler"
       />
       <div class="nmorph-switch__bg-content" :class="{ 'nmorph-switch__bg-content--enable': initialValue }">
         <slot v-if="initialValue" name="bg-on" />
@@ -104,7 +115,7 @@ watch(
   input {
     width: 100%;
     height: var(--height);
-    visibility: hidden;
+    // visibility: hidden;
     opacity: 0;
   }
 
@@ -167,5 +178,12 @@ watch(
 .nmorph-switch__bg-content--enable {
   justify-content: flex-start;
   color: var(--nmorph-focus-text-color);
+}
+
+.nmorph-switch--focus {
+  outline: 2px solid var(--nmorph-accent-color);
+  .nmorph-switch__content {
+    scale: 0.95;
+  }
 }
 </style>

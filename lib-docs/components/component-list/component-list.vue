@@ -128,4 +128,10 @@ const isRouteExist = (name: string) => {
 .docs-component-list__scroll {
   height: var(--aside-container-height);
 }
+
+@include max-width-query(768) {
+  .docs-component-list {
+    width: 100%;
+  }
+}
 </style>

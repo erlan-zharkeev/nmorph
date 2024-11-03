@@ -14,7 +14,15 @@ const templateData = `
   <NmorphButton :ripple="false" text="I am not ripple" />
 </template>
 `;
-const cssData = ``;
+const cssData = `
+<style lang="scss">
+  .button-ripple-overview {
+    .nmorph-button {
+      margin: 0 8px;
+    }
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 </script>
 
@@ -27,14 +35,21 @@ const code = [scriptData, templateData, cssData];
     >
       <template #overview>
         <div class="button-ripple-overview">
-          <NmorphButton style-type="default" ripple text="I am ripple" />
+          <NmorphButton
+            style-type="default"
+            ripple
+            :text="$t('overview.i-am-ripple')"
+          />
           <NmorphButton
             style-type="default"
             ripple
             accent-bg-on-hover
-            text="I am ripple with hover bg"
+            :text="$t('overview.i-am-ripple-with-hover-bg')"
           />
-          <NmorphButton :ripple="false" text="I am not ripple" />
+          <NmorphButton
+            :ripple="false"
+            :text="$t('overview.i-am-not-ripple')"
+          />
         </div>
       </template>
       <template #code>

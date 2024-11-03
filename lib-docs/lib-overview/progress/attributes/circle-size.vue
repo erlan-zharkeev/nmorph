@@ -3,9 +3,41 @@ import { NmorphProgress } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
-const templateData = "";
+const templateData = `
+<template>
+  <NmorphProgress
+    :percentage="33"
+    :circle-size="50"
+    type="circle"
+    color="var(--nmorph-accent-color)"
+  />
+  <NmorphProgress
+    :percentage="33"
+    :circle-size="100"
+    type="circle"
+    color="var(--nmorph-error-color)"
+  />
+  <NmorphProgress
+    :percentage="33"
+    :circle-size="120"
+    type="circle"
+    color="cyan"
+  />
+</template>
+`;
 
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .progress-circle-size-overview {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    .nmorph-progress {
+      margin-right: 16px;
+    }
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
 </script>
@@ -30,9 +62,14 @@ const code = [scriptData, templateData, cssData];
               :percentage="33"
               :circle-size="100"
               type="circle"
+              color="var(--nmorph-error-color)"
+            />
+            <NmorphProgress
+              :percentage="33"
+              :circle-size="120"
+              type="circle"
               color="cyan"
             />
-            <NmorphProgress :percentage="33" :circle-size="200" type="circle" />
           </ClientOnly>
         </div>
       </template>

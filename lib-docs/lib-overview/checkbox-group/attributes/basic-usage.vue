@@ -2,14 +2,14 @@
 import { NmorphCheckboxGroup } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = `
-<script lang="ts">
-const options = [
-  { id: "1", disabled: true, label: "1" },
-  { id: "2", label: "2" },
-  { id: "3", label: "3" },
-];
+<script lang="ts" setup>
+  const options = [
+    { id: "1", disabled: true, label: "1" },
+    { id: "2", label: "2" },
+    { id: "3", label: "3" },
+  ];
 
-const value = ref(["2"]);
+  const value = ref(["2"]);
 <\/script>
 `;
 
@@ -28,7 +28,15 @@ const templateData = `
   />
 </template>
 `;
-const cssData = "";
+const cssData = `
+<style lang="scss">
+  .checkbox-group-model-value-overview {
+    .nmorph-checkbox-group {
+      margin-right: 24px;
+    }
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 const options = [
   { id: "1", disabled: true, label: "1" },

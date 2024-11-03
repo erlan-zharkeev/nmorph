@@ -1,13 +1,28 @@
 <script setup lang="ts">
 import { NmorphSlider } from "@nmorph/nmorph-ui-kit";
 
-const scriptData = "";
+const scriptData = `
+<script lang="ts" setup>
+  const value = ref(3);
+<\/script>
+`;
 
-const templateData = "";
-
-const cssData = "";
+const templateData = `
+<template>
+  <NmorphSlider :min="1" :max="22" :step="1" v-model="value" />
+</template>
+`;
+const cssData = `
+<style lang="scss">
+  .slider-basic-usage-overview {
+    width: 300px;
+    min-height: 40px;
+  }
+</style>
+`;
 
 const code = [scriptData, templateData, cssData];
+
 const value = ref(3);
 </script>
 

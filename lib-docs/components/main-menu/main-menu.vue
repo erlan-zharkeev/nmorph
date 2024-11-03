@@ -73,4 +73,10 @@ $transition: 0.2s ease-in-out left;
     opacity: 1;
   }
 }
+
+@include max-width-query(768) {
+  .docs-main-menu__content {
+    padding: 8px;
+  }
+}
 </style>

@@ -12,7 +12,23 @@ const templateData = `
 </template>
 `;
 
-const cssData = ``;
+const cssData = `
+<style lang="scss">
+  .button-shape-overview {
+    .nmorph-button {
+      margin: 0 8px;
+    }
+
+    .custom-circle-button {
+      --height: 50px;
+    }
+
+    .custom-square-button {
+      --height: 70px;
+    }
+  }
+</style>
+`;
 const code = [scriptData, templateData, cssData];
 </script>
 
@@ -26,14 +42,14 @@ const code = [scriptData, templateData, cssData];
     >
       <template #overview>
         <div class="button-shape-overview">
-          <NmorphButton>Default</NmorphButton>
-          <NmorphButton shape="circle" class="custom-circle-button"
-            >Circle</NmorphButton
-          >
-          <NmorphButton shape="round">Round</NmorphButton>
-          <NmorphButton shape="square" class="custom-square-button"
-            >Square</NmorphButton
-          >
+          <NmorphButton>{{ $t("overview.default") }}</NmorphButton>
+          <NmorphButton shape="circle" class="custom-circle-button">{{
+            $t("overview.circle")
+          }}</NmorphButton>
+          <NmorphButton shape="round">{{ $t("overview.round") }}</NmorphButton>
+          <NmorphButton shape="square" class="custom-square-button">{{
+            $t("overview.square")
+          }}</NmorphButton>
         </div>
       </template>
       <template #code>

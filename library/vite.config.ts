@@ -6,7 +6,7 @@ import dts from 'vite-plugin-dts';
 import svgLoader from 'vite-svg-loader';
 import { fileURLToPath, URL } from 'url';
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(() => {
   return {
     plugins: [
       vue(),
@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
         fileName: (format: string) => `index.${format}.js`,
       },
       rollupOptions: {
-        external: ['vue', 'vue-i18n', 'lodash', 'pinia', 'mitt'],
+        external: ['vue', 'vue-i18n', 'lodash', 'pinia'],
         plugins: [
           {
             name: 'ignore-test-and-story-files',
@@ -60,11 +60,5 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-    // test: {
-    //   globals: true,
-    //   // simulate DOM with happy-dom
-    //   // (requires installing happy-dom as a peer dependency)
-    //   environment: 'happy-dom',
-    // },
   };
 });

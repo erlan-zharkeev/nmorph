@@ -2,7 +2,7 @@
 import { NmorphAlert, NmorphAlertType } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = `
-<script lang="ts">
+<script lang="ts" setup>
   const initialAlerts: Record<
   string,
   {
@@ -54,16 +54,19 @@ const templateData = `
 
 const cssData = `
 <style lang="scss">
-.alert-basic-usage-overview {
-  width: 100%;
-  .first-row {
-    display: flex;
-    margin-bottom: 8px;
+  .alert-basic-usage-overview {
+    width: 100%;
+    .first-row {
+      display: flex;
+      margin-bottom: 8px;
+    }
+    .second-row {
+      span,
+      p {
+        color: var(--nmorph-white-color);
+      }
+    }
   }
-  .nmorph-alert {
-    margin-right: 8px;
-  }
-}
 </style>
 `;
 
@@ -145,6 +148,12 @@ const closeHandler = (id: string) => {
   }
   .nmorph-alert {
     margin-right: 8px;
+  }
+  .second-row {
+    span,
+    p {
+      color: var(--nmorph-white-color);
+    }
   }
 }
 </style>

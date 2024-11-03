@@ -6,7 +6,7 @@ export type NmorphSelectModelValueType = string | string[];
 export type NmorphSelectSelectedValueInjectionType = Ref<NmorphSelectModelValueType>;
 export type NmorphSelectChangeSelectedValue = (value: string) => void;
 
-export interface INmorphSelectOption extends Omit<INmorphCommonInputProps, 'fill'> {
+export interface INmorphSelectOption extends INmorphCommonInputProps {
   value: string;
   label: string;
 }

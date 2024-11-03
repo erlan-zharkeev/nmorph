@@ -13,9 +13,11 @@ const templateData = `
 `;
 const cssData = `
 <style lang="scss">
-.nmorph-link {
-  margin: 0 8px;
-}
+  .link-type-overview {
+    .nmorph-link {
+      margin: 0 8px;
+    }
+  }
 </style>
 `;
 

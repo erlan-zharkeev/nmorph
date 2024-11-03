@@ -2,22 +2,25 @@
 import { NmorphProgress } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
-
 const templateData = `
-<div class="progress-percentage-overview">
-  <NmorphProgress :percentage="33" />
-  <NmorphProgress :percentage="66" />
-  <NmorphProgress :percentage="99" />
-</div>
+<template>
+  <div class="progress-percentage-overview">
+    <NmorphProgress :percentage="33" />
+    <NmorphProgress :percentage="66" />
+    <NmorphProgress :percentage="99" />
+  </div>
+</template>
 `;
 
 const cssData = `
-.progress-percentage-overview {
-  width: 100%;
-  .nmorph-progress {
-    margin-bottom: 16px;
+<style lang="scss">
+  .progress-percentage-overview {
+    width: 100%;
+    .nmorph-progress__linear {
+      margin-bottom: 12px;
+    }
   }
-}
+</style>
 `;
 
 const code = [scriptData, templateData, cssData];
@@ -59,8 +62,8 @@ const code = [scriptData, templateData, cssData];
 <style lang="scss">
 .progress-percentage-overview {
   width: 100%;
-  .nmorph-progress {
-    margin-bottom: 16px;
+  .nmorph-progress__linear {
+    margin-bottom: 12px;
   }
 }
 </style>

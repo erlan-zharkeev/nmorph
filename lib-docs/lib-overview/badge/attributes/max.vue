@@ -4,11 +4,12 @@ import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
 const scriptData = "";
 
 const templateData = `
-<NmorphBadge :max="18" :value="100">
-  <NmorphButton text="button" />
-</NmorphBadge>
+<template>
+  <NmorphBadge :max="18" :value="100">
+    <NmorphButton text="button" />
+  </NmorphBadge>
+</template>
 `;
-
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];

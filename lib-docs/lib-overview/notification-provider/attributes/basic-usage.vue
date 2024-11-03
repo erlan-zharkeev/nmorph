@@ -60,11 +60,13 @@ const templateData = `
 
 const cssData = `
 <style lang="scss">
-  .actions {
-    display: flex;
-  }
-  .actions__button {
-    margin-right: 8px;
+  .notification-provider-basic-usage-overview {
+    .actions {
+      display: flex;
+    }
+    .actions__button {
+      margin-right: 8px;
+    }
   }
 </style>
 `;

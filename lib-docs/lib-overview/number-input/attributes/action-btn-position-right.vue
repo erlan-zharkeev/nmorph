@@ -3,7 +3,7 @@ import { NmorphNumberInput } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = `
 <script lang="ts" setup>
-  const value = ref("");
+  const value = ref(2);
 <\/script>
 `;
 

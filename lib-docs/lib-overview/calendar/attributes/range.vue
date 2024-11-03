@@ -1,9 +1,23 @@
 <script setup lang="ts">
 import { NmorphCalendar } from "@nmorph/nmorph-ui-kit";
 
-const scriptData = "";
+const scriptData = `
+<script lang="ts" setup>
+  const date1 = new Date();
+  const date2 = new Date();
 
-const templateData = "";
+  date2.setDate(date2.getDate() + 2);
+
+  const range = ref([date1, date2]);
+  const model = ref(new Date());
+<\/script>
+`;
+
+const templateData = `
+<template>
+  <NmorphCalendar :range="range" v-model="model" />
+</template>
+`;
 
 const cssData = "";
 

@@ -4,19 +4,23 @@ import { NmorphProgress } from "@nmorph/nmorph-ui-kit";
 const scriptData = "";
 
 const templateData = `
-<div class="progress-indeterminate-overview">
-  <NmorphProgress
-    :percentage="50"
-    indeterminate
-    color="var(--nmorph-accent-color)"
-  />
-</div>
+<template>
+  <div class="progress-indeterminate-overview">
+    <NmorphProgress
+      :percentage="50"
+      indeterminate
+      color="var(--nmorph-accent-color)"
+    />
+  </div>
+</template>
 `;
 
 const cssData = `
-.progress-indeterminate-overview {
-  width: 100%;
-}
+<style lang="scss">
+  .progress-indeterminate-overview {
+    width: 100%;
+  }
+</style>
 `;
 
 const code = [scriptData, templateData, cssData];

@@ -5,23 +5,31 @@ import { CatReal } from "~/assets/images";
 const scriptData = "";
 
 const templateData = `
-<div class="image-fit-overview__wrapper">
-  <NmorphImage :src="CatReal" fit="contain" />
-</div>
-<div class="image-fit-overview__wrapper">
-  <NmorphImage :src="CatReal" fit="fill" />
-</div>
-<div class="image-fit-overview__wrapper">
-  <NmorphImage :src="CatReal" fit="cover" />
-</div>
+<template>
+  <div class="image-fit-overview__wrapper">
+    <NmorphImage :src="CatReal" fit="contain" />
+  </div>
+  <div class="image-fit-overview__wrapper">
+    <NmorphImage :src="CatReal" fit="fill" />
+  </div>
+  <div class="image-fit-overview__wrapper">
+    <NmorphImage :src="CatReal" fit="cover" />
+  </div>
+</template>
 `;
 
 const cssData = `
-.image-fit-overview__wrapper {
-  width: 200px;
-  height: 200px;
-  margin-right: 16px;
-}
+<style lang="scss">
+  .image-fit-overview {
+    width: 100%;
+    display: flex;
+    .image-fit-overview__wrapper {
+      width: 200px;
+      height: 200px;
+      margin-right: 16px;
+    }
+  }
+</style>
 `;
 
 const code = [scriptData, templateData, cssData];

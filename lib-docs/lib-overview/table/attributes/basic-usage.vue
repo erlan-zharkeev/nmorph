@@ -8,78 +8,78 @@ import {
 
 const scriptData = `
 <script lang="ts" setup>
-interface ITableCell {
-  date: string;
-  name: string;
-  address: string;
-}
-
-const data = ref<ITableCell[]>([
-  {
-    date: "2023-10-10",
-    name: "Alice",
-    address: "123 Maple Ave, New York",
-  },
-  {
-    date: "2023-10-09",
-    name: "Bob",
-    address: "456 Elm St, Chicago",
-  },
-  {
-    date: "2023-10-08",
-    name: "Charlie",
-    address: "789 Pine St, San Francisco",
-  },
-  {
-    date: "2023-10-07",
-    name: "Diana",
-    address: "321 Oak St, Seattle",
-  },
-  {
-    date: "2023-10-06",
-    name: "Ethan",
-    address: "654 Birch Rd, Austin",
-  },
-  {
-    date: "2023-10-05",
-    name: "Fiona",
-    address: "987 Cedar Blvd, Miami",
-  },
-  {
-    date: "2023-10-04",
-    name: "George",
-    address: "147 Spruce St, Denver",
-  },
-]);
-
-const clickHandler = (data: ITableCell) => {
-  alert(\`My name is \${data.name}!\`);
-};
-
-const sort = ref({ date: "descending", name: "ascending" });
-const bordered = ref(false);
-const design = ref("nmorph");
-const highlightRowOnHover = ref(false);
-
-const toggleDesignProp = () => {
-  if (design.value === "nmorph") {
-    bordered.value = true;
-    design.value = "common";
-  } else {
-    bordered.value = false;
-    design.value = "nmorph";
+  interface ITableCell {
+    date: string;
+    name: string;
+    address: string;
   }
-};
 
-const toggleHighlightRow = () => {
-  highlightRowOnHover.value = !highlightRowOnHover.value;
-};
+  const data = ref<ITableCell[]>([
+    {
+      date: "2023-10-10",
+      name: "Alice",
+      address: "123 Maple Ave, New York",
+    },
+    {
+      date: "2023-10-09",
+      name: "Bob",
+      address: "456 Elm St, Chicago",
+    },
+    {
+      date: "2023-10-08",
+      name: "Charlie",
+      address: "789 Pine St, San Francisco",
+    },
+    {
+      date: "2023-10-07",
+      name: "Diana",
+      address: "321 Oak St, Seattle",
+    },
+    {
+      date: "2023-10-06",
+      name: "Ethan",
+      address: "654 Birch Rd, Austin",
+    },
+    {
+      date: "2023-10-05",
+      name: "Fiona",
+      address: "987 Cedar Blvd, Miami",
+    },
+    {
+      date: "2023-10-04",
+      name: "George",
+      address: "147 Spruce St, Denver",
+    },
+  ]);
 
-const highlightRowOnHoverText = computed(() => {
-  return highlightRowOnHover.value
-    ? "Disable row highlight"
-    : "Enable row highlight";
-});
+  const clickHandler = (data: ITableCell) => {
+    alert(\`My name is \${data.name}!\`);
+  };
+
+  const sort = ref({ date: "descending", name: "ascending" });
+  const bordered = ref(false);
+  const design = ref("nmorph");
+  const highlightRowOnHover = ref(false);
+
+  const toggleDesignProp = () => {
+    if (design.value === "nmorph") {
+      bordered.value = true;
+      design.value = "common";
+    } else {
+      bordered.value = false;
+      design.value = "nmorph";
+    }
+  };
+
+  const toggleHighlightRow = () => {
+    highlightRowOnHover.value = !highlightRowOnHover.value;
+  };
+
+  const highlightRowOnHoverText = computed(() => {
+    return highlightRowOnHover.value
+      ? "Disable row highlight"
+      : "Enable row highlight";
+  });
 <\/script>
 `;
 
@@ -137,16 +137,16 @@ const templateData = `
 
 const cssData = `
 <style lang="scss">
-.table-basic-usage-overview {
-  width: 100%;
-  .actions {
-    margin-bottom: 16px;
-    display: flex;
+  .table-basic-usage-overview {
+    width: 100%;
+    .actions {
+      margin-bottom: 16px;
+      display: flex;
+    }
+    .actions__element {
+      margin-right: 8px;
+    }
   }
-  .actions__element {
-    margin-right: 8px;
-  }
-}
 </style>
 `;
 const code = [scriptData, templateData, cssData];
@@ -252,7 +252,7 @@ const clickMeText = `overview.table.basic-usage.click-me-text`;
                 />
               </div>
               <div class="actions__element">
-                <p>Sort values: {{ sort }}</p>
+                <p>{{ $t("overview.sort-values") }} {{ sort }}</p>
               </div>
             </div>
             <NmorphTable
