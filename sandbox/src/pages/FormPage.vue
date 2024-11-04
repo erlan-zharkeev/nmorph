@@ -1,35 +1,29 @@
 <template>
   <div class="wrapper">
-    <NmorphForm :value="form">
-      <!-- <select>
-        <option
-          v-for="option in food"
-          :key="option.value"
-          :value="option.value"
-          tabindex="0"
-        />
-      </select> -->
-      <!-- <NmorphFormItem id="username" label="Username">
-        <NmorphTextInput v-model="form.username.value" type-password />
-      </NmorphFormItem> -->
-      <!--
+    {{ formRef }}
+    <NmorphForm :value="form" ref="formRef">
+      <NmorphFormItem id="username" label="Username">
+        <NmorphTextInput v-model="form.username.value" clearable />
+      </NmorphFormItem>
+
       <NmorphFormItem id="years" label="Years old">
         <NmorphNumberInput v-model="form.years.value" :min="18" :max="150" />
-      </NmorphFormItem> -->
+      </NmorphFormItem>
 
-      <!-- <NmorphFormItem id="drink" label="Preferred drink">
+      <NmorphFormItem id="drink" label="Preferred drink">
         <NmorphRadioGroup v-model="form.drink.value">
           <NmorphRadio
             v-for="option in drinks"
+            style-type="radio-style"
             :key="option.value"
             :label="option.label"
             :value="option.value"
             :disabled="option.disabled"
           />
         </NmorphRadioGroup>
-      </NmorphFormItem> -->
-
-      <!-- <NmorphFormItem id="browsers" label="Browsers">
+      </NmorphFormItem>
+      <!--
+      <NmorphFormItem id="browsers" label="Browsers">
         <NmorphCheckboxGroup v-model="form.browsers.value">
           <NmorphCheckbox
             v-for="option in browsers"
@@ -37,57 +31,22 @@
             :key="option.id"
             :label="option.label"
             :disabled="option.disabled"
-            style-type="button"
+            design="button"
           />
         </NmorphCheckboxGroup>
-      </NmorphFormItem> -->
+      </NmorphFormItem>
 
-      <!-- <NmorphFormItem id="agreement" label="Agreement">
-        <NmorphSwitch v-model="form.agreement.value">
-          <template #thumb-on
-            ><NmorphIcon name="eye" width="10px" height="10px"
-          /></template>
-          <template #thumb-off
-            ><NmorphIcon name="eye-blocked" width="10px" height="10px"
-          /></template>
-        </NmorphSwitch>
-      </NmorphFormItem> -->
-
-      <!-- <NmorphFormItem id="someValue" label="Some value">
+      <NmorphFormItem id="someValue" label="Some value">
         <NmorphSlider
           v-model="form.someValue.value"
           :step="1"
           :min="0"
           :max="100"
         />
-      </NmorphFormItem> -->
-
-      <!-- <NmorphFormItem id="food" label="Favorite food">
-        <NmorphSelect
-          v-model="form.food.value"
-          value-required
-          :options-map="food"
-          fill
-        >
-          <NmorphSelectOption
-            v-for="option in food"
-            :key="option.value"
-            :label="option.label"
-            :value="option.value"
-          />
-        </NmorphSelect>
-      </NmorphFormItem> -->
-
-      <NmorphFormItem id="date" label="Choose date">
-        <NmorphDatePicker v-model="form.date.value" />
       </NmorphFormItem>
 
-      <!-- <NmorphFormItem id="photo" label="Photo">
+      <NmorphFormItem id="photo" label="Photo">
         <NmorphFileUpload v-model="form.photo.value" multiple />
-      </NmorphFormItem> -->
-
-      <!-- <NmorphFormItem id="send" label="Send form">
-        <NmorphButton text="Click me" width="100px" fill />
       </NmorphFormItem> -->
     </NmorphForm>
   </div>
@@ -111,7 +70,22 @@ import {
   NmorphSelectOption,
   NmorphDatePicker,
 } from "./../../../library/src/components";
-import { reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
+// const date = ref(new Date());
+
+const date1 = new Date(1989, 11, 18);
+// const date2 = new Date(1989, 11, 19);
+const date3 = new Date(1989, 11, 21);
+const range = ref([date1, date3]);
+
+const date = ref([new Date(), new Date()]);
+const formRef = ref();
+const validator = ref();
+
+onMounted(() => {
+  // const data = formRef.value.formData;
+  // console.log(validator);
+});
 
 const form = reactive({
   username: {
@@ -132,63 +106,59 @@ const form = reactive({
       },
     ],
   },
-  browsers: {
-    value: ["Chrome", "Firefox"],
-    rules: [
-      {
-        compareValue: ["ie"],
-        arrayCompareType: "not-contains",
-        error: "IE not supported",
-      },
-    ],
-  },
-  agreement: {
-    value: true,
-    rules: [
-      {
-        compareValue: false,
-        booleanCompareType: "eq",
-        error: "You must set agreement",
-      },
-    ],
-  },
-  someValue: {
-    value: 50,
-    rules: [
-      {
-        compareValue: 30,
-        numberCompareType: "lt",
-        error: "Value must be greater than 30",
-      },
-      {
-        compareValue: 80,
-        numberCompareType: "gt",
-        error: "Value must be less than 80",
-      },
-    ],
-  },
-  food: {
-    value: ["apple"],
-    rules: [
-      {
-        compareValue: ["pear"],
-        arrayCompareType: "not-contains",
-        error: "Pear is not available",
-      },
-    ],
-  },
-  photo: {
-    value: [],
-    rules: [],
-  },
-  time: {
-    value: Date.now(),
-    rules: [],
-  },
-  date: {
-    value: new Date("2024-05-13"),
-    rules: [],
-  },
+  // browsers: {
+  //   value: ["Chrome", "Firefox"],
+  //   rules: [
+  //     {
+  //       compareValue: ["ie"],
+  //       arrayCompareType: "not-contains",
+  //       error: "IE not supported",
+  //     },
+  //   ],
+  // },
+  // agreement: {
+  //   value: true,
+  //   rules: [
+  //     {
+  //       compareValue: false,
+  //       booleanCompareType: "eq",
+  //       error: "You must set agreement",
+  //     },
+  //   ],
+  // },
+  // someValue: {
+  //   value: 50,
+  //   rules: [
+  //     {
+  //       compareValue: 30,
+  //       numberCompareType: "lt",
+  //       error: "Value must be greater than 30",
+  //     },
+  //     {
+  //       compareValue: 80,
+  //       numberCompareType: "gt",
+  //       error: "Value must be less than 80",
+  //     },
+  //   ],
+  // },
+  // food: {
+  //   value: ["apple"],
+  //   rules: [
+  //     {
+  //       compareValue: ["pear"],
+  //       arrayCompareType: "not-contains",
+  //       error: "Pear is not available",
+  //     },
+  //   ],
+  // },
+  // photo: {
+  //   value: [],
+  //   rules: [],
+  // },
+  // date: {
+  //   value: new Date(),
+  //   rules: [],
+  // },
 });
 
 const drinks = [

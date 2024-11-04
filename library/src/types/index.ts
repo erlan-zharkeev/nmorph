@@ -300,6 +300,8 @@ export enum NmorphIconList {
   'wind-power' = 'wind-power',
   'zoom-in' = 'zoom-in',
   'zoom-out' = 'zoom-out',
+  'plus-thin' = 'plus-thin',
+  'minus-thin' = 'minus-thin',
 }
 
 export enum NmorphComponentPosition {

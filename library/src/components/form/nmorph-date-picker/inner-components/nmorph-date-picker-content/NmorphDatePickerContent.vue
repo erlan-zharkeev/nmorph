@@ -3,6 +3,8 @@ import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphCalendar, NmorphDateType, NmorphSelectedDateModelType } from '@/components';
 import { NmorphSelectionDateType, NmorphInnerPickerType } from '@/types';
+import NmorphDatePickerHeader from './../nmorph-date-picker-header/NmorphDatePickerHeader.vue';
+import NmorphYearMonthPicker from './../nmorph-year-month-picker/NmorphYearMonthPicker.vue';
 
 interface INmorphProps {
   initialDate?: Date;
@@ -70,6 +72,9 @@ const backToYearsHandler = () => {
 const updateSelectedDate = (value: NmorphDateType) => {
   emit('update-selected-value', value);
 };
+const updateInitialDate = (date) => {
+  initialDate.value = date;
+};
 </script>
 
 <template>
@@ -77,13 +82,15 @@ const updateSelectedDate = (value: NmorphDateType) => {
     <NmorphCalendar
       v-if="selectedPicker === 'calendar'"
       :type="props.type"
-      :selected-values="props.selectedValues"
       :initial-date="initialDate"
+      :model-value="props.selectedValues"
       @update:model-value="updateSelectedDate"
+      @update-initial-date="updateInitialDate"
     >
       <template #header
         ><NmorphDatePickerHeader
-          :date="initialDate"
+          :year="initialDate.getFullYear()"
+          :month="initialDate.getMonth()"
           @prev-month="prevMonthHandler"
           @next-month="nextMonthHandler"
           @prev-year="prevYearHandler"

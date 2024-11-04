@@ -49,15 +49,15 @@ export const useMock = () => {
   const food = [
     {
       label: t("overview.form.basic-usage.pear"),
-      value: "pear",
+      value: t("overview.form.basic-usage.pear"),
     },
     {
       label: t("overview.form.basic-usage.apple"),
-      value: "apple",
+      value: t("overview.form.basic-usage.apple"),
     },
     {
       label: t("overview.form.basic-usage.orange"),
-      value: "orange",
+      value: t("overview.form.basic-usage.orange"),
     },
   ];
 

@@ -454,6 +454,9 @@ export default {
       "type": {
         "subtitle": "Defines the calendar type, such as *single* or *multiple* selection."
       },
+      "custom-content": {
+        "subtitle": ""
+      },
       "range": {
         "subtitle": "Determines whether the calendar operates in range selection mode."
       },
@@ -1181,47 +1184,6 @@ export default {
         "update:model-value": "Emitted when the slider value changes."
       }
     },
-    // "time-picker": {
-    //   "disabled": {
-    //     "subtitle": "Disables the time picker if set to true."
-    //   },
-    //   "model-value": {
-    //     "subtitle": "Represents the selected time value."
-    //   },
-    //   "open": {
-    //     "subtitle": "Controls whether the time picker dropdown is open."
-    //   },
-    //   "init-without-value": {
-    //     "subtitle": "If true, the time picker will initialize without a default value."
-    //   },
-    //   "disabled-hours": {
-    //     "subtitle": "Specifies which hours should be disabled for selection."
-    //   },
-    //   "disabled-minutes": {
-    //     "subtitle": "Specifies which minutes should be disabled for selection."
-    //   },
-    //   "disabled-seconds": {
-    //     "subtitle": "Specifies which seconds should be disabled for selection."
-    //   },
-    //   "api": {
-    //     "disabled": "Disables the time picker.",
-    //     "model-value": "The selected time value.",
-    //     "open": "Boolean to control visibility of the dropdown.",
-    //     "init-without-value": "Initializes the time picker without a value.",
-    //     "disabled-hours": "Hours that are not selectable.",
-    //     "disabled-minutes": "Minutes that are not selectable.",
-    //     "disabled-seconds": "Seconds that are not selectable."
-    //   },
-    //   "slot": {},
-    //   "variables": {},
-    //   "events": {
-    //     "update:model-value": "Emitted when the selected time changes.",
-    //     "on-change-open-close": "Emitted when the time picker is opened or closed."
-    //   },
-    //   "exposes": {
-    //     "inputDOMRef": "Original input DOM element"
-    //   }
-    // },
     "radio": {
       "basic-usage": {
         "info": {
@@ -1289,7 +1251,7 @@ export default {
       "basic-usage": {
         "subtitle": "Represents the form values for all input elements.",
         "too-short": "Too short",
-        'wrong-age': "Wrong age",
+        "wrong-age": "Wrong age",
         "wrong-sex": "Wrong",
         "you-cant-be-a-nobody": "You cant be a maintainer",
         "we-dont-have-kombucha": "We don't have Kombucha(",
@@ -1309,12 +1271,14 @@ export default {
         "preferred-drink": "Preferred drink",
         "browsers": "Browsers",
         "agreement": "Agreement",
-        "some-number-value": "Some number value",
+        "number-value": "Number value",
         "choose-date": "Choose date",
         "food": "Food",
         "favorite-food": "Favorite food",
         "photo": "Photo",
-        "send-form": "Send form"
+        "send-form": "Send form",
+        "enter-username": "Enter username",
+        "is-valid": "Is valid: "
       },
       "validate-immediately": {
         "subtitle": "If true, the form will validate its fields immediately after rendering."
@@ -1342,6 +1306,29 @@ export default {
       },
       "slot": {
         "default": "Slot to customize the content of the form item, typically input elements or other form controls."
+      }
+    },
+    "date-picker": {
+      "height": {
+        "subtitle": "Sets the height of the date picker input."
+      },
+      "disabled": {
+        "subtitle": "Disables the date picker if set to true."
+      },
+      "api": {
+        "height": "Height of the date picker input.",
+        "disabled": "Boolean that disables the date picker.",
+        "placeholder": "Text displayed when no date is selected.",
+        "model-value": "The currently selected date or range of dates.",
+        "type": "Type of the date picker, e.g., *single* or *range*.",
+        "text-separator": "Text to separate start and end dates in range selection.",
+      },
+      "slot": {},
+      "variables": {
+        "width": "Defines the width of the date picker component."
+      },
+      "events": {
+        "update:model-value": "Emitted when the selected date or date range changes."
       }
     }
   }

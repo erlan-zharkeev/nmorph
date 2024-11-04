@@ -4,11 +4,13 @@ import { useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import { NmorphIcon } from '@/components';
 
+type NmorphSwitchModelType = boolean | string | number;
+
 interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
-  modelValue?: boolean | string | number;
+  modelValue?: NmorphSwitchModelType;
   loading?: boolean;
-  activeValue?: boolean | string | number;
-  inactiveValue?: boolean | string | number;
+  activeValue?: NmorphSwitchModelType;
+  inactiveValue?: NmorphSwitchModelType;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -115,7 +117,6 @@ watch(
   input {
     width: 100%;
     height: var(--height);
-    // visibility: hidden;
     opacity: 0;
   }
 
@@ -181,7 +182,8 @@ watch(
 }
 
 .nmorph-switch--focus {
-  outline: 2px solid var(--nmorph-accent-color);
+  @include focus-outline;
+
   .nmorph-switch__content {
     scale: 0.95;
   }

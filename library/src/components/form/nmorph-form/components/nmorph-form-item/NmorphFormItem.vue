@@ -57,7 +57,7 @@ const modifiers = computed(() =>
   margin: var(--indentation-03) var(--indentation-00);
 
   label {
-    @include title-3;
+    @include title-4;
   }
 
   .nmorph-form-item__content {

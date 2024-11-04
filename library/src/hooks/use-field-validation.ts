@@ -61,7 +61,9 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
   const { inputValue, rules } = data;
 
   const errors = ref<string[]>([]);
-  const valid = computed(() => errors.value.length === 0);
+  const valid = computed(() => {
+    return errors.value.length === 0;
+  });
   const touched = ref(false);
 
   const validate = () => {
@@ -71,8 +73,10 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
     const hasRuleKey = (key: string) => rules.length > 0 && key in rules[0];
     const textValidation = typeof value === 'string' && hasRuleKey('pattern');
     const numberValidation = typeof value === 'number' && hasRuleKey('numberCompareType');
+
     const booleanValidation =
-      typeof value === 'string' || (typeof value === 'boolean' && hasRuleKey('booleanCompareType'));
+      (typeof value === 'string' || typeof value === 'boolean') && hasRuleKey('booleanCompareType');
+
     const arrayValidation = Array.isArray(value) && hasRuleKey('arrayCompareType');
 
     const wrongType = !numberValidation && !textValidation && !booleanValidation && !arrayValidation;
@@ -160,7 +164,11 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
       };
 
       errors.value = typeInferredRules.reduce((acc, rule) => {
-        const match = compareValues(value, rule.compareValue, rule.arrayCompareType);
+        const match = compareValues(
+          value.map((el) => String(el)),
+          rule.compareValue,
+          rule.arrayCompareType
+        );
         if (!match) acc.push(rule.error);
         return acc;
       }, [] as string[]);

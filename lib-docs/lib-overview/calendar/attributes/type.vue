@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import { NmorphCalendar } from "@nmorph/nmorph-ui-kit";
 
+import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+
 const scriptData = `
-const date1 = new Date();
-const date2 = new Date();
-const date3 = new Date();
-date2.setDate(date2.getDate() + 2);
-date3.setDate(date3.getDate() + 3);
+<script lang="ts" setup>
+  const date1 = new Date();
+  const date2 = new Date();
+  const date3 = new Date();
+  date2.setDate(date2.getDate() + 2);
+  date3.setDate(date3.getDate() + 3);
 
-const date = ref(date1);
-const dates = ref([date1, date2, date3]);
-const range = ref([date1, date3]);
+  const date = ref(date1);
+  const dates = ref([date1, date2, date3]);
+  const range = ref([date1, date3]);
 
-const shortDate = (value: Date) => value.toLocaleDateString('current-locale');
+  const shortDate = (value: Date) => value.toLocaleDateString('current-locale');
+<\/script>
 `;
 
 const templateData = `
@@ -102,13 +106,11 @@ const shortDate = (value: Date) => value.toLocaleDateString(locale.value);
         </div>
       </template>
       <template #code>
-        <code-example v-if="templateData" lang="html">{{
-          templateData
-        }}</code-example>
-        <code-example v-if="scriptData" lang="javascript">{{
-          scriptData
-        }}</code-example>
-        <code-example v-if="cssData" lang="css">{{ cssData }}</code-example>
+        <code-slot-data
+          :template-data="templateData"
+          :script-data="scriptData"
+          :css-data="cssData"
+        />
       </template>
     </attribute>
   </div>

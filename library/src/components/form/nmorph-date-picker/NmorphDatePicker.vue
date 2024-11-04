@@ -2,44 +2,32 @@
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType, NmorphSelectionDateType } from '@/types';
-import {
-  NmorphDropdown,
-  NmorphIcon,
-  NmorphDivider,
-  formatDateIntl,
-  NmorphDateType,
-  NmorphSelectedDateModelType,
-} from '@/components';
+import { NmorphDropdown, NmorphIcon, formatDateIntl, NmorphSelectedDateModelType } from '@/components';
 import NmorphClearButton from './inner-components/nmorph-clear-button/NmorphClearButton.vue';
+import NmorphDatePickerContent from './inner-components/nmorph-date-picker-content/NmorphDatePickerContent.vue';
+import { useI18n } from 'vue-i18n';
 
 interface INmorphProps extends INmorphCommonInputProps {
   placeholder?: string;
-  initialStartDate?: Date;
-  initialEndDate?: Date;
   modelValue: NmorphSelectedDateModelType;
   type?: keyof typeof NmorphSelectionDateType;
   textSeparator?: string;
-  startDatePlaceholder?: string;
-  endDatePlaceholder?: string;
+  initialDate?: Date;
 }
+
+const { t, messages } = useI18n();
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   height: 'default',
-  placeholder: 'Pick a date',
-  initialStartDate: () => new Date(),
-  initialEndDate: undefined,
+  placeholder: '',
   modelValue: null,
   type: 'date',
-  textSeparator: 'To',
-  startDatePlaceholder: 'Start date',
-  endDatePlaceholder: 'End date',
+  textSeparator: '-',
+  initialDate: () => new Date(),
 });
 
-const startDate = ref(props.initialStartDate);
-const endDate = ref(
-  props.initialEndDate ?? new Date(new Date(props.initialStartDate).setMonth(props.initialStartDate.getMonth() + 1))
-);
+const placeholderText = computed(() => (props.placeholder ? props.placeholder : t('NmorphDatePicker.pickADate')));
 
 const selectedDate = ref<NmorphSelectedDateModelType>(props.modelValue);
 
@@ -48,10 +36,18 @@ interface INmorphEmit {
   (e: 'update:model-value', modelValue: NmorphSelectedDateModelType): void;
 }
 
+const focus = ref(false);
+const focusHandler = () => {
+  focus.value = true;
+};
+const blurHandler = () => {
+  focus.value = false;
+};
+
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
-    'nmorph-date-picker': [`${props.disabled && 'disabled'}`, props.type],
+    'nmorph-date-picker': [`${props.disabled && 'disabled'}`, props.type, `${focus.value && 'focus'}`],
   })
 );
 
@@ -66,26 +62,14 @@ const toggleOpen = () => {
 };
 
 const displayValue = computed(() => {
-  if (!selectedDate.value) return props.placeholder;
+  if (!selectedDate.value) return placeholderText.value;
   if (Array.isArray(selectedDate.value)) {
-    if (selectedDate.value.length === 0) return props.placeholder;
+    if (selectedDate.value.length === 0) return placeholderText.value;
     const arrayResult = formatDateIntl(selectedDate.value) as unknown[];
-    return arrayResult.join(', ');
+    const separator = props.type === 'daterange' ? ' - ' : ', ';
+    return arrayResult.join(separator);
   } else {
     return formatDateIntl(selectedDate.value);
-  }
-});
-
-const displayValues = computed(() => {
-  if (Array.isArray(selectedDate.value)) {
-    const from = formatDateIntl(selectedDate.value[0]) ?? props.startDatePlaceholder;
-    const to = formatDateIntl(selectedDate.value[1]) ?? props.endDatePlaceholder;
-    return {
-      from,
-      to,
-    };
-  } else {
-    return { from: props.startDatePlaceholder, to: props.endDatePlaceholder };
   }
 });
 
@@ -95,28 +79,8 @@ const clearHandler = () => {
   emit('update:model-value', selectedDate.value);
 };
 
-if (props.type === 'date' && Array.isArray(selectedDate.value)) {
-  console.warn('If you decide to use type "date" the passed property must be an Date object');
-}
-
-if ((props.type === 'dates' || props.type === 'daterange') && !Array.isArray(selectedDate.value)) {
-  console.warn('If you decide to use type "dates" or "daterange" the passed property must be an array');
-}
-
-const updateSelectedDateHandler = (value: unknown) => {
-  const val = value as Date;
-  if (Array.isArray(selectedDate.value)) {
-    if (props.type === 'dates') {
-      const dateToCompare = val.toDateString();
-      const transformedSelectedValues = selectedDate.value.map((val) => val?.toDateString());
-      const hasValueIndex = transformedSelectedValues.findIndex((value) => dateToCompare === value);
-      if (transformedSelectedValues.includes(dateToCompare)) {
-        selectedDate.value.splice(hasValueIndex, 1);
-      } else selectedDate.value.push(val);
-    }
-  } else {
-    selectedDate.value = val;
-  }
+const updateSelectedDateHandler = (value: NmorphSelectedDateModelType) => {
+  selectedDate.value = value;
   emit('update:model-value', selectedDate.value);
 };
 
@@ -126,30 +90,18 @@ const showClearButton = computed(() => {
   }
   return Boolean(selectedDate.value);
 });
-
-const updateStartDateValue = (value: NmorphDateType) => {
-  if (!Array.isArray(selectedDate.value)) return;
-  selectedDate.value[0] = value;
-  emit('update:model-value', selectedDate.value);
-};
-
-const updateEndDateValue = (value: NmorphDateType) => {
-  if (!Array.isArray(selectedDate.value)) return;
-  selectedDate.value[1] = value;
-  emit('update:model-value', selectedDate.value);
-};
 </script>
 
 <template>
   <div :class="modifiers">
-    <div v-if="props.type === 'date' || props.type === 'dates'" class="nmorph-date-picker__date-wrapper">
+    <div class="nmorph-date-picker__date-wrapper">
       <div
         ref="nmorphInputDOMRef"
         class="nmorph-date-picker__input"
         :class="{ 'nmorph-date-picker__input--open': open }"
         @click="toggleOpen"
       >
-        <input type="date" />
+        <input type="date" @focus.prevent="focusHandler" @blur="blurHandler" @keydown.space.prevent="() => {}" />
         <NmorphIcon name="calendar" class="nmorph-date-picker__calendar-icon" />
         <div class="nmorph-date-picker__selected-value">{{ displayValue }}</div>
         <div class="nmorph-date-picker__clear-button-wrapper">
@@ -167,56 +119,9 @@ const updateEndDateValue = (value: NmorphDateType) => {
         >
           <NmorphDatePickerContent
             :selected-values="selectedDate"
-            :initial-date="startDate"
+            :initial-date="props.initialDate"
             :type="type"
             @update-selected-value="updateSelectedDateHandler"
-          />
-        </NmorphDropdown>
-      </div>
-    </div>
-    <div v-if="props.type === 'daterange'" class="nmorph-date-picker__date-range-wrapper">
-      <div
-        ref="nmorphInputDOMRef"
-        class="nmorph-date-picker__input"
-        :class="{ 'nmorph-date-picker__input--open': open }"
-        @click="toggleOpen"
-      >
-        <input type="date" />
-        <NmorphIcon name="calendar" class="nmorph-date-picker__calendar-icon" />
-        <div class="nmorph-date-picker__selected-value">
-          <div class="nmorph-date-picker__value-from">
-            {{ displayValues.from }}
-          </div>
-          <div class="nmorph-date-picker__value-separator">{{ props.textSeparator }}</div>
-          <div class="nmorph-date-picker__value-from">
-            {{ displayValues.to }}
-          </div>
-        </div>
-        <div class="nmorph-date-picker__clear-button-wrapper">
-          <NmorphClearButton v-if="showClearButton" @clear="clearHandler" />
-        </div>
-      </div>
-      <div class="nmorph-date-picker__content">
-        <NmorphDropdown
-          v-if="nmorphInputDOMRef"
-          :fill-width="false"
-          :width="648"
-          :open="open"
-          :relative-element="nmorphInputDOMRef"
-          @on-outside-click="closeHandler"
-        >
-          <NmorphDatePickerContent
-            :selected-values="selectedDate"
-            :initial-date="startDate"
-            :type="type"
-            @update-selected-value="updateStartDateValue"
-          />
-          <NmorphDivider direction="vertical" />
-          <NmorphDatePickerContent
-            :selected-values="selectedDate"
-            :initial-date="endDate"
-            :type="type"
-            @update-selected-value="updateEndDateValue"
           />
         </NmorphDropdown>
       </div>
@@ -269,6 +174,7 @@ const updateEndDateValue = (value: NmorphDateType) => {
   .nmorph-date-picker__clear-button-wrapper {
     width: 14px;
     height: 14px;
+    margin-right: 1px;
   }
 
   .nmorph-dropdown {
@@ -276,7 +182,13 @@ const updateEndDateValue = (value: NmorphDateType) => {
   }
 
   input {
-    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    pointer-events: none;
   }
 
   .nmorph-calendar {
@@ -298,6 +210,18 @@ const updateEndDateValue = (value: NmorphDateType) => {
 
   .nmorph-date-picker__selected-value {
     display: flex;
+  }
+}
+
+.nmorph-date-picker--focus {
+  @include focus-outline;
+}
+
+.nmorph-date-picker--disabled {
+  @include disabled;
+
+  .nmorph-date-picker__date-wrapper {
+    pointer-events: none;
   }
 }
 </style>

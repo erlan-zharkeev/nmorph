@@ -137,6 +137,7 @@ import Message from '@/assets/icons/message.svg';
 import Mic from '@/assets/icons/mic.svg';
 import Microphone from '@/assets/icons/microphone.svg';
 import Minus from '@/assets/icons/minus.svg';
+import MinusThin from '@/assets/icons/minus-thin.svg';
 import Money from '@/assets/icons/money.svg';
 import Monitor from '@/assets/icons/monitor.svg';
 import Moon from '@/assets/icons/moon.svg';
@@ -164,6 +165,7 @@ import PieChart from '@/assets/icons/pie-chart.svg';
 import Place from '@/assets/icons/place.svg';
 import Platform from '@/assets/icons/platform.svg';
 import Plus from '@/assets/icons/plus.svg';
+import PlusThin from '@/assets/icons/plus-thin.svg';
 import Pointer from '@/assets/icons/pointer.svg';
 import Position from '@/assets/icons/position.svg';
 import PostCard from '@/assets/icons/postcard.svg';
@@ -515,4 +517,6 @@ export const NmorphIconsMap: Record<NmorphIconList, string> = {
   [NmorphIconList['wind-power']]: WindPower,
   [NmorphIconList['zoom-in']]: ZoomIn,
   [NmorphIconList['zoom-out']]: ZoomOut,
+  [NmorphIconList['plus-thin']]: PlusThin,
+  [NmorphIconList['minus-thin']]: MinusThin,
 };

@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphButton, NmorphIcon, NmorphRadioGroup, getDecadeYears, useCalendarTexts } from '@/components';
+import {
+  NmorphButton,
+  NmorphIcon,
+  NmorphRadioGroup,
+  getDecadeYears,
+  useCalendarTexts,
+  NmorphDivider,
+} from '@/components';
 import { INmorphRadioOption, NmorphDatePickerControlsType } from '@/types';
 
 interface INmorphProps {
@@ -106,24 +113,17 @@ const goToYearsHandler = () => {
 <template>
   <div :class="modifiers">
     <div class="nmorph-year-month-picker__header">
-      <NmorphButton
-        class="nmorph-year-month-picker__action-btn"
-        style-type="transparent"
-        @click="buttonClickHandler('decrease')"
-      >
+      <NmorphButton class="nmorph-year-month-picker__action-btn" @click="buttonClickHandler('decrease')">
         <NmorphIcon name="chevron-down" class="nmorph-year-month-picker__chevron-left" />
       </NmorphButton>
       <div class="nmorph-year-month-picker__value">
         <NmorphButton :text="value" style-type="transparent" @click="goToYearsHandler" />
       </div>
-      <NmorphButton
-        class="nmorph-year-month-picker__action-btn"
-        style-type="transparent"
-        @click="buttonClickHandler('increase')"
-      >
+      <NmorphButton class="nmorph-year-month-picker__action-btn" @click="buttonClickHandler('increase')">
         <NmorphIcon name="chevron-down" class="nmorph-year-month-picker__chevron-right" />
       </NmorphButton>
     </div>
+    <NmorphDivider />
     <div class="nmorph-year-month-picker__values">
       <NmorphRadioGroup :model-value="selectedValue" :options="values" @update:model-value="updateModelValue" />
     </div>
@@ -136,7 +136,6 @@ const goToYearsHandler = () => {
     display: flex;
     justify-content: space-between;
     padding-bottom: var(--indentation-04);
-    border-bottom: 1px solid var(--nmorph-accent-color);
   }
 
   .nmorph-year-month-picker__value {
@@ -147,6 +146,10 @@ const goToYearsHandler = () => {
 
   .nmorph-year-month-picker__values {
     padding-top: var(--indentation-04);
+  }
+
+  .nmorph-radio-group {
+    width: 100%;
   }
 
   .nmorph-radio-group .nmorph-radio-group__content {

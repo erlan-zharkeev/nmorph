@@ -226,7 +226,7 @@ const transitionEnabled = ref(true);
 
   .nmorph-slider__thumb {
     position: absolute;
-    z-index: 2;
+    z-index: 1;
     border: 0;
     border-radius: var(--default-border-radius);
 

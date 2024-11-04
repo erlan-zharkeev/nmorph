@@ -26,8 +26,8 @@ const attributesData: IAttributesTableData[] = [
     type: `Array<${docsLink(
       "Date",
       "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date"
-    )} | null>[]`,
-    default: "null",
+    )}>[]`,
+    default: "new Date()",
   },
   {
     name: "type",

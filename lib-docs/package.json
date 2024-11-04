@@ -14,7 +14,7 @@
     "deploy": "nuxt generate && gh-pages -d dist"
   },
   "dependencies": {
-    "@nmorph/nmorph-ui-kit": "^0.2.139",
+    "@nmorph/nmorph-ui-kit": "^0.2.149",
     "@nuxtjs/i18n": "^8.3.1",
     "nuxt": "^3.11.2",
     "nuxt-svgo": "^4.0.1",

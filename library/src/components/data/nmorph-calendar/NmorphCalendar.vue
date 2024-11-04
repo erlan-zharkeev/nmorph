@@ -5,7 +5,6 @@ import {
   NmorphTable,
   NmorphTableColumn,
   NmorphTableCell,
-  NmorphCalendarHeader,
   getMonthDaysByWeek,
   hasAnyRangeDateInPrevMonth,
   hasAnyRangeDateInNextMonth,
@@ -17,8 +16,10 @@ import {
   NmorphTableDataType,
   resetTimeToZero,
 } from '@/components';
+import NmorphCalendarHeader from './inner-components/nmorph-calendar-header/NmorphCalendarHeader.vue';
 import { useCalendarTexts } from './hooks';
 import { NmorphSelectionDateType } from '@/types';
+
 interface INmorphProps {
   markToday?: boolean;
   initialDate?: Date;
@@ -26,18 +27,21 @@ interface INmorphProps {
   type?: keyof typeof NmorphSelectionDateType;
   modelValue?: NmorphSelectedDateModelType;
 }
+
 const props = withDefaults(defineProps<INmorphProps>(), {
   markToday: true,
   initialDate: () => new Date(),
   range: undefined,
   type: 'date',
-  modelValue: null,
+  modelValue: () => new Date(),
 });
+
 const emit = defineEmits<INmorphEmit>();
 interface INmorphEmit {
   (e: 'update:model-value', date: NmorphSelectedDateModelType): void;
   (e: 'update-initial-date', date: Date): void;
 }
+
 const { days } = useCalendarTexts();
 
 const setPreviousMonth = () => {
@@ -140,7 +144,6 @@ const isValueSelected = (value: Date) => {
 };
 
 const initialDate = ref(props.initialDate);
-
 const selectedValue = ref<NmorphSelectedDateModelType>(convertValue(props.modelValue));
 
 onMounted(() => {

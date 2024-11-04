@@ -1,9 +1,5 @@
 <template>
-  <div class="wrapper">
-    <NmorphRadio value="3" />
-    <NmorphRadio label="first" value="1" />
-    <NmorphRadio label="second" style-type="radio-style" value="2" checked />
-  </div>
+  <div class="wrapper"></div>
 </template>
 
 <script setup lang="ts">
@@ -15,7 +11,7 @@ const options = [
   { value: "three", label: "Three" },
 ];
 
-const value = ref("three");
+const date = ref([new Date(), new Date()]);
 </script>
 
 <style scoped>

@@ -114,7 +114,7 @@ const modifiers = computed(() =>
         <NmorphButton text="Select file" fill @click="openFileSelector" :disabled="props.disabled" />
       </slot>
     </div>
-    <div class="nmorph-file-upload__list">
+    <div class="nmorph-file-upload__list" v-if="files.length > 0">
       <transition-group name="list" tag="div">
         <div v-for="{ data, previewUrl } in files" :key="data.name" class="nmorph-file-upload__file">
           <NmorphImagePreview :src="previewUrl" />
@@ -167,7 +167,7 @@ const modifiers = computed(() =>
 
   .nmorph-file-upload__file-name {
     margin-left: var(--indentation-02);
-    line-height: 0;
+    @include ellipsis;
   }
 
   .nmorph-file-upload__remove-file {

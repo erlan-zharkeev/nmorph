@@ -1,4 +1,4 @@
-import { reactive, watch } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { useFieldValidation } from '.';
 import { deepClone } from '@/utils';
 import { NmorphFormValueType } from '@/components/form/nmorph-form/types';
@@ -6,12 +6,22 @@ import { NmorphFormValueType } from '@/components/form/nmorph-form/types';
 export const useFormValidation = (formData: NmorphFormValueType, validateFormOnLoad: boolean = false) => {
   const fields = reactive<Record<string, ReturnType<typeof useFieldValidation>>>({});
   const formToCompare = reactive(deepClone(formData));
+  const initialFormData = ref(formData);
+  const isFullValid = ref(false);
+
+  const checkForFullValidation = () => {
+    const totalFieldQuantity = Object.keys(initialFormData.value).length;
+    const touchedFieldsQuantity = Object.keys(fields).length;
+    if (totalFieldQuantity > touchedFieldsQuantity) return;
+    isFullValid.value = Object.entries(fields).every(([_, fieldValue]) => fieldValue.valid);
+  };
 
   const validateAll = () => {
     Object.entries(formData).forEach(([fieldName, fieldData]) => {
       fields[fieldName] = useFieldValidation({ inputValue: fieldData.value, rules: fieldData.rules });
       fields[fieldName].validate();
     });
+    checkForFullValidation();
   };
 
   const compareFormData = (oldData: NmorphFormValueType, newData: NmorphFormValueType) => {
@@ -31,6 +41,7 @@ export const useFormValidation = (formData: NmorphFormValueType, validateFormOnL
       fields[fieldName].validate();
     });
     Object.assign(formToCompare, deepClone(data));
+    checkForFullValidation();
   };
 
   watch(formData, formUpdateHandler, { deep: true });
@@ -38,5 +49,6 @@ export const useFormValidation = (formData: NmorphFormValueType, validateFormOnL
 
   return {
     fields,
+    isFullValid,
   };
 };

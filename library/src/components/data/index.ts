@@ -4,7 +4,6 @@ export { default as NmorphCalendar } from './nmorph-calendar/NmorphCalendar.vue'
 export * from './nmorph-calendar/types';
 export * from './nmorph-calendar/hooks/use-calendar-texts';
 export * from './nmorph-calendar/utils';
-export { default as NmorphCalendarHeader } from './nmorph-calendar/components/nmorph-calendar-header/NmorphCalendarHeader.vue';
 export { default as NmorphCard } from './nmorph-card/NmorphCard.vue';
 export { default as NmorphCarousel } from './nmorph-carousel/NmorphCarousel.vue';
 export * from './nmorph-carousel/types';

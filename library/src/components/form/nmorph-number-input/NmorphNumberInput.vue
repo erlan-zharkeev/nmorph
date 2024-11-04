@@ -107,7 +107,7 @@ defineExpose({ inputDOMRef });
             :height="props.height"
             @click="decreaseHandler"
           >
-            <NmorphIcon name="minus" :width="actionBtnIconSize" :height="actionBtnIconSize" />
+            <NmorphIcon name="minus-thin" :width="actionBtnIconSize" :height="actionBtnIconSize" />
           </NmorphButton>
         </div>
         <input
@@ -126,18 +126,18 @@ defineExpose({ inputDOMRef });
             :height="props.height"
             @click="increaseHandler"
           >
-            <NmorphIcon name="plus" :width="actionBtnIconSize" :height="actionBtnIconSize" />
+            <NmorphIcon name="plus-thin" :width="actionBtnIconSize" :height="actionBtnIconSize" />
           </NmorphButton>
         </div>
         <div v-else class="nmorph-number-input__action-btns">
           <div class="nmorph-number-input__decrease">
             <NmorphButton style-type="transparent" :disabled="minBtnDisabled" @click="decreaseHandler">
-              <NmorphIcon name="minus" :width="actionBtnIconSize" :height="actionBtnIconSize" />
+              <NmorphIcon name="minus-thin" :width="actionBtnIconSize" :height="actionBtnIconSize" />
             </NmorphButton>
           </div>
           <div class="nmorph-number-input__increase">
             <NmorphButton style-type="transparent" :disabled="maxBtnDisabled" @click="increaseHandler">
-              <NmorphIcon name="plus" :width="actionBtnIconSize" :height="actionBtnIconSize" />
+              <NmorphIcon name="plus-thin" :width="actionBtnIconSize" :height="actionBtnIconSize" />
             </NmorphButton>
           </div>
         </div>

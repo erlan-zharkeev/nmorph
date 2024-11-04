@@ -131,8 +131,8 @@ const modifiers = computed(() =>
 
   input:focus-visible {
     opacity: 1;
-    outline: var(--nmorph-accent-color) solid 2px;
     scale: 0.95;
+    @include focus-outline;
   }
 
   .nmorph-checkbox__fake {
@@ -141,6 +141,11 @@ const modifiers = computed(() =>
     @include wh100;
     @include absolute-zero;
     @include nmorph-inset;
+  }
+
+  .nmorph-checkbox__label,
+  .nmorph-checkbox__fake span {
+    @include body-2;
   }
 
   .nmorph-checkbox__fake-checked {

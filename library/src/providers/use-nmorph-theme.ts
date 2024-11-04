@@ -34,6 +34,7 @@ const DEFAULT_LIGHT_THEME_COLORS = {
   text: '#687b9e',
   accent: '#4a90e2',
   focusText: '#ffffff',
+  placeholderText: '#c1c9cf',
 };
 
 const DEFAULT_DARK_THEME_COLORS = {
@@ -43,6 +44,7 @@ const DEFAULT_DARK_THEME_COLORS = {
   text: '#778288',
   accent: '#006cb6',
   focusText: '#ffffff',
+  placeholderText: '#575757',
 };
 
 const THEME_KEY = 'nmorph-data-theme';

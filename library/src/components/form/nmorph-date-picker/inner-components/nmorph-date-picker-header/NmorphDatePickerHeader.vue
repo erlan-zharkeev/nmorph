@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphButton, NmorphIcon, getMonthName } from '@/components';
 
 interface INmorphProps {
-  date?: Date;
+  year: number;
+  month: number;
 }
-const props = withDefaults(defineProps<INmorphProps>(), {
-  date: () => new Date(),
-});
+const props = withDefaults(defineProps<INmorphProps>(), {});
 
 interface INmorphEmit {
   (e: 'prev-month'): void;
@@ -39,18 +38,8 @@ const modifiers = computed(() =>
       </NmorphButton>
     </div>
     <div class="nmorph-date-picker-header__center-side">
-      <NmorphButton
-        :text="String(props.date.getFullYear())"
-        style-type="transparent"
-        fill
-        @click="emit('change-year')"
-      />
-      <NmorphButton
-        :text="getMonthName(props.date.getMonth())"
-        style-type="transparent"
-        fill
-        @click="emit('change-month')"
-      />
+      <NmorphButton :text="props.year" style-type="transparent" fill @click="emit('change-year')" />
+      <NmorphButton :text="getMonthName(props.month)" style-type="transparent" fill @click="emit('change-month')" />
     </div>
     <div class="nmorph-date-picker-header__right-side">
       <NmorphButton class="nmorph-date-picker-header__action-btn" style-type="transparent" @click="emit('next-month')">

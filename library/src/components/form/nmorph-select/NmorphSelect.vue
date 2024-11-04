@@ -12,6 +12,9 @@ import {
   NmorphSelectModelValueType,
   INmorphSelectOption,
 } from '@/components';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 interface INmorphProps extends INmorphCommonInputProps {
   noElementPlaceholder?: string;
@@ -26,7 +29,7 @@ interface INmorphProps extends INmorphCommonInputProps {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  noElementPlaceholder: 'Choose value',
+  noElementPlaceholder: '',
   valueRequired: false,
   options: () => [],
   optionsMap: () => [],
@@ -38,6 +41,10 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   id: '',
   name: '',
 });
+
+const computedNoElementPlaceholder = computed(() =>
+  props.noElementPlaceholder ? props.noElementPlaceholder : t('NmorphSelect.noElementPlaceholder')
+);
 
 const emit = defineEmits<{
   (e: 'update:model-value', val: NmorphSelectModelValueType): void;
@@ -150,7 +157,7 @@ onUnmounted(() => {
 
 const selectedValueTitle = computed(() => {
   if (typeof initialValue.value === 'string') {
-    if (initialValue.value === '') return props.noElementPlaceholder;
+    if (initialValue.value === '') return computedNoElementPlaceholder.value;
     return props.options.find((option) => option.value === initialValue.value)?.label;
   }
   return props.options.find((option) => option.value === initialValue.value)?.label;
@@ -218,7 +225,7 @@ const enterHandler = () => {
           {{ selectedValueTitle }}
         </div>
         <div v-else-if="initialValue.length === 0" class="nmorph-select__selected-value">
-          {{ props.noElementPlaceholder }}
+          {{ computedNoElementPlaceholder }}
         </div>
         <div v-else class="nmorph-select__selected-value">
           <NmorphTagItem
@@ -322,7 +329,8 @@ const enterHandler = () => {
 }
 
 .nmorph-select--focus {
-  outline: 2px var(--nmorph-accent-color) solid;
+  @include focus-outline;
+
   .nmorph-select__content {
     box-shadow: none;
   }

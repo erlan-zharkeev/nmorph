@@ -6,6 +6,8 @@ import {
   NmorphButton,
 } from "@nmorph/nmorph-ui-kit";
 
+import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+
 const scriptData = `
 <style lang="ts" setup>
   const initAlert = {
@@ -127,13 +129,11 @@ const addNotification = (info: boolean = false) => {
         </div>
       </template>
       <template #code>
-        <code-example v-if="templateData" lang="html">{{
-          templateData
-        }}</code-example>
-        <code-example v-if="scriptData" lang="javascript">{{
-          scriptData
-        }}</code-example>
-        <code-example v-if="cssData" lang="css">{{ cssData }}</code-example>
+        <code-slot-data
+          :template-data="templateData"
+          :script-data="scriptData"
+          :css-data="cssData"
+        />
       </template>
     </attribute>
   </div>

@@ -76,53 +76,53 @@ const iconList = computed(() => {
 </template>
 
 <style lang="scss">
-// TODO удалить после добавления в либу
-.nmorph-form-item .nmorph-form-item__content {
-  display: block;
-}
+.docs-icon {
+  .nmorph-form-item .nmorph-form-item__content {
+    display: block;
+  }
 
-:deep(.docs-icon__search-field) {
-  width: 100%;
-}
+  :deep(.docs-icon__search-field) {
+    width: 100%;
+  }
 
-:deep(.nmorph-form__content) {
-  width: 100%;
-  display: flex;
-}
+  :deep(.nmorph-form__content) {
+    width: 100%;
+    display: flex;
+  }
 
-:deep(.nmorph-alert) {
-  padding: 8px;
-}
+  :deep(.nmorph-alert) {
+    padding: 8px;
+  }
 
-:deep(.nmorph-alert .nmorph-alert__icon) {
-  margin-right: 4px;
-}
+  :deep(.nmorph-alert .nmorph-alert__icon) {
+    margin-right: 4px;
+  }
 
-// TODO удалить после добавления в либу
-:deep(.nmorph-validation-icon) {
-  display: none;
-}
+  :deep(.nmorph-validation-icon) {
+    display: none;
+  }
 
-.docs-icon__list-content {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-gap: 8px;
-  margin: 20px 0;
-  padding: 8px;
-}
+  .docs-icon__list-content {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 8px;
+    margin: 20px 0;
+    padding: 8px;
+  }
 
-.docs-icon__list-el {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8px;
-  text-align: center;
-  height: 80px;
-  cursor: pointer;
-}
+  .docs-icon__list-el {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px;
+    text-align: center;
+    height: 80px;
+    cursor: pointer;
+  }
 
-.docs-icon__icon-name {
-  margin-top: 4px;
+  .docs-icon__icon-name {
+    margin-top: 4px;
+  }
 }
 </style>

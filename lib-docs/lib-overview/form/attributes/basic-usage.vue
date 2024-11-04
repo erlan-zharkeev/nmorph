@@ -17,19 +17,17 @@ import {
   NmorphFileUpload,
   NmorphButton,
 } from "@nmorph/nmorph-ui-kit";
+import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
 import { useMock } from "../mock";
 
 const { t } = useI18n();
+const mock = useMock();
 
 const scriptData = "";
-
 const templateData = "";
-
 const cssData = "";
 
 const code = [scriptData, templateData, cssData];
-
-const mock = useMock();
 
 const form = reactive({
   username: {
@@ -59,7 +57,7 @@ const form = reactive({
     ],
   },
   browsers: {
-    value: ["Chrome", "Firefox"],
+    value: ["chrome", "firefox"],
     rules: [
       {
         compareValue: ["ie"],
@@ -68,17 +66,7 @@ const form = reactive({
       },
     ],
   },
-  agreement: {
-    value: true,
-    rules: [
-      {
-        compareValue: false,
-        booleanCompareType: "eq",
-        error: t("overview.form.basic-usage.you-must-set-agreement"),
-      },
-    ],
-  },
-  someValue: {
+  numberValue: {
     value: 50,
     rules: [
       {
@@ -107,15 +95,25 @@ const form = reactive({
     value: [],
     rules: [],
   },
-  time: {
-    value: Date.now(),
+  date: {
+    value: new Date(),
     rules: [],
   },
-  date: {
-    value: new Date("2024-05-13"),
-    rules: [],
+  agreement: {
+    value: true,
+    rules: [
+      {
+        compareValue: false,
+        booleanCompareType: "eq",
+        error: t("overview.form.basic-usage.you-must-set-agreement"),
+      },
+    ],
   },
 });
+
+// const formValidatorHandler = (e) => {
+//   console.log(e);
+// };
 </script>
 
 <template>
@@ -124,14 +122,20 @@ const form = reactive({
       <template #overview>
         <div class="form-basic-usage-overview">
           <ClientOnly>
+            <div class="nmorph-title-3">
+              {{ $t("overview.form.basic-usage.is-valid") }} {{ form }}
+            </div>
             <NmorphForm :value="form">
               <NmorphFormItem
                 id="username"
                 :label="$t('overview.form.basic-usage.username')"
               >
-                <NmorphTextInput v-model="form.username.value" type-password />
+                <NmorphTextInput
+                  v-model="form.username.value"
+                  :placeholder="$t('overview.form.basic-usage.enter-username')"
+                  clearable
+                />
               </NmorphFormItem>
-
               <NmorphFormItem
                 id="years"
                 :label="$t('overview.form.basic-usage.years-old')"
@@ -142,7 +146,6 @@ const form = reactive({
                   :max="150"
                 />
               </NmorphFormItem>
-
               <NmorphFormItem
                 id="drink"
                 :label="$t('overview.form.basic-usage.preferred-drink')"
@@ -157,12 +160,14 @@ const form = reactive({
                   />
                 </NmorphRadioGroup>
               </NmorphFormItem>
-
               <NmorphFormItem
                 id="browsers"
                 :label="$t('overview.form.basic-usage.browsers')"
               >
-                <NmorphCheckboxGroup v-model="form.browsers.value">
+                <NmorphCheckboxGroup
+                  v-model="form.browsers.value"
+                  direction="column"
+                >
                   <NmorphCheckbox
                     v-for="option in mock.browsers"
                     :id="option.id"
@@ -173,33 +178,20 @@ const form = reactive({
                   />
                 </NmorphCheckboxGroup>
               </NmorphFormItem>
-
               <NmorphFormItem
-                id="agreement"
-                :label="$t('overview.form.basic-usage.agreement')"
-              >
-                <NmorphSwitch v-model="form.agreement.value">
-                  <template #thumb-on
-                    ><NmorphIcon name="eye" width="10px" height="10px"
-                  /></template>
-                  <template #thumb-off
-                    ><NmorphIcon name="eye-blocked" width="10px" height="10px"
-                  /></template>
-                </NmorphSwitch>
-              </NmorphFormItem>
-
-              <NmorphFormItem
-                id="someValue"
-                :label="$t('overview.form.basic-usage.some-number-value')"
+                id="numberValue"
+                :label="$t('overview.form.basic-usage.number-value')"
               >
                 <NmorphSlider
-                  v-model="form.someValue.value"
+                  v-model="form.numberValue.value"
                   :step="1"
                   :min="0"
                   :max="100"
                 />
+                <span class="form-basic-usage-overview__value">{{
+                  form.numberValue.value
+                }}</span>
               </NmorphFormItem>
-
               <NmorphFormItem
                 id="food"
                 :label="$t('overview.form.basic-usage.food')"
@@ -218,39 +210,48 @@ const form = reactive({
                   />
                 </NmorphSelect>
               </NmorphFormItem>
-
               <NmorphFormItem
                 id="date"
                 :label="$t('overview.form.basic-usage.choose-date')"
               >
                 <NmorphDatePicker v-model="form.date.value" />
               </NmorphFormItem>
-
               <NmorphFormItem
                 id="photo"
                 :label="$t('overview.form.basic-usage.photo')"
               >
                 <NmorphFileUpload v-model="form.photo.value" multiple />
               </NmorphFormItem>
-
               <NmorphFormItem
-                id="send"
-                :label="$t('overview.form.basic-usage.send-form')"
+                id="agreement"
+                :label="$t('overview.form.basic-usage.agreement')"
               >
-                <NmorphButton text="Click me" width="100px" fill />
+                <NmorphSwitch v-model="form.agreement.value">
+                  <template #thumb-on
+                    ><NmorphIcon name="eye" width="10px" height="10px"
+                  /></template>
+                  <template #thumb-off
+                    ><NmorphIcon name="eye-blocked" width="10px" height="10px"
+                  /></template>
+                </NmorphSwitch>
+              </NmorphFormItem>
+              <NmorphFormItem id="send">
+                <NmorphButton
+                  :text="$t('overview.form.basic-usage.send-form')"
+                  width="100px"
+                  fill
+                />
               </NmorphFormItem>
             </NmorphForm>
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-example v-if="templateData" lang="html">{{
-          templateData
-        }}</code-example>
-        <code-example v-if="scriptData" lang="javascript">{{
-          scriptData
-        }}</code-example>
-        <code-example v-if="cssData" lang="css">{{ cssData }}</code-example>
+        <code-slot-data
+          :template-data="templateData"
+          :script-data="scriptData"
+          :css-data="cssData"
+        />
       </template>
     </attribute>
   </div>
@@ -258,5 +259,18 @@ const form = reactive({
 
 <style lang="scss">
 .form-basic-usage-overview {
+  width: 260px;
+  .form-basic-usage-overview__value {
+    margin-left: 8px;
+  }
+  .nmorph-text-input,
+  .nmorph-number-input,
+  .nmorph-radio-group,
+  .nmorph-checkbox-group,
+  .nmorph-select,
+  .nmorph-date-picker,
+  .nmorph-file-upload {
+    width: 100%;
+  }
 }
 </style>

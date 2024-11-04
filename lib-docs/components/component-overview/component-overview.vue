@@ -38,6 +38,7 @@ import slider from "~/lib-overview/slider";
 import radio from "~/lib-overview/radio";
 import radioGroup from "~/lib-overview/radio-group";
 import form from "~/lib-overview/form";
+import datePicker from "~/lib-overview/date-picker";
 
 interface IProps {
   name: string;
@@ -83,6 +84,7 @@ const componentsMap: Record<string, unknown[]> = {
   radio,
   "radio-group": radioGroup,
   form,
+  "date-picker": datePicker,
 };
 </script>
 

@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { NmorphForm } from "@nmorph/nmorph-ui-kit";
+import { NmorphDatePicker } from "@nmorph/nmorph-ui-kit";
 
 const scriptData = "";
 
-const templateData = "";
+const templateData = `
+<template>
+  <NmorphDatePicker disabled />
+</template>
+`;
 
 const cssData = "";
 
@@ -11,16 +15,16 @@ const code = [scriptData, templateData, cssData];
 </script>
 
 <template>
-  <div id="content-validate-immediately">
+  <div id="content-disabled">
     <attribute
-      header="Validate-immediately"
-      :subtitle="$t('overview.form.validate-immediately.subtitle')"
+      header="Disabled"
+      :subtitle="$t('overview.date-picker.disabled.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>
-        <div class="form-validate-immediately-overview">
+        <div class="date-picker-disabled-overview">
           <ClientOnly>
-            <!-- <NmorphForm /> -->
+            <NmorphDatePicker disabled />
           </ClientOnly>
         </div>
       </template>
@@ -38,6 +42,6 @@ const code = [scriptData, templateData, cssData];
 </template>
 
 <style lang="scss">
-.form-validate-immediately-overview {
+.date-picker-disabled-overview {
 }
 </style>

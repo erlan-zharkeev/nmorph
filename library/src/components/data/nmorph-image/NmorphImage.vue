@@ -2,6 +2,9 @@
 import { INmorphImage } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 interface INmorphProps extends INmorphImage {
   loadingText?: string;
@@ -12,11 +15,16 @@ interface INmorphProps extends INmorphImage {
 const props = withDefaults(defineProps<INmorphProps>(), {
   fit: 'cover',
   alt: '',
-  loadingText: 'Loading ...',
-  loadFailedText: 'Image loading failed',
+  loadingText: '',
+  loadFailedText: '',
   srcSet: '',
   frameBorder: 4,
 });
+
+const computedLoadingText = computed(() => (props.loadingText ? props.loadingText : t('NmorphImage.loadingText')));
+const computedLoadFailedText = computed(() =>
+  props.loadFailedText ? props.loadFailedText : t('NmorphImage.loadFailedText')
+);
 
 const imageLoadFinished = ref(false);
 const imageLoadError = ref(false);
@@ -57,11 +65,11 @@ const frameBorder = computed(() => `${props.frameBorder}px`);
     <img :src="props.src" :alt="props.alt" :srcset="props.srcSet" @load="onImageLoad" @error="onImageError" />
     <div v-if="loadingFailed" class="nmorph-image__load-failed">
       <slot name="error">
-        {{ props.loadFailedText }}
+        {{ computedLoadFailedText }}
       </slot>
     </div>
     <div v-else-if="!imageLoadFinished" class="nmorph-image__loading">
-      <slot name="loading"> {{ props.loadingText }} </slot>
+      <slot name="loading"> {{ computedLoadingText }} </slot>
     </div>
   </div>
 </template>

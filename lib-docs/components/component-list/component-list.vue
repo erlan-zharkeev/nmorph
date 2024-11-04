@@ -61,6 +61,7 @@ const list: { name: string; components: string[] }[] = [
       "NmorphNumberInput",
       "NmorphSelect",
       "NmorphSlider",
+      "NmorphDatePicker",
       // "NmorphTimePicker",
       "NmorphRadio",
       "NmorphRadioGroup",

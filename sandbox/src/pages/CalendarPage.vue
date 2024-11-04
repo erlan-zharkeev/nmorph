@@ -3,7 +3,8 @@
     <NmorphCard>
       <div class="calendar-wrapper">
         <NmorphCalendar
-          :initialDate="new Date(2024, 3, 1)"
+          :initial-date="new Date(2024, 3, 1)"
+          type="dates"
           v-model="selectedValue"
         >
           <template #date-cell="{ scope }">
