@@ -1,5 +1,15 @@
 <template>
-  <NmorphYearMonthPicker :currentDate="new Date()" />
+  <NmorphForm :value="form" ref="formRef">
+    <NmorphFormItem id="username" label="Username">
+      <NmorphTextInput v-model="form.username.value" clearable />
+    </NmorphFormItem>
+    <NmorphFormItem id="date" label="Date">
+      <NmorphDatePicker v-model="form.date.value" />
+    </NmorphFormItem>
+    <NmorphFormItem id="photo" label="Photo">
+      <NmorphFileUpload v-model="form.photo.value" multiple />
+    </NmorphFormItem>
+  </NmorphForm>
 </template>
 
 <style>
@@ -26,15 +36,28 @@ nav a.router-link-exact-active {
 </style>
 
 <script setup lang="ts">
+// use strict
 import {
-  INmorphInstance,
-  NmorphYearMonthPicker,
-  useNmorph,
+  NmorphFormItem,
+  NmorphForm,
+  NmorphTextInput,
+  NmorphDatePicker,
+  NmorphFileUpload,
 } from "@nmorph/nmorph-ui-kit";
-import { inject } from "vue";
+import { inject, reactive } from "vue";
 
-// const { setTheme, currentTheme } = inject<INmorphInstance>("nmorph");
-const nmorph = useNmorph();
-
-console.log(nmorph.theme);
+const form = reactive({
+  username: {
+    value: "",
+    rules: [{ pattern: /.{5,}/, error: "Too short" }],
+  },
+  photo: {
+    value: [],
+    rules: [],
+  },
+  date: {
+    value: new Date(),
+    rules: [],
+  },
+});
 </script>

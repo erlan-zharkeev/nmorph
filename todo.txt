@@ -15,3 +15,5 @@ TODO
 Interminate progress нужно сделать плавнее
 style-type или design определится
 carousel
+добавить tabindex и aria role
+типизовать все defineExpose

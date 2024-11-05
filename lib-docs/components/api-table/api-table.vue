@@ -10,6 +10,7 @@ import {
   NmorphTable,
   NmorphTableColumn,
   NmorphTableCell,
+  NmorphDialog,
 } from "@nmorph/nmorph-ui-kit";
 
 const { t } = useI18n();
@@ -58,6 +59,12 @@ const getID = (name: string) => {
   }`;
 };
 
+const dialogs = ref<Record<string, boolean>>({});
+
+const clickDialog = (key: string) => {
+  dialogs.value[key] = true;
+};
+
 const attributeNameLabel = (name: string, required: boolean) =>
   required ? `${name}*` : name;
 </script>
@@ -93,7 +100,21 @@ const attributeNameLabel = (name: string, required: boolean) =>
           <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
             <template #default="{ scope }">
               <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
-                <p v-html="row.type" class="no-wrap" />
+                <NmorphDialog
+                  v-model="dialogs[row.modalName]"
+                  title="Type"
+                  width="auto"
+                >
+                  <code-example lang="javascript">{{ row.type }}</code-example>
+                </NmorphDialog>
+                <a
+                  v-if="row.modalName"
+                  class="docs-link"
+                  @click="() => clickDialog(row.modalName)"
+                >
+                  {{ row.modalName }}
+                </a>
+                <p v-html="row.type" class="no-wrap" v-else />
               </NmorphTableCell>
             </template>
           </NmorphTableColumn>
@@ -157,7 +178,21 @@ const attributeNameLabel = (name: string, required: boolean) =>
           <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
             <template #default="{ scope }">
               <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
-                <p v-html="row.type" class="no-wrap" />
+                <NmorphDialog
+                  v-model="dialogs[row.modalName]"
+                  title="Type"
+                  width="auto"
+                >
+                  <code-example lang="javascript">{{ row.type }}</code-example>
+                </NmorphDialog>
+                <a
+                  v-if="row.modalName"
+                  class="docs-link"
+                  @click="() => clickDialog(row.modalName)"
+                >
+                  {{ row.modalName }}
+                </a>
+                <p v-html="row.type" class="no-wrap" v-else />
               </NmorphTableCell>
             </template>
           </NmorphTableColumn>
@@ -220,5 +255,10 @@ const attributeNameLabel = (name: string, required: boolean) =>
   color: var(--nmorph-white-color);
   padding: 2px 4px;
   border-radius: 4px;
+  cursor: pointer;
+}
+
+.nmorph-dialog code {
+  text-align: left;
 }
 </style>

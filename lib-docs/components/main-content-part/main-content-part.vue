@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { NmorphScroll, NmorphBacktop } from "@nmorph/nmorph-ui-kit";
+const router = useRouter();
+
 const scroll = ref(null);
 defineExpose({ scroll });
+
+const isComponentOverview = computed(() =>
+  router.currentRoute.value.fullPath.includes("components/overview")
+);
 </script>
 
 <template>
@@ -20,6 +26,7 @@ defineExpose({ scroll });
       </main>
       <aside
         class="docs-main-layout__card nmorph--shadow-inset docs-main-layout__center-aside"
+        v-if="!isComponentOverview"
       >
         <slot name="aside-right" />
       </aside>

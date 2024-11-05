@@ -1,19 +1,40 @@
-import { reactive, ref, watch } from 'vue';
+import { reactive, readonly, Ref, ref, watch } from 'vue';
 import { useFieldValidation } from '.';
 import { deepClone } from '@/utils';
 import { NmorphFormValueType } from '@/components/form/nmorph-form/types';
 
-export const useFormValidation = (formData: NmorphFormValueType, validateFormOnLoad: boolean = false) => {
-  const fields = reactive<Record<string, ReturnType<typeof useFieldValidation>>>({});
-  const formToCompare = reactive(deepClone(formData));
-  const initialFormData = ref(formData);
-  const isFullValid = ref(false);
+export interface INmorphUseFormValidation {
+  fields: Record<
+    string,
+    {
+      touched: Ref<boolean>;
+      valid: Ref<boolean>;
+      errors: Ref<string[]>;
+      validate: () => void;
+    }
+  >;
+  isFormValid: Ref<boolean>;
+  isAnyTouched: Ref<boolean>;
+}
 
-  const checkForFullValidation = () => {
-    const totalFieldQuantity = Object.keys(initialFormData.value).length;
-    const touchedFieldsQuantity = Object.keys(fields).length;
-    if (totalFieldQuantity > touchedFieldsQuantity) return;
-    isFullValid.value = Object.entries(fields).every(([_, fieldValue]) => fieldValue.valid);
+export const useFormValidation = (
+  formData: NmorphFormValueType,
+  validateFormOnLoad: boolean = false
+): INmorphUseFormValidation => {
+  const fields = reactive<Record<string, ReturnType<typeof useFieldValidation>>>({});
+
+  const silentFields = reactive<Record<string, ReturnType<typeof useFieldValidation>>>({});
+
+  const formToCompare = reactive(deepClone(formData));
+  const isFormValid = ref(false);
+  const isAnyTouched = ref(false);
+
+  const silentFullValidation = () => {
+    Object.entries(formData).forEach(([fieldName, fieldData]) => {
+      silentFields[fieldName] = useFieldValidation({ inputValue: fieldData.value, rules: fieldData.rules });
+      silentFields[fieldName].validate();
+    });
+    isFormValid.value = Object.entries(silentFields).every(([_, fieldValue]) => fieldValue.valid);
   };
 
   const validateAll = () => {
@@ -21,7 +42,6 @@ export const useFormValidation = (formData: NmorphFormValueType, validateFormOnL
       fields[fieldName] = useFieldValidation({ inputValue: fieldData.value, rules: fieldData.rules });
       fields[fieldName].validate();
     });
-    checkForFullValidation();
   };
 
   const compareFormData = (oldData: NmorphFormValueType, newData: NmorphFormValueType) => {
@@ -41,7 +61,8 @@ export const useFormValidation = (formData: NmorphFormValueType, validateFormOnL
       fields[fieldName].validate();
     });
     Object.assign(formToCompare, deepClone(data));
-    checkForFullValidation();
+    silentFullValidation();
+    isAnyTouched.value = true;
   };
 
   watch(formData, formUpdateHandler, { deep: true });
@@ -49,6 +70,7 @@ export const useFormValidation = (formData: NmorphFormValueType, validateFormOnL
 
   return {
     fields,
-    isFullValid,
+    isFormValid: readonly(isFormValid),
+    isAnyTouched: readonly(isAnyTouched),
   };
 };

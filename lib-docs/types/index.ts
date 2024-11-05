@@ -10,6 +10,7 @@ export interface IBasicApiTableData {
 export interface IAttributesTableData extends IBasicApiTableData {
   default: string;
   required?: boolean;
+  modalName?: string;
 }
 
 export interface IVariablesTableData extends ISlotsTableData {}

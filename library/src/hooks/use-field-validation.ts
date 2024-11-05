@@ -1,5 +1,5 @@
 import { NmorphAvailableFormValueType } from '@/components/form/nmorph-form/types';
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 
 export const enum NmorphArrayValidationOperator {
   'contains-one' = 'contains-one',
@@ -61,16 +61,23 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
   const { inputValue, rules } = data;
 
   const errors = ref<string[]>([]);
-  const valid = computed(() => {
-    return errors.value.length === 0;
-  });
+  const valid = ref(false);
+
   const touched = ref(false);
 
-  const validate = () => {
-    if (inputValue === null || !Boolean(rules.length)) return null;
+  const validate = (): void => {
+    const rulesExist = Boolean(rules?.length > 0);
+
+    if (!rulesExist) {
+      valid.value = true;
+      return;
+    }
+
+    if (inputValue === null) return;
     const value = inputValue;
 
-    const hasRuleKey = (key: string) => rules.length > 0 && key in rules[0];
+    const hasRuleKey = (key: string) => rulesExist && key in rules[0];
+
     const textValidation = typeof value === 'string' && hasRuleKey('pattern');
     const numberValidation = typeof value === 'number' && hasRuleKey('numberCompareType');
 
@@ -80,9 +87,10 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
     const arrayValidation = Array.isArray(value) && hasRuleKey('arrayCompareType');
 
     const wrongType = !numberValidation && !textValidation && !booleanValidation && !arrayValidation;
+
     if (wrongType) {
       console.warn('The input value and the provided rules do not match');
-      return null;
+      return;
     }
 
     if (!touched.value) touched.value = true;
@@ -173,6 +181,8 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
         return acc;
       }, [] as string[]);
     }
+
+    valid.value = errors.value.length === 0;
   };
 
   return {

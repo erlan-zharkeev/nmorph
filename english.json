@@ -1,4 +1,4 @@
-export default {
+{
   "guide": "Guide",
   "components": "Components",
   "about": "About",
@@ -1325,7 +1325,7 @@ export default {
         "placeholder": "Text displayed when no date is selected.",
         "model-value": "The currently selected date or range of dates.",
         "type": "Type of the date picker, e.g., *single* or *range*.",
-        "text-separator": "Text to separate start and end dates in range selection.",
+        "text-separator": "Text to separate start and end dates in range selection."
       },
       "slot": {},
       "variables": {
@@ -1336,4 +1336,4 @@ export default {
       }
     }
   }
-};
+}

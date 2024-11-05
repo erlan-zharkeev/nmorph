@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
-import { computed, provide, watch } from 'vue';
+import { computed, provide } from 'vue';
 import { useFormValidation } from '@/hooks';
-import { onMounted } from 'vue';
 import { NmorphFormValueType, NmorphFormValidationDataType } from './types';
+import { INmorphFromDataExpose } from '@/types';
 
 interface INmorphProps {
   value: NmorphFormValueType;
@@ -22,13 +22,7 @@ const modifiers = computed(() =>
 
 const formValidationData = useFormValidation(props.value, props.validateImmediately);
 
-// interface INmorphEmit {
-//   (e: 'form-validator', val: ReturnType<typeof useFormValidation>): void;
-// }
-
-// const emit = defineEmits<INmorphEmit>();
-
-defineExpose({ formData: formValidationData });
+defineExpose<INmorphFromDataExpose>({ formData: formValidationData });
 provide<NmorphFormValidationDataType>('form-data', formValidationData);
 </script>
 

@@ -11,7 +11,6 @@ interface INmorphProps {
   label?: string;
   showValidationIcon?: boolean;
   staticErrorBoxSpace?: boolean;
-  validate?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -19,13 +18,12 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   showValidationIcon: true,
   staticErrorBoxSpace: false,
-  validate: true,
 });
 
 const formData = inject<NmorphFormValidationDataType>('form-data', undefined);
 const validationData = computed(() => formData?.fields[props.id]);
 
-const ableToShowValidation = computed(() => props.validate && validationData.value);
+const ableToShowValidation = computed(() => validationData.value);
 const showStatusIcon = computed(
   () => Boolean(ableToShowValidation.value) && Boolean(validationData?.value?.touched) && props.showValidationIcon
 );

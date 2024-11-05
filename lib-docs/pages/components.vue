@@ -7,24 +7,35 @@ const componentPage = ref<HTMLElement | null>(null);
 const navigationContents = ref<string[]>([]);
 const timeoutScrollId = ref(null);
 const router = useRouter();
+const scrollDOMRef = ref(null);
 
 watch(
   () => router.currentRoute.value,
   () => {
+    const isRootComponents =
+      router.currentRoute.value.fullPath.split("/").filter(Boolean).pop() ===
+      "components";
+    if (isRootComponents) router.push("/overview");
+
     nextTick(() => {
       doUpdate();
     });
-  }
+  },
+  { immediate: true }
 );
 
 const scrollToAnchor = (anchor: string) => {
-  if (!document || !scroll.value || !anchor) return;
+  if (document !== null || !scrollDOMRef.value || !anchor) return;
   const offsetFromCurrent = document
-    ?.getElementById(anchor)
+    // @ts-ignore ///
+    .getElementById(anchor)
     .getBoundingClientRect().top;
+
   const y =
-    offsetFromCurrent + scroll.value.scroll.scrollDOMContainer.scrollTop;
-  scroll.value.scroll.moveTo({ x: 0, y });
+    // @ts-ignore ///
+    offsetFromCurrent + scrollDOMRef.value.scroll.scrollDOMContainer.scrollTop;
+  // @ts-ignore ///
+  scrollDOMRef.value.scroll.moveTo({ x: 0, y });
 };
 
 watch(
@@ -64,7 +75,6 @@ const doUpdate = () => {
 
 const activeAnchor = ref("");
 const observer = ref<IntersectionObserver | null>(null);
-const scroll = ref(null);
 
 const updateActiveAnchor = (entries: IntersectionObserverEntry[]) => {
   entries.forEach((entry) => {
@@ -85,7 +95,7 @@ const linkName = (anchor: string) => {
 
 <template>
   <div class="docs-components-page page">
-    <MainContentPart ref="scroll">
+    <MainContentPart ref="scrollDOMRef">
       <template #aside>
         <ComponentsList />
       </template>

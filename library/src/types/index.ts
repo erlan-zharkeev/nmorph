@@ -1,6 +1,12 @@
 import { Ref } from 'vue';
 import { I18n } from 'vue-i18n';
 
+import { NmorphFormValidationDataType } from '@/components';
+
+export interface INmorphFromDataExpose {
+  formData: NmorphFormValidationDataType;
+}
+
 export enum NmorphComponentHeight {
   thick = 'thick-component',
   default = 'default-height-component',

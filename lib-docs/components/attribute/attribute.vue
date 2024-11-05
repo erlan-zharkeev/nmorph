@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   NmorphButton,
+  NmorphCheckbox,
   NmorphCollapse,
   NmorphCollapseItem,
 } from "@nmorph/nmorph-ui-kit";
@@ -17,12 +18,12 @@ interface IProps {
 }
 
 const props = withDefaults(defineProps<IProps>(), {});
-const codeOpen = ref("");
+const codeOpen = ref(false);
+const accordionOpen = ref("");
 
-const openHandler = () => {
-  const value = codeOpen.value === "1" ? "" : "1";
-  codeOpen.value = value;
-};
+watch(codeOpen, (newValue) => {
+  accordionOpen.value = newValue ? "1" : "";
+});
 
 const copyHandler = () => {
   navigator.clipboard.writeText(props.codeToCopy.join(" "));
@@ -72,10 +73,15 @@ const infoData = `overview.${props.infoName}.info`;
       <div class="docs-component__overview-component-actions">
         <ClientOnly>
           <NmorphButton @click="copyHandler" icon="copy-document" />
-          <NmorphButton @click="openHandler" icon="code" />
+          <NmorphCheckbox v-model="codeOpen" design="button">
+            <template #label>
+              <NmorphIcon name="code" />
+            </template>
+          </NmorphCheckbox>
+          <!-- <NmorphButton @click="openHandler" icon="code" /> -->
         </ClientOnly>
       </div>
-      <NmorphCollapse :modelValue="codeOpen">
+      <NmorphCollapse :model-value="accordionOpen">
         <NmorphCollapseItem id="1" name="1">
           <slot name="code" />
         </NmorphCollapseItem>
@@ -89,6 +95,10 @@ const infoData = `overview.${props.infoName}.info`;
   .nmorph-button {
     margin: 0 8px;
   }
+}
+
+.nmorph-checkbox--button {
+  --size: 30px;
 }
 
 :deep(.nmorph-collapse-item__inner-wrapper) {
@@ -124,6 +134,6 @@ const infoData = `overview.${props.infoName}.info`;
 .docs-component__overview-component-actions {
   display: flex;
   justify-content: flex-end;
-  padding: 12px 4px;
+  padding: 12px 8px;
 }
 </style>
