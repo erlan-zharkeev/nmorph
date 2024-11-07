@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  NmorphTextInput,
+  NmorphButton,
   NmorphIcon,
   NmorphLink,
   NmorphDropdown,
@@ -46,17 +46,22 @@ const emit = defineEmits<INmorphEmit>();
 const config = useRuntimeConfig();
 const localePath = useLocalePath();
 
-const searchQuery = ref("");
+// const searchQuery = ref("");
 
 const translateBtn = ref(null);
-const open = ref(false);
+const translateDropdownOpen = ref(false);
 
 const closeHandler = () => {
-  open.value = false;
+  translateDropdownOpen.value = false;
 };
 
 const updateMenuHandler = () => {
   emit("toggle-menu");
+};
+
+const mobileNavMenu = ref(false);
+const toggleMobileNavMenu = () => {
+  mobileNavMenu.value = !mobileNavMenu.value;
 };
 </script>
 
@@ -64,16 +69,13 @@ const updateMenuHandler = () => {
   <header class="docs-top-bar nmorph--shadow-outset">
     <div class="docs-top-bar__left">
       <NmorphCheckbox
-        class="docs-top-bar__burger"
+        class="docs-top-bar__menu"
         :model-value="props.isMenuOpen"
         @update:model-value="updateMenuHandler"
-        label="menu"
         design="button"
       >
-        <template name="label">
-          <ClientOnly>
-            <NmorphIcon name="burger" />
-          </ClientOnly>
+        <template #label>
+          <NmorphIcon name="menu" />
         </template>
       </NmorphCheckbox>
       <div class="docs-top-bar__logo">
@@ -85,7 +87,7 @@ const updateMenuHandler = () => {
       </div>
     </div>
     <div class="docs-top-bar__right">
-      <div class="docs-top-bar__search">
+      <!-- <div class="docs-top-bar__search">
         <NmorphTextInput :placeholder="$t('search')" v-model="searchQuery">
           <template #prepend-icon>
             <ClientOnly>
@@ -93,10 +95,10 @@ const updateMenuHandler = () => {
             </ClientOnly>
           </template>
         </NmorphTextInput>
-      </div>
+      </div> -->
       <div ref="translateBtn" class="docs-top-bar__translate-btn">
         <NmorphCheckbox
-          v-model="open"
+          v-model="translateDropdownOpen"
           size="small"
           class="docs-top-bar__translate-checkbox"
           design="button"
@@ -112,7 +114,7 @@ const updateMenuHandler = () => {
         <NmorphDropdown
           v-if="translateBtn"
           :fill-width="false"
-          :open="open"
+          :open="translateDropdownOpen"
           :relative-element="translateBtn"
           @on-outside-click="closeHandler"
           :x-offset="-40"
@@ -149,7 +151,7 @@ const updateMenuHandler = () => {
         @update:model-value="setTheme"
         active-value="light"
         inactive-value="dark"
-        class="docs-top-bar__element"
+        class="docs-top-bar__element theme-btn"
       >
         <template #thumb-on>
           <ClientOnly>
@@ -164,12 +166,22 @@ const updateMenuHandler = () => {
           </ClientOnly>
         </template>
       </NmorphSwitch>
-      <NmorphLink :href="config.public.NUXT_ENV_GIT_PATH">
-        <ClientOnly>
-          <NmorphIcon :path="GitlabIcon" size="medium" />
-        </ClientOnly>
-      </NmorphLink>
+      <ClientOnly>
+        <NmorphButton style-type="transparent" class="git-lab-button">
+          <NmorphLink :href="config.public.NUXT_ENV_GIT_PATH" target="blank">
+            <GitlabIcon />
+          </NmorphLink>
+        </NmorphButton>
+      </ClientOnly>
     </div>
+    <!-- <div class="docs-mobile-menu"></div> -->
+    <NmorphCheckbox
+      class="docs-top-bar__nav-menu"
+      :model-value="mobileNavMenu"
+      @update:model-value="toggleMobileNavMenu"
+      :label="$t('top-bar.nav')"
+      design="button"
+    />
   </header>
 </template>
 
@@ -276,14 +288,18 @@ $top-bar-height: 50px;
 .docs-top-bar__nav-list {
   display: flex;
   padding-left: 0;
+
   li {
     list-style-type: none;
     margin-right: 8px;
   }
 }
 
-.docs-top-bar__burger {
+.docs-top-bar__menu {
   margin-right: 8px;
+}
+
+.docs-top-bar__nav-menu {
   display: none;
 }
 
@@ -291,11 +307,26 @@ $top-bar-height: 50px;
   .docs-main-layout__left-aside {
     display: none;
   }
+
   .docs-main-layout {
     grid-template-columns: 1fr;
   }
-  .docs-top-bar__burger {
+
+  .docs-top-bar__menu {
     display: block;
+  }
+
+  .docs-top-bar__nav {
+    display: none;
+  }
+
+  .git-lab-button,
+  .theme-btn {
+    display: none;
+  }
+
+  .docs-top-bar__nav-menu {
+    display: flex;
   }
 }
 </style>

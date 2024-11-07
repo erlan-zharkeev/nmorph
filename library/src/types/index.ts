@@ -2,6 +2,12 @@ import { Ref } from 'vue';
 import { I18n } from 'vue-i18n';
 
 import { NmorphFormValidationDataType } from '@/components';
+import { useNmorphBrowser, useNmorphTheme } from '@/providers';
+
+export interface INmorphInstance {
+  theme: ReturnType<typeof useNmorphTheme>;
+  browser: ReturnType<typeof useNmorphBrowser>;
+}
 
 export interface INmorphFromDataExpose {
   formData: NmorphFormValidationDataType;
@@ -432,13 +438,6 @@ export interface INmorphDimensions {
   height: number;
 }
 
-export interface INmorphInstance {
-  theme: INmorphThemeInstance;
-  browser: {
-    dimensions: Ref<INmorphDimensions>;
-  };
-}
-
 export interface INmorphImage {
   src: string;
   srcSet?: string;
@@ -466,6 +465,7 @@ export interface INmorphRadioOption {
   disabled?: boolean;
   label?: string;
   value: string;
+  tabindex?: number;
 }
 
 export enum NmorphRadioStyleType {

@@ -83,7 +83,7 @@ const closeButtonPosition = computed(() => props.closeIconPosition);
 
   .nmorph-alert__content,
   .nmorph-alert__content-title {
-    color: var(--nmorph-gray-color);
+    color: var(--nmorph-white-color);
     white-space: pre-line;
   }
 
@@ -119,7 +119,7 @@ const closeButtonPosition = computed(() => props.closeIconPosition);
     cursor: pointer;
 
     .nmorph-icon {
-      --color: var(--nmorph-gray-color);
+      --color: var(--nmorph-white-color);
     }
   }
 }

@@ -1,5 +1,5 @@
-import { INmorphCoords, NmorphDomElementType, NmorphPlacementType } from '@/types';
-import { Ref, ref, nextTick, onMounted } from 'vue';
+import { INmorphCoords, INmorphInstance, NmorphDomElementType, NmorphPlacementType } from '@/types';
+import { Ref, ref, nextTick, onMounted, inject, watch, onUnmounted } from 'vue';
 
 interface INmorphUsePlacementPayload {
   initialPlacement: NmorphPlacementType;
@@ -13,10 +13,55 @@ export const usePlacement = (data: INmorphUsePlacementPayload) => {
   const { initialPlacement, relativeElement, contentDOMElement, yOffset = 0, xOffset = 0 } = data;
   const placement = ref<NmorphPlacementType>(initialPlacement);
   const placementCoords = ref<INmorphCoords<string>>({ x: '0px', y: '0px' });
+  const nmorph = inject<INmorphInstance>('nmorph');
+  const scrollContainer = ref<HTMLElement | null>(null);
+
+  watch(
+    () => nmorph.browser,
+    () => {
+      adjustPlacement();
+    },
+    { deep: true }
+  );
 
   onMounted(() => {
     adjustPlacement();
+    findScrollableContainer();
+    addScrollListener();
   });
+
+  onUnmounted(() => {
+    removeScrollListener();
+  });
+
+  const findScrollableContainer = () => {
+    let element = contentDOMElement.value as HTMLElement | null;
+
+    while (element) {
+      const style = window.getComputedStyle(element);
+      if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
+        scrollContainer.value = element;
+        break;
+      }
+      element = element.parentElement;
+    }
+  };
+
+  const addScrollListener = () => {
+    if (scrollContainer.value) {
+      scrollContainer.value.addEventListener('scroll', adjustPlacement, { passive: true });
+    } else {
+      window.addEventListener('scroll', adjustPlacement, { passive: true });
+    }
+  };
+
+  const removeScrollListener = () => {
+    if (scrollContainer.value) {
+      scrollContainer.value.removeEventListener('scroll', adjustPlacement);
+    } else {
+      window.removeEventListener('scroll', adjustPlacement);
+    }
+  };
 
   const adjustPlacement = () => {
     nextTick(() => {
@@ -62,7 +107,7 @@ export const usePlacement = (data: INmorphUsePlacementPayload) => {
       }
 
       if (placement.value === 'top') {
-        placementCoords.value = { x: `${x + xOffset}px`, y: `${y + yOffset}px` };
+        placementCoords.value = { x: `${x + xOffset}px`, y: `${y - dropdownElHeight + yOffset}px` };
       }
 
       if (placement.value === 'bottom') {
@@ -70,11 +115,11 @@ export const usePlacement = (data: INmorphUsePlacementPayload) => {
       }
 
       if (placement.value === 'right') {
-        placementCoords.value = { x: `${x + xOffset}px`, y: `${y + yOffset}px` };
+        placementCoords.value = { x: `${x + relativeElWidth + xOffset}px`, y: `${y + yOffset}px` };
       }
 
       if (placement.value === 'left') {
-        placementCoords.value = { x: `${x + relativeElWidth + xOffset}px`, y: `${y + yOffset}px` };
+        placementCoords.value = { x: `${x - dropdownElWidth + xOffset}px`, y: `${y + yOffset}px` };
       }
     });
   };

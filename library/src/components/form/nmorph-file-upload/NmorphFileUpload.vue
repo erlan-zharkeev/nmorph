@@ -13,6 +13,9 @@ import {
 } from '@/components';
 import { useModifiers } from '@/utils';
 import { NmorphDomElementType, NmorphIconList } from '@/types';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 interface INmorphProps {
   modelValue?: INmorphCustomFileData[];
@@ -20,6 +23,7 @@ interface INmorphProps {
   multiple?: boolean;
   allowedTypes?: NmorphResolutionType[];
   photoWithPreview?: boolean;
+  buttonText?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -28,7 +32,10 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   multiple: false,
   allowedTypes: () => ['jpg', 'jpeg', 'png'],
   photoWithPreview: true,
+  buttonText: '',
 });
+
+const computedButtonText = computed(() => (props.buttonText ? props.buttonText : t('NmorphFileUpload.selectFile')));
 
 const getPlainType = (resolution: string) => resolution.split('/')[1];
 
@@ -111,7 +118,7 @@ const modifiers = computed(() =>
         @change="handleFileUpload"
       />
       <slot name="trigger">
-        <NmorphButton text="Select file" fill @click="openFileSelector" :disabled="props.disabled" />
+        <NmorphButton :text="computedButtonText" fill @click="openFileSelector" :disabled="props.disabled" />
       </slot>
     </div>
     <div class="nmorph-file-upload__list" v-if="files.length > 0">

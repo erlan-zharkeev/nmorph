@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphButton, NmorphIcon, getMonthName } from '@/components';
 
@@ -30,22 +30,48 @@ const modifiers = computed(() =>
 <template>
   <div :class="modifiers">
     <div class="nmorph-date-picker-header__left-side">
-      <NmorphButton class="nmorph-date-picker-header__action-btn" style-type="transparent" @click="emit('prev-year')">
+      <NmorphButton
+        class="nmorph-date-picker-header__action-btn"
+        style-type="transparent"
+        @click="emit('prev-year')"
+        :tabindex="-1"
+      >
         <NmorphIcon name="chevron-double-down" class="nmorph-date-picker-header__chevron-double-left" />
       </NmorphButton>
-      <NmorphButton class="nmorph-date-picker-header__action-btn" style-type="transparent" @click="emit('prev-month')">
+      <NmorphButton
+        class="nmorph-date-picker-header__action-btn"
+        style-type="transparent"
+        @click="emit('prev-month')"
+        :tabindex="-1"
+      >
         <NmorphIcon name="chevron-down" class="nmorph-date-picker-header__chevron-left" />
       </NmorphButton>
     </div>
     <div class="nmorph-date-picker-header__center-side">
-      <NmorphButton :text="props.year" style-type="transparent" fill @click="emit('change-year')" />
-      <NmorphButton :text="getMonthName(props.month)" style-type="transparent" fill @click="emit('change-month')" />
+      <NmorphButton :text="props.year" style-type="transparent" fill @click="emit('change-year')" :tabindex="-1" />
+      <NmorphButton
+        :text="getMonthName(props.month)"
+        style-type="transparent"
+        fill
+        @click="emit('change-month')"
+        :tabindex="-1"
+      />
     </div>
     <div class="nmorph-date-picker-header__right-side">
-      <NmorphButton class="nmorph-date-picker-header__action-btn" style-type="transparent" @click="emit('next-month')">
+      <NmorphButton
+        class="nmorph-date-picker-header__action-btn"
+        style-type="transparent"
+        @click="emit('next-month')"
+        :tabindex="-1"
+      >
         <NmorphIcon name="chevron-down" class="nmorph-date-picker-header__chevron-right" />
       </NmorphButton>
-      <NmorphButton class="nmorph-date-picker-header__action-btn" style-type="transparent" @click="emit('next-year')">
+      <NmorphButton
+        class="nmorph-date-picker-header__action-btn"
+        style-type="transparent"
+        @click="emit('next-year')"
+        :tabindex="-1"
+      >
         <NmorphIcon name="chevron-double-down" class="nmorph-date-picker-header__chevron-double-right" />
       </NmorphButton>
     </div>

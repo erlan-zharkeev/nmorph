@@ -5,6 +5,23 @@ const router = useRouter();
 const scroll = ref(null);
 defineExpose({ scroll });
 
+const isRouteReady = ref(false);
+
+let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+onMounted(async () => {
+  await router.isReady();
+  timeoutId = setTimeout(() => {
+    isRouteReady.value = true;
+  }, 0);
+});
+
+onUnmounted(() => {
+  if (timeoutId !== null) {
+    clearTimeout(timeoutId);
+  }
+});
+
 const isComponentOverview = computed(() =>
   router.currentRoute.value.fullPath.includes("components/overview")
 );
@@ -21,12 +38,15 @@ const isComponentOverview = computed(() =>
       ref="scroll"
       class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card"
     >
-      <main class="docs-main-layout__center">
+      <main
+        class="docs-main-layout__center"
+        :class="{ 'docs-main-layout__center--full-page': isComponentOverview }"
+      >
         <slot name="default" />
       </main>
       <aside
         class="docs-main-layout__card nmorph--shadow-inset docs-main-layout__center-aside"
-        v-if="!isComponentOverview"
+        v-if="isRouteReady && !isComponentOverview"
       >
         <slot name="aside-right" />
       </aside>
@@ -56,6 +76,10 @@ const isComponentOverview = computed(() =>
 
 .docs-main-layout__center {
   width: calc(100% - 200px);
+}
+
+.docs-main-layout__center--full-page {
+  width: 100%;
 }
 
 .docs-main-layout__center-aside {

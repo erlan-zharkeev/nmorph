@@ -19,6 +19,10 @@ export default {
   "form": "Form",
   "navigation": "Navigation",
   "other": "Other",
+  "top-bar": {
+    "menu": "Menu",
+    "nav": "Navigation",
+  },
   "overview": {
     "basic-usage": "Basic usage",
     "one": "One",

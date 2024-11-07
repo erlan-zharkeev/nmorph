@@ -1,50 +1,37 @@
 <template>
   <div class="wrapper">
-    <NmorphForm :value="form" ref="formRef">
-      <NmorphFormItem id="username" label="Username">
-        <NmorphTextInput v-model="form.username.value" clearable />
+    <NmorphForm :value="form">
+      <NmorphFormItem id="username">
+        <NmorphTextInput />
       </NmorphFormItem>
-      <NmorphFormItem
-        id="date"
-        :label="$t('overview.form.basic-usage.choose-date')"
-      >
+      <NmorphFormItem id="photo">
         <NmorphDatePicker v-model="form.date.value" />
       </NmorphFormItem>
-      <NmorphFormItem id="photo" :label="$t('overview.form.basic-usage.photo')">
-        <NmorphFileUpload v-model="form.photo.value" multiple />
+      <NmorphFormItem id="age">
+        <NmorphNumberInput />
+      </NmorphFormItem>
+      <NmorphFormItem id="photo">
+        <NmorphFileUpload />
       </NmorphFormItem>
     </NmorphForm>
   </div>
 </template>
 <script lang="ts" setup>
-import {
-  NmorphFormItem,
-  NmorphForm,
-  NmorphFileUpload,
-  NmorphTextInput,
-  NmorphDatePicker,
-} from "./../../../library/src/components";
-
-import { type INmorphFromDataExpose } from "./../../../library/src/types";
-
-import { reactive, ref, watch } from "vue";
-
-const formRef = ref<INmorphFromDataExpose | null>(null);
-
-watch(
-  () => formRef.value?.formData,
-  (newValue) => {
-    // newValue.isFormValid.
-    // console.log(newValue);
-    // isFormValid.value = newValue.isFormValid.value;
-  },
-  { deep: true }
-);
+import { reactive } from "vue";
+import { NmorphForm, NmorphFormItem } from "./../../../library/src/components";
+import NmorphNumberInput from "../../../library/src/components/form/nmorph-number-input/NmorphNumberInput.vue";
+import NmorphTextInput from "../../../library/src/components/form/nmorph-text-input/NmorphTextInput.vue";
+import NmorphFileUpload from "../../../library/src/components/form/nmorph-file-upload/NmorphFileUpload.vue";
+import NmorphDatePicker from "../../../library/src/components/form/nmorph-date-picker/NmorphDatePicker.vue";
 
 const form = reactive({
   username: {
     value: "",
-    rules: [{ pattern: /.{5,}/, error: "Too short" }],
+    rules: [],
+  },
+  age: {
+    value: 12,
+    rules: [],
   },
   photo: {
     value: [],
@@ -60,8 +47,13 @@ const form = reactive({
 .wrapper {
   display: flex;
   justify-content: center;
+  max-width: 200px;
+  height: 200px;
+  overflow: auto;
 }
-
+.nmorph-form-item {
+  margin-bottom: 100px;
+}
 form {
   max-width: 400px;
 }

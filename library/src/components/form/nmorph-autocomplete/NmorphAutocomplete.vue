@@ -20,7 +20,7 @@ interface INmorphProps extends INmorphCommonInputProps {
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: '',
-  placeholder: 'Type ...',
+  placeholder: '',
   height: 'default',
   disabled: false,
   clearable: true,

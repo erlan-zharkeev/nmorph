@@ -77,5 +77,8 @@ export default defineNuxtConfig({
       alwaysRedirect: true,
     },
     vueI18n: "./i18n.config.ts",
+    compilation: {
+      strictMessage: false,
+    },
   },
 });

@@ -15,7 +15,7 @@ watch(
     const isRootComponents =
       router.currentRoute.value.fullPath.split("/").filter(Boolean).pop() ===
       "components";
-    if (isRootComponents) router.push("/overview");
+    if (isRootComponents) router.push("components/overview");
 
     nextTick(() => {
       doUpdate();

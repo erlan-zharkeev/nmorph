@@ -26,7 +26,7 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "placeholder",
     type: "String",
-    default: "Type ...",
+    default: "-",
   },
   {
     name: "clearable",

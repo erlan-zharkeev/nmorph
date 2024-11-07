@@ -64,6 +64,7 @@ provide<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-but
           :value="option.value"
           :disabled="option.disabled || props.disabled"
           :style-type="props.styleType"
+          :tabindex="option.tabindex"
         />
         <slot />
       </div>

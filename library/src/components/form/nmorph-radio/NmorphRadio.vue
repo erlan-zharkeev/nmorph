@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   label: '',
   styleType: 'button',
   checked: false,
+  tabindex: 0,
 });
 
 const changeHandler = () => {
@@ -53,6 +54,7 @@ defineExpose({ inputDOMRef });
           :name="props.label"
           :value="props.value"
           :checked="checked"
+          :tabindex="props.tabindex"
           class="nmorph-native-input"
         />
         <div class="nmorph-radio__fake" />
@@ -71,6 +73,7 @@ defineExpose({ inputDOMRef });
         :name="props.label"
         :value="props.value"
         :checked="checked"
+        :tabindex="props.tabindex"
         class="nmorph-native-input"
       />
       <div v-if="props.label" class="nmorph-radio__fake">

@@ -3,6 +3,7 @@ import { translate as NmorphCalendar } from '@/components/data/nmorph-calendar/t
 import { translate as NmorphDatePicker } from '@/components/form/nmorph-date-picker/translate';
 import { translate as NmorphImage } from '@/components/data/nmorph-image/translate';
 import { translate as NmorphSelect } from '@/components/form/nmorph-select/translate';
+import { translate as NmorphFileUpload } from '@/components/form/nmorph-file-upload/translate';
 
 import { Locale, TranslateMessages } from '@/main';
 
@@ -12,4 +13,5 @@ export const translation: TranslateMessages = {
   NmorphDatePicker: NmorphDatePicker[Locale.ru],
   NmorphImage: NmorphImage[Locale.ru],
   NmorphSelect: NmorphSelect[Locale.ru],
+  NmorphFileUpload: NmorphFileUpload[Locale.ru],
 };

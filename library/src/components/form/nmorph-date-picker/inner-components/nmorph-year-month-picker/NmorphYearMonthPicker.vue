@@ -23,6 +23,7 @@ const initialMonthData: INmorphRadioOption[] = months.map((monthName, idx) => {
   return {
     label,
     value: String(idx),
+    tabindex: -1,
   };
 });
 
@@ -113,13 +114,13 @@ const goToYearsHandler = () => {
 <template>
   <div :class="modifiers">
     <div class="nmorph-year-month-picker__header">
-      <NmorphButton class="nmorph-year-month-picker__action-btn" @click="buttonClickHandler('decrease')">
+      <NmorphButton class="nmorph-year-month-picker__action-btn" @click="buttonClickHandler('decrease')" :tabindex="-1">
         <NmorphIcon name="chevron-down" class="nmorph-year-month-picker__chevron-left" />
       </NmorphButton>
       <div class="nmorph-year-month-picker__value">
-        <NmorphButton :text="value" style-type="transparent" @click="goToYearsHandler" />
+        <NmorphButton :text="value" style-type="transparent" @click="goToYearsHandler" :tabindex="-1" />
       </div>
-      <NmorphButton class="nmorph-year-month-picker__action-btn" @click="buttonClickHandler('increase')">
+      <NmorphButton class="nmorph-year-month-picker__action-btn" @click="buttonClickHandler('increase')" :tabindex="-1">
         <NmorphIcon name="chevron-down" class="nmorph-year-month-picker__chevron-right" />
       </NmorphButton>
     </div>

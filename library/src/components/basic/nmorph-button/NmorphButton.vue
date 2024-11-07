@@ -14,6 +14,7 @@ interface INmorphProps extends INmorphCommonInputProps {
   shape?: keyof typeof NmorphButtonShape;
   icon?: keyof typeof NmorphIconList;
   fill?: boolean;
+  tabindex?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -28,6 +29,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   ripple: true,
   shape: 'default',
   icon: undefined,
+  tabindex: 0,
 });
 
 const modifiers = computed(() =>
@@ -65,6 +67,7 @@ defineExpose({ buttonDOMElement });
       :disabled="props.disabled"
       :loading="props.loading"
       :type="props.type"
+      :tabindex="props.tabindex"
     >
       <NmorphIcon v-if="props.icon" :name="props.icon" />
       <div v-else>

@@ -125,11 +125,7 @@ const closeHandler = () => {
 
 <template>
   <div id="content-basic-usage">
-    <attribute
-      header="Open"
-      :subtitle="$t('overview.basic-usage')"
-      :codeToCopy="code"
-    >
+    <attribute :header="$t('overview.basic-usage')" :codeToCopy="code">
       <template #overview>
         <div class="dropdown-basic-usage-overview">
           <ClientOnly>
