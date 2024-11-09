@@ -23,7 +23,7 @@ const templateData = `
         @on-outside-click="showDefault = false"
       >
         <div class="overlay-slot-element">
-          <NmorphCard>
+          <div class="overlay-slot__content">
             Lorem Ipsum is simply dummy text of the printing and
             typesetting industry. Lorem Ipsum has been the industry's
             standard dummy text ever since the 1500s, when an unknown
@@ -35,7 +35,7 @@ const templateData = `
             Ipsum passages, and more recently with desktop publishing
             software like Aldus PageMaker including versions of Lorem
             Ipsum.
-          </NmorphCard>
+          </div>
         </div>
       </NmorphOverlay>
     </div>
@@ -78,8 +78,16 @@ const cssData = `
       left: 50%;
       transform: translate(-50%, -50%);
     }
+    .overlay-slot__content {
+      background: var(--nmorph-main-color);
+      padding: 8px;
+    }
+    .nmorph-button {
+      margin-bottom: 8px;
+    }
     .overlay-content {
       display: flex;
+      flex-wrap: wrap;
     }
     .overlay-element {
       margin-right: 8px;
@@ -115,7 +123,7 @@ const showTransparent = ref(false);
                   @on-outside-click="showDefault = false"
                 >
                   <div class="overlay-slot-element">
-                    <NmorphCard>
+                    <div class="overlay-slot__content">
                       Lorem Ipsum is simply dummy text of the printing and
                       typesetting industry. Lorem Ipsum has been the industry's
                       standard dummy text ever since the 1500s, when an unknown
@@ -127,7 +135,7 @@ const showTransparent = ref(false);
                       Ipsum passages, and more recently with desktop publishing
                       software like Aldus PageMaker including versions of Lorem
                       Ipsum.
-                    </NmorphCard>
+                    </div>
                   </div>
                 </NmorphOverlay>
               </div>
@@ -181,8 +189,16 @@ const showTransparent = ref(false);
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  .overlay-slot__content {
+    background: var(--nmorph-main-color);
+    padding: 8px;
+  }
+  .nmorph-button {
+    margin-bottom: 8px;
+  }
   .overlay-content {
     display: flex;
+    flex-wrap: wrap;
   }
   .overlay-element {
     margin-right: 8px;

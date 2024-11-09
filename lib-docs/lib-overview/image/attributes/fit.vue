@@ -25,6 +25,7 @@ const cssData = `
   .image-fit-overview {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     .image-fit-overview__wrapper {
       width: 200px;
       height: 200px;
@@ -75,6 +76,7 @@ const code = [scriptData, templateData, cssData];
 .image-fit-overview {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   .image-fit-overview__wrapper {
     width: 200px;
     height: 200px;

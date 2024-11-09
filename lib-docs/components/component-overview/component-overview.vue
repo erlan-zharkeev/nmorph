@@ -106,6 +106,12 @@ const componentsMap: Record<string, unknown[]> = {
   padding: 16px;
 }
 
+@include max-width-query(768) {
+  .component-overview {
+    padding: 4px;
+  }
+}
+
 .component-overview__title {
   margin-bottom: 8px;
 }

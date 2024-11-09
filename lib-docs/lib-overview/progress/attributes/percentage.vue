@@ -7,9 +7,9 @@ const scriptData = "";
 const templateData = `
 <template>
   <div class="progress-percentage-overview">
-    <NmorphProgress :percentage="33" />
-    <NmorphProgress :percentage="66" />
-    <NmorphProgress :percentage="99" />
+    <NmorphProgress :percentage="33"  color="pink" />
+    <NmorphProgress :percentage="66" color="var(--nmorph-accent-color)" />
+    <NmorphProgress :percentage="99" color="lightblue" />
   </div>
 </template>
 `;
@@ -39,12 +39,12 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="progress-percentage-overview">
           <ClientOnly>
-            <NmorphProgress :percentage="33" color="cyan" />
+            <NmorphProgress :percentage="33" color="pink" />
             <NmorphProgress
               :percentage="66"
               color="var(--nmorph-accent-color)"
             />
-            <NmorphProgress :percentage="99" />
+            <NmorphProgress :percentage="99" color="lightblue" />
           </ClientOnly>
         </div>
       </template>

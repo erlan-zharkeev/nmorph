@@ -37,9 +37,11 @@ const cssData = `
 <style lang="scss">
   .date-picker-basic-usage-overview {
     display: flex;
+    flex-wrap: wrap;
 
     .date-picker-basic-usage-overview__element {
       margin-right: 12px;
+      margin-bottom: 8px;
     }
   }
 </style>
@@ -94,9 +96,11 @@ const range = ref([date1, date2]);
 <style lang="scss">
 .date-picker-basic-usage-overview {
   display: flex;
+  flex-wrap: wrap;
 
   .date-picker-basic-usage-overview__element {
     margin-right: 12px;
+    margin-bottom: 8px;
   }
 }
 </style>

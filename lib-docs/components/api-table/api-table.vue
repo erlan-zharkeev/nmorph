@@ -261,4 +261,14 @@ const attributeNameLabel = (name: string, required: boolean) =>
 .nmorph-dialog code {
   text-align: left;
 }
+
+@include max-width-query(768) {
+  .nmorph-table__cell-content {
+    font-size: 10px;
+  }
+
+  .nmorph-table .nmorph-table__cell--data {
+    font-size: 10px;
+  }
+}
 </style>

@@ -58,8 +58,10 @@ const code = [scriptData, templateData, cssData];
 .number-input-height-overview {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   .nmorph-number-input {
     margin-right: 8px;
+    margin-bottom: 8px;
   }
 }
 </style>

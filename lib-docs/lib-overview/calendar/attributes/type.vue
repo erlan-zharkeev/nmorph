@@ -121,9 +121,10 @@ const shortDate = (value: Date) => value.toLocaleDateString(locale.value);
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  .calendar-type-overview__element {
-    max-width: 33.333%;
-  }
+
+  // .calendar-type-overview__element {
+  //   max-width: 33.333%;
+  // }
   p {
     margin-bottom: 8px;
   }

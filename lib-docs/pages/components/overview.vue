@@ -414,13 +414,17 @@ const tabs = ref([
 
 <style lang="scss">
 .overview {
+  .nmorph-card {
+    pointer-events: none;
+  }
+
   .overview__title {
     margin-bottom: 8px;
   }
 
   .overview-component-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 300px));
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
   }
 
@@ -436,16 +440,13 @@ const tabs = ref([
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    padding: 0 4px;
   }
 
   .overview-component-wrapper {
     height: 200px;
 
     .nmorph-card {
-      height: 100%;
-    }
-
-    a {
       height: 100%;
     }
   }
@@ -507,11 +508,19 @@ const tabs = ref([
     }
   }
 
-  @include max-width-query(768) {
+  @include max-width-query(1600) {
     .overview-component-list {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
     }
+  }
 
+  @include max-width-query(1366) {
+    .overview-component-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @include max-width-query(768) {
     .overview-component-wrapper {
       width: 100%;
     }

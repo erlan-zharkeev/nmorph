@@ -15,11 +15,7 @@ const listAttributesData: IAttributesTableData[] = [
 const listEvents = [
   {
     name: "close",
-    type: docsLink(
-      "Array&lt;NmorphTagItem&gt;",
-      "#content-tag-item-attributes",
-      "_self"
-    ),
+    type: "String",
   },
   {
     name: "update:model-value",

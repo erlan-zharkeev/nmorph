@@ -79,9 +79,12 @@ const options = ref([
 .select-height-overview {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+
   .nmorph-select {
     --base-width: 150px;
     margin-right: 8px;
+    margin-bottom: 8px;
   }
 }
 </style>

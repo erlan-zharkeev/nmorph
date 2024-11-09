@@ -18,7 +18,7 @@ const cssData = `
 <style lang="scss">
   .button-shape-overview {
     .nmorph-button {
-      margin: 0 8px;
+      margin: 4px 8px;
     }
 
     .custom-circle-button {
@@ -68,7 +68,7 @@ const code = [scriptData, templateData, cssData];
 <style lang="scss">
 .button-shape-overview {
   .nmorph-button {
-    margin: 0 8px;
+    margin: 4px 8px;
   }
 
   .custom-circle-button {

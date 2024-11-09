@@ -22,10 +22,12 @@ const cssData = `
   .image-loading-text-overview {
     display: flex;
     width: 100%;
+    flex-wrap: wrap;
     .nmorph-image {
       --width: 300px;
       --height: 300px;
       margin-right: 16px;
+      margin-bottom: 8px;
     }
   }
 </style>
@@ -82,10 +84,12 @@ const imageKey = ref(0);
 .image-loading-text-overview {
   display: flex;
   width: 100%;
+  flex-wrap: wrap;
   .nmorph-image {
     --width: 300px;
     --height: 300px;
     margin-right: 16px;
+    margin-bottom: 8px;
   }
 }
 </style>

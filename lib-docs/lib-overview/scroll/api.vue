@@ -4,7 +4,6 @@ import {
   NmorphScrollBehavior,
 } from "@nmorph/nmorph-ui-kit";
 import ApiTable from "~/components/api-table/api-table.vue";
-import { a11yPropsApi } from "~/utils";
 
 const attributesData = [
   {
@@ -67,7 +66,6 @@ const attributesData = [
     type: "Number",
     default: "4",
   },
-  ...a11yPropsApi,
 ];
 
 const slotData = [

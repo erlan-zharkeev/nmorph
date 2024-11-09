@@ -124,9 +124,11 @@ const cssData = `
     margin-bottom: 8px;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
   }
   .actions__element {
     margin-right: 8px;
+    margin-bottom: 8px;
   }
   .cards__loader {
     margin-top: 16px;
@@ -270,9 +272,11 @@ getData(0);
     margin-bottom: 8px;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
   }
   .actions__element {
     margin-right: 8px;
+    margin-bottom: 8px;
   }
   .cards__loader {
     margin-top: 16px;

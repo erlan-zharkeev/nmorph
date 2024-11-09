@@ -58,10 +58,12 @@ const cssData = `
 <style lang="scss">
   .divider-wrapper {
     display: flex;
+    flex-wrap: wrap;
   }
 
   .divider-horizontal {
     margin-right: 24px;
+    margin-bottom: 8px;
     .nmorph-divider {
       margin: 16px 0;
     }
@@ -164,10 +166,12 @@ const code = [scriptData, templateData, cssData];
 .divider-direction-overview {
   .divider-wrapper {
     display: flex;
+    flex-wrap: wrap;
   }
 
   .divider-horizontal {
     margin-right: 24px;
+    margin-bottom: 8px;
     .nmorph-divider {
       margin: 16px 0;
     }

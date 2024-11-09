@@ -115,6 +115,7 @@ const list = ref([
 .tag-removable-overview {
   .nmorph-tag-item {
     margin-right: 8px;
+    margin-bottom: 8px;
   }
   .tag-list {
     margin-top: 8px;

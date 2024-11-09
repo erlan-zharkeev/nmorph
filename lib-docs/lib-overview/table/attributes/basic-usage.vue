@@ -144,9 +144,12 @@ const cssData = `
     .actions {
       margin-bottom: 16px;
       display: flex;
+      align-items: center;
+      flex-wrap: wrap;
     }
     .actions__element {
       margin-right: 8px;
+      margin-bottom: 8px;
     }
   }
 </style>
@@ -309,9 +312,11 @@ const clickMeText = `overview.table.basic-usage.click-me-text`;
     margin-bottom: 16px;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
   }
   .actions__element {
     margin-right: 8px;
+    margin-bottom: 8px;
   }
 }
 </style>

@@ -64,7 +64,7 @@ const text = ref("Lorem ipsum");
 <style lang="scss">
 .text-input-model-value-overview {
   .nmorph-text-input {
-    width: 300px;
+    width: 260px;
   }
   p {
     margin-bottom: 8px;

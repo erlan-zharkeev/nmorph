@@ -21,10 +21,13 @@ const cssData = `
   .image-load-failed-text-overview {
     display: flex;
     width: 100%;
+    flex-wrap: wrap;
+
     .nmorph-image {
       --width: 300px;
       --height: 300px;
       margin-right: 16px;
+      margin-bottom: 8px;
     }
   }
 </style>
@@ -72,10 +75,13 @@ const code = [scriptData, templateData, cssData];
 .image-load-failed-text-overview {
   display: flex;
   width: 100%;
+  flex-wrap: wrap;
+
   .nmorph-image {
     --width: 300px;
     --height: 300px;
     margin-right: 16px;
+    margin-bottom: 8px;
   }
 }
 </style>

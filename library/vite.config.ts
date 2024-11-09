@@ -31,22 +31,22 @@ export default defineConfig(() => {
       },
       rollupOptions: {
         external: ['vue', 'vue-i18n', 'lodash', 'pinia'],
-        plugins: [
-          {
-            name: 'ignore-test-and-story-files',
-            resolveId(source) {
-              if (source.endsWith('.spec.ts') || source.endsWith('.story.vue')) {
-                return this.resolve(source, { skipSelf: 'true' }).then((resolved) => {
-                  if (resolved) {
-                    return { id: resolved.id, external: true };
-                  }
-                  return null;
-                });
-              }
-              return null;
-            },
-          },
-        ],
+        // plugins: [
+        //   {
+        //     name: 'ignore-test-and-story-files',
+        //     resolveId(source) {
+        //       if (source.endsWith('.spec.ts') || source.endsWith('.story.vue')) {
+        //         return this.resolve(source, { skipSelf: 'true' }).then((resolved) => {
+        //           if (resolved) {
+        //             return { id: resolved.id, external: true };
+        //           }
+        //           return null;
+        //         });
+        //       }
+        //       return null;
+        //     },
+        //   },
+        // ],
       },
       assetsInlineLimit: 0,
     },

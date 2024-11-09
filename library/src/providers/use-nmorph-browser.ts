@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { onUnmounted, ref } from 'vue';
 
 export const useNmorphBrowser = () => {
   const dimensions = ref({ width: 0, height: 0 });
@@ -26,6 +26,13 @@ export const useNmorphBrowser = () => {
     window.addEventListener('resize', resizeHandler);
     window.addEventListener('scroll', scrollHandler);
   }
+
+  const stop = () => {
+    window.removeEventListener('resize', resizeHandler);
+    window.removeEventListener('scroll', scrollHandler);
+  };
+
+  onUnmounted(stop);
 
   return {
     dimensions,

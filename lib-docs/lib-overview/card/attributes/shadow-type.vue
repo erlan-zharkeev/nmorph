@@ -129,6 +129,7 @@ const code = [scriptData, templateData, cssData];
 <style lang="scss">
 .card-shadow-type-overview {
   display: flex;
+  flex-wrap: wrap;
 
   .card-shadow-type-overview__element {
     margin: 8px;

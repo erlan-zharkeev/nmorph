@@ -12,6 +12,7 @@ const templateData = `
       :percentage="50"
       indeterminate
       color="var(--nmorph-accent-color)"
+      :value-right-side="false"
     />
   </div>
 </template>
@@ -42,6 +43,7 @@ const code = [scriptData, templateData, cssData];
               :percentage="50"
               indeterminate
               color="var(--nmorph-accent-color)"
+              :value-right-side="false"
             />
           </ClientOnly>
         </div>

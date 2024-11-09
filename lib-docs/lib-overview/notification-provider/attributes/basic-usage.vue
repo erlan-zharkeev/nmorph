@@ -14,7 +14,7 @@ const scriptData = `
     type: NmorphAlertType.success,
     closable: true,
     content: "Lorem ipsum",
-    width: "300px",
+    width: "150px",
   };
 
   const notificationsTopRight = ref<INmorphNotification[]>([]);
@@ -79,7 +79,7 @@ const initAlert = {
   type: NmorphAlertType.success,
   closable: true,
   content: "Lorem ipsum",
-  width: "300px",
+  width: "150px",
 };
 
 const notificationsTopRight = ref<INmorphNotification[]>([]);

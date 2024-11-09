@@ -23,7 +23,7 @@ const templateData = `
     :percentage="33"
     :circle-size="120"
     type="circle"
-    color="cyan"
+    color="pink"
   />
 </template>
 `;
@@ -70,7 +70,7 @@ const code = [scriptData, templateData, cssData];
               :percentage="33"
               :circle-size="120"
               type="circle"
-              color="cyan"
+              color="pink"
             />
           </ClientOnly>
         </div>

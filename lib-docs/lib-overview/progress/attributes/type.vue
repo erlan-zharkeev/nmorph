@@ -7,11 +7,12 @@ const scriptData = "";
 
 const templateData = `
 <template>
-  <NmorphProgress :percentage="50" />
+  <NmorphProgress :percentage="50" color="var(--nmorph-accent-color)" />
   <NmorphProgress
     type="circle"
     :percentage="50"
     class="circle-progress"
+    color="pink"
   />
 </template>
 `;
@@ -47,11 +48,15 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="progress-type-overview">
           <ClientOnly>
-            <NmorphProgress :percentage="50" />
+            <NmorphProgress
+              :percentage="50"
+              color="var(--nmorph-accent-color)"
+            />
             <NmorphProgress
               type="circle"
               :percentage="50"
               class="circle-progress"
+              color="pink"
             />
           </ClientOnly>
         </div>

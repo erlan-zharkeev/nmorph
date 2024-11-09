@@ -16,7 +16,7 @@ const cssData = `
 <style lang="scss">
   .button-disabled-overview {
     .nmorph-button {
-      margin: 0 8px;
+      margin: 4px 8px;
     }
   }
 </style>
@@ -56,7 +56,7 @@ const code = [scriptData, templateData, cssData];
 <style lang="scss">
 .button-disabled-overview {
   .nmorph-button {
-    margin: 0 8px;
+    margin: 4px 8px;
   }
 }
 </style>

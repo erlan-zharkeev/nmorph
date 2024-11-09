@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { generateUUID, useModifiers } from '@/utils';
-import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick, inject } from 'vue';
+import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick } from 'vue';
 import {
   NmorphTagItem,
   NmorphIcon,

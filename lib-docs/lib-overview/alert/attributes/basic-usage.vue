@@ -59,6 +59,7 @@ const cssData = `
     width: 100%;
     .first-row {
       display: flex;
+      flex-wrap: wrap;
       margin-bottom: 8px;
     }
     .second-row {
@@ -143,6 +144,7 @@ const closeHandler = (id: string) => {
   width: 100%;
   .first-row {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 8px;
   }
   .nmorph-alert {

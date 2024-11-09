@@ -36,8 +36,10 @@ const cssData = `
 <style lang="scss">
   .select-model-value-overview {
     display: flex;
+    flex-wrap: wrap;
     .nmorph-select {
       margin-right: 8px;
+      margin-bottom: 8px;
     }
   }
 </style>
@@ -92,8 +94,10 @@ const multipleValue = ["one", "two"];
 <style lang="scss">
 .select-model-value-overview {
   display: flex;
+  flex-wrap: wrap;
   .nmorph-select {
     margin-right: 8px;
+    margin-bottom: 8px;
   }
 }
 </style>

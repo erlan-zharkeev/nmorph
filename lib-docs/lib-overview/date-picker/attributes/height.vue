@@ -32,9 +32,10 @@ const cssData = `
   .date-picker-height-overview {
     display: flex;
     align-items: center;
-
+    flex-wrap: wrap;
     .nmorph-date-picker {
       margin-right: 8px;
+      margin-bottom: 8px;
     }
   }
 </style>
@@ -79,9 +80,10 @@ const value = ref(new Date());
 .date-picker-height-overview {
   display: flex;
   align-items: center;
-
+  flex-wrap: wrap;
   .nmorph-date-picker {
     margin-right: 8px;
+    margin-bottom: 8px;
   }
 }
 </style>

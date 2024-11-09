@@ -136,10 +136,12 @@ const tabs = ref([
 .tabs-basic-usage-overview {
   .elements {
     display: flex;
+    flex-wrap: wrap;
   }
 
   .elements__element {
     margin-right: 24px;
+    margin-bottom: 8px;
   }
 }
 </style>

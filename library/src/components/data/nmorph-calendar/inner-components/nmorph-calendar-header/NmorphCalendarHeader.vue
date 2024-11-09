@@ -62,6 +62,7 @@ const modifiers = computed(() =>
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
+  flex-wrap: wrap;
 }
 
 .nmorph-calendar-header__actions {

@@ -20,11 +20,6 @@ const attributesData: IAttributesTableData[] = [
     default: "default",
   },
   {
-    name: "fill",
-    type: "Boolean",
-    default: "true",
-  },
-  {
     name: "disabled",
     type: "Boolean",
     default: "false",

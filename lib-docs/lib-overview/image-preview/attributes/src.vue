@@ -58,6 +58,8 @@ const code = [scriptData, templateData, cssData];
 <style lang="scss">
 .image-preview-src-overview {
   display: flex;
+  flex-wrap: wrap;
+
   .nmorph-image-preview {
     --width: 200px;
     --height: 200px;

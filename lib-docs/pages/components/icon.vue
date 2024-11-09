@@ -110,6 +110,30 @@ const iconList = computed(() => {
     padding: 8px;
   }
 
+  @include max-width-query(768) {
+    .docs-icon__list-content {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @include max-width-query(768) {
+    .docs-icon__list-content {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @include max-width-query(500) {
+    .docs-icon__list-content {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @include max-width-query(360) {
+    .docs-icon__list-content {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   .docs-icon__list-el {
     display: flex;
     align-items: center;

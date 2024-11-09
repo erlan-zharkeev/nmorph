@@ -57,6 +57,7 @@ const percentage = 33;
               :percentage="percentage"
               value-inside
               :value-right-side="false"
+              color="pink"
             >
               <template #inner-text>
                 <span

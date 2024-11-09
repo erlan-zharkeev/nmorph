@@ -173,15 +173,33 @@ const toggleMobileNavMenu = () => {
           </NmorphLink>
         </NmorphButton>
       </ClientOnly>
+      <NmorphCheckbox
+        class="docs-top-bar__nav-menu-btn"
+        :model-value="mobileNavMenu"
+        @update:model-value="toggleMobileNavMenu"
+        :label="$t('top-bar.nav')"
+        design="button"
+      />
     </div>
-    <!-- <div class="docs-mobile-menu"></div> -->
-    <NmorphCheckbox
-      class="docs-top-bar__nav-menu"
-      :model-value="mobileNavMenu"
-      @update:model-value="toggleMobileNavMenu"
-      :label="$t('top-bar.nav')"
-      design="button"
-    />
+    <nav
+      class="docs-top-bar__mobile-nav-menu"
+      :class="{ 'docs-top-bar__mobile-nav-menu--open': mobileNavMenu }"
+      @click="mobileNavMenu = false"
+    >
+      <ul>
+        <li>
+          <NuxtLink :to="localePath('/guide')">{{ $t("guide") }}</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink :to="localePath('/components')">{{
+            $t("components")
+          }}</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink :to="localePath('/about')">{{ $t("about") }}</NuxtLink>
+        </li>
+      </ul>
+    </nav>
   </header>
 </template>
 
@@ -295,12 +313,46 @@ $top-bar-height: 50px;
   }
 }
 
+.docs-top-bar__nav-menu-btn {
+  display: none;
+}
+
 .docs-top-bar__menu {
+  --size: 28px;
+  display: none;
   margin-right: 8px;
 }
 
-.docs-top-bar__nav-menu {
-  display: none;
+.docs-top-bar__mobile-nav-menu {
+  position: fixed;
+  bottom: -100%;
+  transition: 0.2s bottom ease-in-out;
+  left: 0;
+  background: var(--nmorph-overlay-color);
+  width: 100%;
+  height: calc(100vh - 50px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ul {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  li {
+    margin: 8px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--nmorph-white-color);
+  }
+}
+
+.docs-top-bar__mobile-nav-menu--open {
+  bottom: 0;
+  z-index: 2;
 }
 
 @include max-width-query(768) {
@@ -310,6 +362,8 @@ $top-bar-height: 50px;
 
   .docs-main-layout {
     grid-template-columns: 1fr;
+    padding-left: 2px;
+    padding-right: 2px;
   }
 
   .docs-top-bar__menu {
@@ -320,12 +374,11 @@ $top-bar-height: 50px;
     display: none;
   }
 
-  .git-lab-button,
-  .theme-btn {
+  .git-lab-button {
     display: none;
   }
 
-  .docs-top-bar__nav-menu {
+  .docs-top-bar__nav-menu-btn {
     display: flex;
   }
 }

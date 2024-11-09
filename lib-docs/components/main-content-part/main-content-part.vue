@@ -103,6 +103,8 @@ const isComponentOverview = computed(() =>
   }
   .docs-main-layout {
     grid-template-columns: 1fr;
+    padding-left: 2px;
+    padding-right: 2px;
   }
 }
 </style>

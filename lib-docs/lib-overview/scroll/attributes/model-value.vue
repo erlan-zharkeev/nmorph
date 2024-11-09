@@ -88,8 +88,8 @@ const updateSliderHandler = (value: number) => {
 <template>
   <div id="content-value">
     <attribute
-      header="Value"
-      :subtitle="$t('overview.scroll.value.subtitle')"
+      header="Model value"
+      :subtitle="$t('overview.scroll.model-value.subtitle')"
       :codeToCopy="code"
     >
       <template #overview>

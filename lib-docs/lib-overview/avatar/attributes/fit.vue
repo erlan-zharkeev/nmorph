@@ -34,8 +34,14 @@ const cssData = `
   .avatar-fit-overview {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+
     .nmorph-avatar {
-      margin-right: 12px;
+      margin: 0 12px;
+    }
+
+    .nmorph-avatar:last-child {
+      margin-top: 8px;
     }
   }
 </style>
@@ -89,8 +95,14 @@ const code = [scriptData, templateData, cssData];
 .avatar-fit-overview {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+
   .nmorph-avatar {
-    margin-right: 12px;
+    margin: 0 12px;
+  }
+
+  .nmorph-avatar:last-child {
+    margin-top: 8px;
   }
 }
 </style>
