@@ -5,11 +5,10 @@ import {
   NmorphLink,
   NmorphDropdown,
   NmorphCheckbox,
-  NmorphSwitch,
-  useNmorph,
+  NmorphIconMenu,
+  NmorphIconLogo,
 } from "@nmorph/nmorph-ui-kit";
-import MoonIcon from "~/assets/icons/moon.svg";
-import SunIcon from "~/assets/icons/sun.svg";
+
 import TranslateIcon from "~/assets/icons/translate.svg";
 import GitlabIcon from "~/assets/icons/gitlab.svg";
 
@@ -17,19 +16,8 @@ const switchLocalePath = useSwitchLocalePath();
 
 const { locale, locales } = useI18n();
 
-const currentTheme = ref<string>("dark");
-const setTheme = ref<(val: any) => void>(() => {});
-
 const availableLocales = computed(() => {
   return locales.value.filter((i) => i.code !== locale.value);
-});
-
-onMounted(() => {
-  if (import.meta.client) {
-    const nmorph = useNmorph();
-    currentTheme.value = nmorph.theme.currentTheme.value;
-    setTheme.value = nmorph.theme.setTheme;
-  }
 });
 
 interface IProps {
@@ -45,8 +33,6 @@ const emit = defineEmits<INmorphEmit>();
 
 const config = useRuntimeConfig();
 const localePath = useLocalePath();
-
-// const searchQuery = ref("");
 
 const translateBtn = ref(null);
 const translateDropdownOpen = ref(false);
@@ -75,27 +61,27 @@ const toggleMobileNavMenu = () => {
         design="button"
       >
         <template #label>
-          <NmorphIcon name="menu" />
+          <NmorphIcon>
+            <NmorphIconMenu />
+          </NmorphIcon>
         </template>
       </NmorphCheckbox>
       <div class="docs-top-bar__logo">
         <NuxtLink :to="localePath('/')">
           <ClientOnly>
-            <NmorphIcon name="logo" width="40px" />
+            <NmorphIcon width="40px">
+              <NmorphIconLogo />
+            </NmorphIcon>
           </ClientOnly>
         </NuxtLink>
       </div>
     </div>
     <div class="docs-top-bar__right">
-      <!-- <div class="docs-top-bar__search">
-        <NmorphTextInput :placeholder="$t('search')" v-model="searchQuery">
-          <template #prepend-icon>
-            <ClientOnly>
-              <NmorphIcon name="search" />
-            </ClientOnly>
-          </template>
-        </NmorphTextInput>
-      </div> -->
+      <NmorphButton style-type="transparent" class="git-lab-button">
+        <NmorphLink :href="config.public.NUXT_ENV_GIT_PATH" target="blank">
+          <GitlabIcon />
+        </NmorphLink>
+      </NmorphButton>
       <div ref="translateBtn" class="docs-top-bar__translate-btn">
         <NmorphCheckbox
           v-model="translateDropdownOpen"
@@ -131,10 +117,11 @@ const toggleMobileNavMenu = () => {
           </ul>
         </NmorphDropdown>
       </div>
+
       <nav class="docs-top-bar__nav">
         <ul class="docs-top-bar__nav-list">
           <li>
-            <NuxtLink :to="localePath('/guide')">{{ $t("guide") }}</NuxtLink>
+            <NuxtLink :to="localePath('/')">{{ $t("guide") }}</NuxtLink>
           </li>
           <li>
             <NuxtLink :to="localePath('/components')">{{
@@ -146,33 +133,7 @@ const toggleMobileNavMenu = () => {
           </li>
         </ul>
       </nav>
-      <NmorphSwitch
-        :model-value="currentTheme"
-        @update:model-value="setTheme"
-        active-value="light"
-        inactive-value="dark"
-        class="docs-top-bar__element theme-btn"
-      >
-        <template #thumb-on>
-          <ClientOnly>
-            <NmorphIcon width="10px" height="10px">
-              <SunIcon class="sun-icon" />
-            </NmorphIcon>
-          </ClientOnly>
-        </template>
-        <template #thumb-off>
-          <ClientOnly>
-            <NmorphIcon width="10px" height="10px"> <MoonIcon /> </NmorphIcon>
-          </ClientOnly>
-        </template>
-      </NmorphSwitch>
-      <ClientOnly>
-        <NmorphButton style-type="transparent" class="git-lab-button">
-          <NmorphLink :href="config.public.NUXT_ENV_GIT_PATH" target="blank">
-            <GitlabIcon />
-          </NmorphLink>
-        </NmorphButton>
-      </ClientOnly>
+      <theme-changer />
       <NmorphCheckbox
         class="docs-top-bar__nav-menu-btn"
         :model-value="mobileNavMenu"
@@ -188,7 +149,7 @@ const toggleMobileNavMenu = () => {
     >
       <ul>
         <li>
-          <NuxtLink :to="localePath('/guide')">{{ $t("guide") }}</NuxtLink>
+          <NuxtLink :to="localePath('/')">{{ $t("guide") }}</NuxtLink>
         </li>
         <li>
           <NuxtLink :to="localePath('/components')">{{
@@ -222,13 +183,6 @@ $top-bar-height: 50px;
   cursor: pointer;
   margin-left: 16px;
   margin-right: 16px;
-}
-
-.docs-top-bar__element {
-  margin-right: 12px;
-  .sun-icon {
-    margin-top: 1px;
-  }
 }
 
 .docs-top-bar__left {
@@ -362,8 +316,6 @@ $top-bar-height: 50px;
 
   .docs-main-layout {
     grid-template-columns: 1fr;
-    padding-left: 2px;
-    padding-right: 2px;
   }
 
   .docs-top-bar__menu {

@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphIconsMap, NmorphIconSize } from '@/components';
-import { NmorphIconList } from '@/types';
+import { NmorphIconSize } from '@/components';
 
 interface INmorphProps {
-  name?: keyof typeof NmorphIconList;
   size?: keyof typeof NmorphIconSize;
   width?: string;
   height?: string;
@@ -13,7 +11,6 @@ interface INmorphProps {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  name: undefined,
   size: 'small',
   width: undefined,
   height: undefined,
@@ -36,16 +33,13 @@ const customStyles = computed(() => {
   if (props.height) styles['--height'] = props.height;
   return styles;
 });
-
-const color = computed(() => props.color);
 </script>
 
 <template>
   <div :class="modifiers" :style="customStyles">
-    <div v-if="props.name" class="nmorph-icon__content">
-      <component :is="NmorphIconsMap[props.name as keyof typeof NmorphIconList]" />
+    <div class="nmorph-icon__content">
+      <slot />
     </div>
-    <slot v-else />
   </div>
 </template>
 

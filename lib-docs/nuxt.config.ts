@@ -32,7 +32,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   css: ["@nmorph/nmorph-ui-kit/dist/style.css"],
   vite: {
     resolve: {

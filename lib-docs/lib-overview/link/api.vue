@@ -19,11 +19,6 @@ const attributesData = [
     default: "false",
   },
   {
-    name: "icon-name",
-    type: docsLink("Icons", "/components/icon"),
-    default: "-",
-  },
-  {
     name: "target",
     type: enumToString(NmorphLinkTarget),
     default: "self",

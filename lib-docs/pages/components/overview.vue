@@ -1,5 +1,36 @@
 <script setup lang="ts">
 import { Racoon, Autumn, Winter } from "~/assets/images";
+import {
+  NmorphIcon,
+  NmorphIconArchive,
+  NmorphIconImage,
+  NmorphCard,
+  NmorphButton,
+  NmorphLink,
+  NmorphAvatar,
+  NmorphBadge,
+  NmorphImage,
+  NmorphTagList,
+  NmorphSkeleton,
+  NmorphProgress,
+  NmorphTooltip,
+  NmorphDivider,
+  NmorphBreadcrumb,
+  NmorphBreadcrumbItem,
+  NmorphTextInput,
+  NmorphSwitch,
+  NmorphCheckbox,
+  NmorphCheckboxGroup,
+  NmorphAutocomplete,
+  NmorphFileUpload,
+  NmorphNumberInput,
+  NmorphSelect,
+  NmorphDatePicker,
+  NmorphTabs,
+  NmorphTabPane,
+  NmorphPagination,
+  NmorphAlert,
+} from "@nmorph/nmorph-ui-kit";
 const { t } = useI18n();
 const tabs = ref([
   { name: "tab-1", label: "Tab 1", content: "Lorem ipsum 1" },
@@ -35,11 +66,9 @@ const tabs = ref([
           <NmorphCard>
             <template #header>Icon</template>
             <div class="overview-component-content">
-              <NmorphIcon
-                name="archive"
-                color="var(--nmorph-accent-color)"
-                size="large"
-              />
+              <NmorphIcon color="var(--nmorph-accent-color)" size="large">
+                <NmorphIconArchive />
+              </NmorphIcon>
             </div>
           </NmorphCard>
         </NuxtLink>
@@ -151,7 +180,9 @@ const tabs = ref([
           <NmorphCard>
             <template #header>Image Preview</template>
             <div class="overview-component-content">
-              <NmorphIcon name="image" width="60px" height="60px" />
+              <NmorphIcon width="60px" height="60px"
+                ><NmorphIconImage
+              /></NmorphIcon>
             </div>
           </NmorphCard>
         </NuxtLink>
@@ -414,6 +445,7 @@ const tabs = ref([
 
 <style lang="scss">
 .overview {
+  padding-bottom: 8px;
   .nmorph-card {
     pointer-events: none;
   }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { anyToPascalCase, pascalToSpace } from "@nmorph/nmorph-ui-kit";
+import { pascalToSpace, anyToPascalCase } from "~/utils";
 import button from "~/lib-overview/button";
 import icon from "~/lib-overview/icon";
 import link from "~/lib-overview/link";
@@ -34,7 +34,6 @@ import autocomplete from "~/lib-overview/autocomplete";
 import fileUpload from "~/lib-overview/file-upload";
 import select from "~/lib-overview/select";
 import slider from "~/lib-overview/slider";
-// import timePicker from "~/lib-overview/time-picker";
 import radio from "~/lib-overview/radio";
 import radioGroup from "~/lib-overview/radio-group";
 import form from "~/lib-overview/form";
@@ -80,7 +79,6 @@ const componentsMap: Record<string, unknown[]> = {
   "file-upload": fileUpload,
   select,
   slider,
-  // "time-picker": timePicker,
   radio,
   "radio-group": radioGroup,
   form,
@@ -108,7 +106,7 @@ const componentsMap: Record<string, unknown[]> = {
 
 @include max-width-query(768) {
   .component-overview {
-    padding: 4px;
+    padding: 2px 4px 16px 4px;
   }
 }
 

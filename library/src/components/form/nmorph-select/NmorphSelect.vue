@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 });
 
 const computedNoElementPlaceholder = computed(() =>
-  props.noElementPlaceholder ? props.noElementPlaceholder : t('NmorphSelect.noElementPlaceholder')
+  props.noElementPlaceholder ? props.noElementPlaceholder : t('noElementPlaceholder')
 );
 
 const emit = defineEmits<{

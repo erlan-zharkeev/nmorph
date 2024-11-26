@@ -1,12 +1,11 @@
-import { App, Component, Plugin } from 'vue';
-import * as components from './components';
+import { App, Plugin } from 'vue';
 import { useNmorphTranslation } from './hooks';
-import { useNmorphBrowser, useNmorphTheme } from './providers';
+import { useNmorphBrowser, useNmorphTheme } from './outside-hooks/index.ts';
 import { INmorphOptions } from './types/index.ts';
 
 const library: Plugin = {
   install(Vue: App, options: INmorphOptions = {}): App {
-    if (!options.i18n.outsideMessagesMerge) {
+    if (!options?.i18n?.outsideMessagesMerge) {
       const libTranslates = useNmorphTranslation(options.i18n);
       // @ts-expect-error ///
       const vueI18nInstance = Vue.__VUE_I18N__;
@@ -29,35 +28,15 @@ const library: Plugin = {
 
     const nmorph = { theme, browser };
     Vue.provide('nmorph', nmorph);
-
-    Object.entries(components).forEach(([name, component]) => {
-      if (isVueComponent(component)) {
-        if (options.components === undefined) {
-          Vue.component(name, component);
-        } else {
-          const componentExist = options.components.includes(name);
-          if (!componentExist) return;
-          Vue.component(name, component);
-        }
-      }
-    });
     return Vue;
   },
 };
 
-function isVueComponent(component: unknown): component is Component {
-  return (
-    component &&
-    (typeof component === 'object' || typeof component === 'function') &&
-    ('render' in component || 'template' in component || 'setup' in component)
-  );
-}
-
+export { default as ru } from './locales/ru.js';
+export { default as zh } from './locales/zh.js';
+export { nmorphLog } from './outside-utils';
+export { useNmorphTheme, useNmorphBrowser, useNmorphNotification, useNmorph } from './outside-hooks';
 export * from './types/index.ts';
 export * from './components';
-export * from './utils';
-export * from './hooks';
-export * from './locales';
-export * from './providers';
 
-export default library;
+export const NmorphLibrary = library;

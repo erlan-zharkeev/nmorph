@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphSwitch } from "../../../library/src/components";
-import { useNmorph } from "../../../library/src/providers";
+import { useNmorph } from "../../../library/src/outside-hooks";
 import { router } from "./../app/providers/router/index";
 
 const nmorph = useNmorph();

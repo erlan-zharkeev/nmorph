@@ -21,10 +21,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   frameBorder: 4,
 });
 
-const computedLoadingText = computed(() => (props.loadingText ? props.loadingText : t('NmorphImage.loadingText')));
-const computedLoadFailedText = computed(() =>
-  props.loadFailedText ? props.loadFailedText : t('NmorphImage.loadFailedText')
-);
+const computedLoadingText = computed(() => (props.loadingText ? props.loadingText : t('loadingText')));
+const computedLoadFailedText = computed(() => (props.loadFailedText ? props.loadFailedText : t('loadFailedText')));
 
 const imageLoadFinished = ref(false);
 const imageLoadError = ref(false);

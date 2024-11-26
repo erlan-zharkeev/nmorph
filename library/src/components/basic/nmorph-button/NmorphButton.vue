@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType, NmorphIconList } from '@/types';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
-import { computed, ref } from 'vue';
-import { NmorphIcon, NmorphButtonStyle, NmorphButtonType, NmorphIconSize, NmorphButtonShape } from '@/components';
+import { computed, ref, useSlots } from 'vue';
+import {
+  NmorphIcon,
+  NmorphButtonStyle,
+  NmorphButtonType,
+  NmorphIconSize,
+  NmorphButtonShape,
+  NmorphIconLoading,
+} from '@/components';
 
 interface INmorphProps extends INmorphCommonInputProps {
   styleType?: keyof typeof NmorphButtonStyle;
@@ -12,7 +19,6 @@ interface INmorphProps extends INmorphCommonInputProps {
   text?: string | number;
   accentBgOnHover?: boolean;
   shape?: keyof typeof NmorphButtonShape;
-  icon?: keyof typeof NmorphIconList;
   fill?: boolean;
   tabindex?: number;
 }
@@ -28,9 +34,10 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   accentBgOnHover: false,
   ripple: true,
   shape: 'default',
-  icon: undefined,
   tabindex: 0,
 });
+
+const slots = useSlots();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -41,7 +48,7 @@ const modifiers = computed(() =>
       `${props.disabled && 'disabled'}`,
       `${props.accentBgOnHover && 'accent-bg-on-hover'}`,
       `${props.ripple && 'ripple'}`,
-      `${props.icon && 'icon'}`,
+      `${slots['icon'] && 'icon'}`,
     ],
   })
 );
@@ -69,11 +76,15 @@ defineExpose({ buttonDOMElement });
       :type="props.type"
       :tabindex="props.tabindex"
     >
-      <NmorphIcon v-if="props.icon" :name="props.icon" />
+      <NmorphIcon v-if="slots['icon']">
+        <slot name="icon" />
+      </NmorphIcon>
       <div v-else>
         <slot />
         <span v-if="!props.loading && props.text !== undefined">{{ props.text }}</span>
-        <NmorphIcon v-if="props.loading" name="loader" :size="loadingButtonSize" />
+        <NmorphIcon v-if="props.loading" :size="loadingButtonSize">
+          <NmorphIconLoading />
+        </NmorphIcon>
         <slot name="append" />
       </div>
     </button>

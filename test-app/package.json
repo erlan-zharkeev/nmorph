@@ -1,0 +1,24 @@
+{
+  "name": "test-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@nmorph/nmorph-ui-kit": "^1.0.45",
+    "i18n": "^0.15.1",
+    "vue": "^3.5.12",
+    "vue-i18n": "^10.0.4"
+  },
+  "devDependencies": {
+    "@rollup/plugin-dynamic-import-vars": "^2.1.5",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "typescript": "~5.6.2",
+    "vite": "^5.4.10",
+    "vue-tsc": "^2.1.8"
+  }
+}

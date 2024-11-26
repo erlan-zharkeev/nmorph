@@ -4,6 +4,9 @@ import {
   NmorphCheckbox,
   NmorphCollapse,
   NmorphCollapseItem,
+  NmorphIcon,
+  NmorphIconCode,
+  NmorphIconCopy,
 } from "@nmorph/nmorph-ui-kit";
 import { ref, computed } from "vue";
 import { notificationProvider } from "~/providers";
@@ -72,13 +75,16 @@ const infoData = `overview.${props.infoName}.info`;
       </div>
       <div class="docs-component__overview-component-actions">
         <ClientOnly>
-          <NmorphButton @click="copyHandler" icon="copy-document" />
+          <NmorphButton @click="copyHandler">
+            <template #icon><NmorphIconCopy /></template>
+          </NmorphButton>
           <NmorphCheckbox v-model="codeOpen" design="button">
             <template #label>
-              <NmorphIcon name="code" />
+              <NmorphIcon>
+                <NmorphIconCode />
+              </NmorphIcon>
             </template>
           </NmorphCheckbox>
-          <!-- <NmorphButton @click="openHandler" icon="code" /> -->
         </ClientOnly>
       </div>
       <NmorphCollapse :model-value="accordionOpen">

@@ -1,5 +1,5 @@
 import { defineNuxtPlugin } from "#app";
-import NmorphLibrary, { type INmorphOptions, ru } from "@nmorph/nmorph-ui-kit";
+import { NmorphLibrary, type INmorphOptions, ru } from "@nmorph/nmorph-ui-kit";
 
 export default defineNuxtPlugin((nuxtApp) => {
   if (process.client) {
@@ -14,6 +14,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       // i18n: { messages: { ru }, locale: "en" },
       i18n: {
         outsideMessagesMerge: true,
+        // messages: { ru },
       },
     };
 

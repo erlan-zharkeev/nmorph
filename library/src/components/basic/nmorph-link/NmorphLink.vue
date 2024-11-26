@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 import { NmorphIcon, NmorphLinkTarget } from '@/components';
-import { NmorphColor, NmorphIconList } from '@/types';
+import { NmorphColor } from '@/types';
 
 interface INmorphProps {
   type?: keyof typeof NmorphColor;
   underline?: boolean;
   href?: string;
   text?: string;
-  iconName?: keyof typeof NmorphIconList;
   target?: keyof typeof NmorphLinkTarget;
   disabled?: boolean;
 }
@@ -18,11 +17,12 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   type: NmorphColor.accent,
   href: '',
   underline: false,
-  iconName: undefined,
   text: '',
   target: 'self',
   disabled: false,
 });
+
+const slots = useSlots();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -37,7 +37,9 @@ const modifiers = computed(() =>
       <slot name="prepend" />
 
       {{ text }}
-      <NmorphIcon v-if="iconName" class="nmorph-link__icon" :name="props.iconName" width="10px" height="10px" />
+      <NmorphIcon v-if="slots['icon']" class="nmorph-link__icon" width="10px" height="10px">
+        <slot name="icon" />
+      </NmorphIcon>
       <slot />
     </a>
   </div>

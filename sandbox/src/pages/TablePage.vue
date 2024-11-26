@@ -116,10 +116,6 @@ const attributesData = [
   },
 ];
 
-const testHandler = () => {
-  console.log("test");
-};
-
 const defaultSort = { date: "descending", name: "ascending" };
 const tableData = reactive([
   {

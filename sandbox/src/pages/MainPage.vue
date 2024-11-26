@@ -5,21 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
-const options = [
-  { value: "one", label: "One" },
-  { value: "two", label: "Two", disabled: true },
-  { value: "three", label: "Three" },
-];
-
-const date = ref([new Date(), new Date()]);
+import { NmorphFileUpload } from "../../../library/src/main";
 </script>
 
 <style scoped>
 .wrapper {
-  /* width: 700px;
-  display: flex;
-  margin-top: 50px; */
 }
 </style>

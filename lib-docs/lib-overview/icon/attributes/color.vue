@@ -1,17 +1,24 @@
 <script setup lang="ts">
-import { NmorphIcon } from "@nmorph/nmorph-ui-kit";
+import {
+  NmorphIcon,
+  NmorphIconAddLocation,
+  NmorphIconAvatar,
+  NmorphIconArchive,
+} from "@nmorph/nmorph-ui-kit";
 import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
 
 const scriptData = ``;
 const templateData = `
 <template>
-  <NmorphIcon
-    name="add-location"
-    color="var(--nmorph-accent-color)"
-    size="large"
-  />
-  <NmorphIcon name="avatar" color="#694295" size="large" />
-  <NmorphIcon name="archive" color="hsl(148, 60%, 39%)" size="large" />
+  <NmorphIcon color="var(--nmorph-accent-color)" size="large">
+    <NmorphIconAddLocation />
+  </NmorphIcon>
+  <NmorphIcon color="#694295" size="large"
+    ><NmorphIconAvatar
+  /></NmorphIcon>
+  <NmorphIcon color="hsl(148, 60%, 39%)" size="large"
+    ><NmorphIconArchive
+  /></NmorphIcon>
 </template>
 `;
 const cssData = `
@@ -38,17 +45,15 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="icon-color-overview">
           <ClientOnly>
-            <NmorphIcon
-              name="add-location"
-              color="var(--nmorph-accent-color)"
-              size="large"
-            />
-            <NmorphIcon name="avatar" color="#694295" size="large" />
-            <NmorphIcon
-              name="archive"
-              color="hsl(148, 60%, 39%)"
-              size="large"
-            />
+            <NmorphIcon color="var(--nmorph-accent-color)" size="large">
+              <NmorphIconAddLocation />
+            </NmorphIcon>
+            <NmorphIcon color="#694295" size="large"
+              ><NmorphIconAvatar
+            /></NmorphIcon>
+            <NmorphIcon color="hsl(148, 60%, 39%)" size="large"
+              ><NmorphIconArchive
+            /></NmorphIcon>
           </ClientOnly>
         </div>
       </template>

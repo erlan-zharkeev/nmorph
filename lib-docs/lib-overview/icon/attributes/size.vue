@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { NmorphIcon } from "@nmorph/nmorph-ui-kit";
+import { NmorphIcon, NmorphIconEye } from "@nmorph/nmorph-ui-kit";
 import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
 
 const scriptData = ``;
 
 const templateData = `
 <template>
-  <NmorphIcon size="large" name="eye" />
-  <NmorphIcon size="medium" name="eye" />
-  <NmorphIcon size="small" name="eye" />
+  <NmorphIcon size="large" name="eye"><NmorphIconEye /></NmorphIcon>
+  <NmorphIcon size="medium" name="eye"><NmorphIconEye /></NmorphIcon>
+  <NmorphIcon size="small" name="eye"><NmorphIconEye /></NmorphIcon>
 </template>
 `;
 const cssData = `
@@ -36,9 +36,9 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="icon-size-overview">
           <ClientOnly>
-            <NmorphIcon size="large" name="eye" />
-            <NmorphIcon size="medium" name="eye" />
-            <NmorphIcon size="small" name="eye" />
+            <NmorphIcon size="large" name="eye"><NmorphIconEye /></NmorphIcon>
+            <NmorphIcon size="medium" name="eye"><NmorphIconEye /></NmorphIcon>
+            <NmorphIcon size="small" name="eye"><NmorphIconEye /></NmorphIcon>
           </ClientOnly>
         </div>
       </template>

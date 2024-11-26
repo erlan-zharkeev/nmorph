@@ -1,7 +1,12 @@
 :root {
   --header-height: 50px;
-  --container-height: calc(100vh - 70px);
-  --aside-container-height: calc(100vh - 90px);
+  --footer-height: 20px;
+  --margin: 8px;
+
+  --container-height: calc(
+    100vh - var(--header-height) - var(--footer-height) - (var(--margin) * 3) -
+      16px
+  );
 }
 
 @mixin max-width-query($breakpoint) {
@@ -12,6 +17,10 @@
 
 @include max-width-query(768) {
   :root {
-    --aside-container-height: calc(100vh - 70px);
   }
+}
+
+.page {
+  height: var(--container-height);
+  margin: var(--margin);
 }

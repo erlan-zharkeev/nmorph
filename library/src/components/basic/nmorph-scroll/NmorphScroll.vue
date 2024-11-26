@@ -3,7 +3,6 @@ import { INmorphA11yProps, INmorphInstance, NmorphDomElementType } from '@/types
 import { useModifiers } from '@/utils';
 import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue';
 import { NmorphCoordsType, NmorphOverflowProp, NmorphScrollBehavior } from '@/components';
-import { useA11yProps } from '@/main';
 import { nextTick } from 'vue';
 
 interface INmorphProps extends INmorphA11yProps {
@@ -152,8 +151,6 @@ const scrollBehavior = computed(() => props.cssScrollBehavior);
 const scrollHeight = computed(() => props.height);
 const maxHeight = computed(() => props.maxHeight);
 
-const a11yProps = useA11yProps(props);
-
 defineExpose({ scrollDOMContainer, moveTo });
 
 const mouseEnterHandler = () => {
@@ -169,7 +166,6 @@ const mouseLeaveHandler = () => {
   <div
     ref="scrollDOMContainer"
     :class="modifiers"
-    v-bind="a11yProps"
     @scroll="scrollHandler"
     @mouseenter="mouseEnterHandler"
     @mouseleave="mouseLeaveHandler"

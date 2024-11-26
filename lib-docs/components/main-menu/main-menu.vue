@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { NmorphOverlay } from "@nmorph/nmorph-ui-kit";
 import ComponentList from "~/components/component-list/component-list.vue";
+import GuideMenu from "~/components/guide-menu/guide-menu.vue";
 
 interface IProps {
   isMenuOpen: boolean;
@@ -10,6 +11,8 @@ interface INmorphEmit {
   (e: "menu-click"): void;
 }
 const emit = defineEmits<INmorphEmit>();
+const route = useRoute();
+const isComponentPage = route.path.includes("components");
 </script>
 
 <template>
@@ -19,7 +22,10 @@ const emit = defineEmits<INmorphEmit>();
     @click="emit('menu-click')"
   >
     <div class="nmorph-inset docs-main-menu__content">
-      <component-list />
+      <NmorphScroll class="docs-main-menu__content__scroll">
+        <component-list v-if="isComponentPage" />
+        <guide-menu v-else />
+      </NmorphScroll>
     </div>
     <NmorphOverlay
       :show="props.isMenuOpen"
@@ -72,6 +78,10 @@ $transition: 0.2s ease-in-out left;
   .nmorph-overlay {
     opacity: 1;
   }
+}
+
+.docs-main-menu__content__scroll {
+  height: calc(var(--container-height) + var(--footer-height));
 }
 
 @include max-width-query(768) {

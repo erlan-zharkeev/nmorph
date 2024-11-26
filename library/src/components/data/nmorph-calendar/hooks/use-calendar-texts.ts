@@ -6,7 +6,7 @@ export const useCalendarTexts = () => {
   const { t } = useI18n();
 
   return {
-    months: MONTHS.map((key) => t(`NmorphCalendar.${key}`)),
-    days: DAYS.map((key) => t(`NmorphCalendar.${key}`)),
+    months: MONTHS.map((key) => t(`${key}`)),
+    days: DAYS.map((key) => t(`${key}`)),
   };
 };

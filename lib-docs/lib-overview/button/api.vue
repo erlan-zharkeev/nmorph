@@ -59,11 +59,6 @@ const attributesData = [
     type: enumToString(NmorphComponentHeight),
     default: "default",
   },
-  {
-    name: "icon",
-    type: docsLink("Icons", "/components/icon"),
-    default: "-",
-  },
 ];
 
 const slotData = [

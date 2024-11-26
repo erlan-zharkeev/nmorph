@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { computed, DefineComponent, useSlots } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphIcon, NmorphAlertType, INmorphAlertProps } from '@/components';
-import { NmorphIconList } from '@/types';
+import {
+  NmorphIcon,
+  NmorphAlertType,
+  INmorphAlertProps,
+  NmorphIconSuccessFilled,
+  NmorphIconWarnTriangleFilled,
+  NmorphIconInfoFilled,
+  NmorphIconCircleCloseFilled,
+} from '@/components';
 
 interface INmorphProps extends INmorphAlertProps {}
 
@@ -34,11 +41,11 @@ const closeHandler = () => {
   emit('close');
 };
 
-const iconNameMap: Record<NmorphAlertType, keyof typeof NmorphIconList> = {
-  [NmorphAlertType.success]: 'success-filled',
-  [NmorphAlertType.warning]: 'warn-triangle-filled',
-  [NmorphAlertType.info]: 'info-filled',
-  [NmorphAlertType.error]: 'circle-close-filled',
+const iconNameMap: Record<NmorphAlertType, DefineComponent<{}, {}, unknown>> = {
+  [NmorphAlertType.success]: NmorphIconSuccessFilled,
+  [NmorphAlertType.warning]: NmorphIconWarnTriangleFilled,
+  [NmorphAlertType.info]: NmorphIconInfoFilled,
+  [NmorphAlertType.error]: NmorphIconCircleCloseFilled,
 };
 
 const slots = useSlots();
@@ -53,7 +60,9 @@ const closeButtonPosition = computed(() => props.closeIconPosition);
       <div class="nmorph-alert__left-side">
         <div v-if="props.showIcon" class="nmorph-alert__icon">
           <slot name="icon">
-            <NmorphIcon :name="iconNameMap[props.type]" size="medium" />
+            <NmorphIcon size="medium">
+              <component :is="iconNameMap[props.type]" />
+            </NmorphIcon>
           </slot>
         </div>
         <div class="nmorph-alert__content-wrapper">

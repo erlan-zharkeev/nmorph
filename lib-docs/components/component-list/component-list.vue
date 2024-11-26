@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphScroll, pascalToSpace } from "@nmorph/nmorph-ui-kit";
+import { pascalToSpace } from "~/utils";
 
 const list: { name: string; components: string[] }[] = [
   {
@@ -62,7 +62,6 @@ const list: { name: string; components: string[] }[] = [
       "NmorphSelect",
       "NmorphSlider",
       "NmorphDatePicker",
-      // "NmorphTimePicker",
       "NmorphRadio",
       "NmorphRadioGroup",
       "NmorphForm",
@@ -79,34 +78,36 @@ const isRouteExist = (name: string) => {
 
 <template>
   <div class="docs-component-list">
-    <NmorphScroll class="docs-component-list__scroll">
+    <div
+      class="docs-component-list__element"
+      v-for="category in list"
+      :key="category.name"
+    >
+      <div class="docs-component-list__element-title nmorph-title-1">
+        {{ category.name }}
+      </div>
       <div
-        class="docs-component-list__element"
-        v-for="category in list"
-        :key="category.name"
+        class="docs-component-list__element-name nmorph-body-1"
+        v-for="componentName in category.components"
+        :key="componentName"
       >
-        <div class="docs-component-list__element-title nmorph-title-1">
-          {{ category.name }}
-        </div>
-        <div
-          class="docs-component-list__element-name nmorph-body-1"
-          v-for="componentName in category.components"
-          :key="componentName"
-        >
-          <div v-if="isRouteExist(componentName)">
-            <div class="docs-component-list__name-element">
-              <NuxtLink :to="localePath(componentPathByName(componentName))">
-                {{ pascalToSpace(componentName.substring(6)) }}
-              </NuxtLink>
-            </div>
+        <div v-if="isRouteExist(componentName)">
+          <div class="docs-component-list__name-element">
+            <NuxtLink :to="localePath(componentPathByName(componentName))">
+              {{ pascalToSpace(componentName.substring(6)) }}
+            </NuxtLink>
           </div>
         </div>
       </div>
-    </NmorphScroll>
+    </div>
   </div>
 </template>
 
 <style lang="scss">
+.docs-component-list {
+  padding: 4px 4px 16px 8px;
+}
+
 .docs-component-list__element-title {
   text-transform: capitalize;
 }
@@ -126,13 +127,8 @@ const isRouteExist = (name: string) => {
   }
 }
 
-.docs-component-list__scroll {
-  height: var(--aside-container-height);
-}
-
 @include max-width-query(768) {
   .docs-component-list {
-    width: 100%;
   }
 }
 </style>

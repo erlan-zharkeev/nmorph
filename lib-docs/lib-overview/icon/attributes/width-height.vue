@@ -1,14 +1,20 @@
 <script setup lang="ts">
-import { NmorphIcon } from "@nmorph/nmorph-ui-kit";
+import { NmorphIcon, NmorphIconLoader } from "@nmorph/nmorph-ui-kit";
 import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
 
 const scriptData = ``;
 
 const templateData = `
 <template>
-  <NmorphIcon name="loader" width="33px" height="33px" />
-  <NmorphIcon name="loader" width="23px" height="23px" />
-  <NmorphIcon name="loader" width="12px" height="12px" />
+  <NmorphIcon width="33px" height="33px">
+    <NmorphIconLoader/>
+  </NmorphIcon>
+  <NmorphIcon width="23px" height="23px">
+    <NmorphIconLoader/>
+  </NmorphIcon>
+  <NmorphIcon width="12px" height="12px">
+    <NmorphIconLoader/>
+  </NmorphIcon>
 </template>
 `;
 const cssData = `
@@ -36,9 +42,15 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="icon-width-height-overview">
           <ClientOnly>
-            <NmorphIcon name="loader" width="33px" height="33px" />
-            <NmorphIcon name="loader" width="23px" height="23px" />
-            <NmorphIcon name="loader" width="12px" height="12px" />
+            <NmorphIcon width="33px" height="33px"
+              ><NmorphIconLoader
+            /></NmorphIcon>
+            <NmorphIcon width="23px" height="23px"
+              ><NmorphIconLoader
+            /></NmorphIcon>
+            <NmorphIcon width="12px" height="12px"
+              ><NmorphIconLoader
+            /></NmorphIcon>
           </ClientOnly>
         </div>
       </template>

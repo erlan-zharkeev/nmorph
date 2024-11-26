@@ -29,11 +29,13 @@ const isComponentOverview = computed(() =>
 
 <template>
   <div class="docs-main-layout">
-    <aside
-      class="docs-main-layout__card nmorph--shadow-outset docs-main-layout__left-aside"
+    <NmorphScroll
+      class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card docs-main-layout__left-aside"
     >
-      <slot name="aside" />
-    </aside>
+      <aside>
+        <slot name="aside" />
+      </aside>
+    </NmorphScroll>
     <NmorphScroll
       ref="scroll"
       class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card"
@@ -57,7 +59,6 @@ const isComponentOverview = computed(() =>
 
 <style lang="scss">
 .docs-main-layout {
-  padding: 10px 10px 10px 8px;
   display: grid;
   grid-gap: 8px;
   grid-template-columns: 1fr 4fr;
@@ -66,6 +67,7 @@ const isComponentOverview = computed(() =>
 .docs-main-layout__card {
   border-radius: 4px;
   padding: 8px;
+  padding-bottom: 8px;
 }
 
 .docs-main-layout__scroll-container {
@@ -101,10 +103,9 @@ const isComponentOverview = computed(() =>
   .docs-main-layout__left-aside {
     display: none;
   }
+
   .docs-main-layout {
     grid-template-columns: 1fr;
-    padding-left: 2px;
-    padding-right: 2px;
   }
 }
 </style>

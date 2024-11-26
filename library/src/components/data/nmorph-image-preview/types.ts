@@ -1,6 +1,6 @@
-import { NmorphIconList } from '@/types';
+import { DefineComponent } from 'vue';
 
 export interface INmorphAction {
-  icon: keyof typeof NmorphIconList;
+  icon: DefineComponent<{}, {}, unknown>;
   handler: () => void;
 }

@@ -1,17 +1,26 @@
-import { translate as NmorphSwitch } from '@/components/form/nmorph-switch/translate';
-import { translate as NmorphCalendar } from '@/components/data/nmorph-calendar/translate';
-import { translate as NmorphDatePicker } from '@/components/form/nmorph-date-picker/translate';
-import { translate as NmorphImage } from '@/components/data/nmorph-image/translate';
-import { translate as NmorphSelect } from '@/components/form/nmorph-select/translate';
-import { translate as NmorphFileUpload } from '@/components/form/nmorph-file-upload/translate';
-
-import { Locale, TranslateMessages } from '@/main';
-
-export const translation: TranslateMessages = {
-  NmorphSwitch: NmorphSwitch[Locale.en],
-  NmorphCalendar: NmorphCalendar[Locale.en],
-  NmorphDatePicker: NmorphDatePicker[Locale.en],
-  NmorphImage: NmorphImage[Locale.en],
-  NmorphSelect: NmorphSelect[Locale.en],
-  NmorphFileUpload: NmorphFileUpload[Locale.en],
+export default {
+  sun: 'sun',
+  mon: 'mon',
+  tue: 'tue',
+  wed: 'wed',
+  thu: 'thu',
+  fri: 'fri',
+  sat: 'sat',
+  jan: 'January',
+  feb: 'February',
+  mar: 'March',
+  apr: 'April',
+  may: 'May',
+  jun: 'June',
+  jul: 'July',
+  aug: 'August',
+  sep: 'September',
+  oct: 'October',
+  nov: 'November',
+  dec: 'December',
+  pickADate: 'Pick a date',
+  loadingText: 'Loading ...',
+  loadFailedText: 'Image loading failed',
+  noElementPlaceholder: 'Choose value',
+  selectFile: 'Select file',
 };

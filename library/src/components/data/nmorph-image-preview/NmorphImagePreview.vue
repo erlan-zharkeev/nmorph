@@ -1,7 +1,20 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { ComputedRef, computed, ref, watch } from 'vue';
-import { NmorphImage, NmorphButton, NmorphIcon, NmorphOverlay, INmorphAction } from '@/components';
+import {
+  NmorphImage,
+  NmorphButton,
+  NmorphIcon,
+  NmorphOverlay,
+  INmorphAction,
+  NmorphIconShrink,
+  NmorphIconEnlarge,
+  NmorphIconRotateLeft,
+  NmorphIconRotateRight,
+  NmorphIconZoomIn,
+  NmorphIconZoomOut,
+  NmorphIconChevronDown,
+} from '@/components';
 
 interface INmorphProps {
   modelValue?: boolean;
@@ -106,12 +119,12 @@ const nextHandler = () => {
 
 const enlargeShrinkActionData: ComputedRef<INmorphAction> = computed(() => {
   let result: INmorphAction = {
-    icon: 'shrink',
+    icon: NmorphIconShrink,
     handler: shrinkToNormal,
   };
   if (isLevelChangedToMin.value) {
     result = {
-      icon: 'enlarge',
+      icon: NmorphIconEnlarge,
       handler: enlargeToNormal,
     };
   }
@@ -120,19 +133,19 @@ const enlargeShrinkActionData: ComputedRef<INmorphAction> = computed(() => {
 
 const actions: INmorphAction[] = [
   {
-    icon: 'rotate-right',
+    icon: NmorphIconRotateRight,
     handler: rotateRight,
   },
   {
-    icon: 'rotate-left',
+    icon: NmorphIconRotateLeft,
     handler: rotateLeft,
   },
   {
-    icon: 'zoom-in',
+    icon: NmorphIconZoomIn,
     handler: zoomIn,
   },
   {
-    icon: 'zoom-out',
+    icon: NmorphIconZoomOut,
     handler: zoomOut,
   },
 ];
@@ -158,23 +171,31 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
       </div>
       <div v-if="multipleSources" class="nmorph-image-preview__left">
         <NmorphButton @click="previousHandler">
-          <NmorphIcon name="chevron-down" />
+          <NmorphIcon>
+            <NmorphIconChevronDown />
+          </NmorphIcon>
         </NmorphButton>
       </div>
       <div v-if="multipleSources" class="nmorph-image-preview__right">
         <NmorphButton @click="nextHandler">
-          <NmorphIcon name="chevron-down" />
+          <NmorphIcon>
+            <NmorphIconChevronDown />
+          </NmorphIcon>
         </NmorphButton>
       </div>
       <div class="nmorph-image-preview__actions">
         <div v-for="(action, idx) in actions" :key="idx" class="nmorph-image-preview__action-element">
           <NmorphButton @click="action.handler">
-            <NmorphIcon :name="action.icon" />
+            <NmorphIcon>
+              <component :is="action.icon" />
+            </NmorphIcon>
           </NmorphButton>
         </div>
         <div class="nmorph-image-preview__action-element">
           <NmorphButton :disabled="scaleLevel === 1" @click="enlargeShrinkActionData.handler">
-            <NmorphIcon :name="enlargeShrinkActionData.icon" />
+            <NmorphIcon :name="enlargeShrinkActionData.icon">
+              <component :is="enlargeShrinkActionData.icon" />
+            </NmorphIcon>
           </NmorphButton>
         </div>
       </div>

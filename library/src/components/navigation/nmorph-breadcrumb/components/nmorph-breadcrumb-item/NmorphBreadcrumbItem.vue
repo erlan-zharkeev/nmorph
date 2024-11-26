@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, nextTick, ref } from 'vue';
+import { computed, inject, ref } from 'vue';
 import { generateUUID, useModifiers } from '@/utils';
 import { onMounted } from 'vue';
 import { NmorphBreadcrumbInjection, INmorphBreadcrumbItemProps } from '@/components';

@@ -16,6 +16,8 @@ import {
   NmorphDatePicker,
   NmorphFileUpload,
   NmorphButton,
+  NmorphIconEye,
+  NmorphIconEyeBlocked,
   type INmorphFromDataExpose,
 } from "@nmorph/nmorph-ui-kit";
 import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
@@ -41,6 +43,8 @@ import {
   NmorphDatePicker,
   NmorphFileUpload,
   NmorphButton,
+  NmorphIconEye,
+  NmorphIconEyeBlocked
   type INmorphFromDataExpose,
 } from "@nmorph/nmorph-ui-kit";
 
@@ -311,11 +315,11 @@ const templateData = `
       >
         <NmorphSwitch v-model="form.agreement.value">
           <template #thumb-on
-            ><NmorphIcon name="eye" width="10px" height="10px"
-          /></template>
+            ><NmorphIcon width="10px" height="10px"
+          ><NmorphIconEye /></NmorphIcon></template>
           <template #thumb-off
-            ><NmorphIcon name="eye-blocked" width="10px" height="10px"
-          /></template>
+            ><NmorphIcon width="10px" height="10px"
+          ><NmorphIconEyeBlocked /></NmorphIcon></template>
         </NmorphSwitch>
       </NmorphFormItem>
       <NmorphFormItem id="send">
@@ -629,11 +633,13 @@ watch(
               >
                 <NmorphSwitch v-model="form.agreement.value">
                   <template #thumb-on
-                    ><NmorphIcon name="eye" width="10px" height="10px"
-                  /></template>
+                    ><NmorphIcon width="10px" height="10px"
+                      ><NmorphIconEye /></NmorphIcon
+                  ></template>
                   <template #thumb-off
                     ><NmorphIcon name="eye-blocked" width="10px" height="10px"
-                  /></template>
+                      ><NmorphIconEyeBlocked /></NmorphIcon
+                  ></template>
                 </NmorphSwitch>
               </NmorphFormItem>
               <NmorphFormItem id="send">

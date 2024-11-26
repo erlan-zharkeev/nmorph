@@ -15,7 +15,7 @@ interface INmorphProps extends INmorphCommonInputProps {
   initialDate?: Date;
 }
 
-const { t, messages } = useI18n();
+const { t } = useI18n();
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   initialDate: () => new Date(),
 });
 
-const placeholderText = computed(() => (props.placeholder ? props.placeholder : t('NmorphDatePicker.pickADate')));
+const placeholderText = computed(() => (props.placeholder ? props.placeholder : t('pickADate')));
 
 const selectedDate = ref<NmorphSelectedDateModelType>(props.modelValue);
 

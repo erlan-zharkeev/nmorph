@@ -2,7 +2,7 @@
   "name": "@nmorph/nmorph-ui-kit",
   "type": "module",
   "private": false,
-  "version": "0.2.158",
+  "version": "1.0.45",
   "license": "MIT",
   "engines": {
     "node": "18.13.0",
@@ -52,15 +52,13 @@
     "build:types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist"
   },
   "dependencies": {
-    "@types/vue-router": "^2.0.0",
-    "normalize.css": "^8.0.1",
     "vue": "^3.4.7",
-    "vue-i18n": "^9.9.0",
-    "vue-template-es2015-compiler": "^1.9.1"
+    "vue-i18n": "^9.9.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.8",
     "@types/vue": "^2.0.0",
+    "@types/vue-router": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
     "@vitejs/plugin-vue": "^4.4.0",

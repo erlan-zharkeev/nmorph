@@ -7,12 +7,12 @@ import { createVfm } from "vue-final-modal";
 const vfm = createVfm();
 import { store } from "./providers/store";
 import "vue-final-modal/style.css";
-import NmorphLibrary, { ru } from "./../../../library/src/main";
+import { NmorphLibrary, ru, zh } from "./../../../library/src/main";
 const app = createApp(App);
 
 app.use(router);
 app.use(i18n);
 app.use(vfm);
-app.use(NmorphLibrary, { i18n: { messages: { ru }, locale: "en" } });
+app.use(NmorphLibrary, { i18n: { messages: { ru, zh }, locale: "ru" } });
 app.use(store);
 app.mount("#app");

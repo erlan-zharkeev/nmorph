@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { computed, DefineComponent, reactive, ref } from 'vue';
 import {
   INmorphCustomFileData,
   NmorphArchiveResolution,
@@ -10,9 +10,14 @@ import {
   NmorphButton,
   NmorphIcon,
   NmorphImagePreview,
+  NmorphIconDoc,
+  NmorphIconImage,
+  NmorphIconAudio,
+  NmorphIconVideo,
+  NmorphIconArchive,
 } from '@/components';
 import { useModifiers } from '@/utils';
-import { NmorphDomElementType, NmorphIconList } from '@/types';
+import { NmorphDomElementType } from '@/types';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -35,17 +40,17 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   buttonText: '',
 });
 
-const computedButtonText = computed(() => (props.buttonText ? props.buttonText : t('NmorphFileUpload.selectFile')));
+const computedButtonText = computed(() => (props.buttonText ? props.buttonText : t('selectFile')));
 
 const getPlainType = (resolution: string) => resolution.split('/')[1];
 
-const typeFileIconMap = (resolution: string): keyof typeof NmorphIconList => {
+const typeFileIconMap = (resolution: string): DefineComponent<{}, {}, unknown> => {
   const plainResolutionName = getPlainType(resolution);
-  let result: keyof typeof NmorphIconList = 'doc';
-  if (plainResolutionName in NmorphImageResolution) result = 'image';
-  if (plainResolutionName in NmorphAudioResolution) result = 'audio';
-  if (plainResolutionName in NmorphVideoResolution) result = 'video';
-  if (plainResolutionName in NmorphArchiveResolution) result = 'archive';
+  let result: DefineComponent<{}, {}, unknown> = NmorphIconDoc;
+  if (plainResolutionName in NmorphImageResolution) result = NmorphIconImage;
+  if (plainResolutionName in NmorphAudioResolution) result = NmorphIconAudio;
+  if (plainResolutionName in NmorphVideoResolution) result = NmorphIconVideo;
+  if (plainResolutionName in NmorphArchiveResolution) result = NmorphIconArchive;
   return result;
 };
 
