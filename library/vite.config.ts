@@ -29,7 +29,7 @@ export default defineConfig(() => {
         fileName: (format: string) => `index.${format}.js`,
       },
       rollupOptions: {
-        external: ['vue', 'vue-i18n', 'lodash', 'pinia'],
+        external: ['vue', 'vue-i18n'],
       },
       assetsInlineLimit: 0,
     },

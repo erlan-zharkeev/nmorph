@@ -5,23 +5,28 @@ import { INmorphOptions } from './types/index.ts';
 
 const library: Plugin = {
   install(Vue: App, options: INmorphOptions = {}): App {
-    if (!options?.i18n?.outsideMessagesMerge) {
-      const libTranslates = useNmorphTranslation(options.i18n);
-      // @ts-expect-error ///
-      const vueI18nInstance = Vue.__VUE_I18N__;
-      if (vueI18nInstance) {
-        if (libTranslates.global.messages) {
-          Object.entries(libTranslates.global.messages).forEach(([locale, messages]) => {
-            vueI18nInstance.global.mergeLocaleMessage(locale, messages);
-          });
+    try {
+      if (!options?.i18n?.outsideMessagesMerge) {
+        const libTranslates = useNmorphTranslation(options.i18n);
+        // @ts-expect-error ///
+        const vueI18nInstance = Vue.__VUE_I18N__;
+        if (vueI18nInstance) {
+          if (libTranslates.global.messages.value) {
+            Object.entries(libTranslates.global.messages.value).forEach(([locale, messages]) => {
+              vueI18nInstance.global.mergeLocaleMessage(locale, messages);
+            });
+          }
+          if (libTranslates.global.locale.value) {
+            vueI18nInstance.global.locale.value = libTranslates.global.locale.value;
+          }
+        } else {
+          Vue.use(libTranslates);
         }
-        if (libTranslates.global.locale) {
-          vueI18nInstance.global.locale.value = libTranslates.global.locale;
-        }
-      } else {
-        Vue.use(libTranslates);
       }
+    } catch(e) {
+      console.log('yay');
     }
+
 
     const theme = useNmorphTheme(options.theme);
     const browser = useNmorphBrowser();

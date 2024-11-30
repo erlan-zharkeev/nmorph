@@ -47,7 +47,7 @@ const zIndex = computed(() => props.zIndex);
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .nmorph-notification-enter-from,
 .nmorph-notification-leave-to {
   opacity: 0;

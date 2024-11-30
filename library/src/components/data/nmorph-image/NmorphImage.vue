@@ -67,7 +67,9 @@ const frameBorder = computed(() => `${props.frameBorder}px`);
       </slot>
     </div>
     <div v-else-if="!imageLoadFinished" class="nmorph-image__loading">
-      <slot name="loading"> {{ computedLoadingText }} </slot>
+      <slot name="loading">
+        {{ computedLoadingText }}
+      </slot>
     </div>
   </div>
 </template>

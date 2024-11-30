@@ -86,7 +86,7 @@ defineExpose({ inputDOMRef });
   </label>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .nmorph-radio {
   --size: var(--extra-thin-component);
 

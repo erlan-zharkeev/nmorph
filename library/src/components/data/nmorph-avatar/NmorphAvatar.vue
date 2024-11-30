@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphImage, NmorphIcon } from '@/components';
 import { INmorphImage, AvatarShapeType } from '@/types';
+// import { styled } from '@vue-styled-components/core'
 
 interface INmorphProps extends INmorphImage {
   size?: number;
@@ -49,60 +50,53 @@ const size = computed(() => ` ${props.size}px`);
 const stubIconSize = computed(() => `${(props.size / 100) * 60}px`);
 const radius = computed(() => (props.shape === 'circle' ? '50%' : '4px'));
 const frameBorder = computed(() => `${props.frameBorder}px`);
+
+// const StyledComponent = styled.div`
+//   position: relative;
+//   overflow: hidden;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   .nmorph-avatar--circle {
+//     border-radius: var(--border-radius-circular);
+//   }
+
+//   .nmorph-avatar--square {
+//     border-radius: var(--default-border-radius);
+//   }
+// `;
+
 </script>
 
 <template>
-  <div :class="modifiers">
-    <NmorphImage
-      :fit="props.fit"
-      :src="props.src"
-      :src-set="props.srcSet"
-      :alt="props.alt"
-      :frame-border="0"
-      @load="onImageLoad"
-      @error="onImageError"
-    >
+  <div :class="modifiers" :style="{ width: size, height: size }">
+    <NmorphImage :fit="props.fit" :src="props.src" :src-set="props.srcSet" :alt="props.alt" :frame-border="0"
+      @load="onImageLoad" @error="onImageError">
       <template #error>
         <NmorphIcon name="avatar" :width="stubIconSize" />
       </template>
     </NmorphImage>
   </div>
+
 </template>
 
 <style lang="scss" scoped>
 .nmorph--shadow-combined {
   @include nmorph-combined(v-bind(frameBorder), true);
 }
-</style>
 
-<style lang="scss">
-.nmorph-avatar {
-  position: relative;
-  width: v-bind(size);
-  height: v-bind(size);
-  overflow: hidden;
+.nmorph-image {
+  --width: v-bind(size);
+  --height: v-bind(size);
 
-  @include flex-full-center;
+  position: absolute;
 
-  .nmorph-image {
-    --width: v-bind(size);
-    --height: v-bind(size);
+  padding: v-bind(imagePadding);
+  border-radius: v-bind(radius);
 
-    position: absolute;
-    padding: v-bind(imagePadding);
+  img {
     border-radius: v-bind(radius);
-
-    img {
-      border-radius: v-bind(radius);
-    }
   }
-}
-
-.nmorph-avatar--circle {
-  border-radius: var(--border-radius-circular);
-}
-
-.nmorph-avatar--square {
-  border-radius: var(--default-border-radius);
 }
 </style>
