@@ -506,11 +506,12 @@
     "@netlify/node-cookies" "^0.1.0"
     "urlpattern-polyfill" "8.0.2"
 
-"@nmorph/nmorph-ui-kit@^1.0.45":
-  "integrity" "sha512-s5AFgFXiw4hn2H6amVKUsEuJXLkfOMaJ3YO0ztodxg+8slub+vYqjqATB3msqcCV2XRMiys/vFVNDhGdoPBdzA=="
-  "resolved" "https://registry.npmjs.org/@nmorph/nmorph-ui-kit/-/nmorph-ui-kit-1.0.45.tgz"
-  "version" "1.0.45"
+"@nmorph/nmorph-ui-kit@^1.0.53":
+  "integrity" "sha512-HlAhKS4tFwqsgal1vZFHM4ko4CL4Yy/00sznScep+m5xImcNWtWgtvXuMxUnzf7IsqerWs2Zy7EGijCX7iWqXQ=="
+  "resolved" "https://registry.npmjs.org/@nmorph/nmorph-ui-kit/-/nmorph-ui-kit-1.0.53.tgz"
+  "version" "1.0.53"
   dependencies:
+    "@vue-styled-components/core" "^1.9.0"
     "vue" "^3.4.7"
     "vue-i18n" "^9.9.0"
 
@@ -1002,6 +1003,14 @@
     "ast-kit" "^1.0.1"
     "local-pkg" "^0.5.0"
     "magic-string-ast" "^0.6.2"
+
+"@vue-styled-components/core@^1.9.0":
+  "integrity" "sha512-9onnK3YWT0QBfWE1n/KE6J13ynXZ+DZiA6vDXwkq+YZltSHVPRF4UtT6WrOXsyforD9+6wOUYGBwy5Etlhhp+g=="
+  "resolved" "https://registry.npmjs.org/@vue-styled-components/core/-/core-1.9.0.tgz"
+  "version" "1.9.0"
+  dependencies:
+    "lodash-es" "^4.17.21"
+    "stylis" "^4.3.2"
 
 "@vue/babel-helper-vue-transform-on@1.2.2":
   "integrity" "sha512-nOttamHUR3YzdEqdM/XXDyCSdxMA9VizUKoroLX6yTyRtggzQMHXcmwh8a7ZErcJttIBIc9s68a1B8GZ+Dmvsw=="
@@ -2991,6 +3000,11 @@
   dependencies:
     "p-locate" "^4.1.0"
 
+"lodash-es@^4.17.21":
+  "integrity" "sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw=="
+  "resolved" "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.21.tgz"
+  "version" "4.17.21"
+
 "lodash.defaults@^4.2.0":
   "integrity" "sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ=="
   "resolved" "https://registry.npmjs.org/lodash.defaults/-/lodash.defaults-4.2.0.tgz"
@@ -4444,6 +4458,11 @@
     "browserslist" "^4.23.3"
     "postcss-selector-parser" "^6.1.2"
 
+"stylis@^4.3.2":
+  "integrity" "sha512-osIBl6BGUmSfDkyH2mB7EFvCJntXDrLhKjHTRj/rK6xLH0yuPrHULDRQzKokSOD4VoorhtKpfcfW1GAntu8now=="
+  "resolved" "https://registry.npmjs.org/stylis/-/stylis-4.3.4.tgz"
+  "version" "4.3.4"
+
 "sucrase@^3.35.0":
   "integrity" "sha512-8EbVDiu9iN/nESwxeSxDKe0dunta1GOlHufmSSXxMD2z2/tMZpDMpvXQGsc+ajGo8y2uYUmixaSRUc/QPoQ0GA=="
   "resolved" "https://registry.npmjs.org/sucrase/-/sucrase-3.35.0.tgz"
@@ -4987,7 +5006,7 @@
   dependencies:
     "@vue/devtools-api" "^6.6.3"
 
-"vue@^2.6.14 || ^3.5.11", "vue@^2.7.0 || ^3.2.25", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.3.4", "vue@^3.4.27", "vue@^3.4.7", "vue@^3.5.0", "vue@>=2.7 || >=3", "vue@>=3.2.13", "vue@3.5.12":
+"vue@^2.6.14 || ^3.5.11", "vue@^2.7.0 || ^3.2.25", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.3.0", "vue@^3.3.4", "vue@^3.4.27", "vue@^3.4.7", "vue@^3.5.0", "vue@>=2.7 || >=3", "vue@>=3.2.13", "vue@3.5.12":
   "integrity" "sha512-CLVZtXtn2ItBIi/zHZ0Sg1Xkb7+PU32bJJ8Bmy7ts3jxXTcbfsEfBivFYYWz1Hur+lalqGAh65Coin0r+HRUfg=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.5.12.tgz"
   "version" "3.5.12"
