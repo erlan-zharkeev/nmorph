@@ -48,15 +48,8 @@ defineExpose({ inputDOMRef });
   <label :class="modifiers" @click.prevent="changeHandler">
     <div v-if="props.styleType === 'radio-style'" class="nmorph-radio__content">
       <div class="nmorph-radio__input-wrapper">
-        <input
-          ref="inputDOMRef"
-          type="radio"
-          :name="props.label"
-          :value="props.value"
-          :checked="checked"
-          :tabindex="props.tabindex"
-          class="nmorph-native-input"
-        />
+        <input ref="inputDOMRef" type="radio" :name="props.label" :value="props.value" :checked="checked"
+          :tabindex="props.tabindex" class="nmorph-native-input" />
         <div class="nmorph-radio__fake" />
         <div v-if="checked" class="nmorph-radio__fake-checked" />
       </div>
@@ -66,16 +59,8 @@ defineExpose({ inputDOMRef });
       <slot v-else name="label" />
     </div>
     <div v-if="props.styleType === 'button'" class="nmorph-radio__content">
-      <input
-        ref="inputDOMRef"
-        type="radio"
-        :disabled="props.disabled"
-        :name="props.label"
-        :value="props.value"
-        :checked="checked"
-        :tabindex="props.tabindex"
-        class="nmorph-native-input"
-      />
+      <input ref="inputDOMRef" type="radio" :disabled="props.disabled" :name="props.label" :value="props.value"
+        :checked="checked" :tabindex="props.tabindex" class="nmorph-native-input" />
       <div v-if="props.label" class="nmorph-radio__fake">
         <span> {{ props.label }} </span>
       </div>
@@ -87,6 +72,8 @@ defineExpose({ inputDOMRef });
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-radio {
   --size: var(--extra-thin-component);
 
@@ -110,8 +97,11 @@ defineExpose({ inputDOMRef });
   }
 
   input {
-    @include absolute-zero;
-    @include wh100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 
   input:focus-visible {
@@ -121,8 +111,11 @@ defineExpose({ inputDOMRef });
   .nmorph-radio__fake {
     border-radius: var(--border-radius-circular);
 
-    @include wh100;
-    @include absolute-zero;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
     @include nmorph-inset;
   }
 
@@ -137,7 +130,10 @@ defineExpose({ inputDOMRef });
     background: var(--nmorph-accent-color);
     border-radius: var(--border-radius-circular);
 
-    @include absolute-center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .nmorph-radio__label {

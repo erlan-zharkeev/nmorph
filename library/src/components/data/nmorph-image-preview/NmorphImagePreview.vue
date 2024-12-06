@@ -162,12 +162,8 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
     </div>
     <NmorphOverlay :show="open" @on-outside-click="closeHandler">
       <div class="nmorph-image-preview__content">
-        <NmorphImage
-          :src="triggerSource"
-          :alt="props.alt"
-          fit="cover"
-          :style="{ transform: `rotate(${rotateLevel}deg) scale(${scaleLevel})` }"
-        />
+        <NmorphImage :src="triggerSource" :alt="props.alt" fit="cover"
+          :style="{ transform: `rotate(${rotateLevel}deg) scale(${scaleLevel})` }" />
       </div>
       <div v-if="multipleSources" class="nmorph-image-preview__left">
         <NmorphButton @click="previousHandler">
@@ -231,7 +227,10 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
   .nmorph-image-preview__content {
     transition: var(--transition-04) opacity ease-in-out;
 
-    @include absolute-center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .nmorph-image-preview__actions {

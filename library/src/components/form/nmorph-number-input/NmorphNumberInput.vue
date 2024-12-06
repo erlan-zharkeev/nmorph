@@ -101,31 +101,16 @@ defineExpose({ inputDOMRef });
     <div class="nmorph-number-input__content">
       <div class="nmorph-number-input__input-content">
         <div v-if="!actionBtnPositionRight" class="nmorph-number-input__decrease">
-          <NmorphButton
-            style-type="transparent"
-            :disabled="minBtnDisabled"
-            :height="props.height"
-            @click="decreaseHandler"
-          >
+          <NmorphButton style-type="transparent" :disabled="minBtnDisabled" :height="props.height"
+            @click="decreaseHandler">
             <NmorphIcon name="minus-thin" :width="actionBtnIconSize" :height="actionBtnIconSize" />
           </NmorphButton>
         </div>
-        <input
-          ref="inputDOMRef"
-          class="nmorph-native-input"
-          :value="initialValue"
-          type="number"
-          :min="props.min"
-          :max="props.max"
-          @input="inputHandler"
-        />
+        <input ref="inputDOMRef" class="nmorph-native-input" :value="initialValue" type="number" :min="props.min"
+          :max="props.max" @input="inputHandler" />
         <div v-if="!actionBtnPositionRight" class="nmorph-number-input__increase">
-          <NmorphButton
-            style-type="transparent"
-            :disabled="maxBtnDisabled"
-            :height="props.height"
-            @click="increaseHandler"
-          >
+          <NmorphButton style-type="transparent" :disabled="maxBtnDisabled" :height="props.height"
+            @click="increaseHandler">
             <NmorphIcon name="plus-thin" :width="actionBtnIconSize" :height="actionBtnIconSize" />
           </NmorphButton>
         </div>
@@ -147,6 +132,8 @@ defineExpose({ inputDOMRef });
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-number-input {
   display: inline-flex;
   flex-direction: column;
@@ -198,8 +185,6 @@ defineExpose({ inputDOMRef });
   input:focus {
     background: var(--nmorph-accent-color);
     outline: none;
-
-    // @include nmorph-outset;
   }
 
   .nmorph-number-input__action-btns {

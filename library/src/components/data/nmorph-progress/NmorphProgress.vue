@@ -76,21 +76,16 @@ const displayPercentage = computed(() => `${props.percentage}%`);
         <slot name="circle-inner-part">{{ displayPercentage }}</slot>
       </div>
       <svg :width="props.circleSize" :height="props.circleSize">
-        <circle
-          ref="circle"
-          class="nmorph-progress__circle-ring"
-          :cx="props.circleSize / 2"
-          :cy="props.circleSize / 2"
-          :r="props.circleSize / 2 - 2"
-          :stroke-dasharray="strokeDasharray"
-          :stroke-dashoffset="strokeDashoffset"
-        />
+        <circle ref="circle" class="nmorph-progress__circle-ring" :cx="props.circleSize / 2" :cy="props.circleSize / 2"
+          :r="props.circleSize / 2 - 2" :stroke-dasharray="strokeDasharray" :stroke-dashoffset="strokeDashoffset" />
       </svg>
     </div>
   </div>
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-progress {
   --height: 8px;
   --width-transition: 0.4s ease-in-out width;
@@ -154,15 +149,22 @@ const displayPercentage = computed(() => `${props.percentage}%`);
       border-radius: var(--border-radius-circular);
       content: '';
 
-      @include absolute-center;
-      @include nmorph-dark-shadow;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--nmorph-main-color);
+      box-shadow: 0 0 var(--base-shadow-blur) var(--nmorph-dark-shade-color);
     }
   }
 
   .nmorph-progress__circle-inner-part {
     z-index: 1;
 
-    @include absolute-center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .nmorph-progress__circle-ring {

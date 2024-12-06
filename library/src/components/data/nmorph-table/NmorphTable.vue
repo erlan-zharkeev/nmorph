@@ -102,30 +102,18 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
     <div class="nmorph-table__wrapper">
       <table class="nmorph-table__header">
         <colgroup>
-          <col
-            v-for="columnData in columns"
-            :key="columnData.prop"
-            :style="{ width: `${getWidth(columnData.width)}px` }"
-            :data-src="`${getWidth(columnData.width)}px`"
-          />
+          <col v-for="columnData in columns" :key="columnData.prop"
+            :style="{ width: `${getWidth(columnData.width)}px` }" :data-src="`${getWidth(columnData.width)}px`" />
         </colgroup>
         <thead>
           <tr class="nmorph-table__table-row">
-            <th
-              v-for="(columnData, idx) in columns"
-              :key="idx"
-              class="nmorph-table__table-data"
-              :class="{ 'nmorph-table__table-data--bordered': props.bordered }"
-            >
+            <th v-for="(columnData, idx) in columns" :key="idx" class="nmorph-table__table-data"
+              :class="{ 'nmorph-table__table-data--bordered': props.bordered }">
               <div class="nmorph-table__cell">
                 <div :style="{ 'justify-content': columnData.alignment }" class="nmorph-table__cell-content">
                   <span>{{ columnData.label }}</span>
-                  <NmorphSortButton
-                    v-if="sortData && sortData[columnData.prop]"
-                    class="nmorph-table__button-wrapper"
-                    :value="sortData[columnData.prop]"
-                    @sort="(e: NmorphSortOrderType) => onSort(e, columnData.prop)"
-                  />
+                  <NmorphSortButton v-if="sortData && sortData[columnData.prop]" class="nmorph-table__button-wrapper"
+                    :value="sortData[columnData.prop]" @sort="(e: NmorphSortOrderType) => onSort(e, columnData.prop)" />
                 </div>
               </div>
             </th>
@@ -135,30 +123,16 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
       <div class="nmorph-table__body">
         <table>
           <colgroup>
-            <col
-              v-for="columnData in columns"
-              :key="columnData.prop"
-              :style="{ width: `${getWidth(columnData.width)}px` }"
-            />
+            <col v-for="columnData in columns" :key="columnData.prop"
+              :style="{ width: `${getWidth(columnData.width)}px` }" />
           </colgroup>
           <tbody>
-            <tr
-              v-for="(rowData, idx) in rows"
-              :key="idx"
-              class="nmorph-table__table-data-row"
-              :class="{ 'nmorph-table__table-data-row--row-hover': props.rowHover }"
-            >
-              <td
-                v-for="columnData in columns"
-                :key="columnData.prop"
-                :class="{ 'nmorph-table__table-data--bordered': props.bordered }"
-                class="nmorph-table__table-data"
-              >
-                <div
-                  :id="`table-cell-${tableIdentifier}-${idx}-${columnData.prop}`"
-                  :style="{ 'text-align': columnData.alignment }"
-                  class="nmorph-table__cell nmorph-table__cell--data"
-                >
+            <tr v-for="(rowData, idx) in rows" :key="idx" class="nmorph-table__table-data-row"
+              :class="{ 'nmorph-table__table-data-row--row-hover': props.rowHover }">
+              <td v-for="columnData in columns" :key="columnData.prop"
+                :class="{ 'nmorph-table__table-data--bordered': props.bordered }" class="nmorph-table__table-data">
+                <div :id="`table-cell-${tableIdentifier}-${idx}-${columnData.prop}`"
+                  :style="{ 'text-align': columnData.alignment }" class="nmorph-table__cell nmorph-table__cell--data">
                   {{ tableData(rowData[columnData.prop]) }}
                 </div>
               </td>
@@ -167,11 +141,8 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
         </table>
         <table>
           <colgroup>
-            <col
-              v-for="columnData in columns"
-              :key="columnData.prop"
-              :style="{ width: `${getWidth(columnData.width)}px` }"
-            />
+            <col v-for="columnData in columns" :key="columnData.prop"
+              :style="{ width: `${getWidth(columnData.width)}px` }" />
           </colgroup>
           <tbody class="nmorph-table__slot-columns">
             <slot />
@@ -181,7 +152,10 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
     </div>
   </div>
 </template>
+
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-table {
   --border-color: var(--nmorph-info-text-color);
   --table-cell-height: auto;
@@ -229,10 +203,6 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
   .nmorph-table__body {
     position: relative;
   }
-
-  // .nmorph-table__table-data-row {
-  //   background: transparent;
-  // }
 
   .nmorph-table__table-data-row--row-hover:hover {
     background: var(--table-background-row-hover);

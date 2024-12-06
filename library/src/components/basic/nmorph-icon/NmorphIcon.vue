@@ -59,12 +59,15 @@ const customStyles = computed(() => {
   align-items: center;
 
   .nmorph-icon__content {
-    @include flex-full-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     @include dimensions;
   }
 
   svg {
-    @include wh100;
+    width: 100%;
+    height: 100%;
 
     fill: var(--color);
     stroke-width: 0;

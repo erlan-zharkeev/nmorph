@@ -3,7 +3,8 @@ import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphImage, NmorphIcon } from '@/components';
 import { INmorphImage, AvatarShapeType } from '@/types';
-// import { styled } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core'
+import { nmorphCombined } from '@/utils';
 
 interface INmorphProps extends INmorphImage {
   size?: number;
@@ -49,54 +50,54 @@ const imagePadding = computed(() => `${props.imagePadding}px`);
 const size = computed(() => ` ${props.size}px`);
 const stubIconSize = computed(() => `${(props.size / 100) * 60}px`);
 const radius = computed(() => (props.shape === 'circle' ? '50%' : '4px'));
-const frameBorder = computed(() => `${props.frameBorder}px`);
 
-// const StyledComponent = styled.div`
-//   position: relative;
-//   overflow: hidden;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
+const commonCSS = css`
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-//   .nmorph-avatar--circle {
-//     border-radius: var(--border-radius-circular);
-//   }
+  &.nmorph-avatar--circle {
+    border-radius: var(--border-radius-circular);
+  }
 
-//   .nmorph-avatar--square {
-//     border-radius: var(--default-border-radius);
-//   }
-// `;
+  &.nmorph-avatar--square {
+    border-radius: var(--default-border-radius);
+  }
 
+  .nmorph-image {
+    position: absolute;
+
+    img {
+      border-radius: v-bind(radius);
+    }
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+  .nmorph-image {
+    --width: ${size.value};
+    --height: ${size.value};
+
+    padding: ${imagePadding.value};
+    border-radius: ${radius.value};
+  }
+
+  &.nmorph--shadow-combined {
+    ${nmorphCombined(props.frameBorder, true)};
+  }
+`
 </script>
 
 <template>
-  <div :class="modifiers" :style="{ width: size, height: size }">
+  <StyledComponent :class="modifiers" :style="{ width: size, height: size }">
     <NmorphImage :fit="props.fit" :src="props.src" :src-set="props.srcSet" :alt="props.alt" :frame-border="0"
       @load="onImageLoad" @error="onImageError">
       <template #error>
         <NmorphIcon name="avatar" :width="stubIconSize" />
       </template>
     </NmorphImage>
-  </div>
-
+  </StyledComponent>
 </template>
-
-<style lang="scss" scoped>
-.nmorph--shadow-combined {
-  @include nmorph-combined(v-bind(frameBorder), true);
-}
-
-.nmorph-image {
-  --width: v-bind(size);
-  --height: v-bind(size);
-
-  position: absolute;
-
-  padding: v-bind(imagePadding);
-  border-radius: v-bind(radius);
-
-  img {
-    border-radius: v-bind(radius);
-  }
-}
-</style>

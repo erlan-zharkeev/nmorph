@@ -40,8 +40,15 @@ const emit = defineEmits<INmorphEmit>();
 .nmorph-overlay {
   opacity: 0;
   pointer-events: none;
-
-  @include overlay;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--nmorph-overlay-color);
+  transition: ease-in-out var(--transition-02) opacity;
 }
 
 .nmorph-overlay--transparent {

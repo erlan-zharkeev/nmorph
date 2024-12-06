@@ -11,7 +11,7 @@ import {
   NmorphIconCircleCloseFilled,
 } from '@/components';
 
-interface INmorphProps extends INmorphAlertProps {}
+interface INmorphProps extends INmorphAlertProps { }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   id: undefined,
@@ -82,6 +82,8 @@ const closeButtonPosition = computed(() => props.closeIconPosition);
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-alert {
   --background-color: var(--nmorph-overlay-color);
 

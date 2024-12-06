@@ -38,12 +38,16 @@ const combinedShadowBorderWidth = computed(() => `${props.combinedShadowBorderWi
 </template>
 
 <style lang="scss" scoped>
+@use '@/styles/mixins' as *;
+
 .nmorph--shadow-combined {
   @include nmorph-combined(v-bind(combinedShadowBorderWidth));
 }
 </style>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-card {
   --card-padding: var(--indentation-04);
 

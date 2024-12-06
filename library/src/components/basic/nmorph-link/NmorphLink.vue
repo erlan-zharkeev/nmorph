@@ -46,6 +46,8 @@ const modifiers = computed(() =>
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-link {
   --link-color: var(--nmorph-accent-color);
 

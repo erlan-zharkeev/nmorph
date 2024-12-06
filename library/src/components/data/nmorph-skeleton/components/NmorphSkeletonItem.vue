@@ -37,6 +37,8 @@ const cssHeight = computed(() => props.height);
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-skeleton-item {
   position: relative;
   width: v-bind(cssWidth);

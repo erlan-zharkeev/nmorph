@@ -68,15 +68,8 @@ watch(
 <template>
   <div :class="modifiers">
     <div class="nmorph-switch__content" @click="changeHandler">
-      <input
-        ref="inputDOMRef"
-        type="checkbox"
-        :value="initialValue"
-        :disabled="props.disabled"
-        class="nmorph-native-input"
-        @focus="focusHandler"
-        @blur="blurHandler"
-      />
+      <input ref="inputDOMRef" type="checkbox" :value="initialValue" :disabled="props.disabled"
+        class="nmorph-native-input" @focus="focusHandler" @blur="blurHandler" />
       <div class="nmorph-switch__bg-content" :class="{ 'nmorph-switch__bg-content--enable': initialValue }">
         <slot v-if="initialValue" name="bg-on" />
         <slot v-else name="bg-off" />
@@ -91,6 +84,8 @@ watch(
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-switch {
   --height: 20px;
   --offset: 3px;
@@ -131,7 +126,10 @@ watch(
       left ease-in-out var(--transition-02),
       box-shadow ease-in-out var(--transition-02);
 
-    @include flex-full-center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     @include nmorph-outset;
   }
 }

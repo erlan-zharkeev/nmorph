@@ -35,12 +35,8 @@ const zIndex = computed(() => props.zIndex);
 <template>
   <div :class="`nmorph-notification-provider nmorph-notification-provider--${props.placement}`" :style="{ zIndex }">
     <transition-group name="nmorph-notification" tag="div">
-      <div
-        v-for="notification in visibleNotifications"
-        :key="notification.id"
-        :style="{ width: notification.width }"
-        class="nmorph-notification-provider__notification"
-      >
+      <div v-for="notification in visibleNotifications" :key="notification.id" :style="{ width: notification.width }"
+        class="nmorph-notification-provider__notification">
         <NmorphAlert v-bind="notification" @close="() => closeHandler(notification.id)" />
       </div>
     </transition-group>
@@ -59,6 +55,7 @@ const zIndex = computed(() => props.zIndex);
 }
 
 @mixin animation-right {
+
   .nmorph-notification-enter-active,
   .nmorph-notification-leave-active {
     transition:
@@ -84,6 +81,7 @@ const zIndex = computed(() => props.zIndex);
 }
 
 @mixin animation-left {
+
   .nmorph-notification-enter-active,
   .nmorph-notification-leave-active {
     transition:
@@ -109,6 +107,7 @@ const zIndex = computed(() => props.zIndex);
 }
 
 @mixin animation-top-center {
+
   .nmorph-notification-enter-active,
   .nmorph-notification-leave-active {
     transition:
@@ -134,6 +133,7 @@ const zIndex = computed(() => props.zIndex);
 }
 
 @mixin animation-bottom-center {
+
   .nmorph-notification-enter-active,
   .nmorph-notification-leave-active {
     transition:

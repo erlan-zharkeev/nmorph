@@ -60,29 +60,18 @@ const slots = useSlots();
   <div :class="modifiers">
     <slot />
     <div class="nmorph-tabs__label-list">
-      <div
-        v-for="tabData in updatedPanes"
-        :id="getTabLabelId(tabsIdentifier, tabData.name)"
-        :key="tabData.name"
-        class="nmorph-tabs__label"
-        :class="[
+      <div v-for="tabData in updatedPanes" :id="getTabLabelId(tabsIdentifier, tabData.name)" :key="tabData.name"
+        class="nmorph-tabs__label" :class="[
           { 'nmorph-tabs__label--selected': tabData.name === props.modelValue },
           { 'nmorph-tabs__label--disabled': tabData.disabled },
-        ]"
-        @click="changeTab(tabData)"
-        :custom="tabData.disabled"
-      >
+        ]" @click="changeTab(tabData)" :custom="tabData.disabled">
         <div v-if="!slots.default">{{ tabData.label }}</div>
       </div>
     </div>
     <div class="nmorph-tabs__content__wrapper">
       <div class="nmorph-tabs__content">
-        <div
-          v-for="tabData in updatedPanes"
-          v-show="tabData.name === props.modelValue"
-          :id="getTabContentId(tabsIdentifier, tabData.name)"
-          :key="tabData.name"
-        >
+        <div v-for="tabData in updatedPanes" v-show="tabData.name === props.modelValue"
+          :id="getTabContentId(tabsIdentifier, tabData.name)" :key="tabData.name">
           <div v-if="!slots.default">{{ tabData.content }}</div>
         </div>
       </div>
@@ -91,6 +80,8 @@ const slots = useSlots();
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-tabs {
   border-radius: var(--default-border-radius);
 }

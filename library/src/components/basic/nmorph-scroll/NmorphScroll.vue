@@ -163,18 +163,15 @@ const mouseLeaveHandler = () => {
 </script>
 
 <template>
-  <div
-    ref="scrollDOMContainer"
-    :class="modifiers"
-    @scroll="scrollHandler"
-    @mouseenter="mouseEnterHandler"
-    @mouseleave="mouseLeaveHandler"
-  >
+  <div ref="scrollDOMContainer" :class="modifiers" @scroll="scrollHandler" @mouseenter="mouseEnterHandler"
+    @mouseleave="mouseLeaveHandler">
     <slot />
   </div>
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-scroll {
   --thumb-color: var(--nmorph-accent-color);
 

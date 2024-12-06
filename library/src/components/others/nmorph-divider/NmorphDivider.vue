@@ -23,6 +23,8 @@ const modifiers = computed(() =>
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-divider {
   @include nmorph-outset;
 }

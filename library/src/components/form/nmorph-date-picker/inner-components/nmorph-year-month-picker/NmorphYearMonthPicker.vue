@@ -132,6 +132,8 @@ const goToYearsHandler = () => {
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-year-month-picker {
   .nmorph-year-month-picker__header {
     display: flex;

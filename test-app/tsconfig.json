@@ -21,8 +21,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@/*": ["./../library/src"],
-      "@nmorph/nmorph-ui-kit/*": ["./../library/src/components.ts"]
+      "source/*": ["./src/*"],
     },
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]

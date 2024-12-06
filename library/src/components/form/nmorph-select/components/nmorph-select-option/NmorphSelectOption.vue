@@ -62,6 +62,8 @@ const modifiers = computed(() =>
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-select-option {
   --hover-bg: var(--nmorph-accent-color);
   --hover-color: var(--nmorph-white-color);

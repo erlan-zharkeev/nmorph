@@ -1,0 +1,48 @@
+:root {
+  --font-size-tiny: 10px;
+  --font-size-extra-small: 12px;
+  --font-size-small: 13px;
+  --font-size-base: 14px;
+  --font-size-medium: 16px;
+  --font-size-large: 18px;
+  --font-size-extra-large: 20px;
+
+  --line-height-line: 1;
+  --line-height-compact: 1.3;
+  --line-height-regular: 1.5;
+  --line-height-loose: 1.7;
+
+  --border-radius-none: 0px;
+  --border-radius-20: 2px;
+  --border-radius-40: 4px;
+  --border-radius-60: 6px;
+  --border-radius-80: 8px;
+  --border-radius-120: 12px;
+  --border-radius-200: 20px;
+  --border-radius-999: 99px;
+  --border-radius-circular: 50%;
+  --default-border-radius: var(--border-radius-40);
+
+  --thick-component: 38px;
+  --default-thickness-component: 30px;
+  --thin-component: 22px;
+  --extra-thin-component: 14px;
+
+  --form-container: 280px;
+
+  --default-indentation-input: 8px;
+
+  --indentation-00: 0;
+  --indentation-01: 2px;
+  --indentation-02: 4px;
+  --indentation-03: 8px;
+  --indentation-04: 16px;
+
+  --base-shadow-blur: calc(var(--base-shadow-width) * var(--base-shadow-blur-coefficient));
+  --nmorph-wrapper-padding: calc(var(--base-shadow-width) * 1.5);
+
+  --transition-04: 0.4s;
+  --transition-03: 0.3s;
+  --transition-02: 0.2s;
+  --transition-01: 0.1s;
+}

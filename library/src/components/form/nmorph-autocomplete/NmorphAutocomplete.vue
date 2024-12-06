@@ -96,36 +96,21 @@ watch(loader, (newValue) => {
   <div :class="modifiers">
     <div class="nmorph-autocomplete__input-content">
       <div ref="nmorphAutocompleteDOMRef" class="nmorph-autocomplete__input">
-        <NmorphTextInput
-          :height="props.height"
-          :disabled="props.disabled"
-          :model-value="initialValue"
-          :placeholder="props.placeholder"
-          :clearable="props.clearable"
-          @focus="focusHandler"
-          @update:model-value="updateValueHandler"
-        />
+        <NmorphTextInput :height="props.height" :disabled="props.disabled" :model-value="initialValue"
+          :placeholder="props.placeholder" :clearable="props.clearable" @focus="focusHandler"
+          @update:model-value="updateValueHandler" />
       </div>
     </div>
-    <NmorphDropdown
-      v-if="nmorphAutocompleteDOMRef"
-      :open="open"
-      :relative-element="nmorphAutocompleteDOMRef"
-      @on-outside-click="closeHandler"
-      :y-offset="1"
-    >
+    <NmorphDropdown v-if="nmorphAutocompleteDOMRef" :open="open" :relative-element="nmorphAutocompleteDOMRef"
+      @on-outside-click="closeHandler" :y-offset="1">
       <div v-if="loader" class="nmorph-autocomplete__loading">
         <slot name="loader">
           <NmorphIcon name="loader" size="large" />
         </slot>
       </div>
       <div v-else class="nmorph-autocomplete__list">
-        <div
-          v-for="(listEl, idx) in filteredList"
-          :key="idx"
-          class="nmorph-autocomplete__list-item"
-          @click="() => clickHandler(listEl)"
-        >
+        <div v-for="(listEl, idx) in filteredList" :key="idx" class="nmorph-autocomplete__list-item"
+          @click="() => clickHandler(listEl)">
           <slot :scope="listEl"> {{ listEl.value }} </slot>
         </div>
       </div>
@@ -145,8 +130,9 @@ watch(loader, (newValue) => {
 }
 
 .nmorph-autocomplete__loading {
-  @include flex-full-center;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100px;
 }
 

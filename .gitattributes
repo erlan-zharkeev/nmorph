@@ -1,18 +1,4 @@
-# Обработка всех файлов как текстовых с концами строк LF
 * text eol=lf
-
-# Исключения для изображений
 *.png binary
 *.jpg binary
-*.jpeg binary
 *.ico binary
-
-# Исключения для шрифтов
-*.ttf binary
-*.woff binary
-*.woff2 binary
-*.eot binary
-*.otf binary
-
-# Исключения для других двоичных файлов
-*.pdf binary

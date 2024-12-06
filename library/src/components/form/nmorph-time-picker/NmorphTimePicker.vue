@@ -117,37 +117,15 @@ const selectedValue = computed(() => (emptyValue.value ? '——:——:——' 
         <input ref="inputDOMRef" type="time" :value="timeTuple" step="1" class="nmorph-native-input" />
         <span>{{ selectedValue }}</span>
       </div>
-      <NmorphDropdown
-        v-if="timepickerDOMRef"
-        :open="openDropdown"
-        :relative-element="timepickerDOMRef"
-        @on-outside-click="onOutsideClickDropdownHandler"
-      >
+      <NmorphDropdown v-if="timepickerDOMRef" :open="openDropdown" :relative-element="timepickerDOMRef"
+        @on-outside-click="onOutsideClickDropdownHandler">
         <div class="nmorph-time-picker__dropdown">
-          <NmorphTimeRoller
-            :set-value-on-mount="!emptyValue"
-            :values="hours"
-            :selected-value="timeTuple[0]"
-            :step-height="step"
-            :disabled-range="disabledHours"
-            @value-changed="hoursChangedHandler"
-          />
-          <NmorphTimeRoller
-            :set-value-on-mount="!emptyValue"
-            :values="minutesSeconds"
-            :selected-value="timeTuple[1]"
-            :disabled-range="disabledMinutes"
-            :step-height="step"
-            @value-changed="minutesChangedHandler"
-          />
-          <NmorphTimeRoller
-            :set-value-on-mount="!emptyValue"
-            :values="minutesSeconds"
-            :disabled-range="disabledSeconds"
-            :selected-value="timeTuple[2]"
-            :step-height="step"
-            @value-changed="secondsChangedHandler"
-          />
+          <NmorphTimeRoller :set-value-on-mount="!emptyValue" :values="hours" :selected-value="timeTuple[0]"
+            :step-height="step" :disabled-range="disabledHours" @value-changed="hoursChangedHandler" />
+          <NmorphTimeRoller :set-value-on-mount="!emptyValue" :values="minutesSeconds" :selected-value="timeTuple[1]"
+            :disabled-range="disabledMinutes" :step-height="step" @value-changed="minutesChangedHandler" />
+          <NmorphTimeRoller :set-value-on-mount="!emptyValue" :values="minutesSeconds" :disabled-range="disabledSeconds"
+            :selected-value="timeTuple[2]" :step-height="step" @value-changed="secondsChangedHandler" />
         </div>
       </NmorphDropdown>
     </div>
@@ -155,6 +133,8 @@ const selectedValue = computed(() => (emptyValue.value ? '——:——:——' 
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-time-picker {
   width: 160px;
   cursor: pointer;
@@ -197,7 +177,10 @@ const selectedValue = computed(() => (emptyValue.value ? '——:——:——' 
     border-bottom: $line;
     content: '';
 
-    @include absolute-center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   input {

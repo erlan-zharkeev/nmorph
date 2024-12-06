@@ -97,31 +97,16 @@ const elementIndicator = (idx: number) => {
 
 <template>
   <div :class="modifiers">
-    <div
-      ref="carouselWrapper"
-      class="nmorph-carousel__wrapper"
-      :style="{ transform: translateX }"
-      :class="{ 'transition-enabled': transitionEnabled }"
-    >
-      <div
-        v-for="(itemName, idx) in carouselData"
-        :id="`nmorph-carousel-item-${carouselId}-${itemName}`"
-        :key="itemName"
-        :ref="(el) => setItemRef(el, idx)"
-        class="nmorph-carousel__item"
-      />
+    <div ref="carouselWrapper" class="nmorph-carousel__wrapper" :style="{ transform: translateX }"
+      :class="{ 'transition-enabled': transitionEnabled }">
+      <div v-for="(itemName, idx) in carouselData" :id="`nmorph-carousel-item-${carouselId}-${itemName}`"
+        :key="itemName" :ref="(el) => setItemRef(el, idx)" class="nmorph-carousel__item" />
     </div>
     <div class="nmorph-carousel__elements-indicator">
-      <div
-        v-for="(_, idx) in carouselData"
-        :key="idx"
-        class="nmorph-carousel__element-indicator-wrapper"
-        @click="elementIndicator(idx)"
-      >
-        <div
-          class="nmorph-carousel__element-indicator"
-          :class="{ 'nmorph-carousel__element-indicator--active': isCurrentElementActive(idx) }"
-        />
+      <div v-for="(_, idx) in carouselData" :key="idx" class="nmorph-carousel__element-indicator-wrapper"
+        @click="elementIndicator(idx)">
+        <div class="nmorph-carousel__element-indicator"
+          :class="{ 'nmorph-carousel__element-indicator--active': isCurrentElementActive(idx) }" />
       </div>
     </div>
     <div class="nmorph-carousel__action-btn nmorph-carousel__prev" @click="prevSlide">
@@ -135,6 +120,8 @@ const elementIndicator = (idx: number) => {
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-carousel {
   --height: 500px;
 

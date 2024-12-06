@@ -75,12 +75,16 @@ const frameBorder = computed(() => `${props.frameBorder}px`);
 </template>
 
 <style lang="scss" scoped>
+@use '@/styles/mixins' as *;
+
 .nmorph {
   @include nmorph-border(v-bind(frameBorder));
 }
 </style>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-image {
   --width: auto;
   --height: 100%;
@@ -88,10 +92,13 @@ const frameBorder = computed(() => `${props.frameBorder}px`);
   width: var(--width);
   height: var(--height);
 
-  @include flex-full-center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   img {
-    @include wh100;
+    width: 100%;
+    height: 100%;
 
     object-fit: v-bind(objectFit);
   }

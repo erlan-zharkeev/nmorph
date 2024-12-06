@@ -58,6 +58,8 @@ const outsideClickHandler = () => {
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-dropdown {
   position: fixed;
   width: v-bind(width);

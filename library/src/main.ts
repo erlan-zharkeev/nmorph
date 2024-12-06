@@ -1,5 +1,5 @@
 import { App, Plugin } from 'vue';
-import { useNmorphTranslation } from './hooks';
+import { useNmorphTranslation, useStyleClassMixins } from './hooks';
 import { useNmorphBrowser, useNmorphTheme } from './outside-hooks/index.ts';
 import { INmorphOptions } from './types/index.ts';
 
@@ -27,7 +27,7 @@ const library: Plugin = {
       console.log('yay');
     }
 
-
+    useStyleClassMixins()
     const theme = useNmorphTheme(options.theme);
     const browser = useNmorphBrowser();
 

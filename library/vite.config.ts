@@ -5,6 +5,7 @@ import dts from 'vite-plugin-dts';
 import svgLoader from 'vite-svg-loader';
 import { fileURLToPath, URL } from 'url';
 
+// @ts-expect-error
 export default defineConfig(() => {
   return {
     plugins: [
@@ -39,7 +40,7 @@ export default defineConfig(() => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "./src/styles/main.scss";`,
+          additionalData: `@use "@/styles/style.scss";`,
         },
       },
     },

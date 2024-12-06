@@ -88,27 +88,12 @@ const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
       <div v-if="slots['prepend-icon']" class="nmorph-text-input__prepend-icon">
         <slot name="prepend-icon" />
       </div>
-      <input
-        ref="inputDOMRef"
-        class="nmorph-native-input"
-        :type="type"
-        :placeholder="props.placeholder"
-        :disabled="props.disabled"
-        :value="props.modelValue"
-        @input="handleInput"
-        @focus="handleFocus"
-        @blur="handleBlur"
-        @keyup.enter="emit('on-enter')"
-      />
-      <NmorphButton
-        v-if="props.typePassword || props.clearable"
-        :disabled="props.disabled"
-        class="nmorph-text-input__password-btn"
-        style-type="transparent"
-        width="32px"
-        :height="props.height"
-        @click="actionButtonClickHandler"
-      >
+      <input ref="inputDOMRef" class="nmorph-native-input" :type="type" :placeholder="props.placeholder"
+        :disabled="props.disabled" :value="props.modelValue" @input="handleInput" @focus="handleFocus"
+        @blur="handleBlur" @keyup.enter="emit('on-enter')" />
+      <NmorphButton v-if="props.typePassword || props.clearable" :disabled="props.disabled"
+        class="nmorph-text-input__password-btn" style-type="transparent" width="32px" :height="props.height"
+        @click="actionButtonClickHandler">
         <NmorphIcon :name="actionIcon" />
       </NmorphButton>
     </div>
@@ -116,6 +101,8 @@ const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-text-input {
   display: flex;
   flex-direction: column;

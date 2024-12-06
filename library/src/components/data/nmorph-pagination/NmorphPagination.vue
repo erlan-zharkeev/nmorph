@@ -99,35 +99,21 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
 
 <template>
   <div v-if="show" :class="modifiers">
-    <NmorphButton
-      class="nmorph-pagination__btn nmorph-pagination__prev-btn"
-      :disabled="blockPrevButton || props.disabled"
-      @click="prevClick"
-    >
+    <NmorphButton class="nmorph-pagination__btn nmorph-pagination__prev-btn"
+      :disabled="blockPrevButton || props.disabled" @click="prevClick">
       <NmorphIcon name="chevron-down" class="nmorph-pagination__prev-icon" />
     </NmorphButton>
-    <NmorphRadioGroup
-      :model-value="selectedPage"
-      class="nmorph-pagination__page-group"
-      :disabled="props.disabled"
-      @update:model-value="updateSelectedValue"
-    >
+    <NmorphRadioGroup :model-value="selectedPage" class="nmorph-pagination__page-group" :disabled="props.disabled"
+      @update:model-value="updateSelectedValue">
       <div v-for="page in visiblePages" :key="page.value" class="nmorph-pagination__page-btn-wrapper">
-        <NmorphButton
-          v-if="page.value === 'prev' || page.value === 'next'"
-          :class="`nmorph-pagination__page-btn nmorph-pagination__${page.value}`"
-          :text="page.label"
-          :disabled="props.disabled"
-          @click="bigStepUpdate(page.value)"
-        />
+        <NmorphButton v-if="page.value === 'prev' || page.value === 'next'"
+          :class="`nmorph-pagination__page-btn nmorph-pagination__${page.value}`" :text="page.label"
+          :disabled="props.disabled" @click="bigStepUpdate(page.value)" />
         <NmorphRadio v-else v-bind="page" class="nmorph-pagination__page-btn" :disabled="props.disabled" />
       </div>
     </NmorphRadioGroup>
-    <NmorphButton
-      class="nmorph-pagination__btn nmorph-pagination__next-btn"
-      :disabled="blockNextButton || props.disabled"
-      @click="nextClick"
-    >
+    <NmorphButton class="nmorph-pagination__btn nmorph-pagination__next-btn"
+      :disabled="blockNextButton || props.disabled" @click="nextClick">
       <NmorphIcon name="chevron-down" class="nmorph-pagination__next-icon" />
     </NmorphButton>
   </div>
@@ -138,6 +124,7 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
   display: flex;
   justify-content: center;
   margin-top: var(--indentation-04);
+
   .nmorph-radio-group__content {
     display: flex;
     justify-content: center;

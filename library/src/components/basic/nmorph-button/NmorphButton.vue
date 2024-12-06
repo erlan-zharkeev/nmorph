@@ -68,14 +68,8 @@ defineExpose({ buttonDOMElement });
 
 <template>
   <div :class="modifiers">
-    <button
-      ref="buttonDOMElement"
-      class="nmorph-button__content"
-      :disabled="props.disabled"
-      :loading="props.loading"
-      :type="props.type"
-      :tabindex="props.tabindex"
-    >
+    <button ref="buttonDOMElement" class="nmorph-button__content" :disabled="props.disabled" :loading="props.loading"
+      :type="props.type" :tabindex="props.tabindex">
       <NmorphIcon v-if="slots['icon']">
         <slot name="icon" />
       </NmorphIcon>
@@ -92,6 +86,8 @@ defineExpose({ buttonDOMElement });
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-button {
   display: inline-block;
   width: auto;
@@ -105,7 +101,10 @@ defineExpose({ buttonDOMElement });
     border-radius: var(--default-border-radius);
     cursor: pointer;
 
-    @include flex-full-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     @include nmorph-outset;
 
     span {
@@ -139,8 +138,11 @@ defineExpose({ buttonDOMElement });
       opacity 1s;
     content: '';
 
-    @include wh100;
-    @include absolute-zero;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .nmorph-button__content:active::after {

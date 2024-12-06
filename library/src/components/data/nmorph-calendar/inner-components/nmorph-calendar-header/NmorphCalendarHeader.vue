@@ -32,31 +32,24 @@ const modifiers = computed(() =>
     <slot>
       <div class="nmorph-calendar-header__text">{{ props.year }} {{ getMonthName(props.month) }}</div>
       <div class="nmorph-calendar-header__actions">
-        <NmorphButton
-          v-if="showPreviousMonthButton"
-          class="nmorph-calendar-header__action"
-          @click="emit('click-previous-month')"
-        >
+        <NmorphButton v-if="showPreviousMonthButton" class="nmorph-calendar-header__action"
+          @click="emit('click-previous-month')">
           <NmorphIcon name="arrow-left" />
         </NmorphButton>
-        <NmorphButton
-          v-if="showTodayButton"
-          class="nmorph-calendar-header__action"
-          text="Today"
-          @click="emit('click-today')"
-        />
-        <NmorphButton
-          v-if="showNextMonthButton"
-          class="nmorph-calendar-header__action"
-          @click="emit('click-next-month')"
-        >
+        <NmorphButton v-if="showTodayButton" class="nmorph-calendar-header__action" text="Today"
+          @click="emit('click-today')" />
+        <NmorphButton v-if="showNextMonthButton" class="nmorph-calendar-header__action"
+          @click="emit('click-next-month')">
           <NmorphIcon name="arrow-right" />
         </NmorphButton>
       </div>
     </slot>
   </div>
 </template>
+
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-calendar-header {
   display: flex;
   align-items: center;

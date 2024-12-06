@@ -72,14 +72,8 @@ const modifiers = computed(() =>
   <label :class="modifiers">
     <div v-if="props.design === 'checkbox'" class="nmorph-checkbox__content">
       <div class="nmorph-checkbox__input-wrapper">
-        <input
-          ref="inputDOMRef"
-          type="checkbox"
-          :disabled="props.disabled"
-          :checked="checked"
-          class="nmorph-native-input"
-          @change="handleChange"
-        />
+        <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked"
+          class="nmorph-native-input" @change="handleChange" />
         <div class="nmorph-checkbox__fake" />
         <div v-if="checked" class="nmorph-checkbox__fake-checked" />
       </div>
@@ -103,6 +97,8 @@ const modifiers = computed(() =>
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-checkbox {
   --size: var(--extra-thin-component);
 
@@ -125,8 +121,11 @@ const modifiers = computed(() =>
   input {
     opacity: 0;
 
-    @include absolute-zero;
-    @include wh100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 
   input:focus-visible {
@@ -138,8 +137,11 @@ const modifiers = computed(() =>
   .nmorph-checkbox__fake {
     border-radius: var(--default-border-radius);
 
-    @include wh100;
-    @include absolute-zero;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
     @include nmorph-inset;
   }
 
@@ -154,7 +156,10 @@ const modifiers = computed(() =>
     background: var(--nmorph-accent-color);
     border-radius: var(--border-radius-20);
 
-    @include absolute-center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .nmorph-checkbox__label {

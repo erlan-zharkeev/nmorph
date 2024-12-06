@@ -97,6 +97,8 @@ const clickOnOverlay = () => {
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-dialog {
   --width: v-bind(dialogWidth);
 
@@ -106,7 +108,10 @@ const clickOnOverlay = () => {
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
 
-  @include absolute-center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   .nmorph-dialog__header {
     display: flex;

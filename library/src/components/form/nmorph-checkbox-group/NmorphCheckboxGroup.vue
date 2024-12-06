@@ -54,15 +54,8 @@ provide<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>('change-chec
   <div :class="modifiers">
     <div class="nmorph-checkbox-group__wrapper">
       <div class="nmorph-checkbox-group__content">
-        <NmorphCheckbox
-          v-for="(option, idx) in options"
-          :id="option.id"
-          :key="idx"
-          :label="option.label"
-          :model-value="option.modelValue"
-          :disabled="option.disabled"
-          :design="props.design"
-        />
+        <NmorphCheckbox v-for="(option, idx) in options" :id="option.id" :key="idx" :label="option.label"
+          :model-value="option.modelValue" :disabled="option.disabled" :design="props.design" />
         <slot />
       </div>
     </div>
@@ -82,10 +75,6 @@ provide<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>('change-chec
     display: flex;
     flex-flow: row wrap;
     width: 100%;
-  }
-
-  .nmorph-checkbox {
-    // margin-bottom: var(--indentation-03);
   }
 
   .nmorph-checkbox:not(:last-child) {

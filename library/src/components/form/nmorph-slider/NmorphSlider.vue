@@ -152,33 +152,13 @@ const transitionEnabled = ref(true);
     <div class="nmorph-slider__content">
       <div class="nmorph-slider__input-wrapper">
         <div ref="sliderContainer" class="nmorph-slider__input-container">
-          <NmorphTooltip
-            ref="tooltipRootRef"
-            v-if="tooltipVisible && !props.disabled"
-            :text="String(thumbValue)"
-            force-show
-            :force-coordinate="{ x: thumbXPercentPosition.tooltip, y: '24px' }"
-            block-position
-          />
-          <div
-            ref="sliderFirst"
-            class="nmorph-slider__thumb"
-            :style="{ left: thumbXPercentPosition.thumb }"
-            :class="{ 'nmorph-slider__thumb--smooth': transitionEnabled }"
-            @mouseenter="handleMouseEnter"
-            @mouseleave="handleMouseLeave"
-            @mousedown="mousedownHandler"
-          />
-          <input
-            class="nmorph-slide__native-input"
-            type="range"
-            :value="thumbValue"
-            :min="props.min"
-            :max="props.max"
-            :step="props.step"
-            :disabled="props.disabled"
-            @input="nativeInputHandler"
-          />
+          <NmorphTooltip ref="tooltipRootRef" v-if="tooltipVisible && !props.disabled" :text="String(thumbValue)"
+            force-show :force-coordinate="{ x: thumbXPercentPosition.tooltip, y: '24px' }" block-position />
+          <div ref="sliderFirst" class="nmorph-slider__thumb" :style="{ left: thumbXPercentPosition.thumb }"
+            :class="{ 'nmorph-slider__thumb--smooth': transitionEnabled }" @mouseenter="handleMouseEnter"
+            @mouseleave="handleMouseLeave" @mousedown="mousedownHandler" />
+          <input class="nmorph-slide__native-input" type="range" :value="thumbValue" :min="props.min" :max="props.max"
+            :step="props.step" :disabled="props.disabled" @input="nativeInputHandler" />
         </div>
       </div>
     </div>
@@ -186,6 +166,8 @@ const transitionEnabled = ref(true);
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-slider {
   @mixin thumb {
     width: v-bind(thumbWidthCss);
@@ -246,7 +228,10 @@ const transitionEnabled = ref(true);
   }
 
   .nmorph-slide__native-input {
-    @include absolute-center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     width: 100%;
     background: transparent;

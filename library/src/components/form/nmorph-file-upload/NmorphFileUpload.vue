@@ -115,13 +115,8 @@ const modifiers = computed(() =>
 <template>
   <div :class="modifiers">
     <div class="nmorph-file-upload__trigger">
-      <input
-        ref="inputDOMRef"
-        type="file"
-        :multiple="props.multiple"
-        class="nmorph-native-input"
-        @change="handleFileUpload"
-      />
+      <input ref="inputDOMRef" type="file" :multiple="props.multiple" class="nmorph-native-input"
+        @change="handleFileUpload" />
       <slot name="trigger">
         <NmorphButton :text="computedButtonText" fill @click="openFileSelector" :disabled="props.disabled" />
       </slot>
@@ -146,6 +141,8 @@ const modifiers = computed(() =>
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-file-upload {
   .nmorph-file-upload__trigger {
     position: relative;

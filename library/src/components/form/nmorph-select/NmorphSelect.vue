@@ -208,16 +208,8 @@ const enterHandler = () => {
 <template>
   <div :class="modifiers">
     <div class="nmorph-select__content">
-      <select
-        :id="id"
-        :name="name"
-        @focus="focusHandler"
-        @blur="blurHandler"
-        @keydown.space="spaceHandler"
-        @keydown.arrow-down="arrowDownHandler"
-        @keydown.arrow-up="arrowUpHandler"
-        @keydown.enter="enterHandler"
-      >
+      <select :id="id" :name="name" @focus="focusHandler" @blur="blurHandler" @keydown.space="spaceHandler"
+        @keydown.arrow-down="arrowDownHandler" @keydown.arrow-up="arrowUpHandler" @keydown.enter="enterHandler">
         <option v-for="option in domOptions" :key="option" :value="option" />
       </select>
       <div ref="nmorphSelectDOMRef" class="nmorph-select__selected-values-line" @click.stop="clickHandler">
@@ -228,34 +220,18 @@ const enterHandler = () => {
           {{ computedNoElementPlaceholder }}
         </div>
         <div v-else class="nmorph-select__selected-value">
-          <NmorphTagItem
-            v-for="tag in tags"
-            :key="tag.value"
-            v-bind="tag"
-            transparent
-            :removable="tags.length > 1 || !props.valueRequired"
-            height="thin"
-            @close="changeHandler"
-          />
+          <NmorphTagItem v-for="tag in tags" :key="tag.value" v-bind="tag" transparent
+            :removable="tags.length > 1 || !props.valueRequired" height="thin" @close="changeHandler" />
         </div>
         <NmorphIcon :name="props.loading ? 'loader' : 'chevron-down'" class="nmorph-select__chevron" />
       </div>
     </div>
-    <NmorphDropdown
-      v-if="nmorphSelectDOMRef && !props.disabled"
-      :open="open"
-      :relative-element="nmorphSelectDOMRef"
-      @on-outside-click="closeHandler"
-    >
+    <NmorphDropdown v-if="nmorphSelectDOMRef && !props.disabled" :open="open" :relative-element="nmorphSelectDOMRef"
+      @on-outside-click="closeHandler">
       <div ref="optionsDOMRef" class="nmorph-select__options">
         <NmorphIcon v-if="props.loading" name="loader" class="nmorph-select__chevron" size="medium" />
-        <NmorphSelectOption
-          v-else
-          v-for="option in options"
-          :key="option.value"
-          v-bind="option"
-          :height="props.height"
-        />
+        <NmorphSelectOption v-else v-for="option in options" :key="option.value" v-bind="option"
+          :height="props.height" />
         <slot />
       </div>
     </NmorphDropdown>
@@ -263,6 +239,8 @@ const enterHandler = () => {
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-select {
   --base-width: 200px;
 

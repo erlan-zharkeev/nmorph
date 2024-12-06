@@ -69,17 +69,11 @@ const cellHeight = computed(() => `${props.stepHeight}px`);
 <template>
   <div :class="modifiers">
     <NmorphScroll v-model="coords" height="140px" @on-scroll-end="setValueToCenter">
-      <div
-        v-for="timeVal in transformedValues"
-        :key="timeVal"
-        class="nmorph-time-roller__value"
-        :class="[
-          { 'nmorph-time-roller__value--invisible': timeVal === '-' },
-          { 'nmorph-time-roller__value--selected-value': props.selectedValue === timeVal },
-          { 'nmorph-time-roller__value--disabled-value': isValueDisabled(timeVal) },
-        ]"
-        @click="timeElClick(timeVal)"
-      >
+      <div v-for="timeVal in transformedValues" :key="timeVal" class="nmorph-time-roller__value" :class="[
+        { 'nmorph-time-roller__value--invisible': timeVal === '-' },
+        { 'nmorph-time-roller__value--selected-value': props.selectedValue === timeVal },
+        { 'nmorph-time-roller__value--disabled-value': isValueDisabled(timeVal) },
+      ]" @click="timeElClick(timeVal)">
         {{ timeVal }}
       </div>
     </NmorphScroll>
@@ -87,6 +81,8 @@ const cellHeight = computed(() => `${props.stepHeight}px`);
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-time-roller {
   --hover-bg: var(--nmorph-accent-color);
   --hover-color: var(--nmorph-white-color);

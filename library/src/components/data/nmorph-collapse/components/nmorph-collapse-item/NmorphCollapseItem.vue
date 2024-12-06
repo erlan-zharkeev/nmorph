@@ -88,12 +88,16 @@ watch(isOpen, () => {
       </slot>
     </div>
     <div class="nmorph-collapse-item__content" :style="{ height: `${contentHeight}px` }">
-      <div ref="collapseItemDOMElContent" class="nmorph-collapse-item__inner-wrapper"><slot /></div>
+      <div ref="collapseItemDOMElContent" class="nmorph-collapse-item__inner-wrapper">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-collapse-item {
   --transition-speed: 0.2s;
 

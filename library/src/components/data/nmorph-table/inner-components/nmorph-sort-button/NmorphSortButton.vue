@@ -40,7 +40,9 @@ const iconSize = '10px';
   align-items: center;
 
   .nmorph-button__content {
-    @include flex-full-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     flex-direction: column;
   }
@@ -48,11 +50,6 @@ const iconSize = '10px';
   .nmorph-sort-button__icon-up {
     margin-bottom: -1px;
     transform: rotate(180deg);
-  }
-
-  .nmorph-sort-button__icon-up,
-  .nmorph-sort-button__icon-down {
-    // --color: var(--nmorph-dark-shade-color);
   }
 
   .nmorph-sort-button__icon-down {

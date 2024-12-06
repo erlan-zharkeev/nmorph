@@ -5,7 +5,7 @@ import { NmorphIcon } from '@/components';
 import { NmorphComponentHeight } from '@/types';
 import { INmorphTagItemProps } from './../../types';
 
-interface INmorphProps extends INmorphTagItemProps {}
+interface INmorphProps extends INmorphTagItemProps { }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
@@ -41,6 +41,8 @@ const closeHandler = () => {
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-tag-item {
   display: inline-flex;
   margin-right: var(--indentation-02);

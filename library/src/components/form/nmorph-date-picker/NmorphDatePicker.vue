@@ -95,13 +95,9 @@ const showClearButton = computed(() => {
 <template>
   <div :class="modifiers">
     <div class="nmorph-date-picker__date-wrapper">
-      <div
-        ref="nmorphInputDOMRef"
-        class="nmorph-date-picker__input"
-        :class="{ 'nmorph-date-picker__input--open': open }"
-        @click="toggleOpen"
-      >
-        <input type="date" @focus.prevent="focusHandler" @blur="blurHandler" @keydown.space.prevent="() => {}" />
+      <div ref="nmorphInputDOMRef" class="nmorph-date-picker__input"
+        :class="{ 'nmorph-date-picker__input--open': open }" @click="toggleOpen">
+        <input type="date" @focus.prevent="focusHandler" @blur="blurHandler" @keydown.space.prevent="() => { }" />
         <NmorphIcon name="calendar" class="nmorph-date-picker__calendar-icon" />
         <div class="nmorph-date-picker__selected-value">{{ displayValue }}</div>
         <div class="nmorph-date-picker__clear-button-wrapper">
@@ -109,20 +105,10 @@ const showClearButton = computed(() => {
         </div>
       </div>
       <div class="nmorph-date-picker__content">
-        <NmorphDropdown
-          v-if="nmorphInputDOMRef"
-          :fill-width="false"
-          :width="324"
-          :open="open"
-          :relative-element="nmorphInputDOMRef"
-          @on-outside-click="closeHandler"
-        >
-          <NmorphDatePickerContent
-            :selected-values="selectedDate"
-            :initial-date="props.initialDate"
-            :type="type"
-            @update-selected-value="updateSelectedDateHandler"
-          />
+        <NmorphDropdown v-if="nmorphInputDOMRef" :fill-width="false" :width="324" :open="open"
+          :relative-element="nmorphInputDOMRef" @on-outside-click="closeHandler">
+          <NmorphDatePickerContent :selected-values="selectedDate" :initial-date="props.initialDate" :type="type"
+            @update-selected-value="updateSelectedDateHandler" />
         </NmorphDropdown>
       </div>
     </div>
@@ -130,6 +116,8 @@ const showClearButton = computed(() => {
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-date-picker {
   --width: 200px;
 

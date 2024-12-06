@@ -44,17 +44,16 @@ const modifiers = computed(() =>
     <label v-if="props.label">{{ props.label }}</label>
     <div class="nmorph-form-item__content">
       <slot />
-      <NmorphValidationIcon
-        :valid="Boolean(validationData?.valid)"
-        :show="showStatusIcon"
-        v-if="props.showValidationIcon"
-      />
+      <NmorphValidationIcon :valid="Boolean(validationData?.valid)" :show="showStatusIcon"
+        v-if="props.showValidationIcon" />
     </div>
     <NmorphErrorBox :errors="validationData?.errors" :height="props.height" :static-height="staticErrorBoxSpace" />
   </div>
 </template>
 
 <style lang="scss">
+@use '@/styles/mixins' as *;
+
 .nmorph-form-item {
   margin: var(--indentation-03) var(--indentation-00);
 
