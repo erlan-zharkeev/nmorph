@@ -1,5 +1,5 @@
 <script setup>
-import QRCode from "qrcode";
+// import QRCode from "qrcode";
 import { ref, onMounted } from "vue";
 import {
   NmorphNotificationProvider,
@@ -34,30 +34,23 @@ const closeMenuHandler = () => {
 
 onMounted(async () => {
   nmorphLog("success", `NMORPH DOCS (v${projectData.version})`);
-  const url = `http://192.168.1.5:2222`;
-  const code = await QRCode.toDataURL(url, { version: 2 });
-  if (import.meta.dev) nmorphLog("success", `Mobile dev link: ${code}`);
+  // const url = `http://192.168.1.5:2222`;
+  // const code = await QRCode.toDataURL(url, { version: 2 });
+  // if (import.meta.dev) nmorphLog("success", `Mobile dev link: ${code}`);
   loaded.value = true;
 });
 </script>
 
 <template>
   <div class="loader" v-if="!loaded">
-    <nmorph-progress
-      :value-right-side="false"
-      indeterminate
-      color="var(--nmorph-accent-color)"
-    />
+    <nmorph-progress :value-right-side="false" indeterminate color="var(--nmorph-accent-color)" />
   </div>
   <div v-else class="docs">
     <top-bar :isMenuOpen="menuOpen" @toggle-menu="toggleMenu" />
     <nuxt-page />
     <footer-bar />
     <main-menu :isMenuOpen="menuOpen" @menu-click="closeMenuHandler" />
-    <nmorph-notification-provider
-      :notifications="notificationProvider.notifications.value"
-      placement="top-center"
-    />
+    <nmorph-notification-provider :notifications="notificationProvider.notifications.value" placement="top-center" />
   </div>
 </template>
 
@@ -75,6 +68,7 @@ html {
   top: 50%;
   padding: 0 20%;
 }
+
 .docs {
   display: flex;
   flex-direction: column;
