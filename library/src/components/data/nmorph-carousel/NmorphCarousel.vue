@@ -118,7 +118,7 @@ const elementIndicator = (idx: number) => {
     <slot />
   </div>
 </template>
-
+<!--
 <style lang="scss">
 @use '@/styles/mixins' as *;
 
@@ -200,4 +200,4 @@ const elementIndicator = (idx: number) => {
     height: 100%;
   }
 }
-</style>
+</style> -->

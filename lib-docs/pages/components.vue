@@ -60,6 +60,7 @@ onMounted(() => {
 onUnmounted(() => {
   if (timeoutScrollId.value !== null) clearTimeout(timeoutScrollId.value);
   if (observer.value) observer.value.disconnect();
+  timeoutScrollId.value = null
 });
 
 const doUpdate = () => {
@@ -110,13 +111,9 @@ const linkName = (anchor: string) => {
         </h3>
         <nav class="docs-components-page__nav">
           <ul>
-            <li
-              v-for="anchor in navigationContents"
-              :key="anchor"
-              :class="{
-                'docs-components-page--active': anchor === activeAnchor,
-              }"
-            >
+            <li v-for="anchor in navigationContents" :key="anchor" :class="{
+              'docs-components-page--active': anchor === activeAnchor,
+            }">
               <a :href="`#${anchor}`">{{ linkName(anchor) }}</a>
             </li>
           </ul>
@@ -133,11 +130,11 @@ const linkName = (anchor: string) => {
     margin-bottom: 8px;
   }
 }
+
 .docs-components-page__title {
   text-align: center;
 }
 
 // .docs-components-page--active {
 //   font-weight: 800;
-// }
-</style>
+// }</style>

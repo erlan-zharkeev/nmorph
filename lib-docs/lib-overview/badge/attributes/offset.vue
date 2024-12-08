@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphBadge } from "@nmorph/nmorph-ui-kit";
+import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
 
@@ -35,11 +35,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-offset">
-    <attribute
-      header="Offset"
-      :subtitle="$t('overview.badge.offset.subtitle')"
-      :codeToCopy="code"
-    >
+    <attribute header="Offset" :subtitle="$t('overview.badge.offset.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="badge-offset-overview">
           <ClientOnly>
@@ -57,11 +53,7 @@ const code = [scriptData, templateData, cssData];
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
     </attribute>
   </div>
@@ -70,6 +62,7 @@ const code = [scriptData, templateData, cssData];
 <style lang="scss">
 .badge-offset-overview {
   display: flex;
+
   .badge-value-overview__element {
     margin-right: 24px;
   }

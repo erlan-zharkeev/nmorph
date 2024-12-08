@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { useModifiers } from '@/utils';
+import { disabled, useModifiers } from '@/utils';
 import { computed, useSlots } from 'vue';
 import { NmorphIcon, NmorphLinkTarget } from '@/components';
 import { NmorphColor } from '@/types';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   type?: keyof typeof NmorphColor;
@@ -29,26 +30,8 @@ const modifiers = computed(() =>
     'nmorph-link': [props.type, `${props.underline && 'underline'}`, `${props.disabled && 'disabled'}`],
   })
 );
-</script>
 
-<template>
-  <div :class="modifiers">
-    <a :href="props.href" :target="props.target">
-      <slot name="prepend" />
-
-      {{ text }}
-      <NmorphIcon v-if="slots['icon']" class="nmorph-link__icon" width="10px" height="10px">
-        <slot name="icon" />
-      </NmorphIcon>
-      <slot />
-    </a>
-  </div>
-</template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-link {
+const commonCSS = css`
   --link-color: var(--nmorph-accent-color);
 
   display: inline-block;
@@ -68,39 +51,59 @@ const modifiers = computed(() =>
   &:hover {
     filter: brightness(85%);
   }
-}
 
-.nmorph-link--underline {
-  position: relative;
+  &.nmorph-link--underline {
+    position: relative;
 
-  &:not(.nmorph-link--disabled):hover::before {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 0;
-    border-bottom: 1px solid var(--link-color);
-    content: '';
+    &:not(.nmorph-link--disabled):hover::before {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 0;
+      border-bottom: 1px solid var(--link-color);
+      content: '';
+    }
   }
-}
 
-.nmorph-link--disabled {
-  @include disabled;
-
-  a {
-    pointer-events: none;
+  &.nmorph-link--disabled {
+    a {
+      pointer-events: none;
+    }
   }
-}
 
-.nmorph-link--success {
-  --link-color: var(--nmorph-success-color);
-}
+  &.nmorph-link--success {
+    --link-color: var(--nmorph-success-color);
+  }
 
-.nmorph-link--warning {
-  --link-color: var(--nmorph-warn-color);
-}
+  &.nmorph-link--warning {
+    --link-color: var(--nmorph-warn-color);
+  }
 
-.nmorph-link--error {
-  --link-color: var(--nmorph-error-color);
-}
-</style>
+  &.nmorph-link--error {
+    --link-color: var(--nmorph-error-color);
+  }
+
+  &.nmorph-link--disabled {
+    ${disabled}
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers">
+    <a :href="props.href" :target="props.target">
+      <slot name="prepend" />
+
+      {{ text }}
+      <NmorphIcon v-if="slots['icon']" class="nmorph-link__icon" width="10px" height="10px">
+        <slot name="icon" />
+      </NmorphIcon>
+      <slot />
+    </a>
+  </StyledComponent>
+</template>

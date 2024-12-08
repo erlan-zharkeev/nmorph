@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphIconSize } from '@/components';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   size?: keyof typeof NmorphIconSize;
@@ -33,27 +34,13 @@ const customStyles = computed(() => {
   if (props.height) styles['--height'] = props.height;
   return styles;
 });
-</script>
 
-<template>
-  <div :class="modifiers" :style="customStyles">
-    <div class="nmorph-icon__content">
-      <slot />
-    </div>
-  </div>
-</template>
+const commonCSS = css`
+  width: var(--width);
+  min-width: var(--width);
+  height: var(--height);
+  min-height: var(--height);
 
-<style lang="scss">
-.nmorph-icon {
-  @mixin dimensions {
-    width: var(--width);
-    min-width: var(--width);
-    height: var(--height);
-    min-height: var(--height);
-  }
-
-  @include dimensions;
-  --color: v-bind(color);
 
   display: flex;
   align-items: center;
@@ -62,7 +49,10 @@ const customStyles = computed(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    @include dimensions;
+    width: var(--width);
+    min-width: var(--width);
+    height: var(--height);
+    min-height: var(--height);
   }
 
   svg {
@@ -76,20 +66,33 @@ const customStyles = computed(() => {
   path {
     stroke: var(--color);
   }
-}
 
-.nmorph-icon--small {
-  --width: 14px;
-  --height: 14px;
-}
+  &.nmorph-icon--small {
+    --width: 14px;
+    --height: 14px;
+  }
 
-.nmorph-icon--medium {
-  --width: 20px;
-  --height: 20px;
-}
+  &.nmorph-icon--medium {
+    --width: 20px;
+    --height: 20px;
+  }
 
-.nmorph-icon--large {
-  --width: 32px;
-  --height: 32px;
-}
-</style>
+  &.nmorph-icon--large {
+    --width: 32px;
+    --height: 32px;
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+  --color: ${props => props.color};
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers" :style="customStyles" :props="{ color: props.color }">
+    <div class="nmorph-icon__content">
+      <slot />
+    </div>
+  </StyledComponent>
+</template>

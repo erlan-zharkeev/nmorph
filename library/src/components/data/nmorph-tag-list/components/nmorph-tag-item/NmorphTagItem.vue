@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useModifiers } from '@/utils';
+import { body3, nmorphInset, useModifiers } from '@/utils';
 import { computed } from 'vue';
-import { NmorphIcon } from '@/components';
+import { NmorphIcon, NmorphIconError } from '@/components';
 import { NmorphComponentHeight } from '@/types';
 import { INmorphTagItemProps } from './../../types';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps extends INmorphTagItemProps { }
 
@@ -29,21 +30,8 @@ const emit = defineEmits<INmorphEmit>();
 const closeHandler = () => {
   emit('close', props.value);
 };
-</script>
 
-<template>
-  <div :class="modifiers">
-    <div class="nmorph-tag-item__content">
-      <span>{{ text }}</span>
-      <NmorphIcon v-if="props.removable" class="nmorph-tag-item__close-icon" name="error" @click.stop="closeHandler" />
-    </div>
-  </div>
-</template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-tag-item {
+const commonCSS = css`
   display: inline-flex;
   margin-right: var(--indentation-02);
   padding: var(--indentation-00) var(--indentation-03);
@@ -58,26 +46,38 @@ const closeHandler = () => {
   }
 
   .nmorph-tag-item__close-icon {
-    margin-left: var(--indentation-02);
-    cursor: pointer;
+    margin-left: 4px;
   }
-}
 
-.nmorph-tag-item--nmorph-design {
-  @include nmorph-inset;
-
-  border: none;
-}
-
-.nmorph-tag-item--thin {
-  --height: var(--thin-component);
-
-  span {
-    @include body-3;
+  &.nmorph-tag-item--nmorph-design {
+    border: none;
+    ${nmorphInset()}
   }
-}
 
-.nmorph-tag-item--thick {
-  --height: var(--thick-component);
-}
-</style>
+  &.nmorph-tag-item--thin {
+    --height: var(--thin-component);
+    span {
+      ${body3()}
+    }
+  }
+
+  &.nmorph-tag-item--thick {
+    --height: var(--thick-component);
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers">
+    <div class="nmorph-tag-item__content">
+      <span>{{ text }}</span>
+      <NmorphIcon v-if="props.removable" class="nmorph-tag-item__close-icon" @click.stop="closeHandler">
+        <NmorphIconError />
+      </NmorphIcon>
+    </div>
+  </StyledComponent>
+</template>

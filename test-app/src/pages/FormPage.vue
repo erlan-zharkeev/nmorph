@@ -39,15 +39,8 @@ const form = reactive({
   },
 });
 </script>
-<style>
-.wrapper {
-  display: flex;
-  justify-content: center;
-  max-width: 200px;
-  height: 200px;
-  overflow: auto;
-}
 
+<style>
 .nmorph-form-item {
   margin-bottom: 100px;
 }

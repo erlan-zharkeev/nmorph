@@ -68,31 +68,32 @@ const commonCSS = css`
 
   .nmorph-image {
     position: absolute;
-
-    img {
-      border-radius: v-bind(radius);
-    }
   }
 `
 
 const StyledComponent = styled.div`
   ${commonCSS}
   .nmorph-image {
-    --width: ${size.value};
-    --height: ${size.value};
+    --width: ${props => props.size};
+    --height: ${props => props.size};
 
-    padding: ${imagePadding.value};
-    border-radius: ${radius.value};
+    padding: ${props => props.imagePadding};
+    border-radius: ${props => props.radius};
   }
 
   &.nmorph--shadow-combined {
-    ${nmorphCombined(props.frameBorder, true)};
+    ${nmorphCombined(Number((props) => props.frameBorder), true)};
+  }
+
+  .nmorph-image > img {
+    border-radius: ${props => props.radius};
   }
 `
 </script>
 
 <template>
-  <StyledComponent :class="modifiers" :style="{ width: size, height: size }">
+  <StyledComponent :class="modifiers" :style="{ width: size, height: size }"
+    :props="{ size, imagePadding, radius, frameBorder }">
     <NmorphImage :fit="props.fit" :src="props.src" :src-set="props.srcSet" :alt="props.alt" :frame-border="0"
       @load="onImageLoad" @error="onImageError">
       <template #error>

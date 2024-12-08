@@ -506,10 +506,10 @@
     "@netlify/node-cookies" "^0.1.0"
     "urlpattern-polyfill" "8.0.2"
 
-"@nmorph/nmorph-ui-kit@^1.0.64":
-  "integrity" "sha512-+GUVINN46Gl50H9UhdnPn7TeRRSO5DQXZXNnwACIZ7rkkB9z/Ul9RAfO2QkwUYbH91wcnlwWrcy5uXzZgBbHCA=="
-  "resolved" "https://registry.npmjs.org/@nmorph/nmorph-ui-kit/-/nmorph-ui-kit-1.0.64.tgz"
-  "version" "1.0.64"
+"@nmorph/nmorph-ui-kit@^1.0.78":
+  "integrity" "sha512-isF/EtcxI/IrYIbCzWzsRVfEBXUMELnlzSyah7961PFPb35blYXbjuaaOxFWLxTuFwr55XP4n2iqrohZxQTjzw=="
+  "resolved" "https://registry.npmjs.org/@nmorph/nmorph-ui-kit/-/nmorph-ui-kit-1.0.78.tgz"
+  "version" "1.0.78"
   dependencies:
     "@vue-styled-components/core" "^1.9.0"
     "vue" "^3.5.13"
@@ -4335,7 +4335,7 @@
     "buffer-from" "^1.0.0"
     "source-map" "^0.6.0"
 
-"source-map@^0.6.0":
+"source-map@^0.6.0", "source-map@~0.6.1":
   "integrity" "sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g=="
   "resolved" "https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz"
   "version" "0.6.1"
@@ -4344,11 +4344,6 @@
   "integrity" "sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA=="
   "resolved" "https://registry.npmjs.org/source-map/-/source-map-0.7.4.tgz"
   "version" "0.7.4"
-
-"source-map@~0.6.1":
-  "integrity" "sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g=="
-  "resolved" "https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz"
-  "version" "0.6.1"
 
 "speakingurl@^14.0.1":
   "integrity" "sha512-1POYv7uv2gXoyGFpBCmpDVSNV74IfsWlDW216UPjbWufNf+bSU6GdbDsxdcxtfwb4xlI3yxzOTKClUosxARYrQ=="

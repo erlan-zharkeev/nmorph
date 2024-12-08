@@ -4,6 +4,7 @@ import "@nmorph/nmorph-ui-kit/dist/style.css";
 import { NmorphLibrary, ru, zh } from "@nmorph/nmorph-ui-kit";
 import { i18n } from "source/providers/i18n";
 import { router } from "source/providers/router";
+import 'source/style.css';
 
 const nmorphOptions = { i18n: { messages: { ru, zh }, locale: "ru" } };
 

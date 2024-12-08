@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from 'vue';
-import { useModifiers } from '@/utils';
+import { body3, nmorphInset, title3, useModifiers } from '@/utils';
 import {
   NmorphTable,
   NmorphTableColumn,
@@ -19,6 +19,7 @@ import {
 import NmorphCalendarHeader from './inner-components/nmorph-calendar-header/NmorphCalendarHeader.vue';
 import { useCalendarTexts } from './hooks';
 import { NmorphSelectionDateType } from '@/types';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   markToday?: boolean;
@@ -208,10 +209,68 @@ const modifiers = computed(() =>
 const dateData = (data: unknown) => data as INmorphCalendarDate;
 
 updateCalendar();
+
+const commonCSS = css`
+  --table-data-cell-height: 50px;
+
+  background: var(--nmorph-main-color);
+
+  .nmorph-table__table-data-row {
+    height: var(--table-data-cell-height);
+  }
+
+  .nmorph-table__cell {
+    --table-cell-height: var(--table-data-cell-height);
+    ${body3()}
+  }
+
+  .nmorph-calendar-date {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nmorph-calendar-date--today {
+    ${title3()}
+    color: var(--nmorph-text-color);
+    font-weight: 700;
+  }
+
+  .nmorph-table .nmorph-table__cell {
+    padding: 0 var(--indentation-01);
+  }
+
+  .nmorph-calendar-date--hidden {
+    cursor: none;
+  }
+
+  .nmorph-calendar-date:not(.nmorph-calendar-date--hidden) {
+    cursor: pointer;
+  }
+
+  .nmorph-calendar-date:not(.nmorph-calendar-date--hidden,
+    .nmorph-calendar-date--selected).nmorph-calendar-date--previous,
+  .nmorph-calendar-date:not(.nmorph-calendar-date--hidden, .nmorph-calendar-date--selected).nmorph-calendar-date--next {
+    ${nmorphInset()}
+    color: var(--nmorph-accent-color);
+  }
+
+  .nmorph-calendar-date--selected {
+    color: var(--nmorph-white-color);
+    box-shadow: none;
+    background: var(--nmorph-accent-color);
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+`
 </script>
 
 <template>
-  <div :class="modifiers">
+  <StyledComponent :class="modifiers">
     <slot name="header">
       <NmorphCalendarHeader :year="initialDate.getFullYear()" :month="initialDate.getMonth()"
         :show-previous-month-button="showHeaderButtons.showPreviousMonthButton"
@@ -249,66 +308,5 @@ updateCalendar();
         </NmorphTableColumn>
       </NmorphTable>
     </slot>
-  </div>
+  </StyledComponent>
 </template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-calendar {
-  --table-data-cell-height: 50px;
-
-  background: var(--nmorph-main-color);
-
-  .nmorph-table__table-data-row {
-    height: var(--table-data-cell-height);
-  }
-
-  .nmorph-table__cell {
-    --table-cell-height: var(--table-data-cell-height);
-
-    @include body-3;
-  }
-
-  .nmorph-calendar-date {
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .nmorph-calendar-date--today {
-    color: var(--nmorph-text-color);
-    font-weight: 700;
-
-    @include title-3;
-  }
-
-  .nmorph-table .nmorph-table__cell {
-    padding: 0 var(--indentation-01);
-  }
-
-  .nmorph-calendar-date--hidden {
-    cursor: none;
-  }
-
-  .nmorph-calendar-date:not(.nmorph-calendar-date--hidden) {
-    cursor: pointer;
-  }
-
-  .nmorph-calendar-date:not(.nmorph-calendar-date--hidden,
-    .nmorph-calendar-date--selected).nmorph-calendar-date--previous,
-  .nmorph-calendar-date:not(.nmorph-calendar-date--hidden, .nmorph-calendar-date--selected).nmorph-calendar-date--next {
-    @include nmorph-inset;
-
-    color: var(--nmorph-accent-color);
-  }
-
-  .nmorph-calendar-date--selected {
-    color: var(--nmorph-white-color);
-    box-shadow: none;
-    background: var(--nmorph-accent-color);
-  }
-}
-</style>

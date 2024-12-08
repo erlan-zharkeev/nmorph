@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { INmorphImage } from '@/types';
-import { useModifiers } from '@/utils';
+import { useModifiers, nmorphBorder } from '@/utils';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { styled, css } from '@vue-styled-components/core';
 
 const { t } = useI18n();
 
@@ -54,38 +55,7 @@ const modifiers = computed(() =>
   })
 );
 
-const objectFit = computed(() => props.fit);
-const frameBorder = computed(() => `${props.frameBorder}px`);
-</script>
-
-<template>
-  <div v-if="props.src" :class="modifiers">
-    <img :src="props.src" :alt="props.alt" :srcset="props.srcSet" @load="onImageLoad" @error="onImageError" />
-    <div v-if="loadingFailed" class="nmorph-image__load-failed">
-      <slot name="error">
-        {{ computedLoadFailedText }}
-      </slot>
-    </div>
-    <div v-else-if="!imageLoadFinished" class="nmorph-image__loading">
-      <slot name="loading">
-        {{ computedLoadingText }}
-      </slot>
-    </div>
-  </div>
-</template>
-
-<style lang="scss" scoped>
-@use '@/styles/mixins' as *;
-
-.nmorph {
-  @include nmorph-border(v-bind(frameBorder));
-}
-</style>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-image {
+const commonCSS = css`
   --width: auto;
   --height: 100%;
 
@@ -99,21 +69,47 @@ const frameBorder = computed(() => `${props.frameBorder}px`);
   img {
     width: 100%;
     height: 100%;
-
-    object-fit: v-bind(objectFit);
-  }
-
-  &--hide {
-    img {
-      width: 0;
-      height: 0;
-      opacity: 0;
-    }
   }
 
   .nmorph-image__loading,
   .nmorph-image__load-failed {
     padding: 1rem;
   }
-}
-</style>
+
+  img {
+    object-fit: ${props.fit};
+  }
+
+  &.nmorph-image--hide {
+    img {
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+  }
+`;
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+
+  .nmorph {
+    ${nmorphBorder(Number(props => props.frameBorder))};
+  }
+`;
+</script>
+
+<template>
+  <StyledComponent v-if="props.src" :class="modifiers" :props="{ frameBorder: props.frameBorder }">
+    <img :src="props.src" :alt="props.alt" :srcset="props.srcSet" @load="onImageLoad" @error="onImageError" />
+    <div v-if="loadingFailed" class="nmorph-image__load-failed">
+      <slot name="error">
+        {{ computedLoadFailedText }}
+      </slot>
+    </div>
+    <div v-else-if="!imageLoadFinished" class="nmorph-image__loading">
+      <slot name="loading">
+        {{ computedLoadingText }}
+      </slot>
+    </div>
+  </StyledComponent>
+</template>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphButton, NmorphIcon } from '@/components';
+import { NmorphButton, NmorphIcon, NmorphIconSort, NmorphIconTriangleDown } from '@/components';
 import { NmorphSortOrderType } from '@/types';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   value: NmorphSortOrderType;
@@ -23,19 +24,8 @@ const toggleSort = () => {
   emit('sort', value);
 };
 const iconSize = '10px';
-</script>
 
-<template>
-  <div :class="modifiers">
-    <NmorphButton height="thin" style-type="transparent" @click="toggleSort">
-      <NmorphIcon name="triangle-down" class="nmorph-sort-button__icon-up" :width="iconSize" :height="iconSize" />
-      <NmorphIcon name="triangle-down" class="nmorph-sort-button__icon-down" :width="iconSize" :height="iconSize" />
-    </NmorphButton>
-  </div>
-</template>
-
-<style lang="scss">
-.nmorph-sort-button {
+const commonCSS = css`
   display: flex;
   align-items: center;
 
@@ -55,17 +45,34 @@ const iconSize = '10px';
   .nmorph-sort-button__icon-down {
     margin-top: -1px;
   }
-}
 
-.nmorph-sort-button--ascending {
-  .nmorph-sort-button__icon-up {
-    --color: var(--nmorph-accent-color);
+  &.nmorph-sort-button--ascending {
+    .nmorph-sort-button__icon-up {
+      --color: var(--nmorph-accent-color);
+    }
   }
-}
 
-.nmorph-sort-button--descending {
-  .nmorph-sort-button__icon-down {
-    --color: var(--nmorph-accent-color);
+  &.nmorph-sort-button--descending {
+    .nmorph-sort-button__icon-down {
+      --color: var(--nmorph-accent-color);
+    }
   }
-}
-</style>
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers">
+    <NmorphButton height="thin" style-type="transparent" @click="toggleSort">
+      <NmorphIcon class="nmorph-sort-button__icon-up" :width="iconSize" :height="iconSize">
+        <NmorphIconTriangleDown />
+      </NmorphIcon>
+      <NmorphIcon class="nmorph-sort-button__icon-down" :width="iconSize" :height="iconSize">
+        <NmorphIconTriangleDown />
+      </NmorphIcon>
+    </NmorphButton>
+  </StyledComponent>
+</template>

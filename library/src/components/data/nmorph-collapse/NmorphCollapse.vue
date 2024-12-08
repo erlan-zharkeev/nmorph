@@ -51,6 +51,7 @@ const modifiers = computed(() =>
   })
 );
 </script>
+
 <template>
   <div :class="modifiers">
     <slot />

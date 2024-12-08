@@ -1,9 +1,9 @@
 import MainPage from "source/pages/MainPage.vue";
 import FormPage from "source/pages/FormPage.vue";
 import DatePickerPage from "source/pages/DatePickerPage.vue";
-import CalendarPage from "source/pages/CalendarPage.vue";
+import Data from "source/pages/Data.vue";
 import PaginationPage from "source/pages/PaginationPage.vue";
-import TestPage from "source/pages/TestPage.vue";
+import Basic from "source/pages/Basic.vue";
 
 import { type RouteRecordRaw } from "vue-router";
 
@@ -13,6 +13,20 @@ export const routes: RouteRecordRaw[] = [
     component: () => MainPage,
     meta: {
       title: "Main",
+    },
+  },
+  {
+    path: "/basic",
+    component: () => Basic,
+    meta: {
+      title: "Basic",
+    },
+  },
+  {
+    path: "/data",
+    component: () => Data,
+    meta: {
+      title: "Data",
     },
   },
   {
@@ -30,24 +44,10 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: "/calendar",
-    component: () => CalendarPage,
-    meta: {
-      title: "Calendar",
-    },
-  },
-  {
     path: "/pagination",
     component: () => PaginationPage,
     meta: {
       title: "Pagination",
-    },
-  },
-  {
-    path: "/test",
-    component: () => TestPage,
-    meta: {
-      title: "Test",
     },
   },
 ];

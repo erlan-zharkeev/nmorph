@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { INmorphA11yProps, INmorphInstance, NmorphDomElementType } from '@/types';
-import { useModifiers } from '@/utils';
+import { INmorphInstance, NmorphDomElementType } from '@/types';
+import { useModifiers, nmorphInset } from '@/utils';
 import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue';
 import { NmorphCoordsType, NmorphOverflowProp, NmorphScrollBehavior } from '@/components';
 import { nextTick } from 'vue';
+import { createGlobalStyle } from '@vue-styled-components/core';
 
-interface INmorphProps extends INmorphA11yProps {
+interface INmorphProps {
   height?: string;
   maxHeight?: string;
   modelValue?: NmorphCoordsType;
@@ -160,6 +161,7 @@ const mouseEnterHandler = () => {
 const mouseLeaveHandler = () => {
   show.value = false;
 };
+
 </script>
 
 <template>
@@ -170,8 +172,6 @@ const mouseLeaveHandler = () => {
 </template>
 
 <style lang="scss">
-@use '@/styles/mixins' as *;
-
 .nmorph-scroll {
   --thumb-color: var(--nmorph-accent-color);
 
@@ -191,8 +191,6 @@ const mouseLeaveHandler = () => {
   }
 
   &::-webkit-scrollbar-track {
-    @include nmorph-inset;
-
     border-radius: var(--border-radius-40);
   }
 

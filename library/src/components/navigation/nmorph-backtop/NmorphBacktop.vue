@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphButton, NmorphIcon } from '@/components';
+import { NmorphButton, NmorphIcon, NmorphIconChevronDown } from '@/components';
 import { NmorphDomElementType, NmorphElementDesignType } from '@/types';
 import { onMounted } from 'vue';
 
@@ -46,6 +46,7 @@ const scrollHandler = (event: Event) => {
 const scrollToTopHandler = () => {
   emit('click');
   if (!container.value) return;
+  console.log('a');
   container.value.scrollTo({
     top: 0,
     left: 0,
@@ -70,11 +71,10 @@ onUnmounted(() => {
     <div @click.stop="scrollToTopHandler">
       <slot>
         <NmorphButton :style-type="props.design === 'nmorph' ? 'default' : 'transparent'">
-          <NmorphIcon
-            name="chevron-down"
-            class="nmorph-backtop__up-icon"
-            :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-white-color)'"
-          />
+          <NmorphIcon class="nmorph-backtop__up-icon"
+            :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-white-color)'">
+            <NmorphIconChevronDown />
+          </NmorphIcon>
         </NmorphButton>
       </slot>
     </div>

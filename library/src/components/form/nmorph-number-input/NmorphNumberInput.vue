@@ -2,7 +2,7 @@
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
-import { NmorphButton, NmorphIcon } from '@/components';
+import { NmorphButton, NmorphIcon, NmorphIconMinus, NmorphIconMinusThin, NmorphIconPlus, NmorphIconPlusThin } from '@/components';
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: number;
@@ -103,7 +103,9 @@ defineExpose({ inputDOMRef });
         <div v-if="!actionBtnPositionRight" class="nmorph-number-input__decrease">
           <NmorphButton style-type="transparent" :disabled="minBtnDisabled" :height="props.height"
             @click="decreaseHandler">
-            <NmorphIcon name="minus-thin" :width="actionBtnIconSize" :height="actionBtnIconSize" />
+            <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
+              <NmorphIconMinusThin />
+            </NmorphIcon>
           </NmorphButton>
         </div>
         <input ref="inputDOMRef" class="nmorph-native-input" :value="initialValue" type="number" :min="props.min"
@@ -111,18 +113,24 @@ defineExpose({ inputDOMRef });
         <div v-if="!actionBtnPositionRight" class="nmorph-number-input__increase">
           <NmorphButton style-type="transparent" :disabled="maxBtnDisabled" :height="props.height"
             @click="increaseHandler">
-            <NmorphIcon name="plus-thin" :width="actionBtnIconSize" :height="actionBtnIconSize" />
+            <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
+              <NmorphIconPlusThin />
+            </NmorphIcon>
           </NmorphButton>
         </div>
         <div v-else class="nmorph-number-input__action-btns">
           <div class="nmorph-number-input__decrease">
             <NmorphButton style-type="transparent" :disabled="minBtnDisabled" @click="decreaseHandler">
-              <NmorphIcon name="minus-thin" :width="actionBtnIconSize" :height="actionBtnIconSize" />
+              <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
+                <NmorphIconMinusThin />
+              </NmorphIcon>
             </NmorphButton>
           </div>
           <div class="nmorph-number-input__increase">
             <NmorphButton style-type="transparent" :disabled="maxBtnDisabled" @click="increaseHandler">
-              <NmorphIcon name="plus-thin" :width="actionBtnIconSize" :height="actionBtnIconSize" />
+              <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
+                <NmorphIconPlusThin />
+              </NmorphIcon>
             </NmorphButton>
           </div>
         </div>

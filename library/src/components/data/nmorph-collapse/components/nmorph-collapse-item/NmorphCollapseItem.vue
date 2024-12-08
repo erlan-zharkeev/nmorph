@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, ref, watch } from 'vue';
-import { useModifiers } from '@/utils';
+import { useModifiers, nmorphOutset, nmorphInset, disabled } from '@/utils';
 import {
   INmorphCollapseItemProps,
   NmorphCollapseDataInjectionType,
   NmorphCollapseUpdateModelInjectionType,
 } from '@/components';
 import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps extends INmorphCollapseItemProps {
   height?: keyof typeof NmorphComponentHeight;
@@ -78,10 +79,44 @@ watch(isOpen, () => {
   contentHeight.value =
     isOpen.value && collapseItemDOMElContent.value ? collapseItemDOMElContent.value?.clientHeight : 0;
 });
+
+const commonCSS = css`
+  --transition-speed: 0.2s;
+
+  margin-bottom: var(--indentation-03);
+
+  .nmorph-collapse-item__title {
+    display: flex;
+    align-items: center;
+    padding: var(--indentation-02);
+    border-radius: var(--default-border-radius);
+    ${nmorphOutset()};
+  }
+
+  .nmorph-collapse-item__content {
+    box-sizing: content-box;
+    overflow: hidden;
+    border-radius: var(--default-border-radius);
+    transition: height var(--transition-speed) ease-in-out;
+    ${nmorphInset()};
+  }
+
+  .nmorph-collapse-item__inner-wrapper {
+    padding: var(--indentation-03);
+  }
+
+  &.nmorph-collapse-item--disabled {
+    ${disabled()};
+  }
+`;
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+`;
 </script>
 
 <template>
-  <div :class="modifiers" @click.stop="clickHandler">
+  <StyledComponent :class="modifiers" @click.stop="clickHandler">
     <div class="nmorph-collapse-item__title" :class="titleModifiers">
       <slot name="title">
         {{ props.title }}
@@ -92,41 +127,5 @@ watch(isOpen, () => {
         <slot />
       </div>
     </div>
-  </div>
+  </StyledComponent>
 </template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-collapse-item {
-  --transition-speed: 0.2s;
-
-  margin-bottom: var(--indentation-03);
-
-  .nmorph-collapse-item__title {
-    display: flex;
-    align-items: center;
-    padding: var(--indentation-02);
-    border-radius: var(--default-border-radius);
-
-    @include nmorph-outset;
-  }
-
-  .nmorph-collapse-item__content {
-    box-sizing: content-box;
-    overflow: hidden;
-    border-radius: var(--default-border-radius);
-    transition: height var(--transition-speed) ease-in-out;
-
-    @include nmorph-inset;
-  }
-}
-
-.nmorph-collapse-item__inner-wrapper {
-  padding: var(--indentation-03);
-}
-
-.nmorph-collapse-item--disabled {
-  @include disabled;
-}
-</style>

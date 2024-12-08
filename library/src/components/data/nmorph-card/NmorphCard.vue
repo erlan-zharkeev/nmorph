@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { NmorphShadowType } from '@/types';
-import { useModifiers } from '@/utils';
 import { computed } from 'vue';
+import { styled, css } from '@vue-styled-components/core';
+import { useModifiers, nmorphCombined, body3, title2 } from '@/utils';
 
 interface INmorphProps {
   shadowType?: keyof typeof NmorphShadowType;
@@ -20,11 +21,41 @@ const modifiers = computed(() =>
   })
 );
 
-const combinedShadowBorderWidth = computed(() => `${props.combinedShadowBorderWidth}px`);
+const commonCSS = css`
+  --card-padding: var(--indentation-04);
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--card-padding);
+  border-radius: var(--default-border-radius);
+
+  .nmorph-card__content {
+    height: 100%;
+  }
+
+  .nmorph-card__header {
+    ${title2()};
+  }
+
+  .nmorph-card__footer {
+    ${body3()};
+    height: fit-content;
+    margin-top: 4px;
+  }
+`;
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+
+  &.nmorph--shadow-combined {
+    ${nmorphCombined(Number(props => props.combinedShadowBorderWidth))};
+  }
+`;
 </script>
 
 <template>
-  <div :class="modifiers">
+  <StyledComponent :class="modifiers" :props="{ combinedShadowBorderWidth: props.combinedShadowBorderWidth }">
     <div class="nmorph-card__header">
       <slot name="header" />
     </div>
@@ -34,42 +65,5 @@ const combinedShadowBorderWidth = computed(() => `${props.combinedShadowBorderWi
     <div class="nmorph-card__footer">
       <slot name="footer" />
     </div>
-  </div>
+  </StyledComponent>
 </template>
-
-<style lang="scss" scoped>
-@use '@/styles/mixins' as *;
-
-.nmorph--shadow-combined {
-  @include nmorph-combined(v-bind(combinedShadowBorderWidth));
-}
-</style>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-card {
-  --card-padding: var(--indentation-04);
-
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: var(--card-padding);
-  border-radius: var(--default-border-radius);
-
-  .nmorph-card__header {
-    @include title-2;
-  }
-
-  .nmorph-card__content {
-    height: 100%;
-  }
-
-  .nmorph-card__footer {
-    @include body-3;
-
-    height: fit-content;
-    margin-top: 4px;
-  }
-}
-</style>

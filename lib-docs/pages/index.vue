@@ -73,43 +73,22 @@ const basicUsageJS = `
               </h2>
               <NmorphFormItem id="theme" :show-validation-icon="false">
               </NmorphFormItem>
-              <NmorphFormItem
-                id="main"
-                :label="$t('guide-page.custom-theme-color')"
-                :show-validation-icon="false"
-              >
-                <NmorphTextInput
-                  v-model="form.main.value"
-                  :placeholder="$t('guide-page.enter-color')"
-                />
+              <NmorphFormItem id="main" :label="$t('guide-page.custom-theme-color')" :show-validation-icon="false">
+                <NmorphTextInput v-model="form.main.value" :placeholder="$t('guide-page.enter-color')" />
                 <color-picker v-model="form.main.value" />
               </NmorphFormItem>
-              <NmorphFormItem
-                id="text"
-                :label="$t('guide-page.custom-text-color')"
-                :show-validation-icon="false"
-              >
-                <NmorphTextInput
-                  v-model="form.text.value"
-                  :placeholder="$t('guide-page.enter-color')"
-                />
+              <NmorphFormItem id="text" :label="$t('guide-page.custom-text-color')" :show-validation-icon="false">
+                <NmorphTextInput v-model="form.text.value" :placeholder="$t('guide-page.enter-color')" />
                 <color-picker v-model="form.text.value" />
               </NmorphFormItem>
-              <NmorphFormItem
-                id="accent"
-                :label="$t('guide-page.custom-accent-color')"
-                :show-validation-icon="false"
-              >
-                <NmorphTextInput
-                  v-model="form.accent.value"
-                  :placeholder="$t('guide-page.enter-color')"
-                />
+              <NmorphFormItem id="accent" :label="$t('guide-page.custom-accent-color')" :show-validation-icon="false">
+                <NmorphTextInput v-model="form.accent.value" :placeholder="$t('guide-page.enter-color')" />
                 <color-picker v-model="form.accent.value" />
               </NmorphFormItem>
               <NmorphFormItem :show-validation-icon="false" id="button">
                 <NmorphButton type="submit">{{
                   $t("guide-page.apply-theme")
-                }}</NmorphButton>
+                  }}</NmorphButton>
               </NmorphFormItem>
             </NmorphForm>
           </div>
@@ -129,13 +108,10 @@ const basicUsageJS = `
           <h3 class="section-subtitle">
             {{ $t("guide-page.quick-start.installation") }}
           </h3>
-          <p
-            class="section-paragraph"
-            v-html="$t('guide-page.quick-start.choose-package-manager')"
-          />
+          <p class="section-paragraph" v-html="$t('guide-page.quick-start.choose-package-manager')" />
           <code-example lang="javascript">{{
             installationPackageManager
-          }}</code-example>
+            }}</code-example>
         </div>
         <div class="section-element nmorph--shadow-inset">
           <h3 class="section-subtitle">
@@ -235,6 +211,7 @@ $image-size: 450px;
     .main-section__right-side {
       display: none;
     }
+
     .main-section__image-wrapper {
       $image-size: 200px;
       width: $image-size;

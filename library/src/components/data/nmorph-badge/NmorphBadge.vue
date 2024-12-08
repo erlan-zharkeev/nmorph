@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphDomElementType } from '@/types';
 import { onMounted } from 'vue';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   value: number | string;
@@ -62,30 +63,16 @@ onMounted(() => {
   badgeWidth.value = badge.value.clientWidth;
   badgeHeight.value = badge.value.clientHeight;
 });
-</script>
 
-<template>
-  <div v-if="!props.disabled" :class="modifiers">
-    <slot />
-    <div ref="badge" :class="containerModifiers" :style="{ right: appliedOffset.x, top: appliedOffset.y }">
-      <div v-if="props.isDot" class="nmorph-badge__dot" />
-      <div v-else class="nmorph-badge__content">
-        <slot name="value"> {{ displayValue }} </slot>
-      </div>
-    </div>
-  </div>
-  <slot v-else />
-</template>
-
-<style lang="scss">
-.nmorph-badge {
+const commonCSS = css`
   position: relative;
   display: inline-block;
+  height: fit-content;
+
   --dot-size: 4px;
 
   .nmorph-badge__container {
     position: absolute;
-    background: v-bind(color);
     border-radius: var(--default-border-radius);
     opacity: 1;
   }
@@ -104,5 +91,25 @@ onMounted(() => {
     height: var(--dot-size);
     border-radius: var(--border-radius-circular);
   }
-}
-</style>
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+  .nmorph-badge__container {
+    background: ${props => props.color}
+  }
+`
+</script>
+
+<template>
+  <StyledComponent v-if="!props.disabled" :class="modifiers" :props="{ color: props.color }">
+    <slot />
+    <div ref="badge" :class="containerModifiers" :style="{ right: appliedOffset.x, top: appliedOffset.y }">
+      <div v-if="props.isDot" class="nmorph-badge__dot" />
+      <div v-else class="nmorph-badge__content">
+        <slot name="value"> {{ displayValue }} </slot>
+      </div>
+    </div>
+  </StyledComponent>
+  <slot v-else />
+</template>
