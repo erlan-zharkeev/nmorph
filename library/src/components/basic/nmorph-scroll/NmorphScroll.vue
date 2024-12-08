@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { INmorphInstance, NmorphDomElementType } from '@/types';
-import { useModifiers, nmorphInset } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue';
 import { NmorphCoordsType, NmorphOverflowProp, NmorphScrollBehavior } from '@/components';
 import { nextTick } from 'vue';
-import { createGlobalStyle } from '@vue-styled-components/core';
 
 interface INmorphProps {
   height?: string;

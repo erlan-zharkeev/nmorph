@@ -5,14 +5,20 @@ stages:
   - deploy
 
 cache:
+  key: $CI_COMMIT_REF_SLUG
   paths:
     - lib-docs/node_modules/
 
+variables:
+  NODE_ENV: production
+
 build-docs:
   stage: build
+  before_script:
+    - rm -rf lib-docs/node_modules lib-docs/package-lock.json
   script:
     - cd lib-docs
-    - npm install
+    - npm ci --no-optional
     - npm run build
     - npm run generate
   artifacts:
@@ -23,6 +29,8 @@ build-docs:
 
 pages:
   stage: deploy
+  dependencies:
+    - build-docs
   script:
     - mv lib-docs/.output/public public/
     - ls -l public
@@ -31,4 +39,3 @@ pages:
       - public/
   only:
     - dev
-
