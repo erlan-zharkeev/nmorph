@@ -18,7 +18,7 @@ build-docs:
     - rm -rf lib-docs/node_modules lib-docs/package-lock.json
   script:
     - cd lib-docs
-    - npm ci --no-optional
+    - npm install --no-optional
     - npm run build
     - npm run generate
   artifacts:
