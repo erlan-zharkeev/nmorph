@@ -4,6 +4,7 @@ import { useModifiers } from '@/utils';
 import { NmorphButton, NmorphIcon, NmorphIconChevronDown } from '@/components';
 import { NmorphDomElementType, NmorphElementDesignType } from '@/types';
 import { onMounted } from 'vue';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   right?: number;
@@ -24,9 +25,6 @@ interface INmorphEmit {
 }
 const emit = defineEmits<INmorphEmit>();
 
-const offsetRight = computed(() => `${props.right}px`);
-const offsetBottom = computed(() => `${props.bottom}px`);
-
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-backtop': [`${showButton.value && 'show'}`, props.design],
@@ -46,7 +44,6 @@ const scrollHandler = (event: Event) => {
 const scrollToTopHandler = () => {
   emit('click');
   if (!container.value) return;
-  console.log('a');
   container.value.scrollTo({
     top: 0,
     left: 0,
@@ -56,7 +53,7 @@ const scrollToTopHandler = () => {
 
 onMounted(() => {
   if (!selfDOMEl.value) return;
-  container.value = selfDOMEl.value.parentElement;
+  container.value = selfDOMEl.value.parentElement?.parentElement;
   container.value?.addEventListener('scroll', scrollHandler);
 });
 
@@ -64,44 +61,52 @@ onUnmounted(() => {
   if (!container.value) return;
   container.value?.removeEventListener('scroll', scrollHandler);
 });
+
+const commonCSS = css`
+  .nmorph-backtop {
+    position: fixed;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+
+    .nmorph-backtop__up-icon {
+      transform: rotate(180deg);
+    }
+
+    &.nmorph-backtop--show {
+      opacity: 1;
+    }
+
+    &.nmorph-backtop--common {
+      .nmorph-button {
+        background: var(--nmorph-overlay-color);
+        border-radius: 4px;
+      }
+    }
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+  .nmorph-backtop {
+    right: ${props => props.right}px;
+    bottom: ${props => props.bottom}px;
+  }
+`
 </script>
 
 <template>
-  <div ref="selfDOMEl" :class="modifiers">
-    <div @click.stop="scrollToTopHandler">
-      <slot>
-        <NmorphButton :style-type="props.design === 'nmorph' ? 'default' : 'transparent'">
-          <NmorphIcon class="nmorph-backtop__up-icon"
-            :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-white-color)'">
-            <NmorphIconChevronDown />
-          </NmorphIcon>
-        </NmorphButton>
-      </slot>
+  <StyledComponent :props="{ right: props.right, bottom: props.bottom }">
+    <div ref="selfDOMEl" :class="modifiers">
+      <div @click.stop="scrollToTopHandler">
+        <slot>
+          <NmorphButton :style-type="props.design === 'nmorph' ? 'default' : 'transparent'">
+            <NmorphIcon class="nmorph-backtop__up-icon"
+              :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-white-color)'">
+              <NmorphIconChevronDown />
+            </NmorphIcon>
+          </NmorphButton>
+        </slot>
+      </div>
     </div>
-  </div>
+  </StyledComponent>
 </template>
-
-<style lang="scss">
-.nmorph-backtop {
-  position: fixed;
-  right: v-bind(offsetRight);
-  bottom: v-bind(offsetBottom);
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-
-  .nmorph-backtop__up-icon {
-    transform: rotate(180deg);
-  }
-}
-
-.nmorph-backtop--show {
-  opacity: 1;
-}
-
-.nmorph-backtop--common {
-  .nmorph-button {
-    background: var(--nmorph-overlay-color);
-    border-radius: 4px;
-  }
-}
-</style>

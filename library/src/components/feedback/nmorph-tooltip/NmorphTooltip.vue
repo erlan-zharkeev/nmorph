@@ -3,6 +3,7 @@ import { usePlacement } from '@/hooks';
 import { INmorphCoords, NmorphDomElementType, NmorphPlacementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   text?: string;
@@ -49,10 +50,122 @@ const handleMouseLeave = () => {
 const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
 const tooltipBody = ref<NmorphDomElementType>(null);
 defineExpose({ tooltipBody });
+
+const commonCSS = css`
+  --max-width: 120px;
+
+  --width: fit-content;
+  --height: fit-content;
+
+  display: inline-block;
+
+  .nmorph-tooltip__content {
+    position: relative;
+  }
+
+  .nmorph-tooltip__info-content {
+    position: absolute;
+    max-width: var(--max-width);
+    padding: var(--indentation-03);
+    border-radius: var(--default-border-radius);
+    box-shadow: 0px 0px 20px var(--nmorph-dark-shade-color);
+    width: var(--width);
+    height: var(--height);
+    background: var(--nmorph-main-color);
+  }
+
+  span {
+    white-space: nowrap;
+  }
+
+  .nmorph-tooltip__triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    content: '';
+  }
+
+  &.nmorph-tooltip--top {
+    .nmorph-tooltip__info-content {
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nmorph-tooltip__triangle {
+      top: 100%;
+      left: 50%;
+      border-color: var(--nmorph-main-color) transparent transparent transparent;
+      border-width: 8px 8px 0;
+      transform: translateX(-50%);
+    }
+  }
+
+  &.nmorph-tooltip--right {
+    .nmorph-tooltip__info-content {
+      top: 50%;
+      left: calc(100% + 12px);
+      transform: translateY(-50%);
+    }
+
+    .nmorph-tooltip__triangle {
+      top: 50%;
+      right: 100%;
+      border-color: transparent var(--nmorph-main-color) transparent transparent;
+      border-width: 8px 8px 8px 0;
+      transform: translateY(-50%);
+    }
+  }
+
+  &.nmorph-tooltip--bottom {
+    .nmorph-tooltip__info-content {
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nmorph-tooltip__triangle {
+      bottom: 100%;
+      left: 50%;
+      border-color: transparent transparent var(--nmorph-main-color) transparent;
+      border-width: 0 8px 8px;
+      transform: translateX(-50%);
+    }
+  }
+
+  &.nmorph-tooltip--left {
+    .nmorph-tooltip__info-content {
+      top: 50%;
+      right: calc(100% + 12px);
+      transform: translateY(-50%);
+    }
+
+    .nmorph-tooltip__triangle {
+      top: 50%;
+      left: 100%;
+      border-color: transparent transparent transparent var(--nmorph-main-color);
+      border-width: 8px 0 8px 8px;
+      transform: translateY(-50%);
+    }
+  }
+
+  &.nmorph-tooltip--force-coords {
+    .nmorph-tooltip__info-content {
+      transform: none;
+    }
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+  width: ${props => props.width};
+
+`
 </script>
 
 <template>
-  <div :class="modifiers">
+  <StyledComponent :class="modifiers" :props="{ width }">
     <div
       ref="tooltipDOMRef"
       class="nmorph-tooltip__content"
@@ -85,114 +198,5 @@ defineExpose({ tooltipBody });
         </div>
       </transition-group>
     </div>
-  </div>
+  </StyledComponent>
 </template>
-
-<style lang="scss">
-.nmorph-tooltip {
-  --max-width: 120px;
-
-  --width: fit-content;
-  --height: fit-content;
-
-  display: inline-block;
-  width: v-bind(width);
-
-  .nmorph-tooltip__content {
-    position: relative;
-  }
-
-  .nmorph-tooltip__info-content {
-    position: absolute;
-    max-width: var(--max-width);
-    padding: var(--indentation-03);
-    border-radius: var(--default-border-radius);
-    box-shadow: 0px 0px 20px var(--nmorph-dark-shade-color);
-    width: var(--width);
-    height: var(--height);
-    background: var(--nmorph-main-color);
-  }
-
-  span {
-    white-space: nowrap;
-  }
-
-  .nmorph-tooltip__triangle {
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    content: '';
-  }
-}
-
-.nmorph-tooltip--top {
-  .nmorph-tooltip__info-content {
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .nmorph-tooltip__triangle {
-    top: 100%;
-    left: 50%;
-    border-color: var(--nmorph-main-color) transparent transparent transparent;
-    border-width: 8px 8px 0;
-    transform: translateX(-50%);
-  }
-}
-
-.nmorph-tooltip--right {
-  .nmorph-tooltip__info-content {
-    top: 50%;
-    left: calc(100% + 12px);
-    transform: translateY(-50%);
-  }
-
-  .nmorph-tooltip__triangle {
-    top: 50%;
-    right: 100%;
-    border-color: transparent var(--nmorph-main-color) transparent transparent;
-    border-width: 8px 8px 8px 0;
-    transform: translateY(-50%);
-  }
-}
-
-.nmorph-tooltip--bottom {
-  .nmorph-tooltip__info-content {
-    top: calc(100% + 12px);
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .nmorph-tooltip__triangle {
-    bottom: 100%;
-    left: 50%;
-    border-color: transparent transparent var(--nmorph-main-color) transparent;
-    border-width: 0 8px 8px;
-    transform: translateX(-50%);
-  }
-}
-
-.nmorph-tooltip--left {
-  .nmorph-tooltip__info-content {
-    top: 50%;
-    right: calc(100% + 12px);
-    transform: translateY(-50%);
-  }
-
-  .nmorph-tooltip__triangle {
-    top: 50%;
-    left: 100%;
-    border-color: transparent transparent transparent var(--nmorph-main-color);
-    border-width: 8px 0 8px 8px;
-    transform: translateY(-50%);
-  }
-}
-
-.nmorph-tooltip--force-coords {
-  .nmorph-tooltip__info-content {
-    transform: none;
-  }
-}
-</style>

@@ -82,6 +82,7 @@ const commonCSS = css`
     display: flex;
     align-items: center;
     justify-content: center;
+    ${nmorphOutset()}
 
     span {
       --color: var(--nmorph-white-color);
@@ -167,7 +168,6 @@ const commonCSS = css`
     .nmorph-button__content {
       background: transparent;
       box-shadow: none;
-      ${nmorphOutset()}
     }
   }
 

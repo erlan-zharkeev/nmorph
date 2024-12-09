@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, DefineComponent, useSlots } from 'vue';
-import { useModifiers } from '@/utils';
+import { title3, useModifiers } from '@/utils';
 import {
   NmorphIcon,
   NmorphAlertType,
@@ -9,7 +9,9 @@ import {
   NmorphIconWarnTriangleFilled,
   NmorphIconInfoFilled,
   NmorphIconCircleCloseFilled,
+  NmorphIconCross,
 } from '@/components';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps extends INmorphAlertProps { }
 
@@ -51,40 +53,8 @@ const iconNameMap: Record<NmorphAlertType, DefineComponent<{}, {}, unknown>> = {
 const slots = useSlots();
 
 const closeButtonPosition = computed(() => props.closeIconPosition);
-</script>
 
-<template>
-  <div v-if="slots.default || props.title || props.content || props.html" :class="modifiers">
-    <div v-if="props.html" class="nmorph-alert__html-wrapper" v-html="props.html" />
-    <div v-else class="nmorph-alert__wrapper">
-      <div class="nmorph-alert__left-side">
-        <div v-if="props.showIcon" class="nmorph-alert__icon">
-          <slot name="icon">
-            <NmorphIcon size="medium">
-              <component :is="iconNameMap[props.type]" />
-            </NmorphIcon>
-          </slot>
-        </div>
-        <div class="nmorph-alert__content-wrapper">
-          <div class="nmorph-alert__content-title">
-            <slot v-if="props.title || slots.title" name="title">{{ props.title }}</slot>
-          </div>
-          <div class="nmorph-alert__content">
-            <slot>{{ props.content }}</slot>
-          </div>
-        </div>
-      </div>
-      <div v-if="props.closable" class="nmorph-alert__close" @click="closeHandler">
-        <NmorphIcon name="cross" width="14px" height="14px" />
-      </div>
-    </div>
-  </div>
-</template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-alert {
+const commonCSS = css`
   --background-color: var(--nmorph-overlay-color);
 
   display: inline-block;
@@ -101,8 +71,7 @@ const closeButtonPosition = computed(() => props.closeIconPosition);
   .nmorph-alert__content-title {
     font-weight: 600;
     line-height: 1;
-
-    @include title-3;
+    ${title3()}
   }
 
   .nmorph-alert__html-wrapper {
@@ -133,45 +102,80 @@ const closeButtonPosition = computed(() => props.closeIconPosition);
       --color: var(--nmorph-white-color);
     }
   }
-}
 
-.nmorph-alert--success {
-  .nmorph-alert__icon {
-    .nmorph-icon {
-      --color: var(--nmorph-success-color);
+  .nmorph-alert--success {
+    .nmorph-alert__icon {
+      .nmorph-icon {
+        --color: var(--nmorph-success-color);
+      }
     }
   }
-}
 
-.nmorph-alert--error {
-  .nmorph-alert__icon {
-    .nmorph-icon {
-      --color: var(--nmorph-error-color);
+  &.nmorph-alert--error {
+    .nmorph-alert__icon {
+      .nmorph-icon {
+        --color: var(--nmorph-error-color);
+      }
     }
   }
-}
 
-.nmorph-alert--warning {
-  .nmorph-alert__icon {
-    .nmorph-icon {
-      --color: var(--nmorph-warn-color);
+  &.nmorph-alert--warning {
+    .nmorph-alert__icon {
+      .nmorph-icon {
+        --color: var(--nmorph-warn-color);
+      }
     }
   }
-}
 
-.nmorph-alert--info {
-  .nmorph-alert__icon {
-    .nmorph-icon {
-      --color: var(--nmorph-info-color);
+  &.nmorph-alert--info {
+    .nmorph-alert__icon {
+      .nmorph-icon {
+        --color: var(--nmorph-info-color);
+      }
     }
   }
-}
 
-.nmorph-alert--bordered {
-  border: 1px solid var(--nmorph-gray-color);
-}
+  &.nmorph-alert--bordered {
+    border: 1px solid var(--nmorph-gray-color);
+  }
 
-.nmorph-alert--fill {
-  width: 100%;
-}
-</style>
+  &.nmorph-alert--fill {
+    width: 100%;
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+
+`
+</script>
+
+<template>
+  <StyledComponent v-if="slots.default || props.title || props.content || props.html" :class="modifiers">
+    <div v-if="props.html" class="nmorph-alert__html-wrapper" v-html="props.html" />
+    <div v-else class="nmorph-alert__wrapper">
+      <div class="nmorph-alert__left-side">
+        <div v-if="props.showIcon" class="nmorph-alert__icon">
+          <slot name="icon">
+            <NmorphIcon size="medium">
+              <component :is="iconNameMap[props.type]" />
+            </NmorphIcon>
+          </slot>
+        </div>
+        <div class="nmorph-alert__content-wrapper">
+          <div class="nmorph-alert__content-title">
+            <slot v-if="props.title || slots.title" name="title">{{ props.title }}</slot>
+          </div>
+          <div class="nmorph-alert__content">
+            <slot>{{ props.content }}</slot>
+          </div>
+        </div>
+      </div>
+      <div v-if="props.closable" class="nmorph-alert__close" @click="closeHandler">
+        <NmorphIcon width="14px" height="14px">
+          <NmorphIconCross />
+        </NmorphIcon>
+      </div>
+    </div>
+  </StyledComponent>
+</template>

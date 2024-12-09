@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useSlots } from 'vue';
-import { generateUUID, useModifiers } from '@/utils';
+import { disabled, generateUUID, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { provide } from 'vue';
 import {
   INmorphTabPaneProps,
@@ -9,6 +9,7 @@ import {
   getTabLabelId,
   getTabContentId,
 } from '@/components';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   modelValue?: NmorphTableModelType;
@@ -54,10 +55,63 @@ const updatedPanes = computed(() => {
 });
 
 const slots = useSlots();
+
+
+const commonCSS = css`
+  border-radius: var(--default-border-radius);
+
+  .nmorph-tabs__label-list {
+    display: flex;
+    padding: var(--indentation-02);
+    border-top-left-radius: var(--default-border-radius);
+    border-top-right-radius: var(--default-border-radius);
+    ${nmorphOutset()}
+  }
+
+  .nmorph-tabs__label {
+    margin-right: var(--indentation-02);
+    padding: var(--indentation-03);
+    border-radius: var(--default-border-radius);
+    cursor: pointer;
+    ${nmorphOutset()}
+
+    &.nmorph-tabs__label--disabled {
+      ${disabled()}
+    }
+
+    &.nmorph-tabs__label--selected {
+      ${nmorphInset()}
+    }
+  }
+
+  .nmorph-tabs__content__wrapper {
+    padding: var(--indentation-02);
+    border-bottom-right-radius: var(--default-border-radius);
+    border-bottom-left-radius: var(--default-border-radius);
+    ${nmorphOutset()}
+  }
+
+  .nmorph-tabs__content {
+    padding: var(--indentation-03);
+    border-radius: var(--default-border-radius);
+    ${nmorphInset()}
+  }
+
+  &.nmorph-tabs--stretch {
+    .nmorph-tabs__label {
+      width: 100%;
+    }
+  }
+
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+`
 </script>
 
 <template>
-  <div :class="modifiers">
+  <StyledComponent :class="modifiers">
     <slot />
     <div class="nmorph-tabs__label-list">
       <div v-for="tabData in updatedPanes" :id="getTabLabelId(tabsIdentifier, tabData.name)" :key="tabData.name"
@@ -76,60 +130,5 @@ const slots = useSlots();
         </div>
       </div>
     </div>
-  </div>
+  </StyledComponent>
 </template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-tabs {
-  border-radius: var(--default-border-radius);
-}
-
-.nmorph-tabs--stretch {
-  .nmorph-tabs__label {
-    width: 100%;
-  }
-}
-
-.nmorph-tabs__label-list {
-  display: flex;
-  padding: var(--indentation-02);
-  border-top-left-radius: var(--default-border-radius);
-  border-top-right-radius: var(--default-border-radius);
-
-  @include nmorph-outset;
-}
-
-.nmorph-tabs__label {
-  margin-right: var(--indentation-02);
-  padding: var(--indentation-03);
-  border-radius: var(--default-border-radius);
-  cursor: pointer;
-
-  @include nmorph-outset;
-}
-
-.nmorph-tabs__label--disabled {
-  @include disabled;
-}
-
-.nmorph-tabs__label--selected {
-  @include nmorph-inset;
-}
-
-.nmorph-tabs__content__wrapper {
-  padding: var(--indentation-02);
-  border-bottom-right-radius: var(--default-border-radius);
-  border-bottom-left-radius: var(--default-border-radius);
-
-  @include nmorph-outset;
-}
-
-.nmorph-tabs__content {
-  padding: var(--indentation-03);
-  border-radius: var(--default-border-radius);
-
-  @include nmorph-inset;
-}
-</style>

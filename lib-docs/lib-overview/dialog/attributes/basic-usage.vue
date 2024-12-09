@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphDialog } from "@nmorph/nmorph-ui-kit";
+import { NmorphDialog, NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
 
@@ -51,24 +51,13 @@ const showModalHandler = () => {
 
 <template>
   <div id="content-basic-usage">
-    <attribute
-      :header="$t('overview.basic-usage')"
-      :subtitle="$t('overview.dialog.basic-usage.subtitle')"
-      :codeToCopy="code"
-    >
+    <attribute :header="$t('overview.basic-usage')" :subtitle="$t('overview.dialog.basic-usage.subtitle')"
+      :codeToCopy="code">
       <template #overview>
         <div class="dialog-basic-usage-overview">
           <ClientOnly>
-            <NmorphButton
-              @click="showModalHandler"
-              :text="$t('overview.dialog.basic-usage.show-modal')"
-            />
-            <NmorphDialog
-              v-model="dialogVisibility"
-              title="Lorem Ipsum"
-              :close-on-click-modal="false"
-              width="320px"
-            >
+            <NmorphButton @click="showModalHandler" :text="$t('overview.dialog.basic-usage.show-modal')" />
+            <NmorphDialog v-model="dialogVisibility" title="Lorem Ipsum" :close-on-click-modal="false" width="320px">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
@@ -84,17 +73,12 @@ const showModalHandler = () => {
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
     </attribute>
   </div>
 </template>
 
 <style lang="scss">
-.dialog-basic-usage-overview {
-}
+.dialog-basic-usage-overview {}
 </style>

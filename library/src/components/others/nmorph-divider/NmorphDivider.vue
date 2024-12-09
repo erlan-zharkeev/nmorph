@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useModifiers } from '@/utils';
+import { nmorphOutset, useModifiers } from '@/utils';
 import { NmorphDirectionType } from '@/components';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   direction?: NmorphDirectionType;
@@ -16,26 +17,29 @@ const modifiers = computed(() =>
     'nmorph-divider': [props.direction],
   })
 );
+
+
+const commonCSS = css`
+  ${nmorphOutset()}
+
+
+  &.nmorph-divider--horizontal {
+    width: 100%;
+    height: 2px;
+  }
+
+  &.nmorph-divider--vertical {
+    width: 2px;
+    height: auto;
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+
+`
 </script>
 
 <template>
-  <div :class="modifiers" />
+  <StyledComponent :class="modifiers" />
 </template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-divider {
-  @include nmorph-outset;
-}
-
-.nmorph-divider--horizontal {
-  width: 100%;
-  height: 2px;
-}
-
-.nmorph-divider--vertical {
-  width: 2px;
-  height: auto;
-}
-</style>

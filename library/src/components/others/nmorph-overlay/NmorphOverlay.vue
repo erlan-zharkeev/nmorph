@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { computed } from 'vue';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   show: boolean;
@@ -26,18 +27,8 @@ interface INmorphEmit {
 }
 
 const emit = defineEmits<INmorphEmit>();
-</script>
 
-<template>
-  <div :class="modifiers" @click.stop="clickHandler">
-    <div class="nmorph-overlay__slot" @click.stop>
-      <slot />
-    </div>
-  </div>
-</template>
-
-<style lang="scss">
-.nmorph-overlay {
+const commonCSS = css`
   opacity: 0;
   pointer-events: none;
   position: fixed;
@@ -49,14 +40,27 @@ const emit = defineEmits<INmorphEmit>();
   overflow: hidden;
   background: var(--nmorph-overlay-color);
   transition: ease-in-out var(--transition-02) opacity;
-}
 
-.nmorph-overlay--transparent {
-  background: transparent;
-}
+  &.nmorph-overlay--transparent {
+    background: transparent;
+  }
 
-.nmorph-overlay--show {
-  opacity: 1;
-  pointer-events: auto;
-}
-</style>
+  &.nmorph-overlay--show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers" @click.stop="clickHandler">
+    <div class="nmorph-overlay__slot" @click.stop>
+      <slot />
+    </div>
+  </StyledComponent>
+</template>

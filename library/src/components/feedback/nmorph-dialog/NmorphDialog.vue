@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { useModifiers } from '@/utils';
+import { title2, useModifiers } from '@/utils';
 import { NmorphOverlay, NmorphIcon } from '@/components';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   modelValue?: boolean;
@@ -38,9 +39,6 @@ const modifiers = computed(() =>
   })
 );
 
-const dialogWidth = computed(() => props.width);
-const zIndex = computed(() => props.zIndex);
-
 const isVisible = ref(props.modelValue);
 
 let openTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -76,33 +74,8 @@ const clickOnOverlay = () => {
   if (!props.closeOnOverlay) return;
   closeHandler();
 };
-</script>
 
-<template>
-  <NmorphOverlay :show="isVisible" @on-outside-click="clickOnOverlay">
-    <div :class="modifiers">
-      <div class="nmorph-dialog__header">
-        <slot name="header">
-          <div class="nmorph-dialog__title">{{ props.title }}</div>
-          <div v-if="props.showClose" class="nmorph-dialog__close-icon" @click="closeHandler">
-            <NmorphIcon name="cross" />
-          </div>
-        </slot>
-      </div>
-      <div class="nmorph-dialog__content">
-        <slot />
-      </div>
-    </div>
-  </NmorphOverlay>
-</template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-dialog {
-  --width: v-bind(dialogWidth);
-
-  z-index: v-bind(zIndex);
+const commonCSS = css`
   width: var(--width);
   padding: var(--indentation-04);
   background: var(--nmorph-main-color);
@@ -119,11 +92,35 @@ const clickOnOverlay = () => {
     justify-content: space-between;
     font-weight: 600;
 
-    @include title-2;
+    ${title2()}
   }
 
   .nmorph-dialog__close-icon {
     cursor: pointer;
   }
-}
-</style>
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+  --width: ${props => props.dialogWidth};
+  z-index: ${props => props.zIndex};
+`
+</script>
+
+<template>
+  <NmorphOverlay :show="isVisible" @on-outside-click="clickOnOverlay">
+    <StyledComponent :class="modifiers" :props="{ dialogWidth: props.width, zIndex: props.zIndex }" >
+      <div class="nmorph-dialog__header">
+        <slot name="header">
+          <div class="nmorph-dialog__title">{{ props.title }}</div>
+          <div v-if="props.showClose" class="nmorph-dialog__close-icon" @click="closeHandler">
+            <NmorphIcon name="cross" />
+          </div>
+        </slot>
+      </div>
+      <div class="nmorph-dialog__content">
+        <slot />
+      </div>
+    </StyledComponent>
+  </NmorphOverlay>
+</template>
