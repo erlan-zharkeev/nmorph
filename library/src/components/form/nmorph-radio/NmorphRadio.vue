@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, inject, ref } from 'vue';
-import { useModifiers } from '@/utils';
+import { body2, disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import {
   INmorphRadioOption,
   NmorphDomElementType,
@@ -8,6 +8,7 @@ import {
   NmorphRadioGroupSelectedValueInjectionType,
   NmorphRadioStyleType,
 } from '@/types';
+import { styled, css } from '@vue-styled-components/core'
 
 const groupSelectedValue = inject<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value', undefined);
 const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType>(
@@ -15,7 +16,8 @@ const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType
   undefined
 );
 
-interface INmorphProps extends INmorphRadioOption {
+interface INmorphProps extends Omit<INmorphRadioOption, 'value'> {
+  value?: string;
   styleType?: keyof typeof NmorphRadioStyleType;
   checked?: boolean;
 }
@@ -26,6 +28,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   styleType: 'button',
   checked: false,
   tabindex: 0,
+  value: ''
 });
 
 const changeHandler = () => {
@@ -42,41 +45,9 @@ const modifiers = computed(() =>
 
 const inputDOMRef = ref<NmorphDomElementType>(null);
 defineExpose({ inputDOMRef });
-</script>
 
-<template>
-  <label :class="modifiers" @click.prevent="changeHandler">
-    <div v-if="props.styleType === 'radio-style'" class="nmorph-radio__content">
-      <div class="nmorph-radio__input-wrapper">
-        <input ref="inputDOMRef" type="radio" :name="props.label" :value="props.value" :checked="checked"
-          :tabindex="props.tabindex" class="nmorph-native-input" />
-        <div class="nmorph-radio__fake" />
-        <div v-if="checked" class="nmorph-radio__fake-checked" />
-      </div>
-      <span v-if="props.label" class="nmorph-radio__label">
-        {{ props.label }}
-      </span>
-      <slot v-else name="label" />
-    </div>
-    <div v-if="props.styleType === 'button'" class="nmorph-radio__content">
-      <input ref="inputDOMRef" type="radio" :disabled="props.disabled" :name="props.label" :value="props.value"
-        :checked="checked" :tabindex="props.tabindex" class="nmorph-native-input" />
-      <div v-if="props.label" class="nmorph-radio__fake">
-        <span> {{ props.label }} </span>
-      </div>
-      <div v-else class="nmorph-radio__fake">
-        <slot name="label" />
-      </div>
-    </div>
-  </label>
-</template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-radio {
+const commonCSS = css`
   --size: var(--extra-thin-component);
-
   cursor: pointer;
 
   .nmorph-radio__content {
@@ -105,7 +76,7 @@ defineExpose({ inputDOMRef });
   }
 
   input:focus-visible {
-    @include focus-outline;
+    ${nmorphOutset()}
   }
 
   .nmorph-radio__fake {
@@ -116,12 +87,12 @@ defineExpose({ inputDOMRef });
     position: absolute;
     top: 0;
     left: 0;
-    @include nmorph-inset;
+    ${nmorphInset()}
   }
 
   .nmorph-radio__fake span,
   .nmorph-radio__label {
-    @include body-2;
+    ${body2()}
   }
 
   .nmorph-radio__fake-checked {
@@ -139,32 +110,62 @@ defineExpose({ inputDOMRef });
   .nmorph-radio__label {
     margin-left: var(--indentation-02);
   }
-}
 
-.nmorph-radio--button {
-  --size: var(--default-thickness-component);
+  &.nmorph-radio--button {
+    --size: var(--default-thickness-component);
 
-  .nmorph-radio__fake {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: var(--size);
-    padding: var(--indentation-03);
-    white-space: nowrap;
-    border-radius: var(--default-border-radius);
-
-    @include nmorph-outset;
+    .nmorph-radio__fake {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--size);
+      padding: var(--indentation-03);
+      white-space: nowrap;
+      border-radius: var(--default-border-radius);
+      ${nmorphOutset()}
+    }
   }
-}
 
-.nmorph-radio--checked {
-  .nmorph-radio__fake {
-    @include nmorph-inset;
+  &.nmorph-radio--checked {
+    .nmorph-radio__fake {
+      ${nmorphInset()}
+    }
   }
-}
 
-.nmorph-radio--disabled {
-  @include disabled;
-}
-</style>
+  &.nmorph-radio--disabled {
+    ${disabled()}
+  }
+`
+
+const StyledComponent = styled.label`
+  ${commonCSS}
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers" @click.prevent="changeHandler">
+    <div v-if="props.styleType === 'radio-style'" class="nmorph-radio__content">
+      <div class="nmorph-radio__input-wrapper">
+        <input ref="inputDOMRef" type="radio" :name="props.label" :value="props.value" :checked="checked"
+          :tabindex="props.tabindex" class="nmorph-native-input" />
+        <div class="nmorph-radio__fake" />
+        <div v-if="checked" class="nmorph-radio__fake-checked" />
+      </div>
+      <span v-if="props.label" class="nmorph-radio__label">
+        {{ props.label }}
+      </span>
+      <slot v-else name="label" />
+    </div>
+    <div v-if="props.styleType === 'button'" class="nmorph-radio__content">
+      <input ref="inputDOMRef" type="radio" :disabled="props.disabled" :name="props.label" :value="props.value"
+        :checked="checked" :tabindex="props.tabindex" class="nmorph-native-input" />
+      <div v-if="props.label" class="nmorph-radio__fake">
+        <span> {{ props.label }} </span>
+      </div>
+      <div v-else class="nmorph-radio__fake">
+        <slot name="label" />
+      </div>
+    </div>
+  </StyledComponent>
+</template>

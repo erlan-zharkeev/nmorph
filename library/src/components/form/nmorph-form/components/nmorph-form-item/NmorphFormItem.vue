@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useModifiers } from '@/utils';
+import { title4, useModifiers } from '@/utils';
 import { computed, inject } from 'vue';
 import { NmorphComponentHeight } from '@/types';
 import { NmorphValidationIcon, NmorphErrorBox } from './inner-components';
 import { NmorphFormValidationDataType } from '@/components';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   id: string;
@@ -37,28 +38,12 @@ const modifiers = computed(() =>
     ],
   })
 );
-</script>
 
-<template>
-  <div :class="modifiers">
-    <label v-if="props.label">{{ props.label }}</label>
-    <div class="nmorph-form-item__content">
-      <slot />
-      <NmorphValidationIcon :valid="Boolean(validationData?.valid)" :show="showStatusIcon"
-        v-if="props.showValidationIcon" />
-    </div>
-    <NmorphErrorBox :errors="validationData?.errors" :height="props.height" :static-height="staticErrorBoxSpace" />
-  </div>
-</template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-form-item {
+const commonCSS = css`
   margin: var(--indentation-03) var(--indentation-00);
 
   label {
-    @include title-4;
+    ${title4()}
   }
 
   .nmorph-form-item__content {
@@ -67,23 +52,39 @@ const modifiers = computed(() =>
     align-items: center;
     width: 100%;
   }
-}
 
-.nmorph-form-item--labeled {
-  .nmorph-form-item__content {
-    margin-top: var(--indentation-02);
+  &.nmorph-form-item--labeled {
+    .nmorph-form-item__content {
+      margin-top: var(--indentation-02);
+    }
   }
-}
 
-.nmorph-form-item--valid {
-  .nmorph-native-input:focus {
-    background: var(--nmorph-success-color);
+  &.nmorph-form-item--valid {
+    .nmorph-native-input:focus {
+      background: var(--nmorph-success-color);
+    }
   }
-}
 
-.nmorph-form-item--invalid {
-  .nmorph-native-input:focus {
-    background: var(--nmorph-error-text-color);
+  &.nmorph-form-item--invalid {
+    .nmorph-native-input:focus {
+      background: var(--nmorph-error-text-color);
+    }
   }
-}
-</style>
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers">
+    <label v-if="props.label">{{ props.label }}</label>
+    <div class="nmorph-form-item__content">
+      <slot />
+      <NmorphValidationIcon :valid="Boolean(validationData?.valid)" :show="showStatusIcon"
+        v-if="props.showValidationIcon" />
+    </div>
+    <NmorphErrorBox :errors="validationData?.errors" :height="props.height" :static-height="staticErrorBoxSpace" />
+  </StyledComponent>
+</template>

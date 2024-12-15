@@ -19,7 +19,7 @@ export const useStyleClassMixins = () => {
 
     for (const [className, mixin] of Object.entries(mixins)) {
       css += `
-  .${className} {
+.${className} {
     ${mixin()}
   }
   `;

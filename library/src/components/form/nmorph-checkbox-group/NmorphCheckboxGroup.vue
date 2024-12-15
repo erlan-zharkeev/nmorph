@@ -10,6 +10,7 @@ import {
   NmorphCheckboxGroupSelectedValueInjectionType,
   NmorphComponentDirection,
 } from '@/types';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue: string[];
@@ -48,22 +49,8 @@ const modifiers = computed(() =>
 
 provide<NmorphCheckboxGroupSelectedValueInjectionType>('checkbox-group-selected-value', initialValue);
 provide<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>('change-checkbox-value-handler', changeHandler);
-</script>
 
-<template>
-  <div :class="modifiers">
-    <div class="nmorph-checkbox-group__wrapper">
-      <div class="nmorph-checkbox-group__content">
-        <NmorphCheckbox v-for="(option, idx) in options" :id="option.id" :key="idx" :label="option.label"
-          :model-value="option.modelValue" :disabled="option.disabled" :design="props.design" />
-        <slot />
-      </div>
-    </div>
-  </div>
-</template>
-
-<style lang="scss">
-.nmorph-checkbox-group {
+const commonCSS = css`
   display: inline-block;
 
   .nmorph-checkbox-group__wrapper {
@@ -80,20 +67,36 @@ provide<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>('change-chec
   .nmorph-checkbox:not(:last-child) {
     margin-right: var(--indentation-03);
   }
-}
 
-.nmorph-checkbox-group--column {
-  .nmorph-checkbox-group__content {
-    flex-direction: column;
-  }
+  &.nmorph-checkbox-group--column {
+    .nmorph-checkbox-group__content {
+      flex-direction: column;
+    }
 
-  .nmorph-checkbox:not(:last-child) {
-    margin-right: var(--indentation-00);
-    margin-bottom: var(--indentation-03);
-  }
+    .nmorph-checkbox:not(:last-child) {
+      margin-right: var(--indentation-00);
+      margin-bottom: var(--indentation-03);
+    }
 
-  .nmorph-checkbox:last-child {
-    margin-bottom: var(--indentation-00);
+    .nmorph-checkbox:last-child {
+      margin-bottom: var(--indentation-00);
+    }
   }
-}
-</style>
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers">
+    <div class="nmorph-checkbox-group__wrapper">
+      <div class="nmorph-checkbox-group__content">
+        <NmorphCheckbox v-for="(option, idx) in options" :id="option.id" :key="idx" :label="option.label"
+          :model-value="option.modelValue" :disabled="option.disabled" :design="props.design" />
+        <slot />
+      </div>
+    </div>
+  </StyledComponent>
+</template>

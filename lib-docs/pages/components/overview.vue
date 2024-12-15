@@ -29,7 +29,9 @@ import {
   NmorphTabs,
   NmorphTabPane,
   NmorphPagination,
+  NmorphSlider,
   NmorphAlert,
+  NmorphRadio
 } from "@nmorph/nmorph-ui-kit";
 const { t } = useI18n();
 const tabs = ref([
@@ -307,7 +309,7 @@ const tabs = ref([
           <NmorphCard>
             <template #header>Autocomplete</template>
             <div class="overview-component-content">
-              <NmorphAutocomplete placeholder="Lorem..." />
+              <NmorphAutocomplete placeholder="Lorem..." :list="[]" />
             </div>
           </NmorphCard>
         </NuxtLink>

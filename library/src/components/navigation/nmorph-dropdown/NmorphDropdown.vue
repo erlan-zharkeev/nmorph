@@ -52,7 +52,6 @@ const outsideClickHandler = () => {
 const commonCSS = css`
   .nmorph-dropdown {
     position: fixed;
-    width: v-bind(width);
     border-radius: var(--default-border-radius);
     ${nmorphOutset()}
   }
@@ -65,11 +64,14 @@ const commonCSS = css`
 
 const StyledComponent = styled.div`
   ${commonCSS}
+  .nmorph-dropdown {
+    width: ${props => props.width};
+  }
 `
 </script>
 
 <template>
-  <StyledComponent>
+  <StyledComponent :props="{ width }">
     <NmorphOverlay :show="props.open" transparent @on-outside-click="outsideClickHandler">
       <div ref="dropdownDOMRef" :class="modifiers"
         :style="{ left: `${placementCoords.x}`, top: `${placementCoords.y}` }">

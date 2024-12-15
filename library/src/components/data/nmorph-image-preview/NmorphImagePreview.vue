@@ -284,7 +284,7 @@ const StyledComponent = styled.div`
         </div>
         <div class="nmorph-image-preview__action-element">
           <NmorphButton :disabled="scaleLevel === 1" @click="enlargeShrinkActionData.handler">
-            <NmorphIcon :name="enlargeShrinkActionData.icon">
+            <NmorphIcon>
               <component :is="enlargeShrinkActionData.icon" />
             </NmorphIcon>
           </NmorphButton>

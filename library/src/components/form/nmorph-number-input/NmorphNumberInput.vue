@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { useModifiers } from '@/utils';
+import { disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
-import { NmorphButton, NmorphIcon, NmorphIconMinus, NmorphIconMinusThin, NmorphIconPlus, NmorphIconPlusThin } from '@/components';
+import { NmorphButton, NmorphIcon, NmorphIconMinusThin, NmorphIconPlusThin } from '@/components';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: number;
@@ -94,10 +95,125 @@ watch(initialValue, (updatedValue) => {
 
 const inputDOMRef = ref<NmorphDomElementType>(null);
 defineExpose({ inputDOMRef });
+
+const commonCSS = css`
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .nmorph-number-input__content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .nmorph-number-input__input-content {
+    display: flex;
+    width: 100%;
+    height: var(--height);
+    height: 100%;
+    border-radius: var(--default-border-radius);
+    ${nmorphOutset()}
+  }
+
+  .nmorph-number-input__decrease {
+    .nmorph-button__content {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  .nmorph-number-input__increase {
+    .nmorph-button__content {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  input {
+    width: auto;
+    width: 100%;
+    padding: var(--indentation-00) var(--default-indentation-input);
+    text-align: center;
+    border: none;
+    border-top: 1px solid var(--nmorph-main-color);
+    border-bottom: 1px solid var(--nmorph-main-color);
+    transition: ease-in-out var(--transition-01) background;
+    ${nmorphInset()}
+
+    -moz-appearance: textfield;
+  }
+
+  input:focus {
+    background: var(--nmorph-accent-color);
+    outline: none;
+  }
+
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .nmorph-number-input__action-btns {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  &.nmorph-number-input--disabled {
+    ${disabled()}
+
+    .nmorph-number-input__input-content {
+      pointer-events: none;
+    }
+  }
+
+  &.nmorph-number-input--action-btn-position-right {
+    input {
+      border-top-left-radius: var(--default-border-radius);
+      border-bottom-left-radius: var(--default-border-radius);
+    }
+
+    .nmorph-number-input__decrease,
+    .nmorph-number-input__increase {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .nmorph-number-input__decrease {
+      .nmorph-button__content {
+        border-radius: 0;
+        border-top-right-radius: var(--default-border-radius);
+      }
+    }
+
+    .nmorph-number-input__increase {
+      .nmorph-button__content {
+        border-radius: 0;
+        border-bottom-right-radius: var(--default-border-radius);
+      }
+    }
+
+    .nmorph-button {
+      width: 100%;
+    }
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+  &.nmorph-number-input--action-btn-position-right {
+    .nmorph-button {
+      --height: ${props => props.rightActionBtnHeight};
+    }
+  }
+`
 </script>
 
 <template>
-  <div :class="modifiers">
+  <StyledComponent :class="modifiers" :props="{ rightActionBtnHeight }">
     <div class="nmorph-number-input__content">
       <div class="nmorph-number-input__input-content">
         <div v-if="!actionBtnPositionRight" class="nmorph-number-input__decrease">
@@ -136,109 +252,5 @@ defineExpose({ inputDOMRef });
         </div>
       </div>
     </div>
-  </div>
+  </StyledComponent>
 </template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-number-input {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  .nmorph-number-input__content {
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
-
-  .nmorph-number-input__input-content {
-    display: flex;
-    width: 100%;
-    height: var(--height);
-    height: 100%;
-    border-radius: var(--default-border-radius);
-
-    @include nmorph-outset;
-  }
-
-  .nmorph-number-input__decrease {
-    .nmorph-button__content {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-  }
-
-  .nmorph-number-input__increase {
-    .nmorph-button__content {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  }
-
-  input {
-    width: auto;
-    width: 100%;
-    padding: var(--indentation-00) var(--default-indentation-input);
-    text-align: center;
-    border: none;
-    border-top: 1px solid var(--nmorph-main-color);
-    border-bottom: 1px solid var(--nmorph-main-color);
-    transition: ease-in-out var(--transition-01) background;
-
-    @include nmorph-inset;
-  }
-
-  input:focus {
-    background: var(--nmorph-accent-color);
-    outline: none;
-  }
-
-  .nmorph-number-input__action-btns {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-.nmorph-number-input--disabled {
-  @include disabled;
-
-  .nmorph-number-input__input-content {
-    pointer-events: none;
-  }
-}
-
-.nmorph-number-input--action-btn-position-right {
-  input {
-    border-top-left-radius: var(--default-border-radius);
-    border-bottom-left-radius: var(--default-border-radius);
-  }
-
-  .nmorph-number-input__decrease,
-  .nmorph-number-input__increase {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .nmorph-number-input__decrease {
-    .nmorph-button__content {
-      border-radius: 0;
-      border-top-right-radius: var(--default-border-radius);
-    }
-  }
-
-  .nmorph-number-input__increase {
-    .nmorph-button__content {
-      border-radius: 0;
-      border-bottom-right-radius: var(--default-border-radius);
-    }
-  }
-
-  .nmorph-button {
-    width: 100%;
-    --height: v-bind(rightActionBtnHeight);
-  }
-}
-</style>

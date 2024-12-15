@@ -73,8 +73,6 @@ export interface INmorphCoords<T> {
   y: T;
 }
 
-export type HexColor = `#${string}`;
-
 export enum NmorphImageFit {
   fill = 'fill',
   contain = 'contain',
@@ -85,7 +83,7 @@ export enum NmorphImageFit {
 
 export interface INmorphColorVariable {
   name: string;
-  color: HexColor;
+  color: string;
 }
 
 export interface INmorphOtherThemeOptions {
@@ -105,36 +103,35 @@ export interface INmorphThemeOptions {
 export interface INmorphOptions {
   theme?: INmorphThemeOptions;
   i18n?: INmorphApplyTranslation;
-  components?: string[];
 }
 
 export type NmorphThemeOptionsType = Record<string, INmorphThemeOptions>;
 
 export interface INmorphStaticColors {
-  info?: HexColor;
-  infoText?: HexColor;
-  success?: HexColor;
-  successText?: HexColor;
-  error?: HexColor;
-  errorText?: HexColor;
-  warn?: HexColor;
-  warnText?: HexColor;
-  gray?: HexColor;
-  accent?: HexColor;
-  white?: HexColor;
-  black?: HexColor;
-  text?: HexColor;
-  overlay?: HexColor;
-  focusTextColor?: HexColor;
+  info?: string;
+  infoText?: string;
+  success?: string;
+  successText?: string;
+  error?: string;
+  errorText?: string;
+  warn?: string;
+  warnText?: string;
+  gray?: string;
+  accent?: string;
+  white?: string;
+  black?: string;
+  text?: string;
+  overlay?: string;
+  focusTextColor?: string;
 }
 
 export interface INmorphDynamicColors {
-  darkShade?: HexColor;
-  lightShade?: HexColor;
+  darkShade?: string;
+  lightShade?: string;
 }
 
 export interface INmorphThemeOptions extends INmorphDynamicColors, INmorphStaticColors {
-  main?: HexColor;
+  main?: string;
 }
 
 export type NmorphThemeMapType = Record<string, INmorphColorVariable[]>;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { generateUUID, useModifiers } from '@/utils';
+import { disabled, ellipsis, focusOutline, generateUUID, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick } from 'vue';
 import {
   NmorphTagItem,
@@ -11,8 +11,11 @@ import {
   NmorphSelectChangeSelectedValue,
   NmorphSelectModelValueType,
   INmorphSelectOption,
+  NmorphIconLoader,
+  NmorphIconChevronDown,
 } from '@/components';
 import { useI18n } from 'vue-i18n';
+import { styled, css } from '@vue-styled-components/core'
 
 const { t } = useI18n();
 
@@ -203,10 +206,87 @@ const enterHandler = () => {
   if (!open.value) return;
   changeHandler(currentFocusedEl.value);
 };
+
+const commonCSS = css`
+  --base-width: 200px;
+
+  width: var(--base-width);
+  height: var(--height);
+  cursor: pointer;
+
+  .nmorph-select__content {
+    position: relative;
+    height: 100%;
+    ${nmorphOutset()}
+  }
+
+  .nmorph-select__selected-values-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: var(--indentation-00) var(--default-indentation-input);
+    border-radius: var(--default-border-radius);
+  }
+
+  .nmorph-select__selected-value {
+    ${ellipsis()}
+  }
+
+  select,
+  option {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    border: none;
+    padding: 0;
+    position: absolute;
+  }
+
+  &.nmorph-select--loading {
+    .nmorph-select__options {
+      display: flex;
+      justify-content: center;
+      padding: 16px;
+    }
+  }
+
+  &.nmorph-select--disabled {
+    ${disabled()}
+  }
+
+  &.nmorph-select--open {
+    .nmorph-select__chevron {
+      transform: rotate(180deg);
+    }
+
+    .nmorph-select__content {
+      ${nmorphInset()}
+    }
+  }
+
+  &.nmorph-select--selected-line-outset {
+    .nmorph-select__content {
+      ${nmorphOutset()}
+    }
+  }
+
+  &.nmorph-select--focus {
+    ${focusOutline()}
+
+    .nmorph-select__content {
+      box-shadow: none;
+    }
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+`
 </script>
 
 <template>
-  <div :class="modifiers">
+  <StyledComponent :class="modifiers">
     <div class="nmorph-select__content">
       <select :id="id" :name="name" @focus="focusHandler" @blur="blurHandler" @keydown.space="spaceHandler"
         @keydown.arrow-down="arrowDownHandler" @keydown.arrow-up="arrowUpHandler" @keydown.enter="enterHandler">
@@ -223,94 +303,22 @@ const enterHandler = () => {
           <NmorphTagItem v-for="tag in tags" :key="tag.value" v-bind="tag" transparent
             :removable="tags.length > 1 || !props.valueRequired" height="thin" @close="changeHandler" />
         </div>
-        <NmorphIcon :name="props.loading ? 'loader' : 'chevron-down'" class="nmorph-select__chevron" />
+        <NmorphIcon class="nmorph-select__chevron">
+          <NmorphIconLoader v-if="props.loading" />
+          <NmorphIconChevronDown v-else />
+        </NmorphIcon>
       </div>
     </div>
     <NmorphDropdown v-if="nmorphSelectDOMRef && !props.disabled" :open="open" :relative-element="nmorphSelectDOMRef"
       @on-outside-click="closeHandler">
       <div ref="optionsDOMRef" class="nmorph-select__options">
-        <NmorphIcon v-if="props.loading" name="loader" class="nmorph-select__chevron" size="medium" />
+        <NmorphIcon v-if="props.loading" class="nmorph-select__chevron" size="medium">
+          <NmorphIconChevronDown />
+        </NmorphIcon>
         <NmorphSelectOption v-else v-for="option in options" :key="option.value" v-bind="option"
           :height="props.height" />
         <slot />
       </div>
     </NmorphDropdown>
-  </div>
+  </StyledComponent>
 </template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-select {
-  --base-width: 200px;
-
-  width: var(--base-width);
-  height: var(--height);
-  cursor: pointer;
-
-  .nmorph-select__content {
-    position: relative;
-    height: 100%;
-    @include nmorph-outset;
-  }
-
-  .nmorph-select__selected-values-line {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
-    padding: var(--indentation-00) var(--default-indentation-input);
-    border-radius: var(--default-border-radius);
-  }
-
-  .nmorph-select__selected-value {
-    @include ellipsis;
-  }
-
-  select,
-  option {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    border: none;
-    padding: 0;
-    position: absolute;
-  }
-}
-
-.nmorph-select--loading {
-  .nmorph-select__options {
-    display: flex;
-    justify-content: center;
-    padding: 16px;
-  }
-}
-
-.nmorph-select--disabled {
-  @include disabled;
-}
-
-.nmorph-select--open {
-  .nmorph-select__chevron {
-    transform: rotate(180deg);
-  }
-
-  .nmorph-select__content {
-    @include nmorph-inset;
-  }
-}
-
-.nmorph-select--selected-line-outset {
-  .nmorph-select__content {
-    @include nmorph-outset;
-  }
-}
-
-.nmorph-select--focus {
-  @include focus-outline;
-
-  .nmorph-select__content {
-    box-shadow: none;
-  }
-}
-</style>

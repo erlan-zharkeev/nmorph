@@ -36,7 +36,6 @@ const commonCSS = css`
 
 const StyledComponent = styled.div`
   ${commonCSS}
-
 `
 </script>
 

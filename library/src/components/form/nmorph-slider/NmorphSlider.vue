@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
-import { useModifiers } from '@/utils';
+import { disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import { NmorphTooltip } from '@/components';
+import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
   modelValue?: number;
@@ -145,34 +146,8 @@ const nativeInputHandler = (event: Event): void => {
 };
 
 const transitionEnabled = ref(true);
-</script>
 
-<template>
-  <div :class="modifiers">
-    <div class="nmorph-slider__content">
-      <div class="nmorph-slider__input-wrapper">
-        <div ref="sliderContainer" class="nmorph-slider__input-container">
-          <NmorphTooltip ref="tooltipRootRef" v-if="tooltipVisible && !props.disabled" :text="String(thumbValue)"
-            force-show :force-coordinate="{ x: thumbXPercentPosition.tooltip, y: '24px' }" block-position />
-          <div ref="sliderFirst" class="nmorph-slider__thumb" :style="{ left: thumbXPercentPosition.thumb }"
-            :class="{ 'nmorph-slider__thumb--smooth': transitionEnabled }" @mouseenter="handleMouseEnter"
-            @mouseleave="handleMouseLeave" @mousedown="mousedownHandler" />
-          <input class="nmorph-slide__native-input" type="range" :value="thumbValue" :min="props.min" :max="props.max"
-            :step="props.step" :disabled="props.disabled" @input="nativeInputHandler" />
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-slider {
-  @mixin thumb {
-    width: v-bind(thumbWidthCss);
-    height: 20px;
-  }
+const commonCSS = css`
 
   position: relative;
   width: 100%;
@@ -194,8 +169,7 @@ const transitionEnabled = ref(true);
     width: 100%;
     height: var(--value-fixed-container-height);
     border-radius: var(--default-border-radius);
-
-    @include nmorph-inset;
+    ${nmorphInset()}
   }
 
   .nmorph-slider__input-container {
@@ -211,9 +185,9 @@ const transitionEnabled = ref(true);
     z-index: 1;
     border: 0;
     border-radius: var(--default-border-radius);
+    height: 20px;
 
-    @include thumb;
-    @include nmorph-outset;
+    ${nmorphOutset()}
   }
 
   .nmorph-slider__thumb--smooth {
@@ -255,21 +229,45 @@ const transitionEnabled = ref(true);
   .nmorph-slide__native-input::-moz-range-thumb {
     visibility: hidden;
   }
-}
 
-.nmorph-slider--fill {
-  width: 100%;
-
-  .nmorph-slider__content {
+  &.nmorph-slider--fill {
     width: 100%;
-  }
-}
 
-.nmorph-slider--disabled {
-  @include disabled;
-
-  .nmorph-slider__input-content {
-    pointer-events: none;
+    .nmorph-slider__content {
+      width: 100%;
+    }
   }
-}
-</style>
+
+  &.nmorph-slider--disabled {
+    ${disabled()}
+    .nmorph-slider__input-content {
+      pointer-events: none;
+    }
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+  .nmorph-slider__thumb {
+    width: ${props => props.thumbWidthCss};
+  }
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers" :props="{ thumbWidthCss }">
+    <div class="nmorph-slider__content">
+      <div class="nmorph-slider__input-wrapper">
+        <div ref="sliderContainer" class="nmorph-slider__input-container">
+          <NmorphTooltip ref="tooltipRootRef" v-if="tooltipVisible && !props.disabled" :text="String(thumbValue)"
+            force-show :force-coordinate="{ x: thumbXPercentPosition.tooltip, y: '24px' }" block-position />
+          <div ref="sliderFirst" class="nmorph-slider__thumb" :style="{ left: thumbXPercentPosition.thumb }"
+            :class="{ 'nmorph-slider__thumb--smooth': transitionEnabled }" @mouseenter="handleMouseEnter"
+            @mouseleave="handleMouseLeave" @mousedown="mousedownHandler" />
+          <input class="nmorph-slide__native-input" type="range" :value="thumbValue" :min="props.min" :max="props.max"
+            :step="props.step" :disabled="props.disabled" @input="nativeInputHandler" />
+        </div>
+      </div>
+    </div>
+  </StyledComponent>
+</template>

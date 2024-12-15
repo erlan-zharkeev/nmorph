@@ -22,11 +22,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-show-tooltip">
-    <attribute
-      header="Show-tooltip"
-      :subtitle="$t('overview.slider.show-tooltip.subtitle')"
-      :codeToCopy="code"
-    >
+    <attribute header="Show-tooltip" :subtitle="$t('overview.slider.show-tooltip.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="slider-show-tooltip-overview">
           <ClientOnly>
@@ -35,11 +31,7 @@ const code = [scriptData, templateData, cssData];
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
     </attribute>
   </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphImage, NmorphIcon } from '@/components';
+import { NmorphImage, NmorphIcon, NmorphIconAvatar } from '@/components';
 import { INmorphImage, AvatarShapeType } from '@/types';
 import { styled, css } from '@vue-styled-components/core'
 import { nmorphCombined } from '@/utils';
@@ -97,7 +97,9 @@ const StyledComponent = styled.div`
     <NmorphImage :fit="props.fit" :src="props.src" :src-set="props.srcSet" :alt="props.alt" :frame-border="0"
       @load="onImageLoad" @error="onImageError">
       <template #error>
-        <NmorphIcon name="avatar" :width="stubIconSize" />
+        <NmorphIcon :width="stubIconSize">
+          <NmorphIconAvatar />
+        </NmorphIcon>
       </template>
     </NmorphImage>
   </StyledComponent>

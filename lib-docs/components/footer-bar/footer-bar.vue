@@ -1,16 +1,15 @@
 <script lang="ts" setup>
+import { NmorphLink } from '@nmorph/nmorph-ui-kit';
+
 const { t } = useI18n();
 </script>
 <template>
   <footer class="docs-footer-bar nmorph--shadow-outset">
     <div class="docs-footer-bar__content">
       <span>© {{ new Date().getFullYear() }} Nmorph.</span>
-      <span class="docs-footer-bar__mit"
-        >{{ t("footer-bar.license") }}
-        <NmorphLink href="https://opensource.org/license/MIT" target="blank"
-          >MIT</NmorphLink
-        >.</span
-      >
+      <span class="docs-footer-bar__mit">{{ t("footer-bar.license") }}
+        <NmorphLink href="https://opensource.org/license/MIT" target="blank">MIT</NmorphLink>.
+      </span>
     </div>
   </footer>
 </template>
@@ -38,6 +37,6 @@ const { t } = useI18n();
 }
 
 span {
-  font-size: 10px;
+  font-size: 14px;
 }
 </style>

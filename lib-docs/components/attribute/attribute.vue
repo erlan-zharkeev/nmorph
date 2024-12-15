@@ -57,17 +57,9 @@ const infoData = `overview.${props.infoName}.info`;
 <template>
   <div class="docs-attribute">
     <h2 class="docs-attribute__header nmorph-title-3">{{ props.header }}</h2>
-    <info
-      v-if="props.infoName"
-      :title="$t(`${infoData}.title`)"
-      :content="$t(`${infoData}.content`)"
-      :type="props.infoType"
-    />
-    <p
-      class="docs-attribute__subtitle nmorph-body-2"
-      v-if="props.subtitle"
-      v-html="highlightedSubtitle"
-    />
+    <info v-if="props.infoName" :title="$t(`${infoData}.title`)" :content="$t(`${infoData}.content`)"
+      :type="props.infoType" />
+    <p class="docs-attribute__subtitle nmorph-body-2" v-if="props.subtitle" v-html="highlightedSubtitle" />
     <div class="docs-components__tips"></div>
     <div class="docs-attribute__wrapper nmorph--shadow-outset">
       <div class="docs-component__overview">
@@ -76,9 +68,11 @@ const infoData = `overview.${props.infoName}.info`;
       <div class="docs-component__overview-component-actions">
         <ClientOnly>
           <NmorphButton @click="copyHandler">
-            <template #icon><NmorphIconCopy /></template>
+            <template #icon>
+              <NmorphIconCopy />
+            </template>
           </NmorphButton>
-          <NmorphCheckbox v-model="codeOpen" design="button">
+          <NmorphCheckbox v-model="codeOpen" design="button" class="docs-attribute__code-btn">
             <template #label>
               <NmorphIcon>
                 <NmorphIconCode />
@@ -103,10 +97,6 @@ const infoData = `overview.${props.infoName}.info`;
   }
 }
 
-.nmorph-checkbox--button {
-  --size: 30px;
-}
-
 :deep(.nmorph-collapse-item__inner-wrapper) {
   padding-top: 0;
 }
@@ -123,23 +113,32 @@ const infoData = `overview.${props.infoName}.info`;
   width: 100%;
   margin-bottom: 24px;
 }
+
 .docs-component__overview {
   padding: 16px 8px 0px 8px;
   display: flex;
   align-items: baseline;
 }
+
 .docs-attribute__header {
   margin-bottom: 4px;
 }
+
 .docs-attribute__subtitle {
   margin-bottom: 8px;
 }
+
 .docs-attribute__wrapper {
   border-radius: 8px;
 }
+
 .docs-component__overview-component-actions {
   display: flex;
   justify-content: flex-end;
   padding: 12px 8px;
+}
+
+.nmorph-checkbox--button.docs-attribute__code-btn {
+  --size: 30px;
 }
 </style>

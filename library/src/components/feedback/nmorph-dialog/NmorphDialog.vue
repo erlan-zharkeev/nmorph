@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { title2, useModifiers } from '@/utils';
-import { NmorphOverlay, NmorphIcon } from '@/components';
+import { NmorphOverlay, NmorphIcon, NmorphIconCross } from '@/components';
 import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
@@ -109,12 +109,14 @@ const StyledComponent = styled.div`
 
 <template>
   <NmorphOverlay :show="isVisible" @on-outside-click="clickOnOverlay">
-    <StyledComponent :class="modifiers" :props="{ dialogWidth: props.width, zIndex: props.zIndex }" >
+    <StyledComponent :class="modifiers" :props="{ dialogWidth: props.width, zIndex: props.zIndex }">
       <div class="nmorph-dialog__header">
         <slot name="header">
           <div class="nmorph-dialog__title">{{ props.title }}</div>
           <div v-if="props.showClose" class="nmorph-dialog__close-icon" @click="closeHandler">
-            <NmorphIcon name="cross" />
+            <NmorphIcon>
+              <NmorphIconCross />
+            </NmorphIcon>
           </div>
         </slot>
       </div>

@@ -15,8 +15,5 @@ export { default as NmorphSelectOption } from './nmorph-select/components/nmorph
 export { default as NmorphSlider } from './nmorph-slider/NmorphSlider.vue';
 export { default as NmorphSwitch } from './nmorph-switch/NmorphSwitch.vue';
 export { default as NmorphTextInput } from './nmorph-text-input/NmorphTextInput.vue';
-export { default as NmorphTimePicker } from './nmorph-time-picker/NmorphTimePicker.vue';
-export * from './nmorph-time-picker/types';
-export * from './nmorph-time-picker/utils';
 export { default as NmorphRadio } from './nmorph-radio/NmorphRadio.vue';
 export { default as NmorphRadioGroup } from './nmorph-radio-group/NmorphRadioGroup.vue';

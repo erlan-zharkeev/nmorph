@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { useModifiers } from '@/utils';
+import { disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { computed, ref, useSlots } from 'vue';
 import { NmorphIcon, NmorphButton } from '@/components';
+import { styled, css } from '@vue-styled-components/core'
 
 const slots = useSlots();
 
@@ -80,30 +81,8 @@ const actionIcon = computed(() => {
 });
 
 const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
-</script>
 
-<template>
-  <div :class="modifiers">
-    <div class="nmorph-text-input__input-side">
-      <div v-if="slots['prepend-icon']" class="nmorph-text-input__prepend-icon">
-        <slot name="prepend-icon" />
-      </div>
-      <input ref="inputDOMRef" class="nmorph-native-input" :type="type" :placeholder="props.placeholder"
-        :disabled="props.disabled" :value="props.modelValue" @input="handleInput" @focus="handleFocus"
-        @blur="handleBlur" @keyup.enter="emit('on-enter')" />
-      <NmorphButton v-if="props.typePassword || props.clearable" :disabled="props.disabled"
-        class="nmorph-text-input__password-btn" style-type="transparent" width="32px" :height="props.height"
-        @click="actionButtonClickHandler">
-        <NmorphIcon :name="actionIcon" />
-      </NmorphButton>
-    </div>
-  </div>
-</template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-text-input {
+const commonCSS = css`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -126,22 +105,21 @@ const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
   input {
     width: 100%;
     height: var(--height);
-    text-indent: v-bind(indentation);
     border: none;
     border-radius: var(--default-border-radius);
 
-    @include nmorph-inset;
+    ${nmorphInset()}
   }
 
   input:focus {
-    @include nmorph-outset;
+    ${nmorphOutset()}
 
     background: var(--nmorph-accent-color);
     outline: none;
   }
 
   input:disabled {
-    @include disabled;
+    ${disabled()}
   }
 
   .nmorph-text-input__password-btn {
@@ -153,29 +131,56 @@ const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
       padding: var(--indentation-03);
     }
   }
-}
 
-.nmorph-button.nmorph--thin-component {
-  .nmorph-text-input__password-btn {
-    margin-top: var(--indentation-00);
+  &.nmorph-button.nmorph--thin-component {
+    .nmorph-text-input__password-btn {
+      margin-top: var(--indentation-00);
 
-    .nmorph-button {
-      --height: var(--thin-component);
-    }
-  }
-}
-
-.nmorph-button.nmorph--focused {
-  .nmorph-text-input__password-btn {
-    .nmorph-icon {
-      --color: var(--nmorph-white-color);
-    }
-
-    .nmorph-button:not(:disabled, [loading='true']):hover {
-      .nmorph-icon {
-        --color: var(--nmorph-white-color);
+      .nmorph-button {
+        --height: var(--thin-component);
       }
     }
   }
-}
-</style>
+
+  &.nmorph-button.nmorph--focused {
+    .nmorph-text-input__password-btn {
+      .nmorph-icon {
+        --color: var(--nmorph-white-color);
+      }
+
+      .nmorph-button:not(:disabled, [loading='true']):hover {
+        .nmorph-icon {
+          --color: var(--nmorph-white-color);
+        }
+      }
+    }
+  }
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+  input {
+    text-indent: ${props => props.indentation};
+  }
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers" :props="{ indentation }">
+    <div class="nmorph-text-input__input-side">
+      <div v-if="slots['prepend-icon']" class="nmorph-text-input__prepend-icon">
+        <slot name="prepend-icon" />
+      </div>
+      <input ref="inputDOMRef" class="nmorph-native-input" :type="type" :placeholder="props.placeholder"
+        :disabled="props.disabled" :value="props.modelValue" @input="handleInput" @focus="handleFocus"
+        @blur="handleBlur" @keyup.enter="emit('on-enter')" />
+      <NmorphButton v-if="props.typePassword || props.clearable" :disabled="props.disabled"
+        class="nmorph-text-input__password-btn" style-type="transparent" width="32px" :height="props.height"
+        @click="actionButtonClickHandler">
+        <NmorphIcon>
+          <component :is="actionIcon" />
+        </NmorphIcon>
+      </NmorphButton>
+    </div>
+  </StyledComponent>
+</template>

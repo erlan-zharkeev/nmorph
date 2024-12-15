@@ -9,6 +9,8 @@ import {
 } from '@/types';
 import { useModifiers } from '@/utils';
 import { ref, computed, provide, watch } from 'vue';
+import { styled, css } from '@vue-styled-components/core';
+import { NmorphRadio } from '@/components';
 
 type NmorphListRadioOptionElementType = Omit<INmorphRadioOption, 'checked'>;
 
@@ -51,29 +53,8 @@ const modifiers = computed(() => useModifiers({ 'nmorph-radio-group': [props.sty
 
 provide<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value', initialValue);
 provide<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-button-value-handler', changeHandler);
-</script>
 
-<template>
-  <div :class="modifiers">
-    <div class="nmorph-radio-group__wrapper">
-      <div class="nmorph-radio-group__content">
-        <NmorphRadio
-          v-for="option in options"
-          :key="option.value"
-          :label="option.label"
-          :value="option.value"
-          :disabled="option.disabled || props.disabled"
-          :style-type="props.styleType"
-          :tabindex="option.tabindex"
-        />
-        <slot />
-      </div>
-    </div>
-  </div>
-</template>
-
-<style lang="scss">
-.nmorph-radio-group {
+const commonCSS = css`
   display: inline-block;
 
   .nmorph-radio-group__wrapper {
@@ -90,17 +71,33 @@ provide<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-but
   .nmorph-radio:not(:last-child) {
     margin-right: var(--indentation-03);
   }
-}
 
-.nmorph-radio-group--column {
-  .nmorph-radio-group__content {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  &.nmorph-radio-group--column {
+    .nmorph-radio-group__content {
+      flex-direction: column;
+      align-items: flex-start;
+    }
 
-  .nmorph-radio:not(:last-child) {
-    margin-right: var(--indentation-00);
-    margin-bottom: var(--indentation-03);
-  }
+    .nmorph-radio:not(:last-child) {
+      margin-right: var(--indentation-00);
+      margin-bottom: var(--indentation-03);
+    }
 }
-</style>
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers">
+    <div class="nmorph-radio-group__wrapper">
+      <div class="nmorph-radio-group__content">
+        <NmorphRadio v-for="option in options" :key="option.value" :label="option.label" :value="option.value"
+          :disabled="option.disabled || props.disabled" :style-type="props.styleType" :tabindex="option.tabindex" />
+        <slot />
+      </div>
+    </div>
+  </StyledComponent>
+</template>

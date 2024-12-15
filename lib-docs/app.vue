@@ -43,7 +43,9 @@ onMounted(async () => {
 
 <template>
   <div class="loader" v-if="!loaded">
-    <nmorph-progress :value-right-side="false" indeterminate color="var(--nmorph-accent-color)" />
+    <client-only>
+      <nmorph-progress :value-right-side="false" indeterminate color="var(--nmorph-accent-color)" />
+    </client-only>
   </div>
   <div v-else class="docs">
     <top-bar :isMenuOpen="menuOpen" @toggle-menu="toggleMenu" />

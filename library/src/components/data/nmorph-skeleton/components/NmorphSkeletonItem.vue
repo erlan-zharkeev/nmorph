@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { nmorphInset, useModifiers } from '@/utils';
-import { NmorphIcon, NmorphSkeletonItemPropsType } from '@/components';
+import { NmorphIcon, NmorphIconImage, NmorphSkeletonItemPropsType } from '@/components';
 import { NmorphElementDesignType } from '@/types';
 import { styled, css } from '@vue-styled-components/core'
 
@@ -62,7 +62,9 @@ const StyledComponent = styled.div`
 <template>
   <StyledComponent :class="modifiers">
     <div class="nmorph-skeleton-item__element">
-      <NmorphIcon v-if="props.variant === 'image'" name="image" :width="props.width" :height="props.height" />
+      <NmorphIcon v-if="props.variant === 'image'" :width="props.width" :height="props.height">
+        <NmorphIconImage />
+      </NmorphIcon>
     </div>
   </StyledComponent>
 </template>

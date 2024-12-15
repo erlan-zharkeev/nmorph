@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphOverlay } from "@nmorph/nmorph-ui-kit";
+import { NmorphOverlay, NmorphScroll } from "@nmorph/nmorph-ui-kit";
 import ComponentList from "~/components/component-list/component-list.vue";
 import GuideMenu from "~/components/guide-menu/guide-menu.vue";
 
@@ -16,21 +16,14 @@ const isComponentPage = route.path.includes("components");
 </script>
 
 <template>
-  <div
-    class="docs-main-menu"
-    :class="{ 'docs-main-menu--open': props.isMenuOpen }"
-    @click="emit('menu-click')"
-  >
+  <div class="docs-main-menu" :class="{ 'docs-main-menu--open': props.isMenuOpen }" @click="emit('menu-click')">
     <div class="nmorph-inset docs-main-menu__content">
       <NmorphScroll class="docs-main-menu__content__scroll">
         <component-list v-if="isComponentPage" />
         <guide-menu v-else />
       </NmorphScroll>
     </div>
-    <NmorphOverlay
-      :show="props.isMenuOpen"
-      @on-outside-click="emit('menu-click')"
-    />
+    <NmorphOverlay :show="props.isMenuOpen" @on-outside-click="emit('menu-click')" />
   </div>
 </template>
 
@@ -75,13 +68,14 @@ $transition: 0.2s ease-in-out left;
 
 .docs-main-menu--open {
   left: 0;
+
   .nmorph-overlay {
     opacity: 1;
   }
 }
 
 .docs-main-menu__content__scroll {
-  height: calc(var(--container-height) + var(--footer-height));
+  height: calc(var(--container-height) + var(--footer-height)) !important;
 }
 
 @include max-width-query(768) {

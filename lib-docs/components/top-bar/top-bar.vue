@@ -54,12 +54,8 @@ const toggleMobileNavMenu = () => {
 <template>
   <header class="docs-top-bar nmorph--shadow-outset">
     <div class="docs-top-bar__left">
-      <NmorphCheckbox
-        class="docs-top-bar__menu"
-        :model-value="props.isMenuOpen"
-        @update:model-value="updateMenuHandler"
-        design="button"
-      >
+      <NmorphCheckbox class="docs-top-bar__menu" :model-value="props.isMenuOpen" @update:model-value="updateMenuHandler"
+        design="button">
         <template #label>
           <NmorphIcon>
             <NmorphIconMenu />
@@ -83,12 +79,8 @@ const toggleMobileNavMenu = () => {
         </NmorphLink>
       </NmorphButton>
       <div ref="translateBtn" class="docs-top-bar__translate-btn">
-        <NmorphCheckbox
-          v-model="translateDropdownOpen"
-          size="small"
-          class="docs-top-bar__translate-checkbox"
-          design="button"
-        >
+        <NmorphCheckbox v-model="translateDropdownOpen" size="small" class="docs-top-bar__translate-checkbox"
+          design="button">
           <template #label>
             <ClientOnly>
               <NmorphIcon>
@@ -97,23 +89,12 @@ const toggleMobileNavMenu = () => {
             </ClientOnly>
           </template>
         </NmorphCheckbox>
-        <NmorphDropdown
-          v-if="translateBtn"
-          :fill-width="false"
-          :open="translateDropdownOpen"
-          :relative-element="translateBtn"
-          @on-outside-click="closeHandler"
-          :x-offset="-40"
-          :y-offset="10"
-          :width="100"
-        >
+        <NmorphDropdown v-if="translateBtn" :fill-width="false" :open="translateDropdownOpen"
+          :relative-element="translateBtn" @on-outside-click="closeHandler" :x-offset="-40" :y-offset="10" :width="100">
           <ul class="docs-translates__dropdown">
-            <NuxtLink
-              :to="switchLocalePath(localeData.code)"
-              v-for="localeData in availableLocales"
-              @click="closeHandler"
-              >{{ localeData.name }}</NuxtLink
-            >
+            <NuxtLink :to="switchLocalePath(localeData.code)" v-for="localeData in availableLocales"
+              @click="closeHandler">
+              {{ localeData.name }}</NuxtLink>
           </ul>
         </NmorphDropdown>
       </div>
@@ -126,7 +107,7 @@ const toggleMobileNavMenu = () => {
           <li>
             <NuxtLink :to="localePath('/components')">{{
               $t("components")
-            }}</NuxtLink>
+              }}</NuxtLink>
           </li>
           <li>
             <NuxtLink :to="localePath('/about')">{{ $t("about") }}</NuxtLink>
@@ -134,19 +115,11 @@ const toggleMobileNavMenu = () => {
         </ul>
       </nav>
       <theme-changer />
-      <NmorphCheckbox
-        class="docs-top-bar__nav-menu-btn"
-        :model-value="mobileNavMenu"
-        @update:model-value="toggleMobileNavMenu"
-        :label="$t('top-bar.nav')"
-        design="button"
-      />
+      <NmorphCheckbox class="docs-top-bar__nav-menu-btn" :model-value="mobileNavMenu"
+        @update:model-value="toggleMobileNavMenu" :label="$t('top-bar.nav')" design="button" />
     </div>
-    <nav
-      class="docs-top-bar__mobile-nav-menu"
-      :class="{ 'docs-top-bar__mobile-nav-menu--open': mobileNavMenu }"
-      @click="mobileNavMenu = false"
-    >
+    <nav class="docs-top-bar__mobile-nav-menu" :class="{ 'docs-top-bar__mobile-nav-menu--open': mobileNavMenu }"
+      @click="mobileNavMenu = false">
       <ul>
         <li>
           <NuxtLink :to="localePath('/')">{{ $t("guide") }}</NuxtLink>
@@ -154,7 +127,7 @@ const toggleMobileNavMenu = () => {
         <li>
           <NuxtLink :to="localePath('/components')">{{
             $t("components")
-          }}</NuxtLink>
+            }}</NuxtLink>
         </li>
         <li>
           <NuxtLink :to="localePath('/about')">{{ $t("about") }}</NuxtLink>
@@ -167,7 +140,7 @@ const toggleMobileNavMenu = () => {
 <style lang="scss" scoped>
 $top-bar-height: 50px;
 
-.docs-top-bar__translate-checkbox {
+.nmorph-checkbox--button.docs-top-bar__translate-checkbox {
   --size: 28px;
 }
 
@@ -198,6 +171,7 @@ $top-bar-height: 50px;
   border-radius: 8px;
   display: flex;
   align-items: center;
+
   img {
     object-fit: cover;
     width: 100%;
@@ -218,6 +192,7 @@ $top-bar-height: 50px;
   ul {
     background: var(--nmorph-main-bg);
   }
+
   a {
     padding: 4px;
     width: 100%;
@@ -229,10 +204,12 @@ $top-bar-height: 50px;
     background: var(--nmorph-accent-color);
     color: var(--nmorph-white-color);
   }
+
   a:first-child {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
   }
+
   a:last-child {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -241,6 +218,7 @@ $top-bar-height: 50px;
 
 .docs-top-bar__nav-list .router-link-active {
   position: relative;
+
   &:before {
     content: "";
     top: calc($top-bar-height / 2 + 4px);

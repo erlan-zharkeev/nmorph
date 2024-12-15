@@ -1,5 +1,5 @@
 import { App, Plugin } from 'vue';
-import { useCommonStyles, useNmorphTranslation, useStyleClassMixins } from './hooks';
+import { useCommonStyles, useNmorphTranslation } from './hooks';
 import { useNmorphBrowser, useNmorphTheme } from './outside-hooks/index.ts';
 import { INmorphOptions } from './types/index.ts';
 
@@ -24,10 +24,9 @@ const library: Plugin = {
         }
       }
     } catch(e) {
-      console.log('yay');
+      console.error(e);
     }
 
-    useStyleClassMixins()
     useCommonStyles()
     const theme = useNmorphTheme(options.theme);
     const browser = useNmorphBrowser();

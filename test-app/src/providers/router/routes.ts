@@ -10,42 +10,42 @@ import { type RouteRecordRaw } from "vue-router";
 export const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    component: () => MainPage,
+    component: MainPage,
     meta: {
       title: "Main",
     },
   },
   {
     path: "/basic",
-    component: () => Basic,
+    component: Basic,
     meta: {
       title: "Basic",
     },
   },
   {
     path: "/data",
-    component: () => Data,
+    component: Data,
     meta: {
       title: "Data",
     },
   },
   {
     path: "/form",
-    component: () => FormPage,
+    component: FormPage,
     meta: {
       title: "Form",
     },
   },
   {
     path: "/date-picker",
-    component: () => DatePickerPage,
+    component: DatePickerPage,
     meta: {
       title: "Date picker",
     },
   },
   {
     path: "/pagination",
-    component: () => PaginationPage,
+    component: PaginationPage,
     meta: {
       title: "Pagination",
     },

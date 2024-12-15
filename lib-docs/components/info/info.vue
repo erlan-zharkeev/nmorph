@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<IProps>(), {
 <template>
   <div class="docs-info" :class="`docs-info--${props.type}`">
     <div class="docs-info__title nmorph-title-3">{{ props.title }}</div>
-    <div class="docs-info__content nmorph-body-3">{{ props.content }}</div>
+    <div class="docs-info__content nmorph-body-3" v-html="props.content" />
   </div>
 </template>
 
@@ -36,6 +36,7 @@ const props = withDefaults(defineProps<IProps>(), {
     height: 100%;
     background: var(--nmorph-accent-color);
   }
+
   &:after {
     content: "";
     position: absolute;

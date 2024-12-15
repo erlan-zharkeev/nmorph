@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { NmorphComponentHeight } from '@/types';
-import { useModifiers } from '@/utils';
+import { disabled, useModifiers } from '@/utils';
 import { inject, computed } from 'vue';
 import {
   INmorphSelectOption,
   NmorphIcon,
+  NmorphIconSuccess,
   NmorphSelectChangeSelectedValue,
   NmorphSelectSelectedValueInjectionType,
 } from '@/components';
+import { styled, css } from '@vue-styled-components/core'
 
 const selectSelectedValue = inject<NmorphSelectSelectedValueInjectionType>('select-selected-value', undefined);
 const selectChangeSelectedValue = inject<NmorphSelectChangeSelectedValue>('select-change-selected-value', undefined);
@@ -49,22 +51,8 @@ const modifiers = computed(() =>
     ],
   })
 );
-</script>
 
-<template>
-  <div :class="modifiers" @click="clickHandler" :value="props.value">
-    <div class="nmorph-select-option__content">
-      <span>{{ props.label }}</span>
-      <slot />
-    </div>
-    <NmorphIcon v-if="checked" name="success" class="nmorph-select-option__checked" />
-  </div>
-</template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-select-option {
+const commonCSS = css`
   --hover-bg: var(--nmorph-accent-color);
   --hover-color: var(--nmorph-white-color);
 
@@ -84,32 +72,48 @@ const modifiers = computed(() =>
   &:not(.nmorph-select-option--disabled):hover .nmorph-select-option__checked {
     --color: var(--hover-color);
   }
-}
 
-.nmorph-select-option--focused {
-  &:not(.nmorph-select-option--disabled) {
-    background: var(--hover-bg);
+  &.nmorph-select-option--focused {
+    &:not(.nmorph-select-option--disabled) {
+      background: var(--hover-bg);
+    }
+
+    &:not(.nmorph-select-option--disabled) span {
+      color: var(--hover-color);
+    }
+
+    &:not(.nmorph-select-option--disabled) .nmorph-select-option__checked {
+      --color: var(--hover-color);
+    }
   }
 
-  &:not(.nmorph-select-option--disabled) span {
-    color: var(--hover-color);
+  &.nmorph-select-option--disabled {
+    ${disabled()}
+
+    .nmorph-select-option__content {
+      pointer-events: none;
+    }
   }
 
-  &:not(.nmorph-select-option--disabled) .nmorph-select-option__checked {
-    --color: var(--hover-color);
+  &.nmorph-select-option--with-label {
+    display: flex;
+    align-items: center;
   }
-}
+`
 
-.nmorph-select-option--disabled {
-  @include disabled;
+const StyledComponent = styled.div`
+  ${commonCSS}
+`
+</script>
 
-  .nmorph-select-option__content {
-    pointer-events: none;
-  }
-}
-
-.nmorph-select-option--with-label {
-  display: flex;
-  align-items: center;
-}
-</style>
+<template>
+  <StyledComponent :class="modifiers" @click="clickHandler" :value="props.value">
+    <div class="nmorph-select-option__content">
+      <span>{{ props.label }}</span>
+      <slot />
+    </div>
+    <NmorphIcon v-if="checked" class="nmorph-select-option__checked">
+      <NmorphIconSuccess />
+    </NmorphIcon>
+  </StyledComponent>
+</template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { generateUUID, useModifiers } from '@/utils';
 import { computed, onMounted, provide, reactive, ref, watch, nextTick } from 'vue';
-import { NmorphIcon, INmorphCarouselInjection } from '@/components';
+import { NmorphIcon, INmorphCarouselInjection, NmorphIconChevronDown } from '@/components';
 import { NmorphDomElementType } from '@/types';
 
 const currentSlide = ref(0);
@@ -110,10 +110,14 @@ const elementIndicator = (idx: number) => {
       </div>
     </div>
     <div class="nmorph-carousel__action-btn nmorph-carousel__prev" @click="prevSlide">
-      <NmorphIcon name="chevron-down" />
+      <NmorphIcon>
+        <NmorphIconChevronDown />
+      </NmorphIcon>
     </div>
     <div class="nmorph-carousel__action-btn nmorph-carousel__next" @click="nextSlide">
-      <NmorphIcon name="chevron-down" />
+      <NmorphIcon>
+        <NmorphIconChevronDown />
+      </NmorphIcon>
     </div>
     <slot />
   </div>
@@ -131,7 +135,7 @@ const elementIndicator = (idx: number) => {
   border: 10px solid var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
 
-  @include nmorph-outset;
+  ${nmorphOutset()}
 
   .nmorph-carousel__wrapper {
     display: flex;

@@ -1,6 +1,5 @@
 import {
   INmorphStaticColors,
-  HexColor,
   INmorphColorVariable,
   NmorphThemeMapType,
   INmorphOtherThemeOptions,
@@ -12,20 +11,35 @@ import packageData from '../../package.json';
 import { nmorphLog } from '@/outside-utils';
 import { camelToKebab } from '@/utils';
 
-const DEFAULT_THEME_COLORS: INmorphColorVariable[] = [
-  { name: '--nmorph-info-color', color: '#d4e5edbb' },
-  { name: '--nmorph-info-text-color', color: '#506c80' },
-  { name: '--nmorph-success-color', color: '#67C23A' },
-  { name: '--nmorph-success-text-color', color: '#0b5b1d' },
-  { name: '--nmorph-error-color', color: '#F56C6C' },
-  { name: '--nmorph-error-text-color', color: '#8d3333' },
-  { name: '--nmorph-warn-color', color: '#E6A21C' },
-  { name: '--nmorph-warn-text-color', color: '#7a6712' },
-  { name: '--nmorph-white-color', color: '#ffffff' },
-  { name: '--nmorph-gray-color', color: '#c9d2dee6' },
-  { name: '--nmorph-black-color', color: '#000000' },
-  { name: '--nmorph-overlay-color', color: '#00000095' },
-];
+// const DEFAULT_THEME_COLORS: INmorphColorVariable[] = [
+//   { name: '--nmorph-info-color', color: '#d4e5edbb' },
+//   { name: '--nmorph-info-text-color', color: '#506c80' },
+//   { name: '--nmorph-success-color', color: '#67C23A' },
+//   { name: '--nmorph-success-text-color', color: '#0b5b1d' },
+//   { name: '--nmorph-error-color', color: '#F56C6C' },
+//   { name: '--nmorph-error-text-color', color: '#8d3333' },
+//   { name: '--nmorph-warn-color', color: '#E6A21C' },
+//   { name: '--nmorph-warn-text-color', color: '#7a6712' },
+//   { name: '--nmorph-white-color', color: '#ffffff' },
+//   { name: '--nmorph-gray-color', color: '#c9d2dee6' },
+//   { name: '--nmorph-black-color', color: '#000000' },
+//   { name: '--nmorph-overlay-color', color: '#00000095' },
+// ];
+
+const DEFAULT_THEME_COLORS = {
+  info: '#d4e5edbb',
+  infoText: '#506c80' ,
+  success: '#67C23A',
+  successText: '#0b5b1d' ,
+  error: '#F56C6C',
+  errorText: '#8d3333',
+  warn: '#E6A21C',
+  warnText: '#7a6712',
+  gray: '#c9d2dee6',
+  white: '#ffffff',
+  black: '#000000',
+  overlay: '#00000095'
+}
 
 const DEFAULT_LIGHT_THEME_COLORS = {
   darkShade: '#c8c9ca',
@@ -65,12 +79,12 @@ const DEFAULT_OPTIONS = {
   },
 };
 
-const isValidHexColor = (value: string): value is HexColor => {
+const isValidHexColor = (value: string) => {
   const hexColorPattern = /^#[0-9A-Fa-f]{6}$/;
   return hexColorPattern.test(value);
 };
 
-const asHexColor = (value: string): HexColor => {
+const asHexColor = (value: string) => {
   if (!isValidHexColor(value)) throw new Error(`Invalid hex color: ${value}`);
   return value;
 };
@@ -79,7 +93,7 @@ const mergeColorVariables = (
   defaultColors: INmorphColorVariable[],
   overrideColors: INmorphColorVariable[]
 ): INmorphColorVariable[] => {
-  const colorMap: Record<string, HexColor> = {};
+  const colorMap: Record<string, string> = {};
 
   defaultColors.forEach(({ name, color }) => {
     colorMap[name] = color;
@@ -92,7 +106,7 @@ const mergeColorVariables = (
   return Object.entries(colorMap).map(([name, color]) => ({ name, color }));
 };
 
-const shadeColor = (color: string, percent: number): HexColor => {
+const shadeColor = (color: string, percent: number) => {
   let R = parseInt(color.substring(1, 3), 16);
   let G = parseInt(color.substring(3, 5), 16);
   let B = parseInt(color.substring(5, 7), 16);
@@ -150,7 +164,8 @@ export const useNmorphTheme = (customOptions: INmorphThemeOptions): INmorphTheme
 
     const result = [];
     Object.entries(themes).forEach(([theme, colors]) => {
-      if (theme === 'common') result.push(convertColorsToString(mergeColorVariables(DEFAULT_THEME_COLORS, colors)));
+      const defaultThemeColors = getStaticColorVariables(DEFAULT_THEME_COLORS)
+      if (theme === 'common') result.push(convertColorsToString(mergeColorVariables(defaultThemeColors, colors)));
       else {
         const themeColors = `
           &[${THEME_KEY}='${theme}'] {
@@ -169,7 +184,6 @@ export const useNmorphTheme = (customOptions: INmorphThemeOptions): INmorphTheme
   };
 
   const themeMap: NmorphThemeMapType = {};
-
   Object.entries(options.themes).forEach(([theme, colors]) => {
     themeMap[theme] = [];
     const darkShade = Boolean(colors.darkShade);
@@ -178,6 +192,7 @@ export const useNmorphTheme = (customOptions: INmorphThemeOptions): INmorphTheme
     const computeDynamicColors = main && !darkShade && !lightShade;
     if (computeDynamicColors) themeMap[theme] = getDynamicColorVariables(colors.main);
     themeMap[theme] = [...themeMap[theme], ...getStaticColorVariables(colors)];
+
   });
 
   const style = document.createElement('style');

@@ -52,8 +52,6 @@ const iconNameMap: Record<NmorphAlertType, DefineComponent<{}, {}, unknown>> = {
 
 const slots = useSlots();
 
-const closeButtonPosition = computed(() => props.closeIconPosition);
-
 const commonCSS = css`
   --background-color: var(--nmorph-overlay-color);
 
@@ -93,7 +91,6 @@ const commonCSS = css`
   }
 
   .nmorph-alert__close {
-    align-self: v-bind(closeButtonPosition);
 
     margin-left: var(--indentation-03);
     cursor: pointer;
@@ -146,12 +143,16 @@ const commonCSS = css`
 
 const StyledComponent = styled.div`
   ${commonCSS}
+  .nmorph-alert__close {
+    align-self: ${props => props.closeButtonPosition};
+  }
 
 `
 </script>
 
 <template>
-  <StyledComponent v-if="slots.default || props.title || props.content || props.html" :class="modifiers">
+  <StyledComponent v-if="slots.default || props.title || props.content || props.html" :class="modifiers"
+    :props="{ closeButtonPosition: props.closeIconPosition }">
     <div v-if="props.html" class="nmorph-alert__html-wrapper" v-html="props.html" />
     <div v-else class="nmorph-alert__wrapper">
       <div class="nmorph-alert__left-side">

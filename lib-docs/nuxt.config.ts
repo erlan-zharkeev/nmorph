@@ -33,7 +33,7 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: false },
-  css: ["@nmorph/nmorph-ui-kit/dist/style.css"],
+  css: [],
   vite: {
     resolve: {
       preserveSymlinks: true,

@@ -68,12 +68,13 @@ const isComponentOverview = computed(() =>
   border-radius: 4px;
   padding: 8px;
   padding-bottom: 8px;
+  height: calc(var(--container-height) - 24px) !important;
 }
 
 .docs-main-layout__scroll-container {
   display: flex;
   justify-content: space-between;
-  height: var(--container-height);
+  height: var(--container-height) !important;
 }
 
 .docs-main-layout__center {

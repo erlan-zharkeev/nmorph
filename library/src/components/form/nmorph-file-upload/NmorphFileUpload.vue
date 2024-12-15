@@ -16,9 +16,10 @@ import {
   NmorphIconVideo,
   NmorphIconArchive,
 } from '@/components';
-import { useModifiers } from '@/utils';
+import { ellipsis, nmorphOutset, useModifiers } from '@/utils';
 import { NmorphDomElementType } from '@/types';
 import { useI18n } from 'vue-i18n';
+import { styled, css } from '@vue-styled-components/core'
 
 const { t } = useI18n();
 
@@ -110,40 +111,8 @@ const modifiers = computed(() =>
     'nmorph-file-upload': [`${props.disabled && 'disabled'}`],
   })
 );
-</script>
 
-<template>
-  <div :class="modifiers">
-    <div class="nmorph-file-upload__trigger">
-      <input ref="inputDOMRef" type="file" :multiple="props.multiple" class="nmorph-native-input"
-        @change="handleFileUpload" />
-      <slot name="trigger">
-        <NmorphButton :text="computedButtonText" fill @click="openFileSelector" :disabled="props.disabled" />
-      </slot>
-    </div>
-    <div class="nmorph-file-upload__list" v-if="files.length > 0">
-      <transition-group name="list" tag="div">
-        <div v-for="{ data, previewUrl } in files" :key="data.name" class="nmorph-file-upload__file">
-          <NmorphImagePreview :src="previewUrl" />
-          <div class="nmorph-file-upload__file-info">
-            <NmorphIcon :name="typeFileIconMap(data.type)" width="14px" height="17px" />
-            <span class="nmorph-file-upload__file-name">{{ data.name }}</span>
-          </div>
-          <div class="nmorph-file-upload__remove-file">
-            <NmorphButton height="thin" style-type="transparent" @click="removeFile(data.name)">
-              <NmorphIcon name="error" />
-            </NmorphButton>
-          </div>
-        </div>
-      </transition-group>
-    </div>
-  </div>
-</template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-file-upload {
+const commonCSS = css`
   .nmorph-file-upload__trigger {
     position: relative;
   }
@@ -163,8 +132,7 @@ const modifiers = computed(() =>
     margin-bottom: var(--indentation-02);
     padding: var(--indentation-02) var(--indentation-03);
     border-radius: var(--default-border-radius);
-
-    @include nmorph-outset;
+    ${nmorphOutset()}
   }
 
   .nmorph-file-upload__file-info {
@@ -176,11 +144,45 @@ const modifiers = computed(() =>
 
   .nmorph-file-upload__file-name {
     margin-left: var(--indentation-02);
-    @include ellipsis;
+    ${ellipsis()}
   }
 
   .nmorph-file-upload__remove-file {
     margin-left: var(--indentation-03);
   }
-}
-</style>
+`
+
+const StyledComponent = styled.div`
+  ${commonCSS}
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers">
+    <div class="nmorph-file-upload__trigger">
+      <input ref="inputDOMRef" type="file" :multiple="props.multiple" class="nmorph-native-input"
+        @change="handleFileUpload" />
+      <slot name="trigger">
+        <NmorphButton :text="computedButtonText" fill @click="openFileSelector" :disabled="props.disabled" />
+      </slot>
+    </div>
+    <div class="nmorph-file-upload__list" v-if="files.length > 0">
+      <transition-group name="list" tag="div">
+        <div v-for="{ data, previewUrl } in files" :key="data.name" class="nmorph-file-upload__file">
+          <NmorphImagePreview :src="previewUrl" />
+          <div class="nmorph-file-upload__file-info">
+            <NmorphIcon width="14px" height="17px">
+              <component :is="typeFileIconMap(data.type)" />
+            </NmorphIcon>
+            <span class="nmorph-file-upload__file-name">{{ data.name }}</span>
+          </div>
+          <div class="nmorph-file-upload__remove-file">
+            <NmorphButton height="thin" style-type="transparent" @click="removeFile(data.name)">
+              <NmorphIcon name="error" />
+            </NmorphButton>
+          </div>
+        </div>
+      </transition-group>
+    </div>
+  </StyledComponent>
+</template>

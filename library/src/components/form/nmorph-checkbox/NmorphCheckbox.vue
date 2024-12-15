@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, ref, inject, watch } from 'vue';
-import { useModifiers } from '@/utils';
+import { body2, disabled, focusOutline, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import {
   INmorphCheckboxOption,
   NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType,
   NmorphCheckboxGroupSelectedValueInjectionType,
   NmorphDomElementType,
 } from '@/types';
+import { styled, css } from '@vue-styled-components/core'
 
 const groupSelectedValue = inject<NmorphCheckboxGroupSelectedValueInjectionType>(
   'checkbox-group-selected-value',
@@ -66,40 +67,8 @@ const modifiers = computed(() =>
     ],
   })
 );
-</script>
 
-<template>
-  <label :class="modifiers">
-    <div v-if="props.design === 'checkbox'" class="nmorph-checkbox__content">
-      <div class="nmorph-checkbox__input-wrapper">
-        <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked"
-          class="nmorph-native-input" @change="handleChange" />
-        <div class="nmorph-checkbox__fake" />
-        <div v-if="checked" class="nmorph-checkbox__fake-checked" />
-      </div>
-      <div v-if="props.label" class="nmorph-checkbox__label">
-        <span>{{ props.label }}</span>
-      </div>
-      <div v-else class="nmorph-checkbox__label">
-        <slot />
-      </div>
-    </div>
-    <div v-if="props.design === 'button'" class="nmorph-checkbox__content">
-      <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked" @change="handleChange" />
-      <div v-if="props.label" class="nmorph-checkbox__fake">
-        <span>{{ props.label }}</span>
-      </div>
-      <div v-else class="nmorph-checkbox__fake">
-        <slot name="label" />
-      </div>
-    </div>
-  </label>
-</template>
-
-<style lang="scss">
-@use '@/styles/mixins' as *;
-
-.nmorph-checkbox {
+const commonCSS = css`
   --size: var(--extra-thin-component);
 
   display: inline-flex;
@@ -131,7 +100,7 @@ const modifiers = computed(() =>
   input:focus-visible {
     opacity: 1;
     scale: 0.95;
-    @include focus-outline;
+    ${focusOutline()}
   }
 
   .nmorph-checkbox__fake {
@@ -142,12 +111,12 @@ const modifiers = computed(() =>
     position: absolute;
     top: 0;
     left: 0;
-    @include nmorph-inset;
+    ${nmorphInset()}
   }
 
   .nmorph-checkbox__label,
   .nmorph-checkbox__fake span {
-    @include body-2;
+    ${body2()}
   }
 
   .nmorph-checkbox__fake-checked {
@@ -170,30 +139,61 @@ const modifiers = computed(() =>
   .nmorph-checkbox__fake span {
     line-height: 0.8;
   }
-}
 
-.nmorph-checkbox--button {
-  --size: var(--thick-component);
+  &.nmorph-checkbox--button {
+    --size: var(--thick-component);
 
-  .nmorph-checkbox__fake {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: var(--size);
-    padding: var(--indentation-03);
-    border-radius: var(--default-border-radius);
-
-    @include nmorph-outset;
+    .nmorph-checkbox__fake {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: var(--size);
+      padding: var(--indentation-03);
+      border-radius: var(--default-border-radius);
+      ${nmorphOutset()}
+    }
   }
-}
 
-.nmorph-checkbox--checked {
-  .nmorph-checkbox__fake {
-    @include nmorph-inset;
+  &.nmorph-checkbox--checked {
+    .nmorph-checkbox__fake {
+      ${nmorphInset()}
+    }
   }
-}
 
-.nmorph-checkbox--disabled {
-  @include disabled;
-}
-</style>
+  &.nmorph-checkbox--disabled {
+    ${disabled()}
+  }
+`
+
+const StyledComponent = styled.label`
+  ${commonCSS}
+`
+</script>
+
+<template>
+  <StyledComponent :class="modifiers">
+    <div v-if="props.design === 'checkbox'" class="nmorph-checkbox__content">
+      <div class="nmorph-checkbox__input-wrapper">
+        <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked"
+          class="nmorph-native-input" @change="handleChange" />
+        <div class="nmorph-checkbox__fake" />
+        <div v-if="checked" class="nmorph-checkbox__fake-checked" />
+      </div>
+      <div v-if="props.label" class="nmorph-checkbox__label">
+        <span>{{ props.label }}</span>
+      </div>
+      <div v-else class="nmorph-checkbox__label">
+        <slot />
+      </div>
+    </div>
+    <div v-if="props.design === 'button'" class="nmorph-checkbox__content">
+      <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked" @change="handleChange" />
+      <div v-if="props.label" class="nmorph-checkbox__fake">
+        <span>{{ props.label }}</span>
+      </div>
+      <div v-else class="nmorph-checkbox__fake">
+        <slot name="label" />
+      </div>
+    </div>
+  </StyledComponent>
+</template>

@@ -165,41 +165,10 @@ const mouseLeaveHandler = () => {
 
 <template>
   <div ref="scrollDOMContainer" :class="modifiers" @scroll="scrollHandler" @mouseenter="mouseEnterHandler"
-    @mouseleave="mouseLeaveHandler">
+    @mouseleave="mouseLeaveHandler" :style="{
+      '--bar-width': barWidth,
+      '--bar-height': barHeight, height: scrollHeight, maxHeight, paddingRight, paddingBottom, overflowX, overflowY, scrollBehavior
+    }">
     <slot />
   </div>
 </template>
-
-<style lang="scss">
-.nmorph-scroll {
-  --thumb-color: var(--nmorph-accent-color);
-
-  height: v-bind(scrollHeight);
-  max-height: v-bind(maxHeight);
-  padding-right: v-bind(paddingRight);
-  padding-bottom: v-bind(paddingBottom);
-  overflow: v-bind(overflowX) v-bind(overflowY);
-  scroll-behavior: v-bind(scrollBehavior);
-
-  &::-webkit-scrollbar {
-    width: v-bind(barWidth);
-    height: v-bind(barHeight);
-    background-color: transparent;
-    cursor: pointer;
-    transition: width ease-in-out 0.2s;
-  }
-
-  &::-webkit-scrollbar-track {
-    border-radius: var(--border-radius-40);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--thumb-color);
-    border-radius: var(--border-radius-40);
-  }
-
-  &::-webkit-scrollbar-corner {
-    background-color: transparent;
-  }
-}
-</style>
