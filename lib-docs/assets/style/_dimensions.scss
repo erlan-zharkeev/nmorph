@@ -15,11 +15,6 @@
   }
 }
 
-@include max-width-query(768) {
-  :root {
-  }
-}
-
 .page {
   height: var(--container-height);
   margin: var(--margin);

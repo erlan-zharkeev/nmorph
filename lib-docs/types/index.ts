@@ -13,11 +13,19 @@ export interface IAttributesTableData extends IBasicApiTableData {
   modalName?: string;
 }
 
-export interface IVariablesTableData extends ISlotsTableData {}
+export interface IVariablesTableData {
+  name: string;
+}
 
-export interface IExposesTableData extends ISlotsTableData {}
+export interface IExposesTableData {
+  name: string;
+}
 
 export interface IEventsTableData extends IBasicApiTableData {}
+
+export interface ITranslates {
+  name: string;
+}
 
 export enum DocsInfo {
   warning = "warning",

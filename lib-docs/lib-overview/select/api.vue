@@ -5,7 +5,7 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/api-table.vue";
-import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
+import { NmorphComponentHeight, NmorphDivider } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -90,30 +90,20 @@ const variablesSelectOption: IVariablesTableData[] = [
   { name: "hover-color" },
 ];
 const eventsSelectOption = [{ name: "change-value", type: "String" }];
+
+const translates = [{ name: 'noElementPlaceholder' }]
 </script>
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphSelect"
-      name="select"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-      :events="events"
-    />
+    <api-table title="NmorphSelect" name="select" :attributes="attributesData" :slots="slotData" :variables="variables"
+      :events="events" :translates="translates" />
   </div>
   <NmorphDivider />
   <div class="docs-api-table">
-    <api-table
-      title="NmorphSelectOption"
-      name="select-option"
-      additional-id="select-option"
-      :attributes="selectOptionAttr"
-      :slots="slotSelectOptionData"
-      :variables="variablesSelectOption"
-      :events="eventsSelectOption"
-    />
+    <api-table title="NmorphSelectOption" name="select-option" additional-id="select-option"
+      :attributes="selectOptionAttr" :slots="slotSelectOptionData" :variables="variablesSelectOption"
+      :events="eventsSelectOption" />
   </div>
 </template>
 

@@ -135,6 +135,7 @@ const linkName = (anchor: string) => {
   text-align: center;
 }
 
-// .docs-components-page--active {
-//   font-weight: 800;
-// }</style>
+.docs-components-page--active {
+  font-weight: 800;
+}
+</style>

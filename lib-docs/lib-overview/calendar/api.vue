@@ -2,6 +2,7 @@
 import {
   type IAttributesTableData,
   type ISlotsTableData,
+  type ITranslates,
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/api-table.vue";
@@ -39,16 +40,33 @@ const attributesData: IAttributesTableData[] = [
 const slotData: ISlotsTableData[] = [{ name: "header" }, { name: "content" }];
 
 const variables: IVariablesTableData[] = [{ name: "table-data-cell-height" }];
+
+const translates: ITranslates[] = [
+  { name: 'sun' },
+  { name: 'mon' },
+  { name: 'tue' },
+  { name: 'wed' },
+  { name: 'thu' },
+  { name: 'fri' },
+  { name: 'sat' },
+  { name: 'jan' },
+  { name: 'feb' },
+  { name: 'mar' },
+  { name: 'apr' },
+  { name: 'may' },
+  { name: 'jun' },
+  { name: 'jul' },
+  { name: 'aug' },
+  { name: 'sep' },
+  { name: 'oct' },
+  { name: 'nov' },
+  { name: 'dec' }
+];
 </script>
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphCalendar"
-      name="calendar"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-    />
+    <api-table title="NmorphCalendar" name="calendar" :attributes="attributesData" :slots="slotData"
+      :variables="variables" :translates="translates" />
   </div>
 </template>

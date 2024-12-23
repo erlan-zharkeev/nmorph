@@ -6,7 +6,8 @@ import Racoon from "./racoon.jpg";
 import Spring from "./spring.jpg";
 import Summer from "./summer.jpg";
 import Winter from "./winter.jpg";
-import GetStarted from "./get-started.png";
+import DarkBg from "./dark-bg.png";
+import LightBg from "./light-bg.png";
 
 export {
   Autumn,
@@ -17,5 +18,6 @@ export {
   Spring,
   Summer,
   Winter,
-  GetStarted,
+  DarkBg,
+  LightBg
 };

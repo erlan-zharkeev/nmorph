@@ -2,7 +2,7 @@
   "name": "@nmorph/nmorph-ui-kit",
   "type": "module",
   "private": false,
-  "version": "1.0.87",
+  "version": "1.0.92",
   "license": "MIT",
   "engines": {
     "node": "18.13.0",

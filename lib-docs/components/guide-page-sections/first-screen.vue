@@ -2,23 +2,26 @@
 import {
   NmorphButton
 } from "@nmorph/nmorph-ui-kit";
-import { GetStarted } from "~/assets/images";
+import { LightBg, DarkBg } from "~/assets/images";
+import { useGlobalStore } from "~/providers";
+
+const router = useRouter();
+const localePath = useLocalePath();
+
+const store = useGlobalStore();
+const bg = computed(() => store.currentTheme === 'dark' ? DarkBg : LightBg)
 </script>
 
 <template>
-  <section id="main" class="main-section">
-    <div class="main-section__left-side">
-      <div class="main-section__image-wrapper">
-        <img :src="GetStarted" class="main-section__image" />
-        <div class="nmorph--shadow-outset fake-btn" />
-      </div>
-    </div>
-    <div class="main-section__right-side">
+  <section id="main" class="info-section main-section">
+    <img :src="bg" class="main-section__bg" />
+    <div class="main-section__content nmorph--shadow-inset">
       <div class="main-section__first-info">
         <h1>NMORPH</h1>
         <div v-html="$t('guide-page.explained')"></div>
         <div v-html="$t('guide-page.main-content')"></div>
-        <NmorphButton :text="$t('guide-page.get-started-btn')" height="thick" class="main-section__get-started-btn" />
+        <NmorphButton :text="$t('guide-page.get-started-btn')" height="thick" class="main-section__get-started-btn"
+          @click="router.push(localePath('/guide'))" />
       </div>
     </div>
   </section>
@@ -32,6 +35,16 @@ $image-size: 450px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+
+  .main-section__bg {
+    position: absolute;
+    opacity: 0.5;
+    rotate: -45deg;
+    height: 150%;
+    object-fit: cover;
+    scale: 1.5;
+  }
 
   .nmorph-radio-group__content {
     flex-wrap: nowrap;
@@ -56,12 +69,14 @@ $image-size: 450px;
     font-size: 18px;
   }
 
-  .main-section__right-side {
+  .main-section__content {
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-left: 8px;
-    max-width: 400px;
+    max-width: 440px;
+    z-index: 1;
+    border-radius: 8px;
+    padding: 16px;
   }
 
   .main-section__image-wrapper {
@@ -120,18 +135,6 @@ $image-size: 450px;
 
   .nmorph-text-input {
     width: 100%;
-  }
-
-  @include max-width-query(768) {
-    .main-section__right-side {
-      display: none;
-    }
-
-    .main-section__image-wrapper {
-      $image-size: 200px;
-      width: $image-size;
-      height: $image-size;
-    }
   }
 }
 </style>

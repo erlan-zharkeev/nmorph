@@ -35,7 +35,7 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit"
 </script>
 
 <template>
-  <section id="quick-start" class="info-section quick-start-section">
+  <section>
     <h2 class="section-title">{{ $t("guide-menu.quick-start") }}</h2>
     <div class="section-element nmorph--shadow-inset">
       <h3 class="section-subtitle">
@@ -44,7 +44,7 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit"
       <p class="section-paragraph" v-html="$t('guide-page.quick-start.choose-package-manager')" />
       <code-example lang="javascript">{{
         installationPackageManager
-        }}</code-example>
+      }}</code-example>
     </div>
     <div class="section-element nmorph--shadow-inset">
       <h3 class="section-subtitle">

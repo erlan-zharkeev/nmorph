@@ -8,13 +8,13 @@ import {
   NmorphIconMenu,
   NmorphIconLogo,
 } from "@nmorph/nmorph-ui-kit";
-
 import TranslateIcon from "~/assets/icons/translate.svg";
 import GitlabIcon from "~/assets/icons/gitlab.svg";
 
 const switchLocalePath = useSwitchLocalePath();
 
 const { locale, locales } = useI18n();
+const route = useRoute();
 
 const availableLocales = computed(() => {
   return locales.value.filter((i) => i.code !== locale.value);
@@ -28,6 +28,7 @@ const props = withDefaults(defineProps<IProps>(), {});
 
 interface INmorphEmit {
   (e: "toggle-menu"): void;
+  (e: "close-menu"): void;
 }
 const emit = defineEmits<INmorphEmit>();
 
@@ -48,14 +49,20 @@ const updateMenuHandler = () => {
 const mobileNavMenu = ref(false);
 const toggleMobileNavMenu = () => {
   mobileNavMenu.value = !mobileNavMenu.value;
+  if (mobileNavMenu.value) emit('close-menu')
 };
+
+const isRootPage = computed(() => route.path.length <= 3);
+watch(() => props.isMenuOpen, () => {
+  mobileNavMenu.value = false
+})
 </script>
 
 <template>
   <header class="docs-top-bar nmorph--shadow-outset">
     <div class="docs-top-bar__left">
       <NmorphCheckbox class="docs-top-bar__menu" :model-value="props.isMenuOpen" @update:model-value="updateMenuHandler"
-        design="button">
+        v-if="!isRootPage" design="button">
         <template #label>
           <NmorphIcon>
             <NmorphIconMenu />
@@ -98,16 +105,15 @@ const toggleMobileNavMenu = () => {
           </ul>
         </NmorphDropdown>
       </div>
-
       <nav class="docs-top-bar__nav">
         <ul class="docs-top-bar__nav-list">
           <li>
-            <NuxtLink :to="localePath('/')">{{ $t("guide") }}</NuxtLink>
+            <NuxtLink :to="localePath('/guide')">{{ $t("guide") }}</NuxtLink>
           </li>
           <li>
             <NuxtLink :to="localePath('/components')">{{
               $t("components")
-              }}</NuxtLink>
+            }}</NuxtLink>
           </li>
           <li>
             <NuxtLink :to="localePath('/about')">{{ $t("about") }}</NuxtLink>
@@ -122,7 +128,7 @@ const toggleMobileNavMenu = () => {
       @click="mobileNavMenu = false">
       <ul>
         <li>
-          <NuxtLink :to="localePath('/')">{{ $t("guide") }}</NuxtLink>
+          <NuxtLink :to="localePath('/guide')">{{ $t("guide") }}</NuxtLink>
         </li>
         <li>
           <NuxtLink :to="localePath('/components')">{{
@@ -150,6 +156,7 @@ $top-bar-height: 50px;
   align-items: center;
   justify-content: space-between;
   padding: 4px 20px;
+  z-index: 1;
 }
 
 .docs-top-bar__translate-btn {
@@ -257,7 +264,9 @@ $top-bar-height: 50px;
 
 .docs-top-bar__mobile-nav-menu {
   position: fixed;
-  bottom: -100%;
+  opacity: 0;
+  bottom: 0;
+  z-index: 2;
   transition: 0.2s bottom ease-in-out;
   left: 0;
   background: var(--nmorph-overlay-color);
@@ -266,6 +275,8 @@ $top-bar-height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: opacity ease-in-out .3s;
+  pointer-events: none;
 
   ul {
     display: flex;
@@ -283,8 +294,9 @@ $top-bar-height: 50px;
 }
 
 .docs-top-bar__mobile-nav-menu--open {
-  bottom: 0;
-  z-index: 2;
+  opacity: 1;
+  transition: opacity ease-in-out .3s;
+  pointer-events: visible;
 }
 
 @include max-width-query(768) {

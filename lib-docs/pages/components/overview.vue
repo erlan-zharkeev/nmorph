@@ -45,6 +45,7 @@ const tabs = ref([
     label: "Tab 3",
   },
 ]);
+const localePath = useLocalePath();
 </script>
 
 <template>
@@ -54,7 +55,7 @@ const tabs = ref([
     </div>
     <div class="overview-component-list">
       <div class="overview-component-wrapper">
-        <NuxtLink to="/components/button">
+        <NuxtLink :to="localePath('/components/button')">
           <NmorphCard>
             <template #header>Button</template>
             <div class="overview-component-content">
@@ -64,7 +65,7 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper">
-        <NuxtLink to="/components/icon">
+        <NuxtLink :to="localePath('/components/icon')">
           <NmorphCard>
             <template #header>Icon</template>
             <div class="overview-component-content">
@@ -76,7 +77,7 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper">
-        <NuxtLink to="/components/link">
+        <NuxtLink :to="localePath('/components/link')">
           <NmorphCard>
             <template #header>Link</template>
             <div class="overview-component-content">
@@ -86,7 +87,7 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper scroll-component">
-        <NuxtLink to="/components/scroll">
+        <NuxtLink :to="localePath('/components/scroll')">
           <NmorphCard>
             <template #header>Scroll</template>
             <div class="overview-component-content">
@@ -96,7 +97,7 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper">
-        <NuxtLink to="/components/avatar">
+        <NuxtLink :to="localePath('/components/avatar')">
           <NmorphCard>
             <template #header>Avatar</template>
             <div class="overview-component-content">
@@ -106,7 +107,7 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper">
-        <NuxtLink to="/components/badge">
+        <NuxtLink :to="localePath('/components/badge')">
           <NmorphCard>
             <template #header>Badge</template>
             <div class="overview-component-content">
@@ -118,19 +119,19 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper card">
-        <NuxtLink to="/components/card">
+        <NuxtLink :to="localePath('/components/card')">
           <NmorphCard>
             <template #header>Card</template>
             <div class="overview-component-content">
               <NmorphCard shadow-type="combined">
-                <NmorphImage :src="Autumn"
-              /></NmorphCard>
+                <NmorphImage :src="Autumn" />
+              </NmorphCard>
             </div>
           </NmorphCard>
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper">
-        <NuxtLink to="/components/image">
+        <NuxtLink :to="localePath('/components/image')">
           <NmorphCard>
             <template #header>Image</template>
             <div class="overview-component-content">
@@ -140,22 +141,20 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper tag">
-        <NuxtLink to="/components/tag">
+        <NuxtLink :to="localePath('/components/tag')">
           <NmorphCard>
             <template #header>Tag</template>
             <div class="overview-component-content">
-              <NmorphTagList
-                :model-value="[
-                  { value: '1', text: 'Lorem' },
-                  { value: '2', text: 'Ipsum' },
-                ]"
-              />
+              <NmorphTagList :model-value="[
+                { value: '1', text: 'Lorem' },
+                { value: '2', text: 'Ipsum' },
+              ]" />
             </div>
           </NmorphCard>
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper skeleton">
-        <NuxtLink to="/components/skeleton">
+        <NuxtLink :to="localePath('/components/skeleton')">
           <NmorphCard>
             <template #header>Skeleton</template>
             <div class="overview-component-content">
@@ -165,32 +164,29 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper progress">
-        <NuxtLink to="/components/progress">
+        <NuxtLink :to="localePath('/components/progress')">
           <NmorphCard>
             <template #header>Progress</template>
             <div class="overview-component-content">
-              <NmorphProgress
-                :percentage="75"
-                color="var(--nmorph-accent-color)"
-              />
+              <NmorphProgress :percentage="75" color="var(--nmorph-accent-color)" />
             </div>
           </NmorphCard>
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper image-preview">
-        <NuxtLink to="/components/image-preview">
+        <NuxtLink :to="localePath('/components/image-preview')">
           <NmorphCard>
             <template #header>Image Preview</template>
             <div class="overview-component-content">
-              <NmorphIcon width="60px" height="60px"
-                ><NmorphIconImage
-              /></NmorphIcon>
+              <NmorphIcon width="60px" height="60px">
+                <NmorphIconImage />
+              </NmorphIcon>
             </div>
           </NmorphCard>
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper tooltip">
-        <NuxtLink to="/components/tooltip">
+        <NuxtLink :to="localePath('/components/tooltip')">
           <NmorphCard>
             <template #header>Tooltip</template>
             <div class="overview-component-content">
@@ -202,7 +198,7 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper divider">
-        <NuxtLink to="/components/divider">
+        <NuxtLink :to="localePath('/components/divider')">
           <NmorphCard>
             <template #header>Divider</template>
             <div class="overview-component-content">
@@ -214,7 +210,7 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper breadcrumb">
-        <NuxtLink to="/components/breadcrumb">
+        <NuxtLink :to="localePath('/components/breadcrumb')">
           <NmorphCard>
             <template #header>Breadcrumb</template>
             <div class="overview-component-content">
@@ -227,7 +223,7 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper text-input">
-        <NuxtLink to="/components/text-input">
+        <NuxtLink :to="localePath('/components/text-input')">
           <NmorphCard>
             <template #header>Text input</template>
             <div class="overview-component-content">
@@ -237,7 +233,7 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper switch">
-        <NuxtLink to="/components/switch">
+        <NuxtLink :to="localePath('/components/switch')">
           <NmorphCard>
             <template #header>Switch</template>
             <div class="overview-component-content">
@@ -247,65 +243,55 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper checkbox">
-        <NuxtLink to="/components/checkbox">
+        <NuxtLink :to="localePath('/components/checkbox')">
           <NmorphCard>
             <template #header>Checkbox</template>
             <div class="overview-component-content">
-              <NmorphCheckbox
-                :model-value="true"
-                design="button"
-                label="Checkbox"
-              />
+              <NmorphCheckbox :model-value="true" design="button" label="Checkbox" />
             </div>
           </NmorphCard>
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper checkbox-group">
-        <NuxtLink to="/components/checkbox-group">
+        <NuxtLink :to="localePath('/components/checkbox-group')">
           <NmorphCard>
             <template #header>Checkbox group</template>
             <div class="overview-component-content">
-              <NmorphCheckboxGroup
-                :model-value="['1']"
-                :options="[
-                  { id: '1', label: '1' },
-                  { id: '2', label: '2' },
-                  { id: '3', label: '3' },
-                ]"
-              />
+              <NmorphCheckboxGroup :model-value="['1']" :options="[
+                { id: '1', label: '1' },
+                { id: '2', label: '2' },
+                { id: '3', label: '3' },
+              ]" />
             </div>
           </NmorphCard>
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper radio">
-        <NuxtLink to="/components/radio">
+        <NuxtLink :to="localePath('/components/radio')">
           <NmorphCard>
             <template #header>Radio</template>
-            <div class="overview-component-content">
+            <div class="overview-component-content')">
               <NmorphRadio checked label="Radio" />
             </div>
           </NmorphCard>
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper radio-group">
-        <NuxtLink to="/components/radio-group">
+        <NuxtLink :to="localePath('/components/radio-group')">
           <NmorphCard>
             <template #header>Radio group</template>
             <div class="overview-component-content">
-              <NmorphCheckboxGroup
-                :model-value="['1']"
-                :options="[
-                  { id: '1', label: '1' },
-                  { id: '2', label: '2' },
-                  { id: '3', label: '3' },
-                ]"
-              />
+              <NmorphCheckboxGroup :model-value="['1']" :options="[
+                { id: '1', label: '1' },
+                { id: '2', label: '2' },
+                { id: '3', label: '3' },
+              ]" />
             </div>
           </NmorphCard>
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper autocomplete">
-        <NuxtLink to="/components/autocomplete">
+        <NuxtLink :to="localePath('/components/autocomplete')">
           <NmorphCard>
             <template #header>Autocomplete</template>
             <div class="overview-component-content">
@@ -315,7 +301,7 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper file-upload">
-        <NuxtLink to="/components/file-upload">
+        <NuxtLink :to="localePath('/components/file-upload')">
           <NmorphCard>
             <template #header>File upload</template>
             <div class="overview-component-content">
@@ -325,7 +311,7 @@ const tabs = ref([
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper slider">
-        <NuxtLink to="/components/slider">
+        <NuxtLink :to="localePath('/components/slider')">
           <NmorphCard>
             <template #header>Slider</template>
             <div class="overview-component-content">
@@ -334,10 +320,8 @@ const tabs = ref([
           </NmorphCard>
         </NuxtLink>
       </div>
-      <div
-        class="overview-component-wrapper number-input overview-component-wrapper--large"
-      >
-        <NuxtLink to="/components/number-input">
+      <div class="overview-component-wrapper number-input overview-component-wrapper--large">
+        <NuxtLink :to="localePath('/components/number-input')">
           <NmorphCard>
             <template #header>Number input</template>
             <div class="overview-component-content">
@@ -346,10 +330,8 @@ const tabs = ref([
           </NmorphCard>
         </NuxtLink>
       </div>
-      <div
-        class="overview-component-wrapper select overview-component-wrapper--large"
-      >
-        <NuxtLink to="/components/select">
+      <div class="overview-component-wrapper select overview-component-wrapper--large">
+        <NuxtLink :to="localePath('/components/select')">
           <NmorphCard>
             <template #header>Select</template>
             <div class="overview-component-content">
@@ -358,10 +340,8 @@ const tabs = ref([
           </NmorphCard>
         </NuxtLink>
       </div>
-      <div
-        class="overview-component-wrapper date-picker overview-component-wrapper--large"
-      >
-        <NuxtLink to="/components/date-picker">
+      <div class="overview-component-wrapper date-picker overview-component-wrapper--large">
+        <NuxtLink :to="localePath('/components/date-picker')">
           <NmorphCard>
             <template #header>Date picker</template>
             <div class="overview-component-content">
@@ -370,10 +350,8 @@ const tabs = ref([
           </NmorphCard>
         </NuxtLink>
       </div>
-      <div
-        class="overview-component-wrapper tabs overview-component-wrapper--large"
-      >
-        <NuxtLink to="/components/tabs">
+      <div class="overview-component-wrapper tabs overview-component-wrapper--large">
+        <NuxtLink :to="localePath('/components/tabs')">
           <NmorphCard>
             <template #header>Tabs</template>
             <div class="overview-component-content">
@@ -389,51 +367,36 @@ const tabs = ref([
           </NmorphCard>
         </NuxtLink>
       </div>
-      <div
-        class="overview-component-wrapper pagination overview-component-wrapper--large"
-      >
-        <NuxtLink to="/components/pagination">
+      <div class="overview-component-wrapper pagination overview-component-wrapper--large">
+        <NuxtLink :to="localePath('/components/pagination')">
           <NmorphCard>
             <template #header>Pagination</template>
             <div class="overview-component-content">
-              <NmorphPagination
-                :quantity-elements-on-page="2"
-                :total-elements-quantity="4"
-                :model-value="1"
-              />
+              <NmorphPagination :quantity-elements-on-page="2" :total-elements-quantity="4" :model-value="1" />
             </div>
           </NmorphCard>
         </NuxtLink>
       </div>
-      <div
-        class="overview-component-wrapper alert overview-component-wrapper--large"
-      >
-        <NuxtLink to="/components/alert">
+      <div class="overview-component-wrapper alert overview-component-wrapper--large">
+        <NuxtLink :to="localePath('/components/alert')">
           <NmorphCard>
             <template #header>Alert</template>
             <div class="overview-component-content">
-              <NmorphAlert
-                title="Lorem"
-                content="Ipsum dolor sit amet consectetur"
-                type="success"
-              />
+              <NmorphAlert title="Lorem" content="Ipsum dolor sit amet consectetur" type="success" />
             </div>
           </NmorphCard>
         </NuxtLink>
       </div>
-      <div
-        class="overview-component-wrapper"
-        v-for="el in [
-          ['Table', 'table'],
-          ['Overlay', 'overlay'],
-          ['Dialog', 'dialog'],
-          ['Notification', 'notification-provider'],
-          ['Backtop', 'backtop'],
-          ['Form', 'form'],
-          ['Dropdown', 'dropdown'],
-          ['Calendar', 'calendar'],
-        ]"
-      >
+      <div class="overview-component-wrapper" v-for="el in [
+        ['Table', 'table'],
+        ['Overlay', 'overlay'],
+        ['Dialog', 'dialog'],
+        ['Notification', 'notification-provider'],
+        ['Backtop', 'backtop'],
+        ['Form', 'form'],
+        ['Dropdown', 'dropdown'],
+        ['Calendar', 'calendar'],
+      ]">
         <NuxtLink :to="`/components/${el[1]}`">
           <NmorphCard>
             <template #header>{{ el[0] }}</template>
@@ -448,6 +411,7 @@ const tabs = ref([
 <style lang="scss">
 .overview {
   padding-bottom: 8px;
+
   .nmorph-card {
     pointer-events: none;
   }
@@ -505,6 +469,7 @@ const tabs = ref([
     .nmorph-card__content {
       overflow: inherit;
     }
+
     .nmorph-image img {
       width: 70px;
       height: 70px;
@@ -532,10 +497,12 @@ const tabs = ref([
       width: 100%;
     }
   }
+
   .divider {
     .nmorph-divider {
       margin: 8px 0;
     }
+
     .overview-component-content {
       display: flex;
       flex-direction: column;

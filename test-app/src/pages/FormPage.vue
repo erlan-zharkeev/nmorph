@@ -1,24 +1,26 @@
 <template>
   <div class="wrapper">
-    <NmorphForm :value="form">
-      <NmorphFormItem id="username">
-        <NmorphTextInput />
-      </NmorphFormItem>
-      <NmorphFormItem id="photo">
-        <NmorphDatePicker v-model="form.date.value" />
-      </NmorphFormItem>
-      <NmorphFormItem id="age">
-        <NmorphNumberInput />
-      </NmorphFormItem>
-      <NmorphFormItem id="photo">
-        <NmorphFileUpload />
-      </NmorphFormItem>
-    </NmorphForm>
+    <NmorphCard>
+      <NmorphForm :value="form">
+        <NmorphFormItem id="username">
+          <NmorphTextInput />
+        </NmorphFormItem>
+        <NmorphFormItem id="photo">
+          <NmorphDatePicker v-model="form.date.value" />
+        </NmorphFormItem>
+        <NmorphFormItem id="age">
+          <NmorphNumberInput />
+        </NmorphFormItem>
+        <NmorphFormItem id="photo">
+          <NmorphFileUpload />
+        </NmorphFormItem>
+      </NmorphForm>
+    </NmorphCard>
   </div>
 </template>
 <script lang="ts" setup>
 import { reactive } from "vue";
-import { NmorphForm, NmorphFormItem, NmorphNumberInput, NmorphTextInput, NmorphFileUpload, NmorphDatePicker } from "@nmorph/nmorph-ui-kit";
+import { NmorphCard, NmorphForm, NmorphFormItem, NmorphNumberInput, NmorphTextInput, NmorphFileUpload, NmorphDatePicker } from "@nmorph/nmorph-ui-kit";
 
 const form = reactive({
   username: {
@@ -41,8 +43,12 @@ const form = reactive({
 </script>
 
 <style>
+.wrapper {
+  padding: 16px;
+}
+
 .nmorph-form-item {
-  margin-bottom: 100px;
+  margin-bottom: 20px !important;
 }
 
 form {

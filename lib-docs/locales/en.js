@@ -1,27 +1,93 @@
 export default {
-  "guide": "Guide",
-  "components": "Components",
-  "about": "About",
-  "search": "Search",
-  "attributes": "Attributes",
-  "slots": "Slots",
-  "variables": "Variables",
-  "exposes": "Exposes",
+  guide: "Guide",
+  components: "Components",
+  about: "About the project",
+  search: "Search",
+  attributes: "Attributes",
+  slots: "Slots",
+  variables: "Variables",
+  exposes: "Expose",
   "right-aside-title": "Contents",
-  "name": "Name",
-  "events": "Events",
-  "description": "Description",
-  "type": "Type",
-  "default": "Default",
-  "basic": "Basic",
-  "data": "Data",
-  "feedback": "Feedback",
-  "form": "Form",
-  "navigation": "Navigation",
-  "other": "Other",
+  name: "Name",
+  events: "Events",
+  translates: "Translations",
+  description: "Description",
+  text: 'Text',
+  type: "Type",
+  default: "Default",
+  basic: "Basic",
+  data: "Data",
+  feedback: "Feedback",
+  form: "Form",
+  navigation: "Navigation",
+  other: "Other",
+  attention: "Attention",
   "top-bar": {
-    "menu": "Menu",
-    "nav": "Navigation",
+    menu: "Menu",
+    nav: "Navigation",
+  },
+  "footer-bar": {
+    license: "Licensed under",
+  },
+  "guide-page": {
+    "theme-customize": "Customize theme",
+    "custom-theme-color": "Change base color",
+    "custom-text-color": "Text color",
+    "custom-accent-color": "Accent color",
+    "enter-color": "Enter color",
+    "get-started-btn": "Quick start",
+    explained: "<b class=\"main-section__subtitle\">Neumorphism / Sceumorphism</b>",
+    "apply-theme": "Apply theme",
+    "main-content":
+      "<p class=\"main-section__first-explained-content\">Vue 3 UI kit for creating unique 3D designs in neumorphic style</p>",
+    "quick-start": {
+      installation: "Installation",
+      "choose-package-manager":
+        "Choose any package manager you prefer.<br>We recommend using reliable ones like <b>NPM</b>, <b>Yarn</b>, <b>Pnpm</b>",
+      plugin: "Library integration",
+      "alternative-plugin": "Alternative integration method",
+      usage: "Basic usage"
+    },
+    "config": {
+      "add-config": "Example of adding library configuration",
+      "available": "Currently, there are two available settings: theme and i18n",
+      "theme": "Theme",
+      "i18n": "Internationalization (i18n)",
+      "ls": "Save current theme in local storage",
+      "rest-themes": "Your custom themes",
+      "default-theme": "Selected default theme",
+      "dark-shade": "Dark shadow depth coefficient, works only with dynamic shadow generation approach",
+      "light-shade": "Light shadow depth coefficient, works only with dynamic shadow generation approach",
+      "shadow-width": "Shadow distance",
+      "shadow-blur": "Shadow blur",
+      "theme-explained": "You can pass your custom variables into the theme object for detailed theme customization.<br />Below is an example of the default theme object.",
+      "auto-generation": "There are two approaches to theme customization.<ul><li>1) Automatic shadow generation. You only need to pass the main color into the theme object. Then, the darkShade and lightShade variables will be generated automatically. Other variables will not be affected and should be added manually. You can also adjust shadow depth coefficients using darkShadeGeneratorCoefficient and lightShadeGeneratorCoefficient variables. These will affect shadows only with this (dynamic) approach.</li><li>2) Each variable must be manually added for each theme.</li>",
+      "main-var": "To automatically generate darkShade and lightShade, just pass this variable.",
+      "shade-var": "Will be automatically calculated if not mutated directly and passed via the main variable.",
+      "i18n-content": "For proper i18n functionality, ensure that you connect i18n before the library. Currently, three locales are available: en, zh, ru.<p>The default locale is en. Import only the locales you need.</p><p>If the locales are missing, you need to add your own. The locale property will overwrite the locale from i18n passed above.</p>",
+      "rewrite-translation": "Rewrite library translations. You can find translation message names in the component documentation.",
+      "other-messages": "Other translations"
+    },
+    "other": {
+      "utils-classes": "Utility classes"
+    },
+  },
+  "about-page": {
+    "alpha-test": "Alpha testing",
+    "alpha-test-lib":
+      "<p>Currently, the library is in the alpha testing stage.</p><p>Since the development is being carried out by a single developer (me), bug fixing and testing take a significant amount of time.</p><p>I would appreciate it if you report any issues.</p>",
+    "get-started": "Get started",
+    "overview": "Overview",
+    "overview-content":
+      "This is a UI component library for Vue 3, developed using neumorphic/skeuomorphic design. It provides a set of simple components for creating a unique user interface.",
+    "neumorphism": "What is neumorphism/skeuomorphism?",
+    "neumorphism-content":
+      "<p>Neumorphism is a design style that combines elements of flat design and skeuomorphism.</p><p>It creates the sensation of volume and soft shadows, making the interface look like it could be touched.</p><p>Neumorphism relies on pastel colors, light gradients, and soft shadows to create the effect of raised or inset elements.</p>"
+  },
+  "guide-menu": {
+    "quick-start": "Quick start",
+    "config": "Configuration",
+    "other": "Other"
   },
   "overview": {
     "basic-usage": "Basic usage",
@@ -34,9 +100,9 @@ export default {
     "thick": "Thick",
     "default": "Default",
     "thin": "Thin",
-    "i-am-ripple": "I am ripple",
-    "i-am-ripple-with-hover-bg": "I am ripple with hover bg",
-    "i-am-not-ripple": "I am not ripple",
+    "i-am-ripple": "I have ripple",
+    "i-am-ripple-with-hover-bg": "I have ripple and hover background",
+    "i-am-not-ripple": "I do not have ripple",
     "circle": "Circle",
     "round": "Round",
     "square": "Square",
@@ -47,7 +113,7 @@ export default {
     "summer": "Summer",
     "load-error": "Load error",
     "custom-loading-text": "Custom loading text",
-    "download-in-progress": "The download is in progress",
+    "download-in-progress": "Download in progress",
     "show": "Show",
     "edit": "Edit",
     "check": "Check",
@@ -55,117 +121,122 @@ export default {
     "underlined": "Underlined",
     "selected-page": "Selected page:",
     "loading": "Loading...",
-    "i-am-slot-prefix": "i'm slot prefix",
+    "i-am-slot-prefix": "I am slot prefix",
     "add": "Add",
     "remove": "Remove",
     "animated": "Animated",
     "loading-state": "Loading state",
-    "value": "value:",
+    "value": "Value:",
     "sort-values": "Sort values",
     "custom-label": "Custom label",
-    "custom-content-for": "custom content for",
-    "tag-zero": "tag zero",
-    "tag-one": "tag one",
-    "tag-two": "tag two",
+    "custom-content-for": "Custom content for",
+    "tag-zero": "Tag zero",
+    "tag-one": "Tag one",
+    "tag-two": "Tag two",
     "i-am-disabled": "I am disabled",
     "enter-text": "Enter text",
-    "model-text": "Model-text:",
+    "model-text": "Model text:",
+    "explore-components": "Explore components",
     "button": {
       "style-type": {
-        "subtitle": "Use *default* or *transparent* to define basic style"
+        "subtitle":
+          "Use *default* or *transparent* to define the base style."
       },
       "loading": {
-        "subtitle": "Use *boolean* to enable or disable loading icon"
+        "subtitle":
+          "Use *boolean* to enable or disable the loading icon."
       },
       "ripple": {
-        "subtitle": "Use *boolean* to enable or disable ripple effect on click"
+        "subtitle":
+          "Use *boolean* to enable or disable the ripple effect on click."
       },
       "height": {
-        "subtitle": "Set height, available *thick*, *default*, *thin*"
+        "subtitle":
+          "Set the height, available values are *thick*, *default*, *thin*."
       },
       "disabled": {
-        "subtitle": "Use *boolean* to disable button"
+        "subtitle": "Use *boolean* to disable the button."
       },
       "shape": {
         "info": {
           "title": "Info",
-          "content": "When using round or square, the size is changed using the --height variable"
+          "content":
+            "When using round or square, the size is changed using the --height variable."
         },
-        "subtitle": "Use shape to change button border-radius"
+        "subtitle": "Use shape to change the border radius of the button."
       },
       "api": {
         "type": "Native button type",
         "text": "Button text",
-        "loading": "Enable/Disable loader inside button",
+        "loading": "Enable/disable loader",
         "style-type": "Change button style",
-        "accent-bg-on-hover": "Enable/Disable background color while hover",
-        "ripple": "Enable/Disable waves on click",
-        "fill": "Button fill container",
-        "disabled": "Disable the button",
+        "accent-bg-on-hover": "Enable/disable background color on hover",
+        "ripple": "Enable/disable ripple on click",
+        "fill": "Fill container with button",
+        "disabled": "Disable button",
         "height": "Change button height",
-        "shape": "Shape change",
-        "icon": "Set icon from icon list"
+        "shape": "Change shape"
       },
       "slot": {
-        "default": "Customize button content",
-        "append": "Append your custom content"
+        "default": "Button content",
+        "append": "Custom content on the right",
+        "icon": "Place for the icon"
       },
       "variables": {
-        "height": "Define button height"
+        "height": "Button height"
       },
       "exposes": {
         "buttonDOMElement": "Original button DOM element"
       }
     },
     "icon": {
-      "search-icon": "Search icon",
+      "search-icon": "Find icon",
       "size": {
-        "subtitle": "Set icon size"
+        "subtitle": "Icon size. Defines both the height and width."
       },
       "width-height": {
-        "subtitle": "Set width/height"
+        "subtitle": "Define the width and height of the icon."
       },
       "color": {
-        "subtitle": "Set color, you can use custom colors or pass available variable"
+        "subtitle":
+          "Icon color. You can use custom colors or pass an available variable."
       },
       "api": {
-        "size": "Icon size",
-        "width": "Icon width",
-        "height": "Icon height",
-        "color": "Icon color",
-        "icon": "Icon list"
+        "size": "Icon size. Defines height and width",
+        "width": "Sets the width of the icon",
+        "height": "Sets the height of the icon",
+        "color": "Defines the icon color",
+        "icon": "Sets the icon from the available icon list"
       },
       "slot": {
-        "default": "Default icon content"
+        "default": "Slot for customizing the icon's content"
       },
       "variables": {
-        "color": "Icon color"
-      }
+        "color": "Defines the icon color"
+      },
     },
     "link": {
       "type": {
-        "subtitle": "Choose color type: *accent*, *success*, *error*, *warning*"
+        "subtitle": "Color type: *accent*, *success*, *error*, *warning*."
       },
       "underline": {
-        "subtitle": "Underline of link"
+        "subtitle": "Underline the link."
       },
       "disabled": {
-        "subtitle": "Disabled state of link"
-      },
-      "icon-name": {
-        "subtitle": "Link with icon"
+        "subtitle": "Inactive state of the link."
       },
       "api": {
         "type": "Color type",
         "href": "Native href attribute",
         "underline": "Show underline on hover",
-        "icon-name": "Icon list",
+        "icon-name": "Name from the icon list",
         "target": "Native target attribute",
-        "disabled": "Disable link"
+        "disabled": "Disable the link"
       },
       "slot": {
-        "default": "Customize link content",
-        "prepend": "Prepend custom content"
+        "default": "Custom content of the link",
+        "prepend": "Add custom content at the beginning",
+        "icon": "Place for the icon"
       },
       "variables": {
         "link-color": "Link color"
@@ -173,33 +244,38 @@ export default {
     },
     "scroll": {
       "height": {
-        "subtitle": "Use *height* property to set the height of the container, without setting the height, the scroll will not be activated"
+        "subtitle":
+          "Use the *height* property to set the container's height. Without setting a height, scrolling will not be activated."
       },
       "max-height": {
-        "subtitle": "The scroll is displayed only when the element height exceeds the max height."
+        "subtitle":
+          "Scroll is displayed only if the element's height exceeds the maximum height."
       },
-      "value": {
-        "subtitle": "Bind and update model value to change scroll position"
+      "model-value": {
+        "subtitle": "Property for two-way data binding of the model."
       },
       "horizontal-scroll": {
-        "subtitle": "If the width of the element exceeds the width of the scrollbar, a horizontal scrollbar appears"
+        "subtitle":
+          "If the element's width exceeds the scroll area width, a horizontal scrollbar appears."
       },
       "api": {
-        "height": "Sets the scroll container's height, supporting both static and dynamic values",
-        "max-height": "Specifies the maximum height of the scroll container, limiting its vertical size",
-        "model-value": "Holds the current scroll position, used for two-way binding and scroll control",
-        "scroll-y-prop": "Determines the vertical scroll behavior, such as auto or hidden",
-        "scroll-x-prop": "Sets the horizontal scroll behavior, controlling the visibility and functionality of the horizontal scroll",
-        "css-scroll-behavior": "Defines the scroll's animation behavior, such as smooth for a gradual scrolling effect",
-        "scroll-end-delay": "Scroll end delay in ms",
-        "update-only-on-scroll-end": "When set to true, updates the model-value only after scrolling has ended",
-        "y-bar-width-in-px": "Y scrollbar width",
-        "x-bar-width-in-px": "X scrollbar width",
-        "y-gap-in-px": "Y scrollbar content indentation",
-        "x-gap-in-px": "X scrollbar content indentation",
-        "role": "role of view",
-        "aria-label": "aria-label of view",
-        "aria-orientation": "aria-orientation of view"
+        "height": "Sets the scroll container's height",
+        "max-height": "Sets the scroll container's maximum height",
+        "model-value":
+          "Contains the current scroll position, used for two-way binding and scroll control",
+        "scroll-y-prop":
+          "Defines the vertical scroll behavior, e.g., *auto* or *hidden*",
+        "scroll-x-prop":
+          "Defines the horizontal scroll behavior, e.g., *auto* or *hidden*",
+        "css-scroll-behavior":
+          "Defines scroll animation behavior, e.g., *smooth* for smooth scrolling",
+        "scroll-end-delay": "Delay before scroll ends in milliseconds",
+        "update-only-on-scroll-end":
+          "When set to *true*, updates the model value only after the scroll ends",
+        "y-bar-width-in-px": "Vertical scrollbar width",
+        "x-bar-width-in-px": "Horizontal scrollbar width",
+        "y-gap-in-px": "Content gap for the vertical scrollbar",
+        "x-gap-in-px": "Content gap for the horizontal scrollbar"
       },
       "slot": {
         "default": "Scroll content"
@@ -208,275 +284,321 @@ export default {
         "thumb-color": "Thumb color"
       },
       "exposes": {
-        "scrollDOMContainer": "Container element",
-        "moveTo": "fn to pass new coordinates"
+        "scrollDOMContainer": "DOM element of the container",
+        "moveTo": "Function to set new coordinates"
       },
       "events": {
         "update:model-value": "Event for intercepting two-way binding",
-        "on-scroll-end": "Event are triggered after the end of the scrolling animation",
+        "on-scroll-end":
+          "Event triggered after scroll animation ends",
         "on-scroll": "Scroll event"
-      }
+      },
     },
     "avatar": {
       "size": {
-        "subtitle": "Specifies the size of the avatar, accept only *number*."
+        "subtitle": "Sets the size of the avatar, accepts a *number* type value."
       },
       "shape": {
-        "subtitle": "Determines the shape of the avatar. Can be *circle* or *square*."
+        "subtitle": "Defines the shape of the avatar. Can be *circle* or *square*."
       },
       "fit": {
-        "subtitle": "Defines how the image fits into the container."
+        "subtitle": "Defines how the image is displayed in the container."
       },
       "api": {
-        "size": "Specifies the avatar's size.",
-        "shape": "Defines the shape of the avatar.",
-        "src": "URL of the avatar image.",
-        "src-set": "List of image sources.",
-        "alt": "Text description for the image.",
-        "fit": "Specifies how the image fills the container."
+        "size": "Sets the size of the avatar",
+        "shape": "Defines the shape of the avatar",
+        "src": "Avatar image URL",
+        "src-set": "List of image sources",
+        "alt": "Text description of the image",
+        "fit": "Defines how the image fills the container",
+        "frame-border": "Defines the thickness of the frame",
+        "image-padding": "Inner padding"
       },
       "slot": {
-        "error": "Slot for displaying load errors"
+        "error": "Slot to display the load error"
       },
       "events": {
-        "error": "Native img error event",
-        "load": "Native img load event"
+        "error": "Event for image load error",
+        "load": "Event for successful image load"
       }
     },
     "badge": {
       "value": {
-        "subtitle": "The displayed value on the badge, can be a *string* or *number*."
+        "subtitle":
+            "The displayed value on the badge, can be *string* or *number*."
       },
       "max": {
-        "subtitle": "Maximum value for the badge. If exceeded, it will display as *max+*."
+        "subtitle":
+            "Maximum value for the badge. If it's set as a number and exceeded, it's displayed as max+."
       },
       "is-dot": {
-        "subtitle": "Displays the badge as a small dot if set to *true*."
+        "subtitle":
+            "Displays the badge as a small dot if set to *true*."
       },
       "hidden": {
-        "subtitle": "Controls whether the badge is hidden."
+        "subtitle": "Controls the visibility of the badge."
       },
       "color": {
-        "subtitle": "The background color of the badge."
+        "subtitle": "Background color of the badge."
       },
       "offset": {
-        "subtitle": "Horizontal/Vertical offset of the badge relative to its parent element."
+        "subtitle":
+            "Horizontal/vertical offset of the badge relative to its parent."
       },
       "api": {
-        "value": "Displayed value on the badge.",
-        "max": "Maximum value that can be displayed.",
-        "is-dot": "Displays the badge as a dot.",
-        "hidden": "Hides the badge.",
-        "color": "Sets the background color of the badge.",
-        "offset-y": "Vertical position offset for the badge.",
-        "offset-x": "Horizontal position offset for the badge."
+        "value": "The displayed value on the badge",
+        "max": "Maximum value to display",
+        "is-dot": "Displays the badge as a dot",
+        "hidden": "Hides the badge",
+        "color": "Sets the background color of the badge",
+        "offset-y": "Vertical offset of the badge",
+        "offset-x": "Horizontal offset of the badge"
       },
       "slot": {
-        "default": "Relative content for badge"
+        "default": "Custom content for the badge"
       },
       "variables": {
-        "dot-size": "Width and height"
+        "dot-size": "Width and height of the dot"
       }
     },
     "card": {
       "shadow-type": {
-        "subtitle": "Specifies the type of shadow effect for the card. Accepts values like *always*, *hover*, or *never*."
+        "subtitle": "Defines the shadow type for the card."
       },
       "api": {
-        "shadow-type": "Defines the shadow visibility on the card."
+        "shadow-type": "Defines the visibility of the card's shadow."
       },
       "slot": {
         "header": "Card header",
         "footer": "Card footer"
       },
       "variables": {
-        "card-padding": "Indentation for all edges"
+        "card-padding": "Padding for all edges"
       }
     },
     "image": {
       "fit": {
-        "subtitle": "Defines how the image fits within its container. Accepts values like *fill*, *contain*, *cover*, *none*, *scale-down*.",
+        "subtitle": "Defines how the image fits into the container. Accepts values such as *fill*, *contain*, *cover*, *none*, *scale-down*.",
         "info": {
-          "title": "Info",
-          "content": "To display fit property correctly, make sure that you have limited size the wrapper"
+          "title": "Information",
+          "content":
+            "To ensure the 'fit' property is displayed correctly, make sure the container has a fixed size."
         }
       },
-      "close-on-outside-click": {
-        "subtitle": "Closes the image preview when clicking outside of it, if set to *true*."
-      },
-      "alt": {
-        "subtitle": "Alternative text for the image when it cannot be displayed."
-      },
       "loading-text": {
-        "subtitle": "Text displayed while the image is loading."
+        "subtitle": "Text displayed during image loading."
       },
       "load-failed-text": {
         "subtitle": "Text displayed when the image fails to load."
       },
       "api": {
-        "fit": "Specifies how the image should fit within its container.",
-        "close-on-outside-click": "Closes the preview when clicking outside of it.",
+        "fit": "Defines how the image should fit into the container.",
+        "close-on-outside-click":
+          "Closes the preview when clicking outside the container.",
         "alt": "Text description for the image.",
         "loading-text": "Text displayed during image loading.",
-        "load-failed-text": "Text shown if the image load fails.",
-        "frame-border": "Define border thickness",
-        "image-padding": "Define image padding",
-        "src": "URL of the image.",
+        "load-failed-text":
+          "Text displayed when the image fails to load.",
+        "frame-border": "Defines the thickness of the frame.",
+        "image-padding": "Defines the padding of the image.",
+        "src": "Image URL.",
         "src-set": "List of image sources."
       },
       "slot": {
-        "loading": "Slot for custom content to display during image loading.",
-        "error": "Slot for custom content to display when the image fails to load."
+        "loading": "Slot for custom content displayed during image loading.",
+        "error": "Slot for custom content displayed when image loading fails."
       },
       "variables": {
         "width": "Defines the width of the image.",
         "height": "Defines the height of the image.",
-        "background-color": "Defines the background-color of the image"
+        "background-color": "Defines the background color of the image."
       },
       "events": {
-        "error": "Native error event",
-        "load": "Native load event"
+        "error": "Image error event.",
+        "load": "Image load event."
+      },
+      "translates": {
+        "loadingText": "Loading ...",
+        "loadFailedText": "Failed to load image."
       }
     },
     "tag-list": {
       "api": {
-        "model-value": "List of tag element objects"
+        "model-value": "List of tags"
       },
       "events": {
         "update:model-value": "Event for intercepting two-way binding",
-        "close": "Return closed tag value"
+        "close": "Returns the value of the closed tag"
       }
     },
     "tag-item": {
-      "value": {
-        "subtitle": "The value assigned to the component, typically *string* or *number*."
-      },
       "text": {
         "subtitle": "Defines the text content displayed in the component."
       },
       "removable": {
-        "subtitle": "Determines if the component can be removed by the user. Accepts only *boolean*.",
+        "subtitle":
+          "Defines whether the component can be removed by the user. Accepts *boolean*.",
         "info": {
-          "title": "Info",
-          "content": "If you want the tag rendering to be handled automatically, you can wrap the component in NmorphTagList."
+          "title": "Information",
+          "content":
+            "If you want the tag display to be handled automatically, you can wrap the component in NmorphTagList."
         }
       },
       "height": {
-        "subtitle": "Specifies the height of the component."
+        "subtitle": "Defines the height of the component."
       },
       "design": {
-        "subtitle": "If set to *common*, the component will be rendered with border"
+        "subtitle":
+          "If set to *common*, the component will be displayed with a border."
       },
       "api": {
-        "value": "Defines the value for the component.",
-        "text": "Sets the text displayed inside the component.",
-        "removable": "Indicates whether the component can be removed. Automatically works when wrapped in NmorphTagList.",
-        "design": "Specifies component style",
-        "height": "Define component height"
+        "value": "Defines the identifier value for the component",
+        "text": "Sets the text displayed inside the component",
+        "removable":
+          "Defines whether the component can be removed. Works automatically when wrapped in NmorphTagList",
+        "design": "Defines the style of the component",
+        "height": "Sets the height of the component"
       },
       "events": {
-        "close": "Return closed tag value"
+        "close": "Returns the value of the closed tag"
       }
     },
     "skeleton": {
       "animated": {
-        "subtitle": "Enables animation for the skeleton component when set to *true*."
+        "subtitle":
+          "Enables animation for the skeleton component if set to *true*."
       },
       "loading": {
-        "subtitle": "Controls whether the skeleton is displayed, typically based on a loading state."
+        "subtitle": "Controls the display of the skeleton."
       },
       "rows": {
-        "subtitle": "Specifies the number of rows in the skeleton, usually for simulating text content."
+        "subtitle":
+          "Defines the number of rows in the skeleton, typically for simulating text content."
       },
       "api": {
-        "animated": "Toggles animation for the skeleton component.",
-        "loading": "Determines whether the skeleton is shown based on the loading state.",
-        "rows": "Defines the number of rows in the skeleton layout."
+        "animated": "Enables animation for the skeleton component",
+        "loading": "Defines whether the skeleton is displayed.",
+        "rows": "Sets the number of rows in the skeleton."
       },
       "slot": {
-        "template": "Slot for custom skeleton structure when loading.",
-        "default": "Default slot content when not loading."
+        "template": "Slot for custom skeleton structure during loading.",
+        "default": "Default slot content when loading is complete."
       },
       "variables": {
-        "loading-gradient": "Defines the gradient color used during skeleton loading animation."
+        "loading-gradient":
+          "Defines the gradient color used during the skeleton loading animation."
       }
     },
     "skeleton-item": {
       "api": {
-        "variant": "Defines the type of skeleton to render, like text or circular.",
-        "design": "Sets the design of the skeleton item, such as color or borders.",
-        "width": "Specifies the width of the skeleton item."
+        "variant":
+          "Defines the type of skeleton to display, such as text or circle.",
+        "design": "Defines the design of the skeleton item.",
+        "width": "Sets the width of the skeleton item."
       }
     },
     "progress": {
       "type": {
-        "subtitle": "Specifies the type of progress bar, e.g., *line* or *circle*."
+        "subtitle":
+          "Defines the type of progress indicator, such as *linear* or *circle*."
       },
       "color": {
-        "subtitle": "Sets the color of the progress bar."
+        "subtitle": "Sets the color of the progress indicator."
       },
       "percentage": {
         "subtitle": "Defines the percentage of progress completed.",
         "info": {
-          "title": "Info",
-          "content": "Make sure to specify the width of the wrapper container for proper display."
+          "title": "Information",
+          "content":
+            "Ensure that the width of the wrapper container is set for proper display."
         }
       },
       "value-inside": {
-        "subtitle": "Displays the progress text inside the bar if set to *true*."
+        "subtitle":
+          "Displays the progress text inside the bar if set to *true*."
       },
       "value-right-side": {
-        "subtitle": "Shows or hides the percentage text alongside the progress bar."
+        "subtitle":
+          "Shows or hides the percentage text next to the progress indicator."
       },
       "indeterminate": {
-        "subtitle": "Shows an indeterminate progress animation when set to *true*."
+        "subtitle":
+          "Displays the indeterminate progress animation when set to *true*."
       },
       "circle-size": {
-        "subtitle": "Specifies the size of the circular progress bar."
+        "subtitle": "Defines the size of the circular progress indicator."
       },
       "api": {
-        "type": "Specifies the type of progress indicator.",
-        "color": "Defines the color of the progress bar.",
-        "percentage": "Sets the progress percentage value.",
-        "value-inside": "Displays progress text inside the bar.",
-        "value-right-side": "Shows or hides percentage text.",
-        "indeterminate": "Enables indeterminate progress animation.",
-        "circle-size": "Defines the size of the circular progress bar."
+        "type": "Specifies the type of progress indicator",
+        "color": "Sets the color of the progress indicator",
+        "percentage": "Sets the percentage of progress",
+        "value-inside": "Displays the progress text inside the bar",
+        "value-right-side": "Shows or hides the percentage text on the right",
+        "indeterminate": "Enables the indeterminate progress animation",
+        "circle-size": "Sets the size of the circular progress indicator"
       },
       "slot": {
-        "inner-text": "Slot for custom content inside the progress bar.",
-        "right-side": "Slot for custom content on the right side of the progress bar.",
-        "circle-inner-part": "Slot for custom content inside the circular progress."
+        "inner-text":
+          "Slot for custom content inside the progress indicator.",
+        "right-side":
+          "Slot for custom content to the right of the progress indicator.",
+        "circle-inner-part":
+          "Slot for custom content inside the circular progress indicator."
       },
       "variables": {
-        "height": "Defines the height of the progress bar.",
-        "width-transition": "Sets the transition animation for width changes.",
-        "animation": "Controls the animation settings for the progress bar."
+        "height": "Defines the width of the progress indicator.",
+        "width-transition": "Sets the progress animation.",
+        "animation": "Controls the settings of the progress indicator's animation."
       }
     },
     "calendar": {
       "type": {
-        "subtitle": "Defines the calendar type, such as *single* or *multiple* selection."
+        "subtitle":
+          "Defines the type of calendar, such as *date* or *dates* selection."
       },
       "custom-content": {
         "subtitle": ""
       },
       "range": {
-        "subtitle": "Determines whether the calendar operates in range selection mode."
+        "subtitle": "Sets the boundaries of the displayed calendar."
       },
       "api": {
-        "mark-today": "Highlights today's date.",
-        "initial-date": "Sets the initial date displayed in the calendar.",
-        "model-value": "Represents the selected date(s) in the calendar.",
-        "type": "Defines the calendar selection type.",
-        "range": "Enables range selection mode in the calendar, allowing selection of a date range."
+        "mark-today": "Highlights today's date",
+        "initial-date":
+          "Sets the initial date displayed in the calendar",
+        "model-value": "Represents the selected date(s) in the calendar",
+        "type": "Defines the selection type in the calendar",
+        "range":
+          "Enables range selection mode in the calendar, allowing date range selection in the calendar. Not the selected range, but the displayed calendar range."
       },
       "slot": {
-        "header": "Slot for customizing the calendar header.",
-        "content": "Slot for customizing the calendar content."
+        "header": "Calendar header slot",
+        "content": "Calendar content slot"
       },
       "variables": {
-        "table-data-cell-height": "Defines the height of each date cell in the calendar."
+        "table-data-cell-height":
+          "Defines the height of each date cell in the calendar"
+      },
+      "translates": {
+        "sun": "Sunday",
+        "mon": "Monday",
+        "tue": "Tuesday",
+        "wed": "Wednesday",
+        "thu": "Thursday",
+        "fri": "Friday",
+        "sat": "Saturday",
+        "jan": "January",
+        "feb": "February",
+        "mar": "March",
+        "apr": "April",
+        "may": "May",
+        "jun": "June",
+        "jul": "July",
+        "aug": "August",
+        "sep": "September",
+        "oct": "October",
+        "nov": "November",
+        "dec": "December"
       }
     },
     "image-preview": {
@@ -484,19 +606,24 @@ export default {
         "subtitle": "Controls the visibility of the image preview."
       },
       "initial-index": {
-        "subtitle": "Defines the initial image index when multiple images are present."
+        "subtitle":
+          "Defines the initial index of the image when there are multiple images."
       },
       "src": {
-        "subtitle": "The source URL of the image to be previewed."
+        "subtitle": "URL of the image for preview."
       },
       "api": {
-        "model-value": "Boolean that toggles the visibility of the image preview.",
-        "alt": "Alternative text that describes the image when it cannot be loaded.",
-        "initial-index": "Index of the first image displayed in a set of images.",
-        "src": "URL of the image to be displayed in the preview.",
-        "scale-step": "Increment step for scaling (zooming) the image.",
-        "min-scale-level": "Defines the minimum zoom level allowed for the image.",
-        "max-scale-level": "Defines the maximum zoom level allowed for the image."
+        "model-value":
+          "Boolean value that toggles the visibility of the image preview",
+        "alt": "Text describing the image when it cannot be loaded",
+        "initial-index":
+          "Index of the first image displayed in the image set",
+        "src": "URL of the image for preview",
+        "scale-step": "Zoom (scaling) step for the image",
+        "min-scale-level":
+          "Defines the minimum scale level for the image",
+        "max-scale-level":
+          "Defines the maximum scale level for the image"
       },
       "slot": {},
       "variables": {
@@ -509,21 +636,25 @@ export default {
     },
     "pagination": {
       "basic-usage": {
-        "subtitle": "Basic usage of the pagination component, allowing navigation between pages."
+        "subtitle": ""
       },
       "api": {
-        "total-elements-quantity": "Total number of items for pagination.",
-        "model-value": "The current active page number.",
-        "elements-quantity-on-page": "Number of elements displayed on each page.",
-        "disabled": "Boolean that disables the pagination component.",
-        "hide-on-single-page": "Hides the pagination component if there is only one page.",
-        "max-visible-pages": "Defines how many pages are visible in the pagination control.",
-        "fast-forward-step": "Determines how many pages are skipped when fast forwarding."
+        "total-elements-quantity": "Total number of elements for pagination.",
+        "model-value": "Current active page number.",
+        "elements-quantity-on-page":
+          "Number of elements displayed on each page.",
+        "disabled": "Boolean value that disables the pagination component.",
+        "hide-on-single-page":
+          "Hides the pagination component if there is only one page.",
+        "max-visible-pages":
+          "Defines how many pages are displayed in the pagination control.",
+        "fast-forward-step":
+          "Defines how many pages are skipped when fast-forwarding."
       },
       "slot": {},
       "variables": {},
       "events": {
-        "update:model-value": "Emitted when the current page number changes."
+        "update:model-value": "Event for intercepting two-way binding"
       }
     },
     "table": {
@@ -534,122 +665,127 @@ export default {
         "click-me-text": "Click me!",
         "info": {
           "title": "Important Information",
-          "content": "The 'bordered' property works only if the 'design' property is set to 'common'. Additionally, sorting currently works only with two values: 'ascending' and 'descending'.\nPlease note that table is still under active development and may contain some wrong behavior."
+          "content":
+            "'bordered' property works only if 'design' property is set to 'common'. Additionally, sorting currently works only with two values: 'ascending' and 'descending'.\nPlease note that the table is under active development and may contain bugs."
         }
       },
       "api": {
-        "data": "Defines the data to be displayed in the table.",
-        "row-hover": "Boolean that toggles the hover effect on table rows.",
-        "bordered": "Boolean that enables or disables borders around table cells. Works only if the 'design' property is set to 'common'.",
-        "sort": "Defines sorting behavior for table columns.",
-        "design": "Allows customization of table styles."
+        "data": "Defines the data to be displayed in the table",
+        "row-hover":
+          "Boolean value that enables or disables hover effect on table rows",
+        "bordered":
+          "Boolean value that enables or disables borders around table cells. Works only if 'design' property is set to 'common'",
+        "sort": "Defines the sorting behavior for table columns",
+        "design": "Table display style"
       },
       "slot": {},
       "variables": {
-        "border-color": "Sets the border color of the table.",
-        "table-cell-height": "Defines the height of table cells."
+        "border-color": "Sets the table border color",
+        "table-cell-height": "Defines the height of table cells"
       }
     },
     "table-column": {
       "api": {
-        "prop": "Specifies the property name from the data source to be displayed in this column.",
-        "label": "The header label for the column, displayed in the table's header.",
-        "width": "Defines the width of the column in a css value",
-        "alignment": "Sets the text alignment in the column. Accepts 'left', 'center', or 'right'."
+        "prop": "Specifies the property name from the data source to be displayed in this column",
+        "label": "Column header to be displayed in the table header",
+        "width": "Defines the column width in CSS value",
+        "alignment":
+          "Sets text alignment in the column. Accepts 'left', 'center', or 'right'"
       }
     },
     "table-cell": {
       "api": {
-        "row": "Required property. Passes the row index from the scope, representing the current row being rendered."
+        "row": "Required property. Passes the row index from the scope representing the current row being rendered."
       },
       "slot": {
-        "default": "The default slot used to customize the content inside each cell of the column. Provides access to the row data and other relevant scope properties."
+        "default":
+          "The default slot is used to customize content inside each column cell. Provides access to the row data and other relevant properties from the scope."
       }
     },
     "tooltip": {
       "text": {
-        "subtitle": "The content to be displayed inside the tooltip.",
-        "hover-me": "Hover me",
-        "i-am-tooltip": "I am tooltip",
+        "subtitle": "Content displayed inside the tooltip.",
+        "hover-me": "Hover over me",
+        "i-am-tooltip": "I am a tooltip",
         "tooltip": "Tooltip",
         "button": "Button"
       },
       "position": {
-        "subtitle": "Specifies the position of the tooltip relative to the target element. Accepts values such as 'top', 'bottom', 'left', 'right'."
+        "subtitle": "Defines the position of the tooltip relative to the target element. Accepts values such as 'top', 'bottom', 'left', 'right'."
       },
       "force-coordinate": {
         "subtitle": "Overrides the default positioning logic and allows specifying exact coordinates for the tooltip."
       },
       "api": {
-        "text": "Defines the text content for the tooltip.",
-        "position": "Sets the position of the tooltip relative to its target.",
-        "force-show": "Boolean that forces the tooltip to be shown.",
-        "force-coordinate": "Allows manual control of the tooltip's coordinates."
+        "text": "Defines the text content of the tooltip",
+        "position": "Sets the position of the tooltip relative to the target element",
+        "force-show": "Boolean value that forcibly shows the tooltip",
+        "force-coordinate": "Allows manual control over the tooltip's coordinates"
       },
       "slot": {},
       "variables": {
-        "max-width": "Sets the maximum width of the tooltip content. It helps to prevent the tooltip from becoming too wide.",
-        "width": "Sets the width of the tooltip content. Allows controlling the horizontal size of the tooltip.",
-        "height": "Sets the height of the tooltip content. Allows controlling the vertical size of the tooltip."
+        "max-width": "Sets the maximum width of the tooltip content",
+        "width": "Sets the width of the tooltip content. Controls the horizontal size of the tooltip",
+        "height": "Sets the height of the tooltip content. Controls the vertical size of the tooltip"
       }
     },
     "alert": {
       "basic-usage": {
         "title": "Any title",
-        "content": "Content for alert",
+        "content": "Content for the alert",
         "info": {
           "title": "Additional Information",
-          "content": "For managing multiple alerts efficiently, use the 'NmorphNotificationProvider' component, which allows grouping and controlling alert notifications centrally."
+          "content": "To conveniently manage multiple alerts, use the 'NmorphNotificationProvider' component, which allows grouping and centrally managing alerts."
         }
       },
       "use-provider": {
-        "subtitle": "To use the provider, the hook needs to be imported from the library."
+        "subtitle": "To use the provider, you need to import the hook from the library."
       },
       "api": {
-        "id": "Unique identifier for the alert component.",
-        "type": "Defines the type of alert (e.g., success, error, warning, info).",
-        "closable": "Boolean that determines whether the alert can be closed by the user.",
-        "title": "Title text displayed at the top of the alert.",
-        "content": "Main message or content of the alert.",
-        "fill": "Determines if the alert should occupy the full width of its container.",
-        "max-width": "Maximum width of the alert component.",
-        "show-icon": "Boolean that shows an icon based on the alert type.",
-        "bordered": "Adds a border around the alert to make it stand out.",
-        "html": "Allows HTML content in the alert body. Use carefully to avoid XSS vulnerabilities."
+        "id": "Unique identifier for the alert component",
+        "type": "Defines the alert type (e.g., success, error, warning, info)",
+        "closable": "Boolean value that defines whether the alert can be closed by the user",
+        "title": "Title displayed in the alert",
+        "content": "Content of the alert",
+        "fill": "Defines whether the alert should occupy the full width of its container",
+        "max-width": "Maximum width of the alert component",
+        "show-icon": "Boolean value that displays an icon based on the alert type",
+        "bordered": "Adds a border around the alert for emphasis",
+        "html": "Allows HTML content in the alert body. Use with caution to avoid XSS vulnerabilities"
       },
       "slot": {
-        "icon": "Slot to customize the icon displayed in the alert.",
-        "title": "Slot to customize the title content of the alert.",
-        "default": "Slot to customize the main content of the alert."
+        "icon": "Slot for customizing the icon displayed in the alert",
+        "title": "Slot for customizing the alert's title",
+        "default": "Slot for customizing the main content of the alert"
       },
       "variables": {},
       "events": {
-        "close": "Emitted when the alert is closed by the user."
+        "close": "Event triggered when the alert is closed by the user"
       }
     },
     "dialog": {
       "basic-usage": {
         "subtitle": "",
-        "show-modal": "Show modal"
+        "show-modal": "Show modal window"
       },
       "api": {
-        "model-value": "Boolean that controls the visibility of the dialog.",
-        "title": "Defines the title text of the dialog.",
-        "width": "Sets the width of the dialog box.",
-        "open-delay": "The delay time in milliseconds before opening the dialog.",
-        "close-delay": "The delay time in milliseconds before closing the dialog.",
-        "close-on-click-modal": "Boolean that allows the dialog to close when clicking outside.",
-        "show-close": "Boolean that displays the close button in the dialog.",
-        "z-index": "Defines the z-index for the dialog to manage stacking context.",
-        "close-on-overlay": "Boolean that specifies if the dialog should close when clicking on the overlay area."
+        "model-value": "Boolean value that controls the visibility of the dialog window",
+        "title": "Defines the text of the dialog header",
+        "width": "Sets the width of the dialog window",
+        "open-delay": "Delay in milliseconds before opening the dialog window",
+        "close-delay": "Delay in milliseconds before closing the dialog window",
+        "close-on-click-modal": "Boolean value that allows closing the dialog window by clicking outside",
+        "show-close": "Boolean value that displays the close button in the dialog window",
+        "z-index": "Defines the z-index for controlling the overlay of the dialog window",
+        "close-on-overlay": "Boolean value indicating whether the dialog window should be closed when clicking on the overlay area"
       },
       "slot": {
-        "header": "Slot to customize the content of the dialog header.",
-        "default": "Slot to define the main content of the dialog."
+        "header": "Slot for customizing the content of the dialog header.",
+        "default": "Slot for defining the main content of the dialog window."
       },
       "events": {
-        "on-close": "Emitted when the dialog is closed by the user.",
-        "update:model-value": "Emitted when the visibility of the dialog changes."
+        "on-close": "Event that triggers when the dialog window is closed by the user.",
+        "update:model-value": "Event that triggers when the visibility of the dialog window changes."
       },
       "variables": {
         "width": "Defines the width of the dialog component."
@@ -657,10 +793,10 @@ export default {
     },
     "divider": {
       "direction": {
-        "subtitle": "Specifies the direction of the divider. Accepts 'horizontal' or 'vertical' values."
+        "subtitle": "Defines the direction of the divider. Accepts 'horizontal' or 'vertical'."
       },
       "api": {
-        "direction": "Defines the orientation of the divider, either 'horizontal' or 'vertical'."
+        "direction": "Defines the orientation of the divider: 'horizontal' or 'vertical'."
       },
       "slot": {},
       "variables": {}
@@ -672,14 +808,14 @@ export default {
         "show-transparent": "Show transparent"
       },
       "api": {
-        "show": "Controls the visibility of the component. Set to *true* to show it, *false* to hide.",
-        "transparent": "Boolean that sets the component's background to be transparent if enabled."
+        "show": "Controls the visibility of the component",
+        "transparent": "Boolean value that makes the component's background transparent if enabled"
       },
       "slot": {
-        "default": "Default slot for customizing the content inside the component."
+        "default": "Default slot for customizing the content inside the component"
       },
       "events": {
-        "on-outside-click": "Emitted when a user clicks outside of the component."
+        "on-outside-click": "Event triggered when the user clicks outside the component"
       },
       "variables": {}
     },
@@ -688,105 +824,103 @@ export default {
         "subtitle": ""
       },
       "placement": {
-        "subtitle": "Defines the position of the notifications on the screen. Accepts values like 'top-right', 'bottom-left', etc."
+        "subtitle": "Defines the position of the notifications on the screen."
       },
       "z-index": {
         "subtitle": "Sets the z-index for the notifications to control their stacking order."
       },
       "quantity": {
-        "subtitle": "Limits the maximum number of notifications that can be displayed simultaneously."
+        "subtitle": "Limits the maximum number of notifications that can be displayed at the same time."
       },
       "api": {
-        "notifications": "Array containing the notifications to be displayed.",
-        "placement": "Specifies where the notifications will appear on the screen.",
-        "z-index": "Defines the stacking order of the notifications.",
-        "quantity": "Maximum number of notifications allowed on the screen at one time.",
-        "close-icon-position": "Determines the location of the close button"
+        "notifications": "Array containing the notifications",
+        "placement": "Specifies where the notifications will appear on the screen",
+        "z-index": "Defines the stacking order of the notifications",
+        "quantity": "Maximum number of notifications that can be on the screen at the same time"
       },
       "slot": {},
       "variables": {}
     },
     "tabs": {
       "api": {
-        "model-value": "Controls the active state of the component, typically used to bind the selected value.",
-        "stretch": "Boolean that determines if the component should stretch to fill the available space."
+        "model-value": "Controls the active state of the component",
+        "stretch": "Boolean value that defines whether the component should stretch to fill available space"
       },
       "slot": {
-        "default": "Slot to customize the content inside each tab."
+        "default": "Slot for customizing the content inside each tab"
       },
       "variables": {},
       "events": {
-        "update:model-value": "Emitted when the active tab changes.",
-        "tab-change": "Emitted when a user changes tabs, indicating the new active tab."
+        "update:model-value": "Event triggered when the active tab changes",
+        "tab-change": "Event triggered when the tab changes"
       }
     },
     "tab-pane": {
       "api": {
-        "label": "The text label for the tab, displayed in the tab navigation.",
-        "name": "A unique identifier for the tab, used for managing the active tab.",
-        "disabled": "Boolean that indicates whether the tab is disabled and cannot be selected."
+        "label": "Label for the tab displayed in the tab navigation",
+        "name": "Unique identifier for the tab, used to control the active tab",
+        "disabled": "Boolean value indicating whether the tab is disabled and cannot be selected"
       },
       "slot": {
-        "label": "Slot to customize the label of the tab.",
-        "default": "Slot to define the main content of the tab."
+        "label": "Slot for customizing the tab label",
+        "default": "Slot for defining the main content of the tab"
       }
     },
     "dropdown": {
       "basic-usage": {
-        "subtitle": "Controls whether the dropdown is open. Set to *true* to open, *false* to close.",
         "first-menu": "First menu",
         "second-menu": "Second menu"
       },
       "api": {
-        "open": "Boolean that controls the visibility of the dropdown.",
-        "relative-element": "Defines the element relative to which the dropdown will be positioned.",
-        "width": "Specifies the width of the dropdown.",
-        "x-offset": "Horizontal offset in pixels for adjusting the dropdown's position.",
-        "y-offset": "Vertical offset in pixels for adjusting the dropdown's position.",
-        "fill-width": "Boolean that determines if the dropdown should occupy the full width of the container."
+        "open": "Boolean value controlling the visibility of the dropdown",
+        "relative-element": "Defines the element relative to which the dropdown will be positioned",
+        "width": "Sets the width of the dropdown",
+        "x-offset": "Horizontal offset in pixels for adjusting the dropdown position",
+        "y-offset": "Vertical offset in pixels for adjusting the dropdown position",
+        "fill-width": "Boolean value defining whether the dropdown should occupy the entire container width"
       },
       "slot": {
-        "default": "Slot to customize the content inside the dropdown."
+        "default": "Slot for customizing the content inside the dropdown"
       },
       "variables": {},
       "events": {
-        "on-outside-click": "Emitted when the user clicks outside of the dropdown, which can be used to close it."
+        "on-outside-click": "Event triggered when the user clicks outside the dropdown, which can be used to close it"
       }
     },
     "backtop": {
       "basic-usage": {
         "info": {
-          "title": "Info",
-          "content": "Make sure that the scroll container height is defined."
+          "title": "Information",
+          "content": "Make sure the scroll container height is defined."
         },
         "scroll-down": "Scroll down"
       },
       "api": {
-        "right": "Specifies the distance from the right edge of the screen.",
-        "bottom": "Specifies the distance from the bottom edge of the screen.",
-        "visibility-height": "Defines the scroll height at which the Backtop button becomes visible. Accepts a number in pixels.",
-        "design": "Common style or neuromorphic"
+        "right": "Sets the distance from the right edge of the screen",
+        "bottom": "Sets the distance from the bottom edge of the screen",
+        "visibility-height": "Defines the scroll height at which the back-to-top button becomes visible. Accepts a number in pixels",
+        "design": "Defines the style of the button"
       },
       "slot": {
-        "default": "Slot to customize the content of the Backtop button."
+        "default": "Slot for customizing the content of the back-to-top button"
       },
       "events": {
-        "click": "Emitted when the Backtop button is clicked."
+        "click": "Event triggered when the user clicks the back-to-top button"
       },
       "variables": {}
     },
     "breadcrumb": {
       "separator": {
-        "subtitle": "Defines the character or symbol used to separate breadcrumb items."
+        "subtitle": "Defines the symbol used to separate navigation items."
       },
       "api": {
-        "separator": "Specifies the separator symbol between breadcrumb items."
+        "separator": "Symbol separating the navigation items"
       }
     },
     "breadcrumb-item": {
       "api": {
-        "to": "Specifies the target route for navigation. Accepts a string path or a route object.",
-        "replace": "Boolean that determines if navigation should replace the current history entry instead of adding a new one."
+        "to": "Specifies the target route for navigation. Accepts a path string or route object",
+        "replace": "Boolean value that determines whether the navigation should replace the current history entry instead of adding a new one"
       }
     },
     "text-input": {
@@ -794,40 +928,40 @@ export default {
         "subtitle": "Sets the height of the input field."
       },
       "disabled": {
-        "subtitle": "Disables the input field if set to true."
+        "subtitle": "Disables the input field if set to *true*."
       },
       "type-password": {
-        "subtitle": "If set to true, the input field will mask the text as a password.",
+        "subtitle": "If set to *true*, the text in the input field will be hidden as a password.",
         "toggle": "Toggle type"
       },
       "model-value": {
-        "subtitle": "Represents the value of the input field, typically used for two-way data binding."
+        "subtitle": "Represents the value of the input field"
       },
       "clearable": {
-        "subtitle": "If true, a clear button will appear to reset the input field."
+        "subtitle": "If set to *true*, a button will appear to clear the input field."
       },
       "api": {
-        "height": "Defines the height of the text input.",
-        "disabled": "Boolean that disables the text input.",
-        "placeholder": "The text that appears as a hint when the input is empty.",
-        "type-password": "Boolean that turns the input into a password field.",
-        "model-value": "Current value of the input field.",
-        "clearable": "Boolean that adds a button to clear the input value."
+        "height": "Defines the height of the input field",
+        "disabled": "Boolean value that disables the input field",
+        "placeholder": "Text displayed as a hint when the input field is empty",
+        "type-password": "Boolean value that turns the input field into a password field",
+        "model-value": "Current value of the input field",
+        "clearable": "Boolean value that adds a button to clear the input field value"
       },
       "slot": {
-        "prepend-icon": "Slot for adding an icon to the beginning of the input field."
+        "prepend-icon": "Slot for adding an icon to the beginning of the input field"
       },
       "variables": {
-        "prepend-icon-indent": "Defines the indentation for the prepend icon."
+        "prepend-icon-indent": "Defines the indent for the icon before the input"
       },
       "events": {
-        "update:model-value": "Emitted when the value of the input field changes.",
-        "focus": "Emitted when the input field gains focus.",
-        "blur": "Emitted when the input field loses focus.",
-        "on-enter": "Emitted when the enter key is pressed."
+        "update:model-value": "Event triggered when the input field value changes",
+        "focus": "Event triggered when the input field gains focus",
+        "blur": "Event triggered when the input field loses focus",
+        "on-enter": "Event triggered when the Enter key is pressed"
       },
       "exposes": {
-        "inputDOMRef": "Original input DOM element"
+        "inputDOMRef": "Original DOM element of the input field"
       }
     },
     "switch": {
@@ -835,435 +969,360 @@ export default {
         "subtitle": "Defines the height of the switch component."
       },
       "disabled": {
-        "subtitle": "Disables the switch if set to true."
+        "subtitle": "Disables the switch if set to *true*."
       },
       "model-value": {
         "subtitle": "Controls the on/off state of the switch."
       },
       "loading": {
-        "subtitle": "Shows a loading state on the switch if set to true."
+        "subtitle": "Displays the loading state on the switch if set to *true*."
       },
       "active-value": {
-        "subtitle": "Specifies the value when the switch is active."
+        "subtitle": "Specifies the value when the switch is on."
       },
       "inactive-value": {
-        "subtitle": "Specifies the value when the switch is inactive."
+        "subtitle": "Specifies the value when the switch is off."
       },
       "api": {
-        "height": "Specifies the height of the switch.",
-        "disabled": "Boolean that disables the switch component.",
-        "model-value": "Controls the switch state.",
-        "loading": "Boolean that shows a loading spinner on the switch.",
-        "active-value": "The value when the switch is on.",
-        "inactive-value": "The value when the switch is off."
+        "height": "Sets the height of the switch",
+        "disabled": "Boolean value that disables the switch component",
+        "model-value": "Controls the state of the switch",
+        "loading": "Boolean value that shows a loading indicator on the switch",
+        "active-value": "Value when the switch is on",
+        "inactive-value": "Value when the switch is off"
       },
       "slot": {
-        "bg-on": "Slot for customizing the background when the switch is on.",
-        "bg-off": "Slot for customizing the background when the switch is off.",
-        "thumb-on": "Slot for customizing the thumb when the switch is on.",
-        "thumb-off": "Slot for customizing the thumb when the switch is off."
+        "bg-on": "Slot for customizing the background when the switch is on",
+        "bg-off": "Slot for customizing the background when the switch is off",
+        "thumb-on": "Slot for customizing the thumb when the switch is on",
+        "thumb-off": "Slot for customizing the thumb when the switch is off"
       },
       "variables": {
-        "height": "Defines the height of the switch.",
-        "offset": "Specifies the offset for the thumb.",
-        "thumb-height": "Defines the height of the switch thumb."
+        "height": "Defines the height of the switch",
+        "offset": "Specifies the offset of the switch thumb",
+        "thumb-height": "Defines the height of the switch thumb"
       },
       "events": {
-        "update:model-value": "Emitted when the switch changes its state."
+        "update:model-value": "Event triggered when the switch state changes"
       },
       "exposes": {
-        "inputDOMRef": "Original input DOM element"
+        "inputDOMRef": "Original DOM element of the input field"
       }
     },
     "checkbox": {
       "id": {
-        "subtitle": "The unique identifier for the checkbox."
+        "subtitle": "Unique identifier for the checkbox."
       },
       "disabled": {
-        "subtitle": "Disables the checkbox if set to true."
+        "subtitle": "Disables the checkbox if set to *true*."
       },
       "model-value": {
-        "subtitle": "Represents the checked state of the checkbox.",
+        "subtitle": "Represents the checkbox state (checked or not).",
         "label": "Label"
       },
       "label": {
         "subtitle": "Specifies the label text for the checkbox."
       },
       "design": {
-        "subtitle": "Defines the design style for the checkbox, such as standard or outlined."
+        "subtitle": "Defines the design style of the checkbox."
       },
       "api": {
-        "id": "Unique identifier for the checkbox.",
-        "disabled": "Boolean that disables the checkbox.",
-        "model-value": "Checked state of the checkbox.",
-        "label": "The label displayed next to the checkbox.",
-        "design": "Specifies the design style of the checkbox."
+        "id": "Unique identifier for the checkbox",
+        "disabled": "Boolean value that disables the checkbox",
+        "model-value": "Checkbox state (checked or not)",
+        "label": "Label displayed next to the checkbox",
+        "design": "Defines the design style of the checkbox"
       },
       "slot": {
-        "default": "Slot for customizing the content of the checkbox.",
-        "label": "Slot for customizing the label of the checkbox."
+        "default": "Slot for customizing the checkbox content",
+        "label": "Slot for customizing the checkbox label"
       },
       "variables": {
-        "size": "Defines the size of the checkbox."
+        "size": "Defines the size of the checkbox"
       },
       "events": {
-        "update:model-value": "Emitted when the checked state of the checkbox changes."
+        "update:model-value": "Event triggered when the checkbox state changes"
       },
       "exposes": {
-        "inputDOMRef": "Original input DOM element"
+        "inputDOMRef": "Original DOM element of the input field"
       }
     },
     "checkbox-group": {
-      "height": {
-        "subtitle": "Specifies the height of the checkbox group container."
-      },
-      "fill": {
-        "subtitle": "If set to true, the container will fill the available space."
-      },
-      "disabled": {
-        "subtitle": "Disables all checkboxes within the group if set to true."
-      },
-      "model-value": {
-        "subtitle": "Array of selected values in the checkbox group."
-      },
-      "options": {
-        "subtitle": "Defines the options for the checkboxes within the group."
-      },
-      "design": {
-        "subtitle": "Sets the design style for the checkbox group."
-      },
-      "direction": {
-        "subtitle": "Specifies the direction (horizontal or vertical) for the checkbox group."
-      },
       "api": {
-        "height": "Height of the checkbox group container.",
-        "fill": "Boolean that allows the container to fill the available space.",
-        "disabled": "Disables all checkboxes within the group.",
-        "model-value": "Array of selected values.",
-        "options": "Options for the checkboxes.",
-        "design": "Design style of the checkbox group.",
-        "direction": "Direction of the checkbox group layout."
+        "height": "Width of the checkboxes",
+        "disabled": "Disables all checkboxes in the group",
+        "model-value": "Array of selected values",
+        "options": "Checkbox options",
+        "design": "Design style of the checkbox group",
+        "direction": "Direction of the checkbox group layout"
       },
       "slot": {
-        "default": "Slot for customizing the content of the checkbox group."
+        "default": "Slot for customizing the content of the checkbox group"
       },
       "variables": {},
       "events": {
-        "update:model-value": "Emitted when the selected values in the checkbox group change."
+        "update:model-value": "Event triggered when selected values in the checkbox group change"
       }
     },
     "autocomplete": {
       "basic-usage": {
-        "placeholder": "Type some..."
+        "placeholder": "Text..."
       },
       "height": {
         "subtitle": "Defines the height of the autocomplete input field."
       },
-      "fill": {
-        "subtitle": "If true, the autocomplete field will fill its container."
-      },
       "disabled": {
-        "subtitle": "Disables the autocomplete input if set to true."
+        "subtitle": "Disables the autocomplete field."
       },
       "placeholder": {
         "subtitle": "Text displayed when the input field is empty."
       },
       "clearable": {
-        "subtitle": "If true, a clear button will be shown to reset the input field."
+        "subtitle": "If set to *true*, a button will appear to clear the input field."
       },
       "list": {
-        "subtitle": "Specifies the list of options for autocomplete suggestions."
+        "subtitle": "Sets the list of options for autocomplete suggestions."
       },
       "action-callback": {
-        "subtitle": "Function called when an option is selected from the list."
+        "subtitle": "Function called when typing in the input."
       },
       "api": {
-        "height": "Height of the autocomplete input field.",
-        "fill": "Boolean that allows the field to fill its container.",
-        "disabled": "Disables the autocomplete input.",
-        "model-value": "Current value of the input field.",
-        "placeholder": "Placeholder text displayed when the input is empty.",
-        "clearable": "Boolean that adds a button to clear the input value.",
-        "list": "List of suggestions for the input.",
-        "action-callback": "Callback function triggered on option selection."
+        "height": "Height of the autocomplete input field",
+        "disabled": "Disables the autocomplete input field",
+        "model-value": "Current value of the input field",
+        "placeholder": "Hint displayed when the input field is empty",
+        "clearable": "Boolean value that adds a button to clear the input value",
+        "list": "List of suggestions for input",
+        "action-callback": "Callback function called when an option is selected"
       },
       "slot": {
-        "loader": "Slot for adding a custom loader during data fetching."
+        "loader": "Slot to add a custom loader while fetching data"
       },
       "variables": {},
       "events": {
-        "update:model-value": "Emitted when the value of the autocomplete field changes.",
-        "select": "Emitted when a suggestion is selected."
+        "update:model-value": "Event triggered when the autocomplete field value changes",
+        "select": "Event triggered when an item is selected from the suggestions"
       }
     },
     "file-upload": {
       "model-value": {},
       "disabled": {
-        "subtitle": "Disables the file upload component if set to true."
+        "subtitle": "Disables the file upload component"
       },
       "multiple": {
-        "subtitle": "Allows multiple files to be uploaded if set to true."
-      },
-      "allowed-types": {
-        "subtitle": "Specifies the allowed file types for upload."
+        "subtitle": "Allows uploading multiple files if set to *true*."
       },
       "photo-with-preview": {
-        "subtitle": "If true, uploaded photos will be displayed with a preview."
-      },
-      "fill": {
-        "subtitle": "If true, the file upload button will fill the container."
+        "subtitle": "If set to *true*, uploaded photos will be displayed with a preview."
       },
       "api": {
-        "model-value": "Represents the uploaded files.",
-        "disabled": "Boolean that disables the file upload component.",
-        "multiple": "Boolean that allows multiple files to be selected.",
-        "allowed-types": "Specifies the types of files that can be uploaded.",
-        "photo-with-preview": "Shows preview of uploaded images.",
-        "fill": "Allows the upload button to fill its container."
+        "model-value": "Represents the uploaded files",
+        "disabled": "Boolean value that disables the file upload component",
+        "multiple": "Boolean value that allows multiple files to be selected",
+        "allowed-types": "Defines the file types that can be uploaded",
+        "photo-with-preview": "Displays a preview of the uploaded images",
+        "fill": "Allows the upload button to fill its container"
       },
       "slot": {
-        "trigger": "Slot for customizing the trigger button for file upload."
+        "trigger": "Slot for customizing the button that triggers the file upload"
       },
       "variables": {},
       "events": {
-        "on-unsupported-file-type-error": "Emitted when a user tries to upload an unsupported file type.",
-        "update:model-value": "Emitted when the file selection changes."
+        "on-unsupported-file-type-error": "Event triggered when the user attempts to upload an unsupported file type",
+        "update:model-value": "Event triggered when the file selection changes"
       },
       "exposes": {
-        "inputDOMRef": "Original input DOM element"
+        "inputDOMRef": "Original DOM element of the input field"
+      },
+      "translates": {
+        "selectFile": "Select a file"
       }
     },
     "number-input": {
-      "basic-usage": {
-        "subtitle": "Represents the current numeric value of the input field."
-      },
+      "basic-usage": {},
       "height": {
         "subtitle": "Defines the height of the number input field."
       },
-      "fill": {
-        "subtitle": "If true, the number input will fill its container."
-      },
       "disabled": {
-        "subtitle": "Disables the number input if set to true."
-      },
-      "max": {
-        "subtitle": "Specifies the maximum value for the input."
-      },
-      "min": {
-        "subtitle": "Specifies the minimum value for the input."
-      },
-      "step": {
-        "subtitle": "Defines the step size for incrementing or decrementing the value."
+        "subtitle": "Disables the number input field if set to *true*."
       },
       "action-btn-position-right": {
-        "subtitle": "If true, the increment and decrement buttons are positioned to the right."
+        "subtitle": "If set to *true*, the increment and decrement buttons are placed on the right."
       },
       "api": {
-        "height": "Height of the number input field.",
-        "fill": "Boolean that allows the field to fill its container.",
-        "disabled": "Boolean that disables the input field.",
-        "model-value": "Current value of the number input.",
-        "max": "Maximum allowable value.",
-        "min": "Minimum allowable value.",
-        "step": "Step size for value increment or decrement.",
-        "action-btn-position-right": "Positions action buttons to the right if true."
+        "height": "Height of the number input field",
+        "disabled": "Boolean value that disables the input field",
+        "model-value": "Current value of the number input field",
+        "max": "Maximum allowed value",
+        "min": "Minimum allowed value",
+        "step": "Step for incrementing or decrementing the value",
+        "action-btn-position-right": "Positions the action buttons on the right if set to *true*"
       },
       "slot": {},
       "variables": {},
       "exposes": {
-        "inputDOMRef": "Original input dom element"
+        "inputDOMRef": "Original DOM element of the input field"
       },
       "events": {
-        "update:model-value": "Emitted when the value of the number input changes."
+        "update:model-value": "Event triggered when the value of the number input field changes"
       }
     },
     "select": {
       "height": {
-        "subtitle": "Sets the height of the select dropdown."
-      },
-      "fill": {
-        "subtitle": "If true, the select component will fill the available container width."
+        "subtitle": "Sets the height of the dropdown list."
       },
       "disabled": {
-        "subtitle": "Disables the select component if set to true."
-      },
-      "no-element-placeholder": {
-        "subtitle": "Text shown when there are no selectable options."
-      },
-      "value-required": {
-        "subtitle": "Specifies if a value must be selected before proceeding."
-      },
-      "options": {
-        "subtitle": "Defines the list of selectable options."
-      },
-      "options-map": {
-        "subtitle": "Specifies an object to map options with labels and values."
+        "subtitle": "Disables the component."
       },
       "model-value": {
         "subtitle": "Represents the selected value of the select component.",
         "multiple": "Multiple values"
       },
       "loading": {
-        "subtitle": "Displays a loading indicator if set to true."
-      },
-      "open": {
-        "subtitle": "Controls whether the select dropdown is open."
+        "subtitle": "Displays a loading indicator if set to *true*."
       },
       "api": {
-        "height": "Height of the select dropdown.",
-        "fill": "Boolean to allow the dropdown to fill its container.",
-        "disabled": "Disables the select dropdown.",
-        "no-element-placeholder": "Placeholder text when no options are available.",
-        "value-required": "Enforces value selection.",
-        "options": "List of selectable options.",
-        "options-map": "Object for mapping options.",
-        "model-value": "The selected value of the dropdown.",
-        "loading": "Shows a loading state.",
-        "open": "Boolean to control dropdown visibility."
+        "height": "Height of the dropdown list",
+        "disabled": "Disables the dropdown list",
+        "no-element-placeholder": "Placeholder text displayed when no options are available",
+        "value-required": "Requires selecting a value",
+        "options": "List of available options",
+        "options-map": "Object for displaying options",
+        "model-value": "Selected value of the dropdown list",
+        "loading": "Displays loading state",
+        "open": "Boolean value to control the visibility of the list"
       },
       "slot": {
-        "default": "Slot to customize the options within the select."
+        "default": "Slot for customizing options in the dropdown list"
       },
       "variables": {
-        "base-width": "Specifies the base width for the select component."
+        "base-width": "Sets the base width for the select component"
       },
       "events": {
-        "update:model-value": "Emitted when the selected value changes."
+        "update:model-value": "Event triggered when the selected value changes"
       }
     },
     "select-option": {
       "api": {
-        "label": "Defines the label of the option, which is displayed in the select dropdown.",
-        "height": "Specifies the height of the select option.",
-        "disabled": "Boolean that determines if the option is disabled and cannot be selected."
+        "label": "Defines the label for the option displayed in the dropdown list",
+        "height": "Sets the height of the select option",
+        "disabled": "Boolean value indicating whether the option is disabled and cannot be selected"
       },
       "slot": {
-        "default": "Slot to customize the content displayed for this option."
+        "default": "Slot for customizing the displayed content for this option"
       },
       "variables": {
-        "hover-bg": "Sets the background color when the option is hovered.",
-        "hover-color": "Defines the text color when the option is hovered."
+        "hover-bg": "Sets the background color when hovering over the option",
+        "hover-color": "Defines the text color when hovering over the option"
       },
       "events": {
-        "change-value": "Emitted when the option value changes."
+        "change-value": "Event triggered when the option value changes"
       }
     },
     "slider": {
-      "fill": {
-        "subtitle": "If true, the slider track will fill the container."
-      },
       "disabled": {
-        "subtitle": "Disables the slider if set to true."
-      },
-      "model-value": {
-        "subtitle": "Represents the current value of the slider."
-      },
-      "max": {
-        "subtitle": "Specifies the maximum value for the slider."
-      },
-      "min": {
-        "subtitle": "Specifies the minimum value for the slider."
-      },
-      "step": {
-        "subtitle": "Defines the step size for the slider."
+        "subtitle": "Disables the slider if set to *true*."
       },
       "show-tooltip": {
-        "subtitle": "If true, shows a tooltip displaying the current value."
+        "subtitle": "If set to *true*, displays a tooltip with the current value."
       },
       "api": {
-        "fill": "Boolean that allows the slider to fill its container.",
-        "disabled": "Disables the slider component.",
-        "model-value": "Current value of the slider.",
-        "max": "Maximum value for the slider.",
-        "min": "Minimum value for the slider.",
-        "step": "Step size for value increment or decrement.",
-        "show-tooltip": "Boolean to control tooltip visibility."
+        "fill": "Boolean value allowing the slider to fill its container",
+        "disabled": "Disables the slider component",
+        "model-value": "Current value of the slider",
+        "max": "Maximum value for the slider",
+        "min": "Minimum value for the slider",
+        "step": "Step for incrementing or decrementing the value",
+        "show-tooltip": "Boolean value to control the visibility of the tooltip"
       },
       "slot": {},
       "variables": {
-        "slider-height": "Defines the height of the slider.",
-        "value-fixed-container-height": "Sets the height of the container for displaying the value."
+        "slider-height": "Defines the height of the slider",
+        "value-fixed-container-height": "Sets the height of the container"
       },
       "events": {
-        "update:model-value": "Emitted when the slider value changes."
+        "update:model-value": "Event triggered when the slider value changes"
+      }
+    },
+    "date-picker": {
+      "height": {
+        "subtitle": "Sets the height of the date picker field."
+      },
+      "disabled": {
+        "subtitle": "Disables date selection if set to *true*."
+      },
+      "api": {
+        "height": "Height of the date picker field",
+        "disabled": "Boolean value that disables the date picker",
+        "placeholder": "Text displayed when no date is selected",
+        "model-value": "Currently selected date or date range",
+        "type": "Type of date selection, such as *single* or *range*",
+        "text-separator": "Text for separating the start and end dates in range selection mode"
+      },
+      "slot": {},
+      "variables": {
+        "width": "Defines the width of the date picker component"
+      },
+      "events": {
+        "update:model-value": "Event triggered when the selected date or date range changes"
+      },
+      "translates": {
+        "pickADate": "Pick a date"
       }
     },
     "radio": {
       "basic-usage": {
         "info": {
-          "title": "Radio Group Usage",
-          "content": "Typically used within a radio group to allow users to select one option from a set. Once a radio button is selected, it cannot be unchecked by clicking on it again—only by selecting another radio button in the group to change the checked state. For proper display, when using the 'style-type' as 'button', a label should be provided."
+          "title": "Radio Group usage",
+          "content": "Typically used in a group of radio buttons to allow the user to select one option from a set. Once a radio button is selected, it cannot be unselected by clicking it again—only by selecting another radio button in the group to change its state. For proper display, when using 'style-type' as 'button', a label (label) should be provided."
         }
       },
       "api": {
-        "disabled": "Boolean that disables the radio button.",
-        "label": "Label text displayed next to the radio button.",
-        "value": "The value assigned to the radio button.",
-        "style-type": "Specifies the visual style of the radio button.",
-        "checked": "Mark radio button as checked"
+        "disabled": "Boolean value that disables the radio button",
+        "label": "Label text displayed next to or inside the radio button",
+        "value": "Value assigned to the radio button",
+        "style-type": "Defines the visual style of the radio button",
+        "checked": "Marks the radio button as selected"
       },
       "slot": {
-        "label": "Slot to customize the label of the radio button."
+        "label": "Slot for customizing the radio button label"
       },
       "variables": {
-        "size": "Specifies the size of the radio button."
+        "size": "Defines the size of the radio button"
       },
       "exposes": {
-        "inputDOMRef": "Original input DOM element"
+        "inputDOMRef": "Original DOM element of the input field"
       }
     },
     "radio-group": {
-      "height": {
-        "subtitle": "Defines the height of the radio group container."
-      },
-      "fill": {
-        "subtitle": "If true, the radio group will fill the available container space."
-      },
-      "disabled": {
-        "subtitle": "Disables all radio buttons within the group if set to true."
-      },
-      "model-value": {
-        "subtitle": "Represents the selected value in the radio group."
-      },
-      "options": {
-        "subtitle": "Defines the list of options available for selection."
-      },
-      "style-type": {
-        "subtitle": "Specifies the visual style of the radio buttons in the group."
-      },
-      "direction": {
-        "subtitle": "Sets the direction of the radio buttons, either horizontal or vertical."
-      },
       "api": {
-        "height": "Height of the radio group container.",
-        "fill": "Boolean that allows the group to fill the container.",
-        "disabled": "Disables all radio buttons within the group.",
-        "model-value": "The selected value of the radio group.",
-        "options": "List of options for selection.",
-        "style-type": "Visual style of the radio buttons.",
-        "direction": "Direction of the radio buttons layout."
+        "height": "Height of the radio button group",
+        "disabled": "Disables all radio buttons in the group",
+        "model-value": "Selected value of the radio button group",
+        "options": "List of options to select from",
+        "style-type": "Visual style of the radio buttons",
+        "direction": "Direction of the radio button layout"
       },
       "slot": {
-        "default": "Slot to customize the radio buttons in the group."
+        "default": "Slot for passing NmorphRadioButton"
       },
       "variables": {},
       "events": {
-        "update:model-value": "Emitted when the selected value changes."
+        "update:model-value": "Event triggered when the selected value changes"
       }
     },
     "form": {
       "basic-usage": {
-        "subtitle": "Represents the form values for all input elements.",
+        "subtitle": "Represents form values for all input elements.",
         "too-short": "Too short",
-        "wrong-age": "Wrong age",
-        "wrong-sex": "Wrong",
-        "you-cant-be-a-nobody": "You cant be a maintainer",
+        "wrong-age": "Incorrect age",
+        "you-cant-be-a-nobody": "You cannot be a nobody",
         "we-dont-have-kombucha": "We don't have Kombucha(",
-        "ie-not-supported": "IE not supported",
-        "you-must-set-agreement": "You must set agreement",
+        "ie-not-supported": "IE is not supported",
+        "you-must-set-agreement": "You must accept the agreement",
         "value-must-greater-than-30": "Value must be greater than 30",
         "value-must-less-than-80": "Value must be less than 80",
-        "pear-is-not-available": "Pear is not available",
+        "pear-is-not-available": "Pear is unavailable",
         "coffee": "Coffee",
         "tea": "Tea",
         "pear": "Pear",
@@ -1275,68 +1334,139 @@ export default {
         "preferred-drink": "Preferred drink",
         "browsers": "Browsers",
         "agreement": "Agreement",
-        "number-value": "Number value",
-        "choose-date": "Choose date",
+        "number-value": "Numeric value",
+        "choose-date": "Choose a date",
         "food": "Food",
         "favorite-food": "Favorite food",
         "photo": "Photo",
         "send-form": "Send form",
         "enter-username": "Enter username",
-        "is-valid": "Is form valid: ",
+        "is-valid": "Form is valid: ",
         "info": {
           "title": "Typing Information",
-          "content": "To ensure correct typing, you need to import the type INmorphFromDataExpose."
+          "content": "For correct typing, you must import the type INmorphFromDataExpose."
         }
       },
       "validate-immediately": {
-        "subtitle": "If true, the form will validate its fields immediately after rendering."
+        "subtitle": "If set to *true*, the form will validate its fields immediately after rendering."
       },
       "api": {
-        "value": "The form values for input elements.",
-        "validate-immediately": "Boolean that controls whether validation occurs on load."
+        "value": "Form values for input elements",
+        "validate-immediately": "Boolean value controlling validation on load"
       },
       "slot": {
-        "default": "Slot for customizing the content of the form."
+        "default": "Slot for passing NmorphFormItem"
       },
       "variables": {},
       "exposes": {
-        "form-data": "Emitted when the form is validated."
-      }
+        "form-data": "Form data including validation"
+      },
+      "explanation": `
+        <div class="container">
+          <h2>1. Rule Types</h2>
+          <p>
+            You can define validation rules based on the type of value you want to check:
+          </p>
+
+          <h3>Text Validation:</h3>
+          <p>
+            <strong>Rule properties:</strong> <code>pattern</code> (uses regular expressions), <code>error</code>
+          </p>
+
+          <h3>Number Validation:</h3>
+          <p>
+            <strong>Rule properties:</strong> <code>numberCompareType</code> (uses <code>NmorphNumberCompareOperator</code>), <code>compareValue</code>, <code>error</code>
+          </p>
+
+          <h3>Boolean Validation (radio button):</h3>
+          <p>
+            <strong>Rule properties:</strong> <code>booleanCompareType</code> (uses <code>NmorphBooleanCompareOperator</code>), <code>compareValue</code>, <code>error</code>
+          </p>
+
+          <h3>Array Validation (checkbox group):</h3>
+          <p>
+            <strong>Rule properties:</strong> <code>arrayCompareType</code> (uses <code>NmorphArrayValidationOperator</code>), <code>compareValue</code>, <code>error</code>
+          </p>
+
+          <h2>2. Enum Definitions</h2>
+          <p>
+            The following enums are used to define different types of validation operators:
+          </p>
+
+          <h3>NmorphArrayValidationOperator:</h3>
+          <ul>
+            <li>
+              <strong>contains-one:</strong> The array must contain at least one of the specified values.
+            </li>
+            <li>
+              <strong>not-contains:</strong> The array must not contain any of the specified values.
+            </li>
+            <li>
+              <strong>full-eq:</strong> The array must be equal to the specified values, including order and length.
+            </li>
+          </ul>
+
+          <h3>NmorphNumberCompareOperator:</h3>
+          <ul>
+            <li>
+              <strong>eq:</strong> The value must equal the specified value.
+            </li>
+            <li>
+              <strong>gte:</strong> The value must be greater than or equal to the specified value.
+            </li>
+            <li>
+              <strong>lte:</strong> The value must be less than or equal to the specified value.
+            </li>
+            <li>
+              <strong>gt:</strong> The value must be greater than the specified value.
+            </li>
+            <li>
+              <strong>lt:</strong> The value must be less than the specified value.
+            </li>
+          </ul>
+
+          <h3>NmorphBooleanCompareOperator:</h3>
+          <ul>
+            <li>
+              <strong>eq:</strong> The boolean value must equal the specified value.
+            </li>
+            <li>
+              <strong>not-eq:</strong> The boolean value must not equal the specified value.
+            </li>
+          </ul>
+
+          <h2>3. Accessing Validation State</h2>
+          <p>
+            After calling the <code>useFieldValidation</code> function, the following parameters will be available:
+          </p>
+          <ul>
+            <li>
+              <strong>touched:</strong> Indicates whether the field has been touched.
+            </li>
+            <li>
+              <strong>valid:</strong> Indicates whether the field is valid based on the defined rules.
+            </li>
+            <li>
+              <strong>errors:</strong> An array containing error messages for the field.
+            </li>
+            <li>
+              <strong>validate:</strong> Function that runs the validation process.
+            </li>
+          </ul>
+        </div>
+      `
     },
     "form-item": {
       "api": {
-        "id": "Specifies the unique identifier for the form item.",
-        "height": "Sets the height of the form item container.",
-        "label": "Defines the label text associated with the form item, providing context to the user.",
-        "show-validation-icon": "Boolean that controls whether a validation icon is displayed for this form item.",
-        "static-error-box-space": "Defines a static space for displaying an error box, ensuring consistent spacing regardless of validation state.",
-        "validate": "Defines the validation rules for the form item."
+        "id": "Unique identifier for the form item",
+        "height": "Sets the height of the form item container",
+        "label": "Defines the label text associated with the form item, providing context to the user",
+        "show-validation-icon": "Boolean value controlling the display of the validation icon for the form item",
+        "static-error-box-space": "Defines static space for displaying the error field, ensuring consistency in space regardless of validation state",
+        "validate": "Defines validation rules for the form item"
       },
       "slot": {
-        "default": "Slot to customize the content of the form item, typically input elements or other form controls."
-      }
-    },
-    "date-picker": {
-      "height": {
-        "subtitle": "Sets the height of the date picker input."
-      },
-      "disabled": {
-        "subtitle": "Disables the date picker if set to true."
-      },
-      "api": {
-        "height": "Height of the date picker input.",
-        "disabled": "Boolean that disables the date picker.",
-        "placeholder": "Text displayed when no date is selected.",
-        "model-value": "The currently selected date or range of dates.",
-        "type": "Type of the date picker, e.g., *single* or *range*.",
-        "text-separator": "Text to separate start and end dates in range selection.",
-      },
-      "slot": {},
-      "variables": {
-        "width": "Defines the width of the date picker component."
-      },
-      "events": {
-        "update:model-value": "Emitted when the selected date or date range changes."
+        "default": "Slot for customizing the content of the form item, typically includes input elements or other form controls"
       }
     }
   }

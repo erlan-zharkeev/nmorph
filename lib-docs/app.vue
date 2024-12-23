@@ -14,6 +14,7 @@ const menuOpen = ref(false);
 
 const loaded = ref(false);
 const store = useGlobalStore();
+const route = useRoute();
 
 onMounted(() => {
   if (import.meta.client) {
@@ -39,20 +40,24 @@ onMounted(async () => {
   // if (import.meta.dev) nmorphLog("success", `Mobile dev link: ${code}`);
   loaded.value = true;
 });
+
+watch(() => route.path.length, () => {
+  if (route.path.length <= 3) menuOpen.value = false
+});
 </script>
 
 <template>
   <div class="loader" v-if="!loaded">
-    <client-only>
-      <nmorph-progress :value-right-side="false" indeterminate color="var(--nmorph-accent-color)" />
-    </client-only>
+    <ClientOnly>
+      <NmorphProgress :value-right-side="false" indeterminate color="var(--nmorph-accent-color)" />
+    </ClientOnly>
   </div>
   <div v-else class="docs">
-    <top-bar :isMenuOpen="menuOpen" @toggle-menu="toggleMenu" />
-    <nuxt-page />
-    <footer-bar />
-    <main-menu :isMenuOpen="menuOpen" @menu-click="closeMenuHandler" />
-    <nmorph-notification-provider :notifications="notificationProvider.notifications.value" placement="top-center" />
+    <TopBar :isMenuOpen="menuOpen" @toggle-menu="toggleMenu" @close-menu="closeMenuHandler" />
+    <NuxtPage />
+    <FooterBar />
+    <MainMenu :isMenuOpen="menuOpen" @menu-click="closeMenuHandler" />
+    <NmorphNotificationProvider :notifications="notificationProvider.notifications.value" placement="top-center" />
   </div>
 </template>
 

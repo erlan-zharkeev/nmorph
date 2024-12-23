@@ -67,17 +67,12 @@ const events = [
     ),
   },
 ];
+const translates = [{ name: "loadingText" }, { name: "loadFailedText" }]
 </script>
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphImage"
-      name="image"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-      :events="events"
-    />
+    <api-table title="NmorphImage" name="image" :attributes="attributesData" :slots="slotData" :variables="variables"
+      :events="events" :translates="translates" />
   </div>
 </template>

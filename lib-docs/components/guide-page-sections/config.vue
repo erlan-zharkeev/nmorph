@@ -49,28 +49,49 @@ const config = {
     darkShadeGeneratorCoefficient: -45, // Number; // ${t('guide-page.config.dark-shade')}
     lightShadeGeneratorCoefficient: 45, // Number; // ${t('guide-page.config.light-shade')}
     other: {
-      baseShadowWidth: '2px', // String // ${t('guide-page.config.shadow-width')}
-      baseShadowBlurCoefficient: '3', // String // ${t('guide-page.config.shadow-blur')}
+      baseShadowWidth: '3.5px', // String // ${t('guide-page.config.shadow-width')}
+      baseShadowBlurCoefficient: '2', // String // ${t('guide-page.config.shadow-blur')}
     },
   }
 };
 `;
 
 const i18n = `
+import { createApp } from "vue";
+import App from "./App.vue";
+import { createI18n } from "vue-i18n";
+import { NmorphLibrary, ru, zh } from "@nmorph/nmorph-ui-kit";
+import 'source/style.css';
 
+const i18nApp = createI18n({
+  locale: "en",
+  fallbackLocale: "en",
+  globalInjection: true,
+  legacy: false,
+  messages: {
+    ru: {
+      loadingText: 'Загружаю что-то...', // ${t('guide-page.config.rewrite-translation')}
+      ... // ${t('guide-page.config.other-messages')}
+    },
+    en: {
+      loadingText: 'Loading something...', // ${t('guide-page.config.rewrite-translation')}
+      ... // ${t('guide-page.config.other-messages')}
+    },
+  },
+});
+
+const nmorphOptions = { i18n: { messages: { ru, zh }, locale: "en" } };
+
+const app = createApp(App);
+app.use(i18nApp);
+app.use(NmorphLibrary, nmorphOptions);
+app.mount("#app");
 `;
 
-const alternativePlugin = `
-
-`
-
-const usage = `
-
-`
 </script>
 
 <template>
-  <section id="config" class="info-section config-section">
+  <section>
     <h2 class="section-title">{{ $t("guide-menu.config") }}</h2>
     <div class="section-element nmorph--shadow-inset">
       <h3 class="section-subtitle">
@@ -95,14 +116,10 @@ const usage = `
       <h3 class="section-subtitle">
         {{ $t("guide-page.config.i18n") }}
       </h3>
-      <!-- <p class="section-paragraph" v-html="$t('guide-page.quick-start.choose-package-manager')" /> -->
+      <p class="section-paragraph" v-html="$t('guide-page.config.i18n-content')" />
       <code-example lang="javascript">{{
         i18n
       }}</code-example>
     </div>
   </section>
 </template>
-
-<style lang="scss">
-.config-section {}
-</style>

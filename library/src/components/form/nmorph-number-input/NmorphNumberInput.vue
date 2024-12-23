@@ -140,7 +140,7 @@ const commonCSS = css`
     border-bottom: 1px solid var(--nmorph-main-color);
     transition: ease-in-out var(--transition-01) background;
     ${nmorphInset()}
-
+    transition: background 0s;
     -moz-appearance: textfield;
   }
 

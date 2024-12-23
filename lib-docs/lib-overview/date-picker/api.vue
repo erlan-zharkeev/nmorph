@@ -55,17 +55,13 @@ const variables: IVariablesTableData[] = [{ name: "width" }];
 const events = [
   { name: "update:model-value", type: `${date} | Array<${date}>[]` },
 ];
+
+const translates = [{ name: 'pickADate' }]
 </script>
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphDatePicker"
-      name="date-picker"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-      :events="events"
-    />
+    <api-table title="NmorphDatePicker" name="date-picker" :attributes="attributesData" :slots="slotData"
+      :variables="variables" :events="events" :translates="translates" />
   </div>
 </template>

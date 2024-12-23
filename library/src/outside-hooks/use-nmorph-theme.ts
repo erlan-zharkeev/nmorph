@@ -11,21 +11,6 @@ import packageData from '../../package.json';
 import { nmorphLog } from '@/outside-utils';
 import { camelToKebab } from '@/utils';
 
-// const DEFAULT_THEME_COLORS: INmorphColorVariable[] = [
-//   { name: '--nmorph-info-color', color: '#d4e5edbb' },
-//   { name: '--nmorph-info-text-color', color: '#506c80' },
-//   { name: '--nmorph-success-color', color: '#67C23A' },
-//   { name: '--nmorph-success-text-color', color: '#0b5b1d' },
-//   { name: '--nmorph-error-color', color: '#F56C6C' },
-//   { name: '--nmorph-error-text-color', color: '#8d3333' },
-//   { name: '--nmorph-warn-color', color: '#E6A21C' },
-//   { name: '--nmorph-warn-text-color', color: '#7a6712' },
-//   { name: '--nmorph-white-color', color: '#ffffff' },
-//   { name: '--nmorph-gray-color', color: '#c9d2dee6' },
-//   { name: '--nmorph-black-color', color: '#000000' },
-//   { name: '--nmorph-overlay-color', color: '#00000095' },
-// ];
-
 const DEFAULT_THEME_COLORS = {
   info: '#d4e5edbb',
   infoText: '#506c80' ,
@@ -43,8 +28,8 @@ const DEFAULT_THEME_COLORS = {
 
 const DEFAULT_LIGHT_THEME_COLORS = {
   darkShade: '#c8c9ca',
-  main: '#eaf2f9',
-  lightShade: '#ffffff',
+  main: '#e9ecec',
+  lightShade: '#fdfdfd',
   text: '#687b9e',
   accent: '#4a90e2',
   focusText: '#ffffff',
@@ -74,8 +59,8 @@ const DEFAULT_OPTIONS = {
   darkShadeGeneratorCoefficient: -45,
   lightShadeGeneratorCoefficient: 45,
   other: {
-    baseShadowWidth: '2px',
-    baseShadowBlurCoefficient: '3',
+    baseShadowWidth: '3.5px',
+    baseShadowBlurCoefficient: '2',
   },
 };
 
@@ -127,6 +112,7 @@ const shadeColor = (color: string, percent: number) => {
 };
 
 export const useNmorphTheme = (customOptions: INmorphThemeOptions): INmorphThemeInstance => {
+  // console.log('2');
   nmorphLog('warn', `NMORPH(v${packageData.version})`);
   const options = { ...DEFAULT_OPTIONS, ...customOptions };
 
@@ -135,7 +121,6 @@ export const useNmorphTheme = (customOptions: INmorphThemeOptions): INmorphTheme
       const validBgColor = asHexColor(mainBgColor);
       const darkerColor = shadeColor(validBgColor, options.darkShadeGeneratorCoefficient);
       const lighterColor = shadeColor(validBgColor, options.lightShadeGeneratorCoefficient);
-
       return [
         { name: '--nmorph-dark-shade-color', color: darkerColor },
         { name: '--nmorph-light-shade-color', color: lighterColor },

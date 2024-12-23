@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { NmorphScroll, NmorphBacktop } from "@nmorph/nmorph-ui-kit";
+import { useSlots } from 'vue'
 const router = useRouter();
 
 const scroll = ref(null);
@@ -22,34 +23,29 @@ onUnmounted(() => {
   }
 });
 
-const isComponentOverview = computed(() =>
-  router.currentRoute.value.fullPath.includes("components/overview")
-);
+const isMainFullPage = computed(() => {
+  return router.currentRoute.value.fullPath.includes("components/overview") || router.currentRoute.value.fullPath.includes("guide")
+});
+
+const slots = useSlots();
+
 </script>
 
 <template>
   <div class="docs-main-layout">
     <NmorphScroll
-      class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card docs-main-layout__left-aside"
-    >
+      class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card docs-main-layout__left-aside">
       <aside>
         <slot name="aside" />
       </aside>
     </NmorphScroll>
-    <NmorphScroll
-      ref="scroll"
-      class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card"
-    >
-      <main
-        class="docs-main-layout__center"
-        :class="{ 'docs-main-layout__center--full-page': isComponentOverview }"
-      >
+    <NmorphScroll ref="scroll" class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card"
+      id="page-content-part">
+      <main class="docs-main-layout__center" :class="{ 'docs-main-layout__center--full-page': isMainFullPage }">
         <slot name="default" />
       </main>
-      <aside
-        class="docs-main-layout__card nmorph--shadow-inset docs-main-layout__center-aside"
-        v-if="isRouteReady && !isComponentOverview"
-      >
+      <aside class="docs-main-layout__card nmorph--shadow-inset docs-main-layout__center-aside"
+        v-if="slots['aside-right'] && isRouteReady && !isMainFullPage">
         <slot name="aside-right" />
       </aside>
       <NmorphBacktop design="common" />
@@ -95,6 +91,7 @@ const isComponentOverview = computed(() =>
   .docs-main-layout__center-aside {
     display: none;
   }
+
   .docs-main-layout__center {
     width: 100%;
   }

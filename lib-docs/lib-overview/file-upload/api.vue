@@ -64,18 +64,13 @@ const events = [
     )}, previewUrl: String }>`,
   },
 ];
+
+const translates = [{ name: 'selectFile' }]
 </script>
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphFileUpload"
-      name="file-upload"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-      :exposes="exposes"
-      :events="events"
-    />
+    <api-table title="NmorphFileUpload" name="file-upload" :attributes="attributesData" :slots="slotData"
+      :variables="variables" :exposes="exposes" :events="events" :translates="translates" />
   </div>
 </template>
