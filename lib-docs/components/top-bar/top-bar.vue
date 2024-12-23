@@ -17,8 +17,13 @@ const { locale, locales } = useI18n();
 const route = useRoute();
 
 const availableLocales = computed(() => {
+  console.log(locales, locale, 'locales')
   return locales.value.filter((i) => i.code !== locale.value);
 });
+
+onMounted(() => {
+  console.log(locales, locale, 'locales2')
+})
 
 interface IProps {
   isMenuOpen: boolean;

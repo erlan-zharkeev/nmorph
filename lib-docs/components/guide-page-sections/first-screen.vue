@@ -117,7 +117,6 @@ $image-size: 450px;
   .main-section__first-info {
     padding: 16px;
     border-radius: 8px;
-    margin-bottom: 24px;
     text-align: center;
 
     h1 {
@@ -125,7 +124,7 @@ $image-size: 450px;
       background: -webkit-linear-gradient(120deg, rgb(255, 0, 150) 30%, rgb(0, 204, 255));
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 0;
+      margin: 0;
     }
   }
 
