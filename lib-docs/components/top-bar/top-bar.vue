@@ -10,20 +10,18 @@ import {
 } from "@nmorph/nmorph-ui-kit";
 import TranslateIcon from "~/assets/icons/translate.svg";
 import GitlabIcon from "~/assets/icons/gitlab.svg";
+import type { LocaleObject } from "@nuxtjs/i18n";
 
 const switchLocalePath = useSwitchLocalePath();
 
 const { locale, locales } = useI18n();
 const route = useRoute();
 
-const availableLocales = computed(() => {
+const availableLocales = computed<LocaleObject[]>(() => {
   console.log(locales, locale, 'locales')
-  return locales.value.filter((i) => i.code !== locale.value);
+  // return locales.value.filter((i) => i.code !== locale.value);
+  return [{ code: 'ru' }, { code: 'zh' }]
 });
-
-onMounted(() => {
-  console.log(locales, locale, 'locales2')
-})
 
 interface IProps {
   isMenuOpen: boolean;

@@ -433,16 +433,17 @@ const tabs = [
   margin-top: 16px;
 }
 
-.wrapper {
-  border: solid 2px red;
+
+/* .wrapper {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 24px;
   margin: 8px;
   max-width: 2000px;
-}
+} */
 
 .nmorph-card {
-  height: 180px;
+
+  /* height: 180px; */
 }
 </style>

@@ -28,10 +28,26 @@ export const usePlacement = (data: INmorphUsePlacementPayload) => {
     adjustPlacement();
     findScrollableContainer();
     addScrollListener();
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+    checkForCoordinateChanges();
   });
 
   onUnmounted(() => {
     removeScrollListener();
+    mutationObserver.disconnect();
+  });
+
+  const checkForCoordinateChanges = () => {
+    nextTick(() => {
+      if (contentDOMElement.value) adjustPlacement()
+    });
+  };
+
+  const mutationObserver = new MutationObserver(() => {
+    checkForCoordinateChanges();
   });
 
   const findScrollableContainer = () => {
