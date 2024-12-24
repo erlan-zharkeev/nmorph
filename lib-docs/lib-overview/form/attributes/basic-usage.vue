@@ -518,11 +518,7 @@ watch(
 
 <template>
   <div id="content-basic-usage">
-    <attribute
-      :header="$t('overview.basic-usage')"
-      :codeToCopy="code"
-      info-name="form.basic-usage"
-    >
+    <attribute :header="$t('overview.basic-usage')" :codeToCopy="code" info-name="form.basic-usage">
       <template #overview>
         <div class="form-basic-usage-overview">
           <ClientOnly>
@@ -531,135 +527,67 @@ watch(
               {{ isFormValid }}
             </div>
             <NmorphForm :value="form" ref="formRef">
-              <NmorphFormItem
-                id="username"
-                :label="$t('overview.form.basic-usage.username')"
-              >
-                <NmorphTextInput
-                  v-model="form.username.value"
-                  :placeholder="$t('overview.form.basic-usage.enter-username')"
-                  clearable
-                />
+              <NmorphFormItem id="username" :label="$t('overview.form.basic-usage.username')">
+                <NmorphTextInput v-model="form.username.value"
+                  :placeholder="$t('overview.form.basic-usage.enter-username')" clearable />
               </NmorphFormItem>
-              <NmorphFormItem
-                id="years"
-                :label="$t('overview.form.basic-usage.years-old')"
-              >
-                <NmorphNumberInput
-                  v-model="form.years.value"
-                  :min="0"
-                  :max="150"
-                />
+              <NmorphFormItem id="years" :label="$t('overview.form.basic-usage.years-old')">
+                <NmorphNumberInput v-model="form.years.value" :min="0" :max="150" />
               </NmorphFormItem>
-              <NmorphFormItem
-                id="drink"
-                :label="$t('overview.form.basic-usage.preferred-drink')"
-              >
+              <NmorphFormItem id="drink" :label="$t('overview.form.basic-usage.preferred-drink')">
                 <NmorphRadioGroup v-model="form.drink.value">
-                  <NmorphRadio
-                    v-for="option in drinks"
-                    :key="option.value"
-                    :label="option.label"
-                    :value="option.value"
-                    :disabled="option.disabled"
-                  />
+                  <NmorphRadio v-for="option in drinks" :key="option.value" :label="option.label" :value="option.value"
+                    :disabled="option.disabled" />
                 </NmorphRadioGroup>
               </NmorphFormItem>
-              <NmorphFormItem
-                id="browsers"
-                :label="$t('overview.form.basic-usage.browsers')"
-              >
-                <NmorphCheckboxGroup
-                  v-model="form.browsers.value"
-                  direction="column"
-                >
-                  <NmorphCheckbox
-                    v-for="option in browsers"
-                    :id="option.id"
-                    :key="option.id"
-                    :label="option.label"
-                    :disabled="option.disabled"
-                    style-type="button"
-                  />
+              <NmorphFormItem id="browsers" :label="$t('overview.form.basic-usage.browsers')">
+                <NmorphCheckboxGroup v-model="form.browsers.value" direction="column">
+                  <NmorphCheckbox v-for="option in browsers" :id="option.id" :key="option.id" :label="option.label"
+                    :disabled="option.disabled" style-type="button" />
                 </NmorphCheckboxGroup>
               </NmorphFormItem>
-              <NmorphFormItem
-                id="numberValue"
-                :label="$t('overview.form.basic-usage.number-value')"
-              >
-                <NmorphSlider
-                  v-model="form.numberValue.value"
-                  :step="1"
-                  :min="0"
-                  :max="100"
-                />
+              <NmorphFormItem id="numberValue" :label="$t('overview.form.basic-usage.number-value')">
+                <NmorphSlider v-model="form.numberValue.value" :step="1" :min="0" :max="100" />
                 <span class="form-basic-usage-overview__value">{{
                   form.numberValue.value
                 }}</span>
               </NmorphFormItem>
-              <NmorphFormItem
-                id="food"
-                :label="$t('overview.form.basic-usage.food')"
-              >
-                <NmorphSelect
-                  v-model="form.food.value"
-                  value-required
-                  :options-map="food"
-                  fill
-                >
-                  <NmorphSelectOption
-                    v-for="option in food"
-                    :key="option.value"
-                    :label="option.label"
-                    :value="option.value"
-                  />
+              <NmorphFormItem id="food" :label="$t('overview.form.basic-usage.food')">
+                <NmorphSelect v-model="form.food.value" value-required :options-map="food" fill>
+                  <NmorphSelectOption v-for="option in food" :key="option.value" :label="option.label"
+                    :value="option.value" />
                 </NmorphSelect>
               </NmorphFormItem>
-              <NmorphFormItem
-                id="date"
-                :label="$t('overview.form.basic-usage.choose-date')"
-              >
+              <NmorphFormItem id="date" :label="$t('overview.form.basic-usage.choose-date')">
                 <NmorphDatePicker v-model="form.date.value" />
               </NmorphFormItem>
-              <NmorphFormItem
-                id="photo"
-                :label="$t('overview.form.basic-usage.photo')"
-              >
+              <NmorphFormItem id="photo" :label="$t('overview.form.basic-usage.photo')">
                 <NmorphFileUpload v-model="form.photo.value" multiple />
               </NmorphFormItem>
-              <NmorphFormItem
-                id="agreement"
-                :label="$t('overview.form.basic-usage.agreement')"
-              >
+              <NmorphFormItem id="agreement" :label="$t('overview.form.basic-usage.agreement')">
                 <NmorphSwitch v-model="form.agreement.value">
-                  <template #thumb-on
-                    ><NmorphIcon width="10px" height="10px"
-                      ><NmorphIconEye /></NmorphIcon
-                  ></template>
-                  <template #thumb-off
-                    ><NmorphIcon name="eye-blocked" width="10px" height="10px"
-                      ><NmorphIconEyeBlocked /></NmorphIcon
-                  ></template>
+                  <template #thumb-on>
+                    <NmorphIcon width="10px" height="10px">
+                      <NmorphIconEye />
+                    </NmorphIcon>
+                  </template>
+                  <template #thumb-off>
+                    <NmorphIcon name="eye-blocked" width="10px" height="10px">
+                      <NmorphIconEyeBlocked />
+                    </NmorphIcon>
+                  </template>
                 </NmorphSwitch>
               </NmorphFormItem>
               <NmorphFormItem id="send">
-                <NmorphButton
-                  :text="$t('overview.form.basic-usage.send-form')"
-                  :disabled="!isFormValid"
-                  width="100px"
-                  fill
-                />
+                <NmorphButton :text="$t('overview.form.basic-usage.send-form')" :disabled="!isFormValid" width="100px"
+                  fill />
               </NmorphFormItem>
             </NmorphForm>
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
     </attribute>
   </div>

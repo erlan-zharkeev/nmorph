@@ -14,11 +14,11 @@ import type { LocaleObject } from "@nuxtjs/i18n";
 
 const switchLocalePath = useSwitchLocalePath();
 
-const { locale, locales } = useI18n();
+const i18n = useI18n();
 const route = useRoute();
 
 const availableLocales = computed<LocaleObject[]>(() => {
-  console.log(locales, locale, 'locales')
+  // console.log(locales, locale, 'locales')
   // return locales.value.filter((i) => i.code !== locale.value);
   return [{ code: 'ru' }, { code: 'zh' }]
 });
@@ -116,7 +116,7 @@ watch(() => props.isMenuOpen, () => {
           <li>
             <NuxtLink :to="localePath('/components')">{{
               $t("components")
-            }}</NuxtLink>
+              }}</NuxtLink>
           </li>
           <li>
             <NuxtLink :to="localePath('/about')">{{ $t("about") }}</NuxtLink>
@@ -136,7 +136,7 @@ watch(() => props.isMenuOpen, () => {
         <li>
           <NuxtLink :to="localePath('/components')">{{
             $t("components")
-            }}</NuxtLink>
+          }}</NuxtLink>
         </li>
         <li>
           <NuxtLink :to="localePath('/about')">{{ $t("about") }}</NuxtLink>
