@@ -19,7 +19,7 @@ import {
 import NmorphCalendarHeader from './inner-components/nmorph-calendar-header/NmorphCalendarHeader.vue';
 import { useCalendarTexts } from './hooks';
 import { NmorphSelectionDateType } from '@/types';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps {
   markToday?: boolean;
