@@ -25,7 +25,7 @@ build-docs:
     paths:
       - lib-docs/.output/public
   only:
-    - main
+    - dev
 
 pages:
   stage: deploy
@@ -38,4 +38,4 @@ pages:
     paths:
       - public/
   only:
-    - main
+    - dev
