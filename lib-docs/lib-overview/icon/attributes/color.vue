@@ -5,7 +5,7 @@ import {
   NmorphIconAvatar,
   NmorphIconArchive,
 } from "@nmorph/nmorph-ui-kit";
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = ``;
 const templateData = `
@@ -37,34 +37,26 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-color">
-    <attribute
-      header="Color"
-      :subtitle="$t('overview.icon.color.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Color" :subtitle="$t('overview.icon.color.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="icon-color-overview">
           <ClientOnly>
             <NmorphIcon color="var(--nmorph-accent-color)" size="large">
               <NmorphIconAddLocation />
             </NmorphIcon>
-            <NmorphIcon color="#694295" size="large"
-              ><NmorphIconAvatar
-            /></NmorphIcon>
-            <NmorphIcon color="hsl(148, 60%, 39%)" size="large"
-              ><NmorphIconArchive
-            /></NmorphIcon>
+            <NmorphIcon color="#694295" size="large">
+              <NmorphIconAvatar />
+            </NmorphIcon>
+            <NmorphIcon color="hsl(148, 60%, 39%)" size="large">
+              <NmorphIconArchive />
+            </NmorphIcon>
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = `
 <script lang="ts" setup>
@@ -23,11 +23,7 @@ const text = ref("Lorem ipsum");
 
 <template>
   <div id="content-clearable">
-    <attribute
-      header="Clearable"
-      :subtitle="$t('overview.text-input.clearable.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Clearable" :subtitle="$t('overview.text-input.clearable.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="text-input-clearable-overview">
           <ClientOnly>
@@ -36,17 +32,12 @@ const text = ref("Lorem ipsum");
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
 <style lang="scss">
-.text-input-clearable-overview {
-}
+.text-input-clearable-overview {}
 </style>

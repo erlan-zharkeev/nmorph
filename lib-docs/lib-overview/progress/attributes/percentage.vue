@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphProgress } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = "";
 const templateData = `
@@ -30,38 +30,28 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-percentage">
-    <attribute
-      header="Percentage"
-      :subtitle="$t('overview.progress.percentage.subtitle')"
-      info-name="progress.percentage"
-      :codeToCopy="code"
-    >
+    <Attribute header="Percentage" :subtitle="$t('overview.progress.percentage.subtitle')"
+      info-name="progress.percentage" :codeToCopy="code">
       <template #overview>
         <div class="progress-percentage-overview">
           <ClientOnly>
             <NmorphProgress :percentage="33" color="pink" />
-            <NmorphProgress
-              :percentage="66"
-              color="var(--nmorph-accent-color)"
-            />
+            <NmorphProgress :percentage="66" color="var(--nmorph-accent-color)" />
             <NmorphProgress :percentage="99" color="lightblue" />
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
 <style lang="scss">
 .progress-percentage-overview {
   width: 100%;
+
   .nmorph-progress__linear {
     margin-bottom: 12px;
   }

@@ -5,7 +5,7 @@ import {
   NmorphComponentHeight,
   NmorphButtonShape,
 } from "@nmorph/nmorph-ui-kit";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 import { enumToString } from "~/utils";
 
 const attributesData = [
@@ -90,13 +90,7 @@ const exposes = [
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphButton"
-      name="button"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-      :exposes="exposes"
-    />
+    <api-table title="NmorphButton" name="button" :attributes="attributesData" :slots="slotData" :variables="variables"
+      :exposes="exposes" />
   </div>
 </template>

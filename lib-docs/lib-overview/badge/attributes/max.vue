@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = "";
 
@@ -19,11 +19,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-max">
-    <attribute
-      header="Max"
-      :subtitle="$t('overview.badge.max.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Max" :subtitle="$t('overview.badge.max.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="badge-max-overview">
           <ClientOnly>
@@ -34,17 +30,12 @@ const code = [scriptData, templateData, cssData];
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
     </attribute>
   </div>
 </template>
 
 <style lang="scss">
-.badge-max-overview {
-}
+.badge-max-overview {}
 </style>

@@ -1,8 +1,0 @@
-<script setup lang="ts">
-import TopBar from "source/components/TopBar.vue";
-</script>
-
-<template>
-  <TopBar />
-  <RouterView />
-</template>

@@ -1,9 +1,9 @@
-import StyleTypeProps from "./style-type.vue";
-import Loading from "./loading.vue";
-import Ripple from "./ripple.vue";
-import Shape from "./shape.vue";
-import Height from "./height.vue";
-import Disabled from "./disabled.vue";
+import StyleTypeProps from "./StyleType.vue";
+import Loading from "./Loading.vue";
+import Ripple from "./Ripple.vue";
+import Shape from "./Shape.vue";
+import Height from "./Height.vue";
+import Disabled from "./Disabled.vue";
 
 export const Attributes = [
   StyleTypeProps,

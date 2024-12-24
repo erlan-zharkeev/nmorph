@@ -4,7 +4,7 @@ import {
   type ISlotsTableData,
   type IVariablesTableData,
 } from "~/types";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -60,14 +60,7 @@ const exposes = [
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphSwitch"
-      name="switch"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-      :exposes="exposes"
-      :events="events"
-    />
+    <api-table title="NmorphSwitch" name="switch" :attributes="attributesData" :slots="slotData" :variables="variables"
+      :exposes="exposes" :events="events" />
   </div>
 </template>

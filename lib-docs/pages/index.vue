@@ -3,7 +3,7 @@ import { FirstScreen } from '~/components/guide-page-sections'
 </script>
 
 <template>
-  <div class="docs-first-page page nmorph--shadow-outset">
+  <div class="docs-first-page nmorph-docs-content nmorph--shadow-outset">
     <FirstScreen />
   </div>
 </template>
@@ -11,5 +11,6 @@ import { FirstScreen } from '~/components/guide-page-sections'
 <style lang="scss">
 .docs-first-page {
   overflow: hidden;
+  position: relative;
 }
 </style>

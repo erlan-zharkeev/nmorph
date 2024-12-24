@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphTagItem, NmorphTagList } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = `
 <script lang="ts" setup>
@@ -67,47 +67,24 @@ const list = ref([
 
 <template>
   <div id="content-removable">
-    <attribute
-      header="Removable"
-      :subtitle="$t('overview.tag-item.removable.subtitle')"
-      info-name="tag-item.removable"
-      :codeToCopy="code"
-    >
+    <Attribute header="Removable" :subtitle="$t('overview.tag-item.removable.subtitle')" info-name="tag-item.removable"
+      :codeToCopy="code">
       <template #overview>
         <div class="tag-removable-overview">
           <ClientOnly>
-            <NmorphTagItem
-              v-show="showTag1"
-              value="0"
-              :text="$t('overview.tag-zero')"
-              :removable="false"
-            />
-            <NmorphTagItem
-              v-show="showTag1"
-              value="1"
-              :text="$t('overview.tag-one')"
-              removable
-              @close="showTag1 = false"
-            />
-            <NmorphTagItem
-              v-show="showTag2"
-              value="2"
-              :text="$t('overview.tag-two')"
-              removable
-              @close="showTag2 = false"
-            />
+            <NmorphTagItem v-show="showTag1" value="0" :text="$t('overview.tag-zero')" :removable="false" />
+            <NmorphTagItem v-show="showTag1" value="1" :text="$t('overview.tag-one')" removable
+              @close="showTag1 = false" />
+            <NmorphTagItem v-show="showTag2" value="2" :text="$t('overview.tag-two')" removable
+              @close="showTag2 = false" />
             <NmorphTagList v-model="list" class="tag-list" />
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
@@ -117,6 +94,7 @@ const list = ref([
     margin-right: 8px;
     margin-bottom: 8px;
   }
+
   .tag-list {
     margin-top: 8px;
   }

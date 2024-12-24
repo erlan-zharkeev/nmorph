@@ -48,31 +48,19 @@ const value = ref(new Date());
 
 <template>
   <div id="content-height">
-    <attribute
-      header="Height"
-      :subtitle="$t('overview.date-picker.height.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Height" :subtitle="$t('overview.date-picker.height.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="date-picker-height-overview">
           <ClientOnly>
-            <NmorphDatePicker
-              v-for="height in Object.keys(NmorphComponentHeight)"
-              :key="height"
-              :height="height"
-              v-model="value"
-            />
+            <NmorphDatePicker v-for="height in Object.keys(NmorphComponentHeight)" :key="height" :height="height"
+              v-model="value" />
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
@@ -81,6 +69,7 @@ const value = ref(new Date());
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+
   .nmorph-date-picker {
     margin-right: 8px;
     margin-bottom: 8px;

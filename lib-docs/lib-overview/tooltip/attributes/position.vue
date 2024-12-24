@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphTooltip, NmorphButton } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = "";
 const templateData = `
@@ -66,11 +66,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-position">
-    <attribute
-      header="Position"
-      :subtitle="$t('overview.tooltip.position.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Position" :subtitle="$t('overview.tooltip.position.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="tooltip-position-overview">
           <ClientOnly>
@@ -110,13 +106,9 @@ const code = [scriptData, templateData, cssData];
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
@@ -125,6 +117,7 @@ const code = [scriptData, templateData, cssData];
   .elements {
     display: flex;
   }
+
   .elements__element {
     margin-right: 8px;
   }

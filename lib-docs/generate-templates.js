@@ -16,7 +16,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-${camelToKebab(attribute)}">
-    <attribute
+    <Attribute
       header="${camelToTitle(attribute)}"
       :subtitle="$t('overview.${componentName}.${camelToKebab(attribute)}.subtitle')"
       :codeToCopy="code"
@@ -45,7 +45,7 @@ const code = [scriptData, templateData, cssData];
 export const generatePageContent = (componentName) =>
 `
 <template>
-  <component-overview name="${componentName}" />
+  <ComponentOverview name="${componentName}" />
 </template>
 `;
 

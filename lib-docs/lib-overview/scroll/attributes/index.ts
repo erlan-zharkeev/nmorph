@@ -1,6 +1,6 @@
-import Height from "./height.vue";
-import MaxHeight from "./max-height.vue";
-import Value from "./model-value.vue";
-import HorizontalScroll from "./horizontal-scroll.vue";
+import Height from "./Height.vue";
+import MaxHeight from "./MaxHeight.vue";
+import Value from "./ModelValue.vue";
+import HorizontalScroll from "./HorizontalScroll.vue";
 
 export const Attributes = [Height, MaxHeight, Value, HorizontalScroll];

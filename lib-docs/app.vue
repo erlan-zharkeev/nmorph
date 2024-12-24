@@ -10,8 +10,6 @@ import {
 import { notificationProvider, useGlobalStore } from "~/providers";
 import projectData from "./package.json";
 
-const menuOpen = ref(false);
-
 const loaded = ref(false);
 const store = useGlobalStore();
 const route = useRoute();
@@ -24,14 +22,6 @@ onMounted(() => {
     store.inferGetDynamicColorVariables(nmorph.theme.getDynamicColorVariables);
   }
 });
-
-const toggleMenu = () => {
-  menuOpen.value = !menuOpen.value;
-};
-
-const closeMenuHandler = () => {
-  menuOpen.value = false;
-};
 
 onMounted(async () => {
   nmorphLog("success", `NMORPH DOCS (v${projectData.version})`);
@@ -47,17 +37,16 @@ watch(() => route.path.length, () => {
 </script>
 
 <template>
+  <ClientOnly>
+    <NmorphNotificationProvider :notifications="notificationProvider.notifications.value" placement="top-center" />
+  </ClientOnly>
   <div class="loader" v-if="!loaded">
     <ClientOnly>
       <NmorphProgress :value-right-side="false" indeterminate color="var(--nmorph-accent-color)" />
     </ClientOnly>
   </div>
   <div v-else class="docs">
-    <TopBar :isMenuOpen="menuOpen" @toggle-menu="toggleMenu" @close-menu="closeMenuHandler" />
-    <NuxtPage />
-    <FooterBar />
-    <MainMenu :isMenuOpen="menuOpen" @menu-click="closeMenuHandler" />
-    <NmorphNotificationProvider :notifications="notificationProvider.notifications.value" placement="top-center" />
+    <NuxtLayout name="default" />
   </div>
 </template>
 

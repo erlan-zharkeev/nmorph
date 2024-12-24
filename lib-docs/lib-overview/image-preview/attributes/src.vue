@@ -2,7 +2,7 @@
 import { NmorphImagePreview } from "@nmorph/nmorph-ui-kit";
 import { Spring, Summer, Autumn, Winter } from "@/assets/images";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = "";
 
@@ -31,11 +31,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-src">
-    <attribute
-      header="Src"
-      :subtitle="$t('overview.image-preview.src.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Src" :subtitle="$t('overview.image-preview.src.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="image-preview-src-overview">
           <ClientOnly>
@@ -45,13 +41,9 @@ const code = [scriptData, templateData, cssData];
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 

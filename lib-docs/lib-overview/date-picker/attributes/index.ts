@@ -1,5 +1,5 @@
-import BasicUsage from "./basic-usage.vue";
-import Height from "./height.vue";
-import Disabled from "./disabled.vue";
+import BasicUsage from "./BasicUsage.vue";
+import Height from "./Height.vue";
+import Disabled from "./Disabled.vue";
 
 export const Attributes = [BasicUsage, Height, Disabled];

@@ -4,7 +4,7 @@ import {
   type ISlotsTableData,
   type IVariablesTableData,
 } from "~/types";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 import { AvatarShapeType } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
@@ -84,13 +84,7 @@ const events = [
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphAvatar"
-      name="avatar"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-      :events="events"
-    />
+    <api-table title="NmorphAvatar" name="avatar" :attributes="attributesData" :slots="slotData" :variables="variables"
+      :events="events" />
   </div>
 </template>

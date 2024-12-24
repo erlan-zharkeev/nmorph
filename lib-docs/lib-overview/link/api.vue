@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphColor, NmorphLinkTarget } from "@nmorph/nmorph-ui-kit";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 
 const attributesData = [
   {
@@ -49,12 +49,6 @@ const variables = [
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphLink"
-      name="link"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-    />
+    <api-table title="NmorphLink" name="link" :attributes="attributesData" :slots="slotData" :variables="variables" />
   </div>
 </template>

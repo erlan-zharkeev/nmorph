@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = ``;
 
@@ -26,11 +26,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-disabled">
-    <attribute
-      header="Disabled"
-      :subtitle="$t('overview.button.disabled.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Disabled" :subtitle="$t('overview.button.disabled.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="button-disabled-overview">
           <NmorphButton disabled>{{ $t("overview.disabled") }}</NmorphButton>
@@ -43,11 +39,7 @@ const code = [scriptData, templateData, cssData];
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
     </attribute>
   </div>

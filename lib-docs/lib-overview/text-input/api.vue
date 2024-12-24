@@ -4,7 +4,7 @@ import {
   type ISlotsTableData,
   type IVariablesTableData,
 } from "~/types";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
@@ -67,14 +67,7 @@ const exposes = [
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphTextInput"
-      name="text-input"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-      :events="events"
-      :exposes="exposes"
-    />
+    <api-table title="NmorphTextInput" name="text-input" :attributes="attributesData" :slots="slotData"
+      :variables="variables" :events="events" :exposes="exposes" />
   </div>
 </template>

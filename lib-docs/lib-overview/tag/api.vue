@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type IAttributesTableData } from "~/types";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 import { NmorphComponentHeight, NmorphDivider } from "@nmorph/nmorph-ui-kit";
 
 const listAttributesData: IAttributesTableData[] = [
@@ -62,23 +62,13 @@ const events = [{ name: "close", type: "String" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphTagList"
-      name="tag-list"
-      :attributes="listAttributesData"
-      :events="listEvents"
-      additional-id="tag-list"
-    />
+    <api-table title="NmorphTagList" name="tag-list" :attributes="listAttributesData" :events="listEvents"
+      additional-id="tag-list" />
   </div>
   <NmorphDivider />
   <div class="docs-api-table">
-    <api-table
-      title="NmorphTagItem"
-      name="tag-item"
-      :attributes="attributesData"
-      :events="events"
-      additional-id="tag-item"
-    />
+    <api-table title="NmorphTagItem" name="tag-item" :attributes="attributesData" :events="events"
+      additional-id="tag-item" />
   </div>
 </template>
 

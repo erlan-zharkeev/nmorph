@@ -1,8 +1,8 @@
-import Type from "./type.vue";
-import Percentage from "./percentage.vue";
-import ValueInside from "./value-inside.vue";
-import Indeterminate from "./indeterminate.vue";
-import CircleSize from "./circle-size.vue";
+import Type from "./Type.vue";
+import Percentage from "./Percentage.vue";
+import ValueInside from "./ValueInside.vue";
+import Indeterminate from "./Indeterminate.vue";
+import CircleSize from "./CircleSize.vue";
 
 export const Attributes = [
   Percentage,

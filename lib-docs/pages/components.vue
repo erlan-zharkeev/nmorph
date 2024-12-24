@@ -1,123 +1,19 @@
 <script setup lang="ts">
-import { ref, watch, nextTick, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import ComponentsList from "~/components/component-list/component-list.vue";
-
-const componentPage = ref<HTMLElement | null>(null);
-const navigationContents = ref<string[]>([]);
-const timeoutScrollId = ref(null);
-const router = useRouter();
-const scrollDOMRef = ref(null);
-
-watch(
-  () => router.currentRoute.value,
-  () => {
-    const isRootComponents =
-      router.currentRoute.value.fullPath.split("/").filter(Boolean).pop() ===
-      "components";
-    if (isRootComponents) router.push("components/overview");
-
-    nextTick(() => {
-      doUpdate();
-    });
-  },
-  { immediate: true }
-);
-
-const scrollToAnchor = (anchor: string) => {
-  if (document !== null || !scrollDOMRef.value || !anchor) return;
-  const offsetFromCurrent = document
-    // @ts-ignore ///
-    .getElementById(anchor)
-    .getBoundingClientRect().top;
-
-  const y =
-    // @ts-ignore ///
-    offsetFromCurrent + scrollDOMRef.value.scroll.scrollDOMContainer.scrollTop;
-  // @ts-ignore ///
-  scrollDOMRef.value.scroll.moveTo({ x: 0, y });
-};
-
-watch(
-  () => router.currentRoute.value.hash,
-  () => {
-    scrollToAnchor(router.currentRoute.value.hash.substring(1));
-  }
-);
-
-onMounted(() => {
-  observer.value = new IntersectionObserver(updateActiveAnchor, {
-    root: null,
-    rootMargin: "-10px 0px -90% 0px",
-    threshold: 0,
-  });
-  doUpdate();
-  const timeoutScrollId = setTimeout(() => {
-    scrollToAnchor(router.currentRoute.value.hash.substring(1));
-  }, 400);
-});
-
-onUnmounted(() => {
-  if (timeoutScrollId.value !== null) clearTimeout(timeoutScrollId.value);
-  if (observer.value) observer.value.disconnect();
-  timeoutScrollId.value = null
-});
-
-const doUpdate = () => {
-  if (!componentPage.value) return;
-  const matchedEl = componentPage.value.querySelectorAll('[id^="content-"]');
-  navigationContents.value = [];
-  matchedEl.forEach((element) => {
-    navigationContents.value.push(element.id);
-    if (!observer.value) return;
-    observer.value.observe(element);
-  });
-};
-
-const activeAnchor = ref("");
-const observer = ref<IntersectionObserver | null>(null);
-
-const updateActiveAnchor = (entries: IntersectionObserverEntry[]) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting && entry.intersectionRatio > 0) {
-      activeAnchor.value = entry.target.id;
-    }
-  });
-};
-
-const linkName = (anchor: string) => {
-  return anchor
-    .substring(8)
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-};
+import ComponentsList from "~/components/component-list/ComponentList.vue";
+import MainContentPart from "~/layouts/MainContentPart.vue";
+import Overview from "~/components/overview/Overview.vue";
 </script>
 
 <template>
   <div class="docs-components-page page">
-    <MainContentPart ref="scrollDOMRef">
+    <MainContentPart>
       <template #aside>
         <ComponentsList />
       </template>
       <template #default>
         <section ref="componentPage">
-          <NuxtPage />
+          <Overview />
         </section>
-      </template>
-      <template #aside-right>
-        <h3 class="nmorph-title-3 docs-components-page__title">
-          {{ $t("right-aside-title") }}
-        </h3>
-        <nav class="docs-components-page__nav">
-          <ul>
-            <li v-for="anchor in navigationContents" :key="anchor" :class="{
-              'docs-components-page--active': anchor === activeAnchor,
-            }">
-              <a :href="`#${anchor}`">{{ linkName(anchor) }}</a>
-            </li>
-          </ul>
-        </nav>
       </template>
     </MainContentPart>
   </div>

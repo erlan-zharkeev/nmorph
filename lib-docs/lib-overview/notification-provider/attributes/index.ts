@@ -1,3 +1,3 @@
-import BasicUsage from "./basic-usage.vue";
+import BasicUsage from "./BasicUsage.vue";
 
 export const Attributes = [BasicUsage];

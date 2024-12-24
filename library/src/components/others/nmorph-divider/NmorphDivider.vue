@@ -22,7 +22,6 @@ const modifiers = computed(() =>
 const commonCSS = css`
   ${nmorphOutset()}
 
-
   &.nmorph-divider--horizontal {
     width: 100%;
     height: 2px;

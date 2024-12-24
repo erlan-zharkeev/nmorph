@@ -2,7 +2,7 @@
 import { NmorphAvatar } from "@nmorph/nmorph-ui-kit";
 import { Dog, Racoon } from "~/assets/images";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = ``;
 const templateData = `
@@ -28,11 +28,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-shape">
-    <attribute
-      header="Shape"
-      :subtitle="$t('overview.avatar.shape.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Shape" :subtitle="$t('overview.avatar.shape.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="avatar-shape-overview">
           <ClientOnly>
@@ -42,11 +38,7 @@ const code = [scriptData, templateData, cssData];
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
     </attribute>
   </div>
@@ -56,6 +48,7 @@ const code = [scriptData, templateData, cssData];
 .avatar-shape-overview {
   display: flex;
   align-items: center;
+
   .nmorph-avatar {
     margin-right: 12px;
   }

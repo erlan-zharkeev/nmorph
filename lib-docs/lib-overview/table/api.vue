@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type IAttributesTableData, type IVariablesTableData } from "~/types";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 import { NmorphSortOrder, NmorphDivider } from "@nmorph/nmorph-ui-kit";
 
 const tableAttributesData: IAttributesTableData[] = [
@@ -76,30 +76,16 @@ const tableCellSlots = [{ name: "default" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphTable"
-      name="table"
-      :attributes="tableAttributesData"
-      :variables="tableVariables"
-    />
+    <api-table title="NmorphTable" name="table" :attributes="tableAttributesData" :variables="tableVariables" />
     <NmorphDivider />
     <div class="docs-api-table">
-      <api-table
-        title="NmorphTableColumn"
-        name="table-column"
-        :attributes="tableColumnAttributes"
-        additional-id="table-column"
-      />
+      <api-table title="NmorphTableColumn" name="table-column" :attributes="tableColumnAttributes"
+        additional-id="table-column" />
     </div>
     <NmorphDivider />
     <div class="docs-api-table">
-      <api-table
-        title="NmorphTableCell"
-        name="table-cell"
-        :attributes="tableCellAttributes"
-        :slots="tableCellSlots"
-        additional-id="table-cell"
-      />
+      <api-table title="NmorphTableCell" name="table-cell" :attributes="tableCellAttributes" :slots="tableCellSlots"
+        additional-id="table-cell" />
     </div>
   </div>
 </template>

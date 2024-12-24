@@ -3,7 +3,7 @@ import {
   NmorphOverflowProp,
   NmorphScrollBehavior,
 } from "@nmorph/nmorph-ui-kit";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 
 const attributesData = [
   {
@@ -116,14 +116,7 @@ const events = [
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphScroll"
-      name="scroll"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-      :exposes="exposes"
-      :events="events"
-    />
+    <api-table title="NmorphScroll" name="scroll" :attributes="attributesData" :slots="slotData" :variables="variables"
+      :exposes="exposes" :events="events" />
   </div>
 </template>

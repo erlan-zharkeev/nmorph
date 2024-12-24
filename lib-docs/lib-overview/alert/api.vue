@@ -4,7 +4,7 @@ import {
   type ISlotsTableData,
   type IVariablesTableData,
 } from "~/types";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 import { NmorphAlertType } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
@@ -74,13 +74,7 @@ const events = [{ name: "close", type: "void" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphAlert"
-      name="alert"
-      :events="events"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-    />
+    <api-table title="NmorphAlert" name="alert" :events="events" :attributes="attributesData" :slots="slotData"
+      :variables="variables" />
   </div>
 </template>

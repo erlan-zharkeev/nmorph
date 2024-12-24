@@ -4,7 +4,7 @@ import {
   type ISlotsTableData,
   type IVariablesTableData,
 } from "~/types";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 import { NmorphRadioStyleType } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
@@ -50,13 +50,7 @@ const exposes = [
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphRadio"
-      name="radio"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-      :exposes="exposes"
-    />
+    <api-table title="NmorphRadio" name="radio" :attributes="attributesData" :slots="slotData" :variables="variables"
+      :exposes="exposes" />
   </div>
 </template>

@@ -5,6 +5,8 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-09-05",
   app: {
     head: {
+      title: "Nmorph",
+
       link: [
         {
           rel: "apple-touch-icon",
@@ -29,6 +31,20 @@ export default defineNuxtConfig({
       meta: [
         { name: "msapplication-TileColor", content: "#2d89ef" },
         { name: "theme-color", content: "#ffffff" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { charset: "utf-8" },
+        { name: "description", content: "Описание вашего сайта для поисковых систем." },
+        { name: "author", content: "ketjo" },
+        { name: "robots", content: "index, follow" },
+        { property: "og:title", content: "Nmorph" },
+        { property: "og:description", content: "Описание для социальных сетей" },
+        { property: "og:image", content: "/og-image.png" },
+        { property: "og:url", content: "https://ваш-сайт.com" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: "Nmorph" },
+        { name: "twitter:description", content: "Описание для Twitter" },
+        { name: "twitter:image", content: "/twitter-image.png" },
       ],
     },
   },

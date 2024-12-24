@@ -1,7 +1,7 @@
-import Value from "./value.vue";
-import Max from "./max.vue";
-import IsDot from "./is-dot.vue";
-import Color from "./color.vue";
-import Offset from "./offset.vue";
+import Value from "./Value.vue";
+import Max from "./Max.vue";
+import IsDot from "./IsDot.vue";
+import Color from "./Color.vue";
+import Offset from "./Offset.vue";
 
 export const Attributes = [Value, Max, IsDot, Color, Offset];

@@ -1,6 +1,6 @@
-import ModelValue from "./model-value.vue";
-import Height from "./height.vue";
-import Disabled from "./disabled.vue";
-import Loading from "./loading.vue";
+import ModelValue from "./ModelValue.vue";
+import Height from "./Height.vue";
+import Disabled from "./Disabled.vue";
+import Loading from "./Loading.vue";
 
 export const Attributes = [ModelValue, Height, Disabled, Loading];

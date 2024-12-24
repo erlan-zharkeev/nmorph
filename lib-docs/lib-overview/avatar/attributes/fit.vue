@@ -2,7 +2,7 @@
 import { NmorphAvatar } from "@nmorph/nmorph-ui-kit";
 import CatReal from "~/assets/images/cat-real.png";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = ``;
 
@@ -51,41 +51,18 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-fit">
-    <attribute
-      header="Fit"
-      :subtitle="$t('overview.avatar.fit.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Fit" :subtitle="$t('overview.avatar.fit.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="avatar-fit-overview">
           <ClientOnly>
-            <NmorphAvatar
-              :src="CatReal"
-              :size="100"
-              shape="square"
-              fit="cover"
-            />
-            <NmorphAvatar
-              :src="CatReal"
-              :size="100"
-              shape="square"
-              fit="contain"
-            />
-            <NmorphAvatar
-              :src="CatReal"
-              :size="100"
-              shape="square"
-              fit="fill"
-            />
+            <NmorphAvatar :src="CatReal" :size="100" shape="square" fit="cover" />
+            <NmorphAvatar :src="CatReal" :size="100" shape="square" fit="contain" />
+            <NmorphAvatar :src="CatReal" :size="100" shape="square" fit="fill" />
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
     </attribute>
   </div>

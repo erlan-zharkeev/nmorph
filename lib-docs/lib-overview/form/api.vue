@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type IAttributesTableData, type ISlotsTableData } from "~/types";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 import {
   NmorphCard,
   NmorphComponentHeight,
@@ -115,23 +115,12 @@ const slotDataFormItem: ISlotsTableData[] = [{ name: "default" }];
   </NmorphCard>
   <NmorphDivider />
   <div class="docs-api-table">
-    <api-table
-      title="NmorphForm"
-      name="form"
-      :attributes="attributesData"
-      :slots="slotData"
-      :exposes="exposes"
-    />
+    <api-table title="NmorphForm" name="form" :attributes="attributesData" :slots="slotData" :exposes="exposes" />
   </div>
   <NmorphDivider />
   <div class="docs-api-table">
-    <api-table
-      title="NmorphFormItem"
-      name="form-item"
-      additional-id="form-item"
-      :attributes="attributesDataFormItem"
-      :slots="slotDataFormItem"
-    />
+    <api-table title="NmorphFormItem" name="form-item" additional-id="form-item" :attributes="attributesDataFormItem"
+      :slots="slotDataFormItem" />
   </div>
 </template>
 
@@ -139,13 +128,16 @@ const slotDataFormItem: ISlotsTableData[] = [{ name: "default" }];
 .additional-data {
   margin: 16px 0;
 }
+
 .docs-api-table {
   margin: 16px 0;
 }
+
 .additional-data {
   h2 {
     margin-top: 8px;
   }
+
   ul {
     margin-top: 0;
   }

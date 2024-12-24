@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphCalendar } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = `
 <script lang="ts" setup>
@@ -35,11 +35,7 @@ const model = ref(new Date());
 
 <template>
   <div id="content-range">
-    <attribute
-      header="Range"
-      :subtitle="$t('overview.calendar.range.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Range" :subtitle="$t('overview.calendar.range.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="calendar-initial-date-overview">
           <ClientOnly>
@@ -48,17 +44,12 @@ const model = ref(new Date());
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
 <style lang="scss">
-.calendar-range-overview {
-}
+.calendar-range-overview {}
 </style>

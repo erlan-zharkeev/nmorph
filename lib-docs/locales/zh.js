@@ -1,4 +1,7 @@
 export default {
+  meta: {
+    description: "Vue3的UI组件库，采用neumorphism/sceumorphism风格。"
+  },
   guide: "指南",
   components: "组件",
   about: "关于项目",

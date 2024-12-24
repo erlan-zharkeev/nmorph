@@ -1,3 +1,3 @@
-import Separator from "./basic-usage.vue";
+import Separator from "./BasicUsage.vue";
 
 export const Attributes = [Separator];

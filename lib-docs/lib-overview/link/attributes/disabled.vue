@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { NmorphLink } from "@nmorph/nmorph-ui-kit";
-import Attribute from "~/components/attribute/attribute.vue";
-
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import Attribute from "~/components/attribute/Attribute.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = ``;
 const templateData = `
@@ -14,6 +13,7 @@ const templateData = `
   <NmorphLink disabled underline>Underlined</NmorphLink>
 </template>
 `;
+
 const cssData = `
 <style lang="scss">
   .link-disabled-overview {
@@ -29,11 +29,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-disabled">
-    <attribute
-      header="Disabled"
-      :subtitle="$t('overview.link.disabled.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Disabled" :subtitle="$t('overview.link.disabled.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="link-disabled-overview">
           <NmorphLink disabled type="accent">Accent</NmorphLink>
@@ -43,13 +39,9 @@ const code = [scriptData, templateData, cssData];
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 

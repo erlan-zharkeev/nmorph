@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type IAttributesTableData, type ISlotsTableData } from "~/types";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 import { NmorphDivider } from "@nmorph/nmorph-ui-kit";
 
 const tabsAttributesData: IAttributesTableData[] = [
@@ -53,22 +53,12 @@ const tabSlotData: ISlotsTableData[] = [{ name: "default" }, { name: "label" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphTabs"
-      name="tabs"
-      :attributes="tabsAttributesData"
-      :slots="tabsSlotData"
-      :events="tabsEvents"
-    />
+    <api-table title="NmorphTabs" name="tabs" :attributes="tabsAttributesData" :slots="tabsSlotData"
+      :events="tabsEvents" />
     <NmorphDivider />
     <div class="docs-api-table">
-      <api-table
-        title="NmorphTabPane"
-        name="tab-pane"
-        :attributes="tabAttributesData"
-        additional-id="tab-pane"
-        :slots="tabSlotData"
-      />
+      <api-table title="NmorphTabPane" name="tab-pane" :attributes="tabAttributesData" additional-id="tab-pane"
+        :slots="tabSlotData" />
     </div>
   </div>
 </template>

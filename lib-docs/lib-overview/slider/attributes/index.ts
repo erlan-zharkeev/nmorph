@@ -1,5 +1,5 @@
-import Disabled from "./disabled.vue";
-import ModelValue from "./basic-usage.vue";
-import ShowTooltip from "./show-tooltip.vue";
+import Disabled from "./Disabled.vue";
+import ModelValue from "./BasicUsage.vue";
+import ShowTooltip from "./ShowTooltip.vue";
 
 export const Attributes = [ModelValue, ShowTooltip, Disabled];

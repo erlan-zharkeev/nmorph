@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphProgress } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = "";
 
@@ -40,35 +40,19 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-type">
-    <attribute
-      header="Type"
-      :subtitle="$t('overview.progress.type.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Type" :subtitle="$t('overview.progress.type.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="progress-type-overview">
           <ClientOnly>
-            <NmorphProgress
-              :percentage="50"
-              color="var(--nmorph-accent-color)"
-            />
-            <NmorphProgress
-              type="circle"
-              :percentage="50"
-              class="circle-progress"
-              color="pink"
-            />
+            <NmorphProgress :percentage="50" color="var(--nmorph-accent-color)" />
+            <NmorphProgress type="circle" :percentage="50" class="circle-progress" color="pink" />
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
@@ -81,6 +65,7 @@ const code = [scriptData, templateData, cssData];
   .nmorph-progress {
     width: 50%;
   }
+
   .circle-progress {
     display: flex;
     justify-content: center;

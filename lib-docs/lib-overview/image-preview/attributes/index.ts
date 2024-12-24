@@ -1,5 +1,5 @@
-import ModelValue from "./model-value.vue";
-import InitialIndex from "./initial-index.vue";
-import Src from "./src.vue";
+import ModelValue from "./ModelValue.vue";
+import InitialIndex from "./InitialIndex.vue";
+import Src from "./Src.vue";
 
 export const Attributes = [Src, ModelValue, InitialIndex];

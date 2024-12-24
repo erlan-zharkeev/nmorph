@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { NmorphLink } from "@nmorph/nmorph-ui-kit";
-import Attribute from "~/components/attribute/attribute.vue";
+import Attribute from "~/components/attribute/Attribute.vue";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = ``;
 const templateData = `
@@ -28,11 +28,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-type">
-    <attribute
-      header="Type"
-      :subtitle="$t('overview.link.type.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Type" :subtitle="$t('overview.link.type.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="link-type-overview">
           <NmorphLink type="accent">Accent</NmorphLink>
@@ -42,13 +38,9 @@ const code = [scriptData, templateData, cssData];
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 

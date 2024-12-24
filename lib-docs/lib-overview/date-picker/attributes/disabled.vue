@@ -16,11 +16,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-disabled">
-    <attribute
-      header="Disabled"
-      :subtitle="$t('overview.date-picker.disabled.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Disabled" :subtitle="$t('overview.date-picker.disabled.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="date-picker-disabled-overview">
           <ClientOnly>
@@ -31,17 +27,16 @@ const code = [scriptData, templateData, cssData];
       <template #code>
         <code-example v-if="templateData" lang="html">{{
           templateData
-        }}</code-example>
+          }}</code-example>
         <code-example v-if="scriptData" lang="javascript">{{
           scriptData
-        }}</code-example>
+          }}</code-example>
         <code-example v-if="cssData" lang="css">{{ cssData }}</code-example>
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
 <style lang="scss">
-.date-picker-disabled-overview {
-}
+.date-picker-disabled-overview {}
 </style>

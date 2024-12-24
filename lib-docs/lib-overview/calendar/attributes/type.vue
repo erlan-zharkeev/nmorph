@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphCalendar } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = `
 <script lang="ts" setup>
@@ -71,11 +71,7 @@ const shortDate = (value: Date) => value.toLocaleDateString(locale.value);
 
 <template>
   <div id="content-type">
-    <attribute
-      header="Type"
-      :subtitle="$t('overview.calendar.type.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Type" :subtitle="$t('overview.calendar.type.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="calendar-type-overview">
           <ClientOnly>
@@ -87,32 +83,20 @@ const shortDate = (value: Date) => value.toLocaleDateString(locale.value);
             <div class="calendar-type-overview__element">
               <p>{{ $t("overview.dates") }}</p>
               <p>{{ dates.map((date) => shortDate(date)).join("~") }}</p>
-              <NmorphCalendar
-                v-model="dates"
-                type="dates"
-                :initial-date="date1"
-              />
+              <NmorphCalendar v-model="dates" type="dates" :initial-date="date1" />
             </div>
             <div class="calendar-type-overview__element">
               <p>{{ $t("overview.date-range") }}</p>
               <p>{{ range.map((date) => shortDate(date)).join("~") }}</p>
-              <NmorphCalendar
-                v-model="range"
-                type="daterange"
-                :initial-date="date1"
-              />
+              <NmorphCalendar v-model="range" type="daterange" :initial-date="date1" />
             </div>
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 

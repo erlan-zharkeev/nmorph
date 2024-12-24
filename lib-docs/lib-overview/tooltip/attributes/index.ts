@@ -1,5 +1,5 @@
-import Text from "./text.vue";
-import Position from "./position.vue";
-import ForceCoordinate from "./force-coordinate.vue";
+import Text from "./Text.vue";
+import Position from "./Position.vue";
+import ForceCoordinate from "./ForceCoordinate.vue";
 
 export const Attributes = [Text, Position, ForceCoordinate];

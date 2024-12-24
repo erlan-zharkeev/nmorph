@@ -1,6 +1,6 @@
-import ModelValue from "./model-value.vue";
-import Disabled from "./disabled.vue";
-import Multiple from "./multiple.vue";
-import PhotoWithPreview from "./photo-with-preview.vue";
+import ModelValue from "./ModelValue.vue";
+import Disabled from "./Disabled.vue";
+import Multiple from "./Multiple.vue";
+import PhotoWithPreview from "./PhotoWithPreview.vue";
 
 export const Attributes = [ModelValue, Disabled, Multiple, PhotoWithPreview];

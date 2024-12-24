@@ -1,4 +1,4 @@
-import ShadowType from "./shadow-type.vue";
+import ShadowType from "./ShadowType.vue";
 
 export const Attributes = [
   ShadowType

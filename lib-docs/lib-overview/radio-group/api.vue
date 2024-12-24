@@ -4,7 +4,7 @@ import {
   type ISlotsTableData,
   type IVariablesTableData,
 } from "~/types";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
@@ -51,13 +51,7 @@ const events = [{ name: "update:model-value", type: "String" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphRadioGroup"
-      name="radio-group"
-      :attributes="attributesData"
-      :slots="slotData"
-      :variables="variables"
-      :events="events"
-    />
+    <api-table title="NmorphRadioGroup" name="radio-group" :attributes="attributesData" :slots="slotData"
+      :variables="variables" :events="events" />
   </div>
 </template>

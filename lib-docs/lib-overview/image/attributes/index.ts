@@ -1,5 +1,5 @@
-import Fit from "./fit.vue";
-import LoadingText from "./loading-text.vue";
-import LoadFailedText from "./load-failed-text.vue";
+import Fit from "./Fit.vue";
+import LoadingText from "./LoadingText.vue";
+import LoadFailedText from "./LoadFailedText.vue";
 
 export const Attributes = [Fit, LoadingText, LoadFailedText];

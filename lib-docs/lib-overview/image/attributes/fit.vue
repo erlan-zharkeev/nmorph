@@ -2,7 +2,7 @@
 import { NmorphImage } from "@nmorph/nmorph-ui-kit";
 import { CatReal } from "~/assets/images";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = "";
 
@@ -40,12 +40,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-fit">
-    <attribute
-      header="Fit"
-      info-name="image.fit"
-      :subtitle="$t('overview.image.fit.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Fit" info-name="image.fit" :subtitle="$t('overview.image.fit.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="image-fit-overview">
           <ClientOnly>
@@ -62,13 +57,9 @@ const code = [scriptData, templateData, cssData];
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
@@ -77,6 +68,7 @@ const code = [scriptData, templateData, cssData];
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+
   .image-fit-overview__wrapper {
     width: 200px;
     height: 200px;

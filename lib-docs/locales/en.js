@@ -1,4 +1,7 @@
 export default {
+  meta: {
+    description: "Library of UI components for Vue 3 in the neumorphism/sceumorphism style."
+  },
   guide: "Guide",
   components: "Components",
   about: "About the project",

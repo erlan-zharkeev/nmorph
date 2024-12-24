@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphIconSize } from "@nmorph/nmorph-ui-kit";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 
 const attributesData = [
   {
@@ -50,12 +50,7 @@ const variablesData = [
 </script>
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphIcon"
-      name="icon"
-      :variables="variablesData"
-      :attributes="attributesData"
-      :slots="slotData"
-    />
+    <api-table title="NmorphIcon" name="icon" :variables="variablesData" :attributes="attributesData"
+      :slots="slotData" />
   </div>
 </template>

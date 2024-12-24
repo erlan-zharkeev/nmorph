@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphButton } from "@nmorph/nmorph-ui-kit";
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = ``;
 
@@ -26,11 +26,7 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-height">
-    <attribute
-      header="Height"
-      :subtitle="$t('overview.button.height.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Height" :subtitle="$t('overview.button.height.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="button-height-overview">
           <NmorphButton height="thick">{{ $t("overview.thick") }}</NmorphButton>
@@ -41,11 +37,7 @@ const code = [scriptData, templateData, cssData];
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
     </attribute>
   </div>

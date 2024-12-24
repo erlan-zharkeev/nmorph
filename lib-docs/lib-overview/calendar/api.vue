@@ -5,7 +5,7 @@ import {
   type ITranslates,
   type IVariablesTableData,
 } from "~/types";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 import { NmorphSelectionDateType } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [

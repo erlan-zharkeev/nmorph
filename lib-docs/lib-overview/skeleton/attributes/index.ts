@@ -1,5 +1,5 @@
-import Animated from "./animated.vue";
-import Loading from "./loading.vue";
-import Rows from "./rows.vue";
+import Animated from "./Animated.vue";
+import Loading from "./Loading.vue";
+import Rows from "./Rows.vue";
 
 export const Attributes = [Rows, Animated, Loading];

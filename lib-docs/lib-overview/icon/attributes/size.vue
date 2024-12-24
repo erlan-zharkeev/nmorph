@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphIcon, NmorphIconEye } from "@nmorph/nmorph-ui-kit";
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = ``;
 
@@ -28,28 +28,26 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-size">
-    <attribute
-      header="Size"
-      :subtitle="$t('overview.icon.size.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Size" :subtitle="$t('overview.icon.size.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="icon-size-overview">
           <ClientOnly>
-            <NmorphIcon size="large" name="eye"><NmorphIconEye /></NmorphIcon>
-            <NmorphIcon size="medium" name="eye"><NmorphIconEye /></NmorphIcon>
-            <NmorphIcon size="small" name="eye"><NmorphIconEye /></NmorphIcon>
+            <NmorphIcon size="large" name="eye">
+              <NmorphIconEye />
+            </NmorphIcon>
+            <NmorphIcon size="medium" name="eye">
+              <NmorphIconEye />
+            </NmorphIcon>
+            <NmorphIcon size="small" name="eye">
+              <NmorphIconEye />
+            </NmorphIcon>
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 

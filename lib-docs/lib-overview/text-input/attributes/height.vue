@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = "";
 const templateData = `
@@ -28,37 +28,20 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-height">
-    <attribute
-      header="Height"
-      :subtitle="$t('overview.text-input.height.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Height" :subtitle="$t('overview.text-input.height.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="text-input-height-overview">
           <ClientOnly>
-            <NmorphTextInput
-              height="thick"
-              :placeholder="$t('overview.enter-text')"
-            />
-            <NmorphTextInput
-              height="default"
-              :placeholder="$t('overview.enter-text')"
-            />
-            <NmorphTextInput
-              height="thin"
-              :placeholder="$t('overview.enter-text')"
-            />
+            <NmorphTextInput height="thick" :placeholder="$t('overview.enter-text')" />
+            <NmorphTextInput height="default" :placeholder="$t('overview.enter-text')" />
+            <NmorphTextInput height="thin" :placeholder="$t('overview.enter-text')" />
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
@@ -66,6 +49,7 @@ const code = [scriptData, templateData, cssData];
 .text-input-height-overview {
   display: flex;
   align-items: center;
+
   .nmorph-text-input {
     margin-right: 8px;
   }

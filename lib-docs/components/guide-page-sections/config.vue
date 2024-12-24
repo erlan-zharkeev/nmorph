@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import Info from '~/components/info/info.vue';
+import Info from '~/components/info/Info.vue';
 
 const { t } = useI18n();
 
@@ -100,7 +100,7 @@ app.mount("#app");
       <p class="section-paragraph" v-html="$t('guide-page.config.available')" />
       <code-example lang="javascript">{{
         config
-      }}</code-example>
+        }}</code-example>
     </div>
     <div class="section-element nmorph--shadow-inset">
       <h3 class="section-subtitle">
@@ -110,7 +110,7 @@ app.mount("#app");
       <Info type='warning' :title="$t('attention')" :content="$t('guide-page.config.auto-generation')" />
       <code-example lang="javascript">{{
         theme
-      }}</code-example>
+        }}</code-example>
     </div>
     <div class="section-element nmorph--shadow-inset">
       <h3 class="section-subtitle">
@@ -119,7 +119,7 @@ app.mount("#app");
       <p class="section-paragraph" v-html="$t('guide-page.config.i18n-content')" />
       <code-example lang="javascript">{{
         i18n
-      }}</code-example>
+        }}</code-example>
     </div>
   </section>
 </template>

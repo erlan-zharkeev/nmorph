@@ -1,5 +1,5 @@
-import Disabled from "./disabled.vue";
-import ModelValue from "./model-value.vue";
-import Design from "./design.vue";
+import Disabled from "./Disabled.vue";
+import ModelValue from "./ModelValue.vue";
+import Design from "./Design.vue";
 
 export const Attributes = [ModelValue, Design, Disabled];

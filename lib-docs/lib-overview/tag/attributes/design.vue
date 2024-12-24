@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphTagItem } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = "";
 const templateData = `
@@ -17,39 +17,22 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-design">
-    <attribute
-      header="Design"
-      :subtitle="$t('overview.tag-item.design.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Design" :subtitle="$t('overview.tag-item.design.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="tag-design-overview">
           <ClientOnly>
-            <NmorphTagItem
-              value="1"
-              :text="$t('overview.tag-one')"
-              design="nmorph"
-            />
-            <NmorphTagItem
-              value="2"
-              :text="$t('overview.tag-two')"
-              design="common"
-            />
+            <NmorphTagItem value="1" :text="$t('overview.tag-one')" design="nmorph" />
+            <NmorphTagItem value="2" :text="$t('overview.tag-two')" design="common" />
           </ClientOnly>
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
 <style lang="scss">
-.tag-design-overview {
-}
+.tag-design-overview {}
 </style>

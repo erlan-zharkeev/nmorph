@@ -4,7 +4,9 @@ import {
   type NmorphCoordsType
 } from "@nmorph/nmorph-ui-kit";
 import { QuickStart, Config, Other } from '~/components/guide-page-sections'
-import GuideMenu from "~/components/guide-menu/guide-menu.vue";
+import GuideMenu from "~/components/guide-menu/GuideMenu.vue";
+import MainContentPart from "~/layouts/MainContentPart.vue";
+
 const scrollDomRef = ref<null | { scroll: { moveTo: (coords: NmorphCoordsType) => void } }>(null);
 const route = useRoute();
 
@@ -70,7 +72,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="docs-guide-page page nmorph--shadow-outset">
+  <div class="docs-guide-page nmorph-docs-content nmorph--shadow-outset">
     <MainContentPart ref="scrollDomRef">
       <template #aside>
         <GuideMenu :active-anchor="`#${hashInIntersection}`" />
@@ -92,7 +94,7 @@ onUnmounted(() => {
   margin: 8px;
   border-radius: 4px;
 
-  .page {
+  .nmorph-docs-content {
     height: calc(var(--container-height) - 16px) !important;
   }
 }

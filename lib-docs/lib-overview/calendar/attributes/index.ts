@@ -1,5 +1,5 @@
-import Type from "./type.vue";
-import Range from "./range.vue";
-import CustomContent from "./custom-content.vue";
+import Type from "./Type.vue";
+import Range from "./Range.vue";
+import CustomContent from "./СustomСontent.vue";
 
 export const Attributes = [Type, Range, CustomContent];

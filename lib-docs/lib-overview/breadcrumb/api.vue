@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type IAttributesTableData } from "~/types";
-import ApiTable from "~/components/api-table/api-table.vue";
+import ApiTable from "~/components/api-table/ApiTable.vue";
 
 const breadcrumbAttributesData: IAttributesTableData[] = [
   {
@@ -26,19 +26,11 @@ const breadcrumbItemAttributesData: IAttributesTableData[] = [
 
 <template>
   <div class="docs-api-table">
-    <api-table
-      title="NmorphBreadcrumb"
-      name="breadcrumb"
-      :attributes="breadcrumbAttributesData"
-    />
+    <api-table title="NmorphBreadcrumb" name="breadcrumb" :attributes="breadcrumbAttributesData" />
     <NmorphDivider />
     <div class="docs-api-table">
-      <api-table
-        title="NmorphBreadcrumbItem"
-        name="breadcrumb-item"
-        :attributes="breadcrumbItemAttributesData"
-        additional-id="breadcrumb-item"
-      />
+      <api-table title="NmorphBreadcrumbItem" name="breadcrumb-item" :attributes="breadcrumbItemAttributesData"
+        additional-id="breadcrumb-item" />
     </div>
   </div>
 </template>

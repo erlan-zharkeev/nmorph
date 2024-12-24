@@ -1,7 +1,7 @@
-import Height from "./height.vue";
-import Disabled from "./disabled.vue";
-import BasicUsage from "./basic-usage.vue";
-import ActionBtnPositionRight from "./action-btn-position-right.vue";
+import Height from "./Height.vue";
+import Disabled from "./Disabled.vue";
+import BasicUsage from "./BasicUsage.vue";
+import ActionBtnPositionRight from "./ActionBtnPositionRight.vue";
 
 export const Attributes = [
   BasicUsage,

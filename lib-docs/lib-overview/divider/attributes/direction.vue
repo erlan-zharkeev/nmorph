@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphDivider, NmorphCard } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = "";
 
@@ -96,53 +96,33 @@ const code = [scriptData, templateData, cssData];
 
 <template>
   <div id="content-direction">
-    <attribute
-      header="Direction"
-      :subtitle="$t('overview.divider.direction.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Direction" :subtitle="$t('overview.divider.direction.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="divider-direction-overview">
           <ClientOnly>
             <div class="divider-wrapper">
               <div class="divider-horizontal">
                 <div class="horizontal-elements">
-                  <div
-                    class="element"
-                    v-for="(_, idx) in Array.from({ length: 4 })"
-                    :key="idx"
-                  >
+                  <div class="element" v-for="(_, idx) in Array.from({ length: 4 })" :key="idx">
                     <NmorphCard>Lorem ipsum</NmorphCard>
                   </div>
                 </div>
                 <NmorphDivider />
                 <div class="horizontal-elements">
-                  <div
-                    class="element"
-                    v-for="(_, idx) in Array.from({ length: 4 })"
-                    :key="idx"
-                  >
+                  <div class="element" v-for="(_, idx) in Array.from({ length: 4 })" :key="idx">
                     <NmorphCard>Lorem ipsum</NmorphCard>
                   </div>
                 </div>
               </div>
               <div class="divider-vertical">
                 <div class="vertical-elements">
-                  <div
-                    class="element"
-                    v-for="(_, idx) in Array.from({ length: 4 })"
-                    :key="idx"
-                  >
+                  <div class="element" v-for="(_, idx) in Array.from({ length: 4 })" :key="idx">
                     <NmorphCard>Lorem ipsum</NmorphCard>
                   </div>
                 </div>
                 <NmorphDivider direction="vertical" />
                 <div class="vertical-elements">
-                  <div
-                    class="element"
-                    v-for="(_, idx) in Array.from({ length: 4 })"
-                    :key="idx"
-                  >
+                  <div class="element" v-for="(_, idx) in Array.from({ length: 4 })" :key="idx">
                     <NmorphCard>Lorem ipsum</NmorphCard>
                   </div>
                 </div>
@@ -152,13 +132,9 @@ const code = [scriptData, templateData, cssData];
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
@@ -172,6 +148,7 @@ const code = [scriptData, templateData, cssData];
   .divider-horizontal {
     margin-right: 24px;
     margin-bottom: 8px;
+
     .nmorph-divider {
       margin: 16px 0;
     }
@@ -179,6 +156,7 @@ const code = [scriptData, templateData, cssData];
 
   .divider-vertical {
     display: flex;
+
     .nmorph-divider {
       margin: 0 16px;
     }

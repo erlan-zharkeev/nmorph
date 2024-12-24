@@ -6,7 +6,7 @@ import {
 } from "@nmorph/nmorph-ui-kit";
 import { Winter } from "@/assets/images";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = `
 <script lang="ts" setup>
@@ -65,11 +65,7 @@ const loading = ref(true);
 
 <template>
   <div id="content-loading">
-    <attribute
-      header="Loading"
-      :subtitle="$t('overview.skeleton.loading.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Loading" :subtitle="$t('overview.skeleton.loading.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="skeleton-loading-overview">
           <ClientOnly>
@@ -79,23 +75,15 @@ const loading = ref(true);
             </div>
             <NmorphSkeleton :loading="loading">
               <template #template>
-                <NmorphSkeletonItem
-                  variant="image"
-                  width="200px"
-                  height="200px"
-                  :style="{ 'margin-bottom': '8px' }"
-                />
+                <NmorphSkeletonItem variant="image" width="200px" height="200px" :style="{ 'margin-bottom': '8px' }" />
                 <NmorphSkeletonItem variant="rect" width="100%" height="14px" />
               </template>
               <template #default>
-                <NmorphImage
-                  :src="Winter"
-                  :style="{
-                    width: '200px',
-                    height: '200px',
-                    'margin-bottom': '5px',
-                  }"
-                />
+                <NmorphImage :src="Winter" :style="{
+                  width: '200px',
+                  height: '200px',
+                  'margin-bottom': '5px',
+                }" />
                 <span>Lorem</span>
               </template>
             </NmorphSkeleton>
@@ -103,13 +91,9 @@ const loading = ref(true);
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
-    </attribute>
+    </Attribute>
   </div>
 </template>
 
@@ -118,6 +102,7 @@ const loading = ref(true);
   .switch {
     display: flex;
     margin-bottom: 8px;
+
     .nmorph-switch {
       margin-left: 8px;
     }

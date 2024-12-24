@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphAutocomplete } from "@nmorph/nmorph-ui-kit";
 
-import CodeSlotData from "~/components/code-slot-data/code-slot-data.vue";
+import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = `
 <script lang="ts" setup>
@@ -38,11 +38,7 @@ const list = ref([{ value: "First" }, { value: "Second" }, { value: "Third" }]);
 
 <template>
   <div id="content-height">
-    <attribute
-      header="Height"
-      :subtitle="$t('overview.autocomplete.height.subtitle')"
-      :codeToCopy="code"
-    >
+    <Attribute header="Height" :subtitle="$t('overview.autocomplete.height.subtitle')" :codeToCopy="code">
       <template #overview>
         <div class="autocomplete-height-overview">
           <ClientOnly>
@@ -53,11 +49,7 @@ const list = ref([{ value: "First" }, { value: "Second" }, { value: "Third" }]);
         </div>
       </template>
       <template #code>
-        <code-slot-data
-          :template-data="templateData"
-          :script-data="scriptData"
-          :css-data="cssData"
-        />
+        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
       </template>
     </attribute>
   </div>
@@ -67,6 +59,7 @@ const list = ref([{ value: "First" }, { value: "Second" }, { value: "Third" }]);
 .autocomplete-height-overview {
   display: flex;
   align-items: center;
+
   .nmorph-autocomplete {
     margin-right: 8px;
   }
