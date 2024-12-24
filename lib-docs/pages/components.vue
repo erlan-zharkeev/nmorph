@@ -5,7 +5,7 @@ import Overview from "~/components/overview/Overview.vue";
 </script>
 
 <template>
-  <div class="docs-components-page page">
+  <div class="docs-components-page nmorph-docs-content">
     <MainContentPart>
       <template #aside>
         <ComponentsList />
