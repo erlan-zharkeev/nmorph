@@ -51,6 +51,8 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit"
         {{ $t("guide-page.quick-start.plugin") }}
       </h3>
       <code-example lang="javascript">{{ basicUsageJS }}</code-example>
+    </div>
+    <div class="section-element nmorph--shadow-inset">
       <h3 class="section-title">{{ $t("guide-page.quick-start.alternative-plugin") }}</h3>
       <code-example lang="javascript">{{ alternativePlugin }}</code-example>
     </div>
