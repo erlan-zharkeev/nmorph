@@ -108,7 +108,7 @@ $image-size: 450px;
     align-items: center;
     flex-direction: column;
     max-width: 440px;
-    z-index: 1;
+    z-index: 0;
     border-radius: 8px;
   }
 

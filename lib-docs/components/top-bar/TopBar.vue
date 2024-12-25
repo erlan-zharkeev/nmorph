@@ -57,6 +57,10 @@ const isRootPage = computed(() => route.path.length <= 3);
 watch(() => props.isMenuOpen, () => {
   mobileNavMenu.value = false
 })
+const isActive = (path: string) => {
+  if (path.includes('components') && route.path.includes('elements')) return true
+  return route.path.startsWith(path)
+}
 </script>
 
 <template>
@@ -109,15 +113,21 @@ watch(() => props.isMenuOpen, () => {
       <nav class="docs-top-bar__nav">
         <ul class="docs-top-bar__nav-list">
           <li>
-            <NuxtLink :to="localePath('/guide')">{{ $t("guide") }}</NuxtLink>
+            <NuxtLink :class="{ 'docs-active-route': isActive(localePath('/guide')) }" :to="localePath('/guide')">
+              {{
+                $t("guide") }}</NuxtLink>
           </li>
           <li>
-            <NuxtLink :to="localePath('/components')">{{
-              $t("components")
-            }}</NuxtLink>
+            <NuxtLink :class="{ 'docs-active-route': isActive(localePath('/components')) }"
+              :to="localePath('/components')">
+              {{
+                $t("components")
+              }}</NuxtLink>
           </li>
           <li>
-            <NuxtLink :to="localePath('/about')">{{ $t("about") }}</NuxtLink>
+            <NuxtLink :class="{ 'docs-active-route': isActive(localePath('/about')) }" :to="localePath('/about')">
+              {{
+                $t("about") }}</NuxtLink>
           </li>
         </ul>
       </nav>
@@ -129,7 +139,8 @@ watch(() => props.isMenuOpen, () => {
       @click="mobileNavMenu = false">
       <ul>
         <li>
-          <NuxtLink :to="localePath('/guide')">{{ $t("guide") }}</NuxtLink>
+          <NuxtLink :to="localePath('/guide')">{{
+            $t("guide") }}</NuxtLink>
         </li>
         <li>
           <NuxtLink :to="localePath('/components')">{{
@@ -224,7 +235,7 @@ $top-bar-height: 50px;
   }
 }
 
-.docs-top-bar__nav-list .router-link-active {
+.docs-top-bar__nav-list .docs-active-route {
   position: relative;
 
   &:before {
@@ -270,7 +281,8 @@ $top-bar-height: 50px;
   z-index: 2;
   transition: 0.2s bottom ease-in-out;
   left: 0;
-  background: var(--nmorph-overlay-color);
+  background: #0000009f;
+  backdrop-filter: blur(10px);
   width: 100%;
   height: calc(100vh - 50px);
   display: flex;
@@ -311,6 +323,7 @@ $top-bar-height: 50px;
 
   .docs-top-bar__menu {
     display: block;
+    width: 28px;
   }
 
   .docs-top-bar__nav {

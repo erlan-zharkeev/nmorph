@@ -3,16 +3,14 @@
   --footer-height: 30px;
   --margin: 8px;
 
+  // --container-height: calc(
+  //   100vh - var(--header-height) - var(--footer-height) - (var(--margin) * 3) -
+  //     4px
+  // );
   --container-height: calc(
-    100vh - var(--header-height) - var(--footer-height) - (var(--margin) * 3) -
-      4px
+    calc(var(--vh) * 100) - var(--header-height) - var(--footer-height) -
+      (var(--margin) * 3) - 4px
   );
-}
-
-@mixin max-width-query($breakpoint) {
-  @media (max-width: #{$breakpoint}px) {
-    @content;
-  }
 }
 
 .nmorph-docs-content {

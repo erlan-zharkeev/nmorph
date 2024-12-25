@@ -1,6 +1,5 @@
 <script setup>
-// import QRCode from "qrcode";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import {
   NmorphNotificationProvider,
   nmorphLog,
@@ -14,21 +13,26 @@ const loaded = ref(false);
 const store = useGlobalStore();
 const route = useRoute();
 
+const updateViewportHeight = () => {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
 onMounted(() => {
   if (import.meta.client) {
+    nmorphLog("success", `NMORPH DOCS (v${projectData.version})`);
     const nmorph = useNmorph();
     store.inferNmorphSetTheme(nmorph.theme.setTheme);
     store.changeTheme(nmorph.theme.currentTheme.value);
     store.inferGetDynamicColorVariables(nmorph.theme.getDynamicColorVariables);
+    updateViewportHeight();
+    window.addEventListener('resize', updateViewportHeight);
   }
+  loaded.value = true;
 });
 
-onMounted(async () => {
-  nmorphLog("success", `NMORPH DOCS (v${projectData.version})`);
-  // const url = `http://192.168.1.5:2222`;
-  // const code = await QRCode.toDataURL(url, { version: 2 });
-  // if (import.meta.dev) nmorphLog("success", `Mobile dev link: ${code}`);
-  loaded.value = true;
+onUnmounted(async () => {
+  window.removeEventListener('resize', updateViewportHeight);
 });
 
 watch(() => route.path.length, () => {

@@ -4,7 +4,7 @@ export default {
   },
   guide: "Guide",
   components: "Components",
-  about: "About the project",
+  about: "About",
   search: "Search",
   attributes: "Attributes",
   slots: "Slots",
@@ -76,16 +76,15 @@ export default {
     },
   },
   "about-page": {
-    "alpha-test": "Alpha testing",
+    "alpha-test": "Current status",
     "alpha-test-lib":
-      "<p>Currently, the library is in the alpha testing stage.</p><p>Since the development is being carried out by a single developer (me), bug fixing and testing take a significant amount of time.</p><p>I would appreciate it if you report any issues.</p>",
+    "<p>Testing of the library is currently underway.</p><p>Since the development is carried out by only one developer, fixing possible bugs and testing takes a lot of time.</p><p>I will be glad if you report any problems.</p>",
     "get-started": "Get started",
-    "overview": "Overview",
     "overview-content":
-      "This is a UI component library for Vue 3, developed using neumorphic/skeuomorphic design. It provides a set of simple components for creating a unique user interface.",
-    "neumorphism": "What is neumorphism/skeuomorphism?",
+          "<p>It is a library of UI components for Vue 3, developed using a non-morphic/skeuomorphic design.</p><p>It provides a set of components to create a unique user interface.</p><p>The project was created as a student's work on frontend development.</p>",
+    neumorphism: "What is neomorphism/skeuomorphism?",
     "neumorphism-content":
-      "<p>Neumorphism is a design style that combines elements of flat design and skeuomorphism.</p><p>It creates the sensation of volume and soft shadows, making the interface look like it could be touched.</p><p>Neumorphism relies on pastel colors, light gradients, and soft shadows to create the effect of raised or inset elements.</p>"
+          "Neumorphism is a design style that combines elements of flat design and skeuomorphism.</p><p>It creates a sense of volume and soft shadows, making the interface look as if it can be touched.</p><p>The neumorphism is based on pastel colors, light gradients and soft shadows, creating the effect of pressed or indented elements.</p>",
   },
   "guide-menu": {
     "quick-start": "Quick start",
