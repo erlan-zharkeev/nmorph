@@ -32,7 +32,6 @@ interface INmorphEmit {
 }
 const emit = defineEmits<INmorphEmit>();
 
-const config = useRuntimeConfig();
 const localePath = useLocalePath();
 
 const translateBtn = ref(null);
@@ -142,7 +141,7 @@ const isActive = (path: string) => {
         <li>
           <NuxtLink :to="localePath('/components')">{{
             $t("components")
-            }}</NuxtLink>
+          }}</NuxtLink>
         </li>
         <li>
           <NuxtLink :to="localePath('/about')">{{ $t("about") }}</NuxtLink>

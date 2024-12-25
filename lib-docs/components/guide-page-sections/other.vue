@@ -1,8 +1,5 @@
 <script setup lang="ts">
 const utilsClasses = `
-
-// Shadow
-
 .nmorph--shadow-outset: {
   background: var(--nmorph-main-color);
   box-shadow:
@@ -18,8 +15,6 @@ const utilsClasses = `
     inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
       var(--nmorph-light-shade-color);
 }
-
-// Typography
 
 .nmorph-body-4 {
   font-weight: 400;
