@@ -13,9 +13,9 @@ import { camelToKebab } from '@/utils';
 
 const DEFAULT_THEME_COLORS = {
   info: '#d4e5edbb',
-  infoText: '#506c80' ,
+  infoText: '#506c80',
   success: '#67C23A',
-  successText: '#0b5b1d' ,
+  successText: '#0b5b1d',
   error: '#F56C6C',
   errorText: '#8d3333',
   warn: '#E6A21C',
@@ -112,7 +112,6 @@ const shadeColor = (color: string, percent: number) => {
 };
 
 export const useNmorphTheme = (customOptions: INmorphThemeOptions): INmorphThemeInstance => {
-  // console.log('2');
   nmorphLog('warn', `NMORPH(v${packageData.version})`);
   const options = { ...DEFAULT_OPTIONS, ...customOptions };
 

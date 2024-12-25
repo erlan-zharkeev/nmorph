@@ -12,7 +12,7 @@ interface INmorphEmit {
 }
 const emit = defineEmits<INmorphEmit>();
 const route = useRoute();
-const isComponentPage = computed(() => route.path.includes("components"));
+const isComponentPage = computed(() => route.path.includes("components") || route.path.includes("elements"));
 </script>
 
 <template>
