@@ -1,11 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import { NmorphScroll, NmorphLink, NmorphCard } from "@nmorph/nmorph-ui-kit";
+import projectData from "./../package.json";
+
 </script>
 
 <template>
-  <div class="nmorph-docs-content docs-about-page nmorph-docs-content">
-    <NmorphScroll class="docs-about-page__scroll">
-      <NmorphCard>
+  <div class="nmorph-docs-content docs-about-page">
+    <NmorphCard>
+      <NmorphScroll class="docs-about-page__scroll ">
+        <section id="nmorph">
+          <h2>NMORPH</h2>
+          <div v-html="$t('about-page.overview-content')" />
+        </section>
         <section id="status">
           <h2>{{ $t("about-page.alpha-test") }}</h2>
           <div v-html="$t('about-page.alpha-test-lib')" />
@@ -17,15 +23,17 @@ import { NmorphScroll, NmorphLink, NmorphCard } from "@nmorph/nmorph-ui-kit";
           <h2>{{ $t("about-page.neumorphism") }}</h2>
           <div v-html="$t('about-page.neumorphism-content')" />
         </section>
-      </NmorphCard>
-    </NmorphScroll>
+        <p class="docs-about-page__version"> Docs version: {{ projectData.version }}
+        </p>
+      </NmorphScroll>
+    </NmorphCard>
   </div>
 </template>
 
 <style scoped lang="scss">
 .docs-about-page__scroll {
   padding: 4px;
-  height: 100%;
+  height: 100% !important;
 }
 
 .nmorph-card {
@@ -51,6 +59,10 @@ import { NmorphScroll, NmorphLink, NmorphCard } from "@nmorph/nmorph-ui-kit";
 
   .get-started-btn {
     margin-top: 16px;
+  }
+
+  .docs-about-page__version {
+    font-weight: 600;
   }
 }
 </style>

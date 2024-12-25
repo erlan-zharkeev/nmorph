@@ -23,7 +23,6 @@ const { t } = useI18n();
   align-items: center;
   border-radius: 4px;
   margin-bottom: var(--margin);
-  z-index: 1;
 }
 
 .docs-footer-bar__content {
