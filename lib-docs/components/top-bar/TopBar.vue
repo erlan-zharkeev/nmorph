@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-  NmorphButton,
   NmorphIcon,
   NmorphLink,
   NmorphDropdown,
@@ -85,11 +84,9 @@ const isActive = (path: string) => {
       </div>
     </div>
     <div class="docs-top-bar__right">
-      <NmorphButton style-type="transparent" class="git-lab-button">
-        <NmorphLink :href="config.public.NUXT_ENV_GIT_PATH" target="blank">
-          <GitlabIcon />
-        </NmorphLink>
-      </NmorphButton>
+      <NmorphLink href="https://gitlab.com/ketjo/nmorph" target="blank" class="git-lab-button">
+        <GitlabIcon />
+      </NmorphLink>
       <div ref="translateBtn" class="docs-top-bar__translate-btn">
         <NmorphCheckbox v-model="translateDropdownOpen" size="small" class="docs-top-bar__translate-checkbox"
           design="button">
@@ -327,10 +324,6 @@ $top-bar-height: 50px;
   }
 
   .docs-top-bar__nav {
-    display: none;
-  }
-
-  .git-lab-button {
     display: none;
   }
 

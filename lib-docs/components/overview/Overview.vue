@@ -55,7 +55,7 @@ const localePath = useLocalePath();
     </div>
     <div class="overview-component-list">
       <div class="overview-component-wrapper">
-        <NuxtLink :to="localePath('/components/button')">
+        <NuxtLink :to="localePath('/elements/button')">
           <NmorphCard>
             <template #header>Button</template>
             <div class="overview-component-content">
@@ -65,7 +65,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper">
-        <NuxtLink :to="localePath('/components/icon')">
+        <NuxtLink :to="localePath('/elements/icon')">
           <NmorphCard>
             <template #header>Icon</template>
             <div class="overview-component-content">
@@ -77,7 +77,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper">
-        <NuxtLink :to="localePath('/components/link')">
+        <NuxtLink :to="localePath('/elements/link')">
           <NmorphCard>
             <template #header>Link</template>
             <div class="overview-component-content">
@@ -87,7 +87,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper scroll-component">
-        <NuxtLink :to="localePath('/components/scroll')">
+        <NuxtLink :to="localePath('/elements/scroll')">
           <NmorphCard>
             <template #header>Scroll</template>
             <div class="overview-component-content">
@@ -97,7 +97,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper">
-        <NuxtLink :to="localePath('/components/avatar')">
+        <NuxtLink :to="localePath('/elements/avatar')">
           <NmorphCard>
             <template #header>Avatar</template>
             <div class="overview-component-content">
@@ -107,7 +107,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper">
-        <NuxtLink :to="localePath('/components/badge')">
+        <NuxtLink :to="localePath('/elements/badge')">
           <NmorphCard>
             <template #header>Badge</template>
             <div class="overview-component-content">
@@ -119,7 +119,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper card">
-        <NuxtLink :to="localePath('/components/card')">
+        <NuxtLink :to="localePath('/elements/card')">
           <NmorphCard>
             <template #header>Card</template>
             <div class="overview-component-content">
@@ -131,7 +131,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper">
-        <NuxtLink :to="localePath('/components/image')">
+        <NuxtLink :to="localePath('/elements/image')">
           <NmorphCard>
             <template #header>Image</template>
             <div class="overview-component-content">
@@ -141,7 +141,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper tag">
-        <NuxtLink :to="localePath('/components/tag')">
+        <NuxtLink :to="localePath('/elements/tag')">
           <NmorphCard>
             <template #header>Tag</template>
             <div class="overview-component-content">
@@ -154,7 +154,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper skeleton">
-        <NuxtLink :to="localePath('/components/skeleton')">
+        <NuxtLink :to="localePath('/elements/skeleton')">
           <NmorphCard>
             <template #header>Skeleton</template>
             <div class="overview-component-content">
@@ -164,7 +164,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper progress">
-        <NuxtLink :to="localePath('/components/progress')">
+        <NuxtLink :to="localePath('/elements/progress')">
           <NmorphCard>
             <template #header>Progress</template>
             <div class="overview-component-content">
@@ -174,7 +174,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper image-preview">
-        <NuxtLink :to="localePath('/components/image-preview')">
+        <NuxtLink :to="localePath('/elements/image-preview')">
           <NmorphCard>
             <template #header>Image Preview</template>
             <div class="overview-component-content">
@@ -186,7 +186,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper tooltip">
-        <NuxtLink :to="localePath('/components/tooltip')">
+        <NuxtLink :to="localePath('/elements/tooltip')">
           <NmorphCard>
             <template #header>Tooltip</template>
             <div class="overview-component-content">
@@ -198,7 +198,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper divider">
-        <NuxtLink :to="localePath('/components/divider')">
+        <NuxtLink :to="localePath('/elements/divider')">
           <NmorphCard>
             <template #header>Divider</template>
             <div class="overview-component-content">
@@ -210,7 +210,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper breadcrumb">
-        <NuxtLink :to="localePath('/components/breadcrumb')">
+        <NuxtLink :to="localePath('/elements/breadcrumb')">
           <NmorphCard>
             <template #header>Breadcrumb</template>
             <div class="overview-component-content">
@@ -223,7 +223,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper text-input">
-        <NuxtLink :to="localePath('/components/text-input')">
+        <NuxtLink :to="localePath('/elements/text-input')">
           <NmorphCard>
             <template #header>Text input</template>
             <div class="overview-component-content">
@@ -233,7 +233,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper switch">
-        <NuxtLink :to="localePath('/components/switch')">
+        <NuxtLink :to="localePath('/elements/switch')">
           <NmorphCard>
             <template #header>Switch</template>
             <div class="overview-component-content">
@@ -243,7 +243,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper checkbox">
-        <NuxtLink :to="localePath('/components/checkbox')">
+        <NuxtLink :to="localePath('/elements/checkbox')">
           <NmorphCard>
             <template #header>Checkbox</template>
             <div class="overview-component-content">
@@ -253,7 +253,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper checkbox-group">
-        <NuxtLink :to="localePath('/components/checkbox-group')">
+        <NuxtLink :to="localePath('/elements/checkbox-group')">
           <NmorphCard>
             <template #header>Checkbox group</template>
             <div class="overview-component-content">
@@ -267,7 +267,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper radio">
-        <NuxtLink :to="localePath('/components/radio')">
+        <NuxtLink :to="localePath('/elements/radio')">
           <NmorphCard>
             <template #header>Radio</template>
             <div class="overview-component-content')">
@@ -277,7 +277,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper radio-group">
-        <NuxtLink :to="localePath('/components/radio-group')">
+        <NuxtLink :to="localePath('/elements/radio-group')">
           <NmorphCard>
             <template #header>Radio group</template>
             <div class="overview-component-content">
@@ -291,7 +291,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper autocomplete">
-        <NuxtLink :to="localePath('/components/autocomplete')">
+        <NuxtLink :to="localePath('/elements/autocomplete')">
           <NmorphCard>
             <template #header>Autocomplete</template>
             <div class="overview-component-content">
@@ -301,7 +301,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper file-upload">
-        <NuxtLink :to="localePath('/components/file-upload')">
+        <NuxtLink :to="localePath('/elements/file-upload')">
           <NmorphCard>
             <template #header>File upload</template>
             <div class="overview-component-content">
@@ -311,7 +311,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper slider">
-        <NuxtLink :to="localePath('/components/slider')">
+        <NuxtLink :to="localePath('/elements/slider')">
           <NmorphCard>
             <template #header>Slider</template>
             <div class="overview-component-content">
@@ -321,7 +321,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper number-input overview-component-wrapper--large">
-        <NuxtLink :to="localePath('/components/number-input')">
+        <NuxtLink :to="localePath('/elements/number-input')">
           <NmorphCard>
             <template #header>Number input</template>
             <div class="overview-component-content">
@@ -331,7 +331,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper select overview-component-wrapper--large">
-        <NuxtLink :to="localePath('/components/select')">
+        <NuxtLink :to="localePath('/elements/select')">
           <NmorphCard>
             <template #header>Select</template>
             <div class="overview-component-content">
@@ -341,7 +341,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper date-picker overview-component-wrapper--large">
-        <NuxtLink :to="localePath('/components/date-picker')">
+        <NuxtLink :to="localePath('/elements/date-picker')">
           <NmorphCard>
             <template #header>Date picker</template>
             <div class="overview-component-content">
@@ -351,7 +351,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper tabs overview-component-wrapper--large">
-        <NuxtLink :to="localePath('/components/tabs')">
+        <NuxtLink :to="localePath('/elements/tabs')">
           <NmorphCard>
             <template #header>Tabs</template>
             <div class="overview-component-content">
@@ -368,7 +368,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper pagination overview-component-wrapper--large">
-        <NuxtLink :to="localePath('/components/pagination')">
+        <NuxtLink :to="localePath('/elements/pagination')">
           <NmorphCard>
             <template #header>Pagination</template>
             <div class="overview-component-content">
@@ -378,7 +378,7 @@ const localePath = useLocalePath();
         </NuxtLink>
       </div>
       <div class="overview-component-wrapper alert overview-component-wrapper--large">
-        <NuxtLink :to="localePath('/components/alert')">
+        <NuxtLink :to="localePath('/elements/alert')">
           <NmorphCard>
             <template #header>Alert</template>
             <div class="overview-component-content">
@@ -397,7 +397,7 @@ const localePath = useLocalePath();
         ['Dropdown', 'dropdown'],
         ['Calendar', 'calendar'],
       ]">
-        <NuxtLink :to="`/components/${el[1]}`">
+        <NuxtLink :to="`/elements/${el[1]}`">
           <NmorphCard>
             <template #header>{{ el[0] }}</template>
             <div class="overview-component-content">{{ el[0] }}</div>
