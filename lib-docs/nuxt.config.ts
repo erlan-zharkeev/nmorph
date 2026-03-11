@@ -1,6 +1,3 @@
-import fs from "fs";
-import path from "path";
-
 export default defineNuxtConfig({
   compatibilityDate: "2024-09-05",
   app: {
@@ -60,13 +57,7 @@ export default defineNuxtConfig({
           additionalData: '@use "~/assets/style/global-mixins.scss" as *;',
         },
       },
-    },
-    server: {
-      https: {
-        key: fs.readFileSync(path.resolve(__dirname, "certs/key.pem")),
-        cert: fs.readFileSync(path.resolve(__dirname, "certs/cert.pem")),
-      },
-    },
+    }
   },
   devServer: {
     host: "0.0.0.0",
