@@ -121,6 +121,11 @@ const isActive = (path: string) => {
               }}</NuxtLink>
           </li>
           <li>
+            <NuxtLink :class="{ 'docs-active-route': isActive(localePath('/changelog')) }" :to="localePath('/changelog')">
+              Changelog
+            </NuxtLink>
+          </li>
+          <li>
             <NuxtLink :class="{ 'docs-active-route': isActive(localePath('/about')) }" :to="localePath('/about')">
               {{
                 $t("about") }}</NuxtLink>
