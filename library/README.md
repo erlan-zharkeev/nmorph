@@ -20,7 +20,7 @@ If you encounter any issues, please don't hesitate to report them. Your feedback
 enhance the library.
 
 **Documentation:** For detailed instructions and examples, visit the
-[official documentation site](https://nmorph-ketjo-cac7dcd94d22ab164b02699fe526e6ca24ba29d225e58354c1.gitlab.io/).
+[official documentation site](https://nmorph.dev).
 
 ---
 
