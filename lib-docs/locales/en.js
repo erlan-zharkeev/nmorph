@@ -86,6 +86,33 @@ export default {
     "neumorphism-content":
           "Neumorphism is a design style that combines elements of flat design and skeuomorphism.</p><p>It creates a sense of volume and soft shadows, making the interface look as if it can be touched.</p><p>The neumorphism is based on pastel colors, light gradients and soft shadows, creating the effect of pressed or indented elements.</p>",
   },
+  "changelog-page": {
+    "roadmap": {
+      "title": "Roadmap",
+      "items": {
+        "nuxt-support": "Add Nuxt support.",
+        "storybook-vr": "Add Storybook and visual regression checks.",
+        "accessibility": "Improve accessibility: keyboard navigation, ARIA, focus states.",
+        "test-coverage": "Increase test coverage: unit, integration, and e2e tests.",
+        "theming-v2": "Prepare Theming v2 with extended design tokens and presets.",
+        "performance": "Optimize performance and bundle size."
+      }
+    },
+    "changelog": {
+      "title": "Changelog",
+      "empty": "Empty for now."
+    },
+    "known-bugs": {
+      "title": "Known bugs",
+      "items": {
+        "dropdown-hover": "When hovering in NmorphDropdown, the item is displayed incorrectly (pointer cursor).",
+        "skeleton": "Skeleton does not work.",
+        "translation": "Translation issues in File Upload, Select, Date Picker components.",
+        "input-clearable": "Clear icon is not displayed in Input with clearable mode.",
+        "mobile-slider": "Input Slider does not work on mobile devices."
+      }
+    }
+  },
   "guide-menu": {
     "quick-start": "Quick start",
     "config": "Configuration",

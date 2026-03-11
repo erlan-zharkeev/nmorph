@@ -84,6 +84,33 @@ export default {
     "neumorphism": "什么是neomorphism/skeuomorphism？",
     "新形态-内容": "Neumorphism是一种结合了平面设计和skeuomorphism元素的设计风格。</p><p>它创造了体积感和柔和的阴影，使界面看起来好像可以触摸。</p><p>neumorphism基于柔和的颜色，浅色渐变和柔和的阴影，创造出压制或缩进元素的效果。</p>",
   },
+  "changelog-page": {
+    "roadmap": {
+      "title": "路线图",
+      "items": {
+        "nuxt-support": "添加 Nuxt 支持。",
+        "storybook-vr": "添加 Storybook 与视觉回归检查。",
+        "accessibility": "改进可访问性：键盘导航、ARIA、焦点状态。",
+        "test-coverage": "提升测试覆盖率：单元测试、集成测试与 e2e 测试。",
+        "theming-v2": "准备 Theming v2，支持扩展设计令牌与预设。",
+        "performance": "优化性能与打包体积。"
+      }
+    },
+    "changelog": {
+      "title": "变更日志",
+      "empty": "暂时为空。"
+    },
+    "known-bugs": {
+      "title": "已知问题",
+      "items": {
+        "dropdown-hover": "在 NmorphDropdown 中悬停时，元素显示不正确（pointer 光标）。",
+        "skeleton": "Skeleton 无法正常工作。",
+        "translation": "File Upload、Select、Date Picker 组件存在翻译问题。",
+        "input-clearable": "Input 的 clearable 模式未显示清除图标。",
+        "mobile-slider": "Input Slider 在移动设备上无法正常工作。"
+      }
+    }
+  },
   "guide-menu": {
     "quick-start": "快速开始",
     "config": "配置",

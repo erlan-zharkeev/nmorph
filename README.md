@@ -4,7 +4,7 @@
 
 This is a UI component library for Vue 3, designed using the neumorphism/skeuomorphism style. It offers a set of simple components for creating unique user interfaces with a modern, 3D-like appearance.
 
-### What is Neumorphism/Skeuomorphism ?
+### What is Neumorphism/Skeuomorphism?
 
 Neumorphism is a design trend that blends elements of flat design and skeuomorphism. It creates an illusion of soft, tactile interfaces with raised or inset effects, subtle gradients, and delicate shadows. This style aims to make UI components feel tangible and visually engaging.
 
