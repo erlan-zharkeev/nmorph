@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 import { notificationProvider } from "~/providers";
 
 import {
@@ -540,19 +540,56 @@ const form = reactive({
   },
 });
 
-const clickIconHandler = (iconName: string) => {
+const filteredIconNames = computed(() => {
+  const searchText = form.searchText.value.trim().toLowerCase();
+  const iconNames = Object.keys(iconList);
+  if (!searchText) return iconNames;
+  return iconNames.filter((iconName) => {
+    const plainName = pascalToSpace(iconName.slice(10)).toLowerCase();
+    return plainName.includes(searchText) || iconName.toLowerCase().includes(searchText);
+  });
+});
+
+const copyToClipboard = async (value: string) => {
+  if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = value;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+};
+
+const clickIconHandler = async (iconName: string) => {
   const value = `<NmorphIcon>
     <${iconName} />
   </NmorphIcon>`;
-  navigator.clipboard.writeText(value);
-  notificationProvider.notify({
-    content: `Copied`,
-    duration: 2000,
-    type: "success",
-    width: "fit-content",
-    closable: false,
-    bordered: false,
-  });
+  try {
+    await copyToClipboard(value);
+    notificationProvider.notify({
+      content: `Copied`,
+      duration: 2000,
+      type: "success",
+      width: "fit-content",
+      closable: false,
+      bordered: false,
+    });
+  } catch {
+    notificationProvider.notify({
+      content: `Copy failed`,
+      duration: 2000,
+      type: "error",
+      width: "fit-content",
+      closable: false,
+      bordered: false,
+    });
+  }
 };
 </script>
 
@@ -565,8 +602,8 @@ const clickIconHandler = (iconName: string) => {
             <NmorphTextInput :placeholder="$t('overview.icon.search-icon')" v-model="form.searchText.value" />
           </NmorphFormItem>
         </NmorphForm>
-        <div class="docs-icon__list-content nmorph--shadow-outset" v-if="Object.keys(iconList).length">
-          <div class="docs-icon__list-el nmorph--shadow-outset" v-for="(el, idx) in Object.keys(iconList)" :key="idx"
+        <div class="docs-icon__list-content nmorph--shadow-outset" v-if="filteredIconNames.length">
+          <div class="docs-icon__list-el nmorph--shadow-outset" v-for="(el, idx) in filteredIconNames" :key="idx"
             @click="() => clickIconHandler(String(el))">
             <ClientOnly>
               <NmorphIcon size="medium">

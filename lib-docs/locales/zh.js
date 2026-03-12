@@ -98,15 +98,14 @@ export default {
     },
     "changelog": {
       "title": "变更日志",
-      "empty": "暂时为空。"
+      "items": {
+        "skeleton-animation": "修复 Skeleton 加载动画：在 loading 启用时 shimmer 正常工作。",
+        "icon-search-and-copy": "修复图标页面搜索过滤，并在不支持 Clipboard API 的环境中处理复制。"
+      }
     },
     "known-bugs": {
       "title": "已知问题",
       "items": {
-        "dropdown-hover": "在 NmorphDropdown 中悬停时，元素显示不正确（pointer 光标）。",
-        "skeleton": "Skeleton 无法正常工作。",
-        "translation": "File Upload、Select、Date Picker 组件存在翻译问题。",
-        "input-clearable": "Input 的 clearable 模式未显示清除图标。",
         "mobile-slider": "Input Slider 在移动设备上无法正常工作。"
       }
     }

@@ -2,8 +2,8 @@
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { computed, ref, useSlots } from 'vue';
-import { NmorphIcon, NmorphButton } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
+import { NmorphIcon, NmorphButton, NmorphIconError, NmorphIconEye, NmorphIconEyeBlocked } from '@/components';
+import { styled, css } from '@vue-styled-components/core';
 
 const slots = useSlots();
 
@@ -76,8 +76,8 @@ defineExpose({ inputDOMRef });
 const emit = defineEmits<INmorphEmit>();
 
 const actionIcon = computed(() => {
-  if (props.clearable) return 'error';
-  else return showPassword.value ? 'eye-blocked' : 'eye';
+  if (props.clearable) return NmorphIconError;
+  else return showPassword.value ? NmorphIconEyeBlocked : NmorphIconEye;
 });
 
 const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
@@ -155,14 +155,14 @@ const commonCSS = css`
       }
     }
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
   input {
-    text-indent: ${props => props.indentation};
+    text-indent: ${(props) => props.indentation};
   }
-`
+`;
 </script>
 
 <template>
@@ -171,12 +171,27 @@ const StyledComponent = styled.div`
       <div v-if="slots['prepend-icon']" class="nmorph-text-input__prepend-icon">
         <slot name="prepend-icon" />
       </div>
-      <input ref="inputDOMRef" class="nmorph-native-input" :type="type" :placeholder="props.placeholder"
-        :disabled="props.disabled" :value="props.modelValue" @input="handleInput" @focus="handleFocus"
-        @blur="handleBlur" @keyup.enter="emit('on-enter')" />
-      <NmorphButton v-if="props.typePassword || props.clearable" :disabled="props.disabled"
-        class="nmorph-text-input__password-btn" style-type="transparent" width="32px" :height="props.height"
-        @click="actionButtonClickHandler">
+      <input
+        ref="inputDOMRef"
+        class="nmorph-native-input"
+        :type="type"
+        :placeholder="props.placeholder"
+        :disabled="props.disabled"
+        :value="props.modelValue"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @keyup.enter="emit('on-enter')"
+      />
+      <NmorphButton
+        v-if="props.typePassword || props.clearable"
+        :disabled="props.disabled"
+        class="nmorph-text-input__password-btn"
+        style-type="transparent"
+        width="32px"
+        :height="props.height"
+        @click="actionButtonClickHandler"
+      >
         <NmorphIcon>
           <component :is="actionIcon" />
         </NmorphIcon>

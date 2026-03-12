@@ -100,15 +100,14 @@ export default {
     },
     "changelog": {
       "title": "Changelog",
-      "empty": "Empty for now."
+      "items": {
+        "skeleton-animation": "Fixed Skeleton loading animation: shimmer now works when loading is enabled.",
+        "icon-search-and-copy": "Fixed icon page search filtering and clipboard copy handling in unsupported environments."
+      }
     },
     "known-bugs": {
       "title": "Known bugs",
       "items": {
-        "dropdown-hover": "When hovering in NmorphDropdown, the item is displayed incorrectly (pointer cursor).",
-        "skeleton": "Skeleton does not work.",
-        "translation": "Translation issues in File Upload, Select, Date Picker components.",
-        "input-clearable": "Clear icon is not displayed in Input with clearable mode.",
         "mobile-slider": "Input Slider does not work on mobile devices."
       }
     }

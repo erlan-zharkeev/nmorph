@@ -100,15 +100,14 @@ export default {
     },
     "changelog": {
       "title": "Changelog",
-      "empty": "Пока пусто."
+      "items": {
+        "skeleton-animation": "Исправлена анимация загрузки Skeleton: shimmer работает при включенном loading.",
+        "icon-search-and-copy": "Исправлены фильтрация поиска и копирование в буфер на странице иконок в окружениях без поддержки Clipboard API."
+      }
     },
     "known-bugs": {
       "title": "Известные баги",
       "items": {
-        "dropdown-hover": "При наведении в NmorphDropdown элемент отображается некорректно (курсор pointer).",
-        "skeleton": "Не работает Skeleton.",
-        "translation": "Проблемы с переводом в компонентах File Upload, Select, Date Picker.",
-        "input-clearable": "В Input с clearable не отображается иконка очистки.",
         "mobile-slider": "На мобильных устройствах не работает Input Slider."
       }
     }

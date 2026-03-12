@@ -10,8 +10,10 @@ import {
 import TranslateIcon from "~/assets/icons/translate.svg";
 import GitlabIcon from "~/assets/icons/gitlab.svg";
 import type { LocaleObject } from "@nuxtjs/i18n";
+import libraryData from "../../../library/package.json";
 
 const switchLocalePath = useSwitchLocalePath();
+const libraryVersion = libraryData.version;
 
 const { locales, locale } = useI18n();
 const route = useRoute();
@@ -81,6 +83,7 @@ const isActive = (path: string) => {
           </ClientOnly>
         </NuxtLink>
       </div>
+      <div class="docs-top-bar__version">{{ libraryVersion }}</div>
     </div>
     <div class="docs-top-bar__right">
       <NmorphLink href="https://gitlab.com/ketjo/nmorph" target="blank" class="git-lab-button">
@@ -173,14 +176,12 @@ $top-bar-height: 50px;
 }
 
 .docs-top-bar__translate-btn {
-  cursor: pointer;
-  margin-left: 16px;
-  margin-right: 16px;
+  margin: 0 16px;
 }
 
 .docs-top-bar__left {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   height: 100%;
 }
 
@@ -197,6 +198,15 @@ $top-bar-height: 50px;
     width: 100%;
     height: 100%;
   }
+}
+
+.docs-top-bar__version {
+  margin-left: 8px;
+  user-select: none;
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 6px;
+
 }
 
 .docs-top-bar__right {

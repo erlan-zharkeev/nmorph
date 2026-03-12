@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { NmorphButton, NmorphCard } from "@nmorph/nmorph-ui-kit";
+import { ref } from "vue";
+import { NmorphButton, NmorphCard, NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
+const textValue = ref("");
 
 const setLocale = (nextLocale: "en" | "ru") => {
   locale.value = nextLocale;
@@ -25,6 +27,13 @@ const setLocale = (nextLocale: "en" | "ru") => {
       </div>
 
       <NmorphButton text="Test Nmorph Button" class="sandbox-page__test-btn" />
+
+      <section class="sandbox-input">
+        <div class="sandbox-input__controls">
+          <p>value: {{ textValue }}</p>
+        </div>
+        <NmorphTextInput v-model="textValue" clearable placeholder="Type something" />
+      </section>
     </NmorphCard>
   </main>
 </template>
@@ -66,5 +75,17 @@ p {
 
 .sandbox-page__test-btn {
   margin-top: 8px;
+}
+
+.sandbox-input {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.sandbox-input__controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 </style>

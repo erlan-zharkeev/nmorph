@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { nmorphInset, useModifiers } from '@/utils';
 import { NmorphIcon, NmorphIconImage, NmorphSkeletonItemPropsType } from '@/components';
 import { NmorphElementDesignType } from '@/types';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps {
   variant: keyof typeof NmorphSkeletonItemPropsType;
@@ -47,7 +47,7 @@ const commonCSS = css`
   &.nmorph-skeleton-item--circle {
     border-radius: var(--border-radius-circular);
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
@@ -56,7 +56,7 @@ const StyledComponent = styled.div`
   &.nmorph-skeleton-item--nmorph-design {
     ${nmorphInset()}
   }
-`
+`;
 </script>
 
 <template>
