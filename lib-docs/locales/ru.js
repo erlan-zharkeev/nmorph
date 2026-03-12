@@ -100,12 +100,13 @@ export default {
     },
     "changelog": {
       "title": "Changelog",
-      "empty": "Пока пусто."
+      "items": {
+        "skeleton-animation": "Исправлена анимация загрузки Skeleton: shimmer работает при включенном loading."
+      }
     },
     "known-bugs": {
       "title": "Известные баги",
       "items": {
-        "skeleton": "Не работает Skeleton.",
         "translation": "Проблемы с переводом в компонентах File Upload, Select, Date Picker.",
         "input-clearable": "В Input с clearable не отображается иконка очистки.",
         "mobile-slider": "На мобильных устройствах не работает Input Slider."

@@ -23,7 +23,7 @@ const modifiers = computed(() =>
 );
 
 const commonCSS = css`
-  .nmorph-skeleton--loading {
+  &.nmorph-skeleton--loading {
     --loading-gradient: linear-gradient(90deg,
         var(--nmorph-text-color) 25%,
         var(--nmorph-white-color) 37%,

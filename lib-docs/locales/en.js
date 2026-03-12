@@ -100,12 +100,13 @@ export default {
     },
     "changelog": {
       "title": "Changelog",
-      "empty": "Empty for now."
+      "items": {
+        "skeleton-animation": "Fixed Skeleton loading animation: shimmer now works when loading is enabled."
+      }
     },
     "known-bugs": {
       "title": "Known bugs",
       "items": {
-        "skeleton": "Skeleton does not work.",
         "translation": "Translation issues in File Upload, Select, Date Picker components.",
         "input-clearable": "Clear icon is not displayed in Input with clearable mode.",
         "mobile-slider": "Input Slider does not work on mobile devices."

@@ -98,12 +98,13 @@ export default {
     },
     "changelog": {
       "title": "变更日志",
-      "empty": "暂时为空。"
+      "items": {
+        "skeleton-animation": "修复 Skeleton 加载动画：在 loading 启用时 shimmer 正常工作。"
+      }
     },
     "known-bugs": {
       "title": "已知问题",
       "items": {
-        "skeleton": "Skeleton 无法正常工作。",
         "translation": "File Upload、Select、Date Picker 组件存在翻译问题。",
         "input-clearable": "Input 的 clearable 模式未显示清除图标。",
         "mobile-slider": "Input Slider 在移动设备上无法正常工作。"

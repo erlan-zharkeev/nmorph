@@ -8,13 +8,14 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
       <NmorphScroll class="docs-changelog-page__scroll">
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
-          <p>{{ $t("changelog-page.changelog.empty") }}</p>
+          <ul>
+            <li>{{ $t("changelog-page.changelog.items.skeleton-animation") }}</li>
+          </ul>
         </section>
         <NmorphDivider />
         <section id="known-bugs">
           <h2>{{ $t("changelog-page.known-bugs.title") }}</h2>
           <ul>
-            <li>{{ $t("changelog-page.known-bugs.items.skeleton") }}</li>
             <li>{{ $t("changelog-page.known-bugs.items.translation") }}</li>
             <li>{{ $t("changelog-page.known-bugs.items.input-clearable") }}</li>
             <li>{{ $t("changelog-page.known-bugs.items.mobile-slider") }}</li>
