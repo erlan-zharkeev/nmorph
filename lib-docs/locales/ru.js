@@ -108,7 +108,6 @@ export default {
     "known-bugs": {
       "title": "Известные баги",
       "items": {
-        "translation": "Проблемы с переводом в компонентах File Upload, Select, Date Picker.",
         "input-clearable": "В Input с clearable не отображается иконка очистки.",
         "mobile-slider": "На мобильных устройствах не работает Input Slider."
       }

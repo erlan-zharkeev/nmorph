@@ -108,7 +108,6 @@ export default {
     "known-bugs": {
       "title": "Known bugs",
       "items": {
-        "translation": "Translation issues in File Upload, Select, Date Picker components.",
         "input-clearable": "Clear icon is not displayed in Input with clearable mode.",
         "mobile-slider": "Input Slider does not work on mobile devices."
       }

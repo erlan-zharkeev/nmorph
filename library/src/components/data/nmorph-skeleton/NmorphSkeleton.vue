@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphSkeletonItem } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps {
   animated?: boolean;
@@ -24,10 +24,12 @@ const modifiers = computed(() =>
 
 const commonCSS = css`
   &.nmorph-skeleton--loading {
-    --loading-gradient: linear-gradient(90deg,
-        var(--nmorph-text-color) 25%,
-        var(--nmorph-white-color) 37%,
-        var(--nmorph-text-color) 63%);
+    --loading-gradient: linear-gradient(
+      90deg,
+      var(--nmorph-text-color) 25%,
+      var(--nmorph-white-color) 37%,
+      var(--nmorph-text-color) 63%
+    );
 
     .nmorph-skeleton-item::before {
       position: absolute;
@@ -43,11 +45,11 @@ const commonCSS = css`
       pointer-events: none;
     }
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
-`
+`;
 </script>
 
 <template>

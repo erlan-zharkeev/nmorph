@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { NmorphButton, NmorphCard, NmorphFileUpload } from "@nmorph/nmorph-ui-kit";
+import { NmorphButton, NmorphCard, NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
-const uploadedFiles = ref([]);
+const textValue = ref("");
 
 const setLocale = (nextLocale: "en" | "ru") => {
   locale.value = nextLocale;
@@ -28,11 +28,11 @@ const setLocale = (nextLocale: "en" | "ru") => {
 
       <NmorphButton text="Test Nmorph Button" class="sandbox-page__test-btn" />
 
-      <section class="sandbox-file-upload">
-        <div class="sandbox-file-upload__controls">
-          <p>selected files: {{ uploadedFiles.length }}</p>
+      <section class="sandbox-input">
+        <div class="sandbox-input__controls">
+          <p>value: {{ textValue }}</p>
         </div>
-        <NmorphFileUpload v-model="uploadedFiles" multiple />
+        <NmorphTextInput v-model="textValue" clearable placeholder="Type something" />
       </section>
     </NmorphCard>
   </main>
@@ -77,13 +77,13 @@ p {
   margin-top: 8px;
 }
 
-.sandbox-file-upload {
+.sandbox-input {
   margin-top: 12px;
   display: grid;
   gap: 10px;
 }
 
-.sandbox-file-upload__controls {
+.sandbox-input__controls {
   display: flex;
   align-items: center;
   gap: 10px;

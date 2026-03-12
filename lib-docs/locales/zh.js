@@ -106,7 +106,6 @@ export default {
     "known-bugs": {
       "title": "已知问题",
       "items": {
-        "translation": "File Upload、Select、Date Picker 组件存在翻译问题。",
         "input-clearable": "Input 的 clearable 模式未显示清除图标。",
         "mobile-slider": "Input Slider 在移动设备上无法正常工作。"
       }

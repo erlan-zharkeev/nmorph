@@ -6,9 +6,9 @@ const scriptData = ``;
 
 const templateData = `
 <template>
-  <NmorphIcon size="large" name="eye"><NmorphIconEye /></NmorphIcon>
-  <NmorphIcon size="medium" name="eye"><NmorphIconEye /></NmorphIcon>
-  <NmorphIcon size="small" name="eye"><NmorphIconEye /></NmorphIcon>
+  <NmorphIcon size="large"><NmorphIconEye /></NmorphIcon>
+  <NmorphIcon size="medium"><NmorphIconEye /></NmorphIcon>
+  <NmorphIcon size="small"><NmorphIconEye /></NmorphIcon>
 </template>
 `;
 const cssData = `
@@ -32,13 +32,13 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="icon-size-overview">
           <ClientOnly>
-            <NmorphIcon size="large" name="eye">
+            <NmorphIcon size="large">
               <NmorphIconEye />
             </NmorphIcon>
-            <NmorphIcon size="medium" name="eye">
+            <NmorphIcon size="medium">
               <NmorphIconEye />
             </NmorphIcon>
-            <NmorphIcon size="small" name="eye">
+            <NmorphIcon size="small">
               <NmorphIconEye />
             </NmorphIcon>
           </ClientOnly>

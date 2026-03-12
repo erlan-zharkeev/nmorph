@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphIconSize } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps {
   size?: keyof typeof NmorphIconSize;
@@ -40,7 +40,6 @@ const commonCSS = css`
   min-width: var(--width);
   height: var(--height);
   min-height: var(--height);
-
 
   display: flex;
   align-items: center;
@@ -81,12 +80,12 @@ const commonCSS = css`
     --width: 32px;
     --height: 32px;
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
-  --color: ${props => props.color};
-`
+  --color: ${(props) => props.color};
+`;
 </script>
 
 <template>
