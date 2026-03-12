@@ -100,7 +100,6 @@ export default {
     },
     "changelog": {
       "title": "Changelog",
-      "version-label": "Версия v{version}",
       "items": {
         "skeleton-animation": "Исправлена анимация загрузки Skeleton: shimmer работает при включенном loading.",
         "icon-search-and-copy": "Исправлены фильтрация поиска и копирование в буфер на странице иконок в окружениях без поддержки Clipboard API."

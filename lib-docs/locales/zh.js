@@ -98,7 +98,6 @@ export default {
     },
     "changelog": {
       "title": "变更日志",
-      "version-label": "版本 v{version}",
       "items": {
         "skeleton-animation": "修复 Skeleton 加载动画：在 loading 启用时 shimmer 正常工作。",
         "icon-search-and-copy": "修复图标页面搜索过滤，并在不支持 Clipboard API 的环境中处理复制。"

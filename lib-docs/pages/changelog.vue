@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
-import libraryData from "../../library/package.json";
-
-const releaseVersion = libraryData.version;
 </script>
 
 <template>
@@ -12,7 +9,7 @@ const releaseVersion = libraryData.version;
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
-            <h3>{{ $t("changelog-page.changelog.version-label", { version: releaseVersion }) }}</h3>
+            <h3>v1.0.105</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.skeleton-animation") }}</li>
               <li>{{ $t("changelog-page.changelog.items.icon-search-and-copy") }}</li>
