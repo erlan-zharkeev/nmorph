@@ -103,7 +103,6 @@ export default {
     "known-bugs": {
       "title": "已知问题",
       "items": {
-        "dropdown-hover": "在 NmorphDropdown 中悬停时，元素显示不正确（pointer 光标）。",
         "skeleton": "Skeleton 无法正常工作。",
         "translation": "File Upload、Select、Date Picker 组件存在翻译问题。",
         "input-clearable": "Input 的 clearable 模式未显示清除图标。",

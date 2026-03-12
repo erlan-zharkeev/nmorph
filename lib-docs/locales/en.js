@@ -105,7 +105,6 @@ export default {
     "known-bugs": {
       "title": "Known bugs",
       "items": {
-        "dropdown-hover": "When hovering in NmorphDropdown, the item is displayed incorrectly (pointer cursor).",
         "skeleton": "Skeleton does not work.",
         "translation": "Translation issues in File Upload, Select, Date Picker components.",
         "input-clearable": "Clear icon is not displayed in Input with clearable mode.",

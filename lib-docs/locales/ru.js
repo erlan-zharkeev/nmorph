@@ -105,7 +105,6 @@ export default {
     "known-bugs": {
       "title": "Известные баги",
       "items": {
-        "dropdown-hover": "При наведении в NmorphDropdown элемент отображается некорректно (курсор pointer).",
         "skeleton": "Не работает Skeleton.",
         "translation": "Проблемы с переводом в компонентах File Upload, Select, Date Picker.",
         "input-clearable": "В Input с clearable не отображается иконка очистки.",

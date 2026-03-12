@@ -14,7 +14,6 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
         <section id="known-bugs">
           <h2>{{ $t("changelog-page.known-bugs.title") }}</h2>
           <ul>
-            <li>{{ $t("changelog-page.known-bugs.items.dropdown-hover") }}</li>
             <li>{{ $t("changelog-page.known-bugs.items.skeleton") }}</li>
             <li>{{ $t("changelog-page.known-bugs.items.translation") }}</li>
             <li>{{ $t("changelog-page.known-bugs.items.input-clearable") }}</li>
