@@ -173,9 +173,7 @@ $top-bar-height: 50px;
 }
 
 .docs-top-bar__translate-btn {
-  cursor: pointer;
-  margin-left: 16px;
-  margin-right: 16px;
+  margin: 0 16px;
 }
 
 .docs-top-bar__left {
