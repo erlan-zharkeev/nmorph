@@ -100,13 +100,13 @@ export default {
       "title": "变更日志",
       "version-label": "版本 v{version}",
       "items": {
-        "skeleton-animation": "修复 Skeleton 加载动画：在 loading 启用时 shimmer 正常工作。"
+        "skeleton-animation": "修复 Skeleton 加载动画：在 loading 启用时 shimmer 正常工作。",
+        "icon-search-and-copy": "修复图标页面搜索过滤，并在不支持 Clipboard API 的环境中处理复制。"
       }
     },
     "known-bugs": {
       "title": "已知问题",
       "items": {
-        "input-clearable": "Input 的 clearable 模式未显示清除图标。",
         "mobile-slider": "Input Slider 在移动设备上无法正常工作。"
       }
     }

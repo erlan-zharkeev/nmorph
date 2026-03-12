@@ -102,13 +102,13 @@ export default {
       "title": "Changelog",
       "version-label": "Version v{version}",
       "items": {
-        "skeleton-animation": "Fixed Skeleton loading animation: shimmer now works when loading is enabled."
+        "skeleton-animation": "Fixed Skeleton loading animation: shimmer now works when loading is enabled.",
+        "icon-search-and-copy": "Fixed icon page search filtering and clipboard copy handling in unsupported environments."
       }
     },
     "known-bugs": {
       "title": "Known bugs",
       "items": {
-        "input-clearable": "Clear icon is not displayed in Input with clearable mode.",
         "mobile-slider": "Input Slider does not work on mobile devices."
       }
     }

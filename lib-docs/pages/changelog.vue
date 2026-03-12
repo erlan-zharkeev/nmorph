@@ -15,6 +15,7 @@ const releaseVersion = libraryData.version;
             <h3>{{ $t("changelog-page.changelog.version-label", { version: releaseVersion }) }}</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.skeleton-animation") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.icon-search-and-copy") }}</li>
             </ul>
           </div>
         </section>
@@ -22,7 +23,6 @@ const releaseVersion = libraryData.version;
         <section id="known-bugs">
           <h2>{{ $t("changelog-page.known-bugs.title") }}</h2>
           <ul>
-            <li>{{ $t("changelog-page.known-bugs.items.input-clearable") }}</li>
             <li>{{ $t("changelog-page.known-bugs.items.mobile-slider") }}</li>
           </ul>
         </section>
