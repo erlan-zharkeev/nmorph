@@ -100,6 +100,7 @@ export default {
     },
     "changelog": {
       "title": "Changelog",
+      "version-label": "Version v{version}",
       "items": {
         "skeleton-animation": "Fixed Skeleton loading animation: shimmer now works when loading is enabled."
       }

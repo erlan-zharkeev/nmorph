@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
+import libraryData from "../../library/package.json";
+
+const releaseVersion = libraryData.version;
 </script>
 
 <template>
@@ -8,9 +11,12 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
       <NmorphScroll class="docs-changelog-page__scroll">
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
-          <ul>
-            <li>{{ $t("changelog-page.changelog.items.skeleton-animation") }}</li>
-          </ul>
+          <div class="docs-changelog-page__release">
+            <h3>{{ $t("changelog-page.changelog.version-label", { version: releaseVersion }) }}</h3>
+            <ul>
+              <li>{{ $t("changelog-page.changelog.items.skeleton-animation") }}</li>
+            </ul>
+          </div>
         </section>
         <NmorphDivider />
         <section id="known-bugs">
@@ -55,6 +61,10 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
 
   h2 {
     margin-bottom: 10px;
+  }
+
+  h3 {
+    margin: 0 0 8px;
   }
 
   p,

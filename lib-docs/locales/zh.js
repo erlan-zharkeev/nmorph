@@ -98,6 +98,7 @@ export default {
     },
     "changelog": {
       "title": "变更日志",
+      "version-label": "版本 v{version}",
       "items": {
         "skeleton-animation": "修复 Skeleton 加载动画：在 loading 启用时 shimmer 正常工作。"
       }
