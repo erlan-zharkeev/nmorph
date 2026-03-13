@@ -25,7 +25,7 @@ build-docs:
   script:
     - cd lib-docs
     - npm ci --ignore-scripts
-    - npm install --no-save @rollup/rollup-linux-x64-gnu
+    - npm install --no-save @rollup/rollup-linux-x64-gnu @esbuild/linux-x64
     - npm run postinstall
     - npm run generate
   artifacts:
