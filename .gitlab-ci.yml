@@ -24,7 +24,9 @@ build-docs:
     - rm -rf lib-docs/node_modules
   script:
     - cd lib-docs
-    - npm ci --include=optional || (rm -rf node_modules && npm install --include=optional)
+    - npm ci --ignore-scripts
+    - npm install --no-save @rollup/rollup-linux-x64-gnu
+    - npm run postinstall
     - npm run generate
   artifacts:
     paths:
