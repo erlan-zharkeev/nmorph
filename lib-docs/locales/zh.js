@@ -100,6 +100,7 @@ export default {
       "title": "变更日志",
       "items": {
         "skeleton-animation": "修复 Skeleton 加载动画：在 loading 启用时 shimmer 正常工作。",
+        "icon-search-and-copy": "修复图标页面中图标显示与输入框相关行为。",
         "export-en-locale": "在包入口新增英文语言包的导出。"
       }
     },

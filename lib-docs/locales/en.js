@@ -102,6 +102,7 @@ export default {
       "title": "Changelog",
       "items": {
         "skeleton-animation": "Fixed Skeleton loading animation: shimmer now works when loading is enabled.",
+        "icon-search-and-copy": "Fixed icon display and input-related behavior on the icon page.",
         "export-en-locale": "Added export of English locale messages from the package entry point."
       }
     },

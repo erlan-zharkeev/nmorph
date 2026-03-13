@@ -102,6 +102,7 @@ export default {
       "title": "Changelog",
       "items": {
         "skeleton-animation": "Исправлена анимация загрузки Skeleton: shimmer работает при включенном loading.",
+        "icon-search-and-copy": "Исправлено отображение иконок и поведение input на странице иконок.",
         "export-en-locale": "Добавлен экспорт английской локали из точки входа пакета."
       }
     },

@@ -18,6 +18,7 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
             <h3>v1.0.105</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.skeleton-animation") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.icon-search-and-copy") }}</li>
             </ul>
           </div>
         </section>
