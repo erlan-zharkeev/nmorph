@@ -102,7 +102,9 @@ export default {
       "title": "Changelog",
       "items": {
         "skeleton-animation": "Fixed Skeleton loading animation: shimmer now works when loading is enabled.",
-        "icon-search-and-copy": "Fixed icon page search filtering and clipboard copy handling in unsupported environments."
+        "icon-search-and-copy": "Fixed icon page search filtering and clipboard copy handling in unsupported environments.",
+        "docs-i18n-merge-fix": "Fixed docs locale resolution when merging external nmorph messages.",
+        "docs-ssg-migration": "Switched docs build pipeline to static generation (SSG)."
       }
     },
     "known-bugs": {

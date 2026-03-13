@@ -25,7 +25,6 @@ build-docs:
   script:
     - cd lib-docs
     - npm install
-    - npm run build
     - npm run generate
   artifacts:
     paths:

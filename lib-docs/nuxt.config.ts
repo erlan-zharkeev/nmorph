@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-09-05",
+  ssr: true,
   app: {
     head: {
       title: "Nmorph",
@@ -66,6 +67,13 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       NUXT_ENV_GIT_PATH: process.env.NUXT_ENV_GIT_PATH,
+    },
+  },
+  nitro: {
+    preset: "static",
+    prerender: {
+      crawlLinks: true,
+      routes: ["/"],
     },
   },
   modules: ["@nuxtjs/i18n", "nuxt-svgo"],
