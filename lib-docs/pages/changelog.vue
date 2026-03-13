@@ -13,8 +13,6 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
             <ul>
               <li>{{ $t("changelog-page.changelog.items.skeleton-animation") }}</li>
               <li>{{ $t("changelog-page.changelog.items.icon-search-and-copy") }}</li>
-              <li>{{ $t("changelog-page.changelog.items.docs-i18n-merge-fix") }}</li>
-              <li>{{ $t("changelog-page.changelog.items.docs-ssg-migration") }}</li>
             </ul>
           </div>
         </section>

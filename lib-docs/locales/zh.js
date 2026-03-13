@@ -100,9 +100,7 @@ export default {
       "title": "变更日志",
       "items": {
         "skeleton-animation": "修复 Skeleton 加载动画：在 loading 启用时 shimmer 正常工作。",
-        "icon-search-and-copy": "修复图标页面搜索过滤，并在不支持 Clipboard API 的环境中处理复制。",
-        "docs-i18n-merge-fix": "修复合并 nmorph 外部翻译时文档站点的语言加载问题。",
-        "docs-ssg-migration": "文档构建流程已切换为静态生成（SSG）。"
+        "icon-search-and-copy": "修复图标页面搜索过滤，并在不支持 Clipboard API 的环境中处理复制。"
       }
     },
     "known-bugs": {
