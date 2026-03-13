@@ -24,7 +24,7 @@ build-docs:
     - rm -rf lib-docs/node_modules
   script:
     - cd lib-docs
-    - npm ci
+    - npm ci --include=optional || (rm -rf node_modules && npm install --include=optional)
     - npm run generate
   artifacts:
     paths:
