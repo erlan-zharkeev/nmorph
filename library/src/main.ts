@@ -23,7 +23,7 @@ const library: Plugin = {
       }
     }
 
-    useCommonStyles()
+    useCommonStyles();
     const theme = useNmorphTheme(options.theme);
     const browser = useNmorphBrowser();
 
@@ -35,6 +35,8 @@ const library: Plugin = {
 
 export { default as ru } from './locales/ru.js';
 export { default as zh } from './locales/zh.js';
+export { default as en } from './locales/en.js';
+
 export { nmorphLog } from './outside-utils';
 export { useNmorphTheme, useNmorphBrowser, useNmorphNotification, useNmorph } from './outside-hooks';
 export * from './types/index.ts';
