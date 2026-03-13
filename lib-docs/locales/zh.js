@@ -100,7 +100,7 @@ export default {
       "title": "变更日志",
       "items": {
         "skeleton-animation": "修复 Skeleton 加载动画：在 loading 启用时 shimmer 正常工作。",
-        "icon-search-and-copy": "修复图标页面搜索过滤，并在不支持 Clipboard API 的环境中处理复制。"
+        "export-en-locale": "在包入口新增英文语言包的导出。"
       }
     },
     "known-bugs": {

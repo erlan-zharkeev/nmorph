@@ -4,7 +4,6 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: "Nmorph",
-
       link: [
         {
           rel: "apple-touch-icon",

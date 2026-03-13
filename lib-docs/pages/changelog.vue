@@ -9,10 +9,15 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v1.0.106</h3>
+            <ul>
+              <li>{{ $t("changelog-page.changelog.items.export-en-locale") }}</li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v1.0.105</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.skeleton-animation") }}</li>
-              <li>{{ $t("changelog-page.changelog.items.icon-search-and-copy") }}</li>
             </ul>
           </div>
         </section>
@@ -43,7 +48,7 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
 <style scoped lang="scss">
 .docs-changelog-page__scroll {
   padding: 4px;
-  height: 100% !important;
+  height: 100%;
 }
 
 .nmorph-card {
