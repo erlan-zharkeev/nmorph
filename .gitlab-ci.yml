@@ -1,4 +1,4 @@
-image: node:18.13.0
+image: node:20.19.0
 
 workflow:
   rules:
@@ -21,10 +21,12 @@ variables:
 build-docs:
   stage: build
   before_script:
-    - rm -rf lib-docs/node_modules lib-docs/package-lock.json
+    - rm -rf lib-docs/node_modules
   script:
     - cd lib-docs
-    - npm install
+    - npm ci --ignore-scripts
+    - npm install --no-save @rollup/rollup-linux-x64-gnu @esbuild/linux-x64
+    - npm run postinstall
     - npm run generate
   artifacts:
     paths:

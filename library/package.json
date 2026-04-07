@@ -2,11 +2,11 @@
   "name": "@nmorph/nmorph-ui-kit",
   "type": "module",
   "private": false,
-  "version": "1.0.106",
+  "version": "1.0.107",
   "license": "MIT",
   "engines": {
-    "node": "18.13.0",
-    "npm": "8.19.3"
+    "node": ">=18.13.0",
+    "npm": ">=8.19.3"
   },
   "types": "./dist/index.d.ts",
   "main": "./dist/index.umd.js",
