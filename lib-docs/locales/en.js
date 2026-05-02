@@ -115,6 +115,7 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "button-icon-slot-docs": "Clarified NmorphButton icon slot behavior: it currently works as icon-only, and a cleaner icon-plus-content API is planned for a future major release.",
         "form-item-input-inheritance": "Form controls now inherit id and name from NmorphFormItem automatically, so labels and native form attributes stay linked without manual prop forwarding.",
         "text-input-autofill-styles": "Fixed NmorphTextInput autofill styling so browser autofill no longer overrides the neumorphic shadows and field colors.",
         "google-icon": "Added NmorphIconGoogle to the icon set.",
@@ -237,7 +238,7 @@ export default {
       "slot": {
         "default": "Button content",
         "append": "Custom content on the right",
-        "icon": "Place for the icon"
+        "icon": "Icon-only slot. When provided, the button renders only the icon and hides text, default, and append content"
       },
       "variables": {
         "height": "Button height"

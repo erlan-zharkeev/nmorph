@@ -115,6 +115,7 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "button-icon-slot-docs": "Уточнено поведение слота icon у NmorphButton: сейчас он фактически работает как icon-only, а более чистый API для иконки вместе с контентом запланирован на будущую major-версию.",
         "form-item-input-inheritance": "Элементы формы теперь автоматически наследуют id и name из NmorphFormItem, поэтому label и нативные атрибуты формы связаны без ручного прокидывания prop.",
         "text-input-autofill-styles": "Исправлены стили autofill в NmorphTextInput: браузерный autofill больше не перебивает неоморфные тени и цвета поля.",
         "google-icon": "Добавлена иконка NmorphIconGoogle в набор иконок.",
@@ -237,7 +238,7 @@ export default {
       slot: {
         default: "Содержимое кнопки",
         append: "Пользовательское содержимое справа",
-        icon: "Место для иконки",
+        icon: "Слот только для icon-only режима. При передаче скрывает text, default и append контент",
       },
       variables: {
         height: "Высота кнопки",

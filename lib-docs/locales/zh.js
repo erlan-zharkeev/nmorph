@@ -113,6 +113,7 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "button-icon-slot-docs": "补充说明了 NmorphButton 的 icon 插槽行为：它当前实际上是 icon-only，用于图标加内容的更清晰 API 计划在后续 major 版本中重写。",
         "form-item-input-inheritance": "表单控件现在会自动继承 NmorphFormItem 的 id 和 name，因此无需手动透传 prop 也能正确关联 label 与原生表单属性。",
         "text-input-autofill-styles": "修复了 NmorphTextInput 的 autofill 样式，浏览器自动填充不再覆盖新拟态阴影和字段颜色。",
         "google-icon": "新增 NmorphIconGoogle 图标。",
@@ -235,7 +236,7 @@ export default {
       "slot": {
         "default": "按钮内容",
         "append": "右侧的自定义内容",
-        "icon": "图标位置"
+        "icon": "仅用于 icon-only 模式的插槽。传入后会隐藏 text、default 和 append 内容"
       },
       "variables": {
         "height": "按钮高度"

@@ -39,6 +39,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 });
 
 const slots = useSlots();
+// TODO major: split icon-only and icon+content use cases into explicit APIs instead of overloading one slot.
 
 const modifiers = computed(() =>
   useModifiers({

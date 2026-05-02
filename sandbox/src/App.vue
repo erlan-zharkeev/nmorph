@@ -4,6 +4,8 @@ import { useI18n } from "vue-i18n";
 import {
   NmorphButton,
   NmorphCard,
+  NmorphIcon,
+  NmorphIconCheck,
   NmorphTextInput,
   NmorphSelectButton,
   NmorphSelectButtonItem,
@@ -64,6 +66,14 @@ const formValue = ref<NmorphFormValueType>({
       </div>
 
       <NmorphButton text="Test Nmorph Button" class="sandbox-page__test-btn" />
+      <NmorphButton class="sandbox-page__test-btn">
+        <div class="sandbox-page__button-with-icon">
+          <NmorphIcon>
+            <NmorphIconCheck />
+          </NmorphIcon>
+          <span>Button with icon</span>
+        </div>
+      </NmorphButton>
 
       <section class="sandbox-select-button">
         <p>NmorphSelectButton: {{ selectButtonValue }}</p>
@@ -138,6 +148,12 @@ p {
 
 .sandbox-page__test-btn {
   margin-top: 8px;
+}
+
+.sandbox-page__button-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .sandbox-select-button {

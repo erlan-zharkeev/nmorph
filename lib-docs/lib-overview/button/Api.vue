@@ -66,6 +66,9 @@ const slotData = [
     name: "default",
   },
   {
+    name: "icon",
+  },
+  {
     name: "append",
   },
 ];
