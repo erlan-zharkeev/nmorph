@@ -2,11 +2,18 @@
 import { computed, ref } from 'vue';
 import { disabled, ellipsis, focusOutline, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType, NmorphSelectionDateType } from '@/types';
-import { NmorphDropdown, NmorphIcon, formatDateIntl, NmorphSelectedDateModelType, NmorphIconCalendar } from '@/components';
+import {
+  NmorphDropdown,
+  NmorphIcon,
+  formatDateIntl,
+  NmorphSelectedDateModelType,
+  NmorphIconCalendar,
+} from '@/components';
 import NmorphClearButton from './inner-components/nmorph-clear-button/NmorphClearButton.vue';
 import NmorphDatePickerContent from './inner-components/nmorph-date-picker-content/NmorphDatePickerContent.vue';
 import { useI18n } from 'vue-i18n';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
+import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
 interface INmorphProps extends INmorphCommonInputProps {
   placeholder?: string;
@@ -27,6 +34,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   textSeparator: '-',
   initialDate: () => new Date(),
 });
+
+const { id, name } = useFormItemInput(props);
 
 const placeholderText = computed(() => (props.placeholder ? props.placeholder : t('pickADate')));
 
@@ -126,7 +135,6 @@ const commonCSS = css`
 
   .nmorph-date-picker__input--open {
     ${nmorphInset()}
-
   }
 
   .nmorph-date-picker__calendar-icon {
@@ -185,19 +193,30 @@ const commonCSS = css`
       pointer-events: none;
     }
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
-`
+`;
 </script>
 
 <template>
   <StyledComponent :class="modifiers">
     <div class="nmorph-date-picker__date-wrapper">
-      <div ref="nmorphInputDOMRef" class="nmorph-date-picker__input"
-        :class="{ 'nmorph-date-picker__input--open': open }" @click="toggleOpen">
-        <input type="date" @focus.prevent="focusHandler" @blur="blurHandler" @keydown.space.prevent="() => { }" />
+      <div
+        ref="nmorphInputDOMRef"
+        class="nmorph-date-picker__input"
+        :class="{ 'nmorph-date-picker__input--open': open }"
+        @click="toggleOpen"
+      >
+        <input
+          :id="id"
+          :name="name"
+          type="date"
+          @focus.prevent="focusHandler"
+          @blur="blurHandler"
+          @keydown.space.prevent="() => {}"
+        />
         <NmorphIcon class="nmorph-date-picker__calendar-icon">
           <NmorphIconCalendar />
         </NmorphIcon>
@@ -207,10 +226,20 @@ const StyledComponent = styled.div`
         </div>
       </div>
       <div class="nmorph-date-picker__content">
-        <NmorphDropdown v-if="nmorphInputDOMRef" :fill-width="false" :width="324" :open="open"
-          :relative-element="nmorphInputDOMRef" @on-outside-click="closeHandler">
-          <NmorphDatePickerContent :selected-values="selectedDate" :initial-date="props.initialDate" :type="type"
-            @update-selected-value="updateSelectedDateHandler" />
+        <NmorphDropdown
+          v-if="nmorphInputDOMRef"
+          :fill-width="false"
+          :width="324"
+          :open="open"
+          :relative-element="nmorphInputDOMRef"
+          @on-outside-click="closeHandler"
+        >
+          <NmorphDatePickerContent
+            :selected-values="selectedDate"
+            :initial-date="props.initialDate"
+            :type="type"
+            @update-selected-value="updateSelectedDateHandler"
+          />
         </NmorphDropdown>
       </div>
     </div>

@@ -9,6 +9,16 @@ import { NmorphComponentHeight, NmorphDivider } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
+    name: "id",
+    type: "String",
+    default: "generated",
+  },
+  {
+    name: "name",
+    type: "String",
+    default: "id",
+  },
+  {
     name: "height",
     type: enumToString(NmorphComponentHeight),
     default: "default",

@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { title4, useModifiers } from '@/utils';
-import { computed, inject } from 'vue';
+import { computed, inject, provide, toRef } from 'vue';
 import { NmorphComponentHeight } from '@/types';
 import { NmorphValidationIcon, NmorphErrorBox } from './inner-components';
 import { NmorphFormValidationDataType } from '@/components';
 import { styled, css } from '@vue-styled-components/core';
+import { nmorphFormItemInputDataKey } from '../../use-form-item-input';
+import { NmorphFormItemInputDataType } from '../../types';
 
 interface INmorphProps {
   id: string;
+  name?: string;
   height?: keyof typeof NmorphComponentHeight;
   label?: string;
   showValidationIcon?: boolean;
@@ -15,6 +18,7 @@ interface INmorphProps {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
+  name: '',
   label: '',
   height: 'default',
   showValidationIcon: true,
@@ -29,6 +33,11 @@ const showStatusIcon = computed(
   () => Boolean(ableToShowValidation.value) && Boolean(validationData?.value?.touched) && props.showValidationIcon
 );
 const ableToAddValidationModifiers = computed(() => ableToShowValidation.value && validationData.value?.touched);
+
+provide<NmorphFormItemInputDataType>(nmorphFormItemInputDataKey, {
+  id: toRef(props, 'id'),
+  name: computed(() => props.name || props.id),
+});
 
 const modifiers = computed(() =>
   useModifiers({

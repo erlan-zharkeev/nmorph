@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { disabled, ellipsis, focusOutline, generateUUID, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
+import { disabled, ellipsis, focusOutline, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick } from 'vue';
 import {
   NmorphTagItem,
@@ -16,6 +16,7 @@ import {
 } from '@/components';
 import { useI18n } from 'vue-i18n';
 import { styled, css } from '@vue-styled-components/core'
+import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
 const { t } = useI18n();
 
@@ -27,8 +28,6 @@ interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: NmorphSelectModelValueType;
   loading?: boolean;
   open?: boolean;
-  id?: string;
-  name?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -41,8 +40,6 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   disabled: false,
   open: false,
-  id: '',
-  name: '',
 });
 
 const computedNoElementPlaceholder = computed(() =>
@@ -60,8 +57,7 @@ const optionsDOMRef = ref<NmorphDomElementType>(null);
 const optionsHeight = ref<string | null>(null);
 const selectedLineOutset = ref(true);
 
-const id = props.id ? props.id : generateUUID();
-const name = props.name ? props.name : generateUUID();
+const { id, name } = useFormItemInput(props);
 
 const changeHandler = (value: string) => {
   if (props.disabled) return;

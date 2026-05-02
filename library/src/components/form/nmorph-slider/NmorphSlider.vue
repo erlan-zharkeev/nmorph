@@ -4,6 +4,7 @@ import { disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import { NmorphTooltip } from '@/components';
 import { styled, css } from '@vue-styled-components/core'
+import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
 interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
   modelValue?: number;
@@ -22,6 +23,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   fill: true,
   showTooltip: true,
 });
+
+const { id, name } = useFormItemInput(props);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -264,8 +267,9 @@ const StyledComponent = styled.div`
           <div ref="sliderFirst" class="nmorph-slider__thumb" :style="{ left: thumbXPercentPosition.thumb }"
             :class="{ 'nmorph-slider__thumb--smooth': transitionEnabled }" @mouseenter="handleMouseEnter"
             @mouseleave="handleMouseLeave" @mousedown="mousedownHandler" />
-          <input class="nmorph-slide__native-input" type="range" :value="thumbValue" :min="props.min" :max="props.max"
-            :step="props.step" :disabled="props.disabled" @input="nativeInputHandler" />
+          <input :id="id" :name="name" class="nmorph-slide__native-input" type="range" :value="thumbValue"
+            :min="props.min" :max="props.max" :step="props.step" :disabled="props.disabled"
+            @input="nativeInputHandler" />
         </div>
       </div>
     </div>

@@ -8,6 +8,16 @@ import ApiTable from "~/components/api-table/ApiTable.vue";
 
 const attributesData: IAttributesTableData[] = [
   {
+    name: "id",
+    type: "String",
+    default: "generated",
+  },
+  {
+    name: "name",
+    type: "String",
+    default: "id",
+  },
+  {
     name: "disabled",
     type: "Boolean",
     default: "false",

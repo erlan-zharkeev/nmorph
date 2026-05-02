@@ -3,7 +3,8 @@ import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } 
 import { disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import { NmorphButton, NmorphIcon, NmorphIconMinusThin, NmorphIconPlusThin } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
+import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: number;
@@ -22,6 +23,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   actionBtnPositionRight: false,
 });
+
+const { id, name } = useFormItemInput(props);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -160,7 +163,6 @@ const commonCSS = css`
     flex-direction: column;
   }
 
-
   &.nmorph-number-input--disabled {
     ${disabled()}
 
@@ -200,16 +202,16 @@ const commonCSS = css`
       width: 100%;
     }
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
   &.nmorph-number-input--action-btn-position-right {
     .nmorph-button {
-      --height: ${props => props.rightActionBtnHeight};
+      --height: ${(props) => props.rightActionBtnHeight};
     }
   }
-`
+`;
 </script>
 
 <template>
@@ -217,18 +219,35 @@ const StyledComponent = styled.div`
     <div class="nmorph-number-input__content">
       <div class="nmorph-number-input__input-content">
         <div v-if="!actionBtnPositionRight" class="nmorph-number-input__decrease">
-          <NmorphButton style-type="transparent" :disabled="minBtnDisabled" :height="props.height"
-            @click="decreaseHandler">
+          <NmorphButton
+            style-type="transparent"
+            :disabled="minBtnDisabled"
+            :height="props.height"
+            @click="decreaseHandler"
+          >
             <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
               <NmorphIconMinusThin />
             </NmorphIcon>
           </NmorphButton>
         </div>
-        <input ref="inputDOMRef" class="nmorph-native-input" :value="initialValue" type="number" :min="props.min"
-          :max="props.max" @input="inputHandler" />
+        <input
+          :id="id"
+          ref="inputDOMRef"
+          :name="name"
+          class="nmorph-native-input"
+          :value="initialValue"
+          type="number"
+          :min="props.min"
+          :max="props.max"
+          @input="inputHandler"
+        />
         <div v-if="!actionBtnPositionRight" class="nmorph-number-input__increase">
-          <NmorphButton style-type="transparent" :disabled="maxBtnDisabled" :height="props.height"
-            @click="increaseHandler">
+          <NmorphButton
+            style-type="transparent"
+            :disabled="maxBtnDisabled"
+            :height="props.height"
+            @click="increaseHandler"
+          >
             <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
               <NmorphIconPlusThin />
             </NmorphIcon>

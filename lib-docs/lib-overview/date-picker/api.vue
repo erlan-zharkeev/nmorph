@@ -17,6 +17,16 @@ const date = `${docsLink(
 
 const attributesData: IAttributesTableData[] = [
   {
+    name: "id",
+    type: "String",
+    default: "generated",
+  },
+  {
+    name: "name",
+    type: "String",
+    default: "id",
+  },
+  {
     name: "model-value",
     type: `${date} | Array<${date}>[]`,
     default: "-",

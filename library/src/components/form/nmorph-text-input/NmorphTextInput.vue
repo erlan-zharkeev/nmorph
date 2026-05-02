@@ -4,6 +4,7 @@ import { disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { computed, ref, useSlots } from 'vue';
 import { NmorphIcon, NmorphButton, NmorphIconError, NmorphIconEye, NmorphIconEyeBlocked } from '@/components';
 import { styled, css } from '@vue-styled-components/core';
+import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
 const slots = useSlots();
 
@@ -24,6 +25,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   clearable: false,
 });
+
+const { id, name } = useFormItemInput(props);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -172,7 +175,9 @@ const StyledComponent = styled.div`
         <slot name="prepend-icon" />
       </div>
       <input
+        :id="id"
         ref="inputDOMRef"
+        :name="name"
         class="nmorph-native-input"
         :type="type"
         :placeholder="props.placeholder"

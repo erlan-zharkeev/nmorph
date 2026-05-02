@@ -115,6 +115,7 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "form-item-input-inheritance": "Form controls now inherit id and name from NmorphFormItem automatically, so labels and native form attributes stay linked without manual prop forwarding.",
         "google-icon": "Added NmorphIconGoogle to the icon set.",
         "contrast-text-colors": "Added --nmorph-semi-contrast-text-color and --nmorph-contrast-text-color CSS variables to default light and dark themes.",
         "form-item-label-for": "NmorphFormItem label now has a correct for attribute linked to the input via inputId prop on NmorphTextInput.",
@@ -996,6 +997,8 @@ export default {
         "subtitle": "If set to *true*, a button will appear to clear the input field."
       },
       "api": {
+        "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
+        "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
         "height": "Defines the height of the input field",
         "disabled": "Boolean value that disables the input field",
         "placeholder": "Text displayed as a hint when the input field is empty",
@@ -1039,6 +1042,8 @@ export default {
         "subtitle": "Specifies the value when the switch is off."
       },
       "api": {
+        "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
+        "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
         "height": "Sets the height of the switch",
         "disabled": "Boolean value that disables the switch component",
         "model-value": "Controls the state of the switch",
@@ -1142,6 +1147,8 @@ export default {
         "subtitle": "Function called when typing in the input."
       },
       "api": {
+        "id": "Sets the id for the nested text input. Inherits NmorphFormItem id when used inside a form item",
+        "name": "Sets the name for the nested text input. Inherits NmorphFormItem name or id when omitted",
         "height": "Height of the autocomplete input field",
         "disabled": "Disables the autocomplete input field",
         "model-value": "Current value of the input field",
@@ -1205,6 +1212,8 @@ export default {
         "subtitle": "If set to *true*, the increment and decrement buttons are placed on the right."
       },
       "api": {
+        "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
+        "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
         "height": "Height of the number input field",
         "disabled": "Boolean value that disables the input field",
         "model-value": "Current value of the number input field",
@@ -1257,6 +1266,8 @@ export default {
         "subtitle": "Displays a loading indicator if set to *true*."
       },
       "api": {
+        "id": "Sets the id for the native select element. Inherits NmorphFormItem id when used inside a form item",
+        "name": "Sets the name for the native select element. Inherits NmorphFormItem name or id when omitted",
         "height": "Height of the dropdown list",
         "disabled": "Disables the dropdown list",
         "no-element-placeholder": "Placeholder text displayed when no options are available",
@@ -1302,6 +1313,8 @@ export default {
         "subtitle": "If set to *true*, displays a tooltip with the current value."
       },
       "api": {
+        "id": "Sets the native range input id. Inherits NmorphFormItem id when used inside a form item",
+        "name": "Sets the native range input name. Inherits NmorphFormItem name or id when omitted",
         "fill": "Boolean value allowing the slider to fill its container",
         "disabled": "Disables the slider component",
         "model-value": "Current value of the slider",
@@ -1327,6 +1340,8 @@ export default {
         "subtitle": "Disables date selection if set to *true*."
       },
       "api": {
+        "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
+        "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
         "height": "Height of the date picker field",
         "disabled": "Boolean value that disables the date picker",
         "placeholder": "Text displayed when no date is selected",
@@ -1438,6 +1453,10 @@ export default {
       },
       "explanation": `
         <div class="container">
+          <p>
+            <strong>Field metadata:</strong> <code>NmorphFormItem</code> passes its <code>id</code> and optional <code>name</code> to nested form controls automatically. Child components can still override these values via their own props.
+          </p>
+
           <h2>1. Rule Types</h2>
           <p>
             You can define validation rules based on the type of value you want to check:
@@ -1533,7 +1552,8 @@ export default {
     },
     "form-item": {
       "api": {
-        "id": "Unique identifier for the form item",
+        "id": "Unique field id used by the label and inherited by nested form controls",
+        "name": "Optional field name inherited by nested form controls. Defaults to id",
         "height": "Sets the height of the form item container",
         "label": "Defines the label text associated with the form item, providing context to the user",
         "show-validation-icon": "Boolean value controlling the display of the validation icon for the form item",

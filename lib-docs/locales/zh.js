@@ -113,6 +113,7 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "form-item-input-inheritance": "表单控件现在会自动继承 NmorphFormItem 的 id 和 name，因此无需手动透传 prop 也能正确关联 label 与原生表单属性。",
         "google-icon": "新增 NmorphIconGoogle 图标。",
         "contrast-text-colors": "在默认浅色和深色主题中新增 --nmorph-semi-contrast-text-color 和 --nmorph-contrast-text-color CSS 变量。",
         "form-item-label-for": "NmorphFormItem 的 label 标签现通过 NmorphTextInput 的 inputId prop 正确关联到输入框。",
@@ -994,6 +995,8 @@ export default {
         "subtitle": "如果设置为 *true*，则会出现按钮以清空输入框。"
       },
       "api": {
+        "id": "设置原生 input 的 id。在 NmorphFormItem 内部使用时会继承其 id",
+        "name": "设置原生 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         "height": "定义输入框的高度",
         "disabled": "布尔值，禁用输入框",
         "placeholder": "当输入框为空时显示的提示文本",
@@ -1037,6 +1040,8 @@ export default {
         "subtitle": "指定开关关闭时的值。"
       },
       "api": {
+        "id": "设置原生 input 的 id。在 NmorphFormItem 内部使用时会继承其 id",
+        "name": "设置原生 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         "height": "设置开关的高度",
         "disabled": "布尔值，禁用开关组件",
         "model-value": "控制开关的状态",
@@ -1140,6 +1145,8 @@ export default {
         "subtitle": "在输入时调用的函数。"
       },
       "api": {
+        "id": "设置内部文本输入框的 id。在 NmorphFormItem 内部使用时会继承其 id",
+        "name": "设置内部文本输入框的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         "height": "自动完成输入框的高度",
         "disabled": "禁用自动完成输入框",
         "model-value": "输入框的当前值",
@@ -1203,6 +1210,8 @@ export default {
         "subtitle": "如果设置为 *true*，增减按钮将位于右侧。"
       },
       "api": {
+        "id": "设置原生 input 的 id。在 NmorphFormItem 内部使用时会继承其 id",
+        "name": "设置原生 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         "height": "数字输入框的高度",
         "disabled": "布尔值，禁用输入框",
         "model-value": "数字输入框的当前值",
@@ -1255,6 +1264,8 @@ export default {
         "subtitle": "如果设置为 *true*，则显示加载指示器。"
       },
       "api": {
+        "id": "设置原生 select 的 id。在 NmorphFormItem 内部使用时会继承其 id",
+        "name": "设置原生 select 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         "height": "下拉列表的高度",
         "disabled": "禁用下拉列表",
         "no-element-placeholder": "当没有选项时显示的占位文本",
@@ -1300,6 +1311,8 @@ export default {
         "subtitle": "如果设置为 *true*，显示当前值的提示框。"
       },
       "api": {
+        "id": "设置原生 range input 的 id。在 NmorphFormItem 内部使用时会继承其 id",
+        "name": "设置原生 range input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         "fill": "布尔值，允许滑块填充其容器",
         "disabled": "禁用滑块组件",
         "model-value": "滑块的当前值",
@@ -1325,6 +1338,8 @@ export default {
         "subtitle": "如果设置为 *true*，禁用日期选择。"
       },
       "api": {
+        "id": "设置原生 input 的 id。在 NmorphFormItem 内部使用时会继承其 id",
+        "name": "设置原生 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         "height": "日期选择字段的高度",
         "disabled": "布尔值，禁用日期选择",
         "placeholder": "没有选择日期时显示的文本",
@@ -1436,6 +1451,10 @@ export default {
       },
       "explanation": `
         <div class="container">
+          <p>
+            <strong>字段元数据：</strong><code>NmorphFormItem</code> 会自动将自身的 <code>id</code> 和可选的 <code>name</code> 传递给嵌套的表单控件。子组件仍然可以通过自己的 prop 覆盖这些值。
+          </p>
+
           <h2>1. 规则类型</h2>
           <p>
             您可以根据要检查的值类型定义验证规则：
@@ -1531,7 +1550,8 @@ export default {
     },
     "form-item": {
       "api": {
-        "id": "表单项的唯一标识符",
+        "id": "字段的唯一 id，供 label 使用并由嵌套表单控件继承",
+        "name": "可选的字段 name，会被嵌套表单控件继承。默认等于 id",
         "height": "设置表单项容器的高度",
         "label": "定义与表单项关联的标签文本，为用户提供上下文",
         "show-validation-icon": "布尔值，控制显示该表单项的验证图标",

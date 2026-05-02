@@ -8,9 +8,9 @@ import {
   NmorphTextInput,
   NmorphAutocompleteActionCallbackType,
   INmorphAutocompleteListItem,
-  NmorphIconLoader
+  NmorphIconLoader,
 } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: string;
@@ -115,24 +115,37 @@ const commonCSS = css`
     color: var(--nmorph-white-color);
     background: var(--nmorph-accent-color);
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
-`
+`;
 </script>
 
 <template>
   <StyledComponent :class="modifiers">
     <div class="nmorph-autocomplete__input-content">
       <div ref="nmorphAutocompleteDOMRef" class="nmorph-autocomplete__input">
-        <NmorphTextInput :height="props.height" :disabled="props.disabled" :model-value="initialValue"
-          :placeholder="props.placeholder" :clearable="props.clearable" @focus="focusHandler"
-          @update:model-value="updateValueHandler" />
+        <NmorphTextInput
+          :id="props.id"
+          :name="props.name"
+          :height="props.height"
+          :disabled="props.disabled"
+          :model-value="initialValue"
+          :placeholder="props.placeholder"
+          :clearable="props.clearable"
+          @focus="focusHandler"
+          @update:model-value="updateValueHandler"
+        />
       </div>
     </div>
-    <NmorphDropdown v-if="nmorphAutocompleteDOMRef" :open="open" :relative-element="nmorphAutocompleteDOMRef"
-      @on-outside-click="closeHandler" :y-offset="1">
+    <NmorphDropdown
+      v-if="nmorphAutocompleteDOMRef"
+      :open="open"
+      :relative-element="nmorphAutocompleteDOMRef"
+      :y-offset="1"
+      @on-outside-click="closeHandler"
+    >
       <div v-if="loader" class="nmorph-autocomplete__loading">
         <slot name="loader">
           <NmorphIcon size="large">
@@ -141,8 +154,12 @@ const StyledComponent = styled.div`
         </slot>
       </div>
       <div v-else class="nmorph-autocomplete__list">
-        <div v-for="(listEl, idx) in filteredList" :key="idx" class="nmorph-autocomplete__list-item"
-          @click="() => clickHandler(listEl)">
+        <div
+          v-for="(listEl, idx) in filteredList"
+          :key="idx"
+          class="nmorph-autocomplete__list-item"
+          @click="() => clickHandler(listEl)"
+        >
           <slot :scope="listEl"> {{ listEl.value }} </slot>
         </div>
       </div>
