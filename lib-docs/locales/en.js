@@ -101,6 +101,7 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "validation-icon-fix": "Fixed NmorphValidationIcon not rendering: icon components were passed as strings instead of component objects.",
         "select-button-unselected-opacity": "NmorphSelectButton: unselected items now appear semi-transparent for clearer visual feedback.",
         "select-button": "Added new NmorphSelectButton component — a segmented button group with slot and options-based API.",
         "engines-range": "Relaxed package engines requirements to support modern Node and npm versions.",

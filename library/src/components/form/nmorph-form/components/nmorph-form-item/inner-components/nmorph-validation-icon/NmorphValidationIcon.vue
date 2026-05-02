@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { ComputedRef, computed } from 'vue';
-import { NmorphIcon } from '@/components';
+import { NmorphIcon, NmorphIconSuccess, NmorphIconError } from '@/components';
 import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
@@ -19,7 +19,7 @@ const modifiers = computed(() =>
   })
 );
 
-const validationIcon = computed(() => (props.valid ? 'success' : 'error'));
+const validationIcon = computed(() => (props.valid ? NmorphIconSuccess : NmorphIconError));
 const validateIconSize = '18px';
 
 const commonCSS = css`

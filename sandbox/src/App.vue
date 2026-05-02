@@ -1,7 +1,21 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { NmorphButton, NmorphCard, NmorphTextInput, NmorphSelectButton, NmorphSelectButtonItem } from "@nmorph/nmorph-ui-kit";
+import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import {
+  NmorphButton,
+  NmorphCard,
+  NmorphTextInput,
+  NmorphSelectButton,
+  NmorphSelectButtonItem,
+  NmorphForm,
+  NmorphFormItem,
+  useNmorph,
+} from "@nmorph/nmorph-ui-kit";
+import type { NmorphFormValueType } from "@nmorph/nmorph-ui-kit";
+
+onMounted(() => {
+  useNmorph().theme.setTheme('dark');
+});
 
 const { t, locale } = useI18n();
 const textValue = ref("");
@@ -15,6 +29,23 @@ const selectButtonOptions = [
 const setLocale = (nextLocale: "en" | "ru") => {
   locale.value = nextLocale;
 };
+
+const formValue = ref<NmorphFormValueType>({
+  email: {
+    value: "",
+    rules: [
+      { pattern: /^.+$/, error: "Email is required" },
+      { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, error: "Enter a valid email" },
+    ],
+  },
+  password: {
+    value: "",
+    rules: [
+      { pattern: /^.+$/, error: "Password is required" },
+      { pattern: /^.{8,}$/, error: "Minimum 8 characters" },
+    ],
+  },
+});
 </script>
 
 <template>
@@ -40,9 +71,8 @@ const setLocale = (nextLocale: "en" | "ru") => {
           <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
           <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
         </NmorphSelectButton>
-                  <NmorphButton height="thin" :text="t('langRu')" @click="setLocale('ru')" />
-
-        <NmorphSelectButton v-model="selectButtonValue" :options="selectButtonOptions" height='thin' />
+        <NmorphButton height="thin" :text="t('langRu')" @click="setLocale('ru')" />
+        <NmorphSelectButton v-model="selectButtonValue" :options="selectButtonOptions" height="thin" />
       </section>
 
       <section class="sandbox-input">
@@ -51,6 +81,22 @@ const setLocale = (nextLocale: "en" | "ru") => {
         </div>
         <NmorphTextInput v-model="textValue" clearable placeholder="Type something" />
       </section>
+
+      <NmorphForm :value="formValue" validate-immediately>
+        <NmorphFormItem id="email" label="Email" static-error-box-space>
+          <NmorphTextInput
+            v-model="(formValue.email.value as string)"
+            placeholder="Enter email"
+          />
+        </NmorphFormItem>
+        <NmorphFormItem id="password" label="Password" static-error-box-space>
+          <NmorphTextInput
+            v-model="(formValue.password.value as string)"
+            type="password"
+            placeholder="Enter password"
+          />
+        </NmorphFormItem>
+      </NmorphForm>
     </NmorphCard>
   </main>
 </template>

@@ -101,6 +101,7 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "validation-icon-fix": "Исправлен NmorphValidationIcon: иконки передавались строками вместо компонентов и не отображались.",
         "select-button-unselected-opacity": "NmorphSelectButton: не выбранные элементы теперь полупрозрачные для лучшей визуальной обратной связи.",
         "select-button": "Добавлен новый компонент NmorphSelectButton — группа кнопок-переключателей с поддержкой слотов и prop options.",
         "engines-range": "Смягчены требования engines пакета для поддержки актуальных версий Node и npm.",

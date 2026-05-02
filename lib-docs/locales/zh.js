@@ -99,6 +99,7 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "validation-icon-fix": "修复 NmorphValidationIcon 不渲染的问题：图标组件被错误地以字符串形式传递。",
         "select-button-unselected-opacity": "NmorphSelectButton：未选中项现在呈半透明状态，视觉反馈更清晰。",
         "select-button": "新增 NmorphSelectButton 组件——支持插槽和 options prop 的分段按钮组。",
         "engines-range": "放宽了包的 engines 要求，以支持较新的 Node 与 npm 版本。",
