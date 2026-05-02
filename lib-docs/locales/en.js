@@ -101,6 +101,7 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "select-button-unselected-opacity": "NmorphSelectButton: unselected items now appear semi-transparent for clearer visual feedback.",
         "select-button": "Added new NmorphSelectButton component — a segmented button group with slot and options-based API.",
         "engines-range": "Relaxed package engines requirements to support modern Node and npm versions.",
         "skeleton-animation": "Fixed Skeleton loading animation: shimmer now works when loading is enabled.",

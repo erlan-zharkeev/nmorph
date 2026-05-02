@@ -101,6 +101,7 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "select-button-unselected-opacity": "NmorphSelectButton: не выбранные элементы теперь полупрозрачные для лучшей визуальной обратной связи.",
         "select-button": "Добавлен новый компонент NmorphSelectButton — группа кнопок-переключателей с поддержкой слотов и prop options.",
         "engines-range": "Смягчены требования engines пакета для поддержки актуальных версий Node и npm.",
         "skeleton-animation": "Исправлена анимация загрузки Skeleton: shimmer работает при включенном loading.",
