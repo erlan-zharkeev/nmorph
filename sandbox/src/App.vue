@@ -82,14 +82,14 @@ const formValue = ref<NmorphFormValueType>({
         <NmorphTextInput v-model="textValue" clearable placeholder="Type something" />
       </section>
 
-      <NmorphForm :value="formValue" validate-immediately>
-        <NmorphFormItem id="email" label="Email" static-error-box-space>
+      <NmorphForm :value="formValue">
+        <NmorphFormItem id="email" label="Email">
           <NmorphTextInput
             v-model="(formValue.email.value as string)"
             placeholder="Enter email"
           />
         </NmorphFormItem>
-        <NmorphFormItem id="password" label="Password" static-error-box-space>
+        <NmorphFormItem id="password" label="Password">
           <NmorphTextInput
             v-model="(formValue.password.value as string)"
             type="password"

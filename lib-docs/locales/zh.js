@@ -69,7 +69,21 @@ export default {
       "shade-var": "如果不直接修改并通过 main 变量传递，它将自动计算。",
       "i18n-content": "为了确保 i18n 正常工作，请确保在库之前连接 i18n。目前提供三种语言环境：en、zh、ru。<p>默认语言环境为 en。仅导入您需要的语言环境。</p><p>如果缺少语言环境，则需要添加您自己的。locale 属性将覆盖上面传递的 i18n locale。</p>",
       "rewrite-translation": "重写库翻译。您可以在组件文档中查看翻译消息名称。",
-      "other-messages": "其他翻译"
+      "other-messages": "其他翻译",
+      "css-variables": "CSS 变量",
+      "css-variables-content": "库提供以下 CSS 自定义属性，可在自定义样式中使用。",
+      "css-variables-theme-derived": "主题派生变量（按主题设置）",
+      "css-variables-auto-generated": "附加文字对比度变量（可按主题配置）",
+      "css-variables-static": "静态变量（所有主题通用）",
+      "css-var-main": "主背景色",
+      "css-var-dark-shade": "深色阴影",
+      "css-var-light-shade": "浅色阴影",
+      "css-var-text": "主文字颜色",
+      "css-var-accent": "强调色 / 品牌色",
+      "css-var-focus-text": "聚焦/强调元素上的文字颜色",
+      "css-var-placeholder": "占位符文字颜色",
+      "css-var-semi-contrast": "文字颜色 +30% 亮度 — 用于次要文字",
+      "css-var-contrast": "文字颜色 +70% 亮度 — 用于高对比度文字"
     },
     "other": {
       "utils-classes": "工具类"
@@ -99,6 +113,12 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "google-icon": "新增 NmorphIconGoogle 图标。",
+        "contrast-text-colors": "在默认浅色和深色主题中新增 --nmorph-semi-contrast-text-color 和 --nmorph-contrast-text-color CSS 变量。",
+        "form-item-label-for": "NmorphFormItem 的 label 标签现通过 NmorphTextInput 的 inputId prop 正确关联到输入框。",
+        "error-box-single-error": "NmorphErrorBox 现在只显示最相关的一条错误，而不是所有错误。",
+        "form-item-margin": "将 NmorphFormItem 的垂直间距从 indentation-03 减小至 indentation-02。",
+        "css-variables-docs": "在 Guide 页面新增 CSS 变量参考章节。",
         "validation-icon-fix": "修复 NmorphValidationIcon 不渲染的问题：图标组件被错误地以字符串形式传递。",
         "select-button-unselected-opacity": "NmorphSelectButton：未选中项现在呈半透明状态，视觉反馈更清晰。",
         "select-button": "新增 NmorphSelectButton 组件——支持插槽和 options prop 的分段按钮组。",

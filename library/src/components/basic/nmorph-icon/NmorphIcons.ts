@@ -95,6 +95,7 @@ export { default as NmorphIconFood } from '@/assets/icons/food.svg';
 export { default as NmorphIconForkSpoon } from '@/assets/icons/fork-spoon.svg';
 export { default as NmorphIconFullScreen } from '@/assets/icons/full-screen.svg';
 export { default as NmorphIconGoblet } from '@/assets/icons/goblet-full.svg';
+export { default as NmorphIconGoogle } from '@/assets/icons/google.svg';
 export { default as NmorphIconGoldMedal } from '@/assets/icons/gold-medal.svg';
 export { default as NmorphIconGoodsFilled } from '@/assets/icons/goods-filled.svg';
 export { default as NmorphIconGoods } from '@/assets/icons/goods.svg';

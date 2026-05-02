@@ -23,8 +23,8 @@ const DEFAULT_THEME_COLORS = {
   gray: '#c9d2dee6',
   white: '#ffffff',
   black: '#000000',
-  overlay: '#00000095'
-}
+  overlay: '#00000095',
+};
 
 const DEFAULT_LIGHT_THEME_COLORS = {
   darkShade: '#c8c9ca',
@@ -34,6 +34,8 @@ const DEFAULT_LIGHT_THEME_COLORS = {
   accent: '#4a90e2',
   focusText: '#ffffff',
   placeholderText: '#c1c9cf',
+  semiContrastText: '#8a9dc0',
+  contrastText: '#b4c4de',
 };
 
 const DEFAULT_DARK_THEME_COLORS = {
@@ -44,6 +46,8 @@ const DEFAULT_DARK_THEME_COLORS = {
   accent: '#006cb6',
   focusText: '#ffffff',
   placeholderText: '#575757',
+  semiContrastText: '#9caab0',
+  contrastText: '#c3cdd1',
 };
 
 const THEME_KEY = 'nmorph-data-theme';
@@ -148,7 +152,7 @@ export const useNmorphTheme = (customOptions: INmorphThemeOptions): INmorphTheme
 
     const result = [];
     Object.entries(themes).forEach(([theme, colors]) => {
-      const defaultThemeColors = getStaticColorVariables(DEFAULT_THEME_COLORS)
+      const defaultThemeColors = getStaticColorVariables(DEFAULT_THEME_COLORS);
       if (theme === 'common') result.push(convertColorsToString(mergeColorVariables(defaultThemeColors, colors)));
       else {
         const themeColors = `
@@ -176,7 +180,6 @@ export const useNmorphTheme = (customOptions: INmorphThemeOptions): INmorphTheme
     const computeDynamicColors = main && !darkShade && !lightShade;
     if (computeDynamicColors) themeMap[theme] = getDynamicColorVariables(colors.main);
     themeMap[theme] = [...themeMap[theme], ...getStaticColorVariables(colors)];
-
   });
 
   const style = document.createElement('style');

@@ -69,7 +69,21 @@ export default {
       "shade-var": "Будет автоматически высчитыватся если не мутировать их напрмяую и передать переменную main.",
       "i18n-content": "Для корректной работы i18n, убедитесь что подключаете i18n до подключения библиотеки. На данный момент доступны три локали en, zh, ru.<p>По умолчанию подключена локаль en. Импортируйте только те локали что будут нужны.</p><p>Если локалей нет то нужно добавить свои. Свойство locale будет перезаписывать locale из i18n переданного выше.</p>",
       "rewrite-translation": "Перезаписаваем переводы библиотеки. Имена сообщений переводов можно посмотреть в документации к компонентам",
-      "other-messages": "Прочие переводы"
+      "other-messages": "Прочие переводы",
+      "css-variables": "CSS-переменные",
+      "css-variables-content": "Библиотека предоставляет следующие CSS-переменные, которые можно использовать в своих стилях.",
+      "css-variables-theme-derived": "Переменные темы (задаются для каждой темы)",
+      "css-variables-auto-generated": "Дополнительные переменные контрастности текста (настраиваются для каждой темы)",
+      "css-variables-static": "Статические переменные (одинаковы для всех тем)",
+      "css-var-main": "Основной цвет фона",
+      "css-var-dark-shade": "Тёмный теневой оттенок",
+      "css-var-light-shade": "Светлый теневой оттенок",
+      "css-var-text": "Основной цвет текста",
+      "css-var-accent": "Акцентный / брендовый цвет",
+      "css-var-focus-text": "Цвет текста на сфокусированных/акцентных элементах",
+      "css-var-placeholder": "Цвет текста-заглушки",
+      "css-var-semi-contrast": "цвет текста +30% яркости — для второстепенного текста",
+      "css-var-contrast": "цвет текста +70% яркости — для контрастного текста"
     },
     "other": {
       "utils-classes": "Утилитные классы"
@@ -101,6 +115,12 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "google-icon": "Добавлена иконка NmorphIconGoogle в набор иконок.",
+        "contrast-text-colors": "Добавлены CSS-переменные --nmorph-semi-contrast-text-color и --nmorph-contrast-text-color в дефолтные светлую и тёмную темы.",
+        "form-item-label-for": "NmorphFormItem: тег label теперь имеет правильный атрибут for, связанный с инпутом через prop inputId у NmorphTextInput.",
+        "error-box-single-error": "NmorphErrorBox теперь показывает только одну актуальную ошибку вместо всех сразу.",
+        "form-item-margin": "Уменьшен вертикальный отступ NmorphFormItem с indentation-03 до indentation-02.",
+        "css-variables-docs": "Добавлен раздел с описанием CSS-переменных на странице Guide.",
         "validation-icon-fix": "Исправлен NmorphValidationIcon: иконки передавались строками вместо компонентов и не отображались.",
         "select-button-unselected-opacity": "NmorphSelectButton: не выбранные элементы теперь полупрозрачные для лучшей визуальной обратной связи.",
         "select-button": "Добавлен новый компонент NmorphSelectButton — группа кнопок-переключателей с поддержкой слотов и prop options.",

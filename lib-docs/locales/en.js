@@ -69,7 +69,21 @@ export default {
       "shade-var": "Will be automatically calculated if not mutated directly and passed via the main variable.",
       "i18n-content": "For proper i18n functionality, ensure that you connect i18n before the library. Currently, three locales are available: en, zh, ru.<p>The default locale is en. Import only the locales you need.</p><p>If the locales are missing, you need to add your own. The locale property will overwrite the locale from i18n passed above.</p>",
       "rewrite-translation": "Rewrite library translations. You can find translation message names in the component documentation.",
-      "other-messages": "Other translations"
+      "other-messages": "Other translations",
+      "css-variables": "CSS Variables",
+      "css-variables-content": "The library exposes the following CSS custom properties that you can use in your own styles.",
+      "css-variables-theme-derived": "Theme-derived variables (set per theme)",
+      "css-variables-auto-generated": "Additional text contrast variables (configurable per theme)",
+      "css-variables-static": "Static variables (same across themes)",
+      "css-var-main": "Main background color",
+      "css-var-dark-shade": "Dark shadow shade",
+      "css-var-light-shade": "Light shadow shade",
+      "css-var-text": "Primary text color",
+      "css-var-accent": "Accent / brand color",
+      "css-var-focus-text": "Text color on focused/accent elements",
+      "css-var-placeholder": "Placeholder text color",
+      "css-var-semi-contrast": "text color +30% brightness — for secondary text",
+      "css-var-contrast": "text color +70% brightness — for high-contrast text"
     },
     "other": {
       "utils-classes": "Utility classes"
@@ -101,6 +115,12 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "google-icon": "Added NmorphIconGoogle to the icon set.",
+        "contrast-text-colors": "Added --nmorph-semi-contrast-text-color and --nmorph-contrast-text-color CSS variables to default light and dark themes.",
+        "form-item-label-for": "NmorphFormItem label now has a correct for attribute linked to the input via inputId prop on NmorphTextInput.",
+        "error-box-single-error": "NmorphErrorBox now shows only the most relevant error instead of all errors at once.",
+        "form-item-margin": "Reduced NmorphFormItem vertical margin from indentation-03 to indentation-02.",
+        "css-variables-docs": "Added CSS variables reference section to the Guide page.",
         "validation-icon-fix": "Fixed NmorphValidationIcon not rendering: icon components were passed as strings instead of component objects.",
         "select-button-unselected-opacity": "NmorphSelectButton: unselected items now appear semi-transparent for clearer visual feedback.",
         "select-button": "Added new NmorphSelectButton component — a segmented button group with slot and options-based API.",

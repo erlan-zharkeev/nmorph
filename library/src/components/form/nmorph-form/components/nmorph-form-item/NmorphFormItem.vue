@@ -4,7 +4,7 @@ import { computed, inject } from 'vue';
 import { NmorphComponentHeight } from '@/types';
 import { NmorphValidationIcon, NmorphErrorBox } from './inner-components';
 import { NmorphFormValidationDataType } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps {
   id: string;
@@ -40,7 +40,7 @@ const modifiers = computed(() =>
 );
 
 const commonCSS = css`
-  margin: var(--indentation-03) var(--indentation-00);
+  margin: var(--indentation-02) var(--indentation-00);
 
   label {
     ${title4()}
@@ -70,20 +70,23 @@ const commonCSS = css`
       background: var(--nmorph-error-text-color);
     }
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
-`
+`;
 </script>
 
 <template>
   <StyledComponent :class="modifiers">
-    <label v-if="props.label">{{ props.label }}</label>
+    <label v-if="props.label" :for="props.id">{{ props.label }}</label>
     <div class="nmorph-form-item__content">
       <slot />
-      <NmorphValidationIcon :valid="Boolean(validationData?.valid)" :show="showStatusIcon"
-        v-if="props.showValidationIcon" />
+      <NmorphValidationIcon
+        v-if="props.showValidationIcon"
+        :valid="Boolean(validationData?.valid)"
+        :show="showStatusIcon"
+      />
     </div>
     <NmorphErrorBox :errors="validationData?.errors" :height="props.height" :static-height="staticErrorBoxSpace" />
   </StyledComponent>

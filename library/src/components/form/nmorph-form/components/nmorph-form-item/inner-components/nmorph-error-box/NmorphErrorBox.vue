@@ -16,21 +16,21 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   staticHeight: false,
 });
 
-const reversedErrors = computed(() => {
+const currentError = computed(() => {
   const arr = Array.isArray(props.errors) ? props.errors : props.errors.value;
-  return arr.reverse();
+  return arr.length ? [arr[arr.length - 1]] : [];
 });
 
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
-    'nmorph-error-box': [`${props.staticHeight && 'static-height'}`, `${reversedErrors.value.length === 0 && 'empty'}`],
+    'nmorph-error-box': [`${props.staticHeight && 'static-height'}`, `${currentError.value.length === 0 && 'empty'}`],
   })
 );
 
 const commonCSS = css`
-  display: block;
-  margin-top: var(--indentation-02);
+  display: flex;
+  align-items: center;
   overflow: hidden;
 
   .nmorph-error-box__error {
@@ -55,7 +55,7 @@ const StyledComponent = styled.div`
 <template>
   <StyledComponent :class="modifiers">
     <transition-group name="list" tag="div">
-      <p v-for="error in reversedErrors" :key="error" class="nmorph-error-box__error">{{ error }}</p>
+      <p v-for="error in currentError" :key="error" class="nmorph-error-box__error">{{ error }}</p>
     </transition-group>
   </StyledComponent>
 </template>
