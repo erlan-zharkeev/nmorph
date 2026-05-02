@@ -17,3 +17,6 @@ export { default as NmorphSwitch } from './nmorph-switch/NmorphSwitch.vue';
 export { default as NmorphTextInput } from './nmorph-text-input/NmorphTextInput.vue';
 export { default as NmorphRadio } from './nmorph-radio/NmorphRadio.vue';
 export { default as NmorphRadioGroup } from './nmorph-radio-group/NmorphRadioGroup.vue';
+export { default as NmorphSelectButton } from './nmorph-select-button/NmorphSelectButton.vue';
+export { default as NmorphSelectButtonItem } from './nmorph-select-button/components/nmorph-select-button-item/NmorphSelectButtonItem.vue';
+export * from './nmorph-select-button/types';

@@ -99,6 +99,7 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "select-button": "新增 NmorphSelectButton 组件——支持插槽和 options prop 的分段按钮组。",
         "engines-range": "放宽了包的 engines 要求，以支持较新的 Node 与 npm 版本。",
         "skeleton-animation": "修复 Skeleton 加载动画：在 loading 启用时 shimmer 正常工作。",
         "icon-search-and-copy": "修复图标页面中图标显示与输入框相关行为。",
@@ -119,6 +120,8 @@ export default {
   },
   "overview": {
     "basic-usage": "基础使用",
+    "off": "关",
+    "on": "开",
     "one": "一",
     "two": "二",
     "three": "三",
@@ -1193,6 +1196,26 @@ export default {
       },
       "events": {
         "update:model-value": "当数字输入框的值变化时触发的事件"
+      }
+    },
+    "select-button": {
+      "height": {
+        "subtitle": "设置组件的高度。"
+      },
+      "disabled": {
+        "subtitle": "禁用组件。"
+      },
+      "api": {
+        "model-value": "选中的值",
+        "height": "组件高度",
+        "disabled": "禁用组件",
+        "options": "渲染的选项列表"
+      },
+      "slot": {
+        "default": "用于放置 NmorphSelectButtonItem 元素的插槽"
+      },
+      "events": {
+        "update:model-value": "当选中值改变时触发"
       }
     },
     "select": {

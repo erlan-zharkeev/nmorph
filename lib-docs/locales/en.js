@@ -101,6 +101,7 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "select-button": "Added new NmorphSelectButton component — a segmented button group with slot and options-based API.",
         "engines-range": "Relaxed package engines requirements to support modern Node and npm versions.",
         "skeleton-animation": "Fixed Skeleton loading animation: shimmer now works when loading is enabled.",
         "icon-search-and-copy": "Fixed icon display and input-related behavior on the icon page.",
@@ -121,6 +122,8 @@ export default {
   },
   "overview": {
     "basic-usage": "Basic usage",
+    "off": "Off",
+    "on": "On",
     "one": "One",
     "two": "Two",
     "three": "Three",
@@ -1195,6 +1198,26 @@ export default {
       },
       "events": {
         "update:model-value": "Event triggered when the value of the number input field changes"
+      }
+    },
+    "select-button": {
+      "height": {
+        "subtitle": "Sets the height of the component."
+      },
+      "disabled": {
+        "subtitle": "Disables the component."
+      },
+      "api": {
+        "model-value": "The selected value",
+        "height": "Height of the component",
+        "disabled": "Disables the component",
+        "options": "List of options to render"
+      },
+      "slot": {
+        "default": "Slot for NmorphSelectButtonItem elements"
+      },
+      "events": {
+        "update:model-value": "Triggered when the selected value changes"
       }
     },
     "select": {

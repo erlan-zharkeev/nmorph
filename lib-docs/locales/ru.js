@@ -101,6 +101,7 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "select-button": "Добавлен новый компонент NmorphSelectButton — группа кнопок-переключателей с поддержкой слотов и prop options.",
         "engines-range": "Смягчены требования engines пакета для поддержки актуальных версий Node и npm.",
         "skeleton-animation": "Исправлена анимация загрузки Skeleton: shimmer работает при включенном loading.",
         "icon-search-and-copy": "Исправлено отображение иконок и поведение input на странице иконок.",
@@ -121,6 +122,8 @@ export default {
   },
   overview: {
     "basic-usage": "Основное использование",
+    off: "Выкл",
+    on: "Вкл",
     one: "Один",
     two: "Два",
     three: "Три",
@@ -1195,6 +1198,26 @@ export default {
       },
       events: {
         "update:model-value": "Событие всплывает при изменении значения числового поля ввода",
+      },
+    },
+    "select-button": {
+      height: {
+        subtitle: "Устанавливает высоту компонента.",
+      },
+      disabled: {
+        subtitle: "Отключает компонент.",
+      },
+      api: {
+        "model-value": "Выбранное значение",
+        height: "Высота компонента",
+        disabled: "Отключает компонент",
+        options: "Список опций для отображения",
+      },
+      slot: {
+        default: "Слот для элементов NmorphSelectButtonItem",
+      },
+      events: {
+        "update:model-value": "Срабатывает при изменении выбранного значения",
       },
     },
     select: {

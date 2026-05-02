@@ -2,7 +2,7 @@
   "name": "nmorph-lib-docs",
   "private": true,
   "type": "module",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --no-qr",
@@ -14,7 +14,7 @@
     "deploy": "nuxt generate && gh-pages -d dist"
   },
   "dependencies": {
-    "@nmorph/nmorph-ui-kit": "^1.0.107",
+    "@nmorph/nmorph-ui-kit": "^1.1.0",
     "@nuxtjs/i18n": "^8.3.1",
     "nuxt": "^3.11.2",
     "nuxt-svgo": "^4.0.1",

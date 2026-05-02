@@ -36,6 +36,7 @@ import Select from "~/lib-overview/select";
 import Slider from "~/lib-overview/slider";
 import Radio from "~/lib-overview/radio";
 import RadioGroup from "~/lib-overview/radio-group";
+import SelectButton from "~/lib-overview/select-button";
 import Form from "~/lib-overview/form";
 import DatePicker from "~/lib-overview/date-picker";
 import MainContentPart from "~/layouts/MainContentPart.vue";
@@ -83,6 +84,7 @@ const componentsMap: Record<string, unknown[]> = {
   slider: Slider,
   radio: Radio,
   "radio-group": RadioGroup,
+  "select-button": SelectButton,
   form: Form,
   "date-picker": DatePicker,
 };

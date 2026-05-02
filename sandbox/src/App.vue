@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { NmorphButton, NmorphCard, NmorphTextInput } from "@nmorph/nmorph-ui-kit";
+import { NmorphButton, NmorphCard, NmorphTextInput, NmorphSelectButton, NmorphSelectButtonItem } from "@nmorph/nmorph-ui-kit";
 import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
 const textValue = ref("");
+const selectButtonValue = ref("on");
+const selectButtonOptions = [
+  { value: "off", label: "Off" },
+  { value: "on", label: "On" },
+  { value: "maybe", label: "Maybe" },
+];
 
 const setLocale = (nextLocale: "en" | "ru") => {
   locale.value = nextLocale;
@@ -27,6 +33,17 @@ const setLocale = (nextLocale: "en" | "ru") => {
       </div>
 
       <NmorphButton text="Test Nmorph Button" class="sandbox-page__test-btn" />
+
+      <section class="sandbox-select-button">
+        <p>NmorphSelectButton: {{ selectButtonValue }}</p>
+        <NmorphSelectButton v-model="selectButtonValue">
+          <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
+          <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
+        </NmorphSelectButton>
+                  <NmorphButton height="thin" :text="t('langRu')" @click="setLocale('ru')" />
+
+        <NmorphSelectButton v-model="selectButtonValue" :options="selectButtonOptions" height='thin' />
+      </section>
 
       <section class="sandbox-input">
         <div class="sandbox-input__controls">
@@ -75,6 +92,12 @@ p {
 
 .sandbox-page__test-btn {
   margin-top: 8px;
+}
+
+.sandbox-select-button {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
 }
 
 .sandbox-input {

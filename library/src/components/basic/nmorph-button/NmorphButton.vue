@@ -10,7 +10,7 @@ import {
   NmorphButtonShape,
   NmorphIconLoading,
 } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps extends INmorphCommonInputProps {
   styleType?: keyof typeof NmorphButtonStyle;
@@ -188,17 +188,23 @@ const commonCSS = css`
   &.nmorph-button--disabled {
     ${disabled()}
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
-`
+`;
 </script>
 
 <template>
   <StyledComponent :class="modifiers">
-    <button ref="buttonDOMElement" class="nmorph-button__content" :disabled="props.disabled" :loading="props.loading"
-      :type="props.type" :tabindex="props.tabindex">
+    <button
+      ref="buttonDOMElement"
+      class="nmorph-button__content"
+      :disabled="props.disabled"
+      :loading="props.loading"
+      :type="props.type"
+      :tabindex="props.tabindex"
+    >
       <NmorphIcon v-if="slots['icon']">
         <slot name="icon" />
       </NmorphIcon>

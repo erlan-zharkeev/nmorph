@@ -31,7 +31,9 @@ import {
   NmorphPagination,
   NmorphSlider,
   NmorphAlert,
-  NmorphRadio
+  NmorphRadio,
+  NmorphSelectButton,
+  NmorphSelectButtonItem
 } from "@nmorph/nmorph-ui-kit";
 const { t } = useI18n();
 const tabs = ref([
@@ -286,6 +288,19 @@ const localePath = useLocalePath();
                 { id: '2', label: '2' },
                 { id: '3', label: '3' },
               ]" />
+            </div>
+          </NmorphCard>
+        </NuxtLink>
+      </div>
+      <div class="overview-component-wrapper select-button">
+        <NuxtLink :to="localePath('/elements/select-button')">
+          <NmorphCard>
+            <template #header>Select button</template>
+            <div class="overview-component-content">
+              <NmorphSelectButton model-value="on">
+                <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
+                <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
+              </NmorphSelectButton>
             </div>
           </NmorphCard>
         </NuxtLink>
