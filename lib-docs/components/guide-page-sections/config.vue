@@ -88,6 +88,32 @@ app.use(NmorphLibrary, nmorphOptions);
 app.mount("#app");
 `;
 
+const cssVariables = `
+/* ${t('guide-page.config.css-variables-theme-derived')} */
+--nmorph-main-color          /* ${t('guide-page.config.css-var-main')} */
+--nmorph-dark-shade-color    /* ${t('guide-page.config.css-var-dark-shade')} */
+--nmorph-light-shade-color   /* ${t('guide-page.config.css-var-light-shade')} */
+--nmorph-text-color          /* ${t('guide-page.config.css-var-text')} */
+--nmorph-accent-color        /* ${t('guide-page.config.css-var-accent')} */
+--nmorph-focus-text-color    /* ${t('guide-page.config.css-var-focus-text')} */
+--nmorph-placeholder-text-color /* ${t('guide-page.config.css-var-placeholder')} */
+
+/* ${t('guide-page.config.css-variables-auto-generated')} */
+--nmorph-semi-contrast-text-color /* ${t('guide-page.config.css-var-semi-contrast')} */
+--nmorph-contrast-text-color      /* ${t('guide-page.config.css-var-contrast')} */
+                                  /* semiContrastText / contrastText in theme config */
+
+/* ${t('guide-page.config.css-variables-static')} */
+--nmorph-success-color       --nmorph-success-text-color
+--nmorph-error-color         --nmorph-error-text-color
+--nmorph-warn-color          --nmorph-warn-text-color
+--nmorph-info-color          --nmorph-info-text-color
+--nmorph-gray-color
+--nmorph-white-color
+--nmorph-black-color
+--nmorph-overlay-color
+`;
+
 </script>
 
 <template>
@@ -120,6 +146,13 @@ app.mount("#app");
       <code-example lang="javascript">{{
         i18n
       }}</code-example>
+    </div>
+    <div class="section-element nmorph--shadow-inset">
+      <h3 class="section-subtitle">
+        {{ $t("guide-page.config.css-variables") }}
+      </h3>
+      <p class="section-paragraph" v-html="$t('guide-page.config.css-variables-content')" />
+      <code-example lang="css">{{ cssVariables }}</code-example>
     </div>
   </section>
 </template>
