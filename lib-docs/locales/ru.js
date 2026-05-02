@@ -116,6 +116,7 @@ export default {
       "title": "Changelog",
       "items": {
         "form-item-input-inheritance": "Элементы формы теперь автоматически наследуют id и name из NmorphFormItem, поэтому label и нативные атрибуты формы связаны без ручного прокидывания prop.",
+        "text-input-autofill-styles": "Исправлены стили autofill в NmorphTextInput: браузерный autofill больше не перебивает неоморфные тени и цвета поля.",
         "google-icon": "Добавлена иконка NmorphIconGoogle в набор иконок.",
         "contrast-text-colors": "Добавлены CSS-переменные --nmorph-semi-contrast-text-color и --nmorph-contrast-text-color в дефолтные светлую и тёмную темы.",
         "form-item-label-for": "NmorphFormItem: тег label теперь имеет правильный атрибут for, связанный с инпутом через prop inputId у NmorphTextInput.",

@@ -12,6 +12,7 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
             <h3>v1.1.4</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.form-item-input-inheritance") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.text-input-autofill-styles") }}</li>
             </ul>
           </div>
           <div class="docs-changelog-page__release">

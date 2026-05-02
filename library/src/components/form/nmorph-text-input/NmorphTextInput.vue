@@ -122,24 +122,25 @@ const commonCSS = css`
   }
 
   input:-webkit-autofill,
-  input:-webkit-autofill:hover {
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:active {
     -webkit-text-fill-color: var(--nmorph-text-color);
     caret-color: var(--nmorph-text-color);
     box-shadow:
-      inset 0 0 0 1000px var(--nmorph-main-color),
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-        var(--nmorph-light-shade-color);
+        var(--nmorph-light-shade-color),
+      inset 0 0 0 1000px var(--nmorph-main-color);
   }
 
   input:-webkit-autofill:focus {
     -webkit-text-fill-color: var(--nmorph-focus-text-color);
     caret-color: var(--nmorph-focus-text-color);
     box-shadow:
-      inset 0 0 0 1000px var(--nmorph-accent-color),
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-        var(--nmorph-light-shade-color);
+        var(--nmorph-light-shade-color),
+      inset 0 0 0 1000px var(--nmorph-accent-color);
     outline: none;
   }
 

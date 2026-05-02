@@ -114,6 +114,7 @@ export default {
       "title": "变更日志",
       "items": {
         "form-item-input-inheritance": "表单控件现在会自动继承 NmorphFormItem 的 id 和 name，因此无需手动透传 prop 也能正确关联 label 与原生表单属性。",
+        "text-input-autofill-styles": "修复了 NmorphTextInput 的 autofill 样式，浏览器自动填充不再覆盖新拟态阴影和字段颜色。",
         "google-icon": "新增 NmorphIconGoogle 图标。",
         "contrast-text-colors": "在默认浅色和深色主题中新增 --nmorph-semi-contrast-text-color 和 --nmorph-contrast-text-color CSS 变量。",
         "form-item-label-for": "NmorphFormItem 的 label 标签现通过 NmorphTextInput 的 inputId prop 正确关联到输入框。",

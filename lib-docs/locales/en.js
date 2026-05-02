@@ -116,6 +116,7 @@ export default {
       "title": "Changelog",
       "items": {
         "form-item-input-inheritance": "Form controls now inherit id and name from NmorphFormItem automatically, so labels and native form attributes stay linked without manual prop forwarding.",
+        "text-input-autofill-styles": "Fixed NmorphTextInput autofill styling so browser autofill no longer overrides the neumorphic shadows and field colors.",
         "google-icon": "Added NmorphIconGoogle to the icon set.",
         "contrast-text-colors": "Added --nmorph-semi-contrast-text-color and --nmorph-contrast-text-color CSS variables to default light and dark themes.",
         "form-item-label-for": "NmorphFormItem label now has a correct for attribute linked to the input via inputId prop on NmorphTextInput.",
