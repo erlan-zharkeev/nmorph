@@ -115,6 +115,7 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "ci-husky-prepare": "Скрипт prepare библиотеки теперь безопасен для CI и file-установок, когда husky недоступен.",
         "color-picker": "Добавлен компонент NmorphColorPicker, страница документации для него и примеры высоты, отображения значения, disabled-состояния и дефолтного accent-цвета темы.",
         "badge-tag-mode": "Добавлен режим `is-tag` для NmorphBadge: теперь бейдж может рендериться как standalone-элемент без overlay-позиционирования и без default slot.",
         "badge-undefined-hidden": "NmorphBadge теперь не рендерится, если `value` равен `undefined`; режим точки (`is-dot`) по-прежнему работает без значения.",

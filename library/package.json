@@ -2,7 +2,7 @@
   "name": "@nmorph/nmorph-ui-kit",
   "type": "module",
   "private": false,
-  "version": "1.1.6",
+  "version": "1.1.7",
   "license": "MIT",
   "engines": {
     "node": ">=18.13.0",
@@ -47,7 +47,7 @@
     "lint:check": "npm run lint:es:check && npm run lint:style:check",
     "lint": "npm run lint:es && npm run lint:style",
     "dev:type": "vue-tsc -p ./tsconfig.json",
-    "prepare": "cd .. && husky install ./library/.husky",
+    "prepare": "command -v husky >/dev/null 2>&1 && cd .. && husky install ./library/.husky || true",
     "validate-branch-name": "node .husky/validate-branch-name.cjs",
     "validate-commit-msg": "node .husky/validate-commit-msg.cjs",
     "build:types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist"

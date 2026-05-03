@@ -115,6 +115,7 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "ci-husky-prepare": "Made the library prepare script safe in CI and file-based installs when husky is unavailable.",
         "color-picker": "Added NmorphColorPicker component, a documentation page for it, and examples for height, value display, disabled state, and theme-accent default color.",
         "badge-tag-mode": "Added is-tag mode to NmorphBadge so it can render as a standalone badge without overlay positioning or a default slot.",
         "badge-undefined-hidden": "NmorphBadge now hides itself when value is undefined; dot mode still renders without a value.",

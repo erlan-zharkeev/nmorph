@@ -113,6 +113,7 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "ci-husky-prepare": "库的 prepare 脚本已改为在 CI 和基于 file 的安装场景下即使没有 husky 也不会失败。",
         "color-picker": "新增 NmorphColorPicker 组件、对应文档页面，以及高度、数值显示、disabled 状态和主题 accent 默认色的示例。",
         "badge-tag-mode": "为 NmorphBadge 新增 `is-tag` 模式，可将徽标作为独立元素渲染，而不是绝对定位的覆盖层。",
         "badge-undefined-hidden": "NmorphBadge 在 `value` 为 `undefined` 时将不再渲染；`is-dot` 点状模式仍可在无值时显示。",
