@@ -160,15 +160,15 @@ const mouseEnterHandler = () => {
 const mouseLeaveHandler = () => {
   show.value = false;
 };
-
 </script>
 
 <template>
-  <div ref="scrollDOMContainer" :class="modifiers" @scroll="scrollHandler" @mouseenter="mouseEnterHandler"
-    @mouseleave="mouseLeaveHandler" :style="{
+  <div
+    ref="scrollDOMContainer"
+    :class="modifiers"
+    :style="{
       '--bar-width': barWidth,
       '--bar-height': barHeight,
-      display: 'block',
       boxSizing: 'border-box',
       minWidth: '0',
       minHeight: '0',
@@ -178,8 +178,12 @@ const mouseLeaveHandler = () => {
       paddingBottom,
       overflowX,
       overflowY,
-      scrollBehavior
-    }">
+      scrollBehavior,
+    }"
+    @scroll="scrollHandler"
+    @mouseenter="mouseEnterHandler"
+    @mouseleave="mouseLeaveHandler"
+  >
     <slot />
   </div>
 </template>

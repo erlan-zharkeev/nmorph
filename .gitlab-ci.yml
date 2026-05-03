@@ -9,6 +9,7 @@ workflow:
 stages:
   - build
   - deploy
+  - release
 
 cache:
   key: $CI_COMMIT_REF_SLUG
@@ -49,4 +50,28 @@ pages:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"'
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"'
+    - when: never
+
+publish:
+  stage: release
+  needs:
+    - job: pages
+  before_script:
+    - rm -rf library/node_modules
+  script:
+    - cd library
+    - npm ci --include=dev --ignore-scripts
+    - npm install --no-save @rollup/rollup-linux-x64-gnu @esbuild/linux-x64
+    - PACKAGE_NAME=$(node -p "require('./package.json').name")
+    - PACKAGE_VERSION=$(node -p "require('./package.json').version")
+    - PUBLISHED_VERSION=$(npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version 2>/dev/null || true)
+    - |
+      if [ "$PUBLISHED_VERSION" = "$PACKAGE_VERSION" ]; then
+        echo "Version $PACKAGE_VERSION is already published for $PACKAGE_NAME. Skipping publish."
+        exit 0
+      fi
+    - printf "//registry.npmjs.org/:_authToken=%s\n" "$NPM_TOKEN" > ~/.npmrc
+    - npm publish --access public
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"'
     - when: never

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphShadowType } from '@/types';
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 import { styled, css } from '@vue-styled-components/core';
 import { useModifiers, nmorphCombined, body3, title2 } from '@/utils';
 
@@ -13,6 +13,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   shadowType: 'outset',
   combinedShadowBorderWidth: 0,
 });
+
+const slots = useSlots();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -49,7 +51,7 @@ const StyledComponent = styled.div`
   ${commonCSS}
 
   &.nmorph--shadow-combined {
-    ${nmorphCombined(Number(props => props.combinedShadowBorderWidth))};
+    ${nmorphCombined(Number((props) => props.combinedShadowBorderWidth))};
   }
 `;
 </script>
@@ -62,7 +64,7 @@ const StyledComponent = styled.div`
     <div class="nmorph-card__content">
       <slot />
     </div>
-    <div class="nmorph-card__footer">
+    <div v-if="slots.footer" class="nmorph-card__footer">
       <slot name="footer" />
     </div>
   </StyledComponent>
