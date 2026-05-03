@@ -60,6 +60,11 @@ publish:
     - rm -rf library/node_modules
   script:
     - cd library
+    - |
+      if [ -z "$NPM_TOKEN" ]; then
+        echo "NPM_TOKEN is empty. If the variable is marked Protected, the main branch must also be protected in GitLab."
+        exit 1
+      fi
     - npm ci --include=dev --ignore-scripts
     - npm install --no-save @rollup/rollup-linux-x64-gnu @esbuild/linux-x64
     - PACKAGE_NAME=$(node -p "require('./package.json').name")
@@ -70,7 +75,10 @@ publish:
         echo "Version $PACKAGE_VERSION is already published for $PACKAGE_NAME. Skipping publish."
         exit 0
       fi
-    - printf "//registry.npmjs.org/:_authToken=%s\n" "$NPM_TOKEN" > ~/.npmrc
+    - printf "@nmorph:registry=https://registry.npmjs.org/\n//registry.npmjs.org/:_authToken=%s\n" "$NPM_TOKEN" > ~/.npmrc
+    - npm whoami --registry=https://registry.npmjs.org/
+    - npm run build
+    - npm pack --dry-run
     - npm publish --access public
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"'
