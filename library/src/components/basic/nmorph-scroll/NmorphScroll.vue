@@ -167,7 +167,18 @@ const mouseLeaveHandler = () => {
   <div ref="scrollDOMContainer" :class="modifiers" @scroll="scrollHandler" @mouseenter="mouseEnterHandler"
     @mouseleave="mouseLeaveHandler" :style="{
       '--bar-width': barWidth,
-      '--bar-height': barHeight, height: scrollHeight, maxHeight, paddingRight, paddingBottom, overflowX, overflowY, scrollBehavior
+      '--bar-height': barHeight,
+      display: 'block',
+      boxSizing: 'border-box',
+      minWidth: '0',
+      minHeight: '0',
+      height: scrollHeight,
+      maxHeight,
+      paddingRight,
+      paddingBottom,
+      overflowX,
+      overflowY,
+      scrollBehavior
     }">
     <slot />
   </div>

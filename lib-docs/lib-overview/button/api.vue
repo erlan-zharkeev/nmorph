@@ -71,6 +71,9 @@ const slotData = [
   {
     name: "append",
   },
+  {
+    name: "icon-only",
+  },
 ];
 
 const variables = [

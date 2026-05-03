@@ -2,7 +2,7 @@
 import { computed, ref, onMounted } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphDomElementType } from '@/types';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps {
   value?: number | string;
@@ -17,6 +17,7 @@ interface INmorphProps {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
+  value: undefined,
   max: 99,
   isDot: false,
   isTag: false,
@@ -113,18 +114,22 @@ const commonCSS = css`
     height: var(--dot-size);
     border-radius: var(--border-radius-circular);
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
   .nmorph-badge__container {
-    background: ${props => props.color}
+    background: ${(props) => props.color};
   }
-`
+`;
 </script>
 
 <template>
-  <StyledComponent v-if="!props.disabled && (!props.isTag || shouldShowBadge)" :class="modifiers" :props="{ color: props.color }">
+  <StyledComponent
+    v-if="!props.disabled && (!props.isTag || shouldShowBadge)"
+    :class="modifiers"
+    :props="{ color: props.color }"
+  >
     <slot v-if="!props.isTag" />
     <div v-if="shouldShowBadge" ref="badge" :class="containerModifiers" :style="containerStyle">
       <div v-if="props.isDot" class="nmorph-badge__dot" />

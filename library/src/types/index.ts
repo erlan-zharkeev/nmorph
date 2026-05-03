@@ -125,7 +125,10 @@ export interface INmorphStaticColors {
   black?: string;
   text?: string;
   overlay?: string;
-  focusTextColor?: string;
+  focusText?: string;
+  placeholderText?: string;
+  semiContrastText?: string;
+  contrastText?: string;
 }
 
 export interface INmorphDynamicColors {

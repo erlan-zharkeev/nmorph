@@ -113,6 +113,12 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "button-icon-slots-breaking": "破坏性变更：NmorphButton 的插槽 API 已拆分。`icon` 现在用于在内容左侧渲染前置图标，纯图标按钮必须使用新的 `icon-only` 插槽。",
+        "badge-value-slot": "NmorphBadge 现在允许 `value` 为 `undefined`，在没有值时会隐藏自身，并支持通过 `value` 插槽自定义徽标内容。文档和 sandbox 已新增对应示例。",
+        "scroll-height-100": "当父级具有明确高度时，NmorphScroll 现在可以正确处理 `height=\"100%\"`，文档中也补充了固定高度与相对高度的示例。",
+        "theme-config-contrast-types": "theme config 的类型与文档已和运行时行为保持一致：`focusText` 现在具有正确类型，`placeholderText`、`semiContrastText` 和 `contrastText` 也已加入主题示例。",
+        "select-button-no-theme-transition": "NmorphSelectButtonItem 不再对 background 和 box-shadow 做过渡动画，因此切换主题时会像库中的其他组件一样立即完成。",
+        "radio-optional-inject-types": "修复了 NmorphRadio 的 inject 类型：当未处于 radio group 中时，独立使用不会再触发 TypeScript 错误。",
         "ci-husky-prepare": "库的 prepare 脚本已改为在 CI 和基于 file 的安装场景下即使没有 husky 也不会失败。",
         "color-picker": "新增 NmorphColorPicker 组件、对应文档页面，以及高度、数值显示、disabled 状态和主题 accent 默认色的示例。",
         "badge-tag-mode": "为 NmorphBadge 新增 `is-tag` 模式，可将徽标作为独立元素渲染，而不是绝对定位的覆盖层。",
@@ -222,6 +228,10 @@ export default {
       "disabled": {
         "subtitle": "使用 *boolean* 来禁用按钮。"
       },
+      "icon-slots": {
+        "subtitle":
+          "`icon` 插槽现在会把图标渲染在内容左侧，`icon-only` 则专门用于纯图标按钮模式。"
+      },
       "shape": {
         "info": {
           "title": "信息",
@@ -243,9 +253,10 @@ export default {
         "shape": "更改形状"
       },
       "slot": {
-        "default": "按钮内容",
-        "append": "右侧的自定义内容",
-        "icon": "仅用于 icon-only 模式的插槽。传入后会隐藏 text、default 和 append 内容"
+        "default": "按钮的主要内容",
+        "append": "主要内容右侧的自定义内容",
+        "icon": "显示在主要内容左侧的前置图标",
+        "icon-only": "纯图标按钮模式。会隐藏 default、text 和 append 内容"
       },
       "variables": {
         "height": "按钮高度"
@@ -310,7 +321,7 @@ export default {
     "scroll": {
       "height": {
         "subtitle":
-          "使用 *height* 属性设置容器的高度。如果没有设置高度，滚动将不会被激活。"
+          "使用 *height* 属性设置容器高度。支持 `300px` 这类固定值，也支持在父级有明确高度时使用 `100%`。"
       },
       "max-height": {
         "subtitle":
@@ -392,6 +403,10 @@ export default {
         "subtitle":
           "The displayed value on the badge, can be *string* or *number*. If omitted and `is-dot` is false, the badge is not rendered."
       },
+      "value-slot": {
+        "subtitle":
+          "Lets you fully replace the content inside the badge through the `value` slot. Works in the default overlay mode."
+      },
       "max": {
         "subtitle":
           "Maximum value for the badge. If it's set as a number and exceeded, it's displayed as max+."
@@ -425,7 +440,8 @@ export default {
         "offset-x": "Horizontal offset of the badge. Ignored when is-tag is true"
       },
       "slot": {
-        "default": "Custom content for the badge in the default overlay mode"
+        "default": "Wrapped content the badge is attached to. Not used when `is-tag` is true.",
+        "value": "Custom content inside the badge instead of the plain `value`. Works only in overlay mode."
       },
       "variables": {
         "dot-size": "Width and height of the dot"

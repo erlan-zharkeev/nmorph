@@ -68,7 +68,7 @@ const infoData = `overview.${props.infoName}.info`;
       <div class="docs-component__overview-component-actions">
         <ClientOnly>
           <NmorphButton @click="copyHandler">
-            <template #icon>
+            <template #icon-only>
               <NmorphIconCopy />
             </template>
           </NmorphButton>

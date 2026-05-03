@@ -39,7 +39,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 });
 
 const slots = useSlots();
-// TODO major: split icon-only and icon+content use cases into explicit APIs instead of overloading one slot.
+const hasIconSlot = computed(() => Boolean(slots['icon']));
+const hasIconOnlySlot = computed(() => Boolean(slots['icon-only']));
 
 const modifiers = computed(() =>
   useModifiers({
@@ -50,7 +51,7 @@ const modifiers = computed(() =>
       `${props.disabled && 'disabled'}`,
       `${props.accentBgOnHover && 'accent-bg-on-hover'}`,
       `${props.ripple && 'ripple'}`,
-      `${slots['icon'] && 'icon'}`,
+      `${hasIconOnlySlot.value && 'icon-only'}`,
     ],
   })
 );
@@ -75,6 +76,7 @@ const commonCSS = css`
     width: 100%;
     height: var(--height);
     padding: var(--indentation-00) var(--indentation-04);
+    box-sizing: border-box;
     line-height: 0;
     border: none;
     border-radius: var(--default-border-radius);
@@ -83,11 +85,16 @@ const commonCSS = css`
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: var(--indentation-02);
     ${nmorphOutset()}
 
     span {
       --color: var(--nmorph-white-color);
     }
+  }
+
+  .nmorph-button__content > .nmorph-icon {
+    flex-shrink: 0;
   }
 
   .nmorph-button__content:disabled {
@@ -177,9 +184,13 @@ const commonCSS = css`
     height: var(--height);
   }
 
-  &.nmorph-button--icon {
+  &.nmorph-button--icon-only {
     width: var(--height);
     height: var(--height);
+
+    .nmorph-button__content {
+      padding: 0;
+    }
   }
 
   &.nmorph-button.nmorph--thin-component {
@@ -206,17 +217,20 @@ const StyledComponent = styled.div`
       :type="props.type"
       :tabindex="props.tabindex"
     >
-      <NmorphIcon v-if="slots['icon']">
-        <slot name="icon" />
+      <NmorphIcon v-if="props.loading" :size="loadingButtonSize">
+        <NmorphIconLoading />
       </NmorphIcon>
-      <div v-else>
-        <slot />
-        <span v-if="!props.loading && props.text !== undefined">{{ props.text }}</span>
-        <NmorphIcon v-if="props.loading" :size="loadingButtonSize">
-          <NmorphIconLoading />
+      <NmorphIcon v-else-if="hasIconOnlySlot">
+        <slot name="icon-only" />
+      </NmorphIcon>
+      <template v-else>
+        <NmorphIcon v-if="hasIconSlot">
+          <slot name="icon" />
         </NmorphIcon>
+        <slot />
+        <span v-if="props.text !== undefined">{{ props.text }}</span>
         <slot name="append" />
-      </div>
+      </template>
     </button>
   </StyledComponent>
 </template>

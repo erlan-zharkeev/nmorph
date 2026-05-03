@@ -2,11 +2,13 @@
 import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import {
+  NmorphBadge,
   NmorphButton,
   NmorphCard,
   NmorphColorPicker,
   NmorphIcon,
   NmorphIconCheck,
+  NmorphIconUsers,
   NmorphTextInput,
   NmorphSelectButton,
   NmorphSelectButtonItem,
@@ -24,6 +26,7 @@ const { t, locale } = useI18n();
 const textValue = ref("");
 const thinColorValue = ref("#f97316");
 const thickColorValue = ref("#10b981");
+const badgeTeamSize = ref(12);
 const selectButtonValue = ref("on");
 const selectButtonOptions = [
   { value: "off", label: "Off" },
@@ -77,6 +80,23 @@ const formValue = ref<NmorphFormValueType>({
           <span>Button with icon</span>
         </div>
       </NmorphButton>
+
+      <section class="sandbox-badge">
+        <p>NmorphBadge custom value slot</p>
+        <div class="sandbox-badge__demo">
+          <NmorphBadge :value="badgeTeamSize" color="var(--nmorph-success-color)">
+            <template #value>
+              <div class="sandbox-badge__value">
+                <NmorphIcon width="10px" height="10px" color="currentColor">
+                  <NmorphIconUsers />
+                </NmorphIcon>
+                <span>{{ badgeTeamSize }}</span>
+              </div>
+            </template>
+            <NmorphButton text="Team" />
+          </NmorphBadge>
+        </div>
+      </section>
 
       <section class="sandbox-select-button">
         <p>NmorphSelectButton: {{ selectButtonValue }}</p>
@@ -181,6 +201,22 @@ p {
   margin-top: 12px;
   display: grid;
   gap: 10px;
+}
+
+.sandbox-badge {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.sandbox-badge__demo {
+  width: fit-content;
+}
+
+.sandbox-badge__value {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .sandbox-input {

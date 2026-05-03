@@ -8,10 +8,13 @@ import {
   NmorphRadioGroupSelectedValueInjectionType,
   NmorphRadioStyleType,
 } from '@/types';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 
-const groupSelectedValue = inject<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value');
-const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType>(
+const groupSelectedValue = inject<NmorphRadioGroupSelectedValueInjectionType | undefined>(
+  'radio-group-selected-value',
+  undefined
+);
+const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType | undefined>(
   'change-radio-button-value-handler',
   undefined
 );
@@ -28,7 +31,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   styleType: 'button',
   checked: false,
   tabindex: 0,
-  value: ''
+  value: '',
 });
 
 const changeHandler = () => {
@@ -136,19 +139,26 @@ const commonCSS = css`
   &.nmorph-radio--disabled {
     ${disabled()}
   }
-`
+`;
 
 const StyledComponent = styled.label`
   ${commonCSS}
-`
+`;
 </script>
 
 <template>
   <StyledComponent :class="modifiers" @click.prevent="changeHandler">
     <div v-if="props.styleType === 'radio-style'" class="nmorph-radio__content">
       <div class="nmorph-radio__input-wrapper">
-        <input ref="inputDOMRef" type="radio" :name="props.label" :value="props.value" :checked="checked"
-          :tabindex="props.tabindex" class="nmorph-native-input" />
+        <input
+          ref="inputDOMRef"
+          type="radio"
+          :name="props.label"
+          :value="props.value"
+          :checked="checked"
+          :tabindex="props.tabindex"
+          class="nmorph-native-input"
+        />
         <div class="nmorph-radio__fake" />
         <div v-if="checked" class="nmorph-radio__fake-checked" />
       </div>
@@ -158,8 +168,16 @@ const StyledComponent = styled.label`
       <slot v-else name="label" />
     </div>
     <div v-if="props.styleType === 'button'" class="nmorph-radio__content">
-      <input ref="inputDOMRef" type="radio" :disabled="props.disabled" :name="props.label" :value="props.value"
-        :checked="checked" :tabindex="props.tabindex" class="nmorph-native-input" />
+      <input
+        ref="inputDOMRef"
+        type="radio"
+        :disabled="props.disabled"
+        :name="props.label"
+        :value="props.value"
+        :checked="checked"
+        :tabindex="props.tabindex"
+        class="nmorph-native-input"
+      />
       <div v-if="props.label" class="nmorph-radio__fake">
         <span> {{ props.label }} </span>
       </div>

@@ -28,6 +28,8 @@ const config = {
         accent: '#006cb6', // String(hex color)
         focusText: '#ffffff', // String(hex color)
         placeholderText: '#575757', // String(hex color)
+        semiContrastText: '#9caab0', // String(hex color)
+        contrastText: '#c3cdd1', // String(hex color)
         info: '#d4e5edbb', // String(hex color)
         infoText: '#506c80', // String(hex color)
         success: '#67C23A', // String(hex color)

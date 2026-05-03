@@ -115,6 +115,12 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "button-icon-slots-breaking": "Breaking change: NmorphButton slot API was split. `icon` now renders a leading icon next to content, and icon-only buttons must use the new `icon-only` slot.",
+        "badge-value-slot": "NmorphBadge now accepts `undefined` as `value`, hides itself when no value is provided, and supports a custom `value` slot for badge content. Docs and sandbox examples were added.",
+        "scroll-height-100": "NmorphScroll now behaves correctly with `height=\"100%\"` when the parent has an explicit height, and the docs now show both fixed and relative height examples.",
+        "theme-config-contrast-types": "Theme config typings and docs were synchronized with runtime behavior: `focusText` is now correctly typed, and `placeholderText`, `semiContrastText`, and `contrastText` are documented in the theme example.",
+        "select-button-no-theme-transition": "NmorphSelectButtonItem no longer animates background and box-shadow, so theme switching is instant and visually consistent with the rest of the library.",
+        "radio-optional-inject-types": "Fixed NmorphRadio inject typings so standalone usage no longer causes TypeScript errors when group injections are absent.",
         "ci-husky-prepare": "Made the library prepare script safe in CI and file-based installs when husky is unavailable.",
         "color-picker": "Added NmorphColorPicker component, a documentation page for it, and examples for height, value display, disabled state, and theme-accent default color.",
         "badge-tag-mode": "Added is-tag mode to NmorphBadge so it can render as a standalone badge without overlay positioning or a default slot.",
@@ -224,6 +230,10 @@ export default {
       "disabled": {
         "subtitle": "Use *boolean* to disable the button."
       },
+      "icon-slots": {
+        "subtitle":
+          "The `icon` slot now renders a leading icon next to the content, while `icon-only` is the dedicated icon-only button mode."
+      },
       "shape": {
         "info": {
           "title": "Info",
@@ -245,9 +255,10 @@ export default {
         "shape": "Change shape"
       },
       "slot": {
-        "default": "Button content",
-        "append": "Custom content on the right",
-        "icon": "Icon-only slot. When provided, the button renders only the icon and hides text, default, and append content"
+        "default": "Main button content",
+        "append": "Custom content on the right side of the main content",
+        "icon": "Leading icon displayed before the main content",
+        "icon-only": "Dedicated icon-only button mode. Hides default, text, and append content"
       },
       "variables": {
         "height": "Button height"
@@ -312,7 +323,7 @@ export default {
     "scroll": {
       "height": {
         "subtitle":
-          "Use the *height* property to set the container's height. Without setting a height, scrolling will not be activated."
+          "Use the *height* property to set the container's height. Fixed values like `300px` and relative values like `100%` are supported when the parent has an explicit height."
       },
       "max-height": {
         "subtitle":
@@ -394,6 +405,10 @@ export default {
         "subtitle":
             "The displayed value on the badge, can be *string* or *number*. If omitted and `is-dot` is false, the badge is not rendered."
       },
+      "value-slot": {
+        "subtitle":
+            "Lets you fully replace the content inside the badge through the `value` slot. Works in the default overlay mode."
+      },
       "max": {
         "subtitle":
             "Maximum value for the badge. If it's set as a number and exceeded, it's displayed as max+."
@@ -427,7 +442,8 @@ export default {
         "offset-x": "Horizontal offset of the badge. Ignored when is-tag is true"
       },
       "slot": {
-        "default": "Custom content for the badge in the default overlay mode"
+        "default": "Wrapped content the badge is attached to. Not used when `is-tag` is true.",
+        "value": "Custom content inside the badge instead of the plain `value`. Works only in overlay mode."
       },
       "variables": {
         "dot-size": "Width and height of the dot"

@@ -51,10 +51,6 @@ const commonCSS = css`
   border-radius: var(--default-border-radius);
   cursor: pointer;
   opacity: 0.45;
-  transition:
-    box-shadow var(--transition-02) ease,
-    background var(--transition-02) ease,
-    opacity var(--transition-02) ease;
   font-size: var(--item-font-size);
 
   input {

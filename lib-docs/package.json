@@ -4,14 +4,15 @@
   "type": "module",
   "version": "0.0.8",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev --no-qr",
+    "prepare:library": "sh -c 'test -d ../library/node_modules || npm --prefix ../library install --no-fund --no-audit; npm --prefix ../library run build'",
+    "build": "npm run prepare:library && nuxt build",
+    "dev": "npm run prepare:library && nuxt dev --no-qr",
     "clean": "rm -rf .nuxt node_modules && npm install",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "generate": "npm run prepare:library && nuxt generate",
+    "preview": "npm run prepare:library && nuxt preview",
     "postinstall": "nuxt prepare",
     "generate-component": "node generate-component.js",
-    "deploy": "nuxt generate && gh-pages -d dist"
+    "deploy": "npm run generate && gh-pages -d dist"
   },
   "dependencies": {
     "@nmorph/nmorph-ui-kit": "file:../library",
