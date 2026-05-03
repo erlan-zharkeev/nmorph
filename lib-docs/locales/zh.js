@@ -405,7 +405,7 @@ export default {
       },
       "value-slot": {
         "subtitle":
-          "Lets you fully replace the content inside the badge through the `value` slot. Works in the default overlay mode."
+          "Lets you fully replace the content inside the badge through the `value` slot. Slot props expose `value` and `displayValue`. Works in the default overlay mode."
       },
       "max": {
         "subtitle":

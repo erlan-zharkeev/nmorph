@@ -14,12 +14,12 @@ const teamSize = 12;
 const templateData = `
 <template>
   <NmorphBadge :value="teamSize" color="var(--nmorph-success-color)">
-    <template #value>
+    <template #value="{ value }">
       <div class="badge-value-slot-overview__content">
         <NmorphIcon width="10px" height="10px" color="currentColor">
           <NmorphIconUsers />
         </NmorphIcon>
-        <span>{{ teamSize }}</span>
+        <span>{{ value }}</span>
       </div>
     </template>
     <NmorphButton text="team" />
@@ -45,12 +45,12 @@ const code = [scriptData, templateData, cssData];
         <div class="badge-value-slot-overview">
           <ClientOnly>
             <NmorphBadge :value="teamSize" color="var(--nmorph-success-color)">
-              <template #value>
+              <template #value="{ value }">
                 <div class="badge-value-slot-overview__content">
                   <NmorphIcon width="10px" height="10px" color="currentColor">
                     <NmorphIconUsers />
                   </NmorphIcon>
-                  <span>{{ teamSize }}</span>
+                  <span>{{ value }}</span>
                 </div>
               </template>
               <NmorphButton text="team" />

@@ -16,6 +16,11 @@ interface INmorphProps {
   disabled?: boolean;
 }
 
+type NmorphBadgeValueSlotProps = {
+  value: INmorphProps["value"];
+  displayValue: string | number | undefined;
+};
+
 const props = withDefaults(defineProps<INmorphProps>(), {
   value: undefined,
   max: 99,
@@ -27,6 +32,11 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   offsetY: 0,
   disabled: false,
 });
+
+defineSlots<{
+  default?: (props: Record<string, never>) => any;
+  value?: (props: NmorphBadgeValueSlotProps) => any;
+}>();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -137,7 +147,7 @@ const StyledComponent = styled.div`
         <template v-if="props.isTag">
           {{ displayValue }}
         </template>
-        <slot v-else name="value"> {{ displayValue }} </slot>
+        <slot v-else name="value" :value="props.value" :display-value="displayValue"> {{ displayValue }} </slot>
       </div>
     </div>
   </StyledComponent>

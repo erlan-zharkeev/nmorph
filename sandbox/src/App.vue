@@ -85,12 +85,12 @@ const formValue = ref<NmorphFormValueType>({
         <p>NmorphBadge custom value slot</p>
         <div class="sandbox-badge__demo">
           <NmorphBadge :value="badgeTeamSize" color="var(--nmorph-success-color)">
-            <template #value>
+            <template #value="{ value }">
               <div class="sandbox-badge__value">
                 <NmorphIcon width="10px" height="10px" color="currentColor">
                   <NmorphIconUsers />
                 </NmorphIcon>
-                <span>{{ badgeTeamSize }}</span>
+                <span>{{ value }}</span>
               </div>
             </template>
             <NmorphButton text="Team" />

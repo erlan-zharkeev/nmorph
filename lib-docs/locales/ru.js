@@ -407,7 +407,7 @@ export default {
       },
       "value-slot": {
         subtitle:
-          "Позволяет полностью заменить содержимое внутри бейджа через slot `value`. Работает в стандартном overlay-режиме.",
+          "Позволяет полностью заменить содержимое внутри бейджа через slot `value`. В slot props доступны `value` и `displayValue`. Работает в стандартном overlay-режиме.",
       },
       max: {
         subtitle:
