@@ -138,7 +138,8 @@ export default {
     "known-bugs": {
       "title": "Известные баги",
       "items": {
-        "mobile-slider": "На мобильных устройствах не работает Input Slider."
+        "mobile-slider": "На мобильных устройствах не работает Input Slider.",
+        "text-input-clear-overlap": "NmorphTextInput: кнопка очистки может перекрывать placeholder, если ширина инпута небольшая."
       }
     }
   },

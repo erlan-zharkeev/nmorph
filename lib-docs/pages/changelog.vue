@@ -77,6 +77,7 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
           <h2>{{ $t("changelog-page.known-bugs.title") }}</h2>
           <ul>
             <li>{{ $t("changelog-page.known-bugs.items.mobile-slider") }}</li>
+            <li>{{ $t("changelog-page.known-bugs.items.text-input-clear-overlap") }}</li>
           </ul>
         </section>
         <NmorphDivider />

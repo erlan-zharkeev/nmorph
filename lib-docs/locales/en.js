@@ -138,7 +138,8 @@ export default {
     "known-bugs": {
       "title": "Known bugs",
       "items": {
-        "mobile-slider": "Input Slider does not work on mobile devices."
+        "mobile-slider": "Input Slider does not work on mobile devices.",
+        "text-input-clear-overlap": "NmorphTextInput: the clear button may overlap the placeholder text when the input width is small."
       }
     }
   },

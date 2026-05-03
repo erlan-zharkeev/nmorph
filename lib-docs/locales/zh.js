@@ -136,7 +136,8 @@ export default {
     "known-bugs": {
       "title": "已知问题",
       "items": {
-        "mobile-slider": "Input Slider 在移动设备上无法正常工作。"
+        "mobile-slider": "Input Slider 在移动设备上无法正常工作。",
+        "text-input-clear-overlap": "NmorphTextInput：当输入框宽度较小时，清除按钮可能会遮挡 placeholder 文字。"
       }
     }
   },
