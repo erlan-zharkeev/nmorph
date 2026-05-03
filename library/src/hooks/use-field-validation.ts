@@ -25,7 +25,7 @@ export interface INmorphRule {
   numberCompareType?: keyof typeof NmorphNumberCompareOperator;
   booleanCompareType?: keyof typeof NmorphBooleanCompareOperator;
   arrayCompareType?: keyof typeof NmorphArrayValidationOperator;
-  compareValue?: number | string | string[];
+  compareValue?: boolean | number | string | string[];
   error: string;
 }
 
@@ -49,7 +49,7 @@ export interface INmorphNumberValidationRule extends INmorphRule {
 
 export interface INmorphRadioGroupValidationRule extends INmorphRule {
   booleanCompareType: NmorphBooleanCompareOperator;
-  compareValue: string;
+  compareValue: boolean | string;
 }
 
 export interface INmorphCheckboxGroupValidationRule extends INmorphRule {

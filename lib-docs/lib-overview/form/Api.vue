@@ -18,7 +18,7 @@ const attributesDataValue = `
     numberCompareType?: keyof typeof NmorphNumberCompareOperator;
     booleanCompareType?: keyof typeof NmorphBooleanCompareOperator;
     arrayCompareType?: keyof typeof NmorphArrayValidationOperator;
-    compareValue?: number | string | string[];
+    compareValue?: boolean | number | string | string[];
     error: string;
   }
   enum NmorphArrayValidationOperator {
