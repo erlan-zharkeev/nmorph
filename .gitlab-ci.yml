@@ -7,9 +7,9 @@ workflow:
     - when: never
 
 stages:
+  - release
   - build
   - deploy
-  - release
 
 cache:
   key: $CI_COMMIT_REF_SLUG
@@ -54,8 +54,6 @@ pages:
 
 publish:
   stage: release
-  needs:
-    - job: pages
   variables:
     NODE_ENV: development
     NPM_CONFIG_PRODUCTION: "false"
@@ -68,6 +66,20 @@ publish:
         echo "NPM_TOKEN is empty. If the variable is marked Protected, the main branch must also be protected in GitLab."
         exit 1
       fi
+    - |
+      echo "NPM_TOKEN diagnostics"
+      echo "length=${#NPM_TOKEN}"
+      if [ "${NPM_TOKEN#npm_}" != "$NPM_TOKEN" ]; then
+        echo "starts_with_npm_prefix=true"
+      else
+        echo "starts_with_npm_prefix=false"
+      fi
+      if printf '%s' "$NPM_TOKEN" | grep -q '[[:space:]]'; then
+        echo "contains_whitespace=true"
+      else
+        echo "contains_whitespace=false"
+      fi
+      echo "sha256=$(printf '%s' "$NPM_TOKEN" | sha256sum | awk '{print $1}')"
     - npm ci --include=dev --ignore-scripts
     - npm install --no-save @rollup/rollup-linux-x64-gnu @esbuild/linux-x64
     - PACKAGE_NAME=$(node -p "require('./package.json').name")
@@ -79,6 +91,7 @@ publish:
         exit 0
       fi
     - printf "@nmorph:registry=https://registry.npmjs.org/\n//registry.npmjs.org/:_authToken=%s\n" "$NPM_TOKEN" > ~/.npmrc
+    - sed 's#//registry.npmjs.org/:_authToken=.*#//registry.npmjs.org/:_authToken=[REDACTED]#' ~/.npmrc
     - npm whoami --registry=https://registry.npmjs.org/
     - npm run build
     - npm pack --dry-run
