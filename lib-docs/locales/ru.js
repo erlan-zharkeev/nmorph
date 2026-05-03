@@ -116,6 +116,8 @@ export default {
       "title": "Changelog",
       "items": {
         "button-icon-slot-docs": "Уточнено поведение слота icon у NmorphButton: сейчас он фактически работает как icon-only, а более чистый API для иконки вместе с контентом запланирован на будущую major-версию.",
+        "select-button-keyboard-focus": "NmorphSelectButtonItem теперь доступен с клавиатуры: Tab фокусирует каждый элемент, Space/Enter выбирают его, при фокусе отображается outline.",
+        "tabindex-prop": "Добавлен prop tabindex в INmorphCommonInputProps — все элементы формы (NmorphTextInput, NmorphSwitch, NmorphSlider, NmorphNumberInput, NmorphSelect, NmorphSelectButtonItem) теперь поддерживают tabindex.",
         "form-item-input-inheritance": "Элементы формы теперь автоматически наследуют id и name из NmorphFormItem, поэтому label и нативные атрибуты формы связаны без ручного прокидывания prop.",
         "text-input-autofill-styles": "Исправлены стили autofill в NmorphTextInput: браузерный autofill больше не перебивает неоморфные тени и цвета поля.",
         "google-icon": "Добавлена иконка NmorphIconGoogle в набор иконок.",

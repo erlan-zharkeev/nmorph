@@ -23,6 +23,7 @@ interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
+  tabindex: 0,
 });
 
 const inputDOMRef = ref<NmorphDomElementType>(null);
@@ -57,7 +58,16 @@ const commonCSS = css`
   font-size: var(--item-font-size);
 
   input {
-    display: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--nmorph-accent-color);
+    outline-offset: 2px;
   }
 
   &.nmorph-select-button-item--checked {
@@ -76,13 +86,20 @@ const StyledComponent = styled.label`
 </script>
 
 <template>
-  <StyledComponent :class="modifiers" @click.prevent="clickHandler">
+  <StyledComponent
+    :class="modifiers"
+    :tabindex="props.tabindex"
+    @click.prevent="clickHandler"
+    @keydown.space.prevent="clickHandler"
+    @keydown.enter.prevent="clickHandler"
+  >
     <input
       ref="inputDOMRef"
       type="radio"
       :value="props.value"
       :checked="checked"
       :disabled="props.disabled"
+      tabindex="-1"
       class="nmorph-native-input"
     />
     <slot />

@@ -41,6 +41,7 @@ export interface INmorphCommonInputProps {
   name?: string;
   height?: keyof typeof NmorphComponentHeight;
   disabled?: boolean;
+  tabindex?: number;
 }
 
 export enum NmorphShadowType {

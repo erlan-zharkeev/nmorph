@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   inactiveValue: false,
 });
 
-const { id, name } = useFormItemInput(props);
+const { id, name, tabindex } = useFormItemInput(props);
 
 const emit = defineEmits<INmorphEmit>();
 
@@ -178,7 +178,7 @@ const StyledComponent = styled.div`
   <StyledComponent :class="modifiers">
     <div class="nmorph-switch__content" @click="changeHandler">
       <input ref="inputDOMRef" :id="id" :name="name" type="checkbox" :value="initialValue"
-        :disabled="props.disabled" class="nmorph-native-input" @focus="focusHandler" @blur="blurHandler" />
+        :disabled="props.disabled" :tabindex="tabindex" class="nmorph-native-input" @focus="focusHandler" @blur="blurHandler" />
       <div class="nmorph-switch__bg-content" :class="{ 'nmorph-switch__bg-content--enable': initialValue }">
         <slot v-if="initialValue" name="bg-on" />
         <slot v-else name="bg-off" />

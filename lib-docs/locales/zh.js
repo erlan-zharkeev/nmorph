@@ -114,6 +114,8 @@ export default {
       "title": "变更日志",
       "items": {
         "button-icon-slot-docs": "补充说明了 NmorphButton 的 icon 插槽行为：它当前实际上是 icon-only，用于图标加内容的更清晰 API 计划在后续 major 版本中重写。",
+        "select-button-keyboard-focus": "NmorphSelectButtonItem 现在支持键盘操作：Tab 可聚焦每个选项，Space/Enter 可选中，聚焦时显示 outline 轮廓。",
+        "tabindex-prop": "在 INmorphCommonInputProps 中新增 tabindex prop——所有表单控件（NmorphTextInput、NmorphSwitch、NmorphSlider、NmorphNumberInput、NmorphSelect、NmorphSelectButtonItem）现均支持 tabindex。",
         "form-item-input-inheritance": "表单控件现在会自动继承 NmorphFormItem 的 id 和 name，因此无需手动透传 prop 也能正确关联 label 与原生表单属性。",
         "text-input-autofill-styles": "修复了 NmorphTextInput 的 autofill 样式，浏览器自动填充不再覆盖新拟态阴影和字段颜色。",
         "google-icon": "新增 NmorphIconGoogle 图标。",

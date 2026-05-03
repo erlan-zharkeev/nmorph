@@ -116,6 +116,8 @@ export default {
       "title": "Changelog",
       "items": {
         "button-icon-slot-docs": "Clarified NmorphButton icon slot behavior: it currently works as icon-only, and a cleaner icon-plus-content API is planned for a future major release.",
+        "select-button-keyboard-focus": "NmorphSelectButtonItem is now keyboard-accessible: Tab focuses each item, Space/Enter selects it, and a focus-visible outline is shown.",
+        "tabindex-prop": "Added tabindex prop to INmorphCommonInputProps — all form controls (NmorphTextInput, NmorphSwitch, NmorphSlider, NmorphNumberInput, NmorphSelect, NmorphSelectButtonItem) now support tabindex.",
         "form-item-input-inheritance": "Form controls now inherit id and name from NmorphFormItem automatically, so labels and native form attributes stay linked without manual prop forwarding.",
         "text-input-autofill-styles": "Fixed NmorphTextInput autofill styling so browser autofill no longer overrides the neumorphic shadows and field colors.",
         "google-icon": "Added NmorphIconGoogle to the icon set.",

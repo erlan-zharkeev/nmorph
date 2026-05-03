@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   clearable: false,
 });
 
-const { id, name } = useFormItemInput(props);
+const { id, name, tabindex } = useFormItemInput(props);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -201,6 +201,7 @@ const StyledComponent = styled.div`
         :id="id"
         ref="inputDOMRef"
         :name="name"
+        :tabindex="tabindex"
         class="nmorph-native-input"
         :type="type"
         :placeholder="props.placeholder"

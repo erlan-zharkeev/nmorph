@@ -12,6 +12,8 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
             <h3>v1.1.5</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.button-icon-slot-docs") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.select-button-keyboard-focus") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.tabindex-prop") }}</li>
             </ul>
           </div>
           <div class="docs-changelog-page__release">

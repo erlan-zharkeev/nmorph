@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   showTooltip: true,
 });
 
-const { id, name } = useFormItemInput(props);
+const { id, name, tabindex } = useFormItemInput(props);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -267,7 +267,7 @@ const StyledComponent = styled.div`
           <div ref="sliderFirst" class="nmorph-slider__thumb" :style="{ left: thumbXPercentPosition.thumb }"
             :class="{ 'nmorph-slider__thumb--smooth': transitionEnabled }" @mouseenter="handleMouseEnter"
             @mouseleave="handleMouseLeave" @mousedown="mousedownHandler" />
-          <input :id="id" :name="name" class="nmorph-slide__native-input" type="range" :value="thumbValue"
+          <input :id="id" :name="name" :tabindex="tabindex" class="nmorph-slide__native-input" type="range" :value="thumbValue"
             :min="props.min" :max="props.max" :step="props.step" :disabled="props.disabled"
             @input="nativeInputHandler" />
         </div>

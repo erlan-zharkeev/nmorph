@@ -57,7 +57,7 @@ const optionsDOMRef = ref<NmorphDomElementType>(null);
 const optionsHeight = ref<string | null>(null);
 const selectedLineOutset = ref(true);
 
-const { id, name } = useFormItemInput(props);
+const { id, name, tabindex } = useFormItemInput(props);
 
 const changeHandler = (value: string) => {
   if (props.disabled) return;
@@ -284,7 +284,7 @@ const StyledComponent = styled.div`
 <template>
   <StyledComponent :class="modifiers">
     <div class="nmorph-select__content">
-      <select :id="id" :name="name" @focus="focusHandler" @blur="blurHandler" @keydown.space="spaceHandler"
+      <select :id="id" :name="name" :tabindex="tabindex" @focus="focusHandler" @blur="blurHandler" @keydown.space="spaceHandler"
         @keydown.arrow-down="arrowDownHandler" @keydown.arrow-up="arrowUpHandler" @keydown.enter="enterHandler">
         <option v-for="option in domOptions" :key="option" :value="option" />
       </select>
