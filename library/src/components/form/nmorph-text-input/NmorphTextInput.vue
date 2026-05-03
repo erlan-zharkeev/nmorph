@@ -13,6 +13,8 @@ interface INmorphProps extends INmorphCommonInputProps {
   typePassword?: boolean;
   modelValue?: string;
   clearable?: boolean;
+  indentation?: string;
+  inputAttrs?: Record<string, string | number | boolean | undefined>;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -24,9 +26,11 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   rules: () => [],
   height: 'default',
   clearable: false,
+  indentation: '',
+  inputAttrs: () => ({}),
 });
 
-const { id, name, tabindex } = useFormItemInput(props);
+const { id, name, autocomplete, tabindex } = useFormItemInput(props);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -67,6 +71,18 @@ const handleBlur = () => {
 
 const inputDOMRef = ref<NmorphDomElementType>(null);
 
+const focus = () => {
+  inputDOMRef.value?.focus();
+};
+
+const blur = () => {
+  inputDOMRef.value?.blur();
+};
+
+const select = () => {
+  (inputDOMRef.value as HTMLInputElement | null)?.select();
+};
+
 interface INmorphEmit {
   (e: 'update:model-value', val: string): void;
   (e: 'focus'): void;
@@ -74,7 +90,7 @@ interface INmorphEmit {
   (e: 'on-enter'): void;
 }
 
-defineExpose({ inputDOMRef });
+defineExpose({ inputDOMRef, focus, blur, select });
 
 const emit = defineEmits<INmorphEmit>();
 
@@ -83,7 +99,7 @@ const actionIcon = computed(() => {
   else return showPassword.value ? NmorphIconEyeBlocked : NmorphIconEye;
 });
 
-const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
+const indentation = computed(() => props.indentation || (slots['prepend-icon'] ? '28px' : '8px'));
 
 const commonCSS = css`
   display: flex;
@@ -203,12 +219,14 @@ const StyledComponent = styled.div`
         :id="id"
         ref="inputDOMRef"
         :name="name"
+        :autocomplete="autocomplete"
         :tabindex="tabindex"
         class="nmorph-native-input"
         :type="type"
         :placeholder="props.placeholder"
         :disabled="props.disabled"
         :value="props.modelValue"
+        v-bind="props.inputAttrs"
         @input="handleInput"
         @focus="handleFocus"
         @blur="handleBlur"

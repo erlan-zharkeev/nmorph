@@ -29,6 +29,16 @@ const attributesData: IAttributesTableData[] = [
     default: "false",
   },
   {
+    name: "autocomplete",
+    type: "String",
+    default: "-",
+  },
+  {
+    name: "tabindex",
+    type: "Number",
+    default: "0",
+  },
+  {
     name: "placeholder",
     type: "String",
     default: "-",
@@ -53,6 +63,16 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "false",
   },
+  {
+    name: "indentation",
+    type: "String",
+    default: "auto",
+  },
+  {
+    name: "input-attrs",
+    type: "Object",
+    default: "{}",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "prepend-icon" }];
@@ -71,6 +91,18 @@ const exposes = [
       "HTMLElement",
       "https://developer.mozilla.org/ru/docs/Web/API/HTMLElement"
     )} | null`,
+  },
+  {
+    name: "focus",
+    type: "() => void",
+  },
+  {
+    name: "blur",
+    type: "() => void",
+  },
+  {
+    name: "select",
+    type: "() => void",
   },
 ];
 </script>

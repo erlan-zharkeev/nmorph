@@ -129,6 +129,7 @@ const StyledComponent = styled.div`
         <NmorphTextInput
           :id="props.id"
           :name="props.name"
+          :autocomplete="props.autocomplete"
           :height="props.height"
           :disabled="props.disabled"
           :model-value="initialValue"

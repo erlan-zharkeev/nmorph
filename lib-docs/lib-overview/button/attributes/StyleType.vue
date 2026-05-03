@@ -9,6 +9,7 @@ const templateData = `
 <template>
   <NmorphButton style-type="default">Default</NmorphButton>
   <NmorphButton style-type="transparent">Transparent</NmorphButton>
+  <NmorphButton style-type="transparent" color="var(--nmorph-accent-color)">Accent</NmorphButton>
 </template>
 `;
 const cssData = `
@@ -34,6 +35,9 @@ const code = [scriptData, templateData, cssData];
             }}</NmorphButton>
           <NmorphButton style-type="transparent">{{
             $t("overview.transparent")
+            }}</NmorphButton>
+          <NmorphButton style-type="transparent" color="var(--nmorph-accent-color)">{{
+            $t("overview.edit")
             }}</NmorphButton>
         </div>
       </template>

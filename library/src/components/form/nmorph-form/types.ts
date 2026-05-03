@@ -8,4 +8,5 @@ export type NmorphFormValidationDataType = INmorphUseFormValidation;
 export interface NmorphFormItemInputDataType {
   id: Ref<string>;
   name: Ref<string>;
+  autocomplete: Ref<string | undefined>;
 }

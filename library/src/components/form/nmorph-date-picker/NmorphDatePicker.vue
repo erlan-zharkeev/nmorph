@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   initialDate: () => new Date(),
 });
 
-const { id, name } = useFormItemInput(props);
+const { id, name, autocomplete } = useFormItemInput(props);
 
 const placeholderText = computed(() => (props.placeholder ? props.placeholder : t('pickADate')));
 
@@ -212,6 +212,7 @@ const StyledComponent = styled.div`
         <input
           :id="id"
           :name="name"
+          :autocomplete="autocomplete"
           type="date"
           @focus.prevent="focusHandler"
           @blur="blurHandler"

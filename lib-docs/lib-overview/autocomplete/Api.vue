@@ -29,6 +29,11 @@ const attributesData: IAttributesTableData[] = [
     default: "false",
   },
   {
+    name: "autocomplete",
+    type: "String",
+    default: "-",
+  },
+  {
     name: "model-value",
     type: "String",
     default: "-",

@@ -9,6 +9,7 @@ import {
   NmorphIcon,
   NmorphIconCheck,
   NmorphIconUsers,
+  NmorphOTPInput,
   NmorphTextInput,
   NmorphSelectButton,
   NmorphSelectButtonItem,
@@ -24,6 +25,9 @@ onMounted(() => {
 
 const { t, locale } = useI18n();
 const textValue = ref("");
+const otpValue = ref("");
+const otpAlphaValue = ref("");
+const otpCompletedValue = ref("");
 const thinColorValue = ref("#f97316");
 const thickColorValue = ref("#10b981");
 const badgeTeamSize = ref(12);
@@ -52,6 +56,10 @@ const formValue = ref<NmorphFormValueType>({
       { pattern: /^.+$/, error: "Password is required" },
       { pattern: /^.{8,}$/, error: "Minimum 8 characters" },
     ],
+  },
+  otp: {
+    value: "",
+    rules: [{ pattern: /^\d{6}$/, error: "Enter a 6-digit code" }],
   },
 });
 </script>
@@ -115,6 +123,28 @@ const formValue = ref<NmorphFormValueType>({
         <NmorphTextInput v-model="textValue" clearable placeholder="Type something" />
       </section>
 
+      <section class="sandbox-otp">
+        <p>NmorphOTPInput</p>
+        <div class="sandbox-otp__grid">
+          <div class="sandbox-otp__item">
+            <span>numeric / 6</span>
+            <NmorphOTPInput v-model="otpValue" @complete="otpCompletedValue = $event" />
+            <p>value: {{ otpValue || "-" }}</p>
+            <p>complete: {{ otpCompletedValue || "-" }}</p>
+          </div>
+          <div class="sandbox-otp__item">
+            <span>alphanumeric / 4</span>
+            <NmorphOTPInput
+              v-model="otpAlphaValue"
+              mode="alphanumeric"
+              :length="4"
+              height="thin"
+            />
+            <p>value: {{ otpAlphaValue || "-" }}</p>
+          </div>
+        </div>
+      </section>
+
       <section class="sandbox-color-picker">
         <p>NmorphColorPicker</p>
         <div class="sandbox-color-picker__grid">
@@ -146,6 +176,9 @@ const formValue = ref<NmorphFormValueType>({
             type="password"
             placeholder="Enter password"
           />
+        </NmorphFormItem>
+        <NmorphFormItem id="otp" label="OTP code">
+          <NmorphOTPInput v-model="(formValue.otp.value as string)" />
         </NmorphFormItem>
       </NmorphForm>
     </NmorphCard>
@@ -223,6 +256,22 @@ p {
   margin-top: 12px;
   display: grid;
   gap: 10px;
+}
+
+.sandbox-otp {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.sandbox-otp__grid {
+  display: grid;
+  gap: 12px;
+}
+
+.sandbox-otp__item {
+  display: grid;
+  gap: 6px;
 }
 
 .sandbox-input__controls {

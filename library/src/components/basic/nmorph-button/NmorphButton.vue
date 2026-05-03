@@ -14,6 +14,7 @@ import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps extends INmorphCommonInputProps {
   styleType?: keyof typeof NmorphButtonStyle;
+  color?: string;
   loading?: boolean;
   ripple?: boolean;
   type?: keyof typeof NmorphButtonType;
@@ -28,6 +29,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   type: 'button',
   fill: false,
   text: undefined,
+  color: undefined,
   disabled: false,
   loading: false,
   styleType: 'default',
@@ -65,12 +67,19 @@ const iconSizeMap = {
 };
 
 const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIconSize);
+const transparentColorStyles = computed(() =>
+  props.styleType === 'transparent' && props.color ? { '--transparent-button-color': props.color } : {}
+);
 
 defineExpose({ buttonDOMElement });
 
 const commonCSS = css`
   display: inline-block;
   width: auto;
+
+  &.nmorph--fill {
+    width: 100%;
+  }
 
   .nmorph-button__content {
     width: 100%;
@@ -176,6 +185,11 @@ const commonCSS = css`
     .nmorph-button__content {
       background: transparent;
       box-shadow: none;
+      color: var(--transparent-button-color, var(--nmorph-text-color));
+    }
+
+    .nmorph-button__content .nmorph-icon {
+      --color: var(--transparent-button-color, var(--nmorph-text-color));
     }
   }
 
@@ -208,7 +222,7 @@ const StyledComponent = styled.div`
 </script>
 
 <template>
-  <StyledComponent :class="modifiers">
+  <StyledComponent :class="modifiers" :style="transparentColorStyles">
     <button
       ref="buttonDOMElement"
       class="nmorph-button__content"

@@ -10,6 +10,7 @@ export { default as NmorphForm } from './nmorph-form/NmorphForm.vue';
 export * from './nmorph-form/types';
 export { default as NmorphFormItem } from './nmorph-form/components/nmorph-form-item/NmorphFormItem.vue';
 export { default as NmorphNumberInput } from './nmorph-number-input/NmorphNumberInput.vue';
+export { default as NmorphOTPInput } from './nmorph-otp-input/NmorphOTPInput.vue';
 export { default as NmorphSelect } from './nmorph-select/NmorphSelect.vue';
 export * from './nmorph-select/types';
 export { default as NmorphSelectOption } from './nmorph-select/components/nmorph-select-option/NmorphSelectOption.vue';

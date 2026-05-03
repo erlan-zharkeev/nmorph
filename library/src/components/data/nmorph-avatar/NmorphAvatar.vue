@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, type Component } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphImage, NmorphIcon, NmorphIconAvatar } from '@/components';
 import { INmorphImage, AvatarShapeType } from '@/types';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 import { nmorphCombined } from '@/utils';
 
 interface INmorphProps extends INmorphImage {
@@ -11,6 +11,7 @@ interface INmorphProps extends INmorphImage {
   shape?: keyof typeof AvatarShapeType;
   frameBorder?: number;
   imagePadding?: number;
+  fallback?: Component;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -18,6 +19,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   shape: 'circle',
   frameBorder: 2,
   imagePadding: 4,
+  fallback: () => NmorphIconAvatar,
 });
 
 interface INmorphEmit {
@@ -50,6 +52,7 @@ const imagePadding = computed(() => `${props.imagePadding}px`);
 const size = computed(() => ` ${props.size}px`);
 const stubIconSize = computed(() => `${(props.size / 100) * 60}px`);
 const radius = computed(() => (props.shape === 'circle' ? '50%' : '4px'));
+const fallback = computed(() => props.fallback || NmorphIconAvatar);
 
 const commonCSS = css`
   position: relative;
@@ -69,37 +72,52 @@ const commonCSS = css`
   .nmorph-image {
     position: absolute;
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
   .nmorph-image {
-    --width: ${props => props.size};
-    --height: ${props => props.size};
+    --width: ${(props) => props.size};
+    --height: ${(props) => props.size};
 
-    padding: ${props => props.imagePadding};
-    border-radius: ${props => props.radius};
+    padding: ${(props) => props.imagePadding};
+    border-radius: ${(props) => props.radius};
   }
 
   &.nmorph--shadow-combined {
-    ${nmorphCombined(Number((props) => props.frameBorder), true)};
+    ${nmorphCombined(
+      Number((props) => props.frameBorder),
+      true
+    )};
   }
 
   .nmorph-image > img {
-    border-radius: ${props => props.radius};
+    border-radius: ${(props) => props.radius};
   }
-`
+`;
 </script>
 
 <template>
-  <StyledComponent :class="modifiers" :style="{ width: size, height: size }"
-    :props="{ size, imagePadding, radius, frameBorder }">
-    <NmorphImage :fit="props.fit" :src="props.src" :src-set="props.srcSet" :alt="props.alt" :frame-border="0"
-      @load="onImageLoad" @error="onImageError">
+  <StyledComponent
+    :class="modifiers"
+    :style="{ width: size, height: size }"
+    :props="{ size, imagePadding, radius, frameBorder }"
+  >
+    <NmorphImage
+      :fit="props.fit"
+      :src="props.src"
+      :src-set="props.srcSet"
+      :alt="props.alt"
+      :frame-border="0"
+      @load="onImageLoad"
+      @error="onImageError"
+    >
       <template #error>
-        <NmorphIcon :width="stubIconSize">
-          <NmorphIconAvatar />
-        </NmorphIcon>
+        <slot name="error">
+          <NmorphIcon :width="stubIconSize">
+            <component :is="fallback" />
+          </NmorphIcon>
+        </slot>
       </template>
     </NmorphImage>
   </StyledComponent>

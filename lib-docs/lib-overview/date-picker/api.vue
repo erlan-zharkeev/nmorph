@@ -43,6 +43,11 @@ const attributesData: IAttributesTableData[] = [
     default: "false",
   },
   {
+    name: "autocomplete",
+    type: "String",
+    default: "-",
+  },
+  {
     name: "placeholder",
     type: "String",
     default: "Pick a date",

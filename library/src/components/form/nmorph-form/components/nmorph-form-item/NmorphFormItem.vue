@@ -11,6 +11,7 @@ import { NmorphFormItemInputDataType } from '../../types';
 interface INmorphProps {
   id: string;
   name?: string;
+  autocomplete?: string;
   height?: keyof typeof NmorphComponentHeight;
   label?: string;
   showValidationIcon?: boolean;
@@ -19,6 +20,7 @@ interface INmorphProps {
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   name: '',
+  autocomplete: '',
   label: '',
   height: 'default',
   showValidationIcon: true,
@@ -37,6 +39,7 @@ const ableToAddValidationModifiers = computed(() => ableToShowValidation.value &
 provide<NmorphFormItemInputDataType>(nmorphFormItemInputDataKey, {
   id: toRef(props, 'id'),
   name: computed(() => props.name || props.id),
+  autocomplete: computed(() => props.autocomplete || undefined),
 });
 
 const modifiers = computed(() =>
@@ -49,7 +52,7 @@ const modifiers = computed(() =>
 );
 
 const commonCSS = css`
-  margin: var(--indentation-03) var(--indentation-00);
+  margin: var(--indentation-04) var(--indentation-00);
 
   label {
     ${title4()}

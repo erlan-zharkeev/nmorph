@@ -35,6 +35,11 @@ const attributesData: IAttributesTableData[] = [
     default: "4",
   },
   {
+    name: "fallback",
+    type: "Component",
+    default: "NmorphIconAvatar",
+  },
+  {
     name: "src-set",
     type: "String",
     default: "-",

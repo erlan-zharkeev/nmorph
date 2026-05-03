@@ -90,6 +90,11 @@ const attributesDataFormItem: IAttributesTableData[] = [
     default: "id",
   },
   {
+    name: "autocomplete",
+    type: "String",
+    default: "-",
+  },
+  {
     name: "height",
     type: enumToString(NmorphComponentHeight),
     default: "default",

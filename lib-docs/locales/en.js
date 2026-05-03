@@ -116,6 +116,11 @@ export default {
       "title": "Changelog",
       "items": {
         "button-icon-slots-breaking": "Breaking change: NmorphButton slot API was split. `icon` now renders a leading icon next to content, and icon-only buttons must use the new `icon-only` slot.",
+        "otp-input-component": "Added NmorphOTPInput with documentation and sandbox examples. It reuses NmorphTextInput styling and supports paste, keyboard navigation, and completion events.",
+        "form-autocomplete-forwarding": "NmorphFormItem now forwards autocomplete to nested form controls, and the affected component API docs were updated.",
+        "text-input-composition-api": "NmorphTextInput now exposes focus, blur, and select methods and accepts additional native input attributes for composed controls such as OTP input.",
+        "avatar-fallback-prop": "NmorphAvatar now accepts a fallback component prop with a default NmorphIconAvatar fallback, and the avatar API docs were updated.",
+        "button-fill-transparent-color": "NmorphButton fill now reliably stretches to the container width, and transparent buttons support custom text and icon color through the color prop.",
         "badge-value-slot": "NmorphBadge now accepts `undefined` as `value`, hides itself when no value is provided, and supports a custom `value` slot for badge content. Docs and sandbox examples were added.",
         "scroll-height-100": "NmorphScroll now behaves correctly with `height=\"100%\"` when the parent has an explicit height, and the docs now show both fixed and relative height examples.",
         "theme-config-contrast-types": "Theme config typings and docs were synchronized with runtime behavior: `focusText` is now correctly typed, and `placeholderText`, `semiContrastText`, and `contrastText` are documented in the theme example.",
@@ -247,6 +252,7 @@ export default {
         "text": "Button text",
         "loading": "Enable/disable loader",
         "style-type": "Change button style",
+        "color": "Change text and icon color for a transparent button",
         "accent-bg-on-hover": "Enable/disable background color on hover",
         "ripple": "Enable/disable ripple on click",
         "fill": "Fill container with button",
@@ -390,7 +396,8 @@ export default {
         "alt": "Text description of the image",
         "fit": "Defines how the image fills the container",
         "frame-border": "Defines the thickness of the frame",
-        "image-padding": "Inner padding"
+        "image-padding": "Inner padding",
+        "fallback": "Component shown when the image cannot be loaded. Defaults to NmorphIconAvatar"
       },
       "slot": {
         "error": "Slot to display the load error"
@@ -1011,6 +1018,46 @@ export default {
         "replace": "Boolean value that determines whether the navigation should replace the current history entry instead of adding a new one"
       }
     },
+    "otp-input": {
+      "length": {
+        "subtitle": "Defines how many cells are rendered for the code."
+      },
+      "mode": {
+        "subtitle": "Controls which characters are allowed: *numeric*, *text*, or *alphanumeric*."
+      },
+      "height": {
+        "subtitle": "Sets the size of each OTP cell."
+      },
+      "disabled": {
+        "subtitle": "Disables all OTP cells if set to *true*."
+      },
+      "api": {
+        "id": "Sets the id of the first OTP cell. The remaining cells receive suffixed ids automatically",
+        "name": "Sets the hidden input name. Inherits NmorphFormItem name or id when omitted",
+        "autocomplete": "Autocomplete token for OTP cells. Defaults to one-time-code and can also be inherited from NmorphFormItem",
+        "height": "Defines the size of each OTP cell",
+        "disabled": "Boolean value that disables the OTP input",
+        "tabindex": "Base tabindex for OTP cells. Following cells increment it automatically",
+        "model-value": "Current OTP value as a combined string",
+        "length": "Number of OTP cells",
+        "mode": "Allowed input mode: numeric, text, or alphanumeric",
+        "autocapitalize": "Sets the native autocapitalize value for OTP cells",
+        "autofocus": "Automatically focuses the first OTP cell on mount"
+      },
+      "slot": {},
+      "variables": {},
+      "events": {
+        "update:model-value": "Event triggered when the combined OTP value changes",
+        "focus": "Event triggered when any OTP cell receives focus",
+        "blur": "Event triggered when focus leaves the entire OTP input",
+        "complete": "Event triggered when all OTP cells are filled"
+      },
+      "exposes": {
+        "inputDOMRefs": "Array of original DOM elements for OTP cells",
+        "focus": "Focuses the first OTP cell or a specific cell by index",
+        "blur": "Blurs all OTP cells"
+      }
+    },
     "text-input": {
       "height": {
         "subtitle": "Sets the height of the input field."
@@ -1031,12 +1078,16 @@ export default {
       "api": {
         "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
         "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
+        "autocomplete": "Autocomplete value for the native input. Can also be inherited from NmorphFormItem",
+        "tabindex": "Native tabindex value for the input",
         "height": "Defines the height of the input field",
         "disabled": "Boolean value that disables the input field",
         "placeholder": "Text displayed as a hint when the input field is empty",
         "type-password": "Boolean value that turns the input field into a password field",
         "model-value": "Current value of the input field",
-        "clearable": "Boolean value that adds a button to clear the input field value"
+        "clearable": "Boolean value that adds a button to clear the input field value",
+        "indentation": "Custom text indent for the native input. Defaults to automatic spacing based on the prepend-icon slot",
+        "input-attrs": "Additional native attributes forwarded to the internal input element"
       },
       "slot": {
         "prepend-icon": "Slot for adding an icon to the beginning of the input field"
@@ -1051,7 +1102,10 @@ export default {
         "on-enter": "Event triggered when the Enter key is pressed"
       },
       "exposes": {
-        "inputDOMRef": "Original DOM element of the input field"
+        "inputDOMRef": "Original DOM element of the input field",
+        "focus": "Focuses the input field",
+        "blur": "Blurs the input field",
+        "select": "Selects the current input value"
       }
     },
     "color-picker": {
@@ -1213,6 +1267,7 @@ export default {
       "api": {
         "id": "Sets the id for the nested text input. Inherits NmorphFormItem id when used inside a form item",
         "name": "Sets the name for the nested text input. Inherits NmorphFormItem name or id when omitted",
+        "autocomplete": "Autocomplete value passed to the nested text input. Can also be inherited from NmorphFormItem",
         "height": "Height of the autocomplete input field",
         "disabled": "Disables the autocomplete input field",
         "model-value": "Current value of the input field",
@@ -1278,6 +1333,7 @@ export default {
       "api": {
         "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
         "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
+        "autocomplete": "Autocomplete value for the native number input. Can also be inherited from NmorphFormItem",
         "height": "Height of the number input field",
         "disabled": "Boolean value that disables the input field",
         "model-value": "Current value of the number input field",
@@ -1332,6 +1388,7 @@ export default {
       "api": {
         "id": "Sets the id for the native select element. Inherits NmorphFormItem id when used inside a form item",
         "name": "Sets the name for the native select element. Inherits NmorphFormItem name or id when omitted",
+        "autocomplete": "Autocomplete value for the native select element. Can also be inherited from NmorphFormItem",
         "height": "Height of the dropdown list",
         "disabled": "Disables the dropdown list",
         "no-element-placeholder": "Placeholder text displayed when no options are available",
@@ -1406,6 +1463,7 @@ export default {
       "api": {
         "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
         "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
+        "autocomplete": "Autocomplete value for the hidden native date input. Can also be inherited from NmorphFormItem",
         "height": "Height of the date picker field",
         "disabled": "Boolean value that disables the date picker",
         "placeholder": "Text displayed when no date is selected",
@@ -1519,6 +1577,8 @@ export default {
         <div class="container">
           <p>
             <strong>Field metadata:</strong> <code>NmorphFormItem</code> passes its <code>id</code> and optional <code>name</code> to nested form controls automatically. Child components can still override these values via their own props.
+            <br />
+            <strong>Autocomplete:</strong> If a control supports <code>autocomplete</code>, <code>NmorphFormItem</code> can provide it too.
           </p>
 
           <h2>1. Rule Types</h2>
@@ -1618,6 +1678,7 @@ export default {
       "api": {
         "id": "Unique field id used by the label and inherited by nested form controls",
         "name": "Optional field name inherited by nested form controls. Defaults to id",
+        "autocomplete": "Optional autocomplete value inherited by nested form controls that support it",
         "height": "Sets the height of the form item container",
         "label": "Defines the label text associated with the form item, providing context to the user",
         "show-validation-icon": "Boolean value controlling the display of the validation icon for the form item",

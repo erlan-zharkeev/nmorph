@@ -114,6 +114,11 @@ export default {
       "title": "变更日志",
       "items": {
         "button-icon-slots-breaking": "破坏性变更：NmorphButton 的插槽 API 已拆分。`icon` 现在用于在内容左侧渲染前置图标，纯图标按钮必须使用新的 `icon-only` 插槽。",
+        "otp-input-component": "新增 NmorphOTPInput，并补充了文档与 sandbox 示例。该组件复用了 NmorphTextInput 的样式，并支持粘贴、键盘导航和 complete 事件。",
+        "form-autocomplete-forwarding": "NmorphFormItem 现在会把 autocomplete 透传给内部表单控件，相关组件的 API 文档也已同步更新。",
+        "text-input-composition-api": "NmorphTextInput 现在公开 focus、blur、select 方法，并支持向内部 input 透传额外的原生属性，便于组合式控件如 OTP input 使用。",
+        "avatar-fallback-prop": "NmorphAvatar 现支持 fallback 组件 prop，默认回退为 NmorphIconAvatar，avatar API 文档也已同步更新。",
+        "button-fill-transparent-color": "NmorphButton 的 fill 现在会稳定撑满容器宽度，transparent 按钮也支持通过 color prop 自定义文字和图标颜色。",
         "badge-value-slot": "NmorphBadge 现在允许 `value` 为 `undefined`，在没有值时会隐藏自身，并支持通过 `value` 插槽自定义徽标内容。文档和 sandbox 已新增对应示例。",
         "scroll-height-100": "当父级具有明确高度时，NmorphScroll 现在可以正确处理 `height=\"100%\"`，文档中也补充了固定高度与相对高度的示例。",
         "theme-config-contrast-types": "theme config 的类型与文档已和运行时行为保持一致：`focusText` 现在具有正确类型，`placeholderText`、`semiContrastText` 和 `contrastText` 也已加入主题示例。",
@@ -245,6 +250,7 @@ export default {
         "text": "按钮文本",
         "loading": "启用/禁用加载器",
         "style-type": "更改按钮样式",
+        "color": "更改 transparent 按钮的文字和图标颜色",
         "accent-bg-on-hover": "启用/禁用悬停时的背景色",
         "ripple": "启用/禁用点击时的涟漪效果",
         "fill": "用按钮填充容器",
@@ -388,7 +394,8 @@ export default {
         "alt": "Text description of the image",
         "fit": "Defines how the image fills the container",
         "frame-border": "Defines the thickness of the frame",
-        "image-padding": "Inner padding"
+        "image-padding": "Inner padding",
+        "fallback": "图片加载失败时显示的组件。默认使用 NmorphIconAvatar"
       },
       "slot": {
         "error": "Slot to display the load error"
@@ -1009,6 +1016,46 @@ export default {
         "replace": "布尔值，决定导航是否应替换当前历史记录条目而不是添加新条目"
       }
     },
+    "otp-input": {
+      "length": {
+        "subtitle": "定义验证码要渲染多少个输入单元。"
+      },
+      "mode": {
+        "subtitle": "控制允许输入的字符类型：*numeric*、*text* 或 *alphanumeric*。"
+      },
+      "height": {
+        "subtitle": "设置每个 OTP 单元的尺寸。"
+      },
+      "disabled": {
+        "subtitle": "如果设置为 *true*，则禁用所有 OTP 单元。"
+      },
+      "api": {
+        "id": "设置第一个 OTP 单元的 id，其余单元会自动附加后缀 id",
+        "name": "设置隐藏 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
+        "autocomplete": "OTP 单元的 autocomplete 值。默认是 one-time-code，也可以从 NmorphFormItem 继承",
+        "height": "定义每个 OTP 单元的尺寸",
+        "disabled": "布尔值，禁用 OTP 输入组件",
+        "tabindex": "OTP 单元的基础 tabindex，后续单元会自动递增",
+        "model-value": "当前合并后的 OTP 字符串值",
+        "length": "OTP 单元数量",
+        "mode": "允许的输入模式：numeric、text 或 alphanumeric",
+        "autocapitalize": "设置 OTP 单元的原生 autocapitalize 值",
+        "autofocus": "在挂载后自动聚焦第一个 OTP 单元"
+      },
+      "slot": {},
+      "variables": {},
+      "events": {
+        "update:model-value": "当合并后的 OTP 值变化时触发的事件",
+        "focus": "当任意 OTP 单元获得焦点时触发的事件",
+        "blur": "当焦点离开整个 OTP 输入组件时触发的事件",
+        "complete": "当所有 OTP 单元都填写完成时触发的事件"
+      },
+      "exposes": {
+        "inputDOMRefs": "OTP 单元原始 DOM 元素数组",
+        "focus": "聚焦第一个 OTP 单元或按索引聚焦指定单元",
+        "blur": "让所有 OTP 单元失去焦点"
+      }
+    },
     "text-input": {
       "height": {
         "subtitle": "设置输入字段的高度。"
@@ -1029,12 +1076,16 @@ export default {
       "api": {
         "id": "设置原生 input 的 id。在 NmorphFormItem 内部使用时会继承其 id",
         "name": "设置原生 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
+        "autocomplete": "原生 input 的 autocomplete 值。也可以从 NmorphFormItem 继承",
+        "tabindex": "原生 input 的 tabindex 值",
         "height": "定义输入框的高度",
         "disabled": "布尔值，禁用输入框",
         "placeholder": "当输入框为空时显示的提示文本",
         "type-password": "布尔值，将输入框变为密码字段",
         "model-value": "当前输入框的值",
-        "clearable": "布尔值，添加一个按钮来清空输入框的值"
+        "clearable": "布尔值，添加一个按钮来清空输入框的值",
+        "indentation": "原生 input 的自定义 text-indent。默认会根据 prepend-icon 插槽自动计算",
+        "input-attrs": "透传给内部 input 元素的额外原生属性"
       },
       "slot": {
         "prepend-icon": "插槽，用于在输入框前添加图标"
@@ -1049,7 +1100,10 @@ export default {
         "on-enter": "按下回车键时触发的事件"
       },
       "exposes": {
-        "inputDOMRef": "输入框的原始 DOM 元素"
+        "inputDOMRef": "输入框的原始 DOM 元素",
+        "focus": "聚焦输入框",
+        "blur": "让输入框失去焦点",
+        "select": "选中当前输入值"
       }
     },
     "color-picker": {
@@ -1211,6 +1265,7 @@ export default {
       "api": {
         "id": "设置内部文本输入框的 id。在 NmorphFormItem 内部使用时会继承其 id",
         "name": "设置内部文本输入框的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
+        "autocomplete": "传递给内部文本输入框的 autocomplete 值。也可以从 NmorphFormItem 继承",
         "height": "自动完成输入框的高度",
         "disabled": "禁用自动完成输入框",
         "model-value": "输入框的当前值",
@@ -1276,6 +1331,7 @@ export default {
       "api": {
         "id": "设置原生 input 的 id。在 NmorphFormItem 内部使用时会继承其 id",
         "name": "设置原生 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
+        "autocomplete": "原生 number input 的 autocomplete 值。也可以从 NmorphFormItem 继承",
         "height": "数字输入框的高度",
         "disabled": "布尔值，禁用输入框",
         "model-value": "数字输入框的当前值",
@@ -1330,6 +1386,7 @@ export default {
       "api": {
         "id": "设置原生 select 的 id。在 NmorphFormItem 内部使用时会继承其 id",
         "name": "设置原生 select 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
+        "autocomplete": "原生 select 的 autocomplete 值。也可以从 NmorphFormItem 继承",
         "height": "下拉列表的高度",
         "disabled": "禁用下拉列表",
         "no-element-placeholder": "当没有选项时显示的占位文本",
@@ -1404,6 +1461,7 @@ export default {
       "api": {
         "id": "设置原生 input 的 id。在 NmorphFormItem 内部使用时会继承其 id",
         "name": "设置原生 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
+        "autocomplete": "隐藏原生 date input 的 autocomplete 值。也可以从 NmorphFormItem 继承",
         "height": "日期选择字段的高度",
         "disabled": "布尔值，禁用日期选择",
         "placeholder": "没有选择日期时显示的文本",
@@ -1517,6 +1575,8 @@ export default {
         <div class="container">
           <p>
             <strong>字段元数据：</strong><code>NmorphFormItem</code> 会自动将自身的 <code>id</code> 和可选的 <code>name</code> 传递给嵌套的表单控件。子组件仍然可以通过自己的 prop 覆盖这些值。
+            <br />
+            <strong>Autocomplete：</strong> 如果控件支持 <code>autocomplete</code>，<code>NmorphFormItem</code> 也可以把它向下传递。
           </p>
 
           <h2>1. 规则类型</h2>
@@ -1616,6 +1676,7 @@ export default {
       "api": {
         "id": "字段的唯一 id，供 label 使用并由嵌套表单控件继承",
         "name": "可选的字段 name，会被嵌套表单控件继承。默认等于 id",
+        "autocomplete": "可选的 autocomplete 值，会被支持它的嵌套表单控件继承",
         "height": "设置表单项容器的高度",
         "label": "定义与表单项关联的标签文本，为用户提供上下文",
         "show-validation-icon": "布尔值，控制显示该表单项的验证图标",

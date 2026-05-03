@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   actionBtnPositionRight: false,
 });
 
-const { id, name, tabindex } = useFormItemInput(props);
+const { id, name, autocomplete, tabindex } = useFormItemInput(props);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -234,6 +234,7 @@ const StyledComponent = styled.div`
           :id="id"
           ref="inputDOMRef"
           :name="name"
+          :autocomplete="autocomplete"
           :tabindex="tabindex"
           class="nmorph-native-input"
           :value="initialValue"

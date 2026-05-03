@@ -30,6 +30,11 @@ const attributesData = [
     default: "default",
   },
   {
+    name: "color",
+    type: "String",
+    default: "-",
+  },
+  {
     name: "accent-bg-on-hover",
     type: "Boolean",
     default: "false",

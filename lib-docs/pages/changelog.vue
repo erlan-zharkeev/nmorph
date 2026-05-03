@@ -9,6 +9,16 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v2.0.1</h3>
+            <ul>
+              <li>{{ $t("changelog-page.changelog.items.otp-input-component") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.form-autocomplete-forwarding") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.text-input-composition-api") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.avatar-fallback-prop") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.button-fill-transparent-color") }}</li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.0.0</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.button-icon-slots-breaking") }}</li>

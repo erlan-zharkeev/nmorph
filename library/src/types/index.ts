@@ -39,6 +39,7 @@ export enum NmorphComponentDirection {
 export interface INmorphCommonInputProps {
   id?: string;
   name?: string;
+  autocomplete?: string;
   height?: keyof typeof NmorphComponentHeight;
   disabled?: boolean;
   tabindex?: number;

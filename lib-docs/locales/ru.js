@@ -116,6 +116,11 @@ export default {
       "title": "Changelog",
       "items": {
         "button-icon-slots-breaking": "Ломающее изменение: слот API у NmorphButton разделён. `icon` теперь рендерит ведущую иконку рядом с контентом, а для кнопок только с иконкой нужно использовать новый слот `icon-only`.",
+        "otp-input-component": "Добавлен NmorphOTPInput с документацией и примерами в sandbox. Компонент использует стили NmorphTextInput и поддерживает paste, навигацию с клавиатуры и событие complete.",
+        "form-autocomplete-forwarding": "NmorphFormItem теперь прокидывает autocomplete во вложенные form-контролы, а API-документация затронутых компонентов обновлена.",
+        "text-input-composition-api": "NmorphTextInput теперь exposes-ит методы focus, blur и select, а также принимает дополнительные нативные input-атрибуты для составных контролов вроде OTP input.",
+        "avatar-fallback-prop": "NmorphAvatar теперь принимает prop fallback с дефолтным NmorphIconAvatar, и avatar API-документация обновлена.",
+        "button-fill-transparent-color": "NmorphButton с fill теперь стабильно растягивается на всю ширину контейнера, а transparent-кнопки поддерживают кастомный цвет текста и иконок через prop color.",
         "badge-value-slot": "NmorphBadge теперь принимает `undefined` в `value`, скрывается при отсутствии значения и поддерживает кастомный слот `value` для содержимого бейджа. Для этого добавлены примеры в docs и sandbox.",
         "scroll-height-100": "NmorphScroll теперь корректно работает с `height=\"100%\"`, если у родителя задана явная высота, а в документации появились примеры и для фиксированной, и для относительной высоты.",
         "theme-config-contrast-types": "Типы и документация theme config синхронизированы с runtime-поведением: `focusText` теперь типизирован корректно, а `placeholderText`, `semiContrastText` и `contrastText` добавлены в пример темы.",
@@ -247,6 +252,7 @@ export default {
         text: "Текст кнопки",
         loading: "Включить/отключить загрузчик",
         "style-type": "Изменить стиль кнопки",
+        color: "Изменить цвет текста и иконок для transparent-кнопки",
         "accent-bg-on-hover": "Включить/отключить цвет фона при наведении",
         ripple: "Включить/отключить рябь при нажатии",
         fill: "Заполнение контейнера кнопкой",
@@ -391,6 +397,7 @@ export default {
         fit: "Определяет как изображение заполняет контейнер",
         "frame-border": "Определяет толшину рамки",
         "image-padding": "Внутренний отступ",
+        fallback: "Компонент, который показывается, если изображение не загрузилось. По умолчанию используется NmorphIconAvatar",
       },
       slot: {
         error: "Слот для отображения ошибки загрузки",
@@ -1011,6 +1018,46 @@ export default {
         replace: "Булево значение, определяющее, должна ли навигация заменять текущую запись в истории вместо добавления новой",
       },
     },
+    "otp-input": {
+      length: {
+        subtitle: "Определяет, сколько ячеек будет отрисовано для кода.",
+      },
+      mode: {
+        subtitle: "Управляет допустимыми символами: *numeric*, *text* или *alphanumeric*.",
+      },
+      height: {
+        subtitle: "Устанавливает размер каждой OTP-ячейки.",
+      },
+      disabled: {
+        subtitle: "Отключает все OTP-ячейки, если установлено в *true*.",
+      },
+      api: {
+        id: "Устанавливает id первой OTP-ячейки. Остальные ячейки автоматически получают id с суффиксами",
+        name: "Устанавливает name скрытого input. Если prop не передан, берется name или id из NmorphFormItem",
+        autocomplete: "Autocomplete-значение для OTP-ячеек. По умолчанию используется one-time-code и также может наследоваться из NmorphFormItem",
+        height: "Определяет размер каждой OTP-ячейки",
+        disabled: "Булево значение, отключающее OTP input",
+        tabindex: "Базовый tabindex для OTP-ячеек. Следующие ячейки получают увеличенное значение автоматически",
+        "model-value": "Текущее значение OTP как объединенная строка",
+        length: "Количество OTP-ячеек",
+        mode: "Режим допустимого ввода: numeric, text или alphanumeric",
+        autocapitalize: "Устанавливает нативное значение autocapitalize для OTP-ячеек",
+        autofocus: "Автоматически фокусирует первую OTP-ячейку при монтировании",
+      },
+      slot: {},
+      variables: {},
+      events: {
+        "update:model-value": "Событие всплывает при изменении объединенного OTP-значения",
+        focus: "Событие всплывает, когда любая OTP-ячейка получает фокус",
+        blur: "Событие всплывает, когда фокус покидает весь OTP input",
+        complete: "Событие всплывает, когда заполнены все OTP-ячейки",
+      },
+      exposes: {
+        inputDOMRefs: "Массив оригинальных DOM-элементов OTP-ячеек",
+        focus: "Фокусирует первую OTP-ячейку или конкретную ячейку по индексу",
+        blur: "Снимает фокус со всех OTP-ячеек",
+      },
+    },
     "text-input": {
       height: {
         subtitle: "Устанавливает высоту поля ввода.",
@@ -1031,12 +1078,16 @@ export default {
       api: {
         id: "Устанавливает id нативного input. Внутри NmorphFormItem наследует его id",
         name: "Устанавливает name нативного input. Если prop не передан, берется name или id из NmorphFormItem",
+        autocomplete: "Autocomplete-значение для нативного input. Также может наследоваться из NmorphFormItem",
+        tabindex: "Нативное tabindex-значение для input",
         height: "Определяет высоту текстового поля",
         disabled: "Булево значение, отключающее текстовое поле",
         placeholder: "Текст, отображаемый как подсказка, когда поле ввода пусто",
         "type-password": "Булево значение, превращающее поле ввода в поле для пароля",
         "model-value": "Текущее значение поля ввода",
         clearable: "Булево значение, добавляющее кнопку для очистки значения поля ввода",
+        indentation: "Пользовательский text-indent для нативного input. По умолчанию отступ выбирается автоматически на основе prepend-icon slot",
+        "input-attrs": "Дополнительные нативные атрибуты, которые прокидываются во внутренний input",
       },
       slot: {
         "prepend-icon": "Слот для добавления иконки в начало поля ввода",
@@ -1052,6 +1103,9 @@ export default {
       },
       exposes: {
         inputDOMRef: "Оригинальный элемент DOM поля ввода",
+        focus: "Фокусирует поле ввода",
+        blur: "Снимает фокус с поля ввода",
+        select: "Выделяет текущее значение поля ввода",
       },
     },
     "color-picker": {
@@ -1213,6 +1267,7 @@ export default {
       api: {
         id: "Устанавливает id вложенного текстового input. Внутри NmorphFormItem наследует его id",
         name: "Устанавливает name вложенного текстового input. Если prop не передан, берется name или id из NmorphFormItem",
+        autocomplete: "Autocomplete-значение, передаваемое во вложенный text input. Также может наследоваться из NmorphFormItem",
         height: "Высота поля ввода автодополнения",
         disabled: "Отключает поле ввода автодополнения",
         "model-value": "Текущее значение поля ввода",
@@ -1278,6 +1333,7 @@ export default {
       api: {
         id: "Устанавливает id нативного input. Внутри NmorphFormItem наследует его id",
         name: "Устанавливает name нативного input. Если prop не передан, берется name или id из NmorphFormItem",
+        autocomplete: "Autocomplete-значение для нативного number input. Также может наследоваться из NmorphFormItem",
         height: "Высота числового поля ввода",
         disabled: "Булево значение, отключающее поле ввода",
         "model-value": "Текущее значение числового поля ввода",
@@ -1332,6 +1388,7 @@ export default {
       api: {
         id: "Устанавливает id нативного select. Внутри NmorphFormItem наследует его id",
         name: "Устанавливает name нативного select. Если prop не передан, берется name или id из NmorphFormItem",
+        autocomplete: "Autocomplete-значение для нативного select. Также может наследоваться из NmorphFormItem",
         height: "Высота выпадающего списка",
         disabled: "Отключает выпадающий список",
         "no-element-placeholder": "Текст-заполнитель, отображаемый, когда опции нет",
@@ -1406,6 +1463,7 @@ export default {
       api: {
         id: "Устанавливает id нативного input. Внутри NmorphFormItem наследует его id",
         name: "Устанавливает name нативного input. Если prop не передан, берется name или id из NmorphFormItem",
+        autocomplete: "Autocomplete-значение для скрытого нативного date input. Также может наследоваться из NmorphFormItem",
         height: "Высота поля выбора даты",
         disabled: "Булево значение, отключающее выбор даты",
         placeholder: "Текст, отображаемый, когда дата не выбрана",
@@ -1519,6 +1577,8 @@ export default {
         <div class="container">
           <p>
             <strong>Метаданные поля:</strong> <code>NmorphFormItem</code> автоматически передает свои <code>id</code> и опциональный <code>name</code> вложенным form-control. При необходимости дочерний компонент может переопределить эти значения своими prop.
+            <br />
+            <strong>Autocomplete:</strong> Если контрол поддерживает <code>autocomplete</code>, <code>NmorphFormItem</code> тоже может передать это значение вниз.
           </p>
 
           <h2>1. Типы правил</h2>
@@ -1618,6 +1678,7 @@ export default {
       api: {
         id: "Уникальный id поля, который используется label и наследуется вложенными form-control",
         name: "Опциональный name поля, который наследуется вложенными form-control. По умолчанию равен id",
+        autocomplete: "Опциональное autocomplete-значение, которое наследуется вложенными form-control, если они его поддерживают",
         height: "Устанавливает высоту контейнера элемента формы",
         label: "Определяет текст метки, связанный с элементом формы, предоставляя контекст пользователю",
         "show-validation-icon": "Булево значение, управляющее отображением иконки валидации для данного элемента формы",

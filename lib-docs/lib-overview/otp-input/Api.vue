@@ -31,7 +31,7 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "autocomplete",
     type: "String",
-    default: "-",
+    default: '"one-time-code"',
   },
   {
     name: "tabindex",
@@ -39,69 +39,54 @@ const attributesData: IAttributesTableData[] = [
     default: "0",
   },
   {
-    name: "placeholder",
-    type: "String",
-    default: "-",
-  },
-  {
-    name: "label",
-    type: "String",
-    default: "-",
-  },
-  {
-    name: "type-password",
-    type: "Boolean",
-    default: "false",
-  },
-  {
     name: "model-value",
     type: "String",
-    default: "-",
+    default: '""',
   },
   {
-    name: "clearable",
+    name: "length",
+    type: "Number",
+    default: "6",
+  },
+  {
+    name: "mode",
+    type: '"numeric" | "text" | "alphanumeric"',
+    default: '"numeric"',
+  },
+  {
+    name: "autocapitalize",
+    type: "String",
+    default: '"none"',
+  },
+  {
+    name: "autofocus",
     type: "Boolean",
     default: "false",
-  },
-  {
-    name: "indentation",
-    type: "String",
-    default: "auto",
-  },
-  {
-    name: "input-attrs",
-    type: "Object",
-    default: "{}",
   },
 ];
 
-const slotData: ISlotsTableData[] = [{ name: "prepend-icon" }];
-const variables: IVariablesTableData[] = [{ name: "prepend-icon-indent" }];
+const slotData: ISlotsTableData[] = [];
+const variables: IVariablesTableData[] = [];
 const events = [
   { name: "update:model-value", type: "String" },
   { name: "focus", type: "void" },
   { name: "blur", type: "void" },
-  { name: "on-enter", type: "void" },
+  { name: "complete", type: "String" },
 ];
-
 const exposes = [
   {
-    name: "inputDOMRef",
-    type: `${docsLink(
+    name: "inputDOMRefs",
+    type: `Array<${docsLink(
       "HTMLElement",
       "https://developer.mozilla.org/ru/docs/Web/API/HTMLElement"
-    )} | null`,
+    )} | null>`,
   },
   {
     name: "focus",
-    type: "() => void",
+    type: "(index?: number) => void",
   },
   {
     name: "blur",
-    type: "() => void",
-  },
-  {
-    name: "select",
     type: "() => void",
   },
 ];
@@ -109,7 +94,14 @@ const exposes = [
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphTextInput" name="text-input" :attributes="attributesData" :slots="slotData"
-      :variables="variables" :events="events" :exposes="exposes" />
+    <api-table
+      title="NmorphOTPInput"
+      name="otp-input"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+      :events="events"
+      :exposes="exposes"
+    />
   </div>
 </template>
