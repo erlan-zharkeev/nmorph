@@ -4,7 +4,7 @@
   "type": "module",
   "version": "0.0.8",
   "scripts": {
-    "prepare:library": "sh -c 'test -d ../library/node_modules || npm --prefix ../library install --no-fund --no-audit; npm --prefix ../library run build'",
+    "prepare:library": "sh -c 'test -x ../library/node_modules/.bin/vue-tsc || npm --prefix ../library install --include=dev --no-fund --no-audit; npm --prefix ../library run build'",
     "build": "npm run prepare:library && nuxt build",
     "dev": "npm run prepare:library && nuxt dev --no-qr",
     "clean": "rm -rf .nuxt node_modules && npm install",
