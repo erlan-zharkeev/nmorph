@@ -77,6 +77,7 @@ export { default as NmorphIconEdit } from '@/assets/icons/edit.svg';
 export { default as NmorphIconEnlarge } from '@/assets/icons/enlarge.svg';
 export { default as NmorphIconExpand } from '@/assets/icons/expand.svg';
 export { default as NmorphIconError } from '@/assets/icons/error.svg';
+export { default as NmorphIconExit } from '@/assets/icons/exit.svg';
 export { default as NmorphIconEye } from '@/assets/icons/eye.svg';
 export { default as NmorphIconEyeBlocked } from '@/assets/icons/eye-blocked.svg';
 export { default as NmorphIconFailed } from '@/assets/icons/failed.svg';
@@ -244,6 +245,7 @@ export { default as NmorphIconUploadFilled } from '@/assets/icons/upload-filled.
 export { default as NmorphIconUpload } from '@/assets/icons/upload.svg';
 export { default as NmorphIconUserFilled } from '@/assets/icons/user-filled.svg';
 export { default as NmorphIconUser } from '@/assets/icons/user.svg';
+export { default as NmorphIconUsers } from '@/assets/icons/users.svg';
 export { default as NmorphIconVan } from '@/assets/icons/van.svg';
 export { default as NmorphIconVideoCamera } from '@/assets/icons/view.svg';
 export { default as NmorphIconVideoPause } from '@/assets/icons/video-pause.svg';

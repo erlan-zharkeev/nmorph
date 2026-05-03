@@ -115,6 +115,12 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "color-picker": "Добавлен компонент NmorphColorPicker, страница документации для него и примеры высоты, отображения значения, disabled-состояния и дефолтного accent-цвета темы.",
+        "badge-tag-mode": "Добавлен режим `is-tag` для NmorphBadge: теперь бейдж может рендериться как standalone-элемент без overlay-позиционирования и без default slot.",
+        "badge-undefined-hidden": "NmorphBadge теперь не рендерится, если `value` равен `undefined`; режим точки (`is-dot`) по-прежнему работает без значения.",
+        "exit-users-icons": "В набор иконок и на страницу документации иконок добавлены NmorphIconExit и NmorphIconUsers.",
+        "form-boolean-compare": "Правила валидации формы теперь принимают boolean в `compareValue`; API-документация формы обновлена под это поведение.",
+        "image-src-optional": "В публичных типах `NmorphImage` prop `src` стал опциональным, и документация image API приведена в соответствие с runtime-поведением.",
         "button-icon-slot-docs": "Уточнено поведение слота icon у NmorphButton: сейчас он фактически работает как icon-only, а более чистый API для иконки вместе с контентом запланирован на будущую major-версию.",
         "select-button-keyboard-focus": "NmorphSelectButtonItem теперь доступен с клавиатуры: Tab фокусирует каждый элемент, Space/Enter выбирают его, при фокусе отображается outline.",
         "tabindex-prop": "Добавлен prop tabindex в INmorphCommonInputProps — все элементы формы (NmorphTextInput, NmorphSwitch, NmorphSlider, NmorphNumberInput, NmorphSelect, NmorphSelectButtonItem) теперь поддерживают tabindex.",
@@ -385,7 +391,7 @@ export default {
     badge: {
       value: {
         subtitle:
-          "Отображаемое значение на бейдже, может быть *stirng* или *number*.",
+          "Отображаемое значение на бейдже, может быть *string* или *number*. Если не передано и `is-dot` выключен, бейдж не рендерится.",
       },
       max: {
         subtitle:
@@ -393,7 +399,11 @@ export default {
       },
       "is-dot": {
         subtitle:
-          "Отображает бейдж в виде маленькой точки, если установлено в *true*.",
+          "Отображает бейдж в виде маленькой точки, если установлено в *true*. Работает даже без `value`.",
+      },
+      "is-tag": {
+        subtitle:
+          "Отображает бейдж как обычный standalone-элемент без default slot. В этом режиме offset-ы игнорируются.",
       },
       hidden: {
         subtitle: "Управляет отображением бейджа.",
@@ -406,16 +416,17 @@ export default {
           "Горизонтальное/вертикальное смещение бейджа относительно родительского элемента.",
       },
       api: {
-        value: "Отображаемое значение в бейдже",
+        value: "Отображаемое значение в бейдже. Если `undefined` и `is-dot` выключен, бейдж скрывается",
         max: "Максимальное допустимое отображаемое значение",
         "is-dot": "Отображает бейдж в виде точки",
+        "is-tag": "Переключает бейдж в standalone tag-режим без absolute-позиционирования и без default slot",
         hidden: "Скрывает бейдж",
         color: "Устанавливает цвет фона бейджа",
-        "offset-y": "Вертикальное смещение бейджа",
-        "offset-x": "Горизонтальное смещение бейджа",
+        "offset-y": "Вертикальное смещение бейджа. Игнорируется при is-tag",
+        "offset-x": "Горизонтальное смещение бейджа. Игнорируется при is-tag",
       },
       slot: {
-        default: "Кастомное содержимое для бейджа",
+        default: "Кастомное содержимое для бейджа в стандартном overlay-режиме",
       },
       variables: {
         "dot-size": "Ширина и высота точки",
@@ -1024,6 +1035,38 @@ export default {
       },
       exposes: {
         inputDOMRef: "Оригинальный элемент DOM поля ввода",
+      },
+    },
+    "color-picker": {
+      height: {
+        subtitle: "Устанавливает высоту color picker.",
+      },
+      disabled: {
+        subtitle: "Отключает color picker, если установлено в *true*.",
+      },
+      "model-value": {
+        subtitle: "Управляет выбранным цветом. Принимает hex-значения вроде *#4a90e2*.",
+      },
+      "show-value": {
+        subtitle: "Показывает выбранное hex-значение рядом со swatch. Если `modelValue` не передан, используется текущий accent-цвет темы.",
+      },
+      api: {
+        id: "Устанавливает id нативного input. Внутри NmorphFormItem наследует его id",
+        name: "Устанавливает name нативного input. Если prop не передан, берется name или id из NmorphFormItem",
+        height: "Определяет высоту color picker",
+        disabled: "Булево значение, отключающее color picker",
+        "model-value": "Текущее значение цвета в hex-формате",
+        "show-value": "Булево значение, показывающее текущее hex-значение рядом с цветом",
+      },
+      slot: {},
+      variables: {},
+      events: {
+        "update:model-value": "Событие всплывает при изменении значения цвета",
+        focus: "Событие всплывает, когда color picker получает фокус",
+        blur: "Событие всплывает, когда color picker теряет фокус",
+      },
+      exposes: {
+        inputDOMRef: "Оригинальный DOM-элемент input с выбором цвета",
       },
     },
     switch: {

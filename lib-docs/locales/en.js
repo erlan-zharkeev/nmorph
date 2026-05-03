@@ -115,6 +115,12 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "color-picker": "Added NmorphColorPicker component, a documentation page for it, and examples for height, value display, disabled state, and theme-accent default color.",
+        "badge-tag-mode": "Added is-tag mode to NmorphBadge so it can render as a standalone badge without overlay positioning or a default slot.",
+        "badge-undefined-hidden": "NmorphBadge now hides itself when value is undefined; dot mode still renders without a value.",
+        "exit-users-icons": "Added NmorphIconExit and NmorphIconUsers to the icon set and the icon documentation page.",
+        "form-boolean-compare": "Form validation rules now accept boolean compareValue values, and the form API docs were updated accordingly.",
+        "image-src-optional": "Made NmorphImage src optional in the public typings and aligned the image API docs with the runtime behavior.",
         "button-icon-slot-docs": "Clarified NmorphButton icon slot behavior: it currently works as icon-only, and a cleaner icon-plus-content API is planned for a future major release.",
         "select-button-keyboard-focus": "NmorphSelectButtonItem is now keyboard-accessible: Tab focuses each item, Space/Enter selects it, and a focus-visible outline is shown.",
         "tabindex-prop": "Added tabindex prop to INmorphCommonInputProps — all form controls (NmorphTextInput, NmorphSwitch, NmorphSlider, NmorphNumberInput, NmorphSelect, NmorphSelectButtonItem) now support tabindex.",
@@ -385,7 +391,7 @@ export default {
     "badge": {
       "value": {
         "subtitle":
-            "The displayed value on the badge, can be *string* or *number*."
+            "The displayed value on the badge, can be *string* or *number*. If omitted and `is-dot` is false, the badge is not rendered."
       },
       "max": {
         "subtitle":
@@ -393,7 +399,11 @@ export default {
       },
       "is-dot": {
         "subtitle":
-            "Displays the badge as a small dot if set to *true*."
+            "Displays the badge as a small dot if set to *true*. Works even when `value` is omitted."
+      },
+      "is-tag": {
+        "subtitle":
+            "Displays the badge as a standalone element without the default slot. Offsets are ignored in this mode."
       },
       "hidden": {
         "subtitle": "Controls the visibility of the badge."
@@ -406,16 +416,17 @@ export default {
             "Horizontal/vertical offset of the badge relative to its parent."
       },
       "api": {
-        "value": "The displayed value on the badge",
+        "value": "The displayed value on the badge. If undefined and is-dot is false, the badge is hidden",
         "max": "Maximum value to display",
         "is-dot": "Displays the badge as a dot",
+        "is-tag": "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
         "hidden": "Hides the badge",
         "color": "Sets the background color of the badge",
-        "offset-y": "Vertical offset of the badge",
-        "offset-x": "Horizontal offset of the badge"
+        "offset-y": "Vertical offset of the badge. Ignored when is-tag is true",
+        "offset-x": "Horizontal offset of the badge. Ignored when is-tag is true"
       },
       "slot": {
-        "default": "Custom content for the badge"
+        "default": "Custom content for the badge in the default overlay mode"
       },
       "variables": {
         "dot-size": "Width and height of the dot"
@@ -1024,6 +1035,38 @@ export default {
       },
       "exposes": {
         "inputDOMRef": "Original DOM element of the input field"
+      }
+    },
+    "color-picker": {
+      "height": {
+        "subtitle": "Sets the height of the color picker."
+      },
+      "disabled": {
+        "subtitle": "Disables the color picker if set to *true*."
+      },
+      "model-value": {
+        "subtitle": "Controls the selected color. Accepts hex values like *#4a90e2*."
+      },
+      "show-value": {
+        "subtitle": "Displays the selected hex value next to the swatch. If `modelValue` is omitted, the current theme accent color is used."
+      },
+      "api": {
+        "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
+        "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
+        "height": "Defines the height of the color picker",
+        "disabled": "Boolean value that disables the color picker",
+        "model-value": "Current color value in hex format",
+        "show-value": "Boolean value that displays the current hex value near the swatch"
+      },
+      "slot": {},
+      "variables": {},
+      "events": {
+        "update:model-value": "Event triggered when the color value changes",
+        "focus": "Event triggered when the color picker gains focus",
+        "blur": "Event triggered when the color picker loses focus"
+      },
+      "exposes": {
+        "inputDOMRef": "Original DOM element of the color input"
       }
     },
     "switch": {

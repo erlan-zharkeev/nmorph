@@ -9,9 +9,8 @@ import ApiTable from "~/components/api-table/ApiTable.vue";
 const attributesData: IAttributesTableData[] = [
   {
     name: "src",
-    type: "String",
-    default: "-",
-    required: true,
+    type: "String | undefined",
+    default: "undefined",
   },
   {
     name: "src-set",

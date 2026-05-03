@@ -4,6 +4,7 @@ import { useI18n } from "vue-i18n";
 import {
   NmorphButton,
   NmorphCard,
+  NmorphColorPicker,
   NmorphIcon,
   NmorphIconCheck,
   NmorphTextInput,
@@ -21,6 +22,8 @@ onMounted(() => {
 
 const { t, locale } = useI18n();
 const textValue = ref("");
+const thinColorValue = ref("#f97316");
+const thickColorValue = ref("#10b981");
 const selectButtonValue = ref("on");
 const selectButtonOptions = [
   { value: "off", label: "Off" },
@@ -90,6 +93,24 @@ const formValue = ref<NmorphFormValueType>({
           <p>value: {{ textValue }}</p>
         </div>
         <NmorphTextInput v-model="textValue" clearable placeholder="Type something" />
+      </section>
+
+      <section class="sandbox-color-picker">
+        <p>NmorphColorPicker</p>
+        <div class="sandbox-color-picker__grid">
+          <div class="sandbox-color-picker__item">
+            <span>thin</span>
+            <NmorphColorPicker v-model="thinColorValue" height="thin" />
+          </div>
+          <div class="sandbox-color-picker__item">
+            <span>default</span>
+            <NmorphColorPicker show-value />
+          </div>
+          <div class="sandbox-color-picker__item">
+            <span>thick</span>
+            <NmorphColorPicker v-model="thickColorValue" height="thick" show-value />
+          </div>
+        </div>
       </section>
 
       <NmorphForm :value="formValue">
@@ -172,5 +193,21 @@ p {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.sandbox-color-picker {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.sandbox-color-picker__grid {
+  display: grid;
+  gap: 10px;
+}
+
+.sandbox-color-picker__item {
+  display: grid;
+  gap: 6px;
 }
 </style>

@@ -26,6 +26,7 @@ import Dropdown from "~/lib-overview/dropdown";
 import Backtop from "~/lib-overview/backtop";
 import Breadcrumb from "~/lib-overview/breadcrumb";
 import TextInput from "~/lib-overview/text-input";
+import ColorPicker from "~/lib-overview/color-picker";
 import NumberInput from "~/lib-overview/number-input";
 import SwitchInput from "~/lib-overview/switch";
 import Checkbox from "~/lib-overview/checkbox";
@@ -74,6 +75,7 @@ const componentsMap: Record<string, unknown[]> = {
   backtop: Backtop,
   breadcrumb: Breadcrumb,
   "text-input": TextInput,
+  "color-picker": ColorPicker,
   "number-input": NumberInput,
   switch: SwitchInput,
   checkbox: Checkbox,

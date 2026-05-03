@@ -53,6 +53,7 @@ const list: { name: string; components: string[] }[] = [
     name: "form",
     components: [
       "NmorphTextInput",
+      "NmorphColorPicker",
       "NmorphSwitch",
       "NmorphCheckbox",
       "NmorphCheckboxGroup",

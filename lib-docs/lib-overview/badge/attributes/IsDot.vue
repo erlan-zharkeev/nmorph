@@ -31,7 +31,7 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="badge-is-dot-overview">
           <ClientOnly>
-            <NmorphBadge is-dot value="">
+            <NmorphBadge is-dot>
               <NmorphButton text="button" />
             </NmorphBadge>
           </ClientOnly>

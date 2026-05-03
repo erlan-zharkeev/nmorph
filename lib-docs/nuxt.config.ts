@@ -49,6 +49,13 @@ export default defineNuxtConfig({
   css: [],
   vite: {
     resolve: {
+      dedupe: [
+        "vue",
+        "vue-i18n",
+        "@intlify/shared",
+        "@intlify/core-base",
+        "@intlify/message-compiler",
+      ],
       preserveSymlinks: true,
     },
     css: {

@@ -1,6 +1,7 @@
 export { default as NmorphCheckbox } from './nmorph-checkbox/NmorphCheckbox.vue';
 export { default as NmorphCheckboxGroup } from './nmorph-checkbox-group/NmorphCheckboxGroup.vue';
 export { default as NmorphAutocomplete } from './nmorph-autocomplete/NmorphAutocomplete.vue';
+export { default as NmorphColorPicker } from './nmorph-color-picker/NmorphColorPicker.vue';
 export * from './nmorph-autocomplete/types';
 export { default as NmorphDatePicker } from './nmorph-date-picker/NmorphDatePicker.vue';
 export { default as NmorphFileUpload } from './nmorph-file-upload/NmorphFileUpload.vue';

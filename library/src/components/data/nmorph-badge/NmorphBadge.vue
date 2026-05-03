@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphDomElementType } from '@/types';
-import { onMounted } from 'vue';
 import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
-  value: number | string;
+  value?: number | string;
   max?: number;
   isDot?: boolean;
+  isTag?: boolean;
   hidden?: boolean;
   color?: string;
   offsetY?: number;
@@ -17,9 +17,9 @@ interface INmorphProps {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  value: '',
   max: 99,
   isDot: false,
+  isTag: false,
   hidden: false,
   color: 'var(--nmorph-accent-color)',
   offsetX: 0,
@@ -29,13 +29,13 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-badge': [`${props.hidden && 'hidden'}`],
+    'nmorph-badge': [`${props.hidden && 'hidden'}`, `${props.isTag && 'tag'}`],
   })
 );
 
 const containerModifiers = computed(() =>
   useModifiers({
-    'nmorph-badge__container': [`${props.hidden && 'hidden'}`],
+    'nmorph-badge__container': [`${props.hidden && 'hidden'}`, `${props.isTag && 'tag'}`],
   })
 );
 
@@ -43,6 +43,8 @@ const displayValue = computed(() => {
   const isHaveMaxValue = typeof Number(props.value) === 'number' && Number(props.value) > props.max;
   return isHaveMaxValue ? `${props.max}+` : props.value;
 });
+
+const shouldShowBadge = computed(() => props.isDot || props.value !== undefined);
 
 const appliedOffset = computed(() => {
   const x = `${(badgeWidth?.value / 2 + props.offsetX) * -1}px`;
@@ -53,13 +55,21 @@ const appliedOffset = computed(() => {
   };
 });
 
+const containerStyle = computed(() => {
+  if (props.isTag) return undefined;
+  return {
+    right: appliedOffset.value.x,
+    top: appliedOffset.value.y,
+  };
+});
+
 const badge = ref<NmorphDomElementType>(null);
 
 const badgeWidth = ref(0);
 const badgeHeight = ref(0);
 
 onMounted(() => {
-  if (!badge.value) return;
+  if (!badge.value || props.isTag) return;
   badgeWidth.value = badge.value.clientWidth;
   badgeHeight.value = badge.value.clientHeight;
 });
@@ -73,8 +83,20 @@ const commonCSS = css`
 
   .nmorph-badge__container {
     position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border-radius: var(--default-border-radius);
     opacity: 1;
+  }
+
+  &.nmorph-badge--tag {
+    position: static;
+    display: inline-flex;
+  }
+
+  .nmorph-badge__container--tag {
+    position: static;
   }
 
   .nmorph-badge__content {
@@ -102,14 +124,17 @@ const StyledComponent = styled.div`
 </script>
 
 <template>
-  <StyledComponent v-if="!props.disabled" :class="modifiers" :props="{ color: props.color }">
-    <slot />
-    <div ref="badge" :class="containerModifiers" :style="{ right: appliedOffset.x, top: appliedOffset.y }">
+  <StyledComponent v-if="!props.disabled && (!props.isTag || shouldShowBadge)" :class="modifiers" :props="{ color: props.color }">
+    <slot v-if="!props.isTag" />
+    <div v-if="shouldShowBadge" ref="badge" :class="containerModifiers" :style="containerStyle">
       <div v-if="props.isDot" class="nmorph-badge__dot" />
       <div v-else class="nmorph-badge__content">
-        <slot name="value"> {{ displayValue }} </slot>
+        <template v-if="props.isTag">
+          {{ displayValue }}
+        </template>
+        <slot v-else name="value"> {{ displayValue }} </slot>
       </div>
     </div>
   </StyledComponent>
-  <slot v-else />
+  <slot v-else-if="!props.isTag" />
 </template>

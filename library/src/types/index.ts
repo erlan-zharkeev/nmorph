@@ -180,7 +180,7 @@ export interface INmorphDimensions {
 }
 
 export interface INmorphImage {
-  src: string;
+  src?: string;
   srcSet?: string;
   fit?: keyof typeof NmorphImageFit;
   alt?: string;

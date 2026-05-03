@@ -18,6 +18,7 @@ import {
   NmorphBreadcrumb,
   NmorphBreadcrumbItem,
   NmorphTextInput,
+  NmorphColorPicker,
   NmorphSwitch,
   NmorphCheckbox,
   NmorphCheckboxGroup,
@@ -230,6 +231,16 @@ const localePath = useLocalePath();
             <template #header>Text input</template>
             <div class="overview-component-content">
               <NmorphTextInput :placeholder="t('overview.enter-text')" />
+            </div>
+          </NmorphCard>
+        </NuxtLink>
+      </div>
+      <div class="overview-component-wrapper color-picker">
+        <NuxtLink :to="localePath('/elements/color-picker')">
+          <NmorphCard>
+            <template #header>Color picker</template>
+            <div class="overview-component-content">
+              <NmorphColorPicker show-value />
             </div>
           </NmorphCard>
         </NuxtLink>

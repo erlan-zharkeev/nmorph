@@ -113,6 +113,12 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "color-picker": "新增 NmorphColorPicker 组件、对应文档页面，以及高度、数值显示、disabled 状态和主题 accent 默认色的示例。",
+        "badge-tag-mode": "为 NmorphBadge 新增 `is-tag` 模式，可将徽标作为独立元素渲染，而不是绝对定位的覆盖层。",
+        "badge-undefined-hidden": "NmorphBadge 在 `value` 为 `undefined` 时将不再渲染；`is-dot` 点状模式仍可在无值时显示。",
+        "exit-users-icons": "图标集和图标文档页新增了 NmorphIconExit 与 NmorphIconUsers。",
+        "form-boolean-compare": "表单校验规则现在支持在 `compareValue` 中传入 boolean，表单 API 文档也已同步更新。",
+        "image-src-optional": "NmorphImage 的 `src` 在公开类型中已改为可选，image API 文档也已与运行时行为保持一致。",
         "button-icon-slot-docs": "补充说明了 NmorphButton 的 icon 插槽行为：它当前实际上是 icon-only，用于图标加内容的更清晰 API 计划在后续 major 版本中重写。",
         "select-button-keyboard-focus": "NmorphSelectButtonItem 现在支持键盘操作：Tab 可聚焦每个选项，Space/Enter 可选中，聚焦时显示 outline 轮廓。",
         "tabindex-prop": "在 INmorphCommonInputProps 中新增 tabindex prop——所有表单控件（NmorphTextInput、NmorphSwitch、NmorphSlider、NmorphNumberInput、NmorphSelect、NmorphSelectButtonItem）现均支持 tabindex。",
@@ -383,7 +389,7 @@ export default {
     "badge": {
       "value": {
         "subtitle":
-          "The displayed value on the badge, can be *string* or *number*."
+          "The displayed value on the badge, can be *string* or *number*. If omitted and `is-dot` is false, the badge is not rendered."
       },
       "max": {
         "subtitle":
@@ -391,7 +397,11 @@ export default {
       },
       "is-dot": {
         "subtitle":
-          "Displays the badge as a small dot if set to *true*."
+          "Displays the badge as a small dot if set to *true*. Works even when `value` is omitted."
+      },
+      "is-tag": {
+        "subtitle":
+          "Displays the badge as a standalone element without the default slot. Offsets are ignored in this mode."
       },
       "hidden": {
         "subtitle": "Controls the visibility of the badge."
@@ -404,16 +414,17 @@ export default {
           "Horizontal/vertical offset of the badge relative to its parent."
       },
       "api": {
-        "value": "The displayed value on the badge",
+        "value": "The displayed value on the badge. If undefined and is-dot is false, the badge is hidden",
         "max": "Maximum value to display",
         "is-dot": "Displays the badge as a dot",
+        "is-tag": "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
         "hidden": "Hides the badge",
         "color": "Sets the background color of the badge",
-        "offset-y": "Vertical offset of the badge",
-        "offset-x": "Horizontal offset of the badge"
+        "offset-y": "Vertical offset of the badge. Ignored when is-tag is true",
+        "offset-x": "Horizontal offset of the badge. Ignored when is-tag is true"
       },
       "slot": {
-        "default": "Custom content for the badge"
+        "default": "Custom content for the badge in the default overlay mode"
       },
       "variables": {
         "dot-size": "Width and height of the dot"
@@ -1022,6 +1033,38 @@ export default {
       },
       "exposes": {
         "inputDOMRef": "输入框的原始 DOM 元素"
+      }
+    },
+    "color-picker": {
+      "height": {
+        "subtitle": "设置颜色选择器的高度。"
+      },
+      "disabled": {
+        "subtitle": "如果设置为 *true*，则禁用颜色选择器。"
+      },
+      "model-value": {
+        "subtitle": "控制所选颜色。接受类似 *#4a90e2* 的十六进制值。"
+      },
+      "show-value": {
+        "subtitle": "在色块旁显示当前的十六进制颜色值。如果未传入 `modelValue`，则使用当前主题的 accent 颜色。"
+      },
+      "api": {
+        "id": "设置原生 input 的 id。在 NmorphFormItem 内部使用时会继承其 id",
+        "name": "设置原生 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
+        "height": "定义颜色选择器的高度",
+        "disabled": "布尔值，禁用颜色选择器",
+        "model-value": "当前的十六进制颜色值",
+        "show-value": "布尔值，在色块旁显示当前的十六进制颜色值"
+      },
+      "slot": {},
+      "variables": {},
+      "events": {
+        "update:model-value": "当颜色值变化时触发的事件",
+        "focus": "当颜色选择器获得焦点时触发的事件",
+        "blur": "当颜色选择器失去焦点时触发的事件"
+      },
+      "exposes": {
+        "inputDOMRef": "颜色 input 的原始 DOM 元素"
       }
     },
     "switch": {

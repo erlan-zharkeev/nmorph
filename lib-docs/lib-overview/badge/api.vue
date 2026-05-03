@@ -9,8 +9,8 @@ import ApiTable from "~/components/api-table/ApiTable.vue";
 const attributesData: IAttributesTableData[] = [
   {
     name: "value",
-    type: "Number | String",
-    default: "-",
+    type: "Number | String | undefined",
+    default: "undefined",
   },
   {
     name: "max",
@@ -19,6 +19,11 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "is-dot",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "is-tag",
     type: "Boolean",
     default: "false",
   },
