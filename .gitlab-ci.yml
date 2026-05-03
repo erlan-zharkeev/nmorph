@@ -56,6 +56,9 @@ publish:
   stage: release
   needs:
     - job: pages
+  variables:
+    NODE_ENV: development
+    NPM_CONFIG_PRODUCTION: "false"
   before_script:
     - rm -rf library/node_modules
   script:
