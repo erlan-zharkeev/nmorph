@@ -124,7 +124,6 @@ export default {
         "contrast-text-colors": "Added --nmorph-semi-contrast-text-color and --nmorph-contrast-text-color CSS variables to default light and dark themes.",
         "form-item-label-for": "NmorphFormItem label now has a correct for attribute linked to the input via inputId prop on NmorphTextInput.",
         "error-box-single-error": "NmorphErrorBox now shows only the most relevant error instead of all errors at once.",
-        "form-item-margin": "Reduced NmorphFormItem vertical margin from indentation-03 to indentation-02.",
         "css-variables-docs": "Added CSS variables reference section to the Guide page.",
         "validation-icon-fix": "Fixed NmorphValidationIcon not rendering: icon components were passed as strings instead of component objects.",
         "select-button-unselected-opacity": "NmorphSelectButton: unselected items now appear semi-transparent for clearer visual feedback.",

@@ -10,7 +10,7 @@ import {
 } from '@/types';
 import { styled, css } from '@vue-styled-components/core'
 
-const groupSelectedValue = inject<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value', undefined);
+const groupSelectedValue = inject<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value');
 const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType>(
   'change-radio-button-value-handler',
   undefined

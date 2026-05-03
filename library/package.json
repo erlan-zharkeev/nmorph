@@ -46,7 +46,7 @@
     "lint:style": "stylelint ./src/**/*.{scss,vue} --fix",
     "lint:check": "npm run lint:es:check && npm run lint:style:check",
     "lint": "npm run lint:es && npm run lint:style",
-    "dev:type": "vue-tsc -p ./tsconfig.vue.json",
+    "dev:type": "vue-tsc -p ./tsconfig.json",
     "prepare": "cd .. && husky install ./library/.husky",
     "validate-branch-name": "node .husky/validate-branch-name.cjs",
     "validate-commit-msg": "node .husky/validate-commit-msg.cjs",

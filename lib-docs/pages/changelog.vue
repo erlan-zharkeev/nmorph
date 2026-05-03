@@ -30,7 +30,6 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
               <li>{{ $t("changelog-page.changelog.items.contrast-text-colors") }}</li>
               <li>{{ $t("changelog-page.changelog.items.form-item-label-for") }}</li>
               <li>{{ $t("changelog-page.changelog.items.error-box-single-error") }}</li>
-              <li>{{ $t("changelog-page.changelog.items.form-item-margin") }}</li>
               <li>{{ $t("changelog-page.changelog.items.css-variables-docs") }}</li>
             </ul>
           </div>

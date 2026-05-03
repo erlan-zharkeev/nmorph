@@ -122,7 +122,6 @@ export default {
         "contrast-text-colors": "在默认浅色和深色主题中新增 --nmorph-semi-contrast-text-color 和 --nmorph-contrast-text-color CSS 变量。",
         "form-item-label-for": "NmorphFormItem 的 label 标签现通过 NmorphTextInput 的 inputId prop 正确关联到输入框。",
         "error-box-single-error": "NmorphErrorBox 现在只显示最相关的一条错误，而不是所有错误。",
-        "form-item-margin": "将 NmorphFormItem 的垂直间距从 indentation-03 减小至 indentation-02。",
         "css-variables-docs": "在 Guide 页面新增 CSS 变量参考章节。",
         "validation-icon-fix": "修复 NmorphValidationIcon 不渲染的问题：图标组件被错误地以字符串形式传递。",
         "select-button-unselected-opacity": "NmorphSelectButton：未选中项现在呈半透明状态，视觉反馈更清晰。",

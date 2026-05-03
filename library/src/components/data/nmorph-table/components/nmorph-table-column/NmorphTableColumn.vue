@@ -10,8 +10,8 @@ import {
   NmorphTableColumnPropertyInjectionType,
 } from '@/components';
 
-const data = inject<INmorphTableDataInjection>('table-data', undefined);
-const tableIdentifier = inject<NmorphTableIdInjectionType>('table-identifier', undefined);
+const data = inject<INmorphTableDataInjection>('table-data');
+const tableIdentifier = inject<NmorphTableIdInjectionType>('table-identifier');
 
 interface INmorphProps extends INmorphTableColumnProps {}
 

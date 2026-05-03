@@ -16,7 +16,7 @@ const modifiers = computed(() =>
   })
 );
 
-const carouselData = inject<INmorphCarouselInjection>('carousel-data', undefined);
+const carouselData = inject<INmorphCarouselInjection>('carousel-data');
 
 const isMounted = ref(false);
 

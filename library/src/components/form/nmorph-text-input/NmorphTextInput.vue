@@ -87,8 +87,10 @@ const indentation = computed(() => (slots['prepend-icon'] ? '28px' : '8px'));
 
 const commonCSS = css`
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   align-items: flex-start;
+  min-width: 0;
   --prepend-icon-indent: 8px;
 
   .nmorph-text-input__input-side {

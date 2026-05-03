@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   staticErrorBoxSpace: false,
 });
 
-const formData = inject<NmorphFormValidationDataType>('form-data', undefined);
+const formData = inject<NmorphFormValidationDataType>('form-data');
 const validationData = computed(() => formData?.fields[props.id]);
 
 const ableToShowValidation = computed(() => validationData.value);
@@ -49,7 +49,7 @@ const modifiers = computed(() =>
 );
 
 const commonCSS = css`
-  margin: var(--indentation-02) var(--indentation-00);
+  margin: var(--indentation-03) var(--indentation-00);
 
   label {
     ${title4()}

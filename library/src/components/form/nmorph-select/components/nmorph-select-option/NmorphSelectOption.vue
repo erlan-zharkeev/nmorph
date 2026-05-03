@@ -11,8 +11,8 @@ import {
 } from '@/components';
 import { styled, css } from '@vue-styled-components/core'
 
-const selectSelectedValue = inject<NmorphSelectSelectedValueInjectionType>('select-selected-value', undefined);
-const selectChangeSelectedValue = inject<NmorphSelectChangeSelectedValue>('select-change-selected-value', undefined);
+const selectSelectedValue = inject<NmorphSelectSelectedValueInjectionType>('select-selected-value');
+const selectChangeSelectedValue = inject<NmorphSelectChangeSelectedValue>('select-change-selected-value');
 
 const props = withDefaults(defineProps<INmorphSelectOption>(), {
   label: '',

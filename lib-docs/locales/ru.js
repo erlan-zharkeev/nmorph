@@ -124,7 +124,6 @@ export default {
         "contrast-text-colors": "Добавлены CSS-переменные --nmorph-semi-contrast-text-color и --nmorph-contrast-text-color в дефолтные светлую и тёмную темы.",
         "form-item-label-for": "NmorphFormItem: тег label теперь имеет правильный атрибут for, связанный с инпутом через prop inputId у NmorphTextInput.",
         "error-box-single-error": "NmorphErrorBox теперь показывает только одну актуальную ошибку вместо всех сразу.",
-        "form-item-margin": "Уменьшен вертикальный отступ NmorphFormItem с indentation-03 до indentation-02.",
         "css-variables-docs": "Добавлен раздел с описанием CSS-переменных на странице Guide.",
         "validation-icon-fix": "Исправлен NmorphValidationIcon: иконки передавались строками вместо компонентов и не отображались.",
         "select-button-unselected-opacity": "NmorphSelectButton: не выбранные элементы теперь полупрозрачные для лучшей визуальной обратной связи.",

@@ -40,8 +40,8 @@ const titleModifiers = computed(() =>
   })
 );
 
-const collapseData = inject<NmorphCollapseDataInjectionType>('collapse-data', undefined);
-const updateModel = inject<NmorphCollapseUpdateModelInjectionType>('update-model', undefined);
+const collapseData = inject<NmorphCollapseDataInjectionType>('collapse-data');
+const updateModel = inject<NmorphCollapseUpdateModelInjectionType>('update-model');
 
 const collapseItemDOMElContent = ref<NmorphDomElementType>(null);
 
