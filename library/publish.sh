@@ -15,6 +15,7 @@ fi
 # Увеличение версии
 echo "Увеличение версии ($VERSION_TYPE)..."
 NEW_VERSION=$(npm version $VERSION_TYPE)
+NEW_VERSION=${NEW_VERSION#v}
 
 # Проверка успешности увеличения версии
 if [ $? -ne 0 ]; then
@@ -33,6 +34,14 @@ if [ $? -ne 0 ]; then
 fi
 
 # Публикация пакета
+PACKAGE_NAME=$(npm pkg get name | tr -d '"')
+PUBLISHED_VERSION=$(npm view "$PACKAGE_NAME@$NEW_VERSION" version 2>/dev/null || true)
+
+if [ "$PUBLISHED_VERSION" = "$NEW_VERSION" ]; then
+  echo "Публикация не выполнена: версия $NEW_VERSION уже опубликована."
+  exit 0
+fi
+
 echo "Публикация пакета..."
 npm publish
 
