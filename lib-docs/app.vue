@@ -11,7 +11,6 @@ import projectData from "./package.json";
 
 const loaded = ref(false);
 const store = useGlobalStore();
-const route = useRoute();
 
 const updateViewportHeight = () => {
   const vh = window.innerHeight * 0.01;
@@ -34,10 +33,6 @@ onMounted(() => {
 onUnmounted(async () => {
   window.removeEventListener('resize', updateViewportHeight);
 });
-
-watch(() => route.path.length, () => {
-  if (route.path.length <= 3) menuOpen.value = false
-});
 </script>
 
 <template>
@@ -49,8 +44,16 @@ watch(() => route.path.length, () => {
       <NmorphProgress :value-right-side="false" indeterminate color="var(--nmorph-accent-color)" />
     </ClientOnly>
   </div>
-  <div v-else class="docs">
-    <NuxtLayout name="default" />
+  <div v-else class="docs-shell">
+    <div class="docs">
+      <NuxtLayout name="default" />
+    </div>
+    <div class="docs-unsupported">
+      <div class="docs-unsupported__card nmorph--shadow-outset">
+        <h1>{{ $t("unsupported-resolution.title") }}</h1>
+        <p>{{ $t("unsupported-resolution.description") }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -72,5 +75,49 @@ html {
 .docs {
   display: flex;
   flex-direction: column;
+}
+
+.docs-shell {
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+.docs-unsupported {
+  display: none;
+  min-height: calc(var(--vh, 1vh) * 100);
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: var(--nmorph-main-color);
+}
+
+.docs-unsupported__card {
+  width: 100%;
+  max-width: 320px;
+  padding: 24px 16px;
+  border-radius: 24px;
+  background: var(--nmorph-main-color);
+  text-align: center;
+
+  h1 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  p {
+    margin: 0;
+    color: var(--nmorph-semi-contrast-text-color);
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 319px) {
+  .docs {
+    display: none;
+  }
+
+  .docs-unsupported {
+    display: flex;
+  }
 }
 </style>

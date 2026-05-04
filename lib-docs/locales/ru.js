@@ -32,6 +32,10 @@ export default {
   "footer-bar": {
     license: "Распространяется по лицензии",
   },
+  "unsupported-resolution": {
+    title: "Разрешение не поддерживается",
+    description: "Откройте документацию на устройстве с шириной экрана не меньше 320px."
+  },
   "guide-page": {
     "theme-customize": "Кастомизировать тему",
     "custom-theme-color": "Изменить базовый цвет",

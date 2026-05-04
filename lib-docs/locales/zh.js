@@ -32,6 +32,10 @@ export default {
   "footer-bar": {
     license: "许可协议"
   },
+  "unsupported-resolution": {
+    title: "不支持当前分辨率",
+    description: "请在屏幕宽度不小于 320px 的设备上打开文档。"
+  },
   "guide-page": {
     "theme-customize": "自定义主题",
     "custom-theme-color": "更改基础颜色",

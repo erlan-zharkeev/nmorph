@@ -125,7 +125,7 @@ const isActive = (path: string) => {
           </li>
           <li>
             <NuxtLink :class="{ 'docs-active-route': isActive(localePath('/changelog')) }" :to="localePath('/changelog')">
-              Changelog
+              {{ $t("changelog-page.changelog.title") }}
             </NuxtLink>
           </li>
           <li>
@@ -150,6 +150,10 @@ const isActive = (path: string) => {
           <NuxtLink :to="localePath('/components')">{{
             $t("components")
           }}</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink :to="localePath('/changelog')">{{
+            $t("changelog-page.changelog.title") }}</NuxtLink>
         </li>
         <li>
           <NuxtLink :to="localePath('/about')">{{ $t("about") }}</NuxtLink>

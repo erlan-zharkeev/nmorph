@@ -27,10 +27,14 @@ export default {
   attention: "Attention",
   "top-bar": {
     menu: "Menu",
-    nav: "Navigation",
+    nav: "Nav",
   },
   "footer-bar": {
     license: "Licensed under",
+  },
+  "unsupported-resolution": {
+    title: "Resolution is not supported",
+    description: "Open the documentation on a device with a screen width of at least 320px."
   },
   "guide-page": {
     "theme-customize": "Customize theme",
