@@ -1,8 +1,9 @@
 import { ref, reactive } from 'vue';
 import { INmorphNotification } from '@/components/providers';
+import { generateUUID } from '@/utils';
 
 export const useNmorphNotification = () => {
-  const notifications = ref([]);
+  const notifications = ref<INmorphNotification[]>([]);
 
   const initOptions = {
     duration: 3000,
@@ -13,7 +14,7 @@ export const useNmorphNotification = () => {
 
   const notify = (options: INmorphNotification) => {
     const defaultOptions = {
-      id: String(Date.now()),
+      id: generateUUID(),
       ...initOptions,
     };
 

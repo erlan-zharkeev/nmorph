@@ -119,6 +119,8 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "notification-provider-close-animation": "NmorphNotificationProvider теперь сохраняет стили alert во время анимации закрытия, оставляет уведомления в вертикальном стеке и убирает дерганый reflow при удалении.",
+        "notification-provider-uuid-ids": "useNmorphNotification теперь генерирует UUID для id уведомлений, чтобы избежать коллизий при быстром создании нескольких уведомлений подряд.",
         "button-icon-slots-breaking": "Ломающее изменение: слот API у NmorphButton разделён. `icon` теперь рендерит ведущую иконку рядом с контентом, а для кнопок только с иконкой нужно использовать новый слот `icon-only`.",
         "otp-input-component": "Добавлен NmorphOTPInput с документацией и примерами в sandbox. Компонент использует стили NmorphTextInput и поддерживает paste, навигацию с клавиатуры и событие complete.",
         "form-autocomplete-forwarding": "NmorphFormItem теперь прокидывает autocomplete во вложенные form-контролы, а API-документация затронутых компонентов обновлена.",

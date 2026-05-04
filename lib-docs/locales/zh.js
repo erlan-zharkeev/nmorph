@@ -117,6 +117,8 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "notification-provider-close-animation": "NmorphNotificationProvider 现在会在关闭动画期间保留 alert 样式、维持垂直堆叠布局，并避免通知移除时出现突兀的重排。",
+        "notification-provider-uuid-ids": "useNmorphNotification 现在会为通知生成基于 UUID 的 id，避免短时间内连续创建多个通知时发生冲突。",
         "button-icon-slots-breaking": "破坏性变更：NmorphButton 的插槽 API 已拆分。`icon` 现在用于在内容左侧渲染前置图标，纯图标按钮必须使用新的 `icon-only` 插槽。",
         "otp-input-component": "新增 NmorphOTPInput，并补充了文档与 sandbox 示例。该组件复用了 NmorphTextInput 的样式，并支持粘贴、键盘导航和 complete 事件。",
         "form-autocomplete-forwarding": "NmorphFormItem 现在会把 autocomplete 透传给内部表单控件，相关组件的 API 文档也已同步更新。",

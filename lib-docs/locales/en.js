@@ -119,6 +119,8 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "notification-provider-close-animation": "NmorphNotificationProvider now keeps alert styles intact during close animation, preserves stacked layout, and avoids jarring reflow while notifications leave.",
+        "notification-provider-uuid-ids": "useNmorphNotification now generates UUID-based notification ids to avoid collisions when multiple notifications are created in quick succession.",
         "button-icon-slots-breaking": "Breaking change: NmorphButton slot API was split. `icon` now renders a leading icon next to content, and icon-only buttons must use the new `icon-only` slot.",
         "otp-input-component": "Added NmorphOTPInput with documentation and sandbox examples. It reuses NmorphTextInput styling and supports paste, keyboard navigation, and completion events.",
         "form-autocomplete-forwarding": "NmorphFormItem now forwards autocomplete to nested form controls, and the affected component API docs were updated.",
