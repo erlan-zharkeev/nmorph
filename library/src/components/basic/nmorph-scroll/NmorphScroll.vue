@@ -1,27 +1,11 @@
 <script setup lang="ts">
 import { INmorphInstance, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
-import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue';
-import { NmorphCoordsType, NmorphOverflowProp, NmorphScrollBehavior } from '@/components';
-import { nextTick } from 'vue';
+import { computed, inject, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { type INmorphScrollProps, type NmorphCoordsType } from './types';
 
-interface INmorphProps {
-  height?: string;
-  maxHeight?: string;
-  modelValue?: NmorphCoordsType;
-  scrollYProp?: keyof typeof NmorphOverflowProp;
-  scrollXProp?: keyof typeof NmorphOverflowProp;
-  cssScrollBehavior?: keyof typeof NmorphScrollBehavior;
-  scrollEndDelay?: number;
-  updateOnlyOnScrollEnd?: boolean;
-  yBarWidthInPx?: number;
-  xBarWidthInPx?: number;
-  xGapInPx?: number;
-  yGapInPx?: number;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
-  height: 'auto',
+const props = withDefaults(defineProps<INmorphScrollProps>(), {
+  height: '100%',
   maxHeight: 'none',
   modelValue: () => ({
     x: 0,
@@ -47,8 +31,16 @@ const hasVerticalScroll = ref(false);
 const hasHorizontalScroll = ref(false);
 
 const updateScrollableState = () => {
-  hasVerticalScroll.value = scrollDOMContainer.value?.scrollHeight > scrollDOMContainer.value?.clientHeight;
-  hasHorizontalScroll.value = scrollDOMContainer.value?.scrollWidth > scrollDOMContainer.value?.clientWidth;
+  const element = scrollDOMContainer.value;
+
+  if (!element) {
+    hasVerticalScroll.value = false;
+    hasHorizontalScroll.value = false;
+    return;
+  }
+
+  hasVerticalScroll.value = element.scrollHeight > element.clientHeight;
+  hasHorizontalScroll.value = element.scrollWidth > element.clientWidth;
 };
 
 const paddingRightCandidate = computed(() => props.yBarWidthInPx + props.yGapInPx);
@@ -66,7 +58,7 @@ const barWidth = computed(() => `${props.yBarWidthInPx}px`);
 const barHeight = computed(() => `${props.xBarWidthInPx}px`);
 
 const nmorph = inject('nmorph') as INmorphInstance;
-let scrollEndTimeout: NodeJS.Timeout;
+let scrollEndTimeout: ReturnType<typeof setTimeout> | undefined;
 
 interface INmorphEmit {
   (e: 'on-scroll', event: Event): void;
@@ -77,8 +69,12 @@ interface INmorphEmit {
 const emit = defineEmits<INmorphEmit>();
 
 const updateValue = () => {
-  const x = Math.trunc(scrollDOMContainer.value?.scrollLeft);
-  const y = Math.trunc(scrollDOMContainer.value?.scrollTop);
+  const element = scrollDOMContainer.value;
+
+  if (!element) return;
+
+  const x = Math.trunc(element.scrollLeft);
+  const y = Math.trunc(element.scrollTop);
   emit('update:model-value', { x, y });
 };
 

@@ -1,4 +1,4 @@
-import { INmorphCoords } from '@/types';
+import type { INmorphCoords, NmorphDomElementType } from '@/types';
 
 export type NmorphCoordsType = INmorphCoords<number>;
 
@@ -14,4 +14,28 @@ export enum NmorphScrollBehavior {
   inherit = 'inherit',
   initial = 'initial',
   unset = 'unset',
+}
+
+export type NmorphScrollOverflowType = keyof typeof NmorphOverflowProp;
+
+export type NmorphScrollBehaviorType = keyof typeof NmorphScrollBehavior;
+
+export interface INmorphScrollProps {
+  height?: string;
+  maxHeight?: string;
+  modelValue?: NmorphCoordsType;
+  scrollYProp?: NmorphScrollOverflowType;
+  scrollXProp?: NmorphScrollOverflowType;
+  cssScrollBehavior?: NmorphScrollBehaviorType;
+  scrollEndDelay?: number;
+  updateOnlyOnScrollEnd?: boolean;
+  yBarWidthInPx?: number;
+  xBarWidthInPx?: number;
+  xGapInPx?: number;
+  yGapInPx?: number;
+}
+
+export interface INmorphScrollExpose {
+  scrollDOMContainer: NmorphDomElementType;
+  moveTo: (coords: NmorphCoordsType) => void;
 }

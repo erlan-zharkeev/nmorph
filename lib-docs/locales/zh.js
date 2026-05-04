@@ -117,6 +117,8 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "scroll-default-height-100": "NmorphScroll 现在默认使用 `height=\"100%\"`，API 文档和说明文案也已与这一行为保持一致。",
+        "scroll-typing-fixes": "修复了 NmorphScroll 的 TypeScript 类型：访问容器尺寸和滚动坐标时不再出现 `undefined` 错误，`moveTo` 与 `scrollDOMContainer` 的公开 expose 类型也已整理。",
         "notification-provider-close-animation": "NmorphNotificationProvider 现在会在关闭动画期间保留 alert 样式、维持垂直堆叠布局，并避免通知移除时出现突兀的重排。",
         "notification-provider-uuid-ids": "useNmorphNotification 现在会为通知生成基于 UUID 的 id，避免短时间内连续创建多个通知时发生冲突。",
         "button-icon-slots-breaking": "破坏性变更：NmorphButton 的插槽 API 已拆分。`icon` 现在用于在内容左侧渲染前置图标，纯图标按钮必须使用新的 `icon-only` 插槽。",
@@ -333,7 +335,7 @@ export default {
     "scroll": {
       "height": {
         "subtitle":
-          "使用 *height* 属性设置容器高度。支持 `300px` 这类固定值，也支持在父级有明确高度时使用 `100%`。"
+          "默认值是 `100%`。使用 *height* 属性设置容器高度。支持 `300px` 这类固定值，也支持在父级有明确高度时使用 `100%`。"
       },
       "max-height": {
         "subtitle":

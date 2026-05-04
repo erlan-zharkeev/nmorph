@@ -119,6 +119,8 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "scroll-default-height-100": "NmorphScroll now defaults to `height=\"100%\"`, and the API docs plus descriptive copy were aligned with that behavior.",
+        "scroll-typing-fixes": "Fixed TypeScript typings in NmorphScroll: container size and scroll coordinate access no longer produces `undefined` errors, and the public expose type for `moveTo` and `scrollDOMContainer` was cleaned up.",
         "notification-provider-close-animation": "NmorphNotificationProvider now keeps alert styles intact during close animation, preserves stacked layout, and avoids jarring reflow while notifications leave.",
         "notification-provider-uuid-ids": "useNmorphNotification now generates UUID-based notification ids to avoid collisions when multiple notifications are created in quick succession.",
         "button-icon-slots-breaking": "Breaking change: NmorphButton slot API was split. `icon` now renders a leading icon next to content, and icon-only buttons must use the new `icon-only` slot.",
@@ -335,7 +337,7 @@ export default {
     "scroll": {
       "height": {
         "subtitle":
-          "Use the *height* property to set the container's height. Fixed values like `300px` and relative values like `100%` are supported when the parent has an explicit height."
+          "The default value is `100%`. Use the *height* property to set the container's height. Fixed values like `300px` and relative values like `100%` are supported when the parent has an explicit height."
       },
       "max-height": {
         "subtitle":

@@ -9,7 +9,7 @@ const attributesData = [
   {
     name: "height",
     type: "String",
-    default: "auto",
+    default: "100%",
   },
   {
     name: "max-height",

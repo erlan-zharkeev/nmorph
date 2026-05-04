@@ -1,14 +1,20 @@
 <script setup lang="ts">
-import { NmorphSlider, NmorphScroll } from "@nmorph/nmorph-ui-kit";
+import {
+  type INmorphScrollExpose,
+  NmorphSlider,
+  NmorphScroll,
+} from "@nmorph/nmorph-ui-kit";
 import Attribute from "~/components/attribute/Attribute.vue";
 
 import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = `
 <script lang="ts" setup>
+  import { type INmorphScrollExpose } from "@nmorph/nmorph-ui-kit";
+
   const elements = 30;
   const coords = ref({ x: 0, y: 0 });
-  const scroll = ref<typeof NmorphScroll | null>(null);
+  const scroll = ref<INmorphScrollExpose | null>(null);
 
   const updateSliderHandler = (value: number) => {
     if (scroll.value) scroll.value.moveTo({ x: 0, y: value });
@@ -78,7 +84,7 @@ const code = [scriptData, templateData, cssData];
 
 const elements = 30;
 const coords = ref({ x: 0, y: 0 });
-const scroll = ref<typeof NmorphScroll | null>(null);
+const scroll = ref<INmorphScrollExpose | null>(null);
 
 const updateSliderHandler = (value: number) => {
   if (scroll.value) scroll.value.moveTo({ x: 0, y: value });
