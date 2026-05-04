@@ -54,6 +54,12 @@ pages:
 
 publish:
   stage: release
+  image: node:24
+  id_tokens:
+    NPM_ID_TOKEN:
+      aud: "npm:registry.npmjs.org"
+    SIGSTORE_ID_TOKEN:
+      aud: sigstore
   variables:
     NODE_ENV: development
     NPM_CONFIG_PRODUCTION: "false"
@@ -62,40 +68,23 @@ publish:
   script:
     - cd library
     - |
-      if [ -z "$NPM_TOKEN" ]; then
-        echo "NPM_TOKEN is empty. If the variable is marked Protected, the main branch must also be protected in GitLab."
+      if [ -z "$NPM_ID_TOKEN" ]; then
+        echo "NPM_ID_TOKEN is empty. Trusted publishing requires GitLab.com shared runners and a configured Trusted Publisher on npmjs.com."
         exit 1
       fi
-    - |
-      echo "NPM_TOKEN diagnostics"
-      echo "length=${#NPM_TOKEN}"
-      if [ "${NPM_TOKEN#npm_}" != "$NPM_TOKEN" ]; then
-        echo "starts_with_npm_prefix=true"
-      else
-        echo "starts_with_npm_prefix=false"
-      fi
-      if printf '%s' "$NPM_TOKEN" | grep -q '[[:space:]]'; then
-        echo "contains_whitespace=true"
-      else
-        echo "contains_whitespace=false"
-      fi
-      echo "sha256=$(printf '%s' "$NPM_TOKEN" | sha256sum | awk '{print $1}')"
     - npm ci --include=dev --ignore-scripts
     - npm install --no-save @rollup/rollup-linux-x64-gnu @esbuild/linux-x64
     - PACKAGE_NAME=$(node -p "require('./package.json').name")
     - PACKAGE_VERSION=$(node -p "require('./package.json').version")
-    - PUBLISHED_VERSION=$(npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version 2>/dev/null || true)
+    - PUBLISHED_VERSION=$(npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version --registry=https://registry.npmjs.org/ 2>/dev/null || true)
     - |
       if [ "$PUBLISHED_VERSION" = "$PACKAGE_VERSION" ]; then
         echo "Version $PACKAGE_VERSION is already published for $PACKAGE_NAME. Skipping publish."
         exit 0
       fi
-    - printf "@nmorph:registry=https://registry.npmjs.org/\n//registry.npmjs.org/:_authToken=%s\n" "$NPM_TOKEN" > ~/.npmrc
-    - sed 's#//registry.npmjs.org/:_authToken=.*#//registry.npmjs.org/:_authToken=[REDACTED]#' ~/.npmrc
-    - npm whoami --registry=https://registry.npmjs.org/
     - npm run build
     - npm pack --dry-run
-    - npm publish --access public
+    - npm publish --access public --registry=https://registry.npmjs.org/
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"'
     - when: never
