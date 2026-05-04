@@ -6,7 +6,7 @@
   "scripts": {
     "prepare:library": "sh -c 'test -x ../library/node_modules/.bin/vue-tsc || npm --prefix ../library install --include=dev --no-fund --no-audit; npm --prefix ../library run build'",
     "build": "npm run prepare:library && nuxt build",
-    "dev": "npm run prepare:library && nuxt dev --no-qr",
+    "dev": "npm run prepare:library && nuxt dev --no-qr --open",
     "clean": "rm -rf .nuxt node_modules && npm install",
     "generate": "npm run prepare:library && nuxt generate",
     "preview": "npm run prepare:library && nuxt preview",

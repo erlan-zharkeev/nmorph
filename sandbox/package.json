@@ -11,7 +11,8 @@
   "dependencies": {
     "@nmorph/nmorph-ui-kit": "file:../library",
     "vue": "^3.5.25",
-    "vue-i18n": "^9.14.5"
+    "vue-i18n": "^9.14.5",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@types/node": "^20.19.37",

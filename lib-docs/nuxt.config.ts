@@ -48,6 +48,9 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: [],
   vite: {
+    optimizeDeps: {
+      exclude: ["@nmorph/nmorph-ui-kit"],
+    },
     resolve: {
       dedupe: [
         "vue",
