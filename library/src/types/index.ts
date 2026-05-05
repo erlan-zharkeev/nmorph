@@ -122,6 +122,7 @@ export interface INmorphStaticColors {
   warnText?: string;
   gray?: string;
   accent?: string;
+  scrollThumb?: string;
   white?: string;
   black?: string;
   text?: string;

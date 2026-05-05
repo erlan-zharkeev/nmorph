@@ -25,6 +25,7 @@ const config = {
         darkShade: '#0f1112', // String(hex color) // ${t('guide-page.config.shade-var')}
         lightShade: '#292d30', // String(hex color) // ${t('guide-page.config.shade-var')}
         text: '#778288', // String(hex color)
+        scrollThumb: '#778288',
         accent: '#006cb6', // String(hex color)
         focusText: '#ffffff', // String(hex color)
         placeholderText: '#575757', // String(hex color)
@@ -96,6 +97,7 @@ const cssVariables = `
 --nmorph-dark-shade-color    /* ${t('guide-page.config.css-var-dark-shade')} */
 --nmorph-light-shade-color   /* ${t('guide-page.config.css-var-light-shade')} */
 --nmorph-text-color          /* ${t('guide-page.config.css-var-text')} */
+--nmorph-scroll-thumb-color  /* ${t('guide-page.config.css-var-scroll-thumb')} */
 --nmorph-accent-color        /* ${t('guide-page.config.css-var-accent')} */
 --nmorph-focus-text-color    /* ${t('guide-page.config.css-var-focus-text')} */
 --nmorph-placeholder-text-color /* ${t('guide-page.config.css-var-placeholder')} */

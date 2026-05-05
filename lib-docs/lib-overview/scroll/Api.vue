@@ -77,7 +77,7 @@ const slotData = [
 const variables = [
   {
     name: "thumb-color",
-    default: "var(--thumb-color)",
+    default: "var(--nmorph-scroll-thumb-color, var(--nmorph-text-color))",
   },
 ];
 

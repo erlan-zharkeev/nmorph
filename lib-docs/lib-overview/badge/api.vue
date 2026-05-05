@@ -38,6 +38,11 @@ const attributesData: IAttributesTableData[] = [
     default: "var(--nmorph-accent-color)",
   },
   {
+    name: "z-index",
+    type: "Number",
+    default: "1",
+  },
+  {
     name: "offset-y",
     type: "Number",
     default: "0",

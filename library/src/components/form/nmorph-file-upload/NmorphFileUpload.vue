@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, DefineComponent, reactive, ref } from 'vue';
+import { computed, reactive, ref, type Component } from 'vue';
 import {
   INmorphCustomFileData,
   NmorphArchiveResolution,
@@ -15,11 +15,12 @@ import {
   NmorphIconAudio,
   NmorphIconVideo,
   NmorphIconArchive,
+  NmorphIconCross,
 } from '@/components';
 import { ellipsis, nmorphOutset, useModifiers } from '@/utils';
 import { NmorphDomElementType } from '@/types';
 import { useI18n } from 'vue-i18n';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 
 const { t } = useI18n();
 
@@ -45,9 +46,9 @@ const computedButtonText = computed(() => (props.buttonText ? props.buttonText :
 
 const getPlainType = (resolution: string) => resolution.split('/')[1];
 
-const typeFileIconMap = (resolution: string): DefineComponent<{}, {}, unknown> => {
+const typeFileIconMap = (resolution: string): Component => {
   const plainResolutionName = getPlainType(resolution);
-  let result: DefineComponent<{}, {}, unknown> = NmorphIconDoc;
+  let result: Component = NmorphIconDoc;
   if (plainResolutionName in NmorphImageResolution) result = NmorphIconImage;
   if (plainResolutionName in NmorphAudioResolution) result = NmorphIconAudio;
   if (plainResolutionName in NmorphVideoResolution) result = NmorphIconVideo;
@@ -60,12 +61,12 @@ let files = reactive<INmorphCustomFileData[]>(props.modelValue);
 const inputDOMRef = ref<NmorphDomElementType>(null);
 
 const openFileSelector = () => {
-  if (inputDOMRef.value) {
-    inputDOMRef.value.click();
-  }
+  if (props.disabled || !inputDOMRef.value) return;
+  inputDOMRef.value.click();
 };
 
 const handleFileUpload = (event: Event) => {
+  if (props.disabled) return;
   const target = event.target as HTMLInputElement;
   if (target.files) {
     Array.from(target.files).forEach((file) => {
@@ -83,13 +84,11 @@ const handleFileUpload = (event: Event) => {
 };
 
 const filesChanged = () => {
-  emit(
-    'update:model-value',
-    files.map((file) => file.data)
-  );
+  emit('update:model-value', files);
 };
 
 const removeFile = (fileName: string) => {
+  if (props.disabled) return;
   const index = files.findIndex((file) => file.data.name === fileName);
   if (index !== -1) {
     URL.revokeObjectURL(files[index].previewUrl);
@@ -99,7 +98,7 @@ const removeFile = (fileName: string) => {
 };
 
 interface INmorphEmit {
-  (e: 'update:model-value', val: File[]): void;
+  (e: 'update:model-value', val: INmorphCustomFileData[]): void;
   (e: 'on-unsupported-file-type-error', val: string): void;
 }
 
@@ -150,23 +149,29 @@ const commonCSS = css`
   .nmorph-file-upload__remove-file {
     margin-left: var(--indentation-03);
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
-`
+`;
 </script>
 
 <template>
   <StyledComponent :class="modifiers">
     <div class="nmorph-file-upload__trigger">
-      <input ref="inputDOMRef" type="file" :multiple="props.multiple" class="nmorph-native-input"
-        @change="handleFileUpload" />
+      <input
+        ref="inputDOMRef"
+        type="file"
+        :multiple="props.multiple"
+        :disabled="props.disabled"
+        class="nmorph-native-input"
+        @change="handleFileUpload"
+      />
       <slot name="trigger">
-        <NmorphButton :text="computedButtonText" fill @click="openFileSelector" :disabled="props.disabled" />
+        <NmorphButton :text="computedButtonText" fill :disabled="props.disabled" @click="openFileSelector" />
       </slot>
     </div>
-    <div class="nmorph-file-upload__list" v-if="files.length > 0">
+    <div v-if="files.length > 0" class="nmorph-file-upload__list">
       <transition-group name="list" tag="div">
         <div v-for="{ data, previewUrl } in files" :key="data.name" class="nmorph-file-upload__file">
           <NmorphImagePreview :src="previewUrl" />
@@ -178,7 +183,9 @@ const StyledComponent = styled.div`
           </div>
           <div class="nmorph-file-upload__remove-file">
             <NmorphButton height="thin" style-type="transparent" @click="removeFile(data.name)">
-              <NmorphIcon name="error" />
+              <template #icon-only>
+                <NmorphIconCross />
+              </template>
             </NmorphButton>
           </div>
         </div>

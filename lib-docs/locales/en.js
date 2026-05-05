@@ -83,6 +83,7 @@ export default {
       "css-var-dark-shade": "Dark shadow shade",
       "css-var-light-shade": "Light shadow shade",
       "css-var-text": "Primary text color",
+      "css-var-scroll-thumb": "Scroll thumb color",
       "css-var-accent": "Accent / brand color",
       "css-var-focus-text": "Text color on focused/accent elements",
       "css-var-placeholder": "Placeholder text color",
@@ -124,6 +125,11 @@ export default {
         "notification-provider-placement-per-notification": "NmorphNotificationProvider now supports `placement` on each notification, so one provider can render notifications in different screen positions.",
         "notification-provider-quantity-leave-style": "Fixed notification removal when `quantity` is exceeded: leaving alerts keep icon sizing, colors, and layout during the transition.",
         "button-transparent-hover-icons": "Transparent NmorphButton hover now highlights both text and icons with the accent color.",
+        "badge-z-index": "NmorphBadge now supports a `zIndex` prop for controlling badge stacking order.",
+        "color-picker-display-format": "NmorphColorPicker can display selected colors as hex, RGB, or HSL values through the `displayFormat` prop.",
+        "file-upload-model-custom-data": "NmorphFileUpload now preserves custom file preview data in `v-model`, respects disabled state for selection and removal, and uses the icon-only remove button slot.",
+        "slider-pointer-events": "NmorphSlider now uses pointer events, improving touch dragging and cleaning up document listeners on unmount.",
+        "scroll-thumb-theme-color": "NmorphScroll thumb color now uses the theme text color by default and can be configured with `scrollThumb` / `--nmorph-scroll-thumb-color`.",
         "color-picker-fixed-value-width": "NmorphColorPicker now renders shown hex values with fixed-width formatting so equal-length values keep equal component width.",
         "sandbox-expanded-examples": "Expanded sandbox coverage for basic, data, feedback, form, navigation, and other components.",
         "scroll-default-height-100": "NmorphScroll now defaults to `height=\"100%\"`, and the API docs plus descriptive copy were aligned with that behavior.",
@@ -380,7 +386,7 @@ export default {
         "default": "Scroll content"
       },
       "variables": {
-        "thumb-color": "Thumb color"
+        "thumb-color": "Thumb color. Defaults to --nmorph-scroll-thumb-color"
       },
       "exposes": {
         "scrollDOMContainer": "DOM element of the container",
@@ -464,6 +470,7 @@ export default {
         "is-tag": "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
         "hidden": "Hides the badge",
         "color": "Sets the background color of the badge",
+        "z-index": "Defines the stacking order of the badge",
         "offset-y": "Vertical offset of the badge. Ignored when is-tag is true",
         "offset-x": "Horizontal offset of the badge. Ignored when is-tag is true"
       },
@@ -1140,13 +1147,17 @@ export default {
       "show-value": {
         "subtitle": "Displays the selected hex value next to the swatch. If `modelValue` is omitted, the current theme accent color is used."
       },
+      "display-format": {
+        "subtitle": "Sets the format for the displayed color value."
+      },
       "api": {
         "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
         "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
         "height": "Defines the height of the color picker",
         "disabled": "Boolean value that disables the color picker",
         "model-value": "Current color value in hex format",
-        "show-value": "Boolean value that displays the current hex value near the swatch"
+        "show-value": "Boolean value that displays the current color value near the swatch",
+        "display-format": "Format of the displayed color value"
       },
       "slot": {},
       "variables": {},

@@ -83,6 +83,7 @@ export default {
       "css-var-dark-shade": "深色阴影",
       "css-var-light-shade": "浅色阴影",
       "css-var-text": "主文字颜色",
+      "css-var-scroll-thumb": "滚动条滑块颜色",
       "css-var-accent": "强调色 / 品牌色",
       "css-var-focus-text": "聚焦/强调元素上的文字颜色",
       "css-var-placeholder": "占位符文字颜色",
@@ -122,6 +123,11 @@ export default {
         "notification-provider-placement-per-notification": "NmorphNotificationProvider 现在支持在每条通知上设置 `placement`，一个 provider 即可在不同屏幕位置渲染通知。",
         "notification-provider-quantity-leave-style": "修复超过 `quantity` 时的通知移除：离场 alert 在过渡期间会保留图标尺寸、颜色和布局。",
         "button-transparent-hover-icons": "Transparent NmorphButton 悬停时现在会用 accent 色同时高亮文本和图标。",
+        "badge-z-index": "NmorphBadge 现在支持通过 `zIndex` prop 控制徽标层级。",
+        "color-picker-display-format": "NmorphColorPicker 现在可通过 `displayFormat` prop 将所选颜色显示为 hex、RGB 或 HSL。",
+        "file-upload-model-custom-data": "NmorphFileUpload 现在会在 `v-model` 中保留文件预览数据，选择和移除文件时会遵守 disabled 状态，并使用 icon-only 删除按钮插槽。",
+        "slider-pointer-events": "NmorphSlider 现在使用 pointer events，改善触摸拖动并在卸载时清理 document listeners。",
+        "scroll-thumb-theme-color": "NmorphScroll 滑块颜色现在默认使用主题文字颜色，并可通过 `scrollThumb` / `--nmorph-scroll-thumb-color` 配置。",
         "color-picker-fixed-value-width": "NmorphColorPicker 现在以固定宽度格式显示 hex 值，相同长度的值不会改变组件宽度。",
         "sandbox-expanded-examples": "扩展了 basic、data、feedback、form、navigation 和 other 组件的 sandbox 示例。",
         "scroll-default-height-100": "NmorphScroll 现在默认使用 `height=\"100%\"`，API 文档和说明文案也已与这一行为保持一致。",
@@ -378,7 +384,7 @@ export default {
         "default": "滚动内容"
       },
       "variables": {
-        "thumb-color": "滚动条滑块颜色"
+        "thumb-color": "滚动条滑块颜色。默认使用 --nmorph-scroll-thumb-color"
       },
       "exposes": {
         "scrollDOMContainer": "容器的 DOM 元素",
@@ -462,6 +468,7 @@ export default {
         "is-tag": "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
         "hidden": "Hides the badge",
         "color": "Sets the background color of the badge",
+        "z-index": "Defines the stacking order of the badge",
         "offset-y": "Vertical offset of the badge. Ignored when is-tag is true",
         "offset-x": "Horizontal offset of the badge. Ignored when is-tag is true"
       },
@@ -1138,13 +1145,17 @@ export default {
       "show-value": {
         "subtitle": "在色块旁显示当前的十六进制颜色值。如果未传入 `modelValue`，则使用当前主题的 accent 颜色。"
       },
+      "display-format": {
+        "subtitle": "设置显示的颜色值格式。"
+      },
       "api": {
         "id": "设置原生 input 的 id。在 NmorphFormItem 内部使用时会继承其 id",
         "name": "设置原生 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         "height": "定义颜色选择器的高度",
         "disabled": "布尔值，禁用颜色选择器",
         "model-value": "当前的十六进制颜色值",
-        "show-value": "布尔值，在色块旁显示当前的十六进制颜色值"
+        "show-value": "布尔值，在色块旁显示当前颜色值",
+        "display-format": "显示颜色值的格式"
       },
       "slot": {},
       "variables": {},

@@ -3,7 +3,7 @@ import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
 import { disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import { NmorphTooltip } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
 interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
@@ -103,17 +103,19 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (typeof window !== 'undefined') {
-    document.removeEventListener('mouseup', mouseUp);
+    document.removeEventListener('pointermove', pointerMove);
+    document.removeEventListener('pointerup', pointerUp);
+    document.removeEventListener('pointercancel', pointerUp);
     window.removeEventListener('resize', resizeWindowHandler);
   }
 });
 
-const mouseMove = (event: MouseEvent) => {
+const updateThumbValue = (clientX: number) => {
   transitionEnabled.value = false;
   const rect = sliderContainer.value?.getBoundingClientRect();
   let percent = 0;
   if (rect) {
-    const position = event.clientX - rect.left;
+    const position = clientX - rect.left;
     const size = rect.width;
     percent = Math.max(0, Math.min(1, position / size));
     thumbValue.value = props.min + percent * (props.max - props.min);
@@ -122,16 +124,26 @@ const mouseMove = (event: MouseEvent) => {
   thumbValue.value = Math.max(props.min, Math.min(props.max, thumbValue.value));
 };
 
-const mouseUp = () => {
-  document.removeEventListener('mousemove', mouseMove);
-  document.removeEventListener('mouseup', mouseUp);
+const pointerMove = (event: PointerEvent) => {
+  event.preventDefault();
+  updateThumbValue(event.clientX);
+};
+
+const pointerUp = () => {
+  document.removeEventListener('pointermove', pointerMove);
+  document.removeEventListener('pointerup', pointerUp);
+  document.removeEventListener('pointercancel', pointerUp);
   transitionEnabled.value = true;
 };
 
-const mousedownHandler = () => {
+const pointerDownHandler = (event: PointerEvent) => {
   if (props.disabled) return;
-  document.addEventListener('mousemove', mouseMove);
-  document.addEventListener('mouseup', mouseUp);
+  if (event.pointerType === 'mouse' && event.button !== 0) return;
+  event.preventDefault();
+  updateThumbValue(event.clientX);
+  document.addEventListener('pointermove', pointerMove);
+  document.addEventListener('pointerup', pointerUp);
+  document.addEventListener('pointercancel', pointerUp);
 };
 
 const sliderFirst = ref<NmorphDomElementType>(null);
@@ -151,7 +163,6 @@ const nativeInputHandler = (event: Event): void => {
 const transitionEnabled = ref(true);
 
 const commonCSS = css`
-
   position: relative;
   width: 100%;
   height: 20px;
@@ -181,6 +192,7 @@ const commonCSS = css`
     align-items: center;
     width: 100%;
     height: var(--slider-height);
+    touch-action: none;
   }
 
   .nmorph-slider__thumb {
@@ -247,29 +259,50 @@ const commonCSS = css`
       pointer-events: none;
     }
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
   .nmorph-slider__thumb {
-    width: ${props => props.thumbWidthCss};
+    width: ${(props) => props.thumbWidthCss};
   }
-`
+`;
 </script>
 
 <template>
   <StyledComponent :class="modifiers" :props="{ thumbWidthCss }">
     <div class="nmorph-slider__content">
       <div class="nmorph-slider__input-wrapper">
-        <div ref="sliderContainer" class="nmorph-slider__input-container">
-          <NmorphTooltip ref="tooltipRootRef" v-if="tooltipVisible && !props.disabled" :text="String(thumbValue)"
-            force-show :force-coordinate="{ x: thumbXPercentPosition.tooltip, y: '24px' }" block-position />
-          <div ref="sliderFirst" class="nmorph-slider__thumb" :style="{ left: thumbXPercentPosition.thumb }"
-            :class="{ 'nmorph-slider__thumb--smooth': transitionEnabled }" @mouseenter="handleMouseEnter"
-            @mouseleave="handleMouseLeave" @mousedown="mousedownHandler" />
-          <input :id="id" :name="name" :tabindex="tabindex" class="nmorph-slide__native-input" type="range" :value="thumbValue"
-            :min="props.min" :max="props.max" :step="props.step" :disabled="props.disabled"
-            @input="nativeInputHandler" />
+        <div ref="sliderContainer" class="nmorph-slider__input-container" @pointerdown="pointerDownHandler">
+          <NmorphTooltip
+            v-if="tooltipVisible && !props.disabled"
+            ref="tooltipRootRef"
+            :text="String(thumbValue)"
+            force-show
+            :force-coordinate="{ x: thumbXPercentPosition.tooltip, y: '24px' }"
+            block-position
+          />
+          <div
+            ref="sliderFirst"
+            class="nmorph-slider__thumb"
+            :style="{ left: thumbXPercentPosition.thumb }"
+            :class="{ 'nmorph-slider__thumb--smooth': transitionEnabled }"
+            @mouseenter="handleMouseEnter"
+            @mouseleave="handleMouseLeave"
+          />
+          <input
+            :id="id"
+            :name="name"
+            :tabindex="tabindex"
+            class="nmorph-slide__native-input"
+            type="range"
+            :value="thumbValue"
+            :min="props.min"
+            :max="props.max"
+            :step="props.step"
+            :disabled="props.disabled"
+            @input="nativeInputHandler"
+          />
         </div>
       </div>
     </div>

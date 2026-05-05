@@ -9,6 +9,16 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v2.1.1</h3>
+            <ul>
+              <li>{{ $t("changelog-page.changelog.items.badge-z-index") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.color-picker-display-format") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.file-upload-model-custom-data") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.slider-pointer-events") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.scroll-thumb-theme-color") }}</li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.1.0</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.avatar-name-initials") }}</li>
@@ -138,7 +148,6 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
         <section id="known-bugs">
           <h2>{{ $t("changelog-page.known-bugs.title") }}</h2>
           <ul>
-            <li>{{ $t("changelog-page.known-bugs.items.mobile-slider") }}</li>
             <li>{{ $t("changelog-page.known-bugs.items.text-input-clear-overlap") }}</li>
           </ul>
         </section>
@@ -151,7 +160,6 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
             <li>{{ $t("changelog-page.roadmap.items.accessibility") }}</li>
             <li>{{ $t("changelog-page.roadmap.items.test-coverage") }}</li>
             <li>{{ $t("changelog-page.roadmap.items.theming-v2") }}</li>
-            <li>{{ $t("changelog-page.roadmap.items.color-picker-formats") }}</li>
             <li>{{ $t("changelog-page.roadmap.items.performance") }}</li>
           </ul>
         </section>

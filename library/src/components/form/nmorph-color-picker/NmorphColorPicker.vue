@@ -8,6 +8,7 @@ import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: string;
   showValue?: boolean;
+  displayFormat?: 'hex' | 'rgb' | 'hsl';
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -15,6 +16,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   height: 'default',
   showValue: false,
+  displayFormat: 'hex',
 });
 
 const emit = defineEmits<{
@@ -69,6 +71,42 @@ const handleInput = (event: Event) => {
   emit('update:model-value', nextValue);
 };
 
+const hexToRgb = (hex: string) => [
+  parseInt(hex.slice(1, 3), 16),
+  parseInt(hex.slice(3, 5), 16),
+  parseInt(hex.slice(5, 7), 16),
+];
+
+const formatRgb = (hex: string) => {
+  const [red, green, blue] = hexToRgb(hex);
+  return `rgb(${red}, ${green}, ${blue})`;
+};
+
+const formatHsl = (hex: string) => {
+  const [red, green, blue] = hexToRgb(hex).map((value) => value / 255);
+  const max = Math.max(red, green, blue);
+  const min = Math.min(red, green, blue);
+  const lightness = (max + min) / 2;
+
+  if (max === min) {
+    return `hsl(0, 0%, ${Math.round(lightness * 100)}%)`;
+  }
+
+  const delta = max - min;
+  const saturation = lightness > 0.5 ? delta / (2 - max - min) : delta / (max + min);
+  let hue = 0;
+
+  if (max === red) {
+    hue = (green - blue) / delta + (green < blue ? 6 : 0);
+  } else if (max === green) {
+    hue = (blue - red) / delta + 2;
+  } else {
+    hue = (red - green) / delta + 4;
+  }
+
+  return `hsl(${Math.round(hue * 60)}, ${Math.round(saturation * 100)}%, ${Math.round(lightness * 100)}%)`;
+};
+
 onMounted(() => {
   if (!props.modelValue) {
     currentValue.value = resolveAccentColor();
@@ -80,11 +118,15 @@ defineExpose({ inputDOMRef });
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[props.height], `${focused.value && 'focused'}`],
-    'nmorph-color-picker': [`${props.disabled && 'disabled'}`],
+    'nmorph-color-picker': [`${props.disabled && 'disabled'}`, props.displayFormat],
   })
 );
 
-const displayValue = computed(() => currentValue.value.toUpperCase());
+const displayValue = computed(() => {
+  if (props.displayFormat === 'rgb') return formatRgb(currentValue.value);
+  if (props.displayFormat === 'hsl') return formatHsl(currentValue.value);
+  return currentValue.value.toUpperCase();
+});
 
 const commonCSS = css`
   display: inline-flex;
@@ -141,6 +183,22 @@ const commonCSS = css`
     font-variant-numeric: tabular-nums;
     font-feature-settings: 'tnum';
     user-select: none;
+  }
+
+  &.nmorph-color-picker--rgb {
+    .nmorph-color-picker__value {
+      flex-basis: 18ch;
+      width: 18ch;
+      min-width: 18ch;
+    }
+  }
+
+  &.nmorph-color-picker--hsl {
+    .nmorph-color-picker__value {
+      flex-basis: 20ch;
+      width: 20ch;
+      min-width: 20ch;
+    }
   }
 
   &.nmorph--thin-component {

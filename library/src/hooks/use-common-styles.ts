@@ -287,7 +287,7 @@ export const useCommonStyles = () => {
     }
 
     .nmorph-scroll {
-      --thumb-color: var(--nmorph-accent-color);
+      --thumb-color: var(--nmorph-scroll-thumb-color, var(--nmorph-text-color));
     }
 
     .nmorph-scroll::-webkit-scrollbar {

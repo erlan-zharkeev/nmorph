@@ -38,6 +38,11 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "false",
   },
+  {
+    name: "display-format",
+    type: "'hex' | 'rgb' | 'hsl'",
+    default: "hex",
+  },
 ];
 
 const events: IEventsTableData[] = [

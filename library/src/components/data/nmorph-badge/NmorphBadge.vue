@@ -13,11 +13,12 @@ interface INmorphProps {
   color?: string;
   offsetY?: number;
   offsetX?: number;
+  zIndex?: number;
   disabled?: boolean;
 }
 
 type NmorphBadgeValueSlotProps = {
-  value: INmorphProps["value"];
+  value: INmorphProps['value'];
   displayValue: string | number | undefined;
 };
 
@@ -30,12 +31,13 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   color: 'var(--nmorph-accent-color)',
   offsetX: 0,
   offsetY: 0,
+  zIndex: 1,
   disabled: false,
 });
 
 defineSlots<{
-  default?: (props: Record<string, never>) => any;
-  value?: (props: NmorphBadgeValueSlotProps) => any;
+  default?: (props: Record<string, never>) => unknown;
+  value?: (props: NmorphBadgeValueSlotProps) => unknown;
 }>();
 
 const modifiers = computed(() =>
@@ -67,10 +69,15 @@ const appliedOffset = computed(() => {
 });
 
 const containerStyle = computed(() => {
-  if (props.isTag) return undefined;
+  if (props.isTag) {
+    return {
+      zIndex: props.zIndex,
+    };
+  }
   return {
     right: appliedOffset.value.x,
     top: appliedOffset.value.y,
+    zIndex: props.zIndex,
   };
 });
 

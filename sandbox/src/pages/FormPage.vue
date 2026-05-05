@@ -22,8 +22,9 @@ import {
   NmorphSwitch,
   NmorphTextInput,
 } from '@nmorph/nmorph-ui-kit'
-import type { NmorphFormValueType, NmorphSelectModelValueType } from '@nmorph/nmorph-ui-kit'
+import type { INmorphCustomFileData, NmorphFormValueType, NmorphSelectModelValueType } from '@nmorph/nmorph-ui-kit'
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
+import preloadedUploadImageUrl from '../../../lib-docs/assets/images/cat.jpg?url'
 
 const textValue = ref('Nmorph')
 const passwordValue = ref('secret-value')
@@ -49,7 +50,12 @@ const steppedSliderValue = ref(60)
 const dateValue = ref(new Date(2026, 4, 5))
 const datesValue = ref([new Date(2026, 4, 5), new Date(2026, 4, 12)])
 const rangeValue = ref([new Date(2026, 4, 5), new Date(2026, 4, 18)])
-const uploadedFiles = ref<File[]>([])
+const uploadedFiles = ref<INmorphCustomFileData[]>([
+  {
+    data: new File([], 'cat.jpg', { type: 'image/jpeg' }),
+    previewUrl: preloadedUploadImageUrl,
+  },
+])
 const unsupportedType = ref('')
 
 const selectOptions = [
@@ -195,7 +201,7 @@ const formValue = ref<NmorphFormValueType>({
     <SandboxSection title="NmorphColorPicker">
       <div class="row">
         <NmorphColorPicker v-model="colorValue" height="thin" />
-        <NmorphColorPicker v-model="colorValue" show-value />
+        <NmorphColorPicker v-model="colorValue" show-value display-format='rgb' />
         <NmorphColorPicker v-model="colorValue" height="thick" show-value />
         <NmorphColorPicker model-value="#22c55e" show-value disabled />
       </div>
