@@ -180,6 +180,15 @@ const commonCSS = css`
     .nmorph-button__content:not(:disabled, [loading='true']):hover {
       background: transparent;
       box-shadow: none;
+      color: var(--nmorph-accent-color);
+    }
+
+    .nmorph-button__content:not(:disabled, [loading='true']):hover span {
+      color: var(--nmorph-accent-color);
+    }
+
+    .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
+      --color: var(--nmorph-accent-color);
     }
 
     .nmorph-button__content {

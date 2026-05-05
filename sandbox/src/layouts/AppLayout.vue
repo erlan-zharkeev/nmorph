@@ -147,7 +147,7 @@ watch(
 
 .layout__content {
   padding: 32px 24px;
-  max-width: 720px;
+  max-width: 1100px;
   margin: 0 auto;
   width: 100%;
 }

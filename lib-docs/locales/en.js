@@ -113,12 +113,19 @@ export default {
         "accessibility": "Improve accessibility: keyboard navigation, ARIA, focus states.",
         "test-coverage": "Increase test coverage: unit, integration, and e2e tests.",
         "theming-v2": "Prepare Theming v2 with extended design tokens and presets.",
+        "color-picker-formats": "Add support for displaying different color formats in NmorphColorPicker.",
         "performance": "Optimize performance and bundle size."
       }
     },
     "changelog": {
       "title": "Changelog",
       "items": {
+        "avatar-name-initials": "NmorphAvatar now supports a `name` prop and renders generated initials when no image is available. Avatar docs were updated with API and usage examples.",
+        "notification-provider-placement-per-notification": "NmorphNotificationProvider now supports `placement` on each notification, so one provider can render notifications in different screen positions.",
+        "notification-provider-quantity-leave-style": "Fixed notification removal when `quantity` is exceeded: leaving alerts keep icon sizing, colors, and layout during the transition.",
+        "button-transparent-hover-icons": "Transparent NmorphButton hover now highlights both text and icons with the accent color.",
+        "color-picker-fixed-value-width": "NmorphColorPicker now renders shown hex values with fixed-width formatting so equal-length values keep equal component width.",
+        "sandbox-expanded-examples": "Expanded sandbox coverage for basic, data, feedback, form, navigation, and other components.",
         "scroll-default-height-100": "NmorphScroll now defaults to `height=\"100%\"`, and the API docs plus descriptive copy were aligned with that behavior.",
         "scroll-typing-fixes": "Fixed TypeScript typings in NmorphScroll: container size and scroll coordinate access no longer produces `undefined` errors, and the public expose type for `moveTo` and `scrollDOMContainer` was cleaned up.",
         "notification-provider-close-animation": "NmorphNotificationProvider now keeps alert styles intact during close animation, preserves stacked layout, and avoids jarring reflow while notifications leave.",
@@ -396,16 +403,20 @@ export default {
       "fit": {
         "subtitle": "Defines how the image is displayed in the container."
       },
+      "name": {
+        "subtitle": "Used to generate initials for the fallback when no image is available."
+      },
       "api": {
         "size": "Sets the size of the avatar",
         "shape": "Defines the shape of the avatar",
         "src": "Avatar image URL",
+        "name": "Name used to generate fallback initials",
         "src-set": "List of image sources",
         "alt": "Text description of the image",
         "fit": "Defines how the image fills the container",
         "frame-border": "Defines the thickness of the frame",
         "image-padding": "Inner padding",
-        "fallback": "Component shown when the image cannot be loaded. Defaults to NmorphIconAvatar"
+        "fallback": "Component shown when the image cannot be loaded or src is not provided. Defaults to NmorphIconAvatar"
       },
       "slot": {
         "error": "Slot to display the load error"
@@ -936,8 +947,8 @@ export default {
         "subtitle": "Limits the maximum number of notifications that can be displayed at the same time."
       },
       "api": {
-        "notifications": "Array containing the notifications",
-        "placement": "Specifies where the notifications will appear on the screen",
+        "notifications": "Array containing the notifications. Each notification can override placement",
+        "placement": "Default position for notifications that do not define placement",
         "z-index": "Defines the stacking order of the notifications",
         "quantity": "Maximum number of notifications that can be on the screen at the same time"
       },

@@ -9,7 +9,7 @@ import {
 import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const scriptData = `
-<style lang="ts" setup>
+<script lang="ts" setup>
   const initAlert = {
     type: NmorphAlertType.success,
     closable: true,
@@ -17,20 +17,19 @@ const scriptData = `
     width: "150px",
   };
 
-  const notificationsTopRight = ref<INmorphNotification[]>([]);
-  const notificationsTopCenter = ref([]);
+  const notifications = ref<INmorphNotification[]>([]);
 
-  const addNotification = (info: boolean = false) => {
-    let notifications = notificationsTopRight;
-
-    const notification = { ...initAlert, id: String(Date.now()) };
-    if (info) {
-      notifications = notificationsTopCenter;
-      notification.type = NmorphAlertType.info;
-    }
-    notifications.value.push(notification);
+  const addNotification = (
+    placement: INmorphNotification["placement"] = "top-right"
+  ) => {
+    notifications.value.push({
+      ...initAlert,
+      id: String(Date.now()),
+      placement,
+      type: placement === "top-center" ? NmorphAlertType.info : NmorphAlertType.success,
+    });
   };
-<\/style>
+<\/script>
 `;
 
 const templateData = `
@@ -39,23 +38,20 @@ const templateData = `
     <div class="actions__button">
       <NmorphButton
         text="Add action notification"
-        @click="() => addNotification()"
+        @click="() => addNotification('top-right')"
       />
     </div>
     <div class="actions__button">
       <NmorphButton
         text="Add info notification"
-        @click="() => addNotification(true)"
+        @click="() => addNotification('top-center')"
       />
     </div>
   </div>
   <NmorphNotificationProvider
-    :notifications="notificationsTopRight"
-  />
-  <NmorphNotificationProvider
-    :notifications="notificationsTopCenter"
-    placement="top-center"
-    :quantity="1"
+    :notifications="notifications"
+    placement="top-right"
+    :quantity="3"
   />
 </template>
 `;
@@ -82,18 +78,15 @@ const initAlert = {
   width: "150px",
 };
 
-const notificationsTopRight = ref<INmorphNotification[]>([]);
-const notificationsTopCenter = ref([]);
+const notifications = ref<INmorphNotification[]>([]);
 
-const addNotification = (info: boolean = false) => {
-  let notifications = notificationsTopRight;
-
-  const notification = { ...initAlert, id: String(Date.now()) };
-  if (info) {
-    notifications = notificationsTopCenter;
-    notification.type = NmorphAlertType.info;
-  }
-  notifications.value.push(notification);
+const addNotification = (placement: INmorphNotification["placement"] = "top-right") => {
+  notifications.value.push({
+    ...initAlert,
+    id: String(Date.now()),
+    placement,
+    type: placement === "top-center" ? NmorphAlertType.info : NmorphAlertType.success,
+  });
 };
 </script>
 
@@ -105,14 +98,13 @@ const addNotification = (info: boolean = false) => {
           <ClientOnly>
             <div class="actions">
               <div class="actions__button">
-                <NmorphButton text="Add action notification" @click="() => addNotification()" />
+                <NmorphButton text="Add action notification" @click="() => addNotification('top-right')" />
               </div>
               <div class="actions__button">
-                <NmorphButton text="Add info notification" @click="() => addNotification(true)" />
+                <NmorphButton text="Add info notification" @click="() => addNotification('top-center')" />
               </div>
             </div>
-            <NmorphNotificationProvider :notifications="notificationsTopRight" />
-            <NmorphNotificationProvider :notifications="notificationsTopCenter" placement="top-center" :quantity="1" />
+            <NmorphNotificationProvider :notifications="notifications" placement="top-right" :quantity="3" />
           </ClientOnly>
         </div>
       </template>

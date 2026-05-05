@@ -2,34 +2,56 @@
 import { ref } from 'vue'
 import {
   NmorphAlert,
-  NmorphDialog,
-  NmorphTooltip,
   NmorphButton,
+  NmorphDialog,
+  NmorphIcon,
+  NmorphIconBell,
+  NmorphIconCheck,
   NmorphNotificationProvider,
+  NmorphNotificationPlacement,
+  NmorphTooltip,
   useNmorphNotification,
 } from '@nmorph/nmorph-ui-kit'
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
 
+const notificationPlacements = Object.values(NmorphNotificationPlacement)
+
 const dialogOpen = ref(false)
+const customDialogOpen = ref(false)
+const closableAlertVisible = ref(true)
 const notificationProvider = useNmorphNotification()
 
-const showSuccessNotification = () => {
+const showNotification = (type: 'success' | 'info' | 'warning' | 'error') => {
   notificationProvider.notify({
-    type: 'success',
-    title: 'Success',
-    content: 'Close this notification to check the animation',
+    type,
+    title: `${type[0].toUpperCase()}${type.slice(1)}`,
+    content: `Notification created at ${new Date().toLocaleTimeString()}`,
     closable: true,
     width: '320px',
+    duration: 4000,
   })
 }
 
-const showInfoNotification = () => {
+const showPlacementNotification = (placement: keyof typeof NmorphNotificationPlacement) => {
   notificationProvider.notify({
+    placement,
     type: 'info',
-    title: 'Info',
-    content: String(Date.now()),
+    title: placement,
+    content: `Placed at ${new Date().toLocaleTimeString()}`,
     closable: true,
     width: '320px',
+    duration: 4000,
+  })
+}
+
+const showStickyNotification = () => {
+  notificationProvider.notify({
+    type: 'info',
+    title: 'Sticky',
+    content: 'Duration is disabled for this one.',
+    closable: true,
+    width: '320px',
+    duration: 0,
   })
 }
 </script>
@@ -38,42 +60,133 @@ const showInfoNotification = () => {
   <div class="page">
     <SandboxSection title="NmorphAlert">
       <div class="stack">
-        <div class="col">
-          <NmorphAlert type="info" title="Info" content="This is an info alert" />
-          <NmorphAlert type="success" title="Success" content="This is a success alert" />
-          <NmorphAlert type="warning" title="Warning" content="This is a warning alert" />
-          <NmorphAlert type="error" title="Error" content="This is an error alert" />
-        </div>
-        <div class="actions">
-          <NmorphButton text="Show success notification" @click="showSuccessNotification" />
-          <NmorphButton text="Show info notification" style-type="transparent" @click="showInfoNotification" />
-        </div>
+        <NmorphAlert type="info" title="Info" content="This is an info alert" />
+        <NmorphAlert type="success" title="Success" content="This is a success alert" fill />
+        <NmorphAlert type="warning" title="Warning" content="No border and no icon" :bordered="false" :show-icon="false" />
+        <NmorphAlert type="error" title="Error" close-icon-position="flex-start" closable @close="closableAlertVisible = false">
+          Closable alert slot content.
+        </NmorphAlert>
+        <NmorphAlert v-if="closableAlertVisible" type="success" title="Visible" content="Close the error alert to hide state." />
+        <NmorphAlert :html="'<strong>HTML</strong> alert content'" />
+        <NmorphAlert type="info" title="Custom icon">
+          <template #icon>
+            <NmorphIcon color="var(--nmorph-success-color)">
+              <NmorphIconCheck />
+            </NmorphIcon>
+          </template>
+          Icon slot with default content slot.
+        </NmorphAlert>
       </div>
     </SandboxSection>
 
     <SandboxSection title="NmorphDialog">
-      <NmorphButton text="Open dialog" @click="dialogOpen = true" />
-      <NmorphDialog v-model="dialogOpen" title="Dialog title">
+      <div class="row">
+        <NmorphButton text="Open dialog" @click="dialogOpen = true" />
+        <NmorphButton text="Custom header" style-type="transparent" @click="customDialogOpen = true" />
+      </div>
+      <NmorphDialog v-model="dialogOpen" title="Dialog title" width="380px" :close-delay="120" :z-index="1100">
         <p>Dialog content goes here.</p>
+      </NmorphDialog>
+      <NmorphDialog
+        v-model="customDialogOpen"
+        width="460px"
+        :open-delay="100"
+        :show-close="false"
+        :close-on-overlay="false"
+      >
+        <template #header>
+          <div class="dialog-header">
+            <span>Custom header slot</span>
+            <NmorphButton text="Close" height="thin" @click="customDialogOpen = false" />
+          </div>
+        </template>
+        <p>Overlay click is disabled for this dialog.</p>
       </NmorphDialog>
     </SandboxSection>
 
     <SandboxSection title="NmorphTooltip">
-      <NmorphTooltip content="Hello from tooltip">
-        <NmorphButton text="Hover me" />
-      </NmorphTooltip>
+      <div class="row tooltip-row">
+        <NmorphTooltip text="Top tooltip" position="top">
+          <NmorphButton text="Top" />
+        </NmorphTooltip>
+        <NmorphTooltip text="Right tooltip" position="right">
+          <NmorphButton text="Right" />
+        </NmorphTooltip>
+        <NmorphTooltip text="Bottom tooltip" position="bottom">
+          <NmorphButton text="Bottom" />
+        </NmorphTooltip>
+        <NmorphTooltip text="Left tooltip" position="left">
+          <NmorphButton text="Left" />
+        </NmorphTooltip>
+        <NmorphTooltip force-show text="Forced" :force-coordinate="{ x: '0', y: '34px' }">
+          <NmorphButton text="Force show" style-type="transparent" />
+        </NmorphTooltip>
+      </div>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphNotificationProvider">
+      <div class="row">
+        <NmorphButton text="Success" @click="showNotification('success')" />
+        <NmorphButton text="Info" style-type="transparent" @click="showNotification('info')">
+          <template #icon>
+            <NmorphIconBell />
+          </template>
+        </NmorphButton>
+        <NmorphButton text="Warning" @click="showNotification('warning')" />
+        <NmorphButton text="Error" @click="showNotification('error')" />
+        <NmorphButton text="Sticky" style-type="transparent" @click="showStickyNotification" />
+      </div>
+      <div class="row">
+        <NmorphButton
+          v-for="placement in notificationPlacements"
+          :key="placement"
+          :text="placement"
+          style-type="transparent"
+          @click="showPlacementNotification(placement)"
+        />
+      </div>
     </SandboxSection>
   </div>
   <NmorphNotificationProvider
     :notifications="notificationProvider.notifications.value"
     placement="top-right"
+    :quantity="3"
+    :z-index="1200"
   />
-
 </template>
 
 <style scoped>
-.page { display: grid; gap: 24px; }
-.col { display: grid; gap: 8px; }
-.stack { display: grid; gap: 16px; }
-.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.page {
+  display: grid;
+  gap: 24px;
+}
+
+.stack {
+  display: grid;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.tooltip-row {
+  min-height: 120px;
+  align-items: center;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+p {
+  margin: 0;
+}
 </style>

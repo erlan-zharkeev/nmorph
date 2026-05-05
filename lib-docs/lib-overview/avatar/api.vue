@@ -12,7 +12,11 @@ const attributesData: IAttributesTableData[] = [
     name: "src",
     type: "String",
     default: "-",
-    required: true,
+  },
+  {
+    name: "name",
+    type: "String",
+    default: "-",
   },
   {
     name: "size",

@@ -10,13 +10,7 @@ import { NmorphNotificationPlacement } from "@nmorph/nmorph-ui-kit";
 const attributesData: IAttributesTableData[] = [
   {
     name: "notifications",
-    type: `Array<${docsLink(
-      "Alert",
-      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date"
-    )} & ${docsLink(
-      "Width",
-      "https://developer.mozilla.org/ru/docs/Web/CSS/width"
-    )} & duration?: number;>[]`,
+    type: `Array<INmorphNotification & { width?: string; duration?: number; placement?: ${enumToString(NmorphNotificationPlacement)}; }>`,
     default: "-",
     required: true,
   },

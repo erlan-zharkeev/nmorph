@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, type Component } from 'vue';
+import { computed, type Component } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphImage, NmorphIcon, NmorphIconAvatar } from '@/components';
 import { INmorphImage, AvatarShapeType } from '@/types';
@@ -11,6 +11,7 @@ interface INmorphProps extends INmorphImage {
   shape?: keyof typeof AvatarShapeType;
   frameBorder?: number;
   imagePadding?: number;
+  name?: string;
   fallback?: Component;
 }
 
@@ -19,8 +20,16 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   shape: 'circle',
   frameBorder: 2,
   imagePadding: 4,
+  name: '',
   fallback: () => NmorphIconAvatar,
 });
+
+interface INmorphStyledProps {
+  size: string;
+  imagePadding: string;
+  radius: string;
+  frameBorder: number;
+}
 
 interface INmorphEmit {
   (e: 'error', event: Event): void;
@@ -28,8 +37,6 @@ interface INmorphEmit {
 }
 
 const emit = defineEmits<INmorphEmit>();
-
-const hasError = ref(false);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -40,19 +47,27 @@ const modifiers = computed(() =>
 
 const onImageError = (e: Event) => {
   emit('error', e);
-  hasError.value = true;
 };
 
 const onImageLoad = (e: Event) => {
   emit('load', e);
-  hasError.value = false;
 };
 
 const imagePadding = computed(() => `${props.imagePadding}px`);
 const size = computed(() => ` ${props.size}px`);
 const stubIconSize = computed(() => `${(props.size / 100) * 60}px`);
+const initialsFontSize = computed(() => `${Math.max(12, props.size * 0.38)}px`);
 const radius = computed(() => (props.shape === 'circle' ? '50%' : '4px'));
 const fallback = computed(() => props.fallback || NmorphIconAvatar);
+const initials = computed(() => {
+  const name = props.name.trim();
+  if (!name) return '';
+
+  const parts = name.split(/\s+/);
+  const value = parts.length > 1 ? `${parts[0][0]}${parts[parts.length - 1][0]}` : parts[0].slice(0, 2);
+
+  return value.toUpperCase();
+});
 
 const commonCSS = css`
   position: relative;
@@ -72,27 +87,30 @@ const commonCSS = css`
   .nmorph-image {
     position: absolute;
   }
+
+  .nmorph-avatar__initials {
+    color: var(--nmorph-accent-color);
+    font-weight: 600;
+    line-height: 1;
+  }
 `;
 
 const StyledComponent = styled.div`
   ${commonCSS}
   .nmorph-image {
-    --width: ${(props) => props.size};
-    --height: ${(props) => props.size};
+    --width: ${(props: INmorphStyledProps) => props.size};
+    --height: ${(props: INmorphStyledProps) => props.size};
 
-    padding: ${(props) => props.imagePadding};
-    border-radius: ${(props) => props.radius};
+    padding: ${(props: INmorphStyledProps) => props.imagePadding};
+    border-radius: ${(props: INmorphStyledProps) => props.radius};
   }
 
   &.nmorph--shadow-combined {
-    ${nmorphCombined(
-      Number((props) => props.frameBorder),
-      true
-    )};
+    ${(props: INmorphStyledProps) => nmorphCombined(Number(props.frameBorder), true)};
   }
 
   .nmorph-image > img {
-    border-radius: ${(props) => props.radius};
+    border-radius: ${(props: INmorphStyledProps) => props.radius};
   }
 `;
 </script>
@@ -114,11 +132,22 @@ const StyledComponent = styled.div`
     >
       <template #error>
         <slot name="error">
-          <NmorphIcon :width="stubIconSize">
+          <span v-if="initials" class="nmorph-avatar__initials" :style="{ fontSize: initialsFontSize }">
+            {{ initials }}
+          </span>
+          <NmorphIcon v-else :width="stubIconSize">
             <component :is="fallback" />
           </NmorphIcon>
         </slot>
       </template>
     </NmorphImage>
+    <slot v-if="!props.src" name="error">
+      <span v-if="initials" class="nmorph-avatar__initials" :style="{ fontSize: initialsFontSize }">
+        {{ initials }}
+      </span>
+      <NmorphIcon v-else :width="stubIconSize">
+        <component :is="fallback" />
+      </NmorphIcon>
+    </slot>
   </StyledComponent>
 </template>

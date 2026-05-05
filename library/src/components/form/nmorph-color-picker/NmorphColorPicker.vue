@@ -134,7 +134,12 @@ const commonCSS = css`
     ${body2()}
     ${ellipsis()}
 
-    min-width: 0;
+    flex: 0 0 7ch;
+    width: 7ch;
+    min-width: 7ch;
+    font-family: monospace;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
     user-select: none;
   }
 

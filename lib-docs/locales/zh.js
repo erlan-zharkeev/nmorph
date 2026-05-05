@@ -111,12 +111,19 @@ export default {
         "accessibility": "改进可访问性：键盘导航、ARIA、焦点状态。",
         "test-coverage": "提升测试覆盖率：单元测试、集成测试与 e2e 测试。",
         "theming-v2": "准备 Theming v2，支持扩展设计令牌与预设。",
+        "color-picker-formats": "为 NmorphColorPicker 添加不同颜色格式的显示能力。",
         "performance": "优化性能与打包体积。"
       }
     },
     "changelog": {
       "title": "变更日志",
       "items": {
+        "avatar-name-initials": "NmorphAvatar 现在支持 `name` prop，并在没有可用图片时渲染生成的首字母。Avatar 文档已补充 API 和示例。",
+        "notification-provider-placement-per-notification": "NmorphNotificationProvider 现在支持在每条通知上设置 `placement`，一个 provider 即可在不同屏幕位置渲染通知。",
+        "notification-provider-quantity-leave-style": "修复超过 `quantity` 时的通知移除：离场 alert 在过渡期间会保留图标尺寸、颜色和布局。",
+        "button-transparent-hover-icons": "Transparent NmorphButton 悬停时现在会用 accent 色同时高亮文本和图标。",
+        "color-picker-fixed-value-width": "NmorphColorPicker 现在以固定宽度格式显示 hex 值，相同长度的值不会改变组件宽度。",
+        "sandbox-expanded-examples": "扩展了 basic、data、feedback、form、navigation 和 other 组件的 sandbox 示例。",
         "scroll-default-height-100": "NmorphScroll 现在默认使用 `height=\"100%\"`，API 文档和说明文案也已与这一行为保持一致。",
         "scroll-typing-fixes": "修复了 NmorphScroll 的 TypeScript 类型：访问容器尺寸和滚动坐标时不再出现 `undefined` 错误，`moveTo` 与 `scrollDOMContainer` 的公开 expose 类型也已整理。",
         "notification-provider-close-animation": "NmorphNotificationProvider 现在会在关闭动画期间保留 alert 样式、维持垂直堆叠布局，并避免通知移除时出现突兀的重排。",
@@ -394,16 +401,20 @@ export default {
       "fit": {
         "subtitle": "Defines how the image is displayed in the container."
       },
+      "name": {
+        "subtitle": "Used to generate initials for the fallback when no image is available."
+      },
       "api": {
         "size": "Sets the size of the avatar",
         "shape": "Defines the shape of the avatar",
         "src": "Avatar image URL",
+        "name": "Name used to generate fallback initials",
         "src-set": "List of image sources",
         "alt": "Text description of the image",
         "fit": "Defines how the image fills the container",
         "frame-border": "Defines the thickness of the frame",
         "image-padding": "Inner padding",
-        "fallback": "图片加载失败时显示的组件。默认使用 NmorphIconAvatar"
+        "fallback": "图片加载失败或未提供 src 时显示的组件。默认使用 NmorphIconAvatar"
       },
       "slot": {
         "error": "Slot to display the load error"
@@ -934,8 +945,8 @@ export default {
         "subtitle": "限制同时显示的最大通知数量。"
       },
       "api": {
-        "notifications": "包含通知的数组",
-        "placement": "指定通知将在屏幕上出现的位置",
+        "notifications": "包含通知的数组。每条通知都可以覆盖 placement",
+        "placement": "未定义 placement 的通知所使用的默认位置",
         "z-index": "定义通知的堆叠顺序",
         "quantity": "同时可以在屏幕上显示的最大通知数量"
       },

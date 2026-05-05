@@ -4,6 +4,7 @@ export interface INmorphNotification extends INmorphAlertProps {
   id?: string;
   duration?: number;
   width?: string;
+  placement?: TNmorphNotificationPlacement;
 }
 
 export enum NmorphNotificationPlacement {
@@ -14,3 +15,5 @@ export enum NmorphNotificationPlacement {
   'bottom-center' = 'bottom-center',
   'bottom-right' = 'bottom-right',
 }
+
+export type TNmorphNotificationPlacement = keyof typeof NmorphNotificationPlacement;

@@ -9,6 +9,17 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v2.1.0</h3>
+            <ul>
+              <li>{{ $t("changelog-page.changelog.items.avatar-name-initials") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.notification-provider-placement-per-notification") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.notification-provider-quantity-leave-style") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.button-transparent-hover-icons") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.color-picker-fixed-value-width") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.sandbox-expanded-examples") }}</li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.0.3</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.scroll-default-height-100") }}</li>
@@ -140,6 +151,7 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
             <li>{{ $t("changelog-page.roadmap.items.accessibility") }}</li>
             <li>{{ $t("changelog-page.roadmap.items.test-coverage") }}</li>
             <li>{{ $t("changelog-page.roadmap.items.theming-v2") }}</li>
+            <li>{{ $t("changelog-page.roadmap.items.color-picker-formats") }}</li>
             <li>{{ $t("changelog-page.roadmap.items.performance") }}</li>
           </ul>
         </section>

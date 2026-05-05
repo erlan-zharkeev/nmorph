@@ -1,28 +1,91 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import {
-  NmorphTextInput,
-  NmorphSelectButton,
-  NmorphSelectButtonItem,
-  NmorphOTPInput,
-  NmorphColorPicker,
+  NmorphAutocomplete,
   NmorphCheckbox,
-  NmorphSwitch,
-  NmorphSlider,
+  NmorphCheckboxGroup,
+  NmorphColorPicker,
+  NmorphDatePicker,
   NmorphFileUpload,
   NmorphForm,
   NmorphFormItem,
+  NmorphIconSearch,
+  NmorphNumberInput,
+  NmorphOTPInput,
+  NmorphRadio,
+  NmorphRadioGroup,
+  NmorphSelect,
+  NmorphSelectButton,
+  NmorphSelectButtonItem,
+  NmorphSelectOption,
+  NmorphSlider,
+  NmorphSwitch,
+  NmorphTextInput,
 } from '@nmorph/nmorph-ui-kit'
-import type { NmorphFormValueType } from '@nmorph/nmorph-ui-kit'
+import type { NmorphFormValueType, NmorphSelectModelValueType } from '@nmorph/nmorph-ui-kit'
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
 
-const textValue = ref('')
-const selectValue = ref('on')
+const textValue = ref('Nmorph')
+const passwordValue = ref('secret-value')
+const selectValue = ref<NmorphSelectModelValueType>('draft')
+const multiSelectValue = ref<NmorphSelectModelValueType>(['design', 'build'])
+const optionSelectValue = ref<NmorphSelectModelValueType>('large')
+const autocompleteValue = ref('')
+const numberValue = ref(4)
+const rightNumberValue = ref(10)
+const selectButtonValue = ref('on')
 const otpValue = ref('')
+const alphaOtpValue = ref('A1')
 const colorValue = ref('#6366f1')
 const checked = ref(false)
-const switched = ref(false)
+const checkboxGroupValue = ref(['mail'])
+const checkboxButtonGroupValue = ref(['read'])
+const radioValue = ref('button')
+const radioStyleValue = ref('standard')
+const switchValue = ref('enabled')
+const loadingSwitchValue = ref(true)
 const sliderValue = ref(40)
+const steppedSliderValue = ref(60)
+const dateValue = ref(new Date(2026, 4, 5))
+const datesValue = ref([new Date(2026, 4, 5), new Date(2026, 4, 12)])
+const rangeValue = ref([new Date(2026, 4, 5), new Date(2026, 4, 18)])
+const uploadedFiles = ref<File[]>([])
+const unsupportedType = ref('')
+
+const selectOptions = [
+  { value: 'draft', label: 'Draft' },
+  { value: 'review', label: 'Review' },
+  { value: 'published', label: 'Published' },
+]
+
+const multiSelectOptions = [
+  { value: 'design', label: 'Design' },
+  { value: 'build', label: 'Build' },
+  { value: 'test', label: 'Test' },
+]
+
+const autocompleteList = [
+  { value: 'Almaty', country: 'Kazakhstan' },
+  { value: 'Astana', country: 'Kazakhstan' },
+  { value: 'Amsterdam', country: 'Netherlands' },
+  { value: 'Austin', country: 'United States' },
+]
+
+const checkboxOptions = [
+  { id: 'mail', label: 'Email' },
+  { id: 'sms', label: 'SMS' },
+  { id: 'push', label: 'Push', disabled: true },
+]
+
+const radioOptions = [
+  { value: 'button', label: 'Button' },
+  { value: 'card', label: 'Card' },
+  { value: 'table', label: 'Table', disabled: true },
+]
+
+const simulateSearch = () => new Promise((resolve) => {
+  setTimeout(resolve, 250)
+})
 
 const formValue = ref<NmorphFormValueType>({
   email: {
@@ -45,26 +108,88 @@ const formValue = ref<NmorphFormValueType>({
 <template>
   <div class="page">
     <SandboxSection title="NmorphTextInput">
-      <NmorphTextInput v-model="textValue" clearable placeholder="Type something" />
-      <p class="hint">value: {{ textValue || '—' }}</p>
+      <div class="grid">
+        <NmorphTextInput v-model="textValue" clearable placeholder="Default clearable">
+          <template #prepend-icon>
+            <NmorphIconSearch />
+          </template>
+        </NmorphTextInput>
+        <NmorphTextInput v-model="passwordValue" type-password placeholder="Password" height="thick" />
+        <NmorphTextInput model-value="Disabled value" disabled height="thin" />
+      </div>
+      <p class="hint">value: {{ textValue || 'empty' }}</p>
     </SandboxSection>
 
-    <SandboxSection title="NmorphFileUpload (i18n — switch lang to see)">
-      <NmorphFileUpload />
+    <SandboxSection title="NmorphSelect">
+      <div class="row">
+        <NmorphSelect v-model="selectValue" :options="selectOptions" no-element-placeholder="Select status" />
+        <NmorphSelect
+          v-model="multiSelectValue"
+          :options="multiSelectOptions"
+          value-required
+          height="thick"
+          no-element-placeholder="Select stages"
+        />
+        <NmorphSelect v-model="optionSelectValue" height="thin">
+          <NmorphSelectOption value="small" label="Small" />
+          <NmorphSelectOption value="medium" label="Medium" />
+          <NmorphSelectOption value="large" label="Large" />
+        </NmorphSelect>
+        <NmorphSelect model-value="" :options="selectOptions" loading />
+        <NmorphSelect model-value="draft" :options="selectOptions" disabled />
+      </div>
+      <p class="hint">selected: {{ selectValue }} / {{ multiSelectValue }} / {{ optionSelectValue }}</p>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphAutocomplete">
+      <div class="grid">
+        <NmorphAutocomplete
+          v-model="autocompleteValue"
+          :list="autocompleteList"
+          placeholder="Search city"
+          :action-callback="simulateSearch"
+          clearable
+        >
+          <template #default="{ scope }">
+            <span>{{ scope.value }} · {{ scope.country }}</span>
+          </template>
+        </NmorphAutocomplete>
+        <NmorphAutocomplete model-value="Disabled" :list="autocompleteList" disabled />
+      </div>
+      <p class="hint">value: {{ autocompleteValue || 'empty' }}</p>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphNumberInput">
+      <div class="row">
+        <NmorphNumberInput v-model="numberValue" :min="0" :max="10" :step="1" />
+        <NmorphNumberInput v-model="rightNumberValue" :min="0" :max="20" :step="2" action-btn-position-right height="thick" />
+        <NmorphNumberInput :model-value="3" disabled />
+      </div>
+      <p class="hint">values: {{ numberValue }} / {{ rightNumberValue }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphSelectButton">
-      <NmorphSelectButton v-model="selectValue">
-        <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
-        <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
-        <NmorphSelectButtonItem value="maybe">Maybe</NmorphSelectButtonItem>
-      </NmorphSelectButton>
-      <p class="hint">value: {{ selectValue }}</p>
+      <div class="stack">
+        <NmorphSelectButton v-model="selectButtonValue">
+          <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
+          <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
+          <NmorphSelectButtonItem value="maybe" disabled>Maybe</NmorphSelectButtonItem>
+        </NmorphSelectButton>
+        <NmorphSelectButton model-value="compact" height="thin">
+          <NmorphSelectButtonItem value="compact">Compact</NmorphSelectButtonItem>
+          <NmorphSelectButtonItem value="wide">Wide</NmorphSelectButtonItem>
+        </NmorphSelectButton>
+      </div>
+      <p class="hint">value: {{ selectButtonValue }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphOTPInput">
-      <NmorphOTPInput v-model="otpValue" />
-      <p class="hint">value: {{ otpValue || '—' }}</p>
+      <div class="stack">
+        <NmorphOTPInput v-model="otpValue" :length="6" mode="numeric" />
+        <NmorphOTPInput v-model="alphaOtpValue" :length="4" mode="alphanumeric" height="thin" autocapitalize="characters" />
+        <NmorphOTPInput model-value="1234" :length="4" disabled />
+      </div>
+      <p class="hint">value: {{ otpValue || 'empty' }} / {{ alphaOtpValue || 'empty' }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphColorPicker">
@@ -72,32 +197,96 @@ const formValue = ref<NmorphFormValueType>({
         <NmorphColorPicker v-model="colorValue" height="thin" />
         <NmorphColorPicker v-model="colorValue" show-value />
         <NmorphColorPicker v-model="colorValue" height="thick" show-value />
+        <NmorphColorPicker model-value="#22c55e" show-value disabled />
       </div>
       <p class="hint">value: {{ colorValue }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphCheckbox">
-      <NmorphCheckbox v-model="checked" label="Check me" />
-      <p class="hint">checked: {{ checked }}</p>
+      <div class="stack">
+        <div class="row">
+          <NmorphCheckbox v-model="checked" label="Single checkbox" />
+          <NmorphCheckbox model-value label="Checked disabled" disabled />
+          <NmorphCheckbox v-model="checked" design="button" label="Button checkbox" />
+        </div>
+        <NmorphCheckboxGroup v-model="checkboxGroupValue" :options="checkboxOptions" />
+        <NmorphCheckboxGroup v-model="checkboxButtonGroupValue" :options="checkboxOptions" design="button" direction="column" />
+      </div>
+      <p class="hint">checked: {{ checked }} / group: {{ checkboxGroupValue }} / buttons: {{ checkboxButtonGroupValue }}</p>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphRadio">
+      <div class="stack">
+        <NmorphRadioGroup v-model="radioValue" :options="radioOptions" />
+        <NmorphRadioGroup v-model="radioStyleValue" :options="radioOptions" style-type="radio-style" direction="column" />
+        <div class="row">
+          <NmorphRadio value="standalone" label="Standalone checked" checked />
+          <NmorphRadio value="disabled" label="Disabled" disabled />
+        </div>
+      </div>
+      <p class="hint">radio: {{ radioValue }} / {{ radioStyleValue }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphSwitch">
-      <NmorphSwitch v-model="switched" />
-      <p class="hint">value: {{ switched }}</p>
+      <div class="row">
+        <NmorphSwitch v-model="switchValue" active-value="enabled" inactive-value="disabled">
+          <template #bg-on>ON</template>
+          <template #bg-off>OFF</template>
+        </NmorphSwitch>
+        <NmorphSwitch v-model="loadingSwitchValue" loading />
+        <NmorphSwitch model-value="disabled" active-value="enabled" inactive-value="disabled" disabled />
+      </div>
+      <p class="hint">value: {{ switchValue }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphSlider">
-      <NmorphSlider v-model="sliderValue" />
-      <p class="hint">value: {{ sliderValue }}</p>
+      <div class="stack">
+        <NmorphSlider v-model="sliderValue" />
+        <NmorphSlider v-model="steppedSliderValue" :min="20" :max="100" :step="10" :show-tooltip="false" />
+        <NmorphSlider :model-value="30" disabled />
+      </div>
+      <p class="hint">values: {{ sliderValue }} / {{ steppedSliderValue }}</p>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphDatePicker">
+      <div class="row">
+        <NmorphDatePicker v-model="dateValue" placeholder="Date" />
+        <NmorphDatePicker v-model="datesValue" type="dates" placeholder="Dates" height="thin" />
+        <NmorphDatePicker v-model="rangeValue" type="daterange" placeholder="Range" height="thick" />
+        <NmorphDatePicker :model-value="dateValue" disabled />
+      </div>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphFileUpload">
+      <div class="stack">
+        <NmorphFileUpload
+          v-model="uploadedFiles"
+          multiple
+          button-text="Upload images"
+          :allowed-types="['jpg', 'jpeg', 'png', 'gif']"
+          @on-unsupported-file-type-error="unsupportedType = $event"
+        />
+        <NmorphFileUpload disabled button-text="Disabled upload" />
+      </div>
+      <p class="hint">files: {{ uploadedFiles.length }} / unsupported: {{ unsupportedType || 'none' }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphForm">
-      <NmorphForm :value="formValue">
-        <NmorphFormItem id="email" label="Email">
-          <NmorphTextInput v-model="(formValue.email.value as string)" placeholder="Enter email" autocomplete="email" />
+      <NmorphForm :value="formValue" validate-immediately>
+        <NmorphFormItem id="email" label="Email" autocomplete="email" static-error-box-space>
+          <NmorphTextInput
+            :model-value="String(formValue.email.value)"
+            placeholder="Enter email"
+            @update:model-value="formValue.email.value = $event"
+          />
         </NmorphFormItem>
-        <NmorphFormItem id="password" label="Password">
-          <NmorphTextInput v-model="(formValue.password.value as string)" type="password" placeholder="Enter password" />
+        <NmorphFormItem id="password" label="Password" :show-validation-icon="false">
+          <NmorphTextInput
+            :model-value="String(formValue.password.value)"
+            type-password
+            placeholder="Enter password"
+            @update:model-value="formValue.password.value = $event"
+          />
         </NmorphFormItem>
       </NmorphForm>
     </SandboxSection>
@@ -105,7 +294,32 @@ const formValue = ref<NmorphFormValueType>({
 </template>
 
 <style scoped>
-.page { display: grid; gap: 24px; }
-.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.hint { margin: 0; font-size: 13px; color: var(--nmorph-text-secondary); }
+.page {
+  display: grid;
+  gap: 24px;
+}
+
+.stack {
+  display: grid;
+  gap: 12px;
+}
+
+.row,
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.grid > * {
+  min-width: 220px;
+  flex: 1 1 220px;
+}
+
+.hint {
+  margin: 0;
+  font-size: 13px;
+  color: var(--nmorph-semi-contrast-text-color);
+}
 </style>
