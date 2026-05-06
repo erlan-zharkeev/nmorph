@@ -419,7 +419,7 @@ const localePath = useLocalePath();
           <NmorphCard>
             <template #header>Callout</template>
             <div class="overview-component-content">
-              <NmorphCallout title="Attention" content="Important content" type="warning" />
+              <NmorphCallout content="Successful content" type="success" />
             </div>
           </NmorphCard>
         </NuxtLink>

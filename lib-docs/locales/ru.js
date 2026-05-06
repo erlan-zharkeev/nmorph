@@ -78,7 +78,7 @@ export default {
       "css-variables-content": "Библиотека предоставляет следующие CSS-переменные, которые можно использовать в своих стилях.",
       "css-variables-theme-derived": "Переменные темы (задаются для каждой темы)",
       "css-variables-auto-generated": "Дополнительные переменные контрастности текста (настраиваются для каждой темы)",
-      "css-variables-static": "Статические переменные (одинаковы для всех тем)",
+      "css-variables-static": "Дополнительные цветовые переменные темы (задаются для каждой темы)",
       "css-var-main": "Основной цвет фона",
       "css-var-dark-shade": "Тёмный теневой оттенок",
       "css-var-light-shade": "Светлый теневой оттенок",
@@ -890,10 +890,15 @@ export default {
     },
     callout: {
       "basic-usage": {
+        "no-title-content": "Полезный контент без заголовка.",
         "info-title": "Информация",
         "info-content": "Полезный контент для читателя.",
         "warning-title": "Внимание",
         "warning-content": "Важный контент для читателя.",
+        "success-title": "Успех",
+        "success-content": "Успешный контент для читателя.",
+        "error-title": "Ошибка",
+        "error-content": "Контент ошибки для читателя.",
       },
       api: {
         type: "Определяет тип callout",

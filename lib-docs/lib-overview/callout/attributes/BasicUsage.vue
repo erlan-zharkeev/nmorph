@@ -4,8 +4,11 @@ import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
 const templateData = `
 <template>
+  <NmorphCallout content="Useful content without a title." />
   <NmorphCallout title="Information" content="Useful content for the reader." />
   <NmorphCallout type="warning" title="Attention" content="Important content for the reader." />
+  <NmorphCallout type="success" title="Success" content="Successful content for the reader." />
+  <NmorphCallout type="error" title="Error" content="Error content for the reader." />
 </template>
 `;
 
@@ -27,11 +30,22 @@ const code = [scriptData, templateData, cssData];
     <Attribute :header="$t('overview.basic-usage')" :codeToCopy="code">
       <template #overview>
         <div class="callout-basic-usage-overview">
+          <NmorphCallout :content="$t('overview.callout.basic-usage.no-title-content')" />
           <NmorphCallout :title="$t('overview.callout.basic-usage.info-title')" :content="$t('overview.callout.basic-usage.info-content')" />
           <NmorphCallout
             type="warning"
             :title="$t('overview.callout.basic-usage.warning-title')"
             :content="$t('overview.callout.basic-usage.warning-content')"
+          />
+          <NmorphCallout
+            type="success"
+            :title="$t('overview.callout.basic-usage.success-title')"
+            :content="$t('overview.callout.basic-usage.success-content')"
+          />
+          <NmorphCallout
+            type="error"
+            :title="$t('overview.callout.basic-usage.error-title')"
+            :content="$t('overview.callout.basic-usage.error-content')"
           />
         </div>
       </template>

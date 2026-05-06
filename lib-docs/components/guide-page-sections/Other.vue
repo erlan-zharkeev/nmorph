@@ -50,16 +50,19 @@ const utilsClasses = [
 
 .docs-utility-list__row {
   display: grid;
-  grid-template-columns: minmax(230px, 34%) 1fr;
+  grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
   gap: 12px;
 }
 
 .docs-utility-list dt,
 .docs-utility-list dd {
+  min-width: 0;
   margin: 0;
+  overflow-wrap: anywhere;
 }
 
 .docs-utility-list code {
+  white-space: normal;
   word-break: break-word;
 }
 

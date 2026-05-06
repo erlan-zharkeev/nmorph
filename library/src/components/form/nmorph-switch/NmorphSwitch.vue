@@ -3,7 +3,7 @@ import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
 import { body2, disabled, focusOutline, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import { NmorphIcon, NmorphIconLoader } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
 type NmorphSwitchModelType = boolean | string | number;
@@ -167,18 +167,28 @@ const commonCSS = css`
       scale: 0.95;
     }
   }
-`
+`;
 
 const StyledComponent = styled.div`
   ${commonCSS}
-`
+`;
 </script>
 
 <template>
   <StyledComponent :class="modifiers">
     <div class="nmorph-switch__content" @click="changeHandler">
-      <input ref="inputDOMRef" :id="id" :name="name" type="checkbox" :value="initialValue"
-        :disabled="props.disabled" :tabindex="tabindex" class="nmorph-native-input" @focus="focusHandler" @blur="blurHandler" />
+      <input
+        :id="id"
+        ref="inputDOMRef"
+        :name="name"
+        type="checkbox"
+        :value="initialValue"
+        :disabled="props.disabled"
+        :tabindex="tabindex"
+        class="nmorph-native-input"
+        @focus="focusHandler"
+        @blur="blurHandler"
+      />
       <div class="nmorph-switch__bg-content" :class="{ 'nmorph-switch__bg-content--enable': initialValue }">
         <slot v-if="initialValue" name="bg-on" />
         <slot v-else name="bg-off" />

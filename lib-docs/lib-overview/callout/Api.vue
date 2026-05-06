@@ -5,14 +5,13 @@ import type { IAttributesTableData, ISlotsTableData, IVariablesTableData } from 
 const attributesData: IAttributesTableData[] = [
   {
     name: "type",
-    type: "'info' | 'warning'",
+    type: "'info' | 'warning' | 'success' | 'error'",
     default: "info",
   },
   {
     name: "title",
     type: "String",
-    default: "-",
-    required: true,
+    default: "''",
   },
   {
     name: "content",

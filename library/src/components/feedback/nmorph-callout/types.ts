@@ -1,1 +1,1 @@
-export type NmorphCalloutType = 'info' | 'warning';
+export type NmorphCalloutType = 'info' | 'warning' | 'success' | 'error';

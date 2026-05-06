@@ -78,7 +78,7 @@ export default {
       "css-variables-content": "The library exposes the following CSS custom properties that you can use in your own styles.",
       "css-variables-theme-derived": "Theme-derived variables (set per theme)",
       "css-variables-auto-generated": "Additional text contrast variables (configurable per theme)",
-      "css-variables-static": "Static variables (same across themes)",
+      "css-variables-static": "Additional theme color variables (set per theme)",
       "css-var-main": "Main background color",
       "css-var-dark-shade": "Dark shadow shade",
       "css-var-light-shade": "Light shadow shade",
@@ -890,10 +890,15 @@ export default {
     },
     "callout": {
       "basic-usage": {
+        "no-title-content": "Useful content without a title.",
         "info-title": "Information",
         "info-content": "Useful content for the reader.",
         "warning-title": "Attention",
-        "warning-content": "Important content for the reader."
+        "warning-content": "Important content for the reader.",
+        "success-title": "Success",
+        "success-content": "Successful content for the reader.",
+        "error-title": "Error",
+        "error-content": "Error content for the reader."
       },
       "api": {
         "type": "Defines the callout type",

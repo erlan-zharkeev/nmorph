@@ -109,7 +109,7 @@ export interface INmorphOptions {
   i18n?: INmorphApplyTranslation;
 }
 
-export type NmorphThemeOptionsType = Record<string, INmorphThemeOptions>;
+export type NmorphThemeOptionsType = Record<string, INmorphThemeColors>;
 
 export interface INmorphStaticColors {
   info?: string;
@@ -138,7 +138,7 @@ export interface INmorphDynamicColors {
   lightShade?: string;
 }
 
-export interface INmorphThemeOptions extends INmorphDynamicColors, INmorphStaticColors {
+export interface INmorphThemeColors extends INmorphDynamicColors, INmorphStaticColors {
   main?: string;
 }
 

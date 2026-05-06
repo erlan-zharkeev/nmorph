@@ -252,17 +252,20 @@ const cssVariableGroups = computed(() => [
 
 .docs-token-list__row {
   display: grid;
-  grid-template-columns: minmax(230px, 34%) 1fr;
+  grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
   gap: 12px;
   align-items: start;
 }
 
 .docs-token-list dt,
 .docs-token-list dd {
+  min-width: 0;
   margin: 0;
+  overflow-wrap: anywhere;
 }
 
 .docs-token-list code {
+  white-space: normal;
   word-break: break-word;
 }
 

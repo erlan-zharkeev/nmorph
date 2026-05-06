@@ -82,8 +82,11 @@ const showStickyNotification = () => {
 
     <SandboxSection title="NmorphCallout">
       <div class="stack">
+        <NmorphCallout content="Useful content without a title." />
         <NmorphCallout title="Information" content="Useful content for this section." />
         <NmorphCallout type="warning" title="Attention" content="Important content for this section." />
+        <NmorphCallout type="success" title="Success" content="Successful content for this section." />
+        <NmorphCallout type="error" title="Error" content="Error content for this section." />
       </div>
     </SandboxSection>
 

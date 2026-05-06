@@ -78,7 +78,7 @@ export default {
       "css-variables-content": "库提供以下 CSS 自定义属性，可在自定义样式中使用。",
       "css-variables-theme-derived": "主题派生变量（按主题设置）",
       "css-variables-auto-generated": "附加文字对比度变量（可按主题配置）",
-      "css-variables-static": "静态变量（所有主题通用）",
+      "css-variables-static": "附加主题颜色变量（按主题设置）",
       "css-var-main": "主背景色",
       "css-var-dark-shade": "深色阴影",
       "css-var-light-shade": "浅色阴影",
@@ -888,10 +888,15 @@ export default {
     },
     "callout": {
       "basic-usage": {
+        "no-title-content": "没有标题的有用内容。",
         "info-title": "信息",
         "info-content": "给读者的有用内容。",
         "warning-title": "注意",
-        "warning-content": "给读者的重要内容。"
+        "warning-content": "给读者的重要内容。",
+        "success-title": "成功",
+        "success-content": "给读者的成功内容。",
+        "error-title": "错误",
+        "error-content": "给读者的错误内容。"
       },
       "api": {
         "type": "定义 callout 类型",

@@ -5,15 +5,18 @@ import type { NmorphCalloutType } from './types';
 
 interface INmorphProps {
   type?: NmorphCalloutType;
-  title: string;
+  title?: string;
   content: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   type: 'info',
+  title: '',
 });
 
 const commonCSS = css`
+  --callout-color: var(--nmorph-accent-color);
+
   position: relative;
   padding: 8px 12px;
   margin-bottom: 8px;
@@ -26,7 +29,7 @@ const commonCSS = css`
     left: 0;
     width: 3px;
     height: 100%;
-    background: var(--nmorph-accent-color);
+    background: var(--callout-color);
     content: '';
   }
 
@@ -36,16 +39,21 @@ const commonCSS = css`
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--nmorph-accent-color);
+    background: var(--callout-color);
     opacity: 0.2;
     content: '';
   }
 
   &.nmorph-callout--warning {
-    &::before,
-    &::after {
-      background: var(--nmorph-warn-color);
-    }
+    --callout-color: var(--nmorph-warn-color);
+  }
+
+  &.nmorph-callout--success {
+    --callout-color: var(--nmorph-success-color);
+  }
+
+  &.nmorph-callout--error {
+    --callout-color: var(--nmorph-error-color);
   }
 
   .nmorph-callout__title {
@@ -72,7 +80,7 @@ const StyledComponent = styled.div`
 
 <template>
   <StyledComponent class="nmorph-callout" :class="`nmorph-callout--${props.type}`">
-    <div class="nmorph-callout__title">{{ props.title }}</div>
+    <div v-if="props.title" class="nmorph-callout__title">{{ props.title }}</div>
     <div class="nmorph-callout__content" v-html="props.content" />
   </StyledComponent>
 </template>
