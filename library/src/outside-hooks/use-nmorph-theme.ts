@@ -5,6 +5,8 @@ import {
   INmorphOtherThemeOptions,
   INmorphThemeOptions,
   INmorphThemeInstance,
+  INmorphThemeColors,
+  NmorphThemeOptionsType,
 } from '@/main';
 import { readonly, ref } from 'vue';
 import packageData from '../../package.json';
@@ -130,28 +132,33 @@ export const useNmorphTheme = (customOptions?: INmorphThemeOptions): INmorphThem
     other: customOptions?.other ?? DEFAULT_OPTIONS.other,
   };
 
-  const getDynamicColorVariables = (mainBgColor: string): INmorphColorVariable[] => {
+  const getDynamicThemeColors = (mainBgColor: string): Pick<INmorphThemeColors, 'darkShade' | 'lightShade'> => {
     try {
       const validBgColor = asHexColor(mainBgColor);
-      const darkerColor = shadeColor(validBgColor, options.darkShadeGeneratorCoefficient);
-      const lighterColor = shadeColor(validBgColor, options.lightShadeGeneratorCoefficient);
-      return [
-        { name: '--nmorph-dark-shade-color', color: darkerColor },
-        { name: '--nmorph-light-shade-color', color: lighterColor },
-      ];
+      return {
+        darkShade: shadeColor(validBgColor, options.darkShadeGeneratorCoefficient),
+        lightShade: shadeColor(validBgColor, options.lightShadeGeneratorCoefficient),
+      };
     } catch (e) {
       console.error(e instanceof Error ? e.message : e);
-      return [];
+      return {};
     }
   };
 
-  const getStaticColorVariables = (colors: INmorphStaticColors): INmorphColorVariable[] => {
-    return Object.entries(colors).map(([key, color]) => {
-      return {
-        name: `--nmorph-${camelToKebab(key)}-color`,
-        color,
-      };
-    });
+  const getDynamicColorVariables = (mainBgColor: string): INmorphColorVariable[] => {
+    const dynamicColors = getDynamicThemeColors(mainBgColor);
+    return getStaticColorVariables(dynamicColors);
+  };
+
+  const getStaticColorVariables = (colors: INmorphStaticColors | INmorphThemeColors): INmorphColorVariable[] => {
+    return Object.entries(colors)
+      .filter(([, color]) => typeof color === 'string')
+      .map(([key, color]) => {
+        return {
+          name: `--nmorph-${camelToKebab(key)}-color`,
+          color,
+        };
+      });
   };
 
   const generateVariablesAsString = (themes: NmorphThemeMapType, otherVariables: INmorphOtherThemeOptions): string => {
@@ -183,26 +190,49 @@ export const useNmorphTheme = (customOptions?: INmorphThemeOptions): INmorphThem
     `;
   };
 
-  const themeMap: NmorphThemeMapType = {};
-  Object.entries(options.themes).forEach(([theme, colors]) => {
-    themeMap[theme] = [];
-    const darkShade = Boolean(colors.darkShade);
-    const lightShade = Boolean(colors.lightShade);
-    const main = Boolean(colors.main);
-    const computeDynamicColors = main && !darkShade && !lightShade;
-    if (computeDynamicColors && colors.main) themeMap[theme] = getDynamicColorVariables(colors.main);
-    themeMap[theme] = [...themeMap[theme], ...getStaticColorVariables(colors)];
-  });
+  const createThemeMap = (themes: NmorphThemeOptionsType): NmorphThemeMapType => {
+    const themeMap: NmorphThemeMapType = {};
+
+    Object.entries(themes).forEach(([theme, colors]) => {
+      themeMap[theme] = [];
+      const darkShade = Boolean(colors.darkShade);
+      const lightShade = Boolean(colors.lightShade);
+      const main = Boolean(colors.main);
+      const computeDynamicColors = main && !darkShade && !lightShade;
+      if (computeDynamicColors && colors.main) themeMap[theme] = getDynamicColorVariables(colors.main);
+      themeMap[theme] = [...themeMap[theme], ...getStaticColorVariables(colors)];
+    });
+
+    return themeMap;
+  };
+
+  let themeMap = createThemeMap(options.themes);
 
   const style = document.createElement('style');
   style.type = 'text/css';
   style.innerHTML = generateVariablesAsString(themeMap, options.other);
   document.head.appendChild(style);
 
+  const updateThemeStyles = () => {
+    themeMap = createThemeMap(options.themes);
+    style.innerHTML = generateVariablesAsString(themeMap, options.other);
+  };
+
   const setTheme = (theme: string) => {
     currentTheme.value = theme;
     html.setAttribute(THEME_KEY, currentTheme.value);
     options.saveCurrentThemeToLS ? localStorage.setItem(THEME_KEY, theme) : localStorage.removeItem(THEME_KEY);
+  };
+
+  const setThemeColors = (theme: string, colors: INmorphThemeColors) => {
+    const dynamicColors = colors.main && !colors.darkShade && !colors.lightShade ? getDynamicThemeColors(colors.main) : {};
+    options.themes[theme] = { ...options.themes[theme], ...colors, ...dynamicColors };
+    updateThemeStyles();
+  };
+
+  const applyTheme = (theme: string, colors?: INmorphThemeColors) => {
+    if (colors) setThemeColors(theme, colors);
+    setTheme(theme);
   };
 
   const currentTheme = ref(options.defaultTheme);
@@ -217,5 +247,12 @@ export const useNmorphTheme = (customOptions?: INmorphThemeOptions): INmorphThem
 
   setTheme(currentTheme.value);
   const data = options as INmorphThemeOptions;
-  return { setTheme, currentTheme: readonly(currentTheme), data, getDynamicColorVariables };
+  return {
+    setTheme,
+    setThemeColors,
+    applyTheme,
+    currentTheme: readonly(currentTheme),
+    data,
+    getDynamicColorVariables,
+  };
 };

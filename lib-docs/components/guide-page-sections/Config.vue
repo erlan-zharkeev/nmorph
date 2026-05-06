@@ -19,44 +19,43 @@ app.mount("#app");
 const theme = `
 const config = {
   theme: {
+    defaultTheme: 'dark',
+    saveCurrentThemeToLS: true,
     themes: {
-      dark: {
-        main: '#1c1f21', // String(hex color) // ${t('guide-page.config.main-var')}
-        darkShade: '#0f1112', // String(hex color) // ${t('guide-page.config.shade-var')}
-        lightShade: '#292d30', // String(hex color) // ${t('guide-page.config.shade-var')}
-        text: '#778288', // String(hex color)
-        scrollThumb: '#778288',
-        accent: '#006cb6', // String(hex color)
-        focusText: '#ffffff', // String(hex color)
-        placeholderText: '#575757', // String(hex color)
-        semiContrastText: '#9caab0', // String(hex color)
-        contrastText: '#c3cdd1', // String(hex color)
-        info: '#d4e5edbb', // String(hex color)
-        infoText: '#506c80', // String(hex color)
-        success: '#67C23A', // String(hex color)
-        successText: '#0b5b1d', // String(hex color)
-        error: '#F56C6C', // String(hex color)
-        errorText: '#8d3333', // String(hex color)
-        warn: '#E6A21C', // String(hex color)
-        warnText: '#7a6712', // String(hex color)
-        gray: '#c9d2dee6', // String(hex color)
-        white: '#ffffff', // String(hex color)
-        black: '#000000', // String(hex color)
-        overlay: '#00000095' // String(hex color)
+      light: {
+        main: '#e9ecec',
+        text: '#687b9e',
+        accent: '#4a90e2',
       },
-      light: {...}
-      ... // ${t('guide-page.config.rest-themes')}
+      dark: {
+        main: '#1c1f21',
+        text: '#778288',
+        accent: '#006cb6',
+      },
     },
-    defaultTheme: 'dark', // String // ${t('guide-page.config.default-theme')}
-    saveCurrentThemeToLS: true, // Boolean // ${t('guide-page.config.ls')}
-    darkShadeGeneratorCoefficient: -45, // Number; // ${t('guide-page.config.dark-shade')}
-    lightShadeGeneratorCoefficient: 45, // Number; // ${t('guide-page.config.light-shade')}
+    darkShadeGeneratorCoefficient: -45,
+    lightShadeGeneratorCoefficient: 45,
     other: {
-      baseShadowWidth: '3.5px', // String // ${t('guide-page.config.shadow-width')}
-      baseShadowBlurCoefficient: '2', // String // ${t('guide-page.config.shadow-blur')}
+      baseShadowWidth: '3.5px',
+      baseShadowBlurCoefficient: '2',
     },
   }
 };
+`;
+
+const runtimeTheme = `
+const nmorph = useNmorph();
+
+nmorph.theme.setTheme('dark');
+
+nmorph.theme.setThemeColors('dark', {
+  main: '#20242a',
+  accent: '#ff5a7a',
+});
+
+nmorph.theme.applyTheme('light', {
+  accent: '#4a90e2',
+});
 `;
 
 const i18n = `
@@ -203,6 +202,10 @@ const cssVariableGroups = computed(() => [
       <NmorphCallout type='warning' :title="$t('attention')" :content="$t('guide-page.config.auto-generation')" />
       <code-example lang="javascript">{{
         theme
+      }}</code-example>
+      <p class="section-paragraph" v-html="$t('guide-page.config.theme-runtime')" />
+      <code-example lang="javascript">{{
+        runtimeTheme
       }}</code-example>
     </div>
     <div class="section-element nmorph--shadow-inset">

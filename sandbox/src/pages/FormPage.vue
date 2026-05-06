@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import {
   NmorphAutocomplete,
   NmorphCheckbox,
@@ -21,6 +21,7 @@ import {
   NmorphSlider,
   NmorphSwitch,
   NmorphTextInput,
+  useNmorph,
 } from '@nmorph/nmorph-ui-kit'
 import type { INmorphCustomFileData, NmorphFormValueType, NmorphSelectModelValueType } from '@nmorph/nmorph-ui-kit'
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
@@ -38,6 +39,8 @@ const selectButtonValue = ref('on')
 const otpValue = ref('')
 const alphaOtpValue = ref('A1')
 const colorValue = ref('#6366f1')
+const runtimeMainColor = ref('#1c1f21')
+const runtimeAccentColor = ref('#006cb6')
 const checked = ref(false)
 const checkboxGroupValue = ref(['mail'])
 const checkboxButtonGroupValue = ref(['read'])
@@ -57,6 +60,7 @@ const uploadedFiles = ref<INmorphCustomFileData[]>([
   },
 ])
 const unsupportedType = ref('')
+const { theme } = useNmorph()
 
 const selectOptions = [
   { value: 'draft', label: 'Draft' },
@@ -108,6 +112,23 @@ const formValue = ref<NmorphFormValueType>({
       { pattern: /^.{8,}$/, error: 'Minimum 8 characters' },
     ],
   },
+})
+
+watch(
+  () => theme.currentTheme.value,
+  (themeName) => {
+    runtimeMainColor.value = theme.data.themes?.[themeName]?.main || runtimeMainColor.value
+    runtimeAccentColor.value = theme.data.themes?.[themeName]?.accent || runtimeAccentColor.value
+  },
+  { immediate: true }
+)
+
+watch(runtimeMainColor, (main) => {
+  theme.setThemeColors(theme.currentTheme.value, { main })
+})
+
+watch(runtimeAccentColor, (accent) => {
+  theme.setThemeColors(theme.currentTheme.value, { accent })
 })
 </script>
 
@@ -204,6 +225,15 @@ const formValue = ref<NmorphFormValueType>({
     </SandboxSection>
 
     <SandboxSection title="NmorphColorPicker">
+      <div class="stack">
+        <div class="row">
+          <NmorphColorPicker v-model="runtimeMainColor" show-value />
+          <NmorphColorPicker v-model="runtimeAccentColor" show-value />
+        </div>
+        <p class="hint">
+          runtime theme: {{ theme.currentTheme.value }} / main {{ runtimeMainColor }} / accent {{ runtimeAccentColor }}
+        </p>
+      </div>
       <div class="row">
         <NmorphColorPicker v-model="colorValue" height="thin" />
         <NmorphColorPicker v-model="colorValue" show-value display-format='rgb' />

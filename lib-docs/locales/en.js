@@ -67,8 +67,9 @@ export default {
       "light-shade": "Light shadow depth coefficient, works only with dynamic shadow generation approach",
       "shadow-width": "Shadow distance",
       "shadow-blur": "Shadow blur",
-      "theme-explained": "You can pass your custom variables into the theme object for detailed theme customization.<br />Below is an example of the default theme object.",
-      "auto-generation": "There are two approaches to theme customization.<ul><li>1) Automatic shadow generation. You only need to pass the main color into the theme object. Then, the darkShade and lightShade variables will be generated automatically. Other variables will not be affected and should be added manually. You can also adjust shadow depth coefficients using darkShadeGeneratorCoefficient and lightShadeGeneratorCoefficient variables. These will affect shadows only with this (dynamic) approach.</li><li>2) Each variable must be manually added for each theme.</li>",
+      "theme-explained": "Pass theme colors during library installation. The minimum useful setup is main, text, and accent for each theme.",
+      "auto-generation": "If a theme has main but no darkShade and lightShade, Nmorph generates the shadow colors automatically. Pass darkShade and lightShade manually when you need exact values.",
+      "theme-runtime": "Use the runtime API when colors come from controls such as a color picker. Runtime colors update the managed Nmorph style tag and are not written into inline html style attributes.",
       "main-var": "To automatically generate darkShade and lightShade, just pass this variable.",
       "shade-var": "Will be automatically calculated if not mutated directly and passed via the main variable.",
       "i18n-content": "For proper i18n functionality, ensure that you connect i18n before the library. Currently, three locales are available: en, zh, ru.<p>The default locale is en. Import only the locales you need.</p><p>If the locales are missing, you need to add your own. The locale property will overwrite the locale from i18n passed above.</p>",
@@ -121,6 +122,9 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "callout-status-types": "NmorphCallout title is now optional and the component supports success and error status colors.",
+        "theme-runtime-api": "Added runtime theme APIs: `setThemeColors` and `applyTheme` update the managed Nmorph style tag without writing inline styles to html.",
+        "theme-options-typing": "Cleaned up theme typings so install options and per-theme color options are typed separately, and missing theme config is handled safely.",
         "callout-component": "Added NmorphCallout to the library, docs, component overview, and sandbox.",
         "select-button-fill": "NmorphSelectButton now supports the `fill` prop and can stretch its items across the container width.",
         "badge-size": "NmorphBadge now supports the `size` prop with tiny, extra-small, and base variants.",

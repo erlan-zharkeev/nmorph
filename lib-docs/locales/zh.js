@@ -67,8 +67,9 @@ export default {
       "light-shade": "浅色阴影深度系数，仅在动态阴影生成方法下有效",
       "shadow-width": "阴影距离",
       "shadow-blur": "阴影模糊",
-      "theme-explained": "您可以将自定义变量传递到 theme 对象中，以便进行详细的主题定制。<br />下面是默认主题对象的示例。",
-      "auto-generation": "主题定制有两种方法。<ul><li>1) 自动生成阴影。只需将主颜色传递到主题对象中。然后，darkShade 和 lightShade 变量将自动生成。其他变量将不会受到影响，需要手动添加。您还可以使用 darkShadeGeneratorCoefficient 和 lightShadeGeneratorCoefficient 变量调整阴影深度系数。仅在此（动态）方法下，阴影才会受到影响。</li><li>2) 每个变量都必须为每个主题手动添加。</li>",
+      "theme-explained": "在安装库时传入主题颜色。通常每个主题至少配置 main、text 和 accent。",
+      "auto-generation": "如果主题有 main，但没有 darkShade 和 lightShade，Nmorph 会自动生成阴影颜色。需要精确值时，请手动传入 darkShade 和 lightShade。",
+      "theme-runtime": "当颜色来自 color picker 等控件时，请使用 runtime API。Runtime 颜色会更新 Nmorph 管理的 style 标签，不会写入 html 的 inline style 属性。",
       "main-var": "要自动生成 darkShade 和 lightShade，只需传递此变量。",
       "shade-var": "如果不直接修改并通过 main 变量传递，它将自动计算。",
       "i18n-content": "为了确保 i18n 正常工作，请确保在库之前连接 i18n。目前提供三种语言环境：en、zh、ru。<p>默认语言环境为 en。仅导入您需要的语言环境。</p><p>如果缺少语言环境，则需要添加您自己的。locale 属性将覆盖上面传递的 i18n locale。</p>",
@@ -119,6 +120,9 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "callout-status-types": "NmorphCallout 的 title 现在可选，并支持 success 与 error 状态颜色。",
+        "theme-runtime-api": "新增 runtime 主题 API：`setThemeColors` 和 `applyTheme` 会更新 Nmorph 管理的 style 标签，不会向 html 写入 inline styles。",
+        "theme-options-typing": "整理了主题类型：安装选项与单个主题的颜色选项分开类型化，并安全处理缺失的 theme config。",
         "callout-component": "新增 NmorphCallout，并加入库导出、文档、组件概览和 sandbox。",
         "select-button-fill": "NmorphSelectButton 现在支持 `fill` prop，可让选项撑满容器宽度。",
         "badge-size": "NmorphBadge 现在支持 `size` prop，提供 tiny、extra-small 和 base 三种尺寸。",

@@ -168,6 +168,8 @@ export interface INmorphApplyTranslation {
 
 export interface INmorphThemeInstance {
   setTheme: (theme: string) => void;
+  setThemeColors: (theme: string, colors: INmorphThemeColors) => void;
+  applyTheme: (theme: string, colors?: INmorphThemeColors) => void;
   currentTheme: Readonly<Ref<string>>;
   data: INmorphThemeOptions;
   getDynamicColorVariables: (mainBgColor: string) => INmorphColorVariable[];
