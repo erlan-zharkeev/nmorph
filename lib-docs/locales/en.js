@@ -121,6 +121,11 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "callout-component": "Added NmorphCallout to the library, docs, component overview, and sandbox.",
+        "select-button-fill": "NmorphSelectButton now supports the `fill` prop and can stretch its items across the container width.",
+        "badge-size": "NmorphBadge now supports the `size` prop with tiny, extra-small, and base variants.",
+        "guide-css-variables-utilities": "Updated the Guide CSS variables reference and simplified utility class documentation to class names and purpose.",
+        "docs-mobile-menu-fit-content": "Docs side menu now sizes to its content and the mobile header alignment was refined.",
         "avatar-name-initials": "NmorphAvatar now supports a `name` prop and renders generated initials when no image is available. Avatar docs were updated with API and usage examples.",
         "notification-provider-placement-per-notification": "NmorphNotificationProvider now supports `placement` on each notification, so one provider can render notifications in different screen positions.",
         "notification-provider-quantity-leave-style": "Fixed notification removal when `quantity` is exceeded: leaving alerts keep icon sizing, colors, and layout during the transition.",
@@ -131,7 +136,6 @@ export default {
         "slider-pointer-events": "NmorphSlider now uses pointer events, improving touch dragging and cleaning up document listeners on unmount.",
         "scroll-thumb-theme-color": "NmorphScroll thumb color now uses the theme text color by default and can be configured with `scrollThumb` / `--nmorph-scroll-thumb-color`.",
         "color-picker-fixed-value-width": "NmorphColorPicker now renders shown hex values with fixed-width formatting so equal-length values keep equal component width.",
-        "sandbox-expanded-examples": "Expanded sandbox coverage for basic, data, feedback, form, navigation, and other components.",
         "scroll-default-height-100": "NmorphScroll now defaults to `height=\"100%\"`, and the API docs plus descriptive copy were aligned with that behavior.",
         "scroll-typing-fixes": "Fixed TypeScript typings in NmorphScroll: container size and scroll coordinate access no longer produces `undefined` errors, and the public expose type for `moveTo` and `scrollDOMContainer` was cleaned up.",
         "notification-provider-close-animation": "NmorphNotificationProvider now keeps alert styles intact during close animation, preserves stacked layout, and avoids jarring reflow while notifications leave.",
@@ -147,14 +151,12 @@ export default {
         "theme-config-contrast-types": "Theme config typings and docs were synchronized with runtime behavior: `focusText` is now correctly typed, and `placeholderText`, `semiContrastText`, and `contrastText` are documented in the theme example.",
         "select-button-no-theme-transition": "NmorphSelectButtonItem no longer animates background and box-shadow, so theme switching is instant and visually consistent with the rest of the library.",
         "radio-optional-inject-types": "Fixed NmorphRadio inject typings so standalone usage no longer causes TypeScript errors when group injections are absent.",
-        "ci-husky-prepare": "Made the library prepare script safe in CI and file-based installs when husky is unavailable.",
         "color-picker": "Added NmorphColorPicker component, a documentation page for it, and examples for height, value display, disabled state, and theme-accent default color.",
         "badge-tag-mode": "Added is-tag mode to NmorphBadge so it can render as a standalone badge without overlay positioning or a default slot.",
         "badge-undefined-hidden": "NmorphBadge now hides itself when value is undefined; dot mode still renders without a value.",
         "exit-users-icons": "Added NmorphIconExit and NmorphIconUsers to the icon set and the icon documentation page.",
         "form-boolean-compare": "Form validation rules now accept boolean compareValue values, and the form API docs were updated accordingly.",
         "image-src-optional": "Made NmorphImage src optional in the public typings and aligned the image API docs with the runtime behavior.",
-        "button-icon-slot-docs": "Clarified NmorphButton icon slot behavior: it currently works as icon-only, and a cleaner icon-plus-content API is planned for a future major release.",
         "select-button-keyboard-focus": "NmorphSelectButtonItem is now keyboard-accessible: Tab focuses each item, Space/Enter selects it, and a focus-visible outline is shown.",
         "tabindex-prop": "Added tabindex prop to INmorphCommonInputProps — all form controls (NmorphTextInput, NmorphSwitch, NmorphSlider, NmorphNumberInput, NmorphSelect, NmorphSelectButtonItem) now support tabindex.",
         "form-item-input-inheritance": "Form controls now inherit id and name from NmorphFormItem automatically, so labels and native form attributes stay linked without manual prop forwarding.",
@@ -163,13 +165,11 @@ export default {
         "contrast-text-colors": "Added --nmorph-semi-contrast-text-color and --nmorph-contrast-text-color CSS variables to default light and dark themes.",
         "form-item-label-for": "NmorphFormItem label now has a correct for attribute linked to the input via inputId prop on NmorphTextInput.",
         "error-box-single-error": "NmorphErrorBox now shows only the most relevant error instead of all errors at once.",
-        "css-variables-docs": "Added CSS variables reference section to the Guide page.",
         "validation-icon-fix": "Fixed NmorphValidationIcon not rendering: icon components were passed as strings instead of component objects.",
         "select-button-unselected-opacity": "NmorphSelectButton: unselected items now appear semi-transparent for clearer visual feedback.",
         "select-button": "Added new NmorphSelectButton component — a segmented button group with slot and options-based API.",
         "engines-range": "Relaxed package engines requirements to support modern Node and npm versions.",
         "skeleton-animation": "Fixed Skeleton loading animation: shimmer now works when loading is enabled.",
-        "icon-search-and-copy": "Fixed icon display and input-related behavior on the icon page.",
         "export-en-locale": "Added export of English locale messages from the package entry point."
       }
     },
@@ -459,6 +459,9 @@ export default {
       "color": {
         "subtitle": "Background color of the badge."
       },
+      "size": {
+        "subtitle": "Controls the badge text size through font-size variables."
+      },
       "offset": {
         "subtitle":
             "Horizontal/vertical offset of the badge relative to its parent."
@@ -470,6 +473,7 @@ export default {
         "is-tag": "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
         "hidden": "Hides the badge",
         "color": "Sets the background color of the badge",
+        "size": "Sets the badge text size: tiny, extra-small, or base",
         "z-index": "Defines the stacking order of the badge",
         "offset-y": "Vertical offset of the badge. Ignored when is-tag is true",
         "offset-x": "Horizontal offset of the badge. Ignored when is-tag is true"
@@ -882,6 +886,19 @@ export default {
       "variables": {},
       "events": {
         "close": "Event triggered when the alert is closed by the user"
+      }
+    },
+    "callout": {
+      "basic-usage": {
+        "info-title": "Information",
+        "info-content": "Useful content for the reader.",
+        "warning-title": "Attention",
+        "warning-content": "Important content for the reader."
+      },
+      "api": {
+        "type": "Defines the callout type",
+        "title": "Title displayed in the callout",
+        "content": "Content displayed in the callout"
       }
     },
     "dialog": {
@@ -1388,10 +1405,14 @@ export default {
       "disabled": {
         "subtitle": "Disables the component."
       },
+      "fill": {
+        "subtitle": "Makes the component occupy the full width of its container."
+      },
       "api": {
         "model-value": "The selected value",
         "height": "Height of the component",
         "disabled": "Disables the component",
+        "fill": "Makes the component occupy the full width of its container",
         "options": "List of options to render"
       },
       "slot": {

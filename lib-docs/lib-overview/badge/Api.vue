@@ -38,6 +38,11 @@ const attributesData: IAttributesTableData[] = [
     default: "var(--nmorph-accent-color)",
   },
   {
+    name: "size",
+    type: "'tiny' | 'extra-small' | 'base'",
+    default: "base",
+  },
+  {
     name: "z-index",
     type: "Number",
     default: "1",

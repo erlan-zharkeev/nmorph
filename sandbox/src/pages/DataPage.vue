@@ -57,9 +57,9 @@ const selectedCalendarDates = ref([new Date(2026, 4, 7), new Date(2026, 4, 9)])
 const selectedCalendarRange = ref([new Date(2026, 4, 12), new Date(2026, 4, 18)])
 const collapseValue = ref(['availability'])
 const tags = ref([
-  { text: 'New', value: 'new', height: 'thin' },
+  { text: 'New', value: 'new', height: 'thin' as const },
   { text: 'Stable', value: 'stable', removable: false },
-  { text: 'Preview', value: 'preview', design: 'common' },
+  { text: 'Preview', value: 'preview', design: 'common' as const },
 ])
 
 const tableData = ref([
@@ -102,7 +102,8 @@ const progressColor = (value: number) => {
           </template>
           <NmorphButton text="Slot" />
         </NmorphBadge>
-        <NmorphBadge value="Tag" is-tag />
+        <NmorphBadge value="Tag" is-tag size="extra-small" />
+        <NmorphBadge value="Base Tag" is-tag size="base" />
         <NmorphBadge value="Hidden" hidden>
           <NmorphButton text="Hidden" />
         </NmorphBadge>
@@ -214,7 +215,7 @@ const progressColor = (value: number) => {
         <NmorphTableColumn prop="status" label="Status" width="160">
           <template #default="{ scope }">
             <NmorphTableCell v-for="(_, index) in scope.rows" :key="index" :row="index">
-              <NmorphBadge :value="scope.rows[index].status" is-tag color="var(--nmorph-success-color)" />
+              <NmorphBadge :value="String(scope.rows[index].status)" is-tag color="var(--nmorph-success-color)" />
             </NmorphTableCell>
           </template>
         </NmorphTableColumn>

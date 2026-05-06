@@ -13,6 +13,7 @@ import { styled, css } from '@vue-styled-components/core';
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: string;
   options?: INmorphSelectButtonOption[];
+  fill?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -20,6 +21,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   disabled: false,
   options: () => [],
+  fill: false,
 });
 
 const emit = defineEmits<{
@@ -37,7 +39,7 @@ watch(
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-select-button': [`${props.disabled && 'disabled'}`, props.height],
+    'nmorph-select-button': [`${props.disabled && 'disabled'}`, `${props.fill && 'fill'}`, props.height],
   })
 );
 
@@ -74,6 +76,15 @@ const commonCSS = css`
 
   &.nmorph-select-button--disabled {
     ${disabled()}
+  }
+
+  &.nmorph-select-button--fill {
+    width: 100%;
+
+    > .nmorph-select-button-item {
+      flex: 1 1 0;
+      min-width: 0;
+    }
   }
 `;
 

@@ -104,7 +104,7 @@ onUnmounted(() => {
   margin-bottom: 16px;
 }
 
-.docs-info {
+.nmorph-callout {
   margin-top: 8px;
   max-width: 900px;
 }

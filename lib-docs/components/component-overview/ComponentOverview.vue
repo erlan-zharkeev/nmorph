@@ -17,6 +17,7 @@ import Pagination from "~/lib-overview/pagination";
 import Table from "~/lib-overview/table";
 import Tooltip from "~/lib-overview/tooltip";
 import Alert from "~/lib-overview/alert";
+import Callout from "~/lib-overview/callout";
 import Dialog from "~/lib-overview/dialog";
 import Divider from "~/lib-overview/divider";
 import Overlay from "~/lib-overview/overlay";
@@ -67,6 +68,7 @@ const componentsMap: Record<string, unknown[]> = {
   table: Table,
   tooltip: Tooltip,
   alert: Alert,
+  callout: Callout,
   dialog: Dialog,
   divider: Divider,
   overlay: Overlay,

@@ -119,6 +119,11 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "callout-component": "新增 NmorphCallout，并加入库导出、文档、组件概览和 sandbox。",
+        "select-button-fill": "NmorphSelectButton 现在支持 `fill` prop，可让选项撑满容器宽度。",
+        "badge-size": "NmorphBadge 现在支持 `size` prop，提供 tiny、extra-small 和 base 三种尺寸。",
+        "guide-css-variables-utilities": "更新 Guide 中的 CSS 变量参考，并将 utility classes 简化为类名和用途说明。",
+        "docs-mobile-menu-fit-content": "文档侧边菜单现在会按内容自适应宽度，移动端 header 对齐也已调整。",
         "avatar-name-initials": "NmorphAvatar 现在支持 `name` prop，并在没有可用图片时渲染生成的首字母。Avatar 文档已补充 API 和示例。",
         "notification-provider-placement-per-notification": "NmorphNotificationProvider 现在支持在每条通知上设置 `placement`，一个 provider 即可在不同屏幕位置渲染通知。",
         "notification-provider-quantity-leave-style": "修复超过 `quantity` 时的通知移除：离场 alert 在过渡期间会保留图标尺寸、颜色和布局。",
@@ -129,7 +134,6 @@ export default {
         "slider-pointer-events": "NmorphSlider 现在使用 pointer events，改善触摸拖动并在卸载时清理 document listeners。",
         "scroll-thumb-theme-color": "NmorphScroll 滑块颜色现在默认使用主题文字颜色，并可通过 `scrollThumb` / `--nmorph-scroll-thumb-color` 配置。",
         "color-picker-fixed-value-width": "NmorphColorPicker 现在以固定宽度格式显示 hex 值，相同长度的值不会改变组件宽度。",
-        "sandbox-expanded-examples": "扩展了 basic、data、feedback、form、navigation 和 other 组件的 sandbox 示例。",
         "scroll-default-height-100": "NmorphScroll 现在默认使用 `height=\"100%\"`，API 文档和说明文案也已与这一行为保持一致。",
         "scroll-typing-fixes": "修复了 NmorphScroll 的 TypeScript 类型：访问容器尺寸和滚动坐标时不再出现 `undefined` 错误，`moveTo` 与 `scrollDOMContainer` 的公开 expose 类型也已整理。",
         "notification-provider-close-animation": "NmorphNotificationProvider 现在会在关闭动画期间保留 alert 样式、维持垂直堆叠布局，并避免通知移除时出现突兀的重排。",
@@ -145,14 +149,12 @@ export default {
         "theme-config-contrast-types": "theme config 的类型与文档已和运行时行为保持一致：`focusText` 现在具有正确类型，`placeholderText`、`semiContrastText` 和 `contrastText` 也已加入主题示例。",
         "select-button-no-theme-transition": "NmorphSelectButtonItem 不再对 background 和 box-shadow 做过渡动画，因此切换主题时会像库中的其他组件一样立即完成。",
         "radio-optional-inject-types": "修复了 NmorphRadio 的 inject 类型：当未处于 radio group 中时，独立使用不会再触发 TypeScript 错误。",
-        "ci-husky-prepare": "库的 prepare 脚本已改为在 CI 和基于 file 的安装场景下即使没有 husky 也不会失败。",
         "color-picker": "新增 NmorphColorPicker 组件、对应文档页面，以及高度、数值显示、disabled 状态和主题 accent 默认色的示例。",
         "badge-tag-mode": "为 NmorphBadge 新增 `is-tag` 模式，可将徽标作为独立元素渲染，而不是绝对定位的覆盖层。",
         "badge-undefined-hidden": "NmorphBadge 在 `value` 为 `undefined` 时将不再渲染；`is-dot` 点状模式仍可在无值时显示。",
         "exit-users-icons": "图标集和图标文档页新增了 NmorphIconExit 与 NmorphIconUsers。",
         "form-boolean-compare": "表单校验规则现在支持在 `compareValue` 中传入 boolean，表单 API 文档也已同步更新。",
         "image-src-optional": "NmorphImage 的 `src` 在公开类型中已改为可选，image API 文档也已与运行时行为保持一致。",
-        "button-icon-slot-docs": "补充说明了 NmorphButton 的 icon 插槽行为：它当前实际上是 icon-only，用于图标加内容的更清晰 API 计划在后续 major 版本中重写。",
         "select-button-keyboard-focus": "NmorphSelectButtonItem 现在支持键盘操作：Tab 可聚焦每个选项，Space/Enter 可选中，聚焦时显示 outline 轮廓。",
         "tabindex-prop": "在 INmorphCommonInputProps 中新增 tabindex prop——所有表单控件（NmorphTextInput、NmorphSwitch、NmorphSlider、NmorphNumberInput、NmorphSelect、NmorphSelectButtonItem）现均支持 tabindex。",
         "form-item-input-inheritance": "表单控件现在会自动继承 NmorphFormItem 的 id 和 name，因此无需手动透传 prop 也能正确关联 label 与原生表单属性。",
@@ -161,13 +163,11 @@ export default {
         "contrast-text-colors": "在默认浅色和深色主题中新增 --nmorph-semi-contrast-text-color 和 --nmorph-contrast-text-color CSS 变量。",
         "form-item-label-for": "NmorphFormItem 的 label 标签现通过 NmorphTextInput 的 inputId prop 正确关联到输入框。",
         "error-box-single-error": "NmorphErrorBox 现在只显示最相关的一条错误，而不是所有错误。",
-        "css-variables-docs": "在 Guide 页面新增 CSS 变量参考章节。",
         "validation-icon-fix": "修复 NmorphValidationIcon 不渲染的问题：图标组件被错误地以字符串形式传递。",
         "select-button-unselected-opacity": "NmorphSelectButton：未选中项现在呈半透明状态，视觉反馈更清晰。",
         "select-button": "新增 NmorphSelectButton 组件——支持插槽和 options prop 的分段按钮组。",
         "engines-range": "放宽了包的 engines 要求，以支持较新的 Node 与 npm 版本。",
         "skeleton-animation": "修复 Skeleton 加载动画：在 loading 启用时 shimmer 正常工作。",
-        "icon-search-and-copy": "修复图标页面中图标显示与输入框相关行为。",
         "export-en-locale": "在包入口新增英文语言包的导出。"
       }
     },
@@ -457,6 +457,9 @@ export default {
       "color": {
         "subtitle": "Background color of the badge."
       },
+      "size": {
+        "subtitle": "Controls the badge text size through font-size variables."
+      },
       "offset": {
         "subtitle":
           "Horizontal/vertical offset of the badge relative to its parent."
@@ -468,6 +471,7 @@ export default {
         "is-tag": "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
         "hidden": "Hides the badge",
         "color": "Sets the background color of the badge",
+        "size": "Sets the badge text size: tiny, extra-small, or base",
         "z-index": "Defines the stacking order of the badge",
         "offset-y": "Vertical offset of the badge. Ignored when is-tag is true",
         "offset-x": "Horizontal offset of the badge. Ignored when is-tag is true"
@@ -880,6 +884,19 @@ export default {
       "variables": {},
       "events": {
         "close": "当用户关闭警告时触发的事件"
+      }
+    },
+    "callout": {
+      "basic-usage": {
+        "info-title": "信息",
+        "info-content": "给读者的有用内容。",
+        "warning-title": "注意",
+        "warning-content": "给读者的重要内容。"
+      },
+      "api": {
+        "type": "定义 callout 类型",
+        "title": "在 callout 中显示的标题",
+        "content": "在 callout 中显示的内容"
       }
     },
     "dialog": {
@@ -1386,10 +1403,14 @@ export default {
       "disabled": {
         "subtitle": "禁用组件。"
       },
+      "fill": {
+        "subtitle": "使组件占满容器宽度。"
+      },
       "api": {
         "model-value": "选中的值",
         "height": "组件高度",
         "disabled": "禁用组件",
+        "fill": "使组件占满容器宽度",
         "options": "渲染的选项列表"
       },
       "slot": {

@@ -44,4 +44,13 @@ const list: { name: string; hash: string }[] = [
     font-weight: 800;
   }
 }
+
+@include max-width-query(768) {
+  .docs-guide-menu {
+    a {
+      font-size: 18px;
+      line-height: 1.3;
+    }
+  }
+}
 </style>

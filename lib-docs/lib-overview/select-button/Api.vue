@@ -22,6 +22,11 @@ const attributesData: IAttributesTableData[] = [
     default: "false",
   },
   {
+    name: "fill",
+    type: "Boolean",
+    default: "false",
+  },
+  {
     name: "options",
     type: `Array<INmorphSelectButtonOption>`,
     default: "[]",

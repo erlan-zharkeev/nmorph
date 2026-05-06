@@ -92,7 +92,7 @@ export interface INmorphColorVariable {
 
 export interface INmorphOtherThemeOptions {
   baseShadowWidth?: string;
-  shadowBlurCoefficient?: string;
+  baseShadowBlurCoefficient?: string;
 }
 
 export interface INmorphThemeOptions {

@@ -4,18 +4,19 @@ import {
   NmorphCheckbox,
   NmorphCollapse,
   NmorphCollapseItem,
+  NmorphCallout,
   NmorphIcon,
   NmorphIconCode,
   NmorphIconCopy,
+  type NmorphCalloutType,
 } from "@nmorph/nmorph-ui-kit";
 import { ref, computed } from "vue";
 import { notificationProvider } from "~/providers";
-import type { DocsInfo } from "~/types";
 
 interface IProps {
   header: string;
   infoName?: string;
-  infoType?: keyof typeof DocsInfo;
+  infoType?: NmorphCalloutType;
   subtitle?: string;
   codeToCopy: string[];
 }
@@ -57,7 +58,7 @@ const infoData = `overview.${props.infoName}.info`;
 <template>
   <div class="docs-attribute">
     <h2 class="docs-attribute__header nmorph-title-3">{{ props.header }}</h2>
-    <info v-if="props.infoName" :title="$t(`${infoData}.title`)" :content="$t(`${infoData}.content`)"
+    <NmorphCallout v-if="props.infoName" :title="$t(`${infoData}.title`)" :content="$t(`${infoData}.content`)"
       :type="props.infoType" />
     <p class="docs-attribute__subtitle nmorph-body-2" v-if="props.subtitle" v-html="highlightedSubtitle" />
     <div class="docs-components__tips"></div>

@@ -121,6 +121,11 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "callout-component": "Добавлен NmorphCallout в библиотеку, документацию, overview компонентов и sandbox.",
+        "select-button-fill": "NmorphSelectButton теперь поддерживает prop `fill` и может растягивать элементы на всю ширину контейнера.",
+        "badge-size": "NmorphBadge теперь поддерживает prop `size` с вариантами tiny, extra-small и base.",
+        "guide-css-variables-utilities": "Обновлен справочник CSS-переменных в Guide, а utility classes упрощены до имен классов и назначения.",
+        "docs-mobile-menu-fit-content": "Боковое меню документации теперь подстраивает ширину под контент, а выравнивание мобильного header уточнено.",
         "avatar-name-initials": "NmorphAvatar теперь поддерживает prop `name` и рендерит сгенерированные инициалы, когда изображение недоступно. Документация Avatar обновлена API и примерами.",
         "notification-provider-placement-per-notification": "NmorphNotificationProvider теперь поддерживает `placement` на каждом уведомлении, поэтому один provider может рендерить уведомления в разных позициях экрана.",
         "notification-provider-quantity-leave-style": "Исправлено удаление уведомлений при превышении `quantity`: уходящие alerts сохраняют размеры иконок, цвета и верстку во время transition.",
@@ -131,7 +136,6 @@ export default {
         "slider-pointer-events": "NmorphSlider теперь использует pointer events, лучше работает с touch-перетаскиванием и очищает document listeners при unmount.",
         "scroll-thumb-theme-color": "Цвет ползунка NmorphScroll теперь по умолчанию использует цвет текста и настраивается через `scrollThumb` / `--nmorph-scroll-thumb-color`.",
         "color-picker-fixed-value-width": "NmorphColorPicker теперь отображает hex-значения с фиксированной шириной, чтобы значения одинаковой длины не меняли ширину компонента.",
-        "sandbox-expanded-examples": "Расширены sandbox-примеры для basic, data, feedback, form, navigation и other компонентов.",
         "scroll-default-height-100": "NmorphScroll теперь по умолчанию использует `height=\"100%\"`, а API-документация и описания в docs синхронизированы с этим поведением.",
         "scroll-typing-fixes": "Исправлены TypeScript-типы в NmorphScroll: доступ к размерам и scroll-координатам контейнера больше не приводит к ошибкам `undefined`, а expose-тип для `moveTo` и `scrollDOMContainer` приведён в порядок.",
         "notification-provider-close-animation": "NmorphNotificationProvider теперь сохраняет стили alert во время анимации закрытия, оставляет уведомления в вертикальном стеке и убирает дерганый reflow при удалении.",
@@ -147,14 +151,12 @@ export default {
         "theme-config-contrast-types": "Типы и документация theme config синхронизированы с runtime-поведением: `focusText` теперь типизирован корректно, а `placeholderText`, `semiContrastText` и `contrastText` добавлены в пример темы.",
         "select-button-no-theme-transition": "NmorphSelectButtonItem больше не анимирует background и box-shadow, поэтому переключение темы теперь происходит мгновенно и визуально совпадает с остальной библиотекой.",
         "radio-optional-inject-types": "Исправлены inject-типы в NmorphRadio: standalone-использование больше не вызывает TypeScript-ошибки при отсутствии group-injection.",
-        "ci-husky-prepare": "Скрипт prepare библиотеки теперь безопасен для CI и file-установок, когда husky недоступен.",
         "color-picker": "Добавлен компонент NmorphColorPicker, страница документации для него и примеры высоты, отображения значения, disabled-состояния и дефолтного accent-цвета темы.",
         "badge-tag-mode": "Добавлен режим `is-tag` для NmorphBadge: теперь бейдж может рендериться как standalone-элемент без overlay-позиционирования и без default slot.",
         "badge-undefined-hidden": "NmorphBadge теперь не рендерится, если `value` равен `undefined`; режим точки (`is-dot`) по-прежнему работает без значения.",
         "exit-users-icons": "В набор иконок и на страницу документации иконок добавлены NmorphIconExit и NmorphIconUsers.",
         "form-boolean-compare": "Правила валидации формы теперь принимают boolean в `compareValue`; API-документация формы обновлена под это поведение.",
         "image-src-optional": "В публичных типах `NmorphImage` prop `src` стал опциональным, и документация image API приведена в соответствие с runtime-поведением.",
-        "button-icon-slot-docs": "Уточнено поведение слота icon у NmorphButton: сейчас он фактически работает как icon-only, а более чистый API для иконки вместе с контентом запланирован на будущую major-версию.",
         "select-button-keyboard-focus": "NmorphSelectButtonItem теперь доступен с клавиатуры: Tab фокусирует каждый элемент, Space/Enter выбирают его, при фокусе отображается outline.",
         "tabindex-prop": "Добавлен prop tabindex в INmorphCommonInputProps — все элементы формы (NmorphTextInput, NmorphSwitch, NmorphSlider, NmorphNumberInput, NmorphSelect, NmorphSelectButtonItem) теперь поддерживают tabindex.",
         "form-item-input-inheritance": "Элементы формы теперь автоматически наследуют id и name из NmorphFormItem, поэтому label и нативные атрибуты формы связаны без ручного прокидывания prop.",
@@ -163,13 +165,11 @@ export default {
         "contrast-text-colors": "Добавлены CSS-переменные --nmorph-semi-contrast-text-color и --nmorph-contrast-text-color в дефолтные светлую и тёмную темы.",
         "form-item-label-for": "NmorphFormItem: тег label теперь имеет правильный атрибут for, связанный с инпутом через prop inputId у NmorphTextInput.",
         "error-box-single-error": "NmorphErrorBox теперь показывает только одну актуальную ошибку вместо всех сразу.",
-        "css-variables-docs": "Добавлен раздел с описанием CSS-переменных на странице Guide.",
         "validation-icon-fix": "Исправлен NmorphValidationIcon: иконки передавались строками вместо компонентов и не отображались.",
         "select-button-unselected-opacity": "NmorphSelectButton: не выбранные элементы теперь полупрозрачные для лучшей визуальной обратной связи.",
         "select-button": "Добавлен новый компонент NmorphSelectButton — группа кнопок-переключателей с поддержкой слотов и prop options.",
         "engines-range": "Смягчены требования engines пакета для поддержки актуальных версий Node и npm.",
         "skeleton-animation": "Исправлена анимация загрузки Skeleton: shimmer работает при включенном loading.",
-        "icon-search-and-copy": "Исправлено отображение иконок и поведение input на странице иконок.",
         "export-en-locale": "Добавлен экспорт английской локали из точки входа пакета."
       }
     },
@@ -459,6 +459,9 @@ export default {
       color: {
         subtitle: "Цвет фона бейджа.",
       },
+      size: {
+        subtitle: "Управляет размером текста бейджа через font-size переменные.",
+      },
       offset: {
         subtitle:
           "Горизонтальное/вертикальное смещение бейджа относительно родительского элемента.",
@@ -470,6 +473,7 @@ export default {
         "is-tag": "Переключает бейдж в standalone tag-режим без absolute-позиционирования и без default slot",
         hidden: "Скрывает бейдж",
         color: "Устанавливает цвет фона бейджа",
+        size: "Устанавливает размер текста бейджа: tiny, extra-small или base",
         "z-index": "Определяет порядок наложения бейджа",
         "offset-y": "Вертикальное смещение бейджа. Игнорируется при is-tag",
         "offset-x": "Горизонтальное смещение бейджа. Игнорируется при is-tag",
@@ -882,6 +886,19 @@ export default {
       variables: {},
       events: {
         close: "Событие срабатывающее когда оповещение закрывается пользователем",
+      },
+    },
+    callout: {
+      "basic-usage": {
+        "info-title": "Информация",
+        "info-content": "Полезный контент для читателя.",
+        "warning-title": "Внимание",
+        "warning-content": "Важный контент для читателя.",
+      },
+      api: {
+        type: "Определяет тип callout",
+        title: "Заголовок, отображаемый в callout",
+        content: "Контент, отображаемый в callout",
       },
     },
     dialog: {
@@ -1388,10 +1405,14 @@ export default {
       disabled: {
         subtitle: "Отключает компонент.",
       },
+      fill: {
+        subtitle: "Растягивает компонент на всю ширину контейнера.",
+      },
       api: {
         "model-value": "Выбранное значение",
         height: "Высота компонента",
         disabled: "Отключает компонент",
+        fill: "Растягивает компонент на всю ширину контейнера",
         options: "Список опций для отображения",
       },
       slot: {

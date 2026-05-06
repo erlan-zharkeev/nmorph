@@ -185,17 +185,22 @@ $top-bar-height: 50px;
 
 .docs-top-bar__left {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   height: 100%;
 }
 
 .docs-top-bar__logo {
-  height: 95%;
+  height: 40px;
   border-radius: 4px;
   overflow: hidden;
   border-radius: 8px;
   display: flex;
   align-items: center;
+
+  a {
+    display: flex;
+    align-items: center;
+  }
 
   img {
     object-fit: cover;
@@ -209,7 +214,7 @@ $top-bar-height: 50px;
   user-select: none;
   font-weight: bold;
   font-size: 12px;
-  margin-bottom: 6px;
+  line-height: 1;
 
 }
 
@@ -339,6 +344,7 @@ $top-bar-height: 50px;
   .docs-top-bar__menu {
     display: block;
     width: 28px;
+    margin-right: 12px;
   }
 
   .docs-top-bar__nav {

@@ -32,6 +32,7 @@ import {
   NmorphPagination,
   NmorphSlider,
   NmorphAlert,
+  NmorphCallout,
   NmorphRadio,
   NmorphSelectButton,
   NmorphSelectButtonItem
@@ -409,6 +410,16 @@ const localePath = useLocalePath();
             <template #header>Alert</template>
             <div class="overview-component-content">
               <NmorphAlert title="Lorem" content="Ipsum dolor sit amet consectetur" type="success" />
+            </div>
+          </NmorphCard>
+        </NuxtLink>
+      </div>
+      <div class="overview-component-wrapper callout overview-component-wrapper--large">
+        <NuxtLink :to="localePath('/elements/callout')">
+          <NmorphCard>
+            <template #header>Callout</template>
+            <div class="overview-component-content">
+              <NmorphCallout title="Attention" content="Important content" type="warning" />
             </div>
           </NmorphCard>
         </NuxtLink>

@@ -185,6 +185,11 @@ const formValue = ref<NmorphFormValueType>({
           <NmorphSelectButtonItem value="compact">Compact</NmorphSelectButtonItem>
           <NmorphSelectButtonItem value="wide">Wide</NmorphSelectButtonItem>
         </NmorphSelectButton>
+        <NmorphSelectButton model-value="auto" fill>
+          <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
+          <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
+          <NmorphSelectButtonItem value="auto">Auto</NmorphSelectButtonItem>
+        </NmorphSelectButton>
       </div>
       <p class="hint">value: {{ selectButtonValue }}</p>
     </SandboxSection>

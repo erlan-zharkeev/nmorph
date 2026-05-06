@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, nextTick, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphDomElementType } from '@/types';
 import { styled, css } from '@vue-styled-components/core';
+
+type NmorphBadgeSize = 'tiny' | 'extra-small' | 'base';
 
 interface INmorphProps {
   value?: number | string;
@@ -11,6 +13,7 @@ interface INmorphProps {
   isTag?: boolean;
   hidden?: boolean;
   color?: string;
+  size?: NmorphBadgeSize;
   offsetY?: number;
   offsetX?: number;
   zIndex?: number;
@@ -29,6 +32,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   isTag: false,
   hidden: false,
   color: 'var(--nmorph-accent-color)',
+  size: 'base',
   offsetX: 0,
   offsetY: 0,
   zIndex: 1,
@@ -42,7 +46,7 @@ defineSlots<{
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-badge': [`${props.hidden && 'hidden'}`, `${props.isTag && 'tag'}`],
+    'nmorph-badge': [`${props.hidden && 'hidden'}`, `${props.isTag && 'tag'}`, props.size],
   })
 );
 
@@ -86,11 +90,16 @@ const badge = ref<NmorphDomElementType>(null);
 const badgeWidth = ref(0);
 const badgeHeight = ref(0);
 
-onMounted(() => {
+const updateBadgeSize = async () => {
+  await nextTick();
   if (!badge.value || props.isTag) return;
   badgeWidth.value = badge.value.clientWidth;
   badgeHeight.value = badge.value.clientHeight;
-});
+};
+
+onMounted(updateBadgeSize);
+
+watch(() => [props.value, props.max, props.isDot, props.isTag, props.size], updateBadgeSize);
 
 const commonCSS = css`
   position: relative;
@@ -120,6 +129,16 @@ const commonCSS = css`
   .nmorph-badge__content {
     padding: 2px 4px;
     color: var(--nmorph-light-shade-color);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-regular);
+  }
+
+  &.nmorph-badge--tiny .nmorph-badge__content {
+    font-size: var(--font-size-tiny);
+  }
+
+  &.nmorph-badge--extra-small .nmorph-badge__content {
+    font-size: var(--font-size-extra-small);
   }
 
   .nmorph-badge__container--hidden {

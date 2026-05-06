@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import {
   NmorphAlert,
   NmorphButton,
+  NmorphCallout,
   NmorphDialog,
   NmorphIcon,
   NmorphIconBell,
@@ -76,6 +77,13 @@ const showStickyNotification = () => {
           </template>
           Icon slot with default content slot.
         </NmorphAlert>
+      </div>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphCallout">
+      <div class="stack">
+        <NmorphCallout title="Information" content="Useful content for this section." />
+        <NmorphCallout type="warning" title="Attention" content="Important content for this section." />
       </div>
     </SandboxSection>
 

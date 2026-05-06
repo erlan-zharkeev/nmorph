@@ -26,7 +26,7 @@ const list: { name: string; components: string[] }[] = [
 
   {
     name: "feedback",
-    components: ["NmorphTooltip", "NmorphAlert", "NmorphDialog"],
+    components: ["NmorphTooltip", "NmorphAlert", "NmorphCallout", "NmorphDialog"],
   },
 
   {

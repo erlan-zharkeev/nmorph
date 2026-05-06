@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { NmorphCallout } from '@nmorph/nmorph-ui-kit';
 import { useI18n } from 'vue-i18n';
-import Info from '~/components/info/Info.vue';
 
 const { t } = useI18n();
 
@@ -91,32 +91,95 @@ app.use(NmorphLibrary, nmorphOptions);
 app.mount("#app");
 `;
 
-const cssVariables = `
-/* ${t('guide-page.config.css-variables-theme-derived')} */
---nmorph-main-color          /* ${t('guide-page.config.css-var-main')} */
---nmorph-dark-shade-color    /* ${t('guide-page.config.css-var-dark-shade')} */
---nmorph-light-shade-color   /* ${t('guide-page.config.css-var-light-shade')} */
---nmorph-text-color          /* ${t('guide-page.config.css-var-text')} */
---nmorph-scroll-thumb-color  /* ${t('guide-page.config.css-var-scroll-thumb')} */
---nmorph-accent-color        /* ${t('guide-page.config.css-var-accent')} */
---nmorph-focus-text-color    /* ${t('guide-page.config.css-var-focus-text')} */
---nmorph-placeholder-text-color /* ${t('guide-page.config.css-var-placeholder')} */
-
-/* ${t('guide-page.config.css-variables-auto-generated')} */
---nmorph-semi-contrast-text-color /* ${t('guide-page.config.css-var-semi-contrast')} */
---nmorph-contrast-text-color      /* ${t('guide-page.config.css-var-contrast')} */
-                                  /* semiContrastText / contrastText in theme config */
-
-/* ${t('guide-page.config.css-variables-static')} */
---nmorph-success-color       --nmorph-success-text-color
---nmorph-error-color         --nmorph-error-text-color
---nmorph-warn-color          --nmorph-warn-text-color
---nmorph-info-color          --nmorph-info-text-color
---nmorph-gray-color
---nmorph-white-color
---nmorph-black-color
---nmorph-overlay-color
-`;
+const cssVariableGroups = computed(() => [
+  {
+    title: t('guide-page.config.css-variables-theme-derived'),
+    variables: [
+      { name: '--nmorph-main-color', description: t('guide-page.config.css-var-main') },
+      { name: '--nmorph-dark-shade-color', description: t('guide-page.config.css-var-dark-shade') },
+      { name: '--nmorph-light-shade-color', description: t('guide-page.config.css-var-light-shade') },
+      { name: '--nmorph-text-color', description: t('guide-page.config.css-var-text') },
+      { name: '--nmorph-scroll-thumb-color', description: t('guide-page.config.css-var-scroll-thumb') },
+      { name: '--nmorph-accent-color', description: t('guide-page.config.css-var-accent') },
+      { name: '--nmorph-focus-text-color', description: t('guide-page.config.css-var-focus-text') },
+      { name: '--nmorph-placeholder-text-color', description: t('guide-page.config.css-var-placeholder') },
+      { name: '--nmorph-semi-contrast-text-color', description: t('guide-page.config.css-var-semi-contrast') },
+      { name: '--nmorph-contrast-text-color', description: t('guide-page.config.css-var-contrast') },
+    ],
+  },
+  {
+    title: t('guide-page.config.css-variables-static'),
+    variables: [
+      { name: '--nmorph-success-color', description: 'Success state color' },
+      { name: '--nmorph-success-text-color', description: 'Success text color' },
+      { name: '--nmorph-error-color', description: 'Error state color' },
+      { name: '--nmorph-error-text-color', description: 'Error text color' },
+      { name: '--nmorph-warn-color', description: 'Warning state color' },
+      { name: '--nmorph-warn-text-color', description: 'Warning text color' },
+      { name: '--nmorph-info-color', description: 'Info state color' },
+      { name: '--nmorph-info-text-color', description: 'Info text color' },
+      { name: '--nmorph-gray-color', description: 'Neutral gray color' },
+      { name: '--nmorph-white-color', description: 'White color token' },
+      { name: '--nmorph-black-color', description: 'Black color token' },
+      { name: '--nmorph-overlay-color', description: 'Overlay background color' },
+    ],
+  },
+  {
+    title: 'Typography',
+    variables: [
+      { name: '--font-size-tiny', description: 'Tiny text size' },
+      { name: '--font-size-extra-small', description: 'Extra small text size' },
+      { name: '--font-size-small', description: 'Small text size' },
+      { name: '--font-size-base', description: 'Base text size' },
+      { name: '--font-size-medium', description: 'Medium title text size' },
+      { name: '--font-size-large', description: 'Large title text size' },
+      { name: '--font-size-extra-large', description: 'Extra large title text size' },
+      { name: '--line-height-line', description: 'Single-line height' },
+      { name: '--line-height-compact', description: 'Compact text line height' },
+      { name: '--line-height-regular', description: 'Regular text line height' },
+      { name: '--line-height-loose', description: 'Loose title line height' },
+    ],
+  },
+  {
+    title: 'Radius and sizing',
+    variables: [
+      { name: '--border-radius-none', description: 'No border radius' },
+      { name: '--border-radius-20', description: '2px border radius' },
+      { name: '--border-radius-40', description: '4px border radius' },
+      { name: '--border-radius-60', description: '6px border radius' },
+      { name: '--border-radius-80', description: '8px border radius' },
+      { name: '--border-radius-120', description: '12px border radius' },
+      { name: '--border-radius-200', description: '20px border radius' },
+      { name: '--border-radius-999', description: 'Pill border radius' },
+      { name: '--border-radius-circular', description: 'Circular border radius' },
+      { name: '--default-border-radius', description: 'Default component border radius' },
+      { name: '--thick-component', description: 'Thick component height' },
+      { name: '--default-thickness-component', description: 'Default component height' },
+      { name: '--thin-component', description: 'Thin component height' },
+      { name: '--extra-thin-component', description: 'Extra thin component height' },
+      { name: '--form-container', description: 'Default form control width' },
+    ],
+  },
+  {
+    title: 'Spacing, shadows and motion',
+    variables: [
+      { name: '--indentation-00', description: 'Zero spacing token' },
+      { name: '--indentation-01', description: '2px spacing token' },
+      { name: '--indentation-02', description: '4px spacing token' },
+      { name: '--indentation-03', description: '8px spacing token' },
+      { name: '--indentation-04', description: '16px spacing token' },
+      { name: '--default-indentation-input', description: 'Default input inner indentation' },
+      { name: '--base-shadow-width', description: 'Base neumorphic shadow distance' },
+      { name: '--base-shadow-blur-coefficient', description: 'Base shadow blur multiplier' },
+      { name: '--base-shadow-blur', description: 'Calculated base shadow blur' },
+      { name: '--nmorph-wrapper-padding', description: 'Wrapper padding derived from shadow width' },
+      { name: '--transition-01', description: 'Fastest transition duration' },
+      { name: '--transition-02', description: 'Fast transition duration' },
+      { name: '--transition-03', description: 'Default transition duration' },
+      { name: '--transition-04', description: 'Slow transition duration' },
+    ],
+  },
+]);
 
 </script>
 
@@ -137,7 +200,7 @@ const cssVariables = `
         {{ $t("guide-page.config.theme") }}
       </h3>
       <p class="section-paragraph" v-html="$t('guide-page.config.theme-explained')" />
-      <Info type='warning' :title="$t('attention')" :content="$t('guide-page.config.auto-generation')" />
+      <NmorphCallout type='warning' :title="$t('attention')" :content="$t('guide-page.config.auto-generation')" />
       <code-example lang="javascript">{{
         theme
       }}</code-example>
@@ -156,7 +219,57 @@ const cssVariables = `
         {{ $t("guide-page.config.css-variables") }}
       </h3>
       <p class="section-paragraph" v-html="$t('guide-page.config.css-variables-content')" />
-      <code-example lang="css">{{ cssVariables }}</code-example>
+      <div class="docs-css-variable-groups">
+        <div v-for="group in cssVariableGroups" :key="group.title" class="docs-css-variable-group">
+          <h4 class="docs-css-variable-group__title nmorph-title-3">{{ group.title }}</h4>
+          <dl class="docs-token-list">
+            <div v-for="variable in group.variables" :key="variable.name" class="docs-token-list__row">
+              <dt><code>{{ variable.name }}</code></dt>
+              <dd>{{ variable.description }}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
     </div>
   </section>
 </template>
+
+<style lang="scss">
+.docs-css-variable-groups {
+  display: grid;
+  gap: 16px;
+}
+
+.docs-css-variable-group__title {
+  margin-bottom: 8px;
+}
+
+.docs-token-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.docs-token-list__row {
+  display: grid;
+  grid-template-columns: minmax(230px, 34%) 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.docs-token-list dt,
+.docs-token-list dd {
+  margin: 0;
+}
+
+.docs-token-list code {
+  word-break: break-word;
+}
+
+@include max-width-query(768) {
+  .docs-token-list__row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+</style>

@@ -35,7 +35,9 @@ $transition: 0.2s ease-in-out left;
 }
 
 .docs-main-menu__content {
-  width: 30%;
+  width: fit-content;
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
   height: 100vh;
   background: var(--nmorph-main-color);
   padding: 16px;
@@ -75,12 +77,8 @@ $transition: 0.2s ease-in-out left;
 }
 
 .docs-main-menu__content__scroll {
+  width: max-content;
+  max-width: 100%;
   height: calc(var(--container-height) + var(--footer-height)) !important;
-}
-
-@include max-width-query(768) {
-  .docs-main-menu__content {
-    padding: 8px;
-  }
 }
 </style>

@@ -9,6 +9,16 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v2.2.0</h3>
+            <ul>
+              <li>{{ $t("changelog-page.changelog.items.callout-component") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.select-button-fill") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.badge-size") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.guide-css-variables-utilities") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.docs-mobile-menu-fit-content") }}</li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.1.1</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.badge-z-index") }}</li>
@@ -26,7 +36,6 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
               <li>{{ $t("changelog-page.changelog.items.notification-provider-quantity-leave-style") }}</li>
               <li>{{ $t("changelog-page.changelog.items.button-transparent-hover-icons") }}</li>
               <li>{{ $t("changelog-page.changelog.items.color-picker-fixed-value-width") }}</li>
-              <li>{{ $t("changelog-page.changelog.items.sandbox-expanded-examples") }}</li>
             </ul>
           </div>
           <div class="docs-changelog-page__release">
@@ -65,12 +74,6 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v1.1.7</h3>
-            <ul>
-              <li>{{ $t("changelog-page.changelog.items.ci-husky-prepare") }}</li>
-            </ul>
-          </div>
-          <div class="docs-changelog-page__release">
             <h3>v1.1.6</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.color-picker") }}</li>
@@ -84,7 +87,6 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
           <div class="docs-changelog-page__release">
             <h3>v1.1.5</h3>
             <ul>
-              <li>{{ $t("changelog-page.changelog.items.button-icon-slot-docs") }}</li>
               <li>{{ $t("changelog-page.changelog.items.select-button-keyboard-focus") }}</li>
               <li>{{ $t("changelog-page.changelog.items.tabindex-prop") }}</li>
             </ul>
@@ -103,7 +105,6 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
               <li>{{ $t("changelog-page.changelog.items.contrast-text-colors") }}</li>
               <li>{{ $t("changelog-page.changelog.items.form-item-label-for") }}</li>
               <li>{{ $t("changelog-page.changelog.items.error-box-single-error") }}</li>
-              <li>{{ $t("changelog-page.changelog.items.css-variables-docs") }}</li>
             </ul>
           </div>
           <div class="docs-changelog-page__release">
@@ -140,7 +141,6 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
             <h3>v1.0.105</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.skeleton-animation") }}</li>
-              <li>{{ $t("changelog-page.changelog.items.icon-search-and-copy") }}</li>
             </ul>
           </div>
         </section>

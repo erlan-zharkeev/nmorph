@@ -26,8 +26,3 @@ export interface IEventsTableData extends IBasicApiTableData {}
 export interface ITranslates {
   name: string;
 }
-
-export enum DocsInfo {
-  warning = "warning",
-  info = "info",
-}
