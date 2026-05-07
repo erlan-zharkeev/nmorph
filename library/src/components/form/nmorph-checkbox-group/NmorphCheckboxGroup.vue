@@ -24,6 +24,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   options: () => [],
   design: 'checkbox',
   direction: 'row',
+  height: 'default',
+  disabled: false,
 });
 
 interface INmorphEmit {
@@ -46,9 +48,11 @@ const modifiers = computed(() =>
     'nmorph-checkbox-group': [props.design, props.direction],
   })
 );
+const height = computed(() => props.height);
 
 provide<NmorphCheckboxGroupSelectedValueInjectionType>('checkbox-group-selected-value', initialValue);
 provide<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>('change-checkbox-value-handler', changeHandler);
+provide('checkbox-group-height', height);
 
 const commonCSS = css`
   display: inline-block;
@@ -94,7 +98,8 @@ const StyledComponent = styled.div`
     <div class="nmorph-checkbox-group__wrapper">
       <div class="nmorph-checkbox-group__content">
         <NmorphCheckbox v-for="(option, idx) in options" :id="option.id" :key="idx" :label="option.label"
-          :model-value="option.modelValue" :disabled="option.disabled" :design="props.design" />
+          :model-value="option.modelValue" :disabled="option.disabled || props.disabled" :design="props.design"
+          :height="option.height || props.height" />
         <slot />
       </div>
     </div>

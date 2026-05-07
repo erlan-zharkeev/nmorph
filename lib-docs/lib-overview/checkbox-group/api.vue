@@ -5,7 +5,7 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { NmorphComponentDirection } from "@nmorph/nmorph-ui-kit";
+import { NmorphComponentDirection, NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -18,6 +18,11 @@ const attributesData: IAttributesTableData[] = [
     name: "disabled",
     type: "Boolean",
     default: "false",
+  },
+  {
+    name: "height",
+    type: enumToString(NmorphComponentHeight),
+    default: "default",
   },
   {
     name: "options",

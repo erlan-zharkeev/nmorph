@@ -5,7 +5,7 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { NmorphRadioStyleType } from "@nmorph/nmorph-ui-kit";
+import { NmorphComponentHeight, NmorphRadioStyleType } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -28,6 +28,11 @@ const attributesData: IAttributesTableData[] = [
     name: "style-type",
     type: enumToString(NmorphRadioStyleType),
     default: "button",
+  },
+  {
+    name: "height",
+    type: enumToString(NmorphComponentHeight),
+    default: "default",
   },
   {
     name: "checked",

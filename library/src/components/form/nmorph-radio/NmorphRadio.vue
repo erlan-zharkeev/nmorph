@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue';
+import { computed, inject, ref, type Ref } from 'vue';
 import { body2, disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import {
   INmorphRadioOption,
+  NmorphComponentHeight,
   NmorphDomElementType,
   NmorphRadioChangeRadioButtonValueHandlerInjectionType,
   NmorphRadioGroupSelectedValueInjectionType,
@@ -18,6 +19,7 @@ const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType
   'change-radio-button-value-handler',
   undefined
 );
+const groupHeight = inject<Ref<keyof typeof NmorphComponentHeight> | undefined>('radio-group-height', undefined);
 
 interface INmorphProps extends Omit<INmorphRadioOption, 'value'> {
   value?: string;
@@ -39,9 +41,11 @@ const changeHandler = () => {
 };
 
 const checked = computed(() => groupSelectedValue?.value === props.value || props.checked);
+const height = computed(() => props.height || groupHeight?.value || 'default');
 
 const modifiers = computed(() =>
   useModifiers({
+    nmorph: [NmorphComponentHeight[height.value]],
     'nmorph-radio': [`${props.disabled && 'disabled'}`, `${checked.value && 'checked'}`, props.styleType],
   })
 );
@@ -50,7 +54,10 @@ const inputDOMRef = ref<NmorphDomElementType>(null);
 defineExpose({ inputDOMRef });
 
 const commonCSS = css`
-  --size: var(--extra-thin-component);
+  --size: var(--height);
+
+  display: inline-flex;
+  align-items: center;
   cursor: pointer;
 
   .nmorph-radio__content {
@@ -115,8 +122,6 @@ const commonCSS = css`
   }
 
   &.nmorph-radio--button {
-    --size: var(--default-thickness-component);
-
     .nmorph-radio__fake {
       position: relative;
       display: flex;

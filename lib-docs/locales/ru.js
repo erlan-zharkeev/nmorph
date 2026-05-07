@@ -122,6 +122,8 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "checkbox-height": "NmorphCheckbox и NmorphCheckboxGroup теперь поддерживают `height` с размерами thin, default и thick.",
+        "radio-height": "NmorphRadio и NmorphRadioGroup теперь поддерживают `height` с размерами thin, default и thick.",
         "avatar-preview": "NmorphAvatar теперь поддерживает preview изображения по клику, включая галерею из нескольких изображений через `src` или `previewSrc`.",
         "callout-spacing": "NmorphCallout больше не добавляет нижний margin по умолчанию.",
         "media-control-icons": "Добавлены иконки управления медиа: play, pause, stop, record и квадратная альтернатива exit.",
@@ -1278,12 +1280,16 @@ export default {
       design: {
         subtitle: "Определяет стиль дизайна чекбокса",
       },
+      height: {
+        subtitle: "Устанавливает высоту чекбокса.",
+      },
       api: {
         id: "Уникальный идентификатор для чекбокса",
         disabled: "Булево значение, отключающее чекбокс",
         "model-value": "Состояние чекбокса (отмечен или нет)",
         label: "Лэйбл, отображаемый рядом с чекбоксом",
         design: "Определяет стиль дизайна чекбокса",
+        height: "Определяет высоту чекбокса",
       },
       slot: {
         default: "Слот для кастомизации содержимого чекбокса",
@@ -1301,7 +1307,7 @@ export default {
     },
     "checkbox-group": {
       api: {
-        height: "Ширина чекбоксов",
+        height: "Определяет высоту чекбоксов в группе",
         disabled: "Отключает все чекбоксы в группе",
         "model-value": "Массив выбранных значений",
         options: "Опции для чекбоксов",
@@ -1580,6 +1586,7 @@ export default {
         label: "Текст метки, отображаемый рядом или внутри радиокнопки",
         value: "Значение, присвоенное радиокнопке",
         "style-type": "Определяет визуальный стиль радиокнопки",
+        height: "Определяет высоту радиокнопки",
         checked: "Отметить радиокнопку как выбранную",
       },
       slot: {
@@ -1594,7 +1601,7 @@ export default {
     },
     "radio-group": {
       api: {
-        height: "Высота группы радиокнопок",
+        height: "Определяет высоту радиокнопок в группе",
         disabled: "Отключает все радиокнопки в группе",
         "model-value": "Выбранное значение группы радиокнопок",
         options: "Список опций для выбора",

@@ -122,6 +122,8 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "checkbox-height": "NmorphCheckbox and NmorphCheckboxGroup now support `height` with thin, default, and thick component sizes.",
+        "radio-height": "NmorphRadio and NmorphRadioGroup now support `height` with thin, default, and thick component sizes.",
         "avatar-preview": "NmorphAvatar now supports image preview on click, including multiple gallery images through `src` or `previewSrc`.",
         "callout-spacing": "NmorphCallout no longer adds bottom margin by default.",
         "media-control-icons": "Added media control icons: play, pause, stop, record, and a square exit alternative.",
@@ -1278,12 +1280,16 @@ export default {
       "design": {
         "subtitle": "Defines the design style of the checkbox."
       },
+      "height": {
+        "subtitle": "Sets the checkbox height."
+      },
       "api": {
         "id": "Unique identifier for the checkbox",
         "disabled": "Boolean value that disables the checkbox",
         "model-value": "Checkbox state (checked or not)",
         "label": "Label displayed next to the checkbox",
-        "design": "Defines the design style of the checkbox"
+        "design": "Defines the design style of the checkbox",
+        "height": "Defines the checkbox height"
       },
       "slot": {
         "default": "Slot for customizing the checkbox content",
@@ -1301,7 +1307,7 @@ export default {
     },
     "checkbox-group": {
       "api": {
-        "height": "Width of the checkboxes",
+        "height": "Defines the height of checkboxes in the group",
         "disabled": "Disables all checkboxes in the group",
         "model-value": "Array of selected values",
         "options": "Checkbox options",
@@ -1580,6 +1586,7 @@ export default {
         "label": "Label text displayed next to or inside the radio button",
         "value": "Value assigned to the radio button",
         "style-type": "Defines the visual style of the radio button",
+        "height": "Defines the radio button height",
         "checked": "Marks the radio button as selected"
       },
       "slot": {
@@ -1594,7 +1601,7 @@ export default {
     },
     "radio-group": {
       "api": {
-        "height": "Height of the radio button group",
+        "height": "Defines the height of radio buttons in the group",
         "disabled": "Disables all radio buttons in the group",
         "model-value": "Selected value of the radio button group",
         "options": "List of options to select from",

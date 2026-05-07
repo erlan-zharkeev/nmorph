@@ -120,6 +120,8 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "checkbox-height": "NmorphCheckbox 和 NmorphCheckboxGroup 现在支持 `height`，可使用 thin、default 和 thick 组件尺寸。",
+        "radio-height": "NmorphRadio 和 NmorphRadioGroup 现在支持 `height`，可使用 thin、default 和 thick 组件尺寸。",
         "avatar-preview": "NmorphAvatar 现在支持点击预览图片，并可通过 `src` 或 `previewSrc` 传入多张图库图片。",
         "callout-spacing": "NmorphCallout 默认不再添加底部 margin。",
         "media-control-icons": "新增媒体控制图标：play、pause、stop、record，以及方形 exit 替代图标。",
@@ -1276,12 +1278,16 @@ export default {
       "design": {
         "subtitle": "定义复选框的设计风格。"
       },
+      "height": {
+        "subtitle": "设置复选框高度。"
+      },
       "api": {
         "id": "复选框的唯一标识符",
         "disabled": "布尔值，禁用复选框",
         "model-value": "复选框状态（选中或未选中）",
         "label": "显示在复选框旁边的标签",
-        "design": "定义复选框的设计风格"
+        "design": "定义复选框的设计风格",
+        "height": "定义复选框高度"
       },
       "slot": {
         "default": "自定义复选框内容的插槽",
@@ -1299,7 +1305,7 @@ export default {
     },
     "checkbox-group": {
       "api": {
-        "height": "复选框的宽度",
+        "height": "定义组内复选框的高度",
         "disabled": "禁用组中的所有复选框",
         "model-value": "选中值的数组",
         "options": "复选框选项",
@@ -1578,6 +1584,7 @@ export default {
         "label": "显示在单选按钮旁边或内部的标签文本",
         "value": "分配给单选按钮的值",
         "style-type": "定义单选按钮的视觉样式",
+        "height": "定义单选按钮高度",
         "checked": "将单选按钮标记为选中"
       },
       "slot": {
@@ -1592,7 +1599,7 @@ export default {
     },
     "radio-group": {
       "api": {
-        "height": "单选按钮组的高度",
+        "height": "定义组内单选按钮的高度",
         "disabled": "禁用组中的所有单选按钮",
         "model-value": "单选按钮组的选中值",
         "options": "可供选择的选项列表",

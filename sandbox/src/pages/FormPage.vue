@@ -255,22 +255,23 @@ watch(runtimeAccentColor, (accent) => {
       <div class="stack">
         <div class="row">
           <NmorphCheckbox v-model="checked" label="Single checkbox" />
+          <NmorphCheckbox v-model="checked" label="Thin checkbox" height="thin" />
           <NmorphCheckbox model-value label="Checked disabled" disabled />
-          <NmorphCheckbox v-model="checked" design="button" label="Button checkbox" />
+          <NmorphCheckbox v-model="checked" design="button" label="Button checkbox" height="thick" />
         </div>
-        <NmorphCheckboxGroup v-model="checkboxGroupValue" :options="checkboxOptions" />
-        <NmorphCheckboxGroup v-model="checkboxButtonGroupValue" :options="checkboxOptions" design="button" direction="column" />
+        <NmorphCheckboxGroup v-model="checkboxGroupValue" :options="checkboxOptions" height="thin" />
+        <NmorphCheckboxGroup v-model="checkboxButtonGroupValue" :options="checkboxOptions" design="button" direction="column" height="thick" />
       </div>
       <p class="hint">checked: {{ checked }} / group: {{ checkboxGroupValue }} / buttons: {{ checkboxButtonGroupValue }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphRadio">
       <div class="stack">
-        <NmorphRadioGroup v-model="radioValue" :options="radioOptions" />
-        <NmorphRadioGroup v-model="radioStyleValue" :options="radioOptions" style-type="radio-style" direction="column" />
+        <NmorphRadioGroup v-model="radioValue" :options="radioOptions" height="thin" />
+        <NmorphRadioGroup v-model="radioStyleValue" :options="radioOptions" style-type="radio-style" direction="column" height="thick" />
         <div class="row">
           <NmorphRadio value="standalone" label="Standalone checked" checked />
-          <NmorphRadio value="disabled" label="Disabled" disabled />
+          <NmorphRadio value="disabled" label="Disabled" height="thin" disabled />
         </div>
       </div>
       <p class="hint">radio: {{ radioValue }} / {{ radioStyleValue }}</p>

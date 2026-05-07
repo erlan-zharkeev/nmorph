@@ -21,12 +21,14 @@ const templateData = `
     v-model="value"
     :options="options"
     direction="column"
+    height="thin"
   />
   <NmorphCheckboxGroup
     v-model="value"
     :options="options"
     direction="row"
     design="button"
+    height="thick"
   />
 </template>
 `;
@@ -55,8 +57,8 @@ const value = ref(["2"]);
       <template #overview>
         <div class="checkbox-group-model-value-overview">
           <ClientOnly>
-            <NmorphCheckboxGroup v-model="value" :options="options" direction="column" />
-            <NmorphCheckboxGroup v-model="value" :options="options" direction="row" design="button" />
+            <NmorphCheckboxGroup v-model="value" :options="options" direction="column" height="thin" />
+            <NmorphCheckboxGroup v-model="value" :options="options" direction="row" design="button" height="thick" />
           </ClientOnly>
         </div>
       </template>

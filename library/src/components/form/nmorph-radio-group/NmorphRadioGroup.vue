@@ -28,6 +28,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   direction: 'row',
   label: '',
   disabled: false,
+  height: 'default',
 });
 
 interface INmorphEmit {
@@ -50,9 +51,11 @@ const changeHandler = (value: string) => {
 };
 
 const modifiers = computed(() => useModifiers({ 'nmorph-radio-group': [props.styleType, props.direction] }));
+const height = computed(() => props.height);
 
 provide<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value', initialValue);
 provide<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-button-value-handler', changeHandler);
+provide('radio-group-height', height);
 
 const commonCSS = css`
   display: inline-block;
@@ -95,7 +98,8 @@ const StyledComponent = styled.div`
     <div class="nmorph-radio-group__wrapper">
       <div class="nmorph-radio-group__content">
         <NmorphRadio v-for="option in options" :key="option.value" :label="option.label" :value="option.value"
-          :disabled="option.disabled || props.disabled" :style-type="props.styleType" :tabindex="option.tabindex" />
+          :disabled="option.disabled || props.disabled" :style-type="props.styleType" :tabindex="option.tabindex"
+          :height="option.height || props.height" />
         <slot />
       </div>
     </div>

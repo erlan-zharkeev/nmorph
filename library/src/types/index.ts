@@ -199,6 +199,7 @@ export interface INmorphCheckboxOption {
   modelValue?: boolean;
   label?: string;
   design?: NmorphCheckboxDesignType;
+  height?: keyof typeof NmorphComponentHeight;
 }
 
 export type NmorphCheckboxDesignType = 'button' | 'checkbox';
@@ -214,6 +215,7 @@ export interface INmorphRadioOption {
   label?: string;
   value: string;
   tabindex?: number;
+  height?: keyof typeof NmorphComponentHeight;
 }
 
 export enum NmorphRadioStyleType {

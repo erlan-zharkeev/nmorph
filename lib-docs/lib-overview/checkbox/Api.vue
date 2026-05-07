@@ -5,6 +5,7 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
+import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -26,6 +27,11 @@ const attributesData: IAttributesTableData[] = [
     name: "label",
     type: "String",
     default: "-",
+  },
+  {
+    name: "height",
+    type: enumToString(NmorphComponentHeight),
+    default: "default",
   },
   {
     name: "design",

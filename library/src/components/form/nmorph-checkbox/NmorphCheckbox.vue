@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { computed, ref, inject, watch } from 'vue';
+import { computed, ref, inject, watch, type Ref } from 'vue';
 import { body2, disabled, focusOutline, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import {
   INmorphCheckboxOption,
   NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType,
   NmorphCheckboxGroupSelectedValueInjectionType,
+  NmorphComponentHeight,
   NmorphDomElementType,
 } from '@/types';
-import { styled, css } from '@vue-styled-components/core'
+import { styled, css } from '@vue-styled-components/core';
 
 const groupSelectedValue = inject<NmorphCheckboxGroupSelectedValueInjectionType>(
   'checkbox-group-selected-value',
@@ -18,6 +19,7 @@ const changeValue = inject<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectio
   'change-checkbox-value-handler',
   undefined
 );
+const groupHeight = inject<Ref<keyof typeof NmorphComponentHeight> | undefined>('checkbox-group-height', undefined);
 
 const props = withDefaults(defineProps<INmorphCheckboxOption>(), {
   id: '',
@@ -45,6 +47,7 @@ const hasGroup = groupSelectedValue !== undefined;
 const initialValue = hasGroup ? ref(groupSelectedValue.value) : ref(props.modelValue);
 
 const checked = computed(() => (hasGroup ? groupSelectedValue.value.includes(props.id) : props.modelValue));
+const height = computed(() => props.height || groupHeight?.value || 'default');
 
 const emit = defineEmits<INmorphEmit>();
 
@@ -60,6 +63,7 @@ const handleChange = () => {
 
 const modifiers = computed(() =>
   useModifiers({
+    nmorph: [NmorphComponentHeight[height.value]],
     'nmorph-checkbox': [
       `${checked.value && 'checked'}`,
       `${props.disabled && 'disabled'}`,
@@ -69,9 +73,10 @@ const modifiers = computed(() =>
 );
 
 const commonCSS = css`
-  --size: var(--extra-thin-component);
+  --size: var(--height);
 
   display: inline-flex;
+  align-items: center;
   cursor: pointer;
 
   .nmorph-checkbox__content {
@@ -141,8 +146,6 @@ const commonCSS = css`
   }
 
   &.nmorph-checkbox--button {
-    --size: var(--thick-component);
-
     .nmorph-checkbox__fake {
       position: relative;
       display: flex;
@@ -163,19 +166,25 @@ const commonCSS = css`
   &.nmorph-checkbox--disabled {
     ${disabled()}
   }
-`
+`;
 
 const StyledComponent = styled.label`
   ${commonCSS}
-`
+`;
 </script>
 
 <template>
   <StyledComponent :class="modifiers">
     <div v-if="props.design === 'checkbox'" class="nmorph-checkbox__content">
       <div class="nmorph-checkbox__input-wrapper">
-        <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked"
-          class="nmorph-native-input" @change="handleChange" />
+        <input
+          ref="inputDOMRef"
+          type="checkbox"
+          :disabled="props.disabled"
+          :checked="checked"
+          class="nmorph-native-input"
+          @change="handleChange"
+        />
         <div class="nmorph-checkbox__fake" />
         <div v-if="checked" class="nmorph-checkbox__fake-checked" />
       </div>
