@@ -120,6 +120,10 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "select-fill-options-width": "NmorphSelect 现在支持 `fill` 和 `optionsWidth`，可撑满容器宽度、截断过长的 option label，或让 dropdown 选项按内容自动扩展。",
+        "select-loading-disabled": "NmorphSelect 现在会在 loading 时禁用原生 input，并在开始 loading 时关闭 dropdown。",
+        "dropdown-size-css-values": "NmorphDropdown 的宽度 props 现在支持 CSS 字符串，并新增 min-width 与 max-width。",
+        "form-control-transition-cleanup": "NmorphColorPicker 和 NmorphSwitch 不再为 background 与 shadow 变化添加动画，因此主题更新会立即生效。",
         "callout-status-types": "NmorphCallout 的 title 现在可选，并支持 success 与 error 状态颜色。",
         "theme-runtime-api": "新增 runtime 主题 API：`setThemeColors` 和 `applyTheme` 会更新 Nmorph 管理的 style 标签，不会向 html 写入 inline styles。",
         "theme-options-typing": "整理了主题类型：安装选项与单个主题的颜色选项分开类型化，并安全处理缺失的 theme config。",
@@ -1020,6 +1024,8 @@ export default {
         "open": "控制下拉菜单可见性的布尔值",
         "relative-element": "定义下拉菜单相对于哪个元素定位",
         "width": "设置下拉菜单的宽度",
+        "min-width": "设置下拉菜单的最小宽度",
+        "max-width": "设置下拉菜单的最大宽度",
         "x-offset": "调整下拉菜单位置的水平偏移量（以像素为单位）",
         "y-offset": "调整下拉菜单位置的垂直偏移量（以像素为单位）",
         "fill-width": "布尔值，定义下拉菜单是否应占满整个容器宽度"
@@ -1443,6 +1449,12 @@ export default {
       "loading": {
         "subtitle": "如果设置为 *true*，则显示加载指示器。"
       },
+      "fill": {
+        "subtitle": "使 select 占满容器宽度。"
+      },
+      "options-width": {
+        "subtitle": "控制下拉选项保持 select 宽度并截断长文本，或根据内容自动扩展。"
+      },
       "api": {
         "id": "设置原生 select 的 id。在 NmorphFormItem 内部使用时会继承其 id",
         "name": "设置原生 select 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
@@ -1455,6 +1467,8 @@ export default {
         "options-map": "显示选项的对象",
         "model-value": "下拉列表的选中值",
         "loading": "显示加载状态",
+        "fill": "使下拉列表占满容器宽度",
+        "options-width": "控制下拉选项宽度：truncate 或 auto",
         "open": "控制列表可见性的布尔值"
       },
       "slot": {

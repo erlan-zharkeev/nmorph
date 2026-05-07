@@ -122,6 +122,10 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "select-fill-options-width": "NmorphSelect теперь поддерживает `fill` и `optionsWidth`: компонент может растягиваться на ширину контейнера, обрезать длинные option label или расширять dropdown-опции под контент.",
+        "select-loading-disabled": "NmorphSelect теперь блокирует нативный input во время loading и закрывает dropdown при старте загрузки.",
+        "dropdown-size-css-values": "Props ширины NmorphDropdown теперь принимают CSS-строки и поддерживают min-width и max-width.",
+        "form-control-transition-cleanup": "NmorphColorPicker и NmorphSwitch больше не анимируют background и shadow, поэтому обновления темы применяются мгновенно.",
         "callout-status-types": "NmorphCallout теперь может рендериться без title и поддерживает статусы success и error с отдельными цветами.",
         "theme-runtime-api": "Добавлены runtime API темы: `setThemeColors` и `applyTheme` обновляют управляемый style tag Nmorph без записи inline styles в html.",
         "theme-options-typing": "Уточнены типы темы: install options и цвета отдельной темы типизированы раздельно, а отсутствие theme config обрабатывается безопасно.",
@@ -1022,6 +1026,8 @@ export default {
         open: "Булево значение, управляющее видимостью выпадающего списка",
         "relative-element": "Определяет элемент, относительно которого будет позиционироваться выпадающий список",
         width: "Указывает ширину выпадающего списка",
+        "min-width": "Указывает минимальную ширину выпадающего списка",
+        "max-width": "Указывает максимальную ширину выпадающего списка",
         "x-offset": "Горизонтальное смещение в пикселях для настройки позиции выпадающего списка",
         "y-offset": "Вертикальное смещение в пикселях для настройки позиции выпадающего списка",
         "fill-width": "Булево значение, определяющее, должен ли выпадающий список занимать всю ширину контейнера",
@@ -1445,6 +1451,12 @@ export default {
       loading: {
         subtitle: "Отображает индикатор загрузки, если установлено в *true*.",
       },
+      fill: {
+        subtitle: "Растягивает select на всю ширину контейнера.",
+      },
+      "options-width": {
+        subtitle: "Управляет шириной опций: сохранять ширину select и обрезать длинный текст или расширяться под контент.",
+      },
       api: {
         id: "Устанавливает id нативного select. Внутри NmorphFormItem наследует его id",
         name: "Устанавливает name нативного select. Если prop не передан, берется name или id из NmorphFormItem",
@@ -1457,6 +1469,8 @@ export default {
         "options-map": "Объект для отображения опций",
         "model-value": "Выбранное значение выпадающего списка",
         loading: "Отображает состояние загрузки",
+        fill: "Растягивает выпадающий список на всю ширину контейнера",
+        "options-width": "Управляет шириной опций выпадающего списка: truncate или auto",
         open: "Булево значение для управления видимостью списка",
       },
       slot: {

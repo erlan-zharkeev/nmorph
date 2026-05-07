@@ -68,6 +68,12 @@ const selectOptions = [
   { value: 'published', label: 'Published' },
 ]
 
+const longSelectOptions = [
+  { value: 'teams', label: 'Microsoft Teams Audio Device (Virtual)' },
+  { value: 'microphone', label: 'MacBook Pro Microphone (Built-in)' },
+  { value: 'thunderbolt', label: 'Universal Audio Thunderbolt (PCI)' },
+]
+
 const multiSelectOptions = [
   { value: 'design', label: 'Design' },
   { value: 'build', label: 'Build' },
@@ -148,8 +154,10 @@ watch(runtimeAccentColor, (accent) => {
     </SandboxSection>
 
     <SandboxSection title="NmorphSelect">
-      <div class="row">
+      <div class="grid">
         <NmorphSelect v-model="selectValue" :options="selectOptions" no-element-placeholder="Select status" />
+        <NmorphSelect model-value="review" :options="selectOptions" fill />
+        <NmorphSelect model-value="teams" :options="longSelectOptions" options-width="auto" />
         <NmorphSelect
           v-model="multiSelectValue"
           :options="multiSelectOptions"

@@ -122,6 +122,10 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "select-fill-options-width": "NmorphSelect now supports `fill` and `optionsWidth`, can stretch to container width, truncate long option labels, or expand dropdown options to fit content.",
+        "select-loading-disabled": "NmorphSelect now disables the native input while loading and closes the dropdown when loading starts.",
+        "dropdown-size-css-values": "NmorphDropdown width props now accept CSS string values and support min-width and max-width.",
+        "form-control-transition-cleanup": "NmorphColorPicker and NmorphSwitch no longer animate background and shadow changes, so theme updates apply instantly.",
         "callout-status-types": "NmorphCallout title is now optional and the component supports success and error status colors.",
         "theme-runtime-api": "Added runtime theme APIs: `setThemeColors` and `applyTheme` update the managed Nmorph style tag without writing inline styles to html.",
         "theme-options-typing": "Cleaned up theme typings so install options and per-theme color options are typed separately, and missing theme config is handled safely.",
@@ -1022,6 +1026,8 @@ export default {
         "open": "Boolean value controlling the visibility of the dropdown",
         "relative-element": "Defines the element relative to which the dropdown will be positioned",
         "width": "Sets the width of the dropdown",
+        "min-width": "Sets the minimum width of the dropdown",
+        "max-width": "Sets the maximum width of the dropdown",
         "x-offset": "Horizontal offset in pixels for adjusting the dropdown position",
         "y-offset": "Vertical offset in pixels for adjusting the dropdown position",
         "fill-width": "Boolean value defining whether the dropdown should occupy the entire container width"
@@ -1445,6 +1451,12 @@ export default {
       "loading": {
         "subtitle": "Displays a loading indicator if set to *true*."
       },
+      "fill": {
+        "subtitle": "Makes the select occupy the full width of its container."
+      },
+      "options-width": {
+        "subtitle": "Controls whether dropdown options keep the select width and truncate long labels or expand to fit content."
+      },
       "api": {
         "id": "Sets the id for the native select element. Inherits NmorphFormItem id when used inside a form item",
         "name": "Sets the name for the native select element. Inherits NmorphFormItem name or id when omitted",
@@ -1457,6 +1469,8 @@ export default {
         "options-map": "Object for displaying options",
         "model-value": "Selected value of the dropdown list",
         "loading": "Displays loading state",
+        "fill": "Makes the dropdown list occupy the full width of its container",
+        "options-width": "Controls dropdown option width: truncate or auto",
         "open": "Boolean value to control the visibility of the list"
       },
       "slot": {

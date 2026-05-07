@@ -9,7 +9,9 @@ import { styled, css } from '@vue-styled-components/core'
 interface INmorphProps {
   open: boolean;
   relativeElement: NmorphDomElementType;
-  width?: number;
+  width?: number | string;
+  minWidth?: number | string;
+  maxWidth?: number | string;
   xOffset?: number;
   yOffset?: number;
   fillWidth?: boolean;
@@ -43,7 +45,9 @@ const modifiers = computed(() =>
   })
 );
 
-const width = computed(() => (props.fillWidth ? `${props.relativeElement?.clientWidth}px` : `${props.width}px`));
+const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+
+const width = computed(() => (props.fillWidth ? `${props.relativeElement?.clientWidth}px` : getCssSize(props.width)));
 
 const outsideClickHandler = () => {
   emit('on-outside-click');
@@ -66,12 +70,20 @@ const StyledComponent = styled.div`
   ${commonCSS}
   .nmorph-dropdown {
     width: ${props => props.width};
+    min-width: ${props => props.minWidth};
+    max-width: ${props => props.maxWidth};
   }
 `
 </script>
 
 <template>
-  <StyledComponent :props="{ width }">
+  <StyledComponent
+    :props="{
+      width,
+      minWidth: getCssSize(props.minWidth) || 'auto',
+      maxWidth: getCssSize(props.maxWidth) || 'none',
+    }"
+  >
     <NmorphOverlay :show="props.open" transparent @on-outside-click="outsideClickHandler">
       <div ref="dropdownDOMRef" :class="modifiers"
         :style="{ left: `${placementCoords.x}`, top: `${placementCoords.y}` }">

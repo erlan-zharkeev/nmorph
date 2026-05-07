@@ -21,8 +21,18 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "width",
-    type: "Number",
+    type: "Number | String",
     default: "160",
+  },
+  {
+    name: "min-width",
+    type: "Number | String",
+    default: "-",
+  },
+  {
+    name: "max-width",
+    type: "Number | String",
+    default: "-",
   },
   {
     name: "x-offset",

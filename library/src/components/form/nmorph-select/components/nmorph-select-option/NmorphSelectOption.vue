@@ -57,9 +57,32 @@ const commonCSS = css`
   --hover-color: var(--nmorph-white-color);
 
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: var(--indentation-01);
+  box-sizing: border-box;
+  min-width: 0;
   padding: var(--indentation-00) var(--default-indentation-input);
   cursor: pointer;
+
+  .nmorph-select-option__content {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nmorph-select-option__content span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nmorph-select-option__checked {
+    flex: 0 0 auto;
+  }
 
   &:not(.nmorph-select-option--disabled):hover {
     background: var(--hover-bg);
@@ -90,15 +113,9 @@ const commonCSS = css`
   &.nmorph-select-option--disabled {
     ${disabled()}
 
-    .nmorph-select-option__content {
-      pointer-events: none;
-    }
+    pointer-events: none;
   }
 
-  &.nmorph-select-option--with-label {
-    display: flex;
-    align-items: center;
-  }
 `
 
 const StyledComponent = styled.div`

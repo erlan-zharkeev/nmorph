@@ -67,7 +67,17 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "loading",
     type: "Boolean",
-    default: "true",
+    default: "false",
+  },
+  {
+    name: "fill",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "options-width",
+    type: "'truncate' | 'auto'",
+    default: "truncate",
   },
   {
     name: "open",

@@ -146,9 +146,6 @@ const commonCSS = css`
     height: var(--height);
     padding: 0 var(--default-indentation-input);
     border-radius: var(--default-border-radius);
-    transition:
-      background var(--transition-01) ease-in-out,
-      box-shadow var(--transition-01) ease-in-out;
 
     ${nmorphInset()}
   }

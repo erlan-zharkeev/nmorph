@@ -28,6 +28,8 @@ interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: NmorphSelectModelValueType;
   loading?: boolean;
   open?: boolean;
+  fill?: boolean;
+  optionsWidth?: 'truncate' | 'auto';
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -40,6 +42,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'default',
   disabled: false,
   open: false,
+  fill: false,
+  optionsWidth: 'truncate',
 });
 
 const computedNoElementPlaceholder = computed(() =>
@@ -52,6 +56,8 @@ const emit = defineEmits<{
 
 const initialValue = ref<NmorphSelectModelValueType>(props.modelValue);
 const open = ref(props.open);
+const disabledInput = computed(() => props.disabled || props.loading);
+const autoOptionsWidth = computed(() => props.optionsWidth === 'auto');
 
 const optionsDOMRef = ref<NmorphDomElementType>(null);
 const optionsHeight = ref<string | null>(null);
@@ -60,7 +66,7 @@ const selectedLineOutset = ref(true);
 const { id, name, autocomplete, tabindex } = useFormItemInput(props);
 
 const changeHandler = (value: string) => {
-  if (props.disabled) return;
+  if (disabledInput.value) return;
   open.value = false;
   if (typeof initialValue.value === 'string') {
     if (!props.valueRequired && initialValue.value === value) initialValue.value = '';
@@ -95,7 +101,9 @@ const modifiers = computed(() =>
       `${props.disabled && 'disabled'}`,
       `${props.modelValue ? 'on' : 'off'}`,
       `${props.loading && 'loading'}`,
-      `${open.value && 'open'}`,
+      `${open.value && !disabledInput.value && 'open'}`,
+      `${props.fill && 'fill'}`,
+      `${autoOptionsWidth.value && 'options-auto-width'}`,
       `${selectedLineOutset.value ? 'selected-line-outset' : 'selected-line-inset'}`,
       `${focus.value && 'focus'}`,
     ],
@@ -103,7 +111,7 @@ const modifiers = computed(() =>
 );
 
 const clickHandler = () => {
-  if (props.disabled) return;
+  if (disabledInput.value) return;
   open.value = !open.value;
 };
 
@@ -118,6 +126,13 @@ watch(
 const closeHandler = () => {
   open.value = false;
 };
+
+watch(
+  () => props.loading,
+  (isLoading) => {
+    if (isLoading) open.value = false;
+  }
+);
 
 const nodeOptions = ref<NodeListOf<Element>>();
 const domOptions = ref<Array<string>>([]);
@@ -185,16 +200,22 @@ provide<NmorphSelectSelectedValueInjectionType>('select-selected-value', initial
 provide<NmorphSelectChangeSelectedValue>('select-change-selected-value', changeHandler);
 
 const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
+const optionsMinWidth = computed(() =>
+  autoOptionsWidth.value ? `${nmorphSelectDOMRef.value?.clientWidth || 0}px` : undefined
+);
 
 const spaceHandler = () => {
+  if (disabledInput.value) return;
   open.value = !open.value;
 };
 
 const arrowDownHandler = () => {
+  if (disabledInput.value) return;
   currentIndex.value = (currentIndex.value + 1) % domOptions.value.length;
 };
 
 const arrowUpHandler = () => {
+  if (disabledInput.value) return;
   currentIndex.value = (currentIndex.value - 1 + domOptions.value.length) % domOptions.value.length;
 };
 
@@ -251,6 +272,17 @@ const commonCSS = css`
     ${disabled()}
   }
 
+  &.nmorph-select--fill {
+    width: 100%;
+  }
+
+  &.nmorph-select--options-auto-width {
+    .nmorph-select__options {
+      width: max-content;
+      max-width: calc(100vw - var(--indentation-02) * 2);
+    }
+  }
+
   &.nmorph-select--open {
     .nmorph-select__chevron {
       transform: rotate(180deg);
@@ -284,7 +316,7 @@ const StyledComponent = styled.div`
 <template>
   <StyledComponent :class="modifiers">
     <div class="nmorph-select__content">
-      <select :id="id" :name="name" :autocomplete="autocomplete" :tabindex="tabindex" @focus="focusHandler" @blur="blurHandler" @keydown.space="spaceHandler"
+      <select :id="id" :name="name" :autocomplete="autocomplete" :tabindex="tabindex" :disabled="disabledInput" @focus="focusHandler" @blur="blurHandler" @keydown.space="spaceHandler"
         @keydown.arrow-down="arrowDownHandler" @keydown.arrow-up="arrowUpHandler" @keydown.enter="enterHandler">
         <option v-for="option in domOptions" :key="option" :value="option" />
       </select>
@@ -305,7 +337,10 @@ const StyledComponent = styled.div`
         </NmorphIcon>
       </div>
     </div>
-    <NmorphDropdown v-if="nmorphSelectDOMRef && !props.disabled" :open="open" :relative-element="nmorphSelectDOMRef"
+    <NmorphDropdown v-if="nmorphSelectDOMRef && !props.disabled" :open="open && !props.loading"
+      :relative-element="nmorphSelectDOMRef" :fill-width="!autoOptionsWidth"
+      :width="autoOptionsWidth ? 'max-content' : undefined" :min-width="optionsMinWidth"
+      max-width="calc(100vw - 16px)"
       @on-outside-click="closeHandler">
       <div ref="optionsDOMRef" class="nmorph-select__options">
         <NmorphIcon v-if="props.loading" class="nmorph-select__chevron" size="medium">

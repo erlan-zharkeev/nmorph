@@ -83,9 +83,6 @@ const commonCSS = css`
     position: relative;
     height: 100%;
     border-radius: var(--border-radius-999);
-    transition:
-      background ease-in-out var(--transition-02),
-      box-shadow ease-in-out var(--transition-02);
 
     ${body2()}
     ${nmorphInset()}
@@ -121,9 +118,7 @@ const commonCSS = css`
     width: var(--thumb-height);
     height: var(--thumb-height);
     border-radius: var(--border-radius-999);
-    transition:
-      left ease-in-out var(--transition-02),
-      box-shadow ease-in-out var(--transition-02);
+    transition: left ease-in-out var(--transition-02);
 
     display: flex;
     justify-content: center;
