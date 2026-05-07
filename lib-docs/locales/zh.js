@@ -120,6 +120,7 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "media-control-icons": "新增媒体控制图标：play、pause、stop、record，以及方形 exit 替代图标。",
         "select-fill-options-width": "NmorphSelect 现在支持 `fill` 和 `optionsWidth`，可撑满容器宽度、截断过长的 option label，或让 dropdown 选项按内容自动扩展。",
         "select-loading-disabled": "NmorphSelect 现在会在 loading 时禁用原生 input，并在开始 loading 时关闭 dropdown。",
         "dropdown-size-css-values": "NmorphDropdown 的宽度 props 现在支持 CSS 字符串，并新增 min-width 与 max-width。",

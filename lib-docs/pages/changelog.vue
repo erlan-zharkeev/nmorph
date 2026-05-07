@@ -9,6 +9,21 @@ import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v2.2.3</h3>
+            <ul>
+              <li>{{ $t("changelog-page.changelog.items.media-control-icons") }}</li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
+            <h3>v2.2.2</h3>
+            <ul>
+              <li>{{ $t("changelog-page.changelog.items.select-fill-options-width") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.select-loading-disabled") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.dropdown-size-css-values") }}</li>
+              <li>{{ $t("changelog-page.changelog.items.form-control-transition-cleanup") }}</li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.2.1</h3>
             <ul>
               <li>{{ $t("changelog-page.changelog.items.callout-status-types") }}</li>

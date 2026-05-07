@@ -122,6 +122,7 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "media-control-icons": "Added media control icons: play, pause, stop, record, and a square exit alternative.",
         "select-fill-options-width": "NmorphSelect now supports `fill` and `optionsWidth`, can stretch to container width, truncate long option labels, or expand dropdown options to fit content.",
         "select-loading-disabled": "NmorphSelect now disables the native input while loading and closes the dropdown when loading starts.",
         "dropdown-size-css-values": "NmorphDropdown width props now accept CSS string values and support min-width and max-width.",
