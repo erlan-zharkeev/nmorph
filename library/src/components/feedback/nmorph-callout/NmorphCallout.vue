@@ -19,7 +19,6 @@ const commonCSS = css`
 
   position: relative;
   padding: 8px 12px;
-  margin-bottom: 8px;
   overflow: hidden;
   border-radius: 4px;
 

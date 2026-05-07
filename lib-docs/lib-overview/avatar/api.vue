@@ -10,8 +10,38 @@ import { AvatarShapeType } from "@nmorph/nmorph-ui-kit";
 const attributesData: IAttributesTableData[] = [
   {
     name: "src",
-    type: "String",
+    type: "String | String[]",
     default: "-",
+  },
+  {
+    name: "preview",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "preview-src",
+    type: "String | String[]",
+    default: "-",
+  },
+  {
+    name: "preview-initial-index",
+    type: "Number",
+    default: "0",
+  },
+  {
+    name: "preview-scale-step",
+    type: "Number",
+    default: "0.2",
+  },
+  {
+    name: "preview-min-scale-level",
+    type: "Number",
+    default: "0.2",
+  },
+  {
+    name: "preview-max-scale-level",
+    type: "Number",
+    default: "4",
   },
   {
     name: "name",

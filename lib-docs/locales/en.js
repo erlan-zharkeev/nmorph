@@ -122,6 +122,8 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "avatar-preview": "NmorphAvatar now supports image preview on click, including multiple gallery images through `src` or `previewSrc`.",
+        "callout-spacing": "NmorphCallout no longer adds bottom margin by default.",
         "media-control-icons": "Added media control icons: play, pause, stop, record, and a square exit alternative.",
         "select-fill-options-width": "NmorphSelect now supports `fill` and `optionsWidth`, can stretch to container width, truncate long option labels, or expand dropdown options to fit content.",
         "select-loading-disabled": "NmorphSelect now disables the native input while loading and closes the dropdown when loading starts.",
@@ -421,11 +423,20 @@ export default {
       "name": {
         "subtitle": "Used to generate initials for the fallback when no image is available."
       },
+      "preview": {
+        "subtitle": "Opens an image preview on avatar click. `src` and `previewSrc` can accept a string or an array of strings."
+      },
       "api": {
         "size": "Sets the size of the avatar",
         "shape": "Defines the shape of the avatar",
-        "src": "Avatar image URL",
+        "src": "Avatar image URL or preview gallery URLs",
         "name": "Name used to generate fallback initials",
+        "preview": "Enables image preview on click",
+        "preview-src": "Image URL or URL list used only by the preview",
+        "preview-initial-index": "Initial image index for preview gallery",
+        "preview-scale-step": "Scale step for preview zoom actions",
+        "preview-min-scale-level": "Minimum preview scale level",
+        "preview-max-scale-level": "Maximum preview scale level",
         "src-set": "List of image sources",
         "alt": "Text description of the image",
         "fit": "Defines how the image fills the container",

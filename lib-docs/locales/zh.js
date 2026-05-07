@@ -120,6 +120,8 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "avatar-preview": "NmorphAvatar 现在支持点击预览图片，并可通过 `src` 或 `previewSrc` 传入多张图库图片。",
+        "callout-spacing": "NmorphCallout 默认不再添加底部 margin。",
         "media-control-icons": "新增媒体控制图标：play、pause、stop、record，以及方形 exit 替代图标。",
         "select-fill-options-width": "NmorphSelect 现在支持 `fill` 和 `optionsWidth`，可撑满容器宽度、截断过长的 option label，或让 dropdown 选项按内容自动扩展。",
         "select-loading-disabled": "NmorphSelect 现在会在 loading 时禁用原生 input，并在开始 loading 时关闭 dropdown。",
@@ -419,11 +421,20 @@ export default {
       "name": {
         "subtitle": "Used to generate initials for the fallback when no image is available."
       },
+      "preview": {
+        "subtitle": "点击头像时打开图片预览。`src` 和 `previewSrc` 可传入字符串或字符串数组。"
+      },
       "api": {
         "size": "Sets the size of the avatar",
         "shape": "Defines the shape of the avatar",
-        "src": "Avatar image URL",
+        "src": "头像图片 URL 或预览图库 URL",
         "name": "Name used to generate fallback initials",
+        "preview": "启用点击图片预览",
+        "preview-src": "仅用于预览的图片 URL 或 URL 列表",
+        "preview-initial-index": "预览图库的初始图片索引",
+        "preview-scale-step": "预览缩放步长",
+        "preview-min-scale-level": "预览最小缩放级别",
+        "preview-max-scale-level": "预览最大缩放级别",
         "src-set": "List of image sources",
         "alt": "Text description of the image",
         "fit": "Defines how the image fills the container",

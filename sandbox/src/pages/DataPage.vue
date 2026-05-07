@@ -135,6 +135,8 @@ const progressColor = (value: number) => {
       <div class="row">
         <NmorphAvatar :src="imageOne" :size="40" alt="Small avatar" />
         <NmorphAvatar :src="imageTwo" :size="56" shape="square" fit="cover" />
+        <NmorphAvatar :src="[imageOne, imageTwo, imageThree]" preview :size="64" shape="square" alt="Preview avatar" />
+        <NmorphAvatar :src="imageOne" :preview-src="[imageOne, imageTwo, imageThree]" preview :size="56" />
         <NmorphAvatar name="John Doe" :size="56" />
         <NmorphAvatar name="Alex Smith" :size="72" shape="square" />
         <NmorphAvatar :src="brokenImage" name="Broken Image" :size="56" />

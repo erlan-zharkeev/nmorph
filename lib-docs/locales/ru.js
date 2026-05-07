@@ -122,6 +122,8 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "avatar-preview": "NmorphAvatar теперь поддерживает preview изображения по клику, включая галерею из нескольких изображений через `src` или `previewSrc`.",
+        "callout-spacing": "NmorphCallout больше не добавляет нижний margin по умолчанию.",
         "media-control-icons": "Добавлены иконки управления медиа: play, pause, stop, record и квадратная альтернатива exit.",
         "select-fill-options-width": "NmorphSelect теперь поддерживает `fill` и `optionsWidth`: компонент может растягиваться на ширину контейнера, обрезать длинные option label или расширять dropdown-опции под контент.",
         "select-loading-disabled": "NmorphSelect теперь блокирует нативный input во время loading и закрывает dropdown при старте загрузки.",
@@ -421,11 +423,20 @@ export default {
       name: {
         subtitle: "Используется для генерации инициалов фолбэка, когда изображение недоступно.",
       },
+      preview: {
+        subtitle: "Открывает preview изображения по клику на аватар. `src` и `previewSrc` могут принимать строку или массив строк.",
+      },
       api: {
         size: "Задает размер аватара",
         shape: "Определяет форму аватара",
-        src: "URL изображения аватара",
+        src: "URL изображения аватара или URL галереи preview",
         name: "Имя для генерации инициалов фолбэка",
+        preview: "Включает preview изображения по клику",
+        "preview-src": "URL изображения или список URL только для preview",
+        "preview-initial-index": "Начальный индекс изображения в preview-галерее",
+        "preview-scale-step": "Шаг масштабирования в preview",
+        "preview-min-scale-level": "Минимальный уровень масштаба preview",
+        "preview-max-scale-level": "Максимальный уровень масштаба preview",
         "src-set": "Список источников изображения",
         alt: "Текстовое описание изображения",
         fit: "Определяет как изображение заполняет контейнер",
