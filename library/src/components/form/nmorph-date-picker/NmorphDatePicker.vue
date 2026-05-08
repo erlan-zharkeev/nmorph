@@ -28,7 +28,7 @@ const { t } = useI18n();
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
-  height: 'default',
+  height: 'basic',
   placeholder: '',
   modelValue: null,
   type: 'date',

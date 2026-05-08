@@ -8,7 +8,7 @@ const scriptData = "";
 const templateData = `
 <template>
   <NmorphNumberInput height="thick" />
-  <NmorphNumberInput height="default" />
+  <NmorphNumberInput height="basic" />
   <NmorphNumberInput height="thin" />
 </template>
 `;
@@ -34,7 +34,7 @@ const code = [scriptData, templateData, cssData];
         <div class="number-input-height-overview">
           <ClientOnly>
             <NmorphNumberInput height="thick" />
-            <NmorphNumberInput height="default" />
+            <NmorphNumberInput height="basic" />
             <NmorphNumberInput height="thin" />
           </ClientOnly>
         </div>

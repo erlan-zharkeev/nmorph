@@ -16,7 +16,7 @@ const templateData = `
     <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
     <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
   </NmorphSelectButton>
-  <NmorphSelectButton v-model="value" height="default">
+  <NmorphSelectButton v-model="value" height="basic">
     <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
     <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
   </NmorphSelectButton>

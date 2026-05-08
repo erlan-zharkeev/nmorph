@@ -15,7 +15,7 @@ interface INmorphProps {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  height: 'default',
+  height: 'basic',
   type: 'linear',
   color: 'var(--nmorph-accent-color)',
   valueInside: false,

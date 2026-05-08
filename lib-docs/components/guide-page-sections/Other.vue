@@ -11,7 +11,7 @@ const utilsClasses = [
   { name: '.nmorph-title-3', description: 'Medium title typography' },
   { name: '.nmorph-title-2', description: 'Large title typography' },
   { name: '.nmorph-title-1', description: 'Extra large title typography' },
-  { name: '.nmorph--default-height-component', description: 'Default component height' },
+  { name: '.nmorph--basic-component', description: 'Basic component height' },
   { name: '.nmorph--thin-component', description: 'Thin component height' },
   { name: '.nmorph--thick-component', description: 'Thick component height' },
   { name: '.nmorph--fill', description: 'Full container width' },

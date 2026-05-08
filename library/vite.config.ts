@@ -17,6 +17,7 @@ export default defineConfig(() => {
         insertTypesEntry: true,
         copyDtsFiles: false,
         staticImport: true,
+        logLevel: 'silent',
         exclude: ['**/*.spec.ts', '**/*.story.vue', 'node_modules'],
       }),
       svgLoader(),
@@ -36,6 +37,6 @@ export default defineConfig(() => {
     },
     resolve: {
       alias: [{ find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) }],
-    }
+    },
   };
 });

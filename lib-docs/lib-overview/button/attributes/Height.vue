@@ -7,7 +7,7 @@ const scriptData = ``;
 const templateData = `
 <template>
   <NmorphButton height="thick">Thick</NmorphButton>
-  <NmorphButton height="default">Default</NmorphButton>
+  <NmorphButton height="basic">Basic</NmorphButton>
   <NmorphButton height="thin">Thin</NmorphButton>
 </template>
 `;
@@ -30,9 +30,7 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="button-height-overview">
           <NmorphButton height="thick">{{ $t("overview.thick") }}</NmorphButton>
-          <NmorphButton height="default">{{
-            $t("overview.default")
-          }}</NmorphButton>
+          <NmorphButton height="basic">{{ $t("overview.basic") }}</NmorphButton>
           <NmorphButton height="thin">{{ $t("overview.thin") }}</NmorphButton>
         </div>
       </template>

@@ -2,7 +2,9 @@
   "name": "nmorph",
   "private": true,
   "scripts": {
-    "dev": "npm run dev:sandbox & npm run dev:docs",
+    "dev": "npm run dev:sandbox & npm run dev:docs & pnpm --dir library dev",
+    "dev:storybook": "pnpm --dir library dev",
+    "dev:all": "npm run dev",
     "dev:sandbox": "cd sandbox && npm run dev",
     "dev:docs": "cd lib-docs && npm run dev"
   }

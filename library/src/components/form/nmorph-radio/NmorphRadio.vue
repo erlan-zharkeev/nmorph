@@ -30,7 +30,7 @@ interface INmorphProps extends Omit<INmorphRadioOption, 'value'> {
 const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   label: '',
-  styleType: 'button',
+  styleType: 'radio-style',
   checked: false,
   tabindex: 0,
   value: '',
@@ -41,7 +41,7 @@ const changeHandler = () => {
 };
 
 const checked = computed(() => groupSelectedValue?.value === props.value || props.checked);
-const height = computed(() => props.height || groupHeight?.value || 'default');
+const height = computed(() => props.height || groupHeight?.value || 'thin');
 
 const modifiers = computed(() =>
   useModifiers({

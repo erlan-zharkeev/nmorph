@@ -15,7 +15,7 @@ interface INmorphProps extends INmorphCollapseItemProps {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  height: 'default',
+  height: 'basic',
   title: '',
   disabled: false,
   block: true,

@@ -31,7 +31,7 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "height",
     type: enumToString(NmorphComponentHeight),
-    default: "default",
+    default: "thin",
   },
   {
     name: "design",

@@ -201,7 +201,7 @@ export const useCommonStyles = () => {
       background: var(--nmorph-main-color);
     }
 
-    .nmorph--default-height-component {
+    .nmorph--basic-component {
       --height: var(--default-thickness-component);
 
       height: var(--height);

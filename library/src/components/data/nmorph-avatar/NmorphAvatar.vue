@@ -149,19 +149,19 @@ const commonCSS = css`
 const StyledComponent = styled.div`
   ${commonCSS}
   > .nmorph-image {
-    --width: ${(props: INmorphStyledProps) => props.size};
-    --height: ${(props: INmorphStyledProps) => props.size};
+    --width: ${(props) => props.size};
+    --height: ${(props) => props.size};
 
-    padding: ${(props: INmorphStyledProps) => props.imagePadding};
-    border-radius: ${(props: INmorphStyledProps) => props.radius};
+    padding: ${(props) => props.imagePadding};
+    border-radius: ${(props) => props.radius};
   }
 
   &.nmorph--shadow-combined {
-    ${(props: INmorphStyledProps) => nmorphCombined(Number(props.frameBorder), true)};
+    ${(props) => nmorphCombined(Number(props.frameBorder), true)};
   }
 
   > .nmorph-image > img {
-    border-radius: ${(props: INmorphStyledProps) => props.radius};
+    border-radius: ${(props) => props.radius};
   }
 `;
 </script>

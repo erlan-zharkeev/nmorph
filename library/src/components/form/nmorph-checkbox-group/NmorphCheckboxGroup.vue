@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   options: () => [],
   design: 'checkbox',
   direction: 'row',
-  height: 'default',
+  height: 'thin',
   disabled: false,
 });
 

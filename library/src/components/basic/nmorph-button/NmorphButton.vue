@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   loading: false,
   styleType: 'default',
-  height: 'default',
+  height: 'basic',
   accentBgOnHover: false,
   ripple: true,
   shape: 'default',
@@ -62,7 +62,7 @@ const buttonDOMElement = ref<NmorphDomElementType>(null);
 
 const iconSizeMap = {
   thin: 'small',
-  default: 'medium',
+  basic: 'medium',
   thick: 'large',
 };
 

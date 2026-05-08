@@ -34,6 +34,7 @@ import {
   NmorphAlert,
   NmorphCallout,
   NmorphRadio,
+  NmorphRadioGroup,
   NmorphSelectButton,
   NmorphSelectButtonItem
 } from "@nmorph/nmorph-ui-kit";
@@ -284,7 +285,7 @@ const localePath = useLocalePath();
         <NuxtLink :to="localePath('/elements/radio')">
           <NmorphCard>
             <template #header>Radio</template>
-            <div class="overview-component-content')">
+            <div class="overview-component-content">
               <NmorphRadio checked label="Radio" />
             </div>
           </NmorphCard>
@@ -295,10 +296,10 @@ const localePath = useLocalePath();
           <NmorphCard>
             <template #header>Radio group</template>
             <div class="overview-component-content">
-              <NmorphCheckboxGroup :model-value="['1']" :options="[
-                { id: '1', label: '1' },
-                { id: '2', label: '2' },
-                { id: '3', label: '3' },
+              <NmorphRadioGroup model-value="1" :options="[
+                { value: '1', label: '1' },
+                { value: '2', label: '2' },
+                { value: '3', label: '3' },
               ]" />
             </div>
           </NmorphCard>

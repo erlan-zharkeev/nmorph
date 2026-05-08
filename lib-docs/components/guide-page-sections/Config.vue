@@ -153,7 +153,7 @@ const cssVariableGroups = computed(() => [
       { name: '--border-radius-circular', description: 'Circular border radius' },
       { name: '--default-border-radius', description: 'Default component border radius' },
       { name: '--thick-component', description: 'Thick component height' },
-      { name: '--default-thickness-component', description: 'Default component height' },
+      { name: '--default-thickness-component', description: 'Basic component height' },
       { name: '--thin-component', description: 'Thin component height' },
       { name: '--extra-thin-component', description: 'Extra thin component height' },
       { name: '--form-container', description: 'Default form control width' },

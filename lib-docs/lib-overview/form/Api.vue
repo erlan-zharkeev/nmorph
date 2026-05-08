@@ -97,7 +97,7 @@ const attributesDataFormItem: IAttributesTableData[] = [
   {
     name: "height",
     type: enumToString(NmorphComponentHeight),
-    default: "default",
+    default: "basic",
   },
   {
     name: "label",

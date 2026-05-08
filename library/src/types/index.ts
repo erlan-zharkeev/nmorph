@@ -16,7 +16,7 @@ export interface INmorphFromDataExpose {
 
 export enum NmorphComponentHeight {
   thick = 'thick-component',
-  default = 'default-height-component',
+  basic = 'basic-component',
   thin = 'thin-component',
 }
 

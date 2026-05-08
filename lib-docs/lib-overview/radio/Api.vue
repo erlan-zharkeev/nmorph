@@ -27,12 +27,12 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "style-type",
     type: enumToString(NmorphRadioStyleType),
-    default: "button",
+    default: "radio-style",
   },
   {
     name: "height",
     type: enumToString(NmorphComponentHeight),
-    default: "default",
+    default: "thin",
   },
   {
     name: "checked",

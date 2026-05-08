@@ -11,7 +11,7 @@ interface INmorphProps {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  height: 'default',
+  height: 'basic',
   errors: () => [],
   staticHeight: false,
 });

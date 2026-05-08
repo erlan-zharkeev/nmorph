@@ -5,3 +5,5 @@ CLAUDE.md
 .idea
 .DS_Store
 AGENTS.md
+.pnpm-store
+*.timestamp-*.mjs

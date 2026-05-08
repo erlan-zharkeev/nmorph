@@ -13,7 +13,7 @@ const scriptData = `
 const templateData = `
 <template>
   <NmorphAutocomplete height="thick" v-model="text" :list="list" />
-  <NmorphAutocomplete height="default" :list="list" />
+  <NmorphAutocomplete height="basic" :list="list" />
   <NmorphAutocomplete height="thin" :list="list" />
 </template>
 `;
@@ -43,7 +43,7 @@ const list = ref([{ value: "First" }, { value: "Second" }, { value: "Third" }]);
         <div class="autocomplete-height-overview">
           <ClientOnly>
             <NmorphAutocomplete height="thick" v-model="text" :list="list" />
-            <NmorphAutocomplete height="default" :list="list" />
+            <NmorphAutocomplete height="basic" :list="list" />
             <NmorphAutocomplete height="thin" :list="list" />
           </ClientOnly>
         </div>

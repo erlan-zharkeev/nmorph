@@ -16,7 +16,7 @@ const selectChangeSelectedValue = inject<NmorphSelectChangeSelectedValue>('selec
 
 const props = withDefaults(defineProps<INmorphSelectOption>(), {
   label: '',
-  height: 'default',
+  height: 'basic',
   disabled: false,
 });
 

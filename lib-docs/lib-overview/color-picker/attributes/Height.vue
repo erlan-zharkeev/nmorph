@@ -8,7 +8,7 @@ const scriptData = "";
 const templateData = `
 <template>
   <NmorphColorPicker height="thick" />
-  <NmorphColorPicker height="default" />
+  <NmorphColorPicker height="basic" />
   <NmorphColorPicker height="thin" />
 </template>
 `;
@@ -33,7 +33,7 @@ const code = [scriptData, templateData, cssData];
         <div class="color-picker-height-overview">
           <ClientOnly>
             <NmorphColorPicker height="thick" />
-            <NmorphColorPicker height="default" />
+            <NmorphColorPicker height="basic" />
             <NmorphColorPicker height="thin" />
           </ClientOnly>
         </div>

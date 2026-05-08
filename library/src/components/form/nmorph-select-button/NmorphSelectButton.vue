@@ -18,7 +18,7 @@ interface INmorphProps extends INmorphCommonInputProps {
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: '',
-  height: 'default',
+  height: 'basic',
   disabled: false,
   options: () => [],
   fill: false,

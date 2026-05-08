@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   modelValue: '',
   rules: () => [],
-  height: 'default',
+  height: 'basic',
   clearable: false,
   indentation: '',
   inputAttrs: () => ({}),
@@ -35,7 +35,10 @@ const { id, name, autocomplete, tabindex } = useFormItemInput(props);
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[props.height], `${focused.value && 'focused'}`],
-    'nmorph-text-input': [`${props.typePassword && 'password'}`],
+    'nmorph-text-input': [
+      `${props.typePassword && 'password'}`,
+      `${(props.typePassword || props.clearable) && 'with-action'}`,
+    ],
   })
 );
 
@@ -130,6 +133,12 @@ const commonCSS = css`
     border-radius: var(--default-border-radius);
 
     ${nmorphInset()}
+  }
+
+  &.nmorph-text-input--with-action {
+    input {
+      padding-right: calc(var(--height) + var(--indentation-03));
+    }
   }
 
   input:focus {

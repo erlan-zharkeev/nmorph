@@ -15,7 +15,7 @@ const templateData = `
     v-model="value"
   />
   <NmorphDatePicker
-    height="default"
+    height="basic"
     :height="height"
     v-model="value"
   />

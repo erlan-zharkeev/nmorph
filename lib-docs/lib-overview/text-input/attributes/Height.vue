@@ -7,7 +7,7 @@ const scriptData = "";
 const templateData = `
 <template>
   <NmorphTextInput height="thick" placeholder="Enter text" />
-  <NmorphTextInput height="default" placeholder="Enter text" />
+  <NmorphTextInput height="basic" placeholder="Enter text" />
   <NmorphTextInput height="thin" placeholder="Enter text" />
 </template>
 `;
@@ -33,7 +33,7 @@ const code = [scriptData, templateData, cssData];
         <div class="text-input-height-overview">
           <ClientOnly>
             <NmorphTextInput height="thick" :placeholder="$t('overview.enter-text')" />
-            <NmorphTextInput height="default" :placeholder="$t('overview.enter-text')" />
+            <NmorphTextInput height="basic" :placeholder="$t('overview.enter-text')" />
             <NmorphTextInput height="thin" :placeholder="$t('overview.enter-text')" />
           </ClientOnly>
         </div>

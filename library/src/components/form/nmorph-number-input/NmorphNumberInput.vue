@@ -15,7 +15,7 @@ interface INmorphProps extends INmorphCommonInputProps {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  height: 'default',
+  height: 'basic',
   modelValue: 0,
   max: Infinity,
   min: -Infinity,
@@ -54,7 +54,7 @@ const iconSizeMap = {
     default: '12px',
     right: '8px',
   },
-  default: {
+  basic: {
     default: '10px',
     right: '7px',
   },

@@ -23,12 +23,12 @@ interface INmorphProps extends INmorphCommonInputProps {
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: '',
-  styleType: 'button',
+  styleType: 'radio-style',
   options: () => [],
   direction: 'row',
   label: '',
   disabled: false,
-  height: 'default',
+  height: 'thin',
 });
 
 interface INmorphEmit {

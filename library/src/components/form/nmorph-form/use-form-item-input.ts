@@ -6,7 +6,7 @@ import { NmorphFormItemInputDataType } from './types';
 export const nmorphFormItemInputDataKey = 'nmorph-form-item-input-data';
 
 export const useFormItemInput = (props: Pick<INmorphCommonInputProps, 'id' | 'name' | 'tabindex' | 'autocomplete'>) => {
-  const formItemInputData = inject<NmorphFormItemInputDataType>(nmorphFormItemInputDataKey);
+  const formItemInputData = inject<NmorphFormItemInputDataType | undefined>(nmorphFormItemInputDataKey, undefined);
   const fallbackId = generateUUID();
 
   const id = computed(() => props.id || formItemInputData?.id.value || fallbackId);

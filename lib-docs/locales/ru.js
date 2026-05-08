@@ -1,6 +1,7 @@
 export default {
   meta: {
-    description: "Бибилиотека ui компонентов для Vue 3 в стиле neumorphism/sceumorphism."
+    description:
+      "Бибилиотека ui компонентов для Vue 3 в стиле neumorphism/sceumorphism.",
   },
   guide: "Руководство",
   components: "Компоненты",
@@ -15,7 +16,7 @@ export default {
   events: "События",
   translates: "Переводы",
   description: "Описание",
-  text: 'Текст',
+  text: "Текст",
   type: "Тип",
   default: "По умолчанию",
   basic: "Основное",
@@ -34,7 +35,8 @@ export default {
   },
   "unsupported-resolution": {
     title: "Разрешение не поддерживается",
-    description: "Откройте документацию на устройстве с шириной экрана не меньше 320px."
+    description:
+      "Откройте документацию на устройстве с шириной экрана не меньше 320px.",
   },
   "guide-page": {
     "theme-customize": "Кастомизировать тему",
@@ -42,58 +44,75 @@ export default {
     "custom-text-color": "Цвет текста",
     "custom-accent-color": "Цвет акцента",
     "enter-color": "Введите цвет",
-    "get-started-btn": 'Быстрый старт',
-    explained: "<b class=\"main-section__subtitle\">Neumorphism / Sceumorhism</b>",
+    "get-started-btn": "Быстрый старт",
+    explained:
+      '<b class="main-section__subtitle">Neumorphism / Sceumorhism</b>',
     "apply-theme": "Применить тему",
     "main-content":
-      "<p class=\"main-section__first-explained-content\">Vue 3&nbsp;ui-kit для создания уникального 3D&nbsp;дизайна в&nbsp;неу(о)морфическом стиле</p>",
+      '<p class="main-section__first-explained-content">Vue 3&nbsp;ui-kit для создания уникального 3D&nbsp;дизайна в&nbsp;неу(о)морфическом стиле</p>',
     "quick-start": {
       installation: "Установка",
       "choose-package-manager":
         "Выберите на ваше усмотрение любой пакетный менеджер.<br>Мы рекомендуем использовать проверенные такие как <b>NPM</b>, <b>Yarn</b>, <b>Pnpm</b>",
       plugin: "Подключение библиотеки",
       "alternative-plugin": "Алтернативый способ подключения",
-      usage: "Базовое использование"
+      usage: "Базовое использование",
     },
-    "config": {
+    config: {
       "add-config": "Пример добавления конфигурации библиотеки",
-      "available": "На данный момент доступны три настройки: theme, i18n и zIndex",
-      "theme": "Тема",
-      "i18n": "Интернационализация(i18n)",
-      "ls": "Сохранять текущую тему в local storage",
+      available:
+        "На данный момент доступны три настройки: theme, i18n и zIndex",
+      theme: "Тема",
+      i18n: "Интернационализация(i18n)",
+      ls: "Сохранять текущую тему в local storage",
       "rest-themes": "Ваши кастомные темы",
       "default-theme": "Выбранная тема по умолчанию",
-      "dark-shade": "Коэфициент глубины темной тени, работает только при динамическом подходе генерации тени",
-      "light-shade": "Коэфициент глубины светлой тени, работает только при динамическом подходе генерации тени",
+      "dark-shade":
+        "Коэфициент глубины темной тени, работает только при динамическом подходе генерации тени",
+      "light-shade":
+        "Коэфициент глубины светлой тени, работает только при динамическом подходе генерации тени",
       "shadow-width": "Дальность отбрасываемой тени",
       "shadow-blur": "Размытие тени",
-      "theme-explained": "Цвета темы передаются при подключении библиотеки. Минимально обычно достаточно main, text и accent для каждой темы.",
-      "auto-generation": "Если в теме есть main, но нет darkShade и lightShade, Nmorph сгенерирует цвета теней автоматически. Передавайте darkShade и lightShade вручную, когда нужны точные значения.",
-      "theme-runtime": "Используйте runtime API, когда цвета приходят из контролов, например из color picker. Runtime цвета обновляют style tag Nmorph и не записываются в inline style атрибут html.",
-      "main-var": "Для автоматической генерации darkShade и lightShade. Достаточно передать только эту переменную.",
-      "shade-var": "Будет автоматически высчитыватся если не мутировать их напрмяую и передать переменную main.",
-      "i18n-content": "Для корректной работы i18n, убедитесь что подключаете i18n до подключения библиотеки. На данный момент доступны три локали en, zh, ru.<p>По умолчанию подключена локаль en. Импортируйте только те локали что будут нужны.</p><p>Если локалей нет то нужно добавить свои. Свойство locale будет перезаписывать locale из i18n переданного выше.</p>",
-      "rewrite-translation": "Перезаписаваем переводы библиотеки. Имена сообщений переводов можно посмотреть в документации к компонентам",
+      "theme-explained":
+        "Цвета темы передаются при подключении библиотеки. Минимально обычно достаточно main, text и accent для каждой темы.",
+      "auto-generation":
+        "Если в теме есть main, но нет darkShade и lightShade, Nmorph сгенерирует цвета теней автоматически. Передавайте darkShade и lightShade вручную, когда нужны точные значения.",
+      "theme-runtime":
+        "Используйте runtime API, когда цвета приходят из контролов, например из color picker. Runtime цвета обновляют style tag Nmorph и не записываются в inline style атрибут html.",
+      "main-var":
+        "Для автоматической генерации darkShade и lightShade. Достаточно передать только эту переменную.",
+      "shade-var":
+        "Будет автоматически высчитыватся если не мутировать их напрмяую и передать переменную main.",
+      "i18n-content":
+        "Для корректной работы i18n, убедитесь что подключаете i18n до подключения библиотеки. На данный момент доступны три локали en, zh, ru.<p>По умолчанию подключена локаль en. Импортируйте только те локали что будут нужны.</p><p>Если локалей нет то нужно добавить свои. Свойство locale будет перезаписывать locale из i18n переданного выше.</p>",
+      "rewrite-translation":
+        "Перезаписаваем переводы библиотеки. Имена сообщений переводов можно посмотреть в документации к компонентам",
       "other-messages": "Прочие переводы",
       "css-variables": "CSS-переменные",
-      "css-variables-content": "Библиотека предоставляет следующие CSS-переменные, которые можно использовать в своих стилях.",
-      "css-variables-theme-derived": "Переменные темы (задаются для каждой темы)",
-      "css-variables-auto-generated": "Дополнительные переменные контрастности текста (настраиваются для каждой темы)",
-      "css-variables-static": "Дополнительные цветовые переменные темы (задаются для каждой темы)",
+      "css-variables-content":
+        "Библиотека предоставляет следующие CSS-переменные, которые можно использовать в своих стилях.",
+      "css-variables-theme-derived":
+        "Переменные темы (задаются для каждой темы)",
+      "css-variables-auto-generated":
+        "Дополнительные переменные контрастности текста (настраиваются для каждой темы)",
+      "css-variables-static":
+        "Дополнительные цветовые переменные темы (задаются для каждой темы)",
       "css-var-main": "Основной цвет фона",
       "css-var-dark-shade": "Тёмный теневой оттенок",
       "css-var-light-shade": "Светлый теневой оттенок",
       "css-var-text": "Основной цвет текста",
       "css-var-scroll-thumb": "Цвет ползунка прокрутки",
       "css-var-accent": "Акцентный / брендовый цвет",
-      "css-var-focus-text": "Цвет текста на сфокусированных/акцентных элементах",
+      "css-var-focus-text":
+        "Цвет текста на сфокусированных/акцентных элементах",
       "css-var-placeholder": "Цвет текста-заглушки",
-      "css-var-semi-contrast": "цвет текста +30% яркости — для второстепенного текста",
-      "css-var-contrast": "цвет текста +70% яркости — для контрастного текста"
+      "css-var-semi-contrast":
+        "цвет текста +30% яркости — для второстепенного текста",
+      "css-var-contrast": "цвет текста +70% яркости — для контрастного текста",
     },
-    "other": {
-      "utils-classes": "Утилитные классы"
-    }
+    other: {
+      "utils-classes": "Утилитные классы",
+    },
   },
   "about-page": {
     "alpha-test": "Текущий статус",
@@ -107,98 +126,165 @@ export default {
       "<p>Нейморфизм (neumorphism) — это стиль дизайна, который совмещает элементы плоского дизайна и скевоморфизма.</p><p>Он создает ощущение объема и мягких теней, благодаря чему интерфейс выглядит так, словно его можно потрогать.</p><p>В основе нейморфизма лежат пастельные цвета, легкие градиенты и мягкие тени, создавая эффект выдавленных или вдавленных элементов.</p>",
   },
   "changelog-page": {
-    "roadmap": {
-      "title": "Roadmap",
-      "items": {
+    roadmap: {
+      title: "Roadmap",
+      items: {
         "nuxt-support": "Добавить поддержку Nuxt.",
-        "storybook-vr": "Добавить Storybook и проверки визуальных регрессий.",
-        "accessibility": "Улучшить доступность: навигация с клавиатуры, ARIA, фокус-состояния.",
-        "test-coverage": "Увеличить тестовое покрытие: unit, integration и e2e тесты.",
-        "theming-v2": "Подготовить Theming v2 с расширенными дизайн-токенами и пресетами.",
-        "color-picker-formats": "Добавить в NmorphColorPicker возможность отображать разные форматы цвета.",
-        "performance": "Оптимизировать производительность и размер бандла."
-      }
+        "test-coverage":
+          "Увеличить тестовое покрытие: unit, integration и e2e тесты.",
+        "theming-v2":
+          "Подготовить Theming v2 с расширенными дизайн-токенами и пресетами.",
+        "color-picker-formats":
+          "Добавить в NmorphColorPicker возможность отображать разные форматы цвета.",
+        performance: "Оптимизировать производительность и размер бандла.",
+      },
     },
-    "changelog": {
-      "title": "Changelog",
-      "items": {
-        "overlay-z-index-stack": "Добавлен общий автоматический стек z-index для оверлеев, dropdown, select, dialog, date picker, autocomplete и image preview.",
-        "overlay-z-index-props": "Компоненты Nmorph на базе overlay теперь поддерживают `zIndex`, а install options библиотеки позволяют задать базовый z-index общего стека.",
-        "checkbox-height": "NmorphCheckbox и NmorphCheckboxGroup теперь поддерживают `height` с размерами thin, default и thick.",
-        "radio-height": "NmorphRadio и NmorphRadioGroup теперь поддерживают `height` с размерами thin, default и thick.",
-        "avatar-preview": "NmorphAvatar теперь поддерживает preview изображения по клику, включая галерею из нескольких изображений через `src` или `previewSrc`.",
-        "callout-spacing": "NmorphCallout больше не добавляет нижний margin по умолчанию.",
-        "media-control-icons": "Добавлены иконки управления медиа: play, pause, stop, record и квадратная альтернатива exit.",
-        "select-fill-options-width": "NmorphSelect теперь поддерживает `fill` и `optionsWidth`: компонент может растягиваться на ширину контейнера, обрезать длинные option label или расширять dropdown-опции под контент.",
-        "select-loading-disabled": "NmorphSelect теперь блокирует нативный input во время loading и закрывает dropdown при старте загрузки.",
-        "dropdown-size-css-values": "Props ширины NmorphDropdown теперь принимают CSS-строки и поддерживают min-width и max-width.",
-        "form-control-transition-cleanup": "NmorphColorPicker и NmorphSwitch больше не анимируют background и shadow, поэтому обновления темы применяются мгновенно.",
-        "callout-status-types": "NmorphCallout теперь может рендериться без title и поддерживает статусы success и error с отдельными цветами.",
-        "theme-runtime-api": "Добавлены runtime API темы: `setThemeColors` и `applyTheme` обновляют управляемый style tag Nmorph без записи inline styles в html.",
-        "theme-options-typing": "Уточнены типы темы: install options и цвета отдельной темы типизированы раздельно, а отсутствие theme config обрабатывается безопасно.",
-        "callout-component": "Добавлен NmorphCallout в библиотеку, документацию, overview компонентов и sandbox.",
-        "select-button-fill": "NmorphSelectButton теперь поддерживает prop `fill` и может растягивать элементы на всю ширину контейнера.",
-        "badge-size": "NmorphBadge теперь поддерживает prop `size` с вариантами tiny, extra-small и base.",
-        "guide-css-variables-utilities": "Обновлен справочник CSS-переменных в Guide, а utility classes упрощены до имен классов и назначения.",
-        "docs-mobile-menu-fit-content": "Боковое меню документации теперь подстраивает ширину под контент, а выравнивание мобильного header уточнено.",
-        "avatar-name-initials": "NmorphAvatar теперь поддерживает prop `name` и рендерит сгенерированные инициалы, когда изображение недоступно. Документация Avatar обновлена API и примерами.",
-        "notification-provider-placement-per-notification": "NmorphNotificationProvider теперь поддерживает `placement` на каждом уведомлении, поэтому один provider может рендерить уведомления в разных позициях экрана.",
-        "notification-provider-quantity-leave-style": "Исправлено удаление уведомлений при превышении `quantity`: уходящие alerts сохраняют размеры иконок, цвета и верстку во время transition.",
-        "button-transparent-hover-icons": "Transparent NmorphButton при hover теперь выделяет accent-цветом не только текст, но и иконки.",
-        "badge-z-index": "NmorphBadge теперь поддерживает prop `zIndex` для управления порядком наложения бейджа.",
-        "color-picker-display-format": "NmorphColorPicker умеет отображать выбранный цвет в hex, RGB или HSL через prop `displayFormat`.",
-        "file-upload-model-custom-data": "NmorphFileUpload теперь сохраняет данные preview-файлов в `v-model`, учитывает disabled при выборе и удалении файлов и использует icon-only слот для кнопки удаления.",
-        "slider-pointer-events": "NmorphSlider теперь использует pointer events, лучше работает с touch-перетаскиванием и очищает document listeners при unmount.",
-        "scroll-thumb-theme-color": "Цвет ползунка NmorphScroll теперь по умолчанию использует цвет текста и настраивается через `scrollThumb` / `--nmorph-scroll-thumb-color`.",
-        "color-picker-fixed-value-width": "NmorphColorPicker теперь отображает hex-значения с фиксированной шириной, чтобы значения одинаковой длины не меняли ширину компонента.",
-        "scroll-default-height-100": "NmorphScroll теперь по умолчанию использует `height=\"100%\"`, а API-документация и описания в docs синхронизированы с этим поведением.",
-        "scroll-typing-fixes": "Исправлены TypeScript-типы в NmorphScroll: доступ к размерам и scroll-координатам контейнера больше не приводит к ошибкам `undefined`, а expose-тип для `moveTo` и `scrollDOMContainer` приведён в порядок.",
-        "notification-provider-close-animation": "NmorphNotificationProvider теперь сохраняет стили alert во время анимации закрытия, оставляет уведомления в вертикальном стеке и убирает дерганый reflow при удалении.",
-        "notification-provider-uuid-ids": "useNmorphNotification теперь генерирует UUID для id уведомлений, чтобы избежать коллизий при быстром создании нескольких уведомлений подряд.",
-        "button-icon-slots-breaking": "Ломающее изменение: слот API у NmorphButton разделён. `icon` теперь рендерит ведущую иконку рядом с контентом, а для кнопок только с иконкой нужно использовать новый слот `icon-only`.",
-        "otp-input-component": "Добавлен NmorphOTPInput с документацией и примерами в sandbox. Компонент использует стили NmorphTextInput и поддерживает paste, навигацию с клавиатуры и событие complete.",
-        "form-autocomplete-forwarding": "NmorphFormItem теперь прокидывает autocomplete во вложенные form-контролы, а API-документация затронутых компонентов обновлена.",
-        "text-input-composition-api": "NmorphTextInput теперь exposes-ит методы focus, blur и select, а также принимает дополнительные нативные input-атрибуты для составных контролов вроде OTP input.",
-        "avatar-fallback-prop": "NmorphAvatar теперь принимает prop fallback с дефолтным NmorphIconAvatar, и avatar API-документация обновлена.",
-        "button-fill-transparent-color": "NmorphButton с fill теперь стабильно растягивается на всю ширину контейнера, а transparent-кнопки поддерживают кастомный цвет текста и иконок через prop color.",
-        "badge-value-slot": "NmorphBadge теперь принимает `undefined` в `value`, скрывается при отсутствии значения и поддерживает кастомный слот `value` для содержимого бейджа. Для этого добавлены примеры в docs и sandbox.",
-        "scroll-height-100": "NmorphScroll теперь корректно работает с `height=\"100%\"`, если у родителя задана явная высота, а в документации появились примеры и для фиксированной, и для относительной высоты.",
-        "theme-config-contrast-types": "Типы и документация theme config синхронизированы с runtime-поведением: `focusText` теперь типизирован корректно, а `placeholderText`, `semiContrastText` и `contrastText` добавлены в пример темы.",
-        "select-button-no-theme-transition": "NmorphSelectButtonItem больше не анимирует background и box-shadow, поэтому переключение темы теперь происходит мгновенно и визуально совпадает с остальной библиотекой.",
-        "radio-optional-inject-types": "Исправлены inject-типы в NmorphRadio: standalone-использование больше не вызывает TypeScript-ошибки при отсутствии group-injection.",
-        "color-picker": "Добавлен компонент NmorphColorPicker, страница документации для него и примеры высоты, отображения значения, disabled-состояния и дефолтного accent-цвета темы.",
-        "badge-tag-mode": "Добавлен режим `is-tag` для NmorphBadge: теперь бейдж может рендериться как standalone-элемент без overlay-позиционирования и без default slot.",
-        "badge-undefined-hidden": "NmorphBadge теперь не рендерится, если `value` равен `undefined`; режим точки (`is-dot`) по-прежнему работает без значения.",
-        "exit-users-icons": "В набор иконок и на страницу документации иконок добавлены NmorphIconExit и NmorphIconUsers.",
-        "form-boolean-compare": "Правила валидации формы теперь принимают boolean в `compareValue`; API-документация формы обновлена под это поведение.",
-        "image-src-optional": "В публичных типах `NmorphImage` prop `src` стал опциональным, и документация image API приведена в соответствие с runtime-поведением.",
-        "select-button-keyboard-focus": "NmorphSelectButtonItem теперь доступен с клавиатуры: Tab фокусирует каждый элемент, Space/Enter выбирают его, при фокусе отображается outline.",
-        "tabindex-prop": "Добавлен prop tabindex в INmorphCommonInputProps — все элементы формы (NmorphTextInput, NmorphSwitch, NmorphSlider, NmorphNumberInput, NmorphSelect, NmorphSelectButtonItem) теперь поддерживают tabindex.",
-        "form-item-input-inheritance": "Элементы формы теперь автоматически наследуют id и name из NmorphFormItem, поэтому label и нативные атрибуты формы связаны без ручного прокидывания prop.",
-        "text-input-autofill-styles": "Исправлены стили autofill в NmorphTextInput: браузерный autofill больше не перебивает неоморфные тени и цвета поля.",
+    changelog: {
+      title: "Changelog",
+      items: {
+        "height-basic-name":
+          "Общее значение высоты компонентов переименовано с `default` на `basic`; defaults компонентов и документация обновлены на thick, basic и thin.",
+        "checkbox-radio-defaults":
+          "NmorphCheckbox, NmorphCheckboxGroup, NmorphRadio и NmorphRadioGroup теперь по умолчанию используют высоту thin; radio-контролы теперь по умолчанию отображаются круглыми radio.",
+        "overlay-z-index-stack":
+          "Добавлен общий автоматический стек z-index для оверлеев, dropdown, select, dialog, date picker, autocomplete и image preview.",
+        "overlay-z-index-props":
+          "Компоненты Nmorph на базе overlay теперь поддерживают `zIndex`, а install options библиотеки позволяют задать базовый z-index общего стека.",
+        "text-input-clear-space":
+          "NmorphTextInput теперь резервирует место под кнопку очистки/пароля, поэтому placeholder не перекрывается в узких инпутах.",
+        "checkbox-height":
+          "NmorphCheckbox и NmorphCheckboxGroup теперь поддерживают `height` с размерами thin, basic и thick.",
+        "radio-height":
+          "NmorphRadio и NmorphRadioGroup теперь поддерживают `height` с размерами thin, basic и thick.",
+        "avatar-preview":
+          "NmorphAvatar теперь поддерживает preview изображения по клику, включая галерею из нескольких изображений через `src` или `previewSrc`.",
+        "callout-spacing":
+          "NmorphCallout больше не добавляет нижний margin по умолчанию.",
+        "media-control-icons":
+          "Добавлены иконки управления медиа: play, pause, stop, record и квадратная альтернатива exit.",
+        "select-fill-options-width":
+          "NmorphSelect теперь поддерживает `fill` и `optionsWidth`: компонент может растягиваться на ширину контейнера, обрезать длинные option label или расширять dropdown-опции под контент.",
+        "select-loading-disabled":
+          "NmorphSelect теперь блокирует нативный input во время loading и закрывает dropdown при старте загрузки.",
+        "dropdown-size-css-values":
+          "Props ширины NmorphDropdown теперь принимают CSS-строки и поддерживают min-width и max-width.",
+        "form-control-transition-cleanup":
+          "NmorphColorPicker и NmorphSwitch больше не анимируют background и shadow, поэтому обновления темы применяются мгновенно.",
+        "callout-status-types":
+          "NmorphCallout теперь может рендериться без title и поддерживает статусы success и error с отдельными цветами.",
+        "theme-runtime-api":
+          "Добавлены runtime API темы: `setThemeColors` и `applyTheme` обновляют управляемый style tag Nmorph без записи inline styles в html.",
+        "theme-options-typing":
+          "Уточнены типы темы: install options и цвета отдельной темы типизированы раздельно, а отсутствие theme config обрабатывается безопасно.",
+        "callout-component":
+          "Добавлен NmorphCallout в библиотеку, документацию, overview компонентов и sandbox.",
+        "select-button-fill":
+          "NmorphSelectButton теперь поддерживает prop `fill` и может растягивать элементы на всю ширину контейнера.",
+        "badge-size":
+          "NmorphBadge теперь поддерживает prop `size` с вариантами tiny, extra-small и base.",
+        "guide-css-variables-utilities":
+          "Обновлен справочник CSS-переменных в Guide, а utility classes упрощены до имен классов и назначения.",
+        "docs-mobile-menu-fit-content":
+          "Боковое меню документации теперь подстраивает ширину под контент, а выравнивание мобильного header уточнено.",
+        "avatar-name-initials":
+          "NmorphAvatar теперь поддерживает prop `name` и рендерит сгенерированные инициалы, когда изображение недоступно. Документация Avatar обновлена API и примерами.",
+        "notification-provider-placement-per-notification":
+          "NmorphNotificationProvider теперь поддерживает `placement` на каждом уведомлении, поэтому один provider может рендерить уведомления в разных позициях экрана.",
+        "notification-provider-quantity-leave-style":
+          "Исправлено удаление уведомлений при превышении `quantity`: уходящие alerts сохраняют размеры иконок, цвета и верстку во время transition.",
+        "button-transparent-hover-icons":
+          "Transparent NmorphButton при hover теперь выделяет accent-цветом не только текст, но и иконки.",
+        "badge-z-index":
+          "NmorphBadge теперь поддерживает prop `zIndex` для управления порядком наложения бейджа.",
+        "color-picker-display-format":
+          "NmorphColorPicker умеет отображать выбранный цвет в hex, RGB или HSL через prop `displayFormat`.",
+        "file-upload-model-custom-data":
+          "NmorphFileUpload теперь сохраняет данные preview-файлов в `v-model`, учитывает disabled при выборе и удалении файлов и использует icon-only слот для кнопки удаления.",
+        "slider-pointer-events":
+          "NmorphSlider теперь использует pointer events, лучше работает с touch-перетаскиванием и очищает document listeners при unmount.",
+        "scroll-thumb-theme-color":
+          "Цвет ползунка NmorphScroll теперь по умолчанию использует цвет текста и настраивается через `scrollThumb` / `--nmorph-scroll-thumb-color`.",
+        "color-picker-fixed-value-width":
+          "NmorphColorPicker теперь отображает hex-значения с фиксированной шириной, чтобы значения одинаковой длины не меняли ширину компонента.",
+        "scroll-default-height-100":
+          'NmorphScroll теперь по умолчанию использует `height="100%"`, а API-документация и описания в docs синхронизированы с этим поведением.',
+        "scroll-typing-fixes":
+          "Исправлены TypeScript-типы в NmorphScroll: доступ к размерам и scroll-координатам контейнера больше не приводит к ошибкам `undefined`, а expose-тип для `moveTo` и `scrollDOMContainer` приведён в порядок.",
+        "notification-provider-close-animation":
+          "NmorphNotificationProvider теперь сохраняет стили alert во время анимации закрытия, оставляет уведомления в вертикальном стеке и убирает дерганый reflow при удалении.",
+        "notification-provider-uuid-ids":
+          "useNmorphNotification теперь генерирует UUID для id уведомлений, чтобы избежать коллизий при быстром создании нескольких уведомлений подряд.",
+        "button-icon-slots-breaking":
+          "Ломающее изменение: слот API у NmorphButton разделён. `icon` теперь рендерит ведущую иконку рядом с контентом, а для кнопок только с иконкой нужно использовать новый слот `icon-only`.",
+        "otp-input-component":
+          "Добавлен NmorphOTPInput с документацией и примерами в sandbox. Компонент использует стили NmorphTextInput и поддерживает paste, навигацию с клавиатуры и событие complete.",
+        "form-autocomplete-forwarding":
+          "NmorphFormItem теперь прокидывает autocomplete во вложенные form-контролы, а API-документация затронутых компонентов обновлена.",
+        "text-input-composition-api":
+          "NmorphTextInput теперь exposes-ит методы focus, blur и select, а также принимает дополнительные нативные input-атрибуты для составных контролов вроде OTP input.",
+        "avatar-fallback-prop":
+          "NmorphAvatar теперь принимает prop fallback с дефолтным NmorphIconAvatar, и avatar API-документация обновлена.",
+        "button-fill-transparent-color":
+          "NmorphButton с fill теперь стабильно растягивается на всю ширину контейнера, а transparent-кнопки поддерживают кастомный цвет текста и иконок через prop color.",
+        "badge-value-slot":
+          "NmorphBadge теперь принимает `undefined` в `value`, скрывается при отсутствии значения и поддерживает кастомный слот `value` для содержимого бейджа. Для этого добавлены примеры в docs и sandbox.",
+        "scroll-height-100":
+          'NmorphScroll теперь корректно работает с `height="100%"`, если у родителя задана явная высота, а в документации появились примеры и для фиксированной, и для относительной высоты.',
+        "theme-config-contrast-types":
+          "Типы и документация theme config синхронизированы с runtime-поведением: `focusText` теперь типизирован корректно, а `placeholderText`, `semiContrastText` и `contrastText` добавлены в пример темы.",
+        "select-button-no-theme-transition":
+          "NmorphSelectButtonItem больше не анимирует background и box-shadow, поэтому переключение темы теперь происходит мгновенно и визуально совпадает с остальной библиотекой.",
+        "radio-optional-inject-types":
+          "Исправлены inject-типы в NmorphRadio: standalone-использование больше не вызывает TypeScript-ошибки при отсутствии group-injection.",
+        "color-picker":
+          "Добавлен компонент NmorphColorPicker, страница документации для него и примеры высоты, отображения значения, disabled-состояния и дефолтного accent-цвета темы.",
+        "badge-tag-mode":
+          "Добавлен режим `is-tag` для NmorphBadge: теперь бейдж может рендериться как standalone-элемент без overlay-позиционирования и без default slot.",
+        "badge-undefined-hidden":
+          "NmorphBadge теперь не рендерится, если `value` равен `undefined`; режим точки (`is-dot`) по-прежнему работает без значения.",
+        "exit-users-icons":
+          "В набор иконок и на страницу документации иконок добавлены NmorphIconExit и NmorphIconUsers.",
+        "form-boolean-compare":
+          "Правила валидации формы теперь принимают boolean в `compareValue`; API-документация формы обновлена под это поведение.",
+        "image-src-optional":
+          "В публичных типах `NmorphImage` prop `src` стал опциональным, и документация image API приведена в соответствие с runtime-поведением.",
+        "select-button-keyboard-focus":
+          "NmorphSelectButtonItem теперь доступен с клавиатуры: Tab фокусирует каждый элемент, Space/Enter выбирают его, при фокусе отображается outline.",
+        "tabindex-prop":
+          "Добавлен prop tabindex в INmorphCommonInputProps — все элементы формы (NmorphTextInput, NmorphSwitch, NmorphSlider, NmorphNumberInput, NmorphSelect, NmorphSelectButtonItem) теперь поддерживают tabindex.",
+        "form-item-input-inheritance":
+          "Элементы формы теперь автоматически наследуют id и name из NmorphFormItem, поэтому label и нативные атрибуты формы связаны без ручного прокидывания prop.",
+        "text-input-autofill-styles":
+          "Исправлены стили autofill в NmorphTextInput: браузерный autofill больше не перебивает неоморфные тени и цвета поля.",
         "google-icon": "Добавлена иконка NmorphIconGoogle в набор иконок.",
-        "contrast-text-colors": "Добавлены CSS-переменные --nmorph-semi-contrast-text-color и --nmorph-contrast-text-color в дефолтные светлую и тёмную темы.",
-        "form-item-label-for": "NmorphFormItem: тег label теперь имеет правильный атрибут for, связанный с инпутом через prop inputId у NmorphTextInput.",
-        "error-box-single-error": "NmorphErrorBox теперь показывает только одну актуальную ошибку вместо всех сразу.",
-        "validation-icon-fix": "Исправлен NmorphValidationIcon: иконки передавались строками вместо компонентов и не отображались.",
-        "select-button-unselected-opacity": "NmorphSelectButton: не выбранные элементы теперь полупрозрачные для лучшей визуальной обратной связи.",
-        "select-button": "Добавлен новый компонент NmorphSelectButton — группа кнопок-переключателей с поддержкой слотов и prop options.",
-        "engines-range": "Смягчены требования engines пакета для поддержки актуальных версий Node и npm.",
-        "skeleton-animation": "Исправлена анимация загрузки Skeleton: shimmer работает при включенном loading.",
-        "export-en-locale": "Добавлен экспорт английской локали из точки входа пакета."
-      }
+        "contrast-text-colors":
+          "Добавлены CSS-переменные --nmorph-semi-contrast-text-color и --nmorph-contrast-text-color в дефолтные светлую и тёмную темы.",
+        "form-item-label-for":
+          "NmorphFormItem: тег label теперь имеет правильный атрибут for, связанный с инпутом через prop inputId у NmorphTextInput.",
+        "error-box-single-error":
+          "NmorphErrorBox теперь показывает только одну актуальную ошибку вместо всех сразу.",
+        "validation-icon-fix":
+          "Исправлен NmorphValidationIcon: иконки передавались строками вместо компонентов и не отображались.",
+        "select-button-unselected-opacity":
+          "NmorphSelectButton: не выбранные элементы теперь полупрозрачные для лучшей визуальной обратной связи.",
+        "select-button":
+          "Добавлен новый компонент NmorphSelectButton — группа кнопок-переключателей с поддержкой слотов и prop options.",
+        "engines-range":
+          "Смягчены требования engines пакета для поддержки актуальных версий Node и npm.",
+        "skeleton-animation":
+          "Исправлена анимация загрузки Skeleton: shimmer работает при включенном loading.",
+        "export-en-locale":
+          "Добавлен экспорт английской локали из точки входа пакета.",
+      },
     },
     "known-bugs": {
-      "title": "Известные баги",
-      "items": {
-        "mobile-slider": "На мобильных устройствах не работает Input Slider.",
-        "text-input-clear-overlap": "NmorphTextInput: кнопка очистки может перекрывать placeholder, если ширина инпута небольшая."
-      }
-    }
+      title: "Известные баги",
+      items: {},
+    },
   },
   "guide-menu": {
     "quick-start": "Бытрый старт",
-    "config": "Конфигурация",
+    config: "Конфигурация",
     other: "Прочее",
   },
   overview: {
@@ -266,7 +352,7 @@ export default {
       },
       height: {
         subtitle:
-          "Установите высоту, доступны значения *thick*, *default*, *thin*.",
+          "Установите высоту, доступны значения *thick*, *basic*, *thin*.",
       },
       disabled: {
         subtitle: "Используйте *boolean*, чтобы отключить кнопку.",
@@ -300,7 +386,8 @@ export default {
         default: "Основное содержимое кнопки",
         append: "Пользовательское содержимое справа от основного контента",
         icon: "Иконка слева от основного контента",
-        "icon-only": "Отдельный режим кнопки только с иконкой. Скрывает default, text и append контент",
+        "icon-only":
+          "Отдельный режим кнопки только с иконкой. Скрывает default, text и append контент",
       },
       variables: {
         height: "Высота кнопки",
@@ -401,7 +488,8 @@ export default {
         default: "Содержимое прокрутки",
       },
       variables: {
-        "thumb-color": "Цвет ползунка. По умолчанию --nmorph-scroll-thumb-color",
+        "thumb-color":
+          "Цвет ползунка. По умолчанию --nmorph-scroll-thumb-color",
       },
       exposes: {
         scrollDOMContainer: "DOM элемент контейнера",
@@ -425,10 +513,12 @@ export default {
         subtitle: "Определяет, как изображение отображается в контейнере.",
       },
       name: {
-        subtitle: "Используется для генерации инициалов фолбэка, когда изображение недоступно.",
+        subtitle:
+          "Используется для генерации инициалов фолбэка, когда изображение недоступно.",
       },
       preview: {
-        subtitle: "Открывает preview изображения по клику на аватар. `src` и `previewSrc` могут принимать строку или массив строк.",
+        subtitle:
+          "Открывает preview изображения по клику на аватар. `src` и `previewSrc` могут принимать строку или массив строк.",
       },
       api: {
         size: "Задает размер аватара",
@@ -437,7 +527,8 @@ export default {
         name: "Имя для генерации инициалов фолбэка",
         preview: "Включает preview изображения по клику",
         "preview-src": "URL изображения или список URL только для preview",
-        "preview-initial-index": "Начальный индекс изображения в preview-галерее",
+        "preview-initial-index":
+          "Начальный индекс изображения в preview-галерее",
         "preview-scale-step": "Шаг масштабирования в preview",
         "preview-min-scale-level": "Минимальный уровень масштаба preview",
         "preview-max-scale-level": "Максимальный уровень масштаба preview",
@@ -446,7 +537,8 @@ export default {
         fit: "Определяет как изображение заполняет контейнер",
         "frame-border": "Определяет толшину рамки",
         "image-padding": "Внутренний отступ",
-        fallback: "Компонент, который показывается, если изображение не загрузилось или src не передан. По умолчанию используется NmorphIconAvatar",
+        fallback:
+          "Компонент, который показывается, если изображение не загрузилось или src не передан. По умолчанию используется NmorphIconAvatar",
       },
       slot: {
         error: "Слот для отображения ошибки загрузки",
@@ -484,17 +576,20 @@ export default {
         subtitle: "Цвет фона бейджа.",
       },
       size: {
-        subtitle: "Управляет размером текста бейджа через font-size переменные.",
+        subtitle:
+          "Управляет размером текста бейджа через font-size переменные.",
       },
       offset: {
         subtitle:
           "Горизонтальное/вертикальное смещение бейджа относительно родительского элемента.",
       },
       api: {
-        value: "Отображаемое значение в бейдже. Если `undefined` и `is-dot` выключен, бейдж скрывается",
+        value:
+          "Отображаемое значение в бейдже. Если `undefined` и `is-dot` выключен, бейдж скрывается",
         max: "Максимальное допустимое отображаемое значение",
         "is-dot": "Отображает бейдж в виде точки",
-        "is-tag": "Переключает бейдж в standalone tag-режим без absolute-позиционирования и без default slot",
+        "is-tag":
+          "Переключает бейдж в standalone tag-режим без absolute-позиционирования и без default slot",
         hidden: "Скрывает бейдж",
         color: "Устанавливает цвет фона бейджа",
         size: "Устанавливает размер текста бейджа: tiny, extra-small или base",
@@ -503,8 +598,10 @@ export default {
         "offset-x": "Горизонтальное смещение бейджа. Игнорируется при is-tag",
       },
       slot: {
-        default: "Контент, поверх которого отображается бейдж. Не используется при `is-tag`.",
-        value: "Кастомное содержимое внутри бейджа вместо текстового `value`. Работает только в overlay-режиме.",
+        default:
+          "Контент, поверх которого отображается бейдж. Не используется при `is-tag`.",
+        value:
+          "Кастомное содержимое внутри бейджа вместо текстового `value`. Работает только в overlay-режиме.",
       },
       variables: {
         "dot-size": "Ширина и высота точки",
@@ -527,7 +624,8 @@ export default {
     },
     image: {
       fit: {
-        subtitle: "Определяет, как изображение вписывается в контейнер. Принимает значения, такие как *fill*, *contain*, *cover*, *none*, *scale-down*.",
+        subtitle:
+          "Определяет, как изображение вписывается в контейнер. Принимает значения, такие как *fill*, *contain*, *cover*, *none*, *scale-down*.",
         info: {
           title: "Информация",
           content:
@@ -554,8 +652,10 @@ export default {
         "src-set": "Список источников изображения.",
       },
       slot: {
-        loading: "Слот для пользовательского содержимого, отображаемого во время загрузки изображения",
-        error: "Слот для пользовательского содержимого, отображаемого при неудачной загрузке изображения",
+        loading:
+          "Слот для пользовательского содержимого, отображаемого во время загрузки изображения",
+        error:
+          "Слот для пользовательского содержимого, отображаемого при неудачной загрузке изображения",
       },
       variables: {
         width: "Определяет ширину изображения",
@@ -568,8 +668,8 @@ export default {
       },
       translates: {
         loadingText: "Загрузка ...",
-        loadFailedText:"Не удалось загрузить изображение"
-      }
+        loadFailedText: "Не удалось загрузить изображение",
+      },
     },
     "tag-list": {
       api: {
@@ -747,8 +847,8 @@ export default {
         sep: "сентябрь",
         oct: "октябрь",
         nov: "ноябрь",
-        dec: "декабрь"
-      }
+        dec: "декабрь",
+      },
     },
     "image-preview": {
       "model-value": {
@@ -773,7 +873,8 @@ export default {
           "Определяет минимальный уровень масштабирования для изображения",
         "max-scale-level":
           "Определяет максимальный уровень масштабирования для изображения",
-        "z-index": "Задает z-index оверлея. Если не передан, используется общий автоматический стек z-index",
+        "z-index":
+          "Задает z-index оверлея. Если не передан, используется общий автоматический стек z-index",
       },
       slot: {},
       variables: {
@@ -861,22 +962,29 @@ export default {
         button: "Кнопка",
       },
       position: {
-        subtitle: "Определяет позицию подсказки относительно целевого элемента. Принимает значения, такие как 'top', 'bottom', 'left', 'right'.",
+        subtitle:
+          "Определяет позицию подсказки относительно целевого элемента. Принимает значения, такие как 'top', 'bottom', 'left', 'right'.",
       },
       "force-coordinate": {
-        subtitle: "Переопределяет стандартную логику позиционирования и позволяет указать точные координаты для подсказки.",
+        subtitle:
+          "Переопределяет стандартную логику позиционирования и позволяет указать точные координаты для подсказки.",
       },
       api: {
         text: "Определяет текстовое содержимое подсказки",
-        position: "Устанавливает положение подсказки относительно целевого элемента",
-        "force-show": "Булево значение, которое принудительно показывает подсказку",
-        "force-coordinate": "Позволяет вручную управлять координатами подсказки",
+        position:
+          "Устанавливает положение подсказки относительно целевого элемента",
+        "force-show":
+          "Булево значение, которое принудительно показывает подсказку",
+        "force-coordinate":
+          "Позволяет вручную управлять координатами подсказки",
       },
       slot: {},
       variables: {
         "max-width": "Устанавливает максимальную ширину содержимого подсказки",
-        width: "Устанавливает ширину содержимого подсказки. Позволяет контролировать горизонтальный размер подсказки",
-        height: "Устанавливает высоту содержимого подсказки. Позволяет контролировать вертикальный размер подсказки",
+        width:
+          "Устанавливает ширину содержимого подсказки. Позволяет контролировать горизонтальный размер подсказки",
+        height:
+          "Устанавливает высоту содержимого подсказки. Позволяет контролировать вертикальный размер подсказки",
       },
     },
     alert: {
@@ -885,21 +993,25 @@ export default {
         content: "Контент для оповещения",
         info: {
           title: "Дополнительная информация",
-          content: "Для удобного управления несколькими оповещениями используйте компонент 'NmorphNotificationProvider', который позволяет группировать и централизованно управлять оповещениями.",
+          content:
+            "Для удобного управления несколькими оповещениями используйте компонент 'NmorphNotificationProvider', который позволяет группировать и централизованно управлять оповещениями.",
         },
       },
       "use-provider": {
-        subtitle: "Для использования провайдера необходимо импортировать хук из библиотеки.",
+        subtitle:
+          "Для использования провайдера необходимо импортировать хук из библиотеки.",
       },
       api: {
         id: "Уникальный идентификатор для компонента оповещения",
         type: "Определяет тип оповещения (например, success, error, warning, info)",
-        closable: "Булево значение, определяющее, можно ли закрыть оповещение пользователем",
+        closable:
+          "Булево значение, определяющее, можно ли закрыть оповещение пользователем",
         title: "Заголовок отображаемый в оповещении",
         content: "Контент оповещения",
         fill: "Определяет, должно ли оповещение занимать всю ширину своего контейнера",
         "max-width": "Максимальная ширина компонента оповещения",
-        "show-icon": "Булево значение, которое отображает иконку на основе типа оповещения",
+        "show-icon":
+          "Булево значение, которое отображает иконку на основе типа оповещения",
         bordered: "Добавляет границу вокруг оповещения для выделения",
         html: "Позволяет использовать HTML-контент в теле оповещения. Используйте с осторожностью, чтобы избежать XSS-уязвимостей",
       },
@@ -910,7 +1022,8 @@ export default {
       },
       variables: {},
       events: {
-        close: "Событие срабатывающее когда оповещение закрывается пользователем",
+        close:
+          "Событие срабатывающее когда оповещение закрывается пользователем",
       },
     },
     callout: {
@@ -937,23 +1050,32 @@ export default {
         "show-modal": "Показать модальное окно",
       },
       api: {
-        "model-value": "Булево значение, которое управляет видимостью диалогового окна",
+        "model-value":
+          "Булево значение, которое управляет видимостью диалогового окна",
         title: "Определяет текст заголовка диалога",
         width: "Задает ширину диалогового окна",
-        "open-delay": "Задержка в миллисекундах перед открытием диалогового окна",
-        "close-delay": "Задержка в миллисекундах перед закрытием диалогового окна",
-        "close-on-click-modal": "Булево значение, позволяющее закрыть диалоговое окно при клике снаружи",
-        "show-close": "Булево значение, которое отображает кнопку закрытия в диалоговом окне",
-        "z-index": "Задает z-index оверлея диалога. Если не передан, используется общий автоматический стек z-index",
-        "close-on-overlay": "Булево значение, указывающее, следует ли закрывать диалоговое окно при клике на область оверлея",
+        "open-delay":
+          "Задержка в миллисекундах перед открытием диалогового окна",
+        "close-delay":
+          "Задержка в миллисекундах перед закрытием диалогового окна",
+        "close-on-click-modal":
+          "Булево значение, позволяющее закрыть диалоговое окно при клике снаружи",
+        "show-close":
+          "Булево значение, которое отображает кнопку закрытия в диалоговом окне",
+        "z-index":
+          "Задает z-index оверлея диалога. Если не передан, используется общий автоматический стек z-index",
+        "close-on-overlay":
+          "Булево значение, указывающее, следует ли закрывать диалоговое окно при клике на область оверлея",
       },
       slot: {
         header: "Слот для кастомизации содержимого заголовка диалогового окна.",
         default: "Слот для определения основного содержимого диалогового окна.",
       },
       events: {
-        "on-close": "Событие всплывает, когда диалоговое окно закрывается пользователем.",
-        "update:model-value": "Событие всплывает при изменении видимости диалогового окна.",
+        "on-close":
+          "Событие всплывает, когда диалоговое окно закрывается пользователем.",
+        "update:model-value":
+          "Событие всплывает при изменении видимости диалогового окна.",
       },
       variables: {
         width: "Определяет ширину компонента диалогового окна.",
@@ -961,10 +1083,12 @@ export default {
     },
     divider: {
       direction: {
-        subtitle: "Определяет направление разделителя. Принимает значения 'horizontal' или 'vertical'.",
+        subtitle:
+          "Определяет направление разделителя. Принимает значения 'horizontal' или 'vertical'.",
       },
       api: {
-        direction: "Определяет ориентацию разделителя: 'horizontal' или 'vertical'.",
+        direction:
+          "Определяет ориентацию разделителя: 'horizontal' или 'vertical'.",
       },
       slot: {},
       variables: {},
@@ -977,14 +1101,18 @@ export default {
       },
       api: {
         show: "Управляет видимостью компонента",
-        transparent: "Булево значение, которое делает фон компонента прозрачным, если включено",
-        "z-index": "Задает z-index оверлея. Если не передан, используется общий автоматический стек z-index",
+        transparent:
+          "Булево значение, которое делает фон компонента прозрачным, если включено",
+        "z-index":
+          "Задает z-index оверлея. Если не передан, используется общий автоматический стек z-index",
       },
       slot: {
-        default: "Слот по умолчанию для кастомизации содержимого внутри компонента",
+        default:
+          "Слот по умолчанию для кастомизации содержимого внутри компонента",
       },
       events: {
-        "on-outside-click": "Событие возникающее когда пользователь кликает вне компонента",
+        "on-outside-click":
+          "Событие возникающее когда пользователь кликает вне компонента",
       },
       variables: {},
     },
@@ -996,16 +1124,21 @@ export default {
         subtitle: "Определяет позицию уведомлений на экране.",
       },
       "z-index": {
-        subtitle: "Задает z-index для уведомлений, чтобы контролировать их порядок наложения.",
+        subtitle:
+          "Задает z-index для уведомлений, чтобы контролировать их порядок наложения.",
       },
       quantity: {
-        subtitle: "Ограничивает максимальное количество уведомлений, которые могут отображаться одновременно.",
+        subtitle:
+          "Ограничивает максимальное количество уведомлений, которые могут отображаться одновременно.",
       },
       api: {
-        notifications: "Массив, содержащий уведомления. Каждое уведомление может переопределить placement",
-        placement: "Позиция по умолчанию для уведомлений без собственного placement",
+        notifications:
+          "Массив, содержащий уведомления. Каждое уведомление может переопределить placement",
+        placement:
+          "Позиция по умолчанию для уведомлений без собственного placement",
         "z-index": "Определяет порядок наложения уведомлений",
-        quantity: "Максимальное количество уведомлений, которое может быть на экране одновременно",
+        quantity:
+          "Максимальное количество уведомлений, которое может быть на экране одновременно",
       },
       slot: {},
       variables: {},
@@ -1013,7 +1146,8 @@ export default {
     tabs: {
       api: {
         "model-value": "Управляет активным состоянием компонента",
-        stretch: "Булево значение, которое определяет, должен ли компонент растягиваться, чтобы заполнить доступное пространство",
+        stretch:
+          "Булево значение, которое определяет, должен ли компонент растягиваться, чтобы заполнить доступное пространство",
       },
       slot: {
         default: "Слот для кастомизации содержимого внутри каждой вкладки",
@@ -1028,7 +1162,8 @@ export default {
       api: {
         label: "Лэйбл для вкладки, отображаемый в навигации по вкладкам",
         name: "Уникальный идентификатор для вкладки, используется для управления активной вкладкой",
-        disabled: "Булево значение, указывающее, отключена ли вкладка и не может быть выбрана",
+        disabled:
+          "Булево значение, указывающее, отключена ли вкладка и не может быть выбрана",
       },
       slot: {
         label: "Слот для кастомизации лэйбла вкладки",
@@ -1042,21 +1177,27 @@ export default {
       },
       api: {
         open: "Булево значение, управляющее видимостью выпадающего списка",
-        "relative-element": "Определяет элемент, относительно которого будет позиционироваться выпадающий список",
+        "relative-element":
+          "Определяет элемент, относительно которого будет позиционироваться выпадающий список",
         width: "Указывает ширину выпадающего списка",
         "min-width": "Указывает минимальную ширину выпадающего списка",
         "max-width": "Указывает максимальную ширину выпадающего списка",
-        "x-offset": "Горизонтальное смещение в пикселях для настройки позиции выпадающего списка",
-        "y-offset": "Вертикальное смещение в пикселях для настройки позиции выпадающего списка",
-        "fill-width": "Булево значение, определяющее, должен ли выпадающий список занимать всю ширину контейнера",
-        "z-index": "Задает z-index оверлея выпадающего списка. Если не передан, используется общий автоматический стек z-index",
+        "x-offset":
+          "Горизонтальное смещение в пикселях для настройки позиции выпадающего списка",
+        "y-offset":
+          "Вертикальное смещение в пикселях для настройки позиции выпадающего списка",
+        "fill-width":
+          "Булево значение, определяющее, должен ли выпадающий список занимать всю ширину контейнера",
+        "z-index":
+          "Задает z-index оверлея выпадающего списка. Если не передан, используется общий автоматический стек z-index",
       },
       slot: {
         default: "Слот для кастомизации содержимого внутри выпадающего списка",
       },
       variables: {},
       events: {
-        "on-outside-click": "Событие всплывающее когда пользователь кликает вне выпадающего списка, что можно использовать для его закрытия",
+        "on-outside-click":
+          "Событие всплывающее когда пользователь кликает вне выпадающего списка, что можно использовать для его закрытия",
       },
     },
     backtop: {
@@ -1070,20 +1211,23 @@ export default {
       api: {
         right: "Задает расстояние от правого края экрана",
         bottom: "Задает расстояние от нижнего края экрана",
-        "visibility-height": "Определяет высоту прокрутки, при которой кнопка возврата наверх становится видимой. Принимает число в пикселях",
+        "visibility-height":
+          "Определяет высоту прокрутки, при которой кнопка возврата наверх становится видимой. Принимает число в пикселях",
         design: "Определяет стиль кнопки",
       },
       slot: {
         default: "Слот для кастомизации содержимого кнопки возврата наверх",
       },
       events: {
-        click: "Событие которое вспылывает, когда пользователь кликает на кнопку возврата наверх",
+        click:
+          "Событие которое вспылывает, когда пользователь кликает на кнопку возврата наверх",
       },
       variables: {},
     },
     breadcrumb: {
       separator: {
-        subtitle: "Определяет символ, используемый для разделения элементов навигации.",
+        subtitle:
+          "Определяет символ, используемый для разделения элементов навигации.",
       },
       api: {
         separator: "Символ разделяющий элементы навигации",
@@ -1092,7 +1236,8 @@ export default {
     "breadcrumb-item": {
       api: {
         to: "Указывает целевой маршрут для навигации. Принимает строку пути или объект маршрута",
-        replace: "Булево значение, определяющее, должна ли навигация заменять текущую запись в истории вместо добавления новой",
+        replace:
+          "Булево значение, определяющее, должна ли навигация заменять текущую запись в истории вместо добавления новой",
       },
     },
     "otp-input": {
@@ -1100,7 +1245,8 @@ export default {
         subtitle: "Определяет, сколько ячеек будет отрисовано для кода.",
       },
       mode: {
-        subtitle: "Управляет допустимыми символами: *numeric*, *text* или *alphanumeric*.",
+        subtitle:
+          "Управляет допустимыми символами: *numeric*, *text* или *alphanumeric*.",
       },
       height: {
         subtitle: "Устанавливает размер каждой OTP-ячейки.",
@@ -1111,20 +1257,25 @@ export default {
       api: {
         id: "Устанавливает id первой OTP-ячейки. Остальные ячейки автоматически получают id с суффиксами",
         name: "Устанавливает name скрытого input. Если prop не передан, берется name или id из NmorphFormItem",
-        autocomplete: "Autocomplete-значение для OTP-ячеек. По умолчанию используется one-time-code и также может наследоваться из NmorphFormItem",
+        autocomplete:
+          "Autocomplete-значение для OTP-ячеек. По умолчанию используется one-time-code и также может наследоваться из NmorphFormItem",
         height: "Определяет размер каждой OTP-ячейки",
         disabled: "Булево значение, отключающее OTP input",
-        tabindex: "Базовый tabindex для OTP-ячеек. Следующие ячейки получают увеличенное значение автоматически",
+        tabindex:
+          "Базовый tabindex для OTP-ячеек. Следующие ячейки получают увеличенное значение автоматически",
         "model-value": "Текущее значение OTP как объединенная строка",
         length: "Количество OTP-ячеек",
         mode: "Режим допустимого ввода: numeric, text или alphanumeric",
-        autocapitalize: "Устанавливает нативное значение autocapitalize для OTP-ячеек",
-        autofocus: "Автоматически фокусирует первую OTP-ячейку при монтировании",
+        autocapitalize:
+          "Устанавливает нативное значение autocapitalize для OTP-ячеек",
+        autofocus:
+          "Автоматически фокусирует первую OTP-ячейку при монтировании",
       },
       slot: {},
       variables: {},
       events: {
-        "update:model-value": "Событие всплывает при изменении объединенного OTP-значения",
+        "update:model-value":
+          "Событие всплывает при изменении объединенного OTP-значения",
         focus: "Событие всплывает, когда любая OTP-ячейка получает фокус",
         blur: "Событие всплывает, когда фокус покидает весь OTP input",
         complete: "Событие всплывает, когда заполнены все OTP-ячейки",
@@ -1143,28 +1294,36 @@ export default {
         subtitle: "Отключает поле ввода, если установлено в *true*.",
       },
       "type-password": {
-        subtitle: "Если установлено в *true*, текст в поле ввода будет скрыт как пароль.",
+        subtitle:
+          "Если установлено в *true*, текст в поле ввода будет скрыт как пароль.",
         toggle: "Переключить тип",
       },
       "model-value": {
         subtitle: "Представляет значение поля ввода",
       },
       clearable: {
-        subtitle: "Если установлено в *true*, появится кнопка для очистки поля ввода.",
+        subtitle:
+          "Если установлено в *true*, появится кнопка для очистки поля ввода.",
       },
       api: {
         id: "Устанавливает id нативного input. Внутри NmorphFormItem наследует его id",
         name: "Устанавливает name нативного input. Если prop не передан, берется name или id из NmorphFormItem",
-        autocomplete: "Autocomplete-значение для нативного input. Также может наследоваться из NmorphFormItem",
+        autocomplete:
+          "Autocomplete-значение для нативного input. Также может наследоваться из NmorphFormItem",
         tabindex: "Нативное tabindex-значение для input",
         height: "Определяет высоту текстового поля",
         disabled: "Булево значение, отключающее текстовое поле",
-        placeholder: "Текст, отображаемый как подсказка, когда поле ввода пусто",
-        "type-password": "Булево значение, превращающее поле ввода в поле для пароля",
+        placeholder:
+          "Текст, отображаемый как подсказка, когда поле ввода пусто",
+        "type-password":
+          "Булево значение, превращающее поле ввода в поле для пароля",
         "model-value": "Текущее значение поля ввода",
-        clearable: "Булево значение, добавляющее кнопку для очистки значения поля ввода",
-        indentation: "Пользовательский text-indent для нативного input. По умолчанию отступ выбирается автоматически на основе prepend-icon slot",
-        "input-attrs": "Дополнительные нативные атрибуты, которые прокидываются во внутренний input",
+        clearable:
+          "Булево значение, добавляющее кнопку для очистки значения поля ввода",
+        indentation:
+          "Пользовательский text-indent для нативного input. По умолчанию отступ выбирается автоматически на основе prepend-icon slot",
+        "input-attrs":
+          "Дополнительные нативные атрибуты, которые прокидываются во внутренний input",
       },
       slot: {
         "prepend-icon": "Слот для добавления иконки в начало поля ввода",
@@ -1173,7 +1332,8 @@ export default {
         "prepend-icon-indent": "Определяет отступ для иконки перед вводом",
       },
       events: {
-        "update:model-value": "Событие всплывает при изменении значения поля ввода",
+        "update:model-value":
+          "Событие всплывает при изменении значения поля ввода",
         focus: "Событие всплывает, когда поле ввода получает фокус",
         blur: "Событие всплывает, когда поле ввода теряет фокус",
         "on-enter": "Событие всплывает при нажатии клавиши Enter",
@@ -1193,10 +1353,12 @@ export default {
         subtitle: "Отключает color picker, если установлено в *true*.",
       },
       "model-value": {
-        subtitle: "Управляет выбранным цветом. Принимает hex-значения вроде *#4a90e2*.",
+        subtitle:
+          "Управляет выбранным цветом. Принимает hex-значения вроде *#4a90e2*.",
       },
       "show-value": {
-        subtitle: "Показывает выбранное hex-значение рядом со swatch. Если `modelValue` не передан, используется текущий accent-цвет темы.",
+        subtitle:
+          "Показывает выбранное hex-значение рядом со swatch. Если `modelValue` не передан, используется текущий accent-цвет темы.",
       },
       "display-format": {
         subtitle: "Задает формат отображаемого значения цвета.",
@@ -1207,7 +1369,8 @@ export default {
         height: "Определяет высоту color picker",
         disabled: "Булево значение, отключающее color picker",
         "model-value": "Текущее значение цвета в hex-формате",
-        "show-value": "Булево значение, показывающее текущее значение цвета рядом с цветом",
+        "show-value":
+          "Булево значение, показывающее текущее значение цвета рядом с цветом",
         "display-format": "Формат отображаемого значения цвета",
       },
       slot: {},
@@ -1232,7 +1395,8 @@ export default {
         subtitle: "Управляет состоянием включено/выключено переключателя.",
       },
       loading: {
-        subtitle: "Отображает состояние загрузки на переключателе, если установлено в *true*.",
+        subtitle:
+          "Отображает состояние загрузки на переключателе, если установлено в *true*.",
       },
       "active-value": {
         subtitle: "Указывает значение, когда переключатель включен.",
@@ -1246,7 +1410,8 @@ export default {
         height: "Указывает высоту переключателя",
         disabled: "Булево значение, отключающее компонент переключателя",
         "model-value": "Управляет состоянием переключателя",
-        loading: "Булево значение, показывающее индикатор загрузки на переключателе",
+        loading:
+          "Булево значение, показывающее индикатор загрузки на переключателе",
         "active-value": "Значение, когда переключатель включен",
         "inactive-value": "Значение, когда переключатель выключен",
       },
@@ -1254,7 +1419,8 @@ export default {
         "bg-on": "Слот для кастомизации фона, когда переключатель включен",
         "bg-off": "Слот для кастомизации фона, когда переключатель выключен",
         "thumb-on": "Слот для кастомизации кнопки, когда переключатель включен",
-        "thumb-off": "Слот для кастомизации кнопки, когда переключатель выключен",
+        "thumb-off":
+          "Слот для кастомизации кнопки, когда переключатель выключен",
       },
       variables: {
         height: "Определяет высоту переключателя",
@@ -1262,7 +1428,8 @@ export default {
         "thumb-height": "Определяет высоту кнопки переключателя",
       },
       events: {
-        "update:model-value": "Событие всплывает, когда переключатель изменяет свое состояние",
+        "update:model-value":
+          "Событие всплывает, когда переключатель изменяет свое состояние",
       },
       exposes: {
         inputDOMRef: "Оригинальный элемент DOM поля ввода",
@@ -1304,7 +1471,8 @@ export default {
         size: "Определяет размер чекбокса",
       },
       events: {
-        "update:model-value": "Событие всплывает при изменении состояния чекбокса",
+        "update:model-value":
+          "Событие всплывает при изменении состояния чекбокса",
       },
       exposes: {
         inputDOMRef: "Оригинальный элемент DOM поля ввода",
@@ -1324,7 +1492,8 @@ export default {
       },
       variables: {},
       events: {
-        "update:model-value": "Событие всплывает при изменении выбранных значений в группе чекбоксов",
+        "update:model-value":
+          "Событие всплывает при изменении выбранных значений в группе чекбоксов",
       },
     },
     autocomplete: {
@@ -1341,7 +1510,8 @@ export default {
         subtitle: "Текст, отображаемый, когда поле ввода пустое.",
       },
       clearable: {
-        subtitle: "Если установлено в *true*, будет отображаться кнопка для очистки поля ввода.",
+        subtitle:
+          "Если установлено в *true*, будет отображаться кнопка для очистки поля ввода.",
       },
       list: {
         subtitle: "Задает список опций для предложений автодополнения.",
@@ -1352,22 +1522,28 @@ export default {
       api: {
         id: "Устанавливает id вложенного текстового input. Внутри NmorphFormItem наследует его id",
         name: "Устанавливает name вложенного текстового input. Если prop не передан, берется name или id из NmorphFormItem",
-        autocomplete: "Autocomplete-значение, передаваемое во вложенный text input. Также может наследоваться из NmorphFormItem",
+        autocomplete:
+          "Autocomplete-значение, передаваемое во вложенный text input. Также может наследоваться из NmorphFormItem",
         height: "Высота поля ввода автодополнения",
         disabled: "Отключает поле ввода автодополнения",
         "model-value": "Текущее значение поля ввода",
         placeholder: "Подсказка, отображаемая, когда поле ввода пустое",
-        clearable: "Булево значение, добавляющее кнопку для очистки значения поля",
+        clearable:
+          "Булево значение, добавляющее кнопку для очистки значения поля",
         list: "Список предложений для ввода",
-        "action-callback": "Функция обратного вызова, вызываемая при выборе опции",
-        "z-index": "Задает z-index оверлея подсказок. Если не передан, используется общий автоматический стек z-index",
+        "action-callback":
+          "Функция обратного вызова, вызываемая при выборе опции",
+        "z-index":
+          "Задает z-index оверлея подсказок. Если не передан, используется общий автоматический стек z-index",
       },
       slot: {
-        loader: "Слот для добавления кастомного загрузчика во время получения данных",
+        loader:
+          "Слот для добавления кастомного загрузчика во время получения данных",
       },
       variables: {},
       events: {
-        "update:model-value": "Событие всплывает при изменении значения поля автодополнения",
+        "update:model-value":
+          "Событие всплывает при изменении значения поля автодополнения",
         select: "Событие всплывает при выборе элемента из предложенных",
       },
     },
@@ -1377,17 +1553,20 @@ export default {
         subtitle: "Отключает компонент загрузки файлов",
       },
       multiple: {
-        subtitle: "Позволяет загрузить несколько файлов, если установлено в *true*.",
+        subtitle:
+          "Позволяет загрузить несколько файлов, если установлено в *true*.",
       },
       "photo-with-preview": {
-        subtitle: "Если установлено в *true*, загруженные фотографии будут отображаться с предварительным просмотром.",
+        subtitle:
+          "Если установлено в *true*, загруженные фотографии будут отображаться с предварительным просмотром.",
       },
       api: {
         "model-value": "Представляет загруженные файлы",
         disabled: "Булево значение, отключающее компонент загрузки файлов",
         multiple: "Булево значение, позволяющее выбрать несколько файлов",
         "allowed-types": "Определяет типы файлов, которые можно загрузить",
-        "photo-with-preview": "Отображает предварительный просмотр загруженных изображений",
+        "photo-with-preview":
+          "Отображает предварительный просмотр загруженных изображений",
         fill: "Позволяет кнопке загрузки заполнить свой контейнер",
       },
       slot: {
@@ -1395,15 +1574,16 @@ export default {
       },
       variables: {},
       events: {
-        "on-unsupported-file-type-error": "Событие всплывает, когда пользователь пытается загрузить неподдерживаемый тип файла",
+        "on-unsupported-file-type-error":
+          "Событие всплывает, когда пользователь пытается загрузить неподдерживаемый тип файла",
         "update:model-value": "Событие всплывает при изменении выбора файлов",
       },
       exposes: {
         inputDOMRef: "Оригинальный элемент DOM поля ввода",
       },
       translates: {
-        selectFile: "Выберите файл"
-      }
+        selectFile: "Выберите файл",
+      },
     },
     "number-input": {
       "basic-usage": {},
@@ -1414,19 +1594,22 @@ export default {
         subtitle: "Отключает числовое поле ввода, если установлено в *true*.",
       },
       "action-btn-position-right": {
-        subtitle: "Если установлено в *true*, кнопки увеличения и уменьшения располагаются справа.",
+        subtitle:
+          "Если установлено в *true*, кнопки увеличения и уменьшения располагаются справа.",
       },
       api: {
         id: "Устанавливает id нативного input. Внутри NmorphFormItem наследует его id",
         name: "Устанавливает name нативного input. Если prop не передан, берется name или id из NmorphFormItem",
-        autocomplete: "Autocomplete-значение для нативного number input. Также может наследоваться из NmorphFormItem",
+        autocomplete:
+          "Autocomplete-значение для нативного number input. Также может наследоваться из NmorphFormItem",
         height: "Высота числового поля ввода",
         disabled: "Булево значение, отключающее поле ввода",
         "model-value": "Текущее значение числового поля ввода",
         max: "Максимально допустимое значение",
         min: "Минимально допустимое значение",
         step: "Шаг для увеличения или уменьшения значения",
-        "action-btn-position-right": "Располагает кнопки действия справа, если установлено в *true*",
+        "action-btn-position-right":
+          "Располагает кнопки действия справа, если установлено в *true*",
       },
       slot: {},
       variables: {},
@@ -1434,7 +1617,8 @@ export default {
         inputDOMRef: "Оригинальный элемент DOM поля ввода",
       },
       events: {
-        "update:model-value": "Событие всплывает при изменении значения числового поля ввода",
+        "update:model-value":
+          "Событие всплывает при изменении значения числового поля ввода",
       },
     },
     "select-button": {
@@ -1479,24 +1663,29 @@ export default {
         subtitle: "Растягивает select на всю ширину контейнера.",
       },
       "options-width": {
-        subtitle: "Управляет шириной опций: сохранять ширину select и обрезать длинный текст или расширяться под контент.",
+        subtitle:
+          "Управляет шириной опций: сохранять ширину select и обрезать длинный текст или расширяться под контент.",
       },
       api: {
         id: "Устанавливает id нативного select. Внутри NmorphFormItem наследует его id",
         name: "Устанавливает name нативного select. Если prop не передан, берется name или id из NmorphFormItem",
-        autocomplete: "Autocomplete-значение для нативного select. Также может наследоваться из NmorphFormItem",
+        autocomplete:
+          "Autocomplete-значение для нативного select. Также может наследоваться из NmorphFormItem",
         height: "Высота выпадающего списка",
         disabled: "Отключает выпадающий список",
-        "no-element-placeholder": "Текст-заполнитель, отображаемый, когда опции нет",
+        "no-element-placeholder":
+          "Текст-заполнитель, отображаемый, когда опции нет",
         "value-required": "Требует выбора значения",
         options: "Список доступных опций",
         "options-map": "Объект для отображения опций",
         "model-value": "Выбранное значение выпадающего списка",
         loading: "Отображает состояние загрузки",
         fill: "Растягивает выпадающий список на всю ширину контейнера",
-        "options-width": "Управляет шириной опций выпадающего списка: truncate или auto",
+        "options-width":
+          "Управляет шириной опций выпадающего списка: truncate или auto",
         open: "Булево значение для управления видимостью списка",
-        "z-index": "Задает z-index выпадающего списка select. Если не передан, используется общий автоматический стек z-index",
+        "z-index":
+          "Задает z-index выпадающего списка select. Если не передан, используется общий автоматический стек z-index",
       },
       slot: {
         default: "Слот для настройки опций в выпадающем списке",
@@ -1505,14 +1694,17 @@ export default {
         "base-width": "Задает базовую ширину для компонента выбора",
       },
       events: {
-        "update:model-value": "Событие всплывает при изменении выбранного значения",
+        "update:model-value":
+          "Событие всплывает при изменении выбранного значения",
       },
     },
     "select-option": {
       api: {
-        label:  "Определяет метку для опции, которая отображается в выпадающем списке",
+        label:
+          "Определяет метку для опции, которая отображается в выпадающем списке",
         height: "Задает высоту опции выбора",
-        disabled: "Булево значение, которое указывает, отключена ли опция и не может быть выбрана",
+        disabled:
+          "Булево значение, которое указывает, отключена ли опция и не может быть выбрана",
       },
       slot: {
         default: "Слот для настройки отображаемого контента для этой опции",
@@ -1530,7 +1722,8 @@ export default {
         subtitle: "Отключает слайдер, если установлено в *true*.",
       },
       "show-tooltip": {
-        subtitle: "Если установлено в *true*, отображает всплывающую подсказку с текущим значением.",
+        subtitle:
+          "Если установлено в *true*, отображает всплывающую подсказку с текущим значением.",
       },
       api: {
         id: "Устанавливает id нативного range input. Внутри NmorphFormItem наследует его id",
@@ -1541,7 +1734,8 @@ export default {
         max: "Максимальное значение для слайдера",
         min: "Минимальное значение для слайдера",
         step: "Шаг для увеличения или уменьшения значения",
-        "show-tooltip": "Булево значение для управления видимостью всплывающей подсказки",
+        "show-tooltip":
+          "Булево значение для управления видимостью всплывающей подсказки",
       },
       slot: {},
       variables: {
@@ -1549,7 +1743,8 @@ export default {
         "value-fixed-container-height": "Устанавливает высоту контейнера",
       },
       events: {
-        "update:model-value": "Событие всплывает при изменении значения слайдера",
+        "update:model-value":
+          "Событие всплывает при изменении значения слайдера",
       },
     },
     "date-picker": {
@@ -1562,31 +1757,36 @@ export default {
       api: {
         id: "Устанавливает id нативного input. Внутри NmorphFormItem наследует его id",
         name: "Устанавливает name нативного input. Если prop не передан, берется name или id из NmorphFormItem",
-        autocomplete: "Autocomplete-значение для скрытого нативного date input. Также может наследоваться из NmorphFormItem",
+        autocomplete:
+          "Autocomplete-значение для скрытого нативного date input. Также может наследоваться из NmorphFormItem",
         height: "Высота поля выбора даты",
         disabled: "Булево значение, отключающее выбор даты",
         placeholder: "Текст, отображаемый, когда дата не выбрана",
         "model-value": "Текущая выбранная дата или диапазон дат",
         type: "Тип выбора даты, например, *одиночный* или *диапазон*",
-        "text-separator": "Текст для разделения начальной и конечной дат в режиме выбора диапазона",
-        "z-index": "Задает z-index выпадающего календаря. Если не передан, используется общий автоматический стек z-index",
+        "text-separator":
+          "Текст для разделения начальной и конечной дат в режиме выбора диапазона",
+        "z-index":
+          "Задает z-index выпадающего календаря. Если не передан, используется общий автоматический стек z-index",
       },
       slot: {},
       variables: {
         width: "Определяет ширину компонента выбора даты",
       },
       events: {
-        "update:model-value": "Событие всплывает, когда выбранная дата или диапазон дат изменяются",
+        "update:model-value":
+          "Событие всплывает, когда выбранная дата или диапазон дат изменяются",
       },
       translates: {
-        "pickADate": "Выберите дату"
-      }
+        pickADate: "Выберите дату",
+      },
     },
     radio: {
       "basic-usage": {
         info: {
           title: "Использование Radio Group",
-          content: "Обычно используется в группе радиокнопок, чтобы позволить пользователю выбрать один вариант из набора. После выбора радиокнопки она не может быть отменена повторным нажатием—только путем выбора другой радиокнопки в группе для изменения состояния. Для правильного отображения, при использовании 'style-type' как 'button', следует предоставить лэйбл (label).",
+          content:
+            "Обычно используется в группе радиокнопок, чтобы позволить пользователю выбрать один вариант из набора. После выбора радиокнопки она не может быть отменена повторным нажатием—только путем выбора другой радиокнопки в группе для изменения состояния. Для правильного отображения, при использовании 'style-type' как 'button', следует предоставить лэйбл (label).",
         },
       },
       api: {
@@ -1621,7 +1821,8 @@ export default {
       },
       variables: {},
       events: {
-        "update:model-value":  "Событие всплывает при изменении выбранного значения",
+        "update:model-value":
+          "Событие всплывает при изменении выбранного значения",
       },
     },
     form: {
@@ -1657,15 +1858,18 @@ export default {
         "is-valid": "Форма валидна: ",
         info: {
           title: "Информация о типизации",
-          content: "Для обеспечения правильной типизации необходимо импортировать тип INmorphFromDataExpose.",
+          content:
+            "Для обеспечения правильной типизации необходимо импортировать тип INmorphFromDataExpose.",
         },
       },
       "validate-immediately": {
-        subtitle: "Если установлено в *true*, форма будет проверять свои поля сразу после рендеринга.",
+        subtitle:
+          "Если установлено в *true*, форма будет проверять свои поля сразу после рендеринга.",
       },
       api: {
         value: "Значения формы для элементов ввода",
-        "validate-immediately": "Булево значение, управляющее проверкой при загрузке",
+        "validate-immediately":
+          "Булево значение, управляющее проверкой при загрузке",
       },
       slot: {
         default: "Слот для передачи NmorphFormItem",
@@ -1779,15 +1983,20 @@ export default {
       api: {
         id: "Уникальный id поля, который используется label и наследуется вложенными form-control",
         name: "Опциональный name поля, который наследуется вложенными form-control. По умолчанию равен id",
-        autocomplete: "Опциональное autocomplete-значение, которое наследуется вложенными form-control, если они его поддерживают",
+        autocomplete:
+          "Опциональное autocomplete-значение, которое наследуется вложенными form-control, если они его поддерживают",
         height: "Устанавливает высоту контейнера элемента формы",
-        label: "Определяет текст метки, связанный с элементом формы, предоставляя контекст пользователю",
-        "show-validation-icon": "Булево значение, управляющее отображением иконки валидации для данного элемента формы",
-        "static-error-box-space": "Определяет статическое пространство для отображения поля ошибки, обеспечивая единообразие пространства независимо от состояния валидации",
+        label:
+          "Определяет текст метки, связанный с элементом формы, предоставляя контекст пользователю",
+        "show-validation-icon":
+          "Булево значение, управляющее отображением иконки валидации для данного элемента формы",
+        "static-error-box-space":
+          "Определяет статическое пространство для отображения поля ошибки, обеспечивая единообразие пространства независимо от состояния валидации",
         validate: "Определяет правила валидации для элемента формы",
       },
       slot: {
-        default: "Слот для настройки содержимого элемента формы, обычно включает элементы ввода или другие элементы управления формой",
+        default:
+          "Слот для настройки содержимого элемента формы, обычно включает элементы ввода или другие элементы управления формой",
       },
     },
   },

@@ -8,7 +8,7 @@ const scriptData = "";
 const templateData = `
 <template>
   <NmorphOTPInput height="thick" />
-  <NmorphOTPInput height="default" />
+  <NmorphOTPInput height="basic" />
   <NmorphOTPInput height="thin" />
 </template>
 `;
@@ -32,7 +32,7 @@ const codeToCopy = [scriptData, templateData, cssData];
         <div class="otp-input-height-overview">
           <ClientOnly>
             <NmorphOTPInput height="thick" />
-            <NmorphOTPInput height="default" />
+            <NmorphOTPInput height="basic" />
             <NmorphOTPInput height="thin" />
           </ClientOnly>
         </div>

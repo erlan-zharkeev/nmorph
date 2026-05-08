@@ -1,6 +1,7 @@
 export default {
   meta: {
-    description: "Library of UI components for Vue 3 in the neumorphism/sceumorphism style."
+    description:
+      "Library of UI components for Vue 3 in the neumorphism/sceumorphism style.",
   },
   guide: "Guide",
   components: "Components",
@@ -15,7 +16,7 @@ export default {
   events: "Events",
   translates: "Translations",
   description: "Description",
-  text: 'Text',
+  text: "Text",
   type: "Type",
   default: "Default",
   basic: "Basic",
@@ -34,7 +35,8 @@ export default {
   },
   "unsupported-resolution": {
     title: "Resolution is not supported",
-    description: "Open the documentation on a device with a screen width of at least 320px."
+    description:
+      "Open the documentation on a device with a screen width of at least 320px.",
   },
   "guide-page": {
     "theme-customize": "Customize theme",
@@ -43,43 +45,57 @@ export default {
     "custom-accent-color": "Accent color",
     "enter-color": "Enter color",
     "get-started-btn": "Quick start",
-    explained: "<b class=\"main-section__subtitle\">Neumorphism / Sceumorphism</b>",
+    explained:
+      '<b class="main-section__subtitle">Neumorphism / Sceumorphism</b>',
     "apply-theme": "Apply theme",
     "main-content":
-      "<p class=\"main-section__first-explained-content\">Vue 3 UI kit for creating unique 3D designs in neumorphic style</p>",
+      '<p class="main-section__first-explained-content">Vue 3 UI kit for creating unique 3D designs in neumorphic style</p>',
     "quick-start": {
       installation: "Installation",
       "choose-package-manager":
         "Choose any package manager you prefer.<br>We recommend using reliable ones like <b>NPM</b>, <b>Yarn</b>, <b>Pnpm</b>",
       plugin: "Library integration",
       "alternative-plugin": "Alternative integration method",
-      usage: "Basic usage"
+      usage: "Basic usage",
     },
-    "config": {
+    config: {
       "add-config": "Example of adding library configuration",
-      "available": "Currently, there are three available settings: theme, i18n, and zIndex",
-      "theme": "Theme",
-      "i18n": "Internationalization (i18n)",
-      "ls": "Save current theme in local storage",
+      available:
+        "Currently, there are three available settings: theme, i18n, and zIndex",
+      theme: "Theme",
+      i18n: "Internationalization (i18n)",
+      ls: "Save current theme in local storage",
       "rest-themes": "Your custom themes",
       "default-theme": "Selected default theme",
-      "dark-shade": "Dark shadow depth coefficient, works only with dynamic shadow generation approach",
-      "light-shade": "Light shadow depth coefficient, works only with dynamic shadow generation approach",
+      "dark-shade":
+        "Dark shadow depth coefficient, works only with dynamic shadow generation approach",
+      "light-shade":
+        "Light shadow depth coefficient, works only with dynamic shadow generation approach",
       "shadow-width": "Shadow distance",
       "shadow-blur": "Shadow blur",
-      "theme-explained": "Pass theme colors during library installation. The minimum useful setup is main, text, and accent for each theme.",
-      "auto-generation": "If a theme has main but no darkShade and lightShade, Nmorph generates the shadow colors automatically. Pass darkShade and lightShade manually when you need exact values.",
-      "theme-runtime": "Use the runtime API when colors come from controls such as a color picker. Runtime colors update the managed Nmorph style tag and are not written into inline html style attributes.",
-      "main-var": "To automatically generate darkShade and lightShade, just pass this variable.",
-      "shade-var": "Will be automatically calculated if not mutated directly and passed via the main variable.",
-      "i18n-content": "For proper i18n functionality, ensure that you connect i18n before the library. Currently, three locales are available: en, zh, ru.<p>The default locale is en. Import only the locales you need.</p><p>If the locales are missing, you need to add your own. The locale property will overwrite the locale from i18n passed above.</p>",
-      "rewrite-translation": "Rewrite library translations. You can find translation message names in the component documentation.",
+      "theme-explained":
+        "Pass theme colors during library installation. The minimum useful setup is main, text, and accent for each theme.",
+      "auto-generation":
+        "If a theme has main but no darkShade and lightShade, Nmorph generates the shadow colors automatically. Pass darkShade and lightShade manually when you need exact values.",
+      "theme-runtime":
+        "Use the runtime API when colors come from controls such as a color picker. Runtime colors update the managed Nmorph style tag and are not written into inline html style attributes.",
+      "main-var":
+        "To automatically generate darkShade and lightShade, just pass this variable.",
+      "shade-var":
+        "Will be automatically calculated if not mutated directly and passed via the main variable.",
+      "i18n-content":
+        "For proper i18n functionality, ensure that you connect i18n before the library. Currently, three locales are available: en, zh, ru.<p>The default locale is en. Import only the locales you need.</p><p>If the locales are missing, you need to add your own. The locale property will overwrite the locale from i18n passed above.</p>",
+      "rewrite-translation":
+        "Rewrite library translations. You can find translation message names in the component documentation.",
       "other-messages": "Other translations",
       "css-variables": "CSS Variables",
-      "css-variables-content": "The library exposes the following CSS custom properties that you can use in your own styles.",
+      "css-variables-content":
+        "The library exposes the following CSS custom properties that you can use in your own styles.",
       "css-variables-theme-derived": "Theme-derived variables (set per theme)",
-      "css-variables-auto-generated": "Additional text contrast variables (configurable per theme)",
-      "css-variables-static": "Additional theme color variables (set per theme)",
+      "css-variables-auto-generated":
+        "Additional text contrast variables (configurable per theme)",
+      "css-variables-static":
+        "Additional theme color variables (set per theme)",
       "css-var-main": "Main background color",
       "css-var-dark-shade": "Dark shadow shade",
       "css-var-light-shade": "Light shadow shade",
@@ -88,159 +104,227 @@ export default {
       "css-var-accent": "Accent / brand color",
       "css-var-focus-text": "Text color on focused/accent elements",
       "css-var-placeholder": "Placeholder text color",
-      "css-var-semi-contrast": "text color +30% brightness — for secondary text",
-      "css-var-contrast": "text color +70% brightness — for high-contrast text"
+      "css-var-semi-contrast":
+        "text color +30% brightness — for secondary text",
+      "css-var-contrast": "text color +70% brightness — for high-contrast text",
     },
-    "other": {
-      "utils-classes": "Utility classes"
+    other: {
+      "utils-classes": "Utility classes",
     },
   },
   "about-page": {
     "alpha-test": "Current status",
     "alpha-test-lib":
-    "<p>Testing of the library is currently underway.</p><p>Since the development is carried out by only one developer, fixing possible bugs and testing takes a lot of time.</p><p>I will be glad if you report any problems.</p>",
+      "<p>Testing of the library is currently underway.</p><p>Since the development is carried out by only one developer, fixing possible bugs and testing takes a lot of time.</p><p>I will be glad if you report any problems.</p>",
     "get-started": "Get started",
     "overview-content":
-          "<p>It is a library of UI components for Vue 3, developed using a non-morphic/skeuomorphic design.</p><p>It provides a set of components to create a unique user interface.</p><p>The project was created as a student's work on frontend development.</p>",
+      "<p>It is a library of UI components for Vue 3, developed using a non-morphic/skeuomorphic design.</p><p>It provides a set of components to create a unique user interface.</p><p>The project was created as a student's work on frontend development.</p>",
     neumorphism: "What is neomorphism/skeuomorphism?",
     "neumorphism-content":
-          "Neumorphism is a design style that combines elements of flat design and skeuomorphism.</p><p>It creates a sense of volume and soft shadows, making the interface look as if it can be touched.</p><p>The neumorphism is based on pastel colors, light gradients and soft shadows, creating the effect of pressed or indented elements.</p>",
+      "Neumorphism is a design style that combines elements of flat design and skeuomorphism.</p><p>It creates a sense of volume and soft shadows, making the interface look as if it can be touched.</p><p>The neumorphism is based on pastel colors, light gradients and soft shadows, creating the effect of pressed or indented elements.</p>",
   },
   "changelog-page": {
-    "roadmap": {
-      "title": "Roadmap",
-      "items": {
+    roadmap: {
+      title: "Roadmap",
+      items: {
         "nuxt-support": "Add Nuxt support.",
-        "storybook-vr": "Add Storybook and visual regression checks.",
-        "accessibility": "Improve accessibility: keyboard navigation, ARIA, focus states.",
-        "test-coverage": "Increase test coverage: unit, integration, and e2e tests.",
-        "theming-v2": "Prepare Theming v2 with extended design tokens and presets.",
-        "color-picker-formats": "Add support for displaying different color formats in NmorphColorPicker.",
-        "performance": "Optimize performance and bundle size."
-      }
+        "test-coverage":
+          "Increase test coverage: unit, integration, and e2e tests.",
+        "theming-v2":
+          "Prepare Theming v2 with extended design tokens and presets.",
+        "color-picker-formats":
+          "Add support for displaying different color formats in NmorphColorPicker.",
+        performance: "Optimize performance and bundle size.",
+      },
     },
-    "changelog": {
-      "title": "Changelog",
-      "items": {
-        "overlay-z-index-stack": "Added a shared automatic z-index stack for overlays, dropdowns, selects, dialogs, date pickers, autocomplete, and image previews.",
-        "overlay-z-index-props": "Nmorph overlay-based components now support `zIndex`, and the library install options can set the shared z-index base.",
-        "checkbox-height": "NmorphCheckbox and NmorphCheckboxGroup now support `height` with thin, default, and thick component sizes.",
-        "radio-height": "NmorphRadio and NmorphRadioGroup now support `height` with thin, default, and thick component sizes.",
-        "avatar-preview": "NmorphAvatar now supports image preview on click, including multiple gallery images through `src` or `previewSrc`.",
-        "callout-spacing": "NmorphCallout no longer adds bottom margin by default.",
-        "media-control-icons": "Added media control icons: play, pause, stop, record, and a square exit alternative.",
-        "select-fill-options-width": "NmorphSelect now supports `fill` and `optionsWidth`, can stretch to container width, truncate long option labels, or expand dropdown options to fit content.",
-        "select-loading-disabled": "NmorphSelect now disables the native input while loading and closes the dropdown when loading starts.",
-        "dropdown-size-css-values": "NmorphDropdown width props now accept CSS string values and support min-width and max-width.",
-        "form-control-transition-cleanup": "NmorphColorPicker and NmorphSwitch no longer animate background and shadow changes, so theme updates apply instantly.",
-        "callout-status-types": "NmorphCallout title is now optional and the component supports success and error status colors.",
-        "theme-runtime-api": "Added runtime theme APIs: `setThemeColors` and `applyTheme` update the managed Nmorph style tag without writing inline styles to html.",
-        "theme-options-typing": "Cleaned up theme typings so install options and per-theme color options are typed separately, and missing theme config is handled safely.",
-        "callout-component": "Added NmorphCallout to the library, docs, component overview, and sandbox.",
-        "select-button-fill": "NmorphSelectButton now supports the `fill` prop and can stretch its items across the container width.",
-        "badge-size": "NmorphBadge now supports the `size` prop with tiny, extra-small, and base variants.",
-        "guide-css-variables-utilities": "Updated the Guide CSS variables reference and simplified utility class documentation to class names and purpose.",
-        "docs-mobile-menu-fit-content": "Docs side menu now sizes to its content and the mobile header alignment was refined.",
-        "avatar-name-initials": "NmorphAvatar now supports a `name` prop and renders generated initials when no image is available. Avatar docs were updated with API and usage examples.",
-        "notification-provider-placement-per-notification": "NmorphNotificationProvider now supports `placement` on each notification, so one provider can render notifications in different screen positions.",
-        "notification-provider-quantity-leave-style": "Fixed notification removal when `quantity` is exceeded: leaving alerts keep icon sizing, colors, and layout during the transition.",
-        "button-transparent-hover-icons": "Transparent NmorphButton hover now highlights both text and icons with the accent color.",
-        "badge-z-index": "NmorphBadge now supports a `zIndex` prop for controlling badge stacking order.",
-        "color-picker-display-format": "NmorphColorPicker can display selected colors as hex, RGB, or HSL values through the `displayFormat` prop.",
-        "file-upload-model-custom-data": "NmorphFileUpload now preserves custom file preview data in `v-model`, respects disabled state for selection and removal, and uses the icon-only remove button slot.",
-        "slider-pointer-events": "NmorphSlider now uses pointer events, improving touch dragging and cleaning up document listeners on unmount.",
-        "scroll-thumb-theme-color": "NmorphScroll thumb color now uses the theme text color by default and can be configured with `scrollThumb` / `--nmorph-scroll-thumb-color`.",
-        "color-picker-fixed-value-width": "NmorphColorPicker now renders shown hex values with fixed-width formatting so equal-length values keep equal component width.",
-        "scroll-default-height-100": "NmorphScroll now defaults to `height=\"100%\"`, and the API docs plus descriptive copy were aligned with that behavior.",
-        "scroll-typing-fixes": "Fixed TypeScript typings in NmorphScroll: container size and scroll coordinate access no longer produces `undefined` errors, and the public expose type for `moveTo` and `scrollDOMContainer` was cleaned up.",
-        "notification-provider-close-animation": "NmorphNotificationProvider now keeps alert styles intact during close animation, preserves stacked layout, and avoids jarring reflow while notifications leave.",
-        "notification-provider-uuid-ids": "useNmorphNotification now generates UUID-based notification ids to avoid collisions when multiple notifications are created in quick succession.",
-        "button-icon-slots-breaking": "Breaking change: NmorphButton slot API was split. `icon` now renders a leading icon next to content, and icon-only buttons must use the new `icon-only` slot.",
-        "otp-input-component": "Added NmorphOTPInput with documentation and sandbox examples. It reuses NmorphTextInput styling and supports paste, keyboard navigation, and completion events.",
-        "form-autocomplete-forwarding": "NmorphFormItem now forwards autocomplete to nested form controls, and the affected component API docs were updated.",
-        "text-input-composition-api": "NmorphTextInput now exposes focus, blur, and select methods and accepts additional native input attributes for composed controls such as OTP input.",
-        "avatar-fallback-prop": "NmorphAvatar now accepts a fallback component prop with a default NmorphIconAvatar fallback, and the avatar API docs were updated.",
-        "button-fill-transparent-color": "NmorphButton fill now reliably stretches to the container width, and transparent buttons support custom text and icon color through the color prop.",
-        "badge-value-slot": "NmorphBadge now accepts `undefined` as `value`, hides itself when no value is provided, and supports a custom `value` slot for badge content. Docs and sandbox examples were added.",
-        "scroll-height-100": "NmorphScroll now behaves correctly with `height=\"100%\"` when the parent has an explicit height, and the docs now show both fixed and relative height examples.",
-        "theme-config-contrast-types": "Theme config typings and docs were synchronized with runtime behavior: `focusText` is now correctly typed, and `placeholderText`, `semiContrastText`, and `contrastText` are documented in the theme example.",
-        "select-button-no-theme-transition": "NmorphSelectButtonItem no longer animates background and box-shadow, so theme switching is instant and visually consistent with the rest of the library.",
-        "radio-optional-inject-types": "Fixed NmorphRadio inject typings so standalone usage no longer causes TypeScript errors when group injections are absent.",
-        "color-picker": "Added NmorphColorPicker component, a documentation page for it, and examples for height, value display, disabled state, and theme-accent default color.",
-        "badge-tag-mode": "Added is-tag mode to NmorphBadge so it can render as a standalone badge without overlay positioning or a default slot.",
-        "badge-undefined-hidden": "NmorphBadge now hides itself when value is undefined; dot mode still renders without a value.",
-        "exit-users-icons": "Added NmorphIconExit and NmorphIconUsers to the icon set and the icon documentation page.",
-        "form-boolean-compare": "Form validation rules now accept boolean compareValue values, and the form API docs were updated accordingly.",
-        "image-src-optional": "Made NmorphImage src optional in the public typings and aligned the image API docs with the runtime behavior.",
-        "select-button-keyboard-focus": "NmorphSelectButtonItem is now keyboard-accessible: Tab focuses each item, Space/Enter selects it, and a focus-visible outline is shown.",
-        "tabindex-prop": "Added tabindex prop to INmorphCommonInputProps — all form controls (NmorphTextInput, NmorphSwitch, NmorphSlider, NmorphNumberInput, NmorphSelect, NmorphSelectButtonItem) now support tabindex.",
-        "form-item-input-inheritance": "Form controls now inherit id and name from NmorphFormItem automatically, so labels and native form attributes stay linked without manual prop forwarding.",
-        "text-input-autofill-styles": "Fixed NmorphTextInput autofill styling so browser autofill no longer overrides the neumorphic shadows and field colors.",
+    changelog: {
+      title: "Changelog",
+      items: {
+        "height-basic-name":
+          "Renamed the shared component height value from `default` to `basic`, and updated component defaults and docs to use thick, basic, and thin.",
+        "checkbox-radio-defaults":
+          "NmorphCheckbox, NmorphCheckboxGroup, NmorphRadio, and NmorphRadioGroup now default to thin height; radio controls now render as round radio controls by default.",
+        "overlay-z-index-stack":
+          "Added a shared automatic z-index stack for overlays, dropdowns, selects, dialogs, date pickers, autocomplete, and image previews.",
+        "overlay-z-index-props":
+          "Nmorph overlay-based components now support `zIndex`, and the library install options can set the shared z-index base.",
+        "text-input-clear-space":
+          "NmorphTextInput now reserves space for the clear/password action button so placeholder text does not overlap it in narrow inputs.",
+        "checkbox-height":
+          "NmorphCheckbox and NmorphCheckboxGroup now support `height` with thin, basic, and thick component sizes.",
+        "radio-height":
+          "NmorphRadio and NmorphRadioGroup now support `height` with thin, basic, and thick component sizes.",
+        "avatar-preview":
+          "NmorphAvatar now supports image preview on click, including multiple gallery images through `src` or `previewSrc`.",
+        "callout-spacing":
+          "NmorphCallout no longer adds bottom margin by default.",
+        "media-control-icons":
+          "Added media control icons: play, pause, stop, record, and a square exit alternative.",
+        "select-fill-options-width":
+          "NmorphSelect now supports `fill` and `optionsWidth`, can stretch to container width, truncate long option labels, or expand dropdown options to fit content.",
+        "select-loading-disabled":
+          "NmorphSelect now disables the native input while loading and closes the dropdown when loading starts.",
+        "dropdown-size-css-values":
+          "NmorphDropdown width props now accept CSS string values and support min-width and max-width.",
+        "form-control-transition-cleanup":
+          "NmorphColorPicker and NmorphSwitch no longer animate background and shadow changes, so theme updates apply instantly.",
+        "callout-status-types":
+          "NmorphCallout title is now optional and the component supports success and error status colors.",
+        "theme-runtime-api":
+          "Added runtime theme APIs: `setThemeColors` and `applyTheme` update the managed Nmorph style tag without writing inline styles to html.",
+        "theme-options-typing":
+          "Cleaned up theme typings so install options and per-theme color options are typed separately, and missing theme config is handled safely.",
+        "callout-component":
+          "Added NmorphCallout to the library, docs, component overview, and sandbox.",
+        "select-button-fill":
+          "NmorphSelectButton now supports the `fill` prop and can stretch its items across the container width.",
+        "badge-size":
+          "NmorphBadge now supports the `size` prop with tiny, extra-small, and base variants.",
+        "guide-css-variables-utilities":
+          "Updated the Guide CSS variables reference and simplified utility class documentation to class names and purpose.",
+        "docs-mobile-menu-fit-content":
+          "Docs side menu now sizes to its content and the mobile header alignment was refined.",
+        "avatar-name-initials":
+          "NmorphAvatar now supports a `name` prop and renders generated initials when no image is available. Avatar docs were updated with API and usage examples.",
+        "notification-provider-placement-per-notification":
+          "NmorphNotificationProvider now supports `placement` on each notification, so one provider can render notifications in different screen positions.",
+        "notification-provider-quantity-leave-style":
+          "Fixed notification removal when `quantity` is exceeded: leaving alerts keep icon sizing, colors, and layout during the transition.",
+        "button-transparent-hover-icons":
+          "Transparent NmorphButton hover now highlights both text and icons with the accent color.",
+        "badge-z-index":
+          "NmorphBadge now supports a `zIndex` prop for controlling badge stacking order.",
+        "color-picker-display-format":
+          "NmorphColorPicker can display selected colors as hex, RGB, or HSL values through the `displayFormat` prop.",
+        "file-upload-model-custom-data":
+          "NmorphFileUpload now preserves custom file preview data in `v-model`, respects disabled state for selection and removal, and uses the icon-only remove button slot.",
+        "slider-pointer-events":
+          "NmorphSlider now uses pointer events, improving touch dragging and cleaning up document listeners on unmount.",
+        "scroll-thumb-theme-color":
+          "NmorphScroll thumb color now uses the theme text color by default and can be configured with `scrollThumb` / `--nmorph-scroll-thumb-color`.",
+        "color-picker-fixed-value-width":
+          "NmorphColorPicker now renders shown hex values with fixed-width formatting so equal-length values keep equal component width.",
+        "scroll-default-height-100":
+          'NmorphScroll now defaults to `height="100%"`, and the API docs plus descriptive copy were aligned with that behavior.',
+        "scroll-typing-fixes":
+          "Fixed TypeScript typings in NmorphScroll: container size and scroll coordinate access no longer produces `undefined` errors, and the public expose type for `moveTo` and `scrollDOMContainer` was cleaned up.",
+        "notification-provider-close-animation":
+          "NmorphNotificationProvider now keeps alert styles intact during close animation, preserves stacked layout, and avoids jarring reflow while notifications leave.",
+        "notification-provider-uuid-ids":
+          "useNmorphNotification now generates UUID-based notification ids to avoid collisions when multiple notifications are created in quick succession.",
+        "button-icon-slots-breaking":
+          "Breaking change: NmorphButton slot API was split. `icon` now renders a leading icon next to content, and icon-only buttons must use the new `icon-only` slot.",
+        "otp-input-component":
+          "Added NmorphOTPInput with documentation and sandbox examples. It reuses NmorphTextInput styling and supports paste, keyboard navigation, and completion events.",
+        "form-autocomplete-forwarding":
+          "NmorphFormItem now forwards autocomplete to nested form controls, and the affected component API docs were updated.",
+        "text-input-composition-api":
+          "NmorphTextInput now exposes focus, blur, and select methods and accepts additional native input attributes for composed controls such as OTP input.",
+        "avatar-fallback-prop":
+          "NmorphAvatar now accepts a fallback component prop with a default NmorphIconAvatar fallback, and the avatar API docs were updated.",
+        "button-fill-transparent-color":
+          "NmorphButton fill now reliably stretches to the container width, and transparent buttons support custom text and icon color through the color prop.",
+        "badge-value-slot":
+          "NmorphBadge now accepts `undefined` as `value`, hides itself when no value is provided, and supports a custom `value` slot for badge content. Docs and sandbox examples were added.",
+        "scroll-height-100":
+          'NmorphScroll now behaves correctly with `height="100%"` when the parent has an explicit height, and the docs now show both fixed and relative height examples.',
+        "theme-config-contrast-types":
+          "Theme config typings and docs were synchronized with runtime behavior: `focusText` is now correctly typed, and `placeholderText`, `semiContrastText`, and `contrastText` are documented in the theme example.",
+        "select-button-no-theme-transition":
+          "NmorphSelectButtonItem no longer animates background and box-shadow, so theme switching is instant and visually consistent with the rest of the library.",
+        "radio-optional-inject-types":
+          "Fixed NmorphRadio inject typings so standalone usage no longer causes TypeScript errors when group injections are absent.",
+        "color-picker":
+          "Added NmorphColorPicker component, a documentation page for it, and examples for height, value display, disabled state, and theme-accent default color.",
+        "badge-tag-mode":
+          "Added is-tag mode to NmorphBadge so it can render as a standalone badge without overlay positioning or a default slot.",
+        "badge-undefined-hidden":
+          "NmorphBadge now hides itself when value is undefined; dot mode still renders without a value.",
+        "exit-users-icons":
+          "Added NmorphIconExit and NmorphIconUsers to the icon set and the icon documentation page.",
+        "form-boolean-compare":
+          "Form validation rules now accept boolean compareValue values, and the form API docs were updated accordingly.",
+        "image-src-optional":
+          "Made NmorphImage src optional in the public typings and aligned the image API docs with the runtime behavior.",
+        "select-button-keyboard-focus":
+          "NmorphSelectButtonItem is now keyboard-accessible: Tab focuses each item, Space/Enter selects it, and a focus-visible outline is shown.",
+        "tabindex-prop":
+          "Added tabindex prop to INmorphCommonInputProps — all form controls (NmorphTextInput, NmorphSwitch, NmorphSlider, NmorphNumberInput, NmorphSelect, NmorphSelectButtonItem) now support tabindex.",
+        "form-item-input-inheritance":
+          "Form controls now inherit id and name from NmorphFormItem automatically, so labels and native form attributes stay linked without manual prop forwarding.",
+        "text-input-autofill-styles":
+          "Fixed NmorphTextInput autofill styling so browser autofill no longer overrides the neumorphic shadows and field colors.",
         "google-icon": "Added NmorphIconGoogle to the icon set.",
-        "contrast-text-colors": "Added --nmorph-semi-contrast-text-color and --nmorph-contrast-text-color CSS variables to default light and dark themes.",
-        "form-item-label-for": "NmorphFormItem label now has a correct for attribute linked to the input via inputId prop on NmorphTextInput.",
-        "error-box-single-error": "NmorphErrorBox now shows only the most relevant error instead of all errors at once.",
-        "validation-icon-fix": "Fixed NmorphValidationIcon not rendering: icon components were passed as strings instead of component objects.",
-        "select-button-unselected-opacity": "NmorphSelectButton: unselected items now appear semi-transparent for clearer visual feedback.",
-        "select-button": "Added new NmorphSelectButton component — a segmented button group with slot and options-based API.",
-        "engines-range": "Relaxed package engines requirements to support modern Node and npm versions.",
-        "skeleton-animation": "Fixed Skeleton loading animation: shimmer now works when loading is enabled.",
-        "export-en-locale": "Added export of English locale messages from the package entry point."
-      }
+        "contrast-text-colors":
+          "Added --nmorph-semi-contrast-text-color and --nmorph-contrast-text-color CSS variables to default light and dark themes.",
+        "form-item-label-for":
+          "NmorphFormItem label now has a correct for attribute linked to the input via inputId prop on NmorphTextInput.",
+        "error-box-single-error":
+          "NmorphErrorBox now shows only the most relevant error instead of all errors at once.",
+        "validation-icon-fix":
+          "Fixed NmorphValidationIcon not rendering: icon components were passed as strings instead of component objects.",
+        "select-button-unselected-opacity":
+          "NmorphSelectButton: unselected items now appear semi-transparent for clearer visual feedback.",
+        "select-button":
+          "Added new NmorphSelectButton component — a segmented button group with slot and options-based API.",
+        "engines-range":
+          "Relaxed package engines requirements to support modern Node and npm versions.",
+        "skeleton-animation":
+          "Fixed Skeleton loading animation: shimmer now works when loading is enabled.",
+        "export-en-locale":
+          "Added export of English locale messages from the package entry point.",
+      },
     },
     "known-bugs": {
-      "title": "Known bugs",
-      "items": {
-        "mobile-slider": "Input Slider does not work on mobile devices.",
-        "text-input-clear-overlap": "NmorphTextInput: the clear button may overlap the placeholder text when the input width is small."
-      }
-    }
+      title: "Known bugs",
+      items: {},
+    },
   },
   "guide-menu": {
     "quick-start": "Quick start",
-    "config": "Configuration",
-    "other": "Other"
+    config: "Configuration",
+    other: "Other",
   },
-  "overview": {
+  overview: {
     "basic-usage": "Basic usage",
-    "off": "Off",
-    "on": "On",
-    "one": "One",
-    "two": "Two",
-    "three": "Three",
-    "four": "Four",
-    "disabled": "Disabled",
+    off: "Off",
+    on: "On",
+    one: "One",
+    two: "Two",
+    three: "Three",
+    four: "Four",
+    disabled: "Disabled",
     "disabled-thin": "Disabled",
-    "thick": "Thick",
-    "default": "Default",
-    "thin": "Thin",
+    thick: "Thick",
+    default: "Default",
+    thin: "Thin",
     "i-am-ripple": "I have ripple",
     "i-am-ripple-with-hover-bg": "I have ripple and hover background",
     "i-am-not-ripple": "I do not have ripple",
-    "circle": "Circle",
-    "round": "Round",
-    "square": "Square",
-    "transparent": "Transparent",
-    "date": "Date",
-    "dates": "Dates",
+    circle: "Circle",
+    round: "Round",
+    square: "Square",
+    transparent: "Transparent",
+    date: "Date",
+    dates: "Dates",
     "date-range": "Date range",
-    "summer": "Summer",
+    summer: "Summer",
     "load-error": "Load error",
     "custom-loading-text": "Custom loading text",
     "download-in-progress": "Download in progress",
-    "show": "Show",
-    "edit": "Edit",
-    "check": "Check",
+    show: "Show",
+    edit: "Edit",
+    check: "Check",
     "without-underline": "Without underline",
-    "underlined": "Underlined",
+    underlined: "Underlined",
     "selected-page": "Selected page:",
-    "loading": "Loading...",
+    loading: "Loading...",
     "i-am-slot-prefix": "I am slot prefix",
-    "add": "Add",
-    "remove": "Remove",
-    "animated": "Animated",
+    add: "Add",
+    remove: "Remove",
+    animated: "Animated",
     "loading-state": "Loading state",
-    "value": "Value:",
+    value: "Value:",
     "sort-values": "Sort values",
     "custom-label": "Custom label",
     "custom-content-for": "Custom content for",
@@ -251,135 +335,134 @@ export default {
     "enter-text": "Enter text",
     "model-text": "Model text:",
     "explore-components": "Explore components",
-    "button": {
+    button: {
       "style-type": {
-        "subtitle":
-          "Use *default* or *transparent* to define the base style."
+        subtitle: "Use *default* or *transparent* to define the base style.",
       },
-      "loading": {
-        "subtitle":
-          "Use *boolean* to enable or disable the loading icon."
+      loading: {
+        subtitle: "Use *boolean* to enable or disable the loading icon.",
       },
-      "ripple": {
-        "subtitle":
-          "Use *boolean* to enable or disable the ripple effect on click."
+      ripple: {
+        subtitle:
+          "Use *boolean* to enable or disable the ripple effect on click.",
       },
-      "height": {
-        "subtitle":
-          "Set the height, available values are *thick*, *default*, *thin*."
+      height: {
+        subtitle:
+          "Set the height, available values are *thick*, *basic*, *thin*.",
       },
-      "disabled": {
-        "subtitle": "Use *boolean* to disable the button."
+      disabled: {
+        subtitle: "Use *boolean* to disable the button.",
       },
       "icon-slots": {
-        "subtitle":
-          "The `icon` slot now renders a leading icon next to the content, while `icon-only` is the dedicated icon-only button mode."
+        subtitle:
+          "The `icon` slot now renders a leading icon next to the content, while `icon-only` is the dedicated icon-only button mode.",
       },
-      "shape": {
-        "info": {
-          "title": "Info",
-          "content":
-            "When using round or square, the size is changed using the --height variable."
+      shape: {
+        info: {
+          title: "Info",
+          content:
+            "When using round or square, the size is changed using the --height variable.",
         },
-        "subtitle": "Use shape to change the border radius of the button."
+        subtitle: "Use shape to change the border radius of the button.",
       },
-      "api": {
-        "type": "Native button type",
-        "text": "Button text",
-        "loading": "Enable/disable loader",
+      api: {
+        type: "Native button type",
+        text: "Button text",
+        loading: "Enable/disable loader",
         "style-type": "Change button style",
-        "color": "Change text and icon color for a transparent button",
+        color: "Change text and icon color for a transparent button",
         "accent-bg-on-hover": "Enable/disable background color on hover",
-        "ripple": "Enable/disable ripple on click",
-        "fill": "Fill container with button",
-        "disabled": "Disable button",
-        "height": "Change button height",
-        "shape": "Change shape"
+        ripple: "Enable/disable ripple on click",
+        fill: "Fill container with button",
+        disabled: "Disable button",
+        height: "Change button height",
+        shape: "Change shape",
       },
-      "slot": {
-        "default": "Main button content",
-        "append": "Custom content on the right side of the main content",
-        "icon": "Leading icon displayed before the main content",
-        "icon-only": "Dedicated icon-only button mode. Hides default, text, and append content"
+      slot: {
+        default: "Main button content",
+        append: "Custom content on the right side of the main content",
+        icon: "Leading icon displayed before the main content",
+        "icon-only":
+          "Dedicated icon-only button mode. Hides default, text, and append content",
       },
-      "variables": {
-        "height": "Button height"
+      variables: {
+        height: "Button height",
       },
-      "exposes": {
-        "buttonDOMElement": "Original button DOM element"
-      }
+      exposes: {
+        buttonDOMElement: "Original button DOM element",
+      },
     },
-    "icon": {
+    icon: {
       "search-icon": "Find icon",
-      "size": {
-        "subtitle": "Icon size. Defines both the height and width."
+      size: {
+        subtitle: "Icon size. Defines both the height and width.",
       },
       "width-height": {
-        "subtitle": "Define the width and height of the icon."
+        subtitle: "Define the width and height of the icon.",
       },
-      "color": {
-        "subtitle":
-          "Icon color. You can use custom colors or pass an available variable."
+      color: {
+        subtitle:
+          "Icon color. You can use custom colors or pass an available variable.",
       },
-      "api": {
-        "size": "Icon size. Defines height and width",
-        "width": "Sets the width of the icon",
-        "height": "Sets the height of the icon",
-        "color": "Defines the icon color",
-        "icon": "Sets the icon from the available icon list"
+      api: {
+        size: "Icon size. Defines height and width",
+        width: "Sets the width of the icon",
+        height: "Sets the height of the icon",
+        color: "Defines the icon color",
+        icon: "Sets the icon from the available icon list",
       },
-      "slot": {
-        "default": "Slot for customizing the icon's content"
+      slot: {
+        default: "Slot for customizing the icon's content",
       },
-      "variables": {
-        "color": "Defines the icon color"
+      variables: {
+        color: "Defines the icon color",
       },
     },
-    "link": {
-      "type": {
-        "subtitle": "Color type: *accent*, *success*, *error*, *warning*."
+    link: {
+      type: {
+        subtitle: "Color type: *accent*, *success*, *error*, *warning*.",
       },
-      "underline": {
-        "subtitle": "Underline the link."
+      underline: {
+        subtitle: "Underline the link.",
       },
-      "disabled": {
-        "subtitle": "Inactive state of the link."
+      disabled: {
+        subtitle: "Inactive state of the link.",
       },
-      "api": {
-        "type": "Color type",
-        "href": "Native href attribute",
-        "underline": "Show underline on hover",
+      api: {
+        type: "Color type",
+        href: "Native href attribute",
+        underline: "Show underline on hover",
         "icon-name": "Name from the icon list",
-        "target": "Native target attribute",
-        "disabled": "Disable the link"
+        target: "Native target attribute",
+        disabled: "Disable the link",
       },
-      "slot": {
-        "default": "Custom content of the link",
-        "prepend": "Add custom content at the beginning",
-        "icon": "Place for the icon"
+      slot: {
+        default: "Custom content of the link",
+        prepend: "Add custom content at the beginning",
+        icon: "Place for the icon",
       },
-      "variables": {
-        "link-color": "Link color"
-      }
+      variables: {
+        "link-color": "Link color",
+      },
     },
-    "scroll": {
-      "height": {
-        "subtitle":
-          "The default value is `100%`. Use the *height* property to set the container's height. Fixed values like `300px` and relative values like `100%` are supported when the parent has an explicit height."
+    scroll: {
+      height: {
+        subtitle:
+          "The default value is `100%`. Use the *height* property to set the container's height. Fixed values like `300px` and relative values like `100%` are supported when the parent has an explicit height.",
       },
       "max-height": {
-        "subtitle":
-          "Scroll is displayed only if the element's height exceeds the maximum height."
+        subtitle:
+          "Scroll is displayed only if the element's height exceeds the maximum height.",
       },
       "model-value": {
-        "subtitle": "Property for two-way data binding of the model."
+        subtitle: "Property for two-way data binding of the model.",
       },
       "horizontal-scroll": {
-        "subtitle":
-          "If the element's width exceeds the scroll area width, a horizontal scrollbar appears."
+        subtitle:
+          "If the element's width exceeds the scroll area width, a horizontal scrollbar appears.",
       },
-      "api": {
-        "height": "Sets the scroll container's height",
+      api: {
+        height: "Sets the scroll container's height",
         "max-height": "Sets the scroll container's maximum height",
         "model-value":
           "Contains the current scroll position, used for two-way binding and scroll control",
@@ -395,525 +478,539 @@ export default {
         "y-bar-width-in-px": "Vertical scrollbar width",
         "x-bar-width-in-px": "Horizontal scrollbar width",
         "y-gap-in-px": "Content gap for the vertical scrollbar",
-        "x-gap-in-px": "Content gap for the horizontal scrollbar"
+        "x-gap-in-px": "Content gap for the horizontal scrollbar",
       },
-      "slot": {
-        "default": "Scroll content"
+      slot: {
+        default: "Scroll content",
       },
-      "variables": {
-        "thumb-color": "Thumb color. Defaults to --nmorph-scroll-thumb-color"
+      variables: {
+        "thumb-color": "Thumb color. Defaults to --nmorph-scroll-thumb-color",
       },
-      "exposes": {
-        "scrollDOMContainer": "DOM element of the container",
-        "moveTo": "Function to set new coordinates"
+      exposes: {
+        scrollDOMContainer: "DOM element of the container",
+        moveTo: "Function to set new coordinates",
       },
-      "events": {
+      events: {
         "update:model-value": "Event for intercepting two-way binding",
-        "on-scroll-end":
-          "Event triggered after scroll animation ends",
-        "on-scroll": "Scroll event"
+        "on-scroll-end": "Event triggered after scroll animation ends",
+        "on-scroll": "Scroll event",
       },
     },
-    "avatar": {
-      "size": {
-        "subtitle": "Sets the size of the avatar, accepts a *number* type value."
+    avatar: {
+      size: {
+        subtitle: "Sets the size of the avatar, accepts a *number* type value.",
       },
-      "shape": {
-        "subtitle": "Defines the shape of the avatar. Can be *circle* or *square*."
+      shape: {
+        subtitle:
+          "Defines the shape of the avatar. Can be *circle* or *square*.",
       },
-      "fit": {
-        "subtitle": "Defines how the image is displayed in the container."
+      fit: {
+        subtitle: "Defines how the image is displayed in the container.",
       },
-      "name": {
-        "subtitle": "Used to generate initials for the fallback when no image is available."
+      name: {
+        subtitle:
+          "Used to generate initials for the fallback when no image is available.",
       },
-      "preview": {
-        "subtitle": "Opens an image preview on avatar click. `src` and `previewSrc` can accept a string or an array of strings."
+      preview: {
+        subtitle:
+          "Opens an image preview on avatar click. `src` and `previewSrc` can accept a string or an array of strings.",
       },
-      "api": {
-        "size": "Sets the size of the avatar",
-        "shape": "Defines the shape of the avatar",
-        "src": "Avatar image URL or preview gallery URLs",
-        "name": "Name used to generate fallback initials",
-        "preview": "Enables image preview on click",
+      api: {
+        size: "Sets the size of the avatar",
+        shape: "Defines the shape of the avatar",
+        src: "Avatar image URL or preview gallery URLs",
+        name: "Name used to generate fallback initials",
+        preview: "Enables image preview on click",
         "preview-src": "Image URL or URL list used only by the preview",
         "preview-initial-index": "Initial image index for preview gallery",
         "preview-scale-step": "Scale step for preview zoom actions",
         "preview-min-scale-level": "Minimum preview scale level",
         "preview-max-scale-level": "Maximum preview scale level",
         "src-set": "List of image sources",
-        "alt": "Text description of the image",
-        "fit": "Defines how the image fills the container",
+        alt: "Text description of the image",
+        fit: "Defines how the image fills the container",
         "frame-border": "Defines the thickness of the frame",
         "image-padding": "Inner padding",
-        "fallback": "Component shown when the image cannot be loaded or src is not provided. Defaults to NmorphIconAvatar"
+        fallback:
+          "Component shown when the image cannot be loaded or src is not provided. Defaults to NmorphIconAvatar",
       },
-      "slot": {
-        "error": "Slot to display the load error"
+      slot: {
+        error: "Slot to display the load error",
       },
-      "events": {
-        "error": "Event for image load error",
-        "load": "Event for successful image load"
-      }
+      events: {
+        error: "Event for image load error",
+        load: "Event for successful image load",
+      },
     },
-    "badge": {
-      "value": {
-        "subtitle":
-            "The displayed value on the badge, can be *string* or *number*. If omitted and `is-dot` is false, the badge is not rendered."
+    badge: {
+      value: {
+        subtitle:
+          "The displayed value on the badge, can be *string* or *number*. If omitted and `is-dot` is false, the badge is not rendered.",
       },
       "value-slot": {
-        "subtitle":
-            "Lets you fully replace the content inside the badge through the `value` slot. Slot props expose `value` and `displayValue`. Works in the default overlay mode."
+        subtitle:
+          "Lets you fully replace the content inside the badge through the `value` slot. Slot props expose `value` and `displayValue`. Works in the default overlay mode.",
       },
-      "max": {
-        "subtitle":
-            "Maximum value for the badge. If it's set as a number and exceeded, it's displayed as max+."
+      max: {
+        subtitle:
+          "Maximum value for the badge. If it's set as a number and exceeded, it's displayed as max+.",
       },
       "is-dot": {
-        "subtitle":
-            "Displays the badge as a small dot if set to *true*. Works even when `value` is omitted."
+        subtitle:
+          "Displays the badge as a small dot if set to *true*. Works even when `value` is omitted.",
       },
       "is-tag": {
-        "subtitle":
-            "Displays the badge as a standalone element without the default slot. Offsets are ignored in this mode."
+        subtitle:
+          "Displays the badge as a standalone element without the default slot. Offsets are ignored in this mode.",
       },
-      "hidden": {
-        "subtitle": "Controls the visibility of the badge."
+      hidden: {
+        subtitle: "Controls the visibility of the badge.",
       },
-      "color": {
-        "subtitle": "Background color of the badge."
+      color: {
+        subtitle: "Background color of the badge.",
       },
-      "size": {
-        "subtitle": "Controls the badge text size through font-size variables."
+      size: {
+        subtitle: "Controls the badge text size through font-size variables.",
       },
-      "offset": {
-        "subtitle":
-            "Horizontal/vertical offset of the badge relative to its parent."
+      offset: {
+        subtitle:
+          "Horizontal/vertical offset of the badge relative to its parent.",
       },
-      "api": {
-        "value": "The displayed value on the badge. If undefined and is-dot is false, the badge is hidden",
-        "max": "Maximum value to display",
+      api: {
+        value:
+          "The displayed value on the badge. If undefined and is-dot is false, the badge is hidden",
+        max: "Maximum value to display",
         "is-dot": "Displays the badge as a dot",
-        "is-tag": "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
-        "hidden": "Hides the badge",
-        "color": "Sets the background color of the badge",
-        "size": "Sets the badge text size: tiny, extra-small, or base",
+        "is-tag":
+          "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
+        hidden: "Hides the badge",
+        color: "Sets the background color of the badge",
+        size: "Sets the badge text size: tiny, extra-small, or base",
         "z-index": "Defines the stacking order of the badge",
         "offset-y": "Vertical offset of the badge. Ignored when is-tag is true",
-        "offset-x": "Horizontal offset of the badge. Ignored when is-tag is true"
+        "offset-x":
+          "Horizontal offset of the badge. Ignored when is-tag is true",
       },
-      "slot": {
-        "default": "Wrapped content the badge is attached to. Not used when `is-tag` is true.",
-        "value": "Custom content inside the badge instead of the plain `value`. Works only in overlay mode."
+      slot: {
+        default:
+          "Wrapped content the badge is attached to. Not used when `is-tag` is true.",
+        value:
+          "Custom content inside the badge instead of the plain `value`. Works only in overlay mode.",
       },
-      "variables": {
-        "dot-size": "Width and height of the dot"
-      }
+      variables: {
+        "dot-size": "Width and height of the dot",
+      },
     },
-    "card": {
+    card: {
       "shadow-type": {
-        "subtitle": "Defines the shadow type for the card."
+        subtitle: "Defines the shadow type for the card.",
       },
-      "api": {
-        "shadow-type": "Defines the visibility of the card's shadow."
+      api: {
+        "shadow-type": "Defines the visibility of the card's shadow.",
       },
-      "slot": {
-        "header": "Card header",
-        "footer": "Card footer"
+      slot: {
+        header: "Card header",
+        footer: "Card footer",
       },
-      "variables": {
-        "card-padding": "Padding for all edges"
-      }
+      variables: {
+        "card-padding": "Padding for all edges",
+      },
     },
-    "image": {
-      "fit": {
-        "subtitle": "Defines how the image fits into the container. Accepts values such as *fill*, *contain*, *cover*, *none*, *scale-down*.",
-        "info": {
-          "title": "Information",
-          "content":
-            "To ensure the 'fit' property is displayed correctly, make sure the container has a fixed size."
-        }
+    image: {
+      fit: {
+        subtitle:
+          "Defines how the image fits into the container. Accepts values such as *fill*, *contain*, *cover*, *none*, *scale-down*.",
+        info: {
+          title: "Information",
+          content:
+            "To ensure the 'fit' property is displayed correctly, make sure the container has a fixed size.",
+        },
       },
       "loading-text": {
-        "subtitle": "Text displayed during image loading."
+        subtitle: "Text displayed during image loading.",
       },
       "load-failed-text": {
-        "subtitle": "Text displayed when the image fails to load."
+        subtitle: "Text displayed when the image fails to load.",
       },
-      "api": {
-        "fit": "Defines how the image should fit into the container.",
+      api: {
+        fit: "Defines how the image should fit into the container.",
         "close-on-outside-click":
           "Closes the preview when clicking outside the container.",
-        "alt": "Text description for the image.",
+        alt: "Text description for the image.",
         "loading-text": "Text displayed during image loading.",
-        "load-failed-text":
-          "Text displayed when the image fails to load.",
+        "load-failed-text": "Text displayed when the image fails to load.",
         "frame-border": "Defines the thickness of the frame.",
         "image-padding": "Defines the padding of the image.",
-        "src": "Image URL.",
-        "src-set": "List of image sources."
+        src: "Image URL.",
+        "src-set": "List of image sources.",
       },
-      "slot": {
-        "loading": "Slot for custom content displayed during image loading.",
-        "error": "Slot for custom content displayed when image loading fails."
+      slot: {
+        loading: "Slot for custom content displayed during image loading.",
+        error: "Slot for custom content displayed when image loading fails.",
       },
-      "variables": {
-        "width": "Defines the width of the image.",
-        "height": "Defines the height of the image.",
-        "background-color": "Defines the background color of the image."
+      variables: {
+        width: "Defines the width of the image.",
+        height: "Defines the height of the image.",
+        "background-color": "Defines the background color of the image.",
       },
-      "events": {
-        "error": "Image error event.",
-        "load": "Image load event."
+      events: {
+        error: "Image error event.",
+        load: "Image load event.",
       },
-      "translates": {
-        "loadingText": "Loading ...",
-        "loadFailedText": "Failed to load image."
-      }
+      translates: {
+        loadingText: "Loading ...",
+        loadFailedText: "Failed to load image.",
+      },
     },
     "tag-list": {
-      "api": {
-        "model-value": "List of tags"
+      api: {
+        "model-value": "List of tags",
       },
-      "events": {
+      events: {
         "update:model-value": "Event for intercepting two-way binding",
-        "close": "Returns the value of the closed tag"
-      }
+        close: "Returns the value of the closed tag",
+      },
     },
     "tag-item": {
-      "text": {
-        "subtitle": "Defines the text content displayed in the component."
+      text: {
+        subtitle: "Defines the text content displayed in the component.",
       },
-      "removable": {
-        "subtitle":
+      removable: {
+        subtitle:
           "Defines whether the component can be removed by the user. Accepts *boolean*.",
-        "info": {
-          "title": "Information",
-          "content":
-            "If you want the tag display to be handled automatically, you can wrap the component in NmorphTagList."
-        }
+        info: {
+          title: "Information",
+          content:
+            "If you want the tag display to be handled automatically, you can wrap the component in NmorphTagList.",
+        },
       },
-      "height": {
-        "subtitle": "Defines the height of the component."
+      height: {
+        subtitle: "Defines the height of the component.",
       },
-      "design": {
-        "subtitle":
-          "If set to *common*, the component will be displayed with a border."
+      design: {
+        subtitle:
+          "If set to *common*, the component will be displayed with a border.",
       },
-      "api": {
-        "value": "Defines the identifier value for the component",
-        "text": "Sets the text displayed inside the component",
-        "removable":
+      api: {
+        value: "Defines the identifier value for the component",
+        text: "Sets the text displayed inside the component",
+        removable:
           "Defines whether the component can be removed. Works automatically when wrapped in NmorphTagList",
-        "design": "Defines the style of the component",
-        "height": "Sets the height of the component"
+        design: "Defines the style of the component",
+        height: "Sets the height of the component",
       },
-      "events": {
-        "close": "Returns the value of the closed tag"
-      }
+      events: {
+        close: "Returns the value of the closed tag",
+      },
     },
-    "skeleton": {
-      "animated": {
-        "subtitle":
-          "Enables animation for the skeleton component if set to *true*."
+    skeleton: {
+      animated: {
+        subtitle:
+          "Enables animation for the skeleton component if set to *true*.",
       },
-      "loading": {
-        "subtitle": "Controls the display of the skeleton."
+      loading: {
+        subtitle: "Controls the display of the skeleton.",
       },
-      "rows": {
-        "subtitle":
-          "Defines the number of rows in the skeleton, typically for simulating text content."
+      rows: {
+        subtitle:
+          "Defines the number of rows in the skeleton, typically for simulating text content.",
       },
-      "api": {
-        "animated": "Enables animation for the skeleton component",
-        "loading": "Defines whether the skeleton is displayed.",
-        "rows": "Sets the number of rows in the skeleton."
+      api: {
+        animated: "Enables animation for the skeleton component",
+        loading: "Defines whether the skeleton is displayed.",
+        rows: "Sets the number of rows in the skeleton.",
       },
-      "slot": {
-        "template": "Slot for custom skeleton structure during loading.",
-        "default": "Default slot content when loading is complete."
+      slot: {
+        template: "Slot for custom skeleton structure during loading.",
+        default: "Default slot content when loading is complete.",
       },
-      "variables": {
+      variables: {
         "loading-gradient":
-          "Defines the gradient color used during the skeleton loading animation."
-      }
+          "Defines the gradient color used during the skeleton loading animation.",
+      },
     },
     "skeleton-item": {
-      "api": {
-        "variant":
+      api: {
+        variant:
           "Defines the type of skeleton to display, such as text or circle.",
-        "design": "Defines the design of the skeleton item.",
-        "width": "Sets the width of the skeleton item."
-      }
+        design: "Defines the design of the skeleton item.",
+        width: "Sets the width of the skeleton item.",
+      },
     },
-    "progress": {
-      "type": {
-        "subtitle":
-          "Defines the type of progress indicator, such as *linear* or *circle*."
+    progress: {
+      type: {
+        subtitle:
+          "Defines the type of progress indicator, such as *linear* or *circle*.",
       },
-      "color": {
-        "subtitle": "Sets the color of the progress indicator."
+      color: {
+        subtitle: "Sets the color of the progress indicator.",
       },
-      "percentage": {
-        "subtitle": "Defines the percentage of progress completed.",
-        "info": {
-          "title": "Information",
-          "content":
-            "Ensure that the width of the wrapper container is set for proper display."
-        }
+      percentage: {
+        subtitle: "Defines the percentage of progress completed.",
+        info: {
+          title: "Information",
+          content:
+            "Ensure that the width of the wrapper container is set for proper display.",
+        },
       },
       "value-inside": {
-        "subtitle":
-          "Displays the progress text inside the bar if set to *true*."
+        subtitle: "Displays the progress text inside the bar if set to *true*.",
       },
       "value-right-side": {
-        "subtitle":
-          "Shows or hides the percentage text next to the progress indicator."
+        subtitle:
+          "Shows or hides the percentage text next to the progress indicator.",
       },
-      "indeterminate": {
-        "subtitle":
-          "Displays the indeterminate progress animation when set to *true*."
+      indeterminate: {
+        subtitle:
+          "Displays the indeterminate progress animation when set to *true*.",
       },
       "circle-size": {
-        "subtitle": "Defines the size of the circular progress indicator."
+        subtitle: "Defines the size of the circular progress indicator.",
       },
-      "api": {
-        "type": "Specifies the type of progress indicator",
-        "color": "Sets the color of the progress indicator",
-        "percentage": "Sets the percentage of progress",
+      api: {
+        type: "Specifies the type of progress indicator",
+        color: "Sets the color of the progress indicator",
+        percentage: "Sets the percentage of progress",
         "value-inside": "Displays the progress text inside the bar",
         "value-right-side": "Shows or hides the percentage text on the right",
-        "indeterminate": "Enables the indeterminate progress animation",
-        "circle-size": "Sets the size of the circular progress indicator"
+        indeterminate: "Enables the indeterminate progress animation",
+        "circle-size": "Sets the size of the circular progress indicator",
       },
-      "slot": {
-        "inner-text":
-          "Slot for custom content inside the progress indicator.",
+      slot: {
+        "inner-text": "Slot for custom content inside the progress indicator.",
         "right-side":
           "Slot for custom content to the right of the progress indicator.",
         "circle-inner-part":
-          "Slot for custom content inside the circular progress indicator."
+          "Slot for custom content inside the circular progress indicator.",
       },
-      "variables": {
-        "height": "Defines the width of the progress indicator.",
+      variables: {
+        height: "Defines the width of the progress indicator.",
         "width-transition": "Sets the progress animation.",
-        "animation": "Controls the settings of the progress indicator's animation."
-      }
+        animation:
+          "Controls the settings of the progress indicator's animation.",
+      },
     },
-    "calendar": {
-      "type": {
-        "subtitle":
-          "Defines the type of calendar, such as *date* or *dates* selection."
+    calendar: {
+      type: {
+        subtitle:
+          "Defines the type of calendar, such as *date* or *dates* selection.",
       },
       "custom-content": {
-        "subtitle": ""
+        subtitle: "",
       },
-      "range": {
-        "subtitle": "Sets the boundaries of the displayed calendar."
+      range: {
+        subtitle: "Sets the boundaries of the displayed calendar.",
       },
-      "api": {
+      api: {
         "mark-today": "Highlights today's date",
-        "initial-date":
-          "Sets the initial date displayed in the calendar",
+        "initial-date": "Sets the initial date displayed in the calendar",
         "model-value": "Represents the selected date(s) in the calendar",
-        "type": "Defines the selection type in the calendar",
-        "range":
-          "Enables range selection mode in the calendar, allowing date range selection in the calendar. Not the selected range, but the displayed calendar range."
+        type: "Defines the selection type in the calendar",
+        range:
+          "Enables range selection mode in the calendar, allowing date range selection in the calendar. Not the selected range, but the displayed calendar range.",
       },
-      "slot": {
-        "header": "Calendar header slot",
-        "content": "Calendar content slot"
+      slot: {
+        header: "Calendar header slot",
+        content: "Calendar content slot",
       },
-      "variables": {
+      variables: {
         "table-data-cell-height":
-          "Defines the height of each date cell in the calendar"
+          "Defines the height of each date cell in the calendar",
       },
-      "translates": {
-        "sun": "Sunday",
-        "mon": "Monday",
-        "tue": "Tuesday",
-        "wed": "Wednesday",
-        "thu": "Thursday",
-        "fri": "Friday",
-        "sat": "Saturday",
-        "jan": "January",
-        "feb": "February",
-        "mar": "March",
-        "apr": "April",
-        "may": "May",
-        "jun": "June",
-        "jul": "July",
-        "aug": "August",
-        "sep": "September",
-        "oct": "October",
-        "nov": "November",
-        "dec": "December"
-      }
+      translates: {
+        sun: "Sunday",
+        mon: "Monday",
+        tue: "Tuesday",
+        wed: "Wednesday",
+        thu: "Thursday",
+        fri: "Friday",
+        sat: "Saturday",
+        jan: "January",
+        feb: "February",
+        mar: "March",
+        apr: "April",
+        may: "May",
+        jun: "June",
+        jul: "July",
+        aug: "August",
+        sep: "September",
+        oct: "October",
+        nov: "November",
+        dec: "December",
+      },
     },
     "image-preview": {
       "model-value": {
-        "subtitle": "Controls the visibility of the image preview."
+        subtitle: "Controls the visibility of the image preview.",
       },
       "initial-index": {
-        "subtitle":
-          "Defines the initial index of the image when there are multiple images."
+        subtitle:
+          "Defines the initial index of the image when there are multiple images.",
       },
-      "src": {
-        "subtitle": "URL of the image for preview."
+      src: {
+        subtitle: "URL of the image for preview.",
       },
-      "api": {
+      api: {
         "model-value":
           "Boolean value that toggles the visibility of the image preview",
-        "alt": "Text describing the image when it cannot be loaded",
-        "initial-index":
-          "Index of the first image displayed in the image set",
-        "src": "URL of the image for preview",
+        alt: "Text describing the image when it cannot be loaded",
+        "initial-index": "Index of the first image displayed in the image set",
+        src: "URL of the image for preview",
         "scale-step": "Zoom (scaling) step for the image",
-        "min-scale-level":
-          "Defines the minimum scale level for the image",
-        "max-scale-level":
-          "Defines the maximum scale level for the image",
-        "z-index": "Defines the overlay z-index. Uses the shared automatic z-index stack when omitted"
+        "min-scale-level": "Defines the minimum scale level for the image",
+        "max-scale-level": "Defines the maximum scale level for the image",
+        "z-index":
+          "Defines the overlay z-index. Uses the shared automatic z-index stack when omitted",
       },
-      "slot": {},
-      "variables": {
-        "width": "Defines the width of the image preview.",
-        "height": "Defines the height of the image preview."
+      slot: {},
+      variables: {
+        width: "Defines the width of the image preview.",
+        height: "Defines the height of the image preview.",
       },
-      "events": {
-        "update:model-value": "Event for intercepting two-way binding"
-      }
+      events: {
+        "update:model-value": "Event for intercepting two-way binding",
+      },
     },
-    "pagination": {
+    pagination: {
       "basic-usage": {
-        "subtitle": ""
+        subtitle: "",
       },
-      "api": {
+      api: {
         "total-elements-quantity": "Total number of elements for pagination.",
         "model-value": "Current active page number.",
         "elements-quantity-on-page":
           "Number of elements displayed on each page.",
-        "disabled": "Boolean value that disables the pagination component.",
+        disabled: "Boolean value that disables the pagination component.",
         "hide-on-single-page":
           "Hides the pagination component if there is only one page.",
         "max-visible-pages":
           "Defines how many pages are displayed in the pagination control.",
         "fast-forward-step":
-          "Defines how many pages are skipped when fast-forwarding."
+          "Defines how many pages are skipped when fast-forwarding.",
       },
-      "slot": {},
-      "variables": {},
-      "events": {
-        "update:model-value": "Event for intercepting two-way binding"
-      }
+      slot: {},
+      variables: {},
+      events: {
+        "update:model-value": "Event for intercepting two-way binding",
+      },
     },
-    "table": {
+    table: {
       "basic-usage": {
-        "subtitle": "",
+        subtitle: "",
         "enable-row-highlight": "Enable row highlight on hover",
         "disable-row-highlight": "Disable row highlight on hover",
         "click-me-text": "Click me!",
-        "info": {
-          "title": "Important Information",
-          "content":
-            "'bordered' property works only if 'design' property is set to 'common'. Additionally, sorting currently works only with two values: 'ascending' and 'descending'.\nPlease note that the table is under active development and may contain bugs."
-        }
+        info: {
+          title: "Important Information",
+          content:
+            "'bordered' property works only if 'design' property is set to 'common'. Additionally, sorting currently works only with two values: 'ascending' and 'descending'.\nPlease note that the table is under active development and may contain bugs.",
+        },
       },
-      "api": {
-        "data": "Defines the data to be displayed in the table",
+      api: {
+        data: "Defines the data to be displayed in the table",
         "row-hover":
           "Boolean value that enables or disables hover effect on table rows",
-        "bordered":
+        bordered:
           "Boolean value that enables or disables borders around table cells. Works only if 'design' property is set to 'common'",
-        "sort": "Defines the sorting behavior for table columns",
-        "design": "Table display style"
+        sort: "Defines the sorting behavior for table columns",
+        design: "Table display style",
       },
-      "slot": {},
-      "variables": {
+      slot: {},
+      variables: {
         "border-color": "Sets the table border color",
-        "table-cell-height": "Defines the height of table cells"
-      }
+        "table-cell-height": "Defines the height of table cells",
+      },
     },
     "table-column": {
-      "api": {
-        "prop": "Specifies the property name from the data source to be displayed in this column",
-        "label": "Column header to be displayed in the table header",
-        "width": "Defines the column width in CSS value",
-        "alignment":
-          "Sets text alignment in the column. Accepts 'left', 'center', or 'right'"
-      }
+      api: {
+        prop: "Specifies the property name from the data source to be displayed in this column",
+        label: "Column header to be displayed in the table header",
+        width: "Defines the column width in CSS value",
+        alignment:
+          "Sets text alignment in the column. Accepts 'left', 'center', or 'right'",
+      },
     },
     "table-cell": {
-      "api": {
-        "row": "Required property. Passes the row index from the scope representing the current row being rendered."
+      api: {
+        row: "Required property. Passes the row index from the scope representing the current row being rendered.",
       },
-      "slot": {
-        "default":
-          "The default slot is used to customize content inside each column cell. Provides access to the row data and other relevant properties from the scope."
-      }
+      slot: {
+        default:
+          "The default slot is used to customize content inside each column cell. Provides access to the row data and other relevant properties from the scope.",
+      },
     },
-    "tooltip": {
-      "text": {
-        "subtitle": "Content displayed inside the tooltip.",
+    tooltip: {
+      text: {
+        subtitle: "Content displayed inside the tooltip.",
         "hover-me": "Hover over me",
         "i-am-tooltip": "I am a tooltip",
-        "tooltip": "Tooltip",
-        "button": "Button"
+        tooltip: "Tooltip",
+        button: "Button",
       },
-      "position": {
-        "subtitle": "Defines the position of the tooltip relative to the target element. Accepts values such as 'top', 'bottom', 'left', 'right'."
+      position: {
+        subtitle:
+          "Defines the position of the tooltip relative to the target element. Accepts values such as 'top', 'bottom', 'left', 'right'.",
       },
       "force-coordinate": {
-        "subtitle": "Overrides the default positioning logic and allows specifying exact coordinates for the tooltip."
+        subtitle:
+          "Overrides the default positioning logic and allows specifying exact coordinates for the tooltip.",
       },
-      "api": {
-        "text": "Defines the text content of the tooltip",
-        "position": "Sets the position of the tooltip relative to the target element",
+      api: {
+        text: "Defines the text content of the tooltip",
+        position:
+          "Sets the position of the tooltip relative to the target element",
         "force-show": "Boolean value that forcibly shows the tooltip",
-        "force-coordinate": "Allows manual control over the tooltip's coordinates"
+        "force-coordinate":
+          "Allows manual control over the tooltip's coordinates",
       },
-      "slot": {},
-      "variables": {
+      slot: {},
+      variables: {
         "max-width": "Sets the maximum width of the tooltip content",
-        "width": "Sets the width of the tooltip content. Controls the horizontal size of the tooltip",
-        "height": "Sets the height of the tooltip content. Controls the vertical size of the tooltip"
-      }
+        width:
+          "Sets the width of the tooltip content. Controls the horizontal size of the tooltip",
+        height:
+          "Sets the height of the tooltip content. Controls the vertical size of the tooltip",
+      },
     },
-    "alert": {
+    alert: {
       "basic-usage": {
-        "title": "Any title",
-        "content": "Content for the alert",
-        "info": {
-          "title": "Additional Information",
-          "content": "To conveniently manage multiple alerts, use the 'NmorphNotificationProvider' component, which allows grouping and centrally managing alerts."
-        }
+        title: "Any title",
+        content: "Content for the alert",
+        info: {
+          title: "Additional Information",
+          content:
+            "To conveniently manage multiple alerts, use the 'NmorphNotificationProvider' component, which allows grouping and centrally managing alerts.",
+        },
       },
       "use-provider": {
-        "subtitle": "To use the provider, you need to import the hook from the library."
+        subtitle:
+          "To use the provider, you need to import the hook from the library.",
       },
-      "api": {
-        "id": "Unique identifier for the alert component",
-        "type": "Defines the alert type (e.g., success, error, warning, info)",
-        "closable": "Boolean value that defines whether the alert can be closed by the user",
-        "title": "Title displayed in the alert",
-        "content": "Content of the alert",
-        "fill": "Defines whether the alert should occupy the full width of its container",
+      api: {
+        id: "Unique identifier for the alert component",
+        type: "Defines the alert type (e.g., success, error, warning, info)",
+        closable:
+          "Boolean value that defines whether the alert can be closed by the user",
+        title: "Title displayed in the alert",
+        content: "Content of the alert",
+        fill: "Defines whether the alert should occupy the full width of its container",
         "max-width": "Maximum width of the alert component",
-        "show-icon": "Boolean value that displays an icon based on the alert type",
-        "bordered": "Adds a border around the alert for emphasis",
-        "html": "Allows HTML content in the alert body. Use with caution to avoid XSS vulnerabilities"
+        "show-icon":
+          "Boolean value that displays an icon based on the alert type",
+        bordered: "Adds a border around the alert for emphasis",
+        html: "Allows HTML content in the alert body. Use with caution to avoid XSS vulnerabilities",
       },
-      "slot": {
-        "icon": "Slot for customizing the icon displayed in the alert",
-        "title": "Slot for customizing the alert's title",
-        "default": "Slot for customizing the main content of the alert"
+      slot: {
+        icon: "Slot for customizing the icon displayed in the alert",
+        title: "Slot for customizing the alert's title",
+        default: "Slot for customizing the main content of the alert",
       },
-      "variables": {},
-      "events": {
-        "close": "Event triggered when the alert is closed by the user"
-      }
+      variables: {},
+      events: {
+        close: "Event triggered when the alert is closed by the user",
+      },
     },
-    "callout": {
+    callout: {
       "basic-usage": {
         "no-title-content": "Useful content without a title.",
         "info-title": "Information",
@@ -923,710 +1020,781 @@ export default {
         "success-title": "Success",
         "success-content": "Successful content for the reader.",
         "error-title": "Error",
-        "error-content": "Error content for the reader."
+        "error-content": "Error content for the reader.",
       },
-      "api": {
-        "type": "Defines the callout type",
-        "title": "Title displayed in the callout",
-        "content": "Content displayed in the callout"
-      }
+      api: {
+        type: "Defines the callout type",
+        title: "Title displayed in the callout",
+        content: "Content displayed in the callout",
+      },
     },
-    "dialog": {
+    dialog: {
       "basic-usage": {
-        "subtitle": "",
-        "show-modal": "Show modal window"
+        subtitle: "",
+        "show-modal": "Show modal window",
       },
-      "api": {
-        "model-value": "Boolean value that controls the visibility of the dialog window",
-        "title": "Defines the text of the dialog header",
-        "width": "Sets the width of the dialog window",
+      api: {
+        "model-value":
+          "Boolean value that controls the visibility of the dialog window",
+        title: "Defines the text of the dialog header",
+        width: "Sets the width of the dialog window",
         "open-delay": "Delay in milliseconds before opening the dialog window",
         "close-delay": "Delay in milliseconds before closing the dialog window",
-        "close-on-click-modal": "Boolean value that allows closing the dialog window by clicking outside",
-        "show-close": "Boolean value that displays the close button in the dialog window",
-        "z-index": "Defines the dialog overlay z-index. Uses the shared automatic z-index stack when omitted",
-        "close-on-overlay": "Boolean value indicating whether the dialog window should be closed when clicking on the overlay area"
+        "close-on-click-modal":
+          "Boolean value that allows closing the dialog window by clicking outside",
+        "show-close":
+          "Boolean value that displays the close button in the dialog window",
+        "z-index":
+          "Defines the dialog overlay z-index. Uses the shared automatic z-index stack when omitted",
+        "close-on-overlay":
+          "Boolean value indicating whether the dialog window should be closed when clicking on the overlay area",
       },
-      "slot": {
-        "header": "Slot for customizing the content of the dialog header.",
-        "default": "Slot for defining the main content of the dialog window."
+      slot: {
+        header: "Slot for customizing the content of the dialog header.",
+        default: "Slot for defining the main content of the dialog window.",
       },
-      "events": {
-        "on-close": "Event that triggers when the dialog window is closed by the user.",
-        "update:model-value": "Event that triggers when the visibility of the dialog window changes."
+      events: {
+        "on-close":
+          "Event that triggers when the dialog window is closed by the user.",
+        "update:model-value":
+          "Event that triggers when the visibility of the dialog window changes.",
       },
-      "variables": {
-        "width": "Defines the width of the dialog component."
-      }
+      variables: {
+        width: "Defines the width of the dialog component.",
+      },
     },
-    "divider": {
-      "direction": {
-        "subtitle": "Defines the direction of the divider. Accepts 'horizontal' or 'vertical'."
+    divider: {
+      direction: {
+        subtitle:
+          "Defines the direction of the divider. Accepts 'horizontal' or 'vertical'.",
       },
-      "api": {
-        "direction": "Defines the orientation of the divider: 'horizontal' or 'vertical'."
+      api: {
+        direction:
+          "Defines the orientation of the divider: 'horizontal' or 'vertical'.",
       },
-      "slot": {},
-      "variables": {}
+      slot: {},
+      variables: {},
     },
-    "overlay": {
+    overlay: {
       "basic-usage": {
-        "subtitle": "",
+        subtitle: "",
         "show-default": "Show default",
-        "show-transparent": "Show transparent"
+        "show-transparent": "Show transparent",
       },
-      "api": {
-        "show": "Controls the visibility of the component",
-        "transparent": "Boolean value that makes the component's background transparent if enabled",
-        "z-index": "Defines the overlay z-index. Uses the shared automatic z-index stack when omitted"
+      api: {
+        show: "Controls the visibility of the component",
+        transparent:
+          "Boolean value that makes the component's background transparent if enabled",
+        "z-index":
+          "Defines the overlay z-index. Uses the shared automatic z-index stack when omitted",
       },
-      "slot": {
-        "default": "Default slot for customizing the content inside the component"
+      slot: {
+        default:
+          "Default slot for customizing the content inside the component",
       },
-      "events": {
-        "on-outside-click": "Event triggered when the user clicks outside the component"
+      events: {
+        "on-outside-click":
+          "Event triggered when the user clicks outside the component",
       },
-      "variables": {}
+      variables: {},
     },
     "notification-provider": {
-      "notifications": {
-        "subtitle": ""
+      notifications: {
+        subtitle: "",
       },
-      "placement": {
-        "subtitle": "Defines the position of the notifications on the screen."
+      placement: {
+        subtitle: "Defines the position of the notifications on the screen.",
       },
       "z-index": {
-        "subtitle": "Sets the z-index for the notifications to control their stacking order."
+        subtitle:
+          "Sets the z-index for the notifications to control their stacking order.",
       },
-      "quantity": {
-        "subtitle": "Limits the maximum number of notifications that can be displayed at the same time."
+      quantity: {
+        subtitle:
+          "Limits the maximum number of notifications that can be displayed at the same time.",
       },
-      "api": {
-        "notifications": "Array containing the notifications. Each notification can override placement",
-        "placement": "Default position for notifications that do not define placement",
+      api: {
+        notifications:
+          "Array containing the notifications. Each notification can override placement",
+        placement:
+          "Default position for notifications that do not define placement",
         "z-index": "Defines the stacking order of the notifications",
-        "quantity": "Maximum number of notifications that can be on the screen at the same time"
+        quantity:
+          "Maximum number of notifications that can be on the screen at the same time",
       },
-      "slot": {},
-      "variables": {}
+      slot: {},
+      variables: {},
     },
-    "tabs": {
-      "api": {
+    tabs: {
+      api: {
         "model-value": "Controls the active state of the component",
-        "stretch": "Boolean value that defines whether the component should stretch to fill available space"
+        stretch:
+          "Boolean value that defines whether the component should stretch to fill available space",
       },
-      "slot": {
-        "default": "Slot for customizing the content inside each tab"
+      slot: {
+        default: "Slot for customizing the content inside each tab",
       },
-      "variables": {},
-      "events": {
+      variables: {},
+      events: {
         "update:model-value": "Event triggered when the active tab changes",
-        "tab-change": "Event triggered when the tab changes"
-      }
+        "tab-change": "Event triggered when the tab changes",
+      },
     },
     "tab-pane": {
-      "api": {
-        "label": "Label for the tab displayed in the tab navigation",
-        "name": "Unique identifier for the tab, used to control the active tab",
-        "disabled": "Boolean value indicating whether the tab is disabled and cannot be selected"
+      api: {
+        label: "Label for the tab displayed in the tab navigation",
+        name: "Unique identifier for the tab, used to control the active tab",
+        disabled:
+          "Boolean value indicating whether the tab is disabled and cannot be selected",
       },
-      "slot": {
-        "label": "Slot for customizing the tab label",
-        "default": "Slot for defining the main content of the tab"
-      }
+      slot: {
+        label: "Slot for customizing the tab label",
+        default: "Slot for defining the main content of the tab",
+      },
     },
-    "dropdown": {
+    dropdown: {
       "basic-usage": {
         "first-menu": "First menu",
-        "second-menu": "Second menu"
+        "second-menu": "Second menu",
       },
-      "api": {
-        "open": "Boolean value controlling the visibility of the dropdown",
-        "relative-element": "Defines the element relative to which the dropdown will be positioned",
-        "width": "Sets the width of the dropdown",
+      api: {
+        open: "Boolean value controlling the visibility of the dropdown",
+        "relative-element":
+          "Defines the element relative to which the dropdown will be positioned",
+        width: "Sets the width of the dropdown",
         "min-width": "Sets the minimum width of the dropdown",
         "max-width": "Sets the maximum width of the dropdown",
-        "x-offset": "Horizontal offset in pixels for adjusting the dropdown position",
-        "y-offset": "Vertical offset in pixels for adjusting the dropdown position",
-        "fill-width": "Boolean value defining whether the dropdown should occupy the entire container width",
-        "z-index": "Defines the dropdown overlay z-index. Uses the shared automatic z-index stack when omitted"
+        "x-offset":
+          "Horizontal offset in pixels for adjusting the dropdown position",
+        "y-offset":
+          "Vertical offset in pixels for adjusting the dropdown position",
+        "fill-width":
+          "Boolean value defining whether the dropdown should occupy the entire container width",
+        "z-index":
+          "Defines the dropdown overlay z-index. Uses the shared automatic z-index stack when omitted",
       },
-      "slot": {
-        "default": "Slot for customizing the content inside the dropdown"
+      slot: {
+        default: "Slot for customizing the content inside the dropdown",
       },
-      "variables": {},
-      "events": {
-        "on-outside-click": "Event triggered when the user clicks outside the dropdown, which can be used to close it"
-      }
+      variables: {},
+      events: {
+        "on-outside-click":
+          "Event triggered when the user clicks outside the dropdown, which can be used to close it",
+      },
     },
-    "backtop": {
+    backtop: {
       "basic-usage": {
-        "info": {
-          "title": "Information",
-          "content": "Make sure the scroll container height is defined."
+        info: {
+          title: "Information",
+          content: "Make sure the scroll container height is defined.",
         },
-        "scroll-down": "Scroll down"
+        "scroll-down": "Scroll down",
       },
-      "api": {
-        "right": "Sets the distance from the right edge of the screen",
-        "bottom": "Sets the distance from the bottom edge of the screen",
-        "visibility-height": "Defines the scroll height at which the back-to-top button becomes visible. Accepts a number in pixels",
-        "design": "Defines the style of the button"
+      api: {
+        right: "Sets the distance from the right edge of the screen",
+        bottom: "Sets the distance from the bottom edge of the screen",
+        "visibility-height":
+          "Defines the scroll height at which the back-to-top button becomes visible. Accepts a number in pixels",
+        design: "Defines the style of the button",
       },
-      "slot": {
-        "default": "Slot for customizing the content of the back-to-top button"
+      slot: {
+        default: "Slot for customizing the content of the back-to-top button",
       },
-      "events": {
-        "click": "Event triggered when the user clicks the back-to-top button"
+      events: {
+        click: "Event triggered when the user clicks the back-to-top button",
       },
-      "variables": {}
+      variables: {},
     },
-    "breadcrumb": {
-      "separator": {
-        "subtitle": "Defines the symbol used to separate navigation items."
+    breadcrumb: {
+      separator: {
+        subtitle: "Defines the symbol used to separate navigation items.",
       },
-      "api": {
-        "separator": "Symbol separating the navigation items"
-      }
+      api: {
+        separator: "Symbol separating the navigation items",
+      },
     },
     "breadcrumb-item": {
-      "api": {
-        "to": "Specifies the target route for navigation. Accepts a path string or route object",
-        "replace": "Boolean value that determines whether the navigation should replace the current history entry instead of adding a new one"
-      }
+      api: {
+        to: "Specifies the target route for navigation. Accepts a path string or route object",
+        replace:
+          "Boolean value that determines whether the navigation should replace the current history entry instead of adding a new one",
+      },
     },
     "otp-input": {
-      "length": {
-        "subtitle": "Defines how many cells are rendered for the code."
+      length: {
+        subtitle: "Defines how many cells are rendered for the code.",
       },
-      "mode": {
-        "subtitle": "Controls which characters are allowed: *numeric*, *text*, or *alphanumeric*."
+      mode: {
+        subtitle:
+          "Controls which characters are allowed: *numeric*, *text*, or *alphanumeric*.",
       },
-      "height": {
-        "subtitle": "Sets the size of each OTP cell."
+      height: {
+        subtitle: "Sets the size of each OTP cell.",
       },
-      "disabled": {
-        "subtitle": "Disables all OTP cells if set to *true*."
+      disabled: {
+        subtitle: "Disables all OTP cells if set to *true*.",
       },
-      "api": {
-        "id": "Sets the id of the first OTP cell. The remaining cells receive suffixed ids automatically",
-        "name": "Sets the hidden input name. Inherits NmorphFormItem name or id when omitted",
-        "autocomplete": "Autocomplete token for OTP cells. Defaults to one-time-code and can also be inherited from NmorphFormItem",
-        "height": "Defines the size of each OTP cell",
-        "disabled": "Boolean value that disables the OTP input",
-        "tabindex": "Base tabindex for OTP cells. Following cells increment it automatically",
+      api: {
+        id: "Sets the id of the first OTP cell. The remaining cells receive suffixed ids automatically",
+        name: "Sets the hidden input name. Inherits NmorphFormItem name or id when omitted",
+        autocomplete:
+          "Autocomplete token for OTP cells. Defaults to one-time-code and can also be inherited from NmorphFormItem",
+        height: "Defines the size of each OTP cell",
+        disabled: "Boolean value that disables the OTP input",
+        tabindex:
+          "Base tabindex for OTP cells. Following cells increment it automatically",
         "model-value": "Current OTP value as a combined string",
-        "length": "Number of OTP cells",
-        "mode": "Allowed input mode: numeric, text, or alphanumeric",
-        "autocapitalize": "Sets the native autocapitalize value for OTP cells",
-        "autofocus": "Automatically focuses the first OTP cell on mount"
+        length: "Number of OTP cells",
+        mode: "Allowed input mode: numeric, text, or alphanumeric",
+        autocapitalize: "Sets the native autocapitalize value for OTP cells",
+        autofocus: "Automatically focuses the first OTP cell on mount",
       },
-      "slot": {},
-      "variables": {},
-      "events": {
-        "update:model-value": "Event triggered when the combined OTP value changes",
-        "focus": "Event triggered when any OTP cell receives focus",
-        "blur": "Event triggered when focus leaves the entire OTP input",
-        "complete": "Event triggered when all OTP cells are filled"
+      slot: {},
+      variables: {},
+      events: {
+        "update:model-value":
+          "Event triggered when the combined OTP value changes",
+        focus: "Event triggered when any OTP cell receives focus",
+        blur: "Event triggered when focus leaves the entire OTP input",
+        complete: "Event triggered when all OTP cells are filled",
       },
-      "exposes": {
-        "inputDOMRefs": "Array of original DOM elements for OTP cells",
-        "focus": "Focuses the first OTP cell or a specific cell by index",
-        "blur": "Blurs all OTP cells"
-      }
+      exposes: {
+        inputDOMRefs: "Array of original DOM elements for OTP cells",
+        focus: "Focuses the first OTP cell or a specific cell by index",
+        blur: "Blurs all OTP cells",
+      },
     },
     "text-input": {
-      "height": {
-        "subtitle": "Sets the height of the input field."
+      height: {
+        subtitle: "Sets the height of the input field.",
       },
-      "disabled": {
-        "subtitle": "Disables the input field if set to *true*."
+      disabled: {
+        subtitle: "Disables the input field if set to *true*.",
       },
       "type-password": {
-        "subtitle": "If set to *true*, the text in the input field will be hidden as a password.",
-        "toggle": "Toggle type"
+        subtitle:
+          "If set to *true*, the text in the input field will be hidden as a password.",
+        toggle: "Toggle type",
       },
       "model-value": {
-        "subtitle": "Represents the value of the input field"
+        subtitle: "Represents the value of the input field",
       },
-      "clearable": {
-        "subtitle": "If set to *true*, a button will appear to clear the input field."
+      clearable: {
+        subtitle:
+          "If set to *true*, a button will appear to clear the input field.",
       },
-      "api": {
-        "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
-        "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
-        "autocomplete": "Autocomplete value for the native input. Can also be inherited from NmorphFormItem",
-        "tabindex": "Native tabindex value for the input",
-        "height": "Defines the height of the input field",
-        "disabled": "Boolean value that disables the input field",
-        "placeholder": "Text displayed as a hint when the input field is empty",
-        "type-password": "Boolean value that turns the input field into a password field",
+      api: {
+        id: "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
+        name: "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
+        autocomplete:
+          "Autocomplete value for the native input. Can also be inherited from NmorphFormItem",
+        tabindex: "Native tabindex value for the input",
+        height: "Defines the height of the input field",
+        disabled: "Boolean value that disables the input field",
+        placeholder: "Text displayed as a hint when the input field is empty",
+        "type-password":
+          "Boolean value that turns the input field into a password field",
         "model-value": "Current value of the input field",
-        "clearable": "Boolean value that adds a button to clear the input field value",
-        "indentation": "Custom text indent for the native input. Defaults to automatic spacing based on the prepend-icon slot",
-        "input-attrs": "Additional native attributes forwarded to the internal input element"
+        clearable:
+          "Boolean value that adds a button to clear the input field value",
+        indentation:
+          "Custom text indent for the native input. Defaults to automatic spacing based on the prepend-icon slot",
+        "input-attrs":
+          "Additional native attributes forwarded to the internal input element",
       },
-      "slot": {
-        "prepend-icon": "Slot for adding an icon to the beginning of the input field"
+      slot: {
+        "prepend-icon":
+          "Slot for adding an icon to the beginning of the input field",
       },
-      "variables": {
-        "prepend-icon-indent": "Defines the indent for the icon before the input"
+      variables: {
+        "prepend-icon-indent":
+          "Defines the indent for the icon before the input",
       },
-      "events": {
-        "update:model-value": "Event triggered when the input field value changes",
-        "focus": "Event triggered when the input field gains focus",
-        "blur": "Event triggered when the input field loses focus",
-        "on-enter": "Event triggered when the Enter key is pressed"
+      events: {
+        "update:model-value":
+          "Event triggered when the input field value changes",
+        focus: "Event triggered when the input field gains focus",
+        blur: "Event triggered when the input field loses focus",
+        "on-enter": "Event triggered when the Enter key is pressed",
       },
-      "exposes": {
-        "inputDOMRef": "Original DOM element of the input field",
-        "focus": "Focuses the input field",
-        "blur": "Blurs the input field",
-        "select": "Selects the current input value"
-      }
+      exposes: {
+        inputDOMRef: "Original DOM element of the input field",
+        focus: "Focuses the input field",
+        blur: "Blurs the input field",
+        select: "Selects the current input value",
+      },
     },
     "color-picker": {
-      "height": {
-        "subtitle": "Sets the height of the color picker."
+      height: {
+        subtitle: "Sets the height of the color picker.",
       },
-      "disabled": {
-        "subtitle": "Disables the color picker if set to *true*."
+      disabled: {
+        subtitle: "Disables the color picker if set to *true*.",
       },
       "model-value": {
-        "subtitle": "Controls the selected color. Accepts hex values like *#4a90e2*."
+        subtitle:
+          "Controls the selected color. Accepts hex values like *#4a90e2*.",
       },
       "show-value": {
-        "subtitle": "Displays the selected hex value next to the swatch. If `modelValue` is omitted, the current theme accent color is used."
+        subtitle:
+          "Displays the selected hex value next to the swatch. If `modelValue` is omitted, the current theme accent color is used.",
       },
       "display-format": {
-        "subtitle": "Sets the format for the displayed color value."
+        subtitle: "Sets the format for the displayed color value.",
       },
-      "api": {
-        "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
-        "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
-        "height": "Defines the height of the color picker",
-        "disabled": "Boolean value that disables the color picker",
+      api: {
+        id: "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
+        name: "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
+        height: "Defines the height of the color picker",
+        disabled: "Boolean value that disables the color picker",
         "model-value": "Current color value in hex format",
-        "show-value": "Boolean value that displays the current color value near the swatch",
-        "display-format": "Format of the displayed color value"
+        "show-value":
+          "Boolean value that displays the current color value near the swatch",
+        "display-format": "Format of the displayed color value",
       },
-      "slot": {},
-      "variables": {},
-      "events": {
+      slot: {},
+      variables: {},
+      events: {
         "update:model-value": "Event triggered when the color value changes",
-        "focus": "Event triggered when the color picker gains focus",
-        "blur": "Event triggered when the color picker loses focus"
+        focus: "Event triggered when the color picker gains focus",
+        blur: "Event triggered when the color picker loses focus",
       },
-      "exposes": {
-        "inputDOMRef": "Original DOM element of the color input"
-      }
+      exposes: {
+        inputDOMRef: "Original DOM element of the color input",
+      },
     },
-    "switch": {
-      "height": {
-        "subtitle": "Defines the height of the switch component."
+    switch: {
+      height: {
+        subtitle: "Defines the height of the switch component.",
       },
-      "disabled": {
-        "subtitle": "Disables the switch if set to *true*."
+      disabled: {
+        subtitle: "Disables the switch if set to *true*.",
       },
       "model-value": {
-        "subtitle": "Controls the on/off state of the switch."
+        subtitle: "Controls the on/off state of the switch.",
       },
-      "loading": {
-        "subtitle": "Displays the loading state on the switch if set to *true*."
+      loading: {
+        subtitle: "Displays the loading state on the switch if set to *true*.",
       },
       "active-value": {
-        "subtitle": "Specifies the value when the switch is on."
+        subtitle: "Specifies the value when the switch is on.",
       },
       "inactive-value": {
-        "subtitle": "Specifies the value when the switch is off."
+        subtitle: "Specifies the value when the switch is off.",
       },
-      "api": {
-        "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
-        "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
-        "height": "Sets the height of the switch",
-        "disabled": "Boolean value that disables the switch component",
+      api: {
+        id: "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
+        name: "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
+        height: "Sets the height of the switch",
+        disabled: "Boolean value that disables the switch component",
         "model-value": "Controls the state of the switch",
-        "loading": "Boolean value that shows a loading indicator on the switch",
+        loading: "Boolean value that shows a loading indicator on the switch",
         "active-value": "Value when the switch is on",
-        "inactive-value": "Value when the switch is off"
+        "inactive-value": "Value when the switch is off",
       },
-      "slot": {
+      slot: {
         "bg-on": "Slot for customizing the background when the switch is on",
         "bg-off": "Slot for customizing the background when the switch is off",
         "thumb-on": "Slot for customizing the thumb when the switch is on",
-        "thumb-off": "Slot for customizing the thumb when the switch is off"
+        "thumb-off": "Slot for customizing the thumb when the switch is off",
       },
-      "variables": {
-        "height": "Defines the height of the switch",
-        "offset": "Specifies the offset of the switch thumb",
-        "thumb-height": "Defines the height of the switch thumb"
+      variables: {
+        height: "Defines the height of the switch",
+        offset: "Specifies the offset of the switch thumb",
+        "thumb-height": "Defines the height of the switch thumb",
       },
-      "events": {
-        "update:model-value": "Event triggered when the switch state changes"
+      events: {
+        "update:model-value": "Event triggered when the switch state changes",
       },
-      "exposes": {
-        "inputDOMRef": "Original DOM element of the input field"
-      }
+      exposes: {
+        inputDOMRef: "Original DOM element of the input field",
+      },
     },
-    "checkbox": {
-      "id": {
-        "subtitle": "Unique identifier for the checkbox."
+    checkbox: {
+      id: {
+        subtitle: "Unique identifier for the checkbox.",
       },
-      "disabled": {
-        "subtitle": "Disables the checkbox if set to *true*."
+      disabled: {
+        subtitle: "Disables the checkbox if set to *true*.",
       },
       "model-value": {
-        "subtitle": "Represents the checkbox state (checked or not).",
-        "label": "Label"
+        subtitle: "Represents the checkbox state (checked or not).",
+        label: "Label",
       },
-      "label": {
-        "subtitle": "Specifies the label text for the checkbox."
+      label: {
+        subtitle: "Specifies the label text for the checkbox.",
       },
-      "design": {
-        "subtitle": "Defines the design style of the checkbox."
+      design: {
+        subtitle: "Defines the design style of the checkbox.",
       },
-      "height": {
-        "subtitle": "Sets the checkbox height."
+      height: {
+        subtitle: "Sets the checkbox height.",
       },
-      "api": {
-        "id": "Unique identifier for the checkbox",
-        "disabled": "Boolean value that disables the checkbox",
+      api: {
+        id: "Unique identifier for the checkbox",
+        disabled: "Boolean value that disables the checkbox",
         "model-value": "Checkbox state (checked or not)",
-        "label": "Label displayed next to the checkbox",
-        "design": "Defines the design style of the checkbox",
-        "height": "Defines the checkbox height"
+        label: "Label displayed next to the checkbox",
+        design: "Defines the design style of the checkbox",
+        height: "Defines the checkbox height",
       },
-      "slot": {
-        "default": "Slot for customizing the checkbox content",
-        "label": "Slot for customizing the checkbox label"
+      slot: {
+        default: "Slot for customizing the checkbox content",
+        label: "Slot for customizing the checkbox label",
       },
-      "variables": {
-        "size": "Defines the size of the checkbox"
+      variables: {
+        size: "Defines the size of the checkbox",
       },
-      "events": {
-        "update:model-value": "Event triggered when the checkbox state changes"
+      events: {
+        "update:model-value": "Event triggered when the checkbox state changes",
       },
-      "exposes": {
-        "inputDOMRef": "Original DOM element of the input field"
-      }
+      exposes: {
+        inputDOMRef: "Original DOM element of the input field",
+      },
     },
     "checkbox-group": {
-      "api": {
-        "height": "Defines the height of checkboxes in the group",
-        "disabled": "Disables all checkboxes in the group",
+      api: {
+        height: "Defines the height of checkboxes in the group",
+        disabled: "Disables all checkboxes in the group",
         "model-value": "Array of selected values",
-        "options": "Checkbox options",
-        "design": "Design style of the checkbox group",
-        "direction": "Direction of the checkbox group layout"
+        options: "Checkbox options",
+        design: "Design style of the checkbox group",
+        direction: "Direction of the checkbox group layout",
       },
-      "slot": {
-        "default": "Slot for customizing the content of the checkbox group"
+      slot: {
+        default: "Slot for customizing the content of the checkbox group",
       },
-      "variables": {},
-      "events": {
-        "update:model-value": "Event triggered when selected values in the checkbox group change"
-      }
+      variables: {},
+      events: {
+        "update:model-value":
+          "Event triggered when selected values in the checkbox group change",
+      },
     },
-    "autocomplete": {
+    autocomplete: {
       "basic-usage": {
-        "placeholder": "Text..."
+        placeholder: "Text...",
       },
-      "height": {
-        "subtitle": "Defines the height of the autocomplete input field."
+      height: {
+        subtitle: "Defines the height of the autocomplete input field.",
       },
-      "disabled": {
-        "subtitle": "Disables the autocomplete field."
+      disabled: {
+        subtitle: "Disables the autocomplete field.",
       },
-      "placeholder": {
-        "subtitle": "Text displayed when the input field is empty."
+      placeholder: {
+        subtitle: "Text displayed when the input field is empty.",
       },
-      "clearable": {
-        "subtitle": "If set to *true*, a button will appear to clear the input field."
+      clearable: {
+        subtitle:
+          "If set to *true*, a button will appear to clear the input field.",
       },
-      "list": {
-        "subtitle": "Sets the list of options for autocomplete suggestions."
+      list: {
+        subtitle: "Sets the list of options for autocomplete suggestions.",
       },
       "action-callback": {
-        "subtitle": "Function called when typing in the input."
+        subtitle: "Function called when typing in the input.",
       },
-      "api": {
-        "id": "Sets the id for the nested text input. Inherits NmorphFormItem id when used inside a form item",
-        "name": "Sets the name for the nested text input. Inherits NmorphFormItem name or id when omitted",
-        "autocomplete": "Autocomplete value passed to the nested text input. Can also be inherited from NmorphFormItem",
-        "height": "Height of the autocomplete input field",
-        "disabled": "Disables the autocomplete input field",
+      api: {
+        id: "Sets the id for the nested text input. Inherits NmorphFormItem id when used inside a form item",
+        name: "Sets the name for the nested text input. Inherits NmorphFormItem name or id when omitted",
+        autocomplete:
+          "Autocomplete value passed to the nested text input. Can also be inherited from NmorphFormItem",
+        height: "Height of the autocomplete input field",
+        disabled: "Disables the autocomplete input field",
         "model-value": "Current value of the input field",
-        "placeholder": "Hint displayed when the input field is empty",
-        "clearable": "Boolean value that adds a button to clear the input value",
-        "list": "List of suggestions for input",
-        "action-callback": "Callback function called when an option is selected",
-        "z-index": "Defines the suggestions overlay z-index. Uses the shared automatic z-index stack when omitted"
+        placeholder: "Hint displayed when the input field is empty",
+        clearable: "Boolean value that adds a button to clear the input value",
+        list: "List of suggestions for input",
+        "action-callback":
+          "Callback function called when an option is selected",
+        "z-index":
+          "Defines the suggestions overlay z-index. Uses the shared automatic z-index stack when omitted",
       },
-      "slot": {
-        "loader": "Slot to add a custom loader while fetching data"
+      slot: {
+        loader: "Slot to add a custom loader while fetching data",
       },
-      "variables": {},
-      "events": {
-        "update:model-value": "Event triggered when the autocomplete field value changes",
-        "select": "Event triggered when an item is selected from the suggestions"
-      }
+      variables: {},
+      events: {
+        "update:model-value":
+          "Event triggered when the autocomplete field value changes",
+        select: "Event triggered when an item is selected from the suggestions",
+      },
     },
     "file-upload": {
       "model-value": {},
-      "disabled": {
-        "subtitle": "Disables the file upload component"
+      disabled: {
+        subtitle: "Disables the file upload component",
       },
-      "multiple": {
-        "subtitle": "Allows uploading multiple files if set to *true*."
+      multiple: {
+        subtitle: "Allows uploading multiple files if set to *true*.",
       },
       "photo-with-preview": {
-        "subtitle": "If set to *true*, uploaded photos will be displayed with a preview."
+        subtitle:
+          "If set to *true*, uploaded photos will be displayed with a preview.",
       },
-      "api": {
+      api: {
         "model-value": "Represents the uploaded files",
-        "disabled": "Boolean value that disables the file upload component",
-        "multiple": "Boolean value that allows multiple files to be selected",
+        disabled: "Boolean value that disables the file upload component",
+        multiple: "Boolean value that allows multiple files to be selected",
         "allowed-types": "Defines the file types that can be uploaded",
         "photo-with-preview": "Displays a preview of the uploaded images",
-        "fill": "Allows the upload button to fill its container"
+        fill: "Allows the upload button to fill its container",
       },
-      "slot": {
-        "trigger": "Slot for customizing the button that triggers the file upload"
+      slot: {
+        trigger:
+          "Slot for customizing the button that triggers the file upload",
       },
-      "variables": {},
-      "events": {
-        "on-unsupported-file-type-error": "Event triggered when the user attempts to upload an unsupported file type",
-        "update:model-value": "Event triggered when the file selection changes"
+      variables: {},
+      events: {
+        "on-unsupported-file-type-error":
+          "Event triggered when the user attempts to upload an unsupported file type",
+        "update:model-value": "Event triggered when the file selection changes",
       },
-      "exposes": {
-        "inputDOMRef": "Original DOM element of the input field"
+      exposes: {
+        inputDOMRef: "Original DOM element of the input field",
       },
-      "translates": {
-        "selectFile": "Select a file"
-      }
+      translates: {
+        selectFile: "Select a file",
+      },
     },
     "number-input": {
       "basic-usage": {},
-      "height": {
-        "subtitle": "Defines the height of the number input field."
+      height: {
+        subtitle: "Defines the height of the number input field.",
       },
-      "disabled": {
-        "subtitle": "Disables the number input field if set to *true*."
+      disabled: {
+        subtitle: "Disables the number input field if set to *true*.",
       },
       "action-btn-position-right": {
-        "subtitle": "If set to *true*, the increment and decrement buttons are placed on the right."
+        subtitle:
+          "If set to *true*, the increment and decrement buttons are placed on the right.",
       },
-      "api": {
-        "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
-        "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
-        "autocomplete": "Autocomplete value for the native number input. Can also be inherited from NmorphFormItem",
-        "height": "Height of the number input field",
-        "disabled": "Boolean value that disables the input field",
+      api: {
+        id: "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
+        name: "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
+        autocomplete:
+          "Autocomplete value for the native number input. Can also be inherited from NmorphFormItem",
+        height: "Height of the number input field",
+        disabled: "Boolean value that disables the input field",
         "model-value": "Current value of the number input field",
-        "max": "Maximum allowed value",
-        "min": "Minimum allowed value",
-        "step": "Step for incrementing or decrementing the value",
-        "action-btn-position-right": "Positions the action buttons on the right if set to *true*"
+        max: "Maximum allowed value",
+        min: "Minimum allowed value",
+        step: "Step for incrementing or decrementing the value",
+        "action-btn-position-right":
+          "Positions the action buttons on the right if set to *true*",
       },
-      "slot": {},
-      "variables": {},
-      "exposes": {
-        "inputDOMRef": "Original DOM element of the input field"
+      slot: {},
+      variables: {},
+      exposes: {
+        inputDOMRef: "Original DOM element of the input field",
       },
-      "events": {
-        "update:model-value": "Event triggered when the value of the number input field changes"
-      }
+      events: {
+        "update:model-value":
+          "Event triggered when the value of the number input field changes",
+      },
     },
     "select-button": {
-      "height": {
-        "subtitle": "Sets the height of the component."
+      height: {
+        subtitle: "Sets the height of the component.",
       },
-      "disabled": {
-        "subtitle": "Disables the component."
+      disabled: {
+        subtitle: "Disables the component.",
       },
-      "fill": {
-        "subtitle": "Makes the component occupy the full width of its container."
+      fill: {
+        subtitle: "Makes the component occupy the full width of its container.",
       },
-      "api": {
+      api: {
         "model-value": "The selected value",
-        "height": "Height of the component",
-        "disabled": "Disables the component",
-        "fill": "Makes the component occupy the full width of its container",
-        "options": "List of options to render"
+        height: "Height of the component",
+        disabled: "Disables the component",
+        fill: "Makes the component occupy the full width of its container",
+        options: "List of options to render",
       },
-      "slot": {
-        "default": "Slot for NmorphSelectButtonItem elements"
+      slot: {
+        default: "Slot for NmorphSelectButtonItem elements",
       },
-      "events": {
-        "update:model-value": "Triggered when the selected value changes"
-      }
+      events: {
+        "update:model-value": "Triggered when the selected value changes",
+      },
     },
-    "select": {
-      "height": {
-        "subtitle": "Sets the height of the dropdown list."
+    select: {
+      height: {
+        subtitle: "Sets the height of the dropdown list.",
       },
-      "disabled": {
-        "subtitle": "Disables the component."
+      disabled: {
+        subtitle: "Disables the component.",
       },
       "model-value": {
-        "subtitle": "Represents the selected value of the select component.",
-        "multiple": "Multiple values"
+        subtitle: "Represents the selected value of the select component.",
+        multiple: "Multiple values",
       },
-      "loading": {
-        "subtitle": "Displays a loading indicator if set to *true*."
+      loading: {
+        subtitle: "Displays a loading indicator if set to *true*.",
       },
-      "fill": {
-        "subtitle": "Makes the select occupy the full width of its container."
+      fill: {
+        subtitle: "Makes the select occupy the full width of its container.",
       },
       "options-width": {
-        "subtitle": "Controls whether dropdown options keep the select width and truncate long labels or expand to fit content."
+        subtitle:
+          "Controls whether dropdown options keep the select width and truncate long labels or expand to fit content.",
       },
-      "api": {
-        "id": "Sets the id for the native select element. Inherits NmorphFormItem id when used inside a form item",
-        "name": "Sets the name for the native select element. Inherits NmorphFormItem name or id when omitted",
-        "autocomplete": "Autocomplete value for the native select element. Can also be inherited from NmorphFormItem",
-        "height": "Height of the dropdown list",
-        "disabled": "Disables the dropdown list",
-        "no-element-placeholder": "Placeholder text displayed when no options are available",
+      api: {
+        id: "Sets the id for the native select element. Inherits NmorphFormItem id when used inside a form item",
+        name: "Sets the name for the native select element. Inherits NmorphFormItem name or id when omitted",
+        autocomplete:
+          "Autocomplete value for the native select element. Can also be inherited from NmorphFormItem",
+        height: "Height of the dropdown list",
+        disabled: "Disables the dropdown list",
+        "no-element-placeholder":
+          "Placeholder text displayed when no options are available",
         "value-required": "Requires selecting a value",
-        "options": "List of available options",
+        options: "List of available options",
         "options-map": "Object for displaying options",
         "model-value": "Selected value of the dropdown list",
-        "loading": "Displays loading state",
-        "fill": "Makes the dropdown list occupy the full width of its container",
+        loading: "Displays loading state",
+        fill: "Makes the dropdown list occupy the full width of its container",
         "options-width": "Controls dropdown option width: truncate or auto",
-        "open": "Boolean value to control the visibility of the list",
-        "z-index": "Defines the select dropdown z-index. Uses the shared automatic z-index stack when omitted"
+        open: "Boolean value to control the visibility of the list",
+        "z-index":
+          "Defines the select dropdown z-index. Uses the shared automatic z-index stack when omitted",
       },
-      "slot": {
-        "default": "Slot for customizing options in the dropdown list"
+      slot: {
+        default: "Slot for customizing options in the dropdown list",
       },
-      "variables": {
-        "base-width": "Sets the base width for the select component"
+      variables: {
+        "base-width": "Sets the base width for the select component",
       },
-      "events": {
-        "update:model-value": "Event triggered when the selected value changes"
-      }
+      events: {
+        "update:model-value": "Event triggered when the selected value changes",
+      },
     },
     "select-option": {
-      "api": {
-        "label": "Defines the label for the option displayed in the dropdown list",
-        "height": "Sets the height of the select option",
-        "disabled": "Boolean value indicating whether the option is disabled and cannot be selected"
+      api: {
+        label:
+          "Defines the label for the option displayed in the dropdown list",
+        height: "Sets the height of the select option",
+        disabled:
+          "Boolean value indicating whether the option is disabled and cannot be selected",
       },
-      "slot": {
-        "default": "Slot for customizing the displayed content for this option"
+      slot: {
+        default: "Slot for customizing the displayed content for this option",
       },
-      "variables": {
+      variables: {
         "hover-bg": "Sets the background color when hovering over the option",
-        "hover-color": "Defines the text color when hovering over the option"
+        "hover-color": "Defines the text color when hovering over the option",
       },
-      "events": {
-        "change-value": "Event triggered when the option value changes"
-      }
+      events: {
+        "change-value": "Event triggered when the option value changes",
+      },
     },
-    "slider": {
-      "disabled": {
-        "subtitle": "Disables the slider if set to *true*."
+    slider: {
+      disabled: {
+        subtitle: "Disables the slider if set to *true*.",
       },
       "show-tooltip": {
-        "subtitle": "If set to *true*, displays a tooltip with the current value."
+        subtitle:
+          "If set to *true*, displays a tooltip with the current value.",
       },
-      "api": {
-        "id": "Sets the native range input id. Inherits NmorphFormItem id when used inside a form item",
-        "name": "Sets the native range input name. Inherits NmorphFormItem name or id when omitted",
-        "fill": "Boolean value allowing the slider to fill its container",
-        "disabled": "Disables the slider component",
+      api: {
+        id: "Sets the native range input id. Inherits NmorphFormItem id when used inside a form item",
+        name: "Sets the native range input name. Inherits NmorphFormItem name or id when omitted",
+        fill: "Boolean value allowing the slider to fill its container",
+        disabled: "Disables the slider component",
         "model-value": "Current value of the slider",
-        "max": "Maximum value for the slider",
-        "min": "Minimum value for the slider",
-        "step": "Step for incrementing or decrementing the value",
-        "show-tooltip": "Boolean value to control the visibility of the tooltip"
+        max: "Maximum value for the slider",
+        min: "Minimum value for the slider",
+        step: "Step for incrementing or decrementing the value",
+        "show-tooltip":
+          "Boolean value to control the visibility of the tooltip",
       },
-      "slot": {},
-      "variables": {
+      slot: {},
+      variables: {
         "slider-height": "Defines the height of the slider",
-        "value-fixed-container-height": "Sets the height of the container"
+        "value-fixed-container-height": "Sets the height of the container",
       },
-      "events": {
-        "update:model-value": "Event triggered when the slider value changes"
-      }
+      events: {
+        "update:model-value": "Event triggered when the slider value changes",
+      },
     },
     "date-picker": {
-      "height": {
-        "subtitle": "Sets the height of the date picker field."
+      height: {
+        subtitle: "Sets the height of the date picker field.",
       },
-      "disabled": {
-        "subtitle": "Disables date selection if set to *true*."
+      disabled: {
+        subtitle: "Disables date selection if set to *true*.",
       },
-      "api": {
-        "id": "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
-        "name": "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
-        "autocomplete": "Autocomplete value for the hidden native date input. Can also be inherited from NmorphFormItem",
-        "height": "Height of the date picker field",
-        "disabled": "Boolean value that disables the date picker",
-        "placeholder": "Text displayed when no date is selected",
+      api: {
+        id: "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
+        name: "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
+        autocomplete:
+          "Autocomplete value for the hidden native date input. Can also be inherited from NmorphFormItem",
+        height: "Height of the date picker field",
+        disabled: "Boolean value that disables the date picker",
+        placeholder: "Text displayed when no date is selected",
         "model-value": "Currently selected date or date range",
-        "type": "Type of date selection, such as *single* or *range*",
-        "text-separator": "Text for separating the start and end dates in range selection mode",
-        "z-index": "Defines the date picker dropdown z-index. Uses the shared automatic z-index stack when omitted"
+        type: "Type of date selection, such as *single* or *range*",
+        "text-separator":
+          "Text for separating the start and end dates in range selection mode",
+        "z-index":
+          "Defines the date picker dropdown z-index. Uses the shared automatic z-index stack when omitted",
       },
-      "slot": {},
-      "variables": {
-        "width": "Defines the width of the date picker component"
+      slot: {},
+      variables: {
+        width: "Defines the width of the date picker component",
       },
-      "events": {
-        "update:model-value": "Event triggered when the selected date or date range changes"
+      events: {
+        "update:model-value":
+          "Event triggered when the selected date or date range changes",
       },
-      "translates": {
-        "pickADate": "Pick a date"
-      }
+      translates: {
+        pickADate: "Pick a date",
+      },
     },
-    "radio": {
+    radio: {
       "basic-usage": {
-        "info": {
-          "title": "Radio Group usage",
-          "content": "Typically used in a group of radio buttons to allow the user to select one option from a set. Once a radio button is selected, it cannot be unselected by clicking it again—only by selecting another radio button in the group to change its state. For proper display, when using 'style-type' as 'button', a label (label) should be provided."
-        }
+        info: {
+          title: "Radio Group usage",
+          content:
+            "Typically used in a group of radio buttons to allow the user to select one option from a set. Once a radio button is selected, it cannot be unselected by clicking it again—only by selecting another radio button in the group to change its state. For proper display, when using 'style-type' as 'button', a label (label) should be provided.",
+        },
       },
-      "api": {
-        "disabled": "Boolean value that disables the radio button",
-        "label": "Label text displayed next to or inside the radio button",
-        "value": "Value assigned to the radio button",
+      api: {
+        disabled: "Boolean value that disables the radio button",
+        label: "Label text displayed next to or inside the radio button",
+        value: "Value assigned to the radio button",
         "style-type": "Defines the visual style of the radio button",
-        "height": "Defines the radio button height",
-        "checked": "Marks the radio button as selected"
+        height: "Defines the radio button height",
+        checked: "Marks the radio button as selected",
       },
-      "slot": {
-        "label": "Slot for customizing the radio button label"
+      slot: {
+        label: "Slot for customizing the radio button label",
       },
-      "variables": {
-        "size": "Defines the size of the radio button"
+      variables: {
+        size: "Defines the size of the radio button",
       },
-      "exposes": {
-        "inputDOMRef": "Original DOM element of the input field"
-      }
+      exposes: {
+        inputDOMRef: "Original DOM element of the input field",
+      },
     },
     "radio-group": {
-      "api": {
-        "height": "Defines the height of radio buttons in the group",
-        "disabled": "Disables all radio buttons in the group",
+      api: {
+        height: "Defines the height of radio buttons in the group",
+        disabled: "Disables all radio buttons in the group",
         "model-value": "Selected value of the radio button group",
-        "options": "List of options to select from",
+        options: "List of options to select from",
         "style-type": "Visual style of the radio buttons",
-        "direction": "Direction of the radio button layout"
+        direction: "Direction of the radio button layout",
       },
-      "slot": {
-        "default": "Slot for passing NmorphRadioButton"
+      slot: {
+        default: "Slot for passing NmorphRadioButton",
       },
-      "variables": {},
-      "events": {
-        "update:model-value": "Event triggered when the selected value changes"
-      }
+      variables: {},
+      events: {
+        "update:model-value": "Event triggered when the selected value changes",
+      },
     },
-    "form": {
+    form: {
       "basic-usage": {
-        "subtitle": "Represents form values for all input elements.",
+        subtitle: "Represents form values for all input elements.",
         "too-short": "Too short",
         "wrong-age": "Incorrect age",
         "you-cant-be-a-nobody": "You cannot be a nobody",
@@ -1636,45 +1804,47 @@ export default {
         "value-must-greater-than-30": "Value must be greater than 30",
         "value-must-less-than-80": "Value must be less than 80",
         "pear-is-not-available": "Pear is unavailable",
-        "coffee": "Coffee",
-        "tea": "Tea",
-        "pear": "Pear",
-        "apple": "Apple",
-        "orange": "Orange",
-        "unknown": "Unknown",
-        "username": "Username",
+        coffee: "Coffee",
+        tea: "Tea",
+        pear: "Pear",
+        apple: "Apple",
+        orange: "Orange",
+        unknown: "Unknown",
+        username: "Username",
         "years-old": "Years old",
         "preferred-drink": "Preferred drink",
-        "browsers": "Browsers",
-        "agreement": "Agreement",
+        browsers: "Browsers",
+        agreement: "Agreement",
         "number-value": "Numeric value",
         "choose-date": "Choose a date",
-        "food": "Food",
+        food: "Food",
         "favorite-food": "Favorite food",
-        "photo": "Photo",
+        photo: "Photo",
         "send-form": "Send form",
         "enter-username": "Enter username",
         "is-valid": "Form is valid: ",
-        "info": {
-          "title": "Typing Information",
-          "content": "For correct typing, you must import the type INmorphFromDataExpose."
-        }
+        info: {
+          title: "Typing Information",
+          content:
+            "For correct typing, you must import the type INmorphFromDataExpose.",
+        },
       },
       "validate-immediately": {
-        "subtitle": "If set to *true*, the form will validate its fields immediately after rendering."
+        subtitle:
+          "If set to *true*, the form will validate its fields immediately after rendering.",
       },
-      "api": {
-        "value": "Form values for input elements",
-        "validate-immediately": "Boolean value controlling validation on load"
+      api: {
+        value: "Form values for input elements",
+        "validate-immediately": "Boolean value controlling validation on load",
       },
-      "slot": {
-        "default": "Slot for passing NmorphFormItem"
+      slot: {
+        default: "Slot for passing NmorphFormItem",
       },
-      "variables": {},
-      "exposes": {
-        "form-data": "Form data including validation"
+      variables: {},
+      exposes: {
+        "form-data": "Form data including validation",
       },
-      "explanation": `
+      explanation: `
         <div class="container">
           <p>
             <strong>Field metadata:</strong> <code>NmorphFormItem</code> passes its <code>id</code> and optional <code>name</code> to nested form controls automatically. Child components can still override these values via their own props.
@@ -1773,22 +1943,27 @@ export default {
             </li>
           </ul>
         </div>
-      `
+      `,
     },
     "form-item": {
-      "api": {
-        "id": "Unique field id used by the label and inherited by nested form controls",
-        "name": "Optional field name inherited by nested form controls. Defaults to id",
-        "autocomplete": "Optional autocomplete value inherited by nested form controls that support it",
-        "height": "Sets the height of the form item container",
-        "label": "Defines the label text associated with the form item, providing context to the user",
-        "show-validation-icon": "Boolean value controlling the display of the validation icon for the form item",
-        "static-error-box-space": "Defines static space for displaying the error field, ensuring consistency in space regardless of validation state",
-        "validate": "Defines validation rules for the form item"
+      api: {
+        id: "Unique field id used by the label and inherited by nested form controls",
+        name: "Optional field name inherited by nested form controls. Defaults to id",
+        autocomplete:
+          "Optional autocomplete value inherited by nested form controls that support it",
+        height: "Sets the height of the form item container",
+        label:
+          "Defines the label text associated with the form item, providing context to the user",
+        "show-validation-icon":
+          "Boolean value controlling the display of the validation icon for the form item",
+        "static-error-box-space":
+          "Defines static space for displaying the error field, ensuring consistency in space regardless of validation state",
+        validate: "Defines validation rules for the form item",
       },
-      "slot": {
-        "default": "Slot for customizing the content of the form item, typically includes input elements or other form controls"
-      }
-    }
-  }
+      slot: {
+        default:
+          "Slot for customizing the content of the form item, typically includes input elements or other form controls",
+      },
+    },
+  },
 };

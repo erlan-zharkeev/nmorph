@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   optionsMap: () => [],
   modelValue: '',
   loading: false,
-  height: 'default',
+  height: 'basic',
   disabled: false,
   open: false,
   fill: false,

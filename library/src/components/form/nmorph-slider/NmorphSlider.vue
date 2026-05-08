@@ -1,20 +1,13 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
+import { NmorphDomElementType } from '@/types';
 import { disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import { NmorphTooltip } from '@/components';
 import { styled, css } from '@vue-styled-components/core';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
+import type { INmorphSliderProps } from './types';
 
-interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
-  modelValue?: number;
-  max?: number;
-  min?: number;
-  step?: number;
-  showTooltip?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphSliderProps>(), {
   modelValue: 0,
   max: 100,
   min: 0,

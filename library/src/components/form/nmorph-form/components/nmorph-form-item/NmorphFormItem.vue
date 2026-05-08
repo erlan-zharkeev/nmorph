@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   name: '',
   autocomplete: '',
   label: '',
-  height: 'default',
+  height: 'basic',
   showValidationIcon: true,
   staticErrorBoxSpace: false,
 });

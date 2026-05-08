@@ -16,7 +16,7 @@ const options = ref([
 const templateData = `
 <template>
   <NmorphSelect
-    v-for="height in ['thick', 'default', 'thin']"
+    v-for="height in ['thick', 'basic', 'thin']"
     :key="height"
     :height="height"
     :options="options"

@@ -21,7 +21,7 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "height",
     type: enumToString(NmorphComponentHeight),
-    default: "default",
+    default: "basic",
   },
   {
     name: "disabled",
@@ -106,7 +106,7 @@ const selectOptionAttr = [
   {
     name: "height",
     type: enumToString(NmorphComponentHeight),
-    default: "default",
+    default: "basic",
   },
   {
     name: "disabled",

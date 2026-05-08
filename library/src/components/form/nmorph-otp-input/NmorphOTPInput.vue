@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   mode: 'numeric',
   autofocus: false,
   autocapitalize: 'none',
-  height: 'default',
+  height: 'basic',
   disabled: false,
 });
 

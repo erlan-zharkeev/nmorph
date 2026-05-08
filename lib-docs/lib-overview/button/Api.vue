@@ -62,7 +62,7 @@ const attributesData = [
   {
     name: "height",
     type: enumToString(NmorphComponentHeight),
-    default: "default",
+    default: "basic",
   },
 ];
 

@@ -17,7 +17,7 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "height",
     type: enumToString(NmorphComponentHeight),
-    default: "default",
+    default: "thin",
   },
   {
     name: "disabled",
@@ -35,7 +35,7 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "style-type",
     type: "button | radio-style",
-    default: "button",
+    default: "radio-style",
   },
   {
     name: "direction",

@@ -9,7 +9,7 @@ import { styled, css } from '@vue-styled-components/core'
 interface INmorphProps extends INmorphTagItemProps { }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  height: 'default',
+  height: 'basic',
   removable: true,
   design: 'nmorph',
 });

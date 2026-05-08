@@ -47,7 +47,7 @@ const hasGroup = groupSelectedValue !== undefined;
 const initialValue = hasGroup ? ref(groupSelectedValue.value) : ref(props.modelValue);
 
 const checked = computed(() => (hasGroup ? groupSelectedValue.value.includes(props.id) : props.modelValue));
-const height = computed(() => props.height || groupHeight?.value || 'default');
+const height = computed(() => props.height || groupHeight?.value || 'thin');
 
 const emit = defineEmits<INmorphEmit>();
 
