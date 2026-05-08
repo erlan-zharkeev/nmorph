@@ -15,6 +15,7 @@ interface INmorphProps {
   xOffset?: number;
   yOffset?: number;
   fillWidth?: boolean;
+  zIndex?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -84,7 +85,7 @@ const StyledComponent = styled.div`
       maxWidth: getCssSize(props.maxWidth) || 'none',
     }"
   >
-    <NmorphOverlay :show="props.open" transparent @on-outside-click="outsideClickHandler">
+    <NmorphOverlay :show="props.open" transparent :z-index="props.zIndex" @on-outside-click="outsideClickHandler">
       <div ref="dropdownDOMRef" :class="modifiers"
         :style="{ left: `${placementCoords.x}`, top: `${placementCoords.y}` }">
         <slot />

@@ -17,9 +17,7 @@ export interface IVariablesTableData {
   name: string;
 }
 
-export interface IExposesTableData {
-  name: string;
-}
+export interface IExposesTableData extends IBasicApiTableData {}
 
 export interface IEventsTableData extends IBasicApiTableData {}
 

@@ -57,7 +57,7 @@ export default {
     },
     "config": {
       "add-config": "添加库配置的示例",
-      "available": "目前可用的设置有两个：theme 和 i18n",
+      "available": "目前可用的设置有三个：theme、i18n 和 zIndex",
       "theme": "主题",
       "i18n": "国际化 (i18n)",
       "ls": "在 local storage 中保存当前主题",
@@ -120,6 +120,8 @@ export default {
     "changelog": {
       "title": "变更日志",
       "items": {
+        "overlay-z-index-stack": "为 overlay、dropdown、select、dialog、date picker、autocomplete 和 image preview 新增共享的自动 z-index 栈。",
+        "overlay-z-index-props": "基于 overlay 的 Nmorph 组件现在支持 `zIndex`，库安装选项也可以设置共享 z-index 栈的基准值。",
         "checkbox-height": "NmorphCheckbox 和 NmorphCheckboxGroup 现在支持 `height`，可使用 thin、default 和 thick 组件尺寸。",
         "radio-height": "NmorphRadio 和 NmorphRadioGroup 现在支持 `height`，可使用 thin、default 和 thick 组件尺寸。",
         "avatar-preview": "NmorphAvatar 现在支持点击预览图片，并可通过 `src` 或 `previewSrc` 传入多张图库图片。",
@@ -768,7 +770,8 @@ export default {
         "min-scale-level":
           "定义图像的最小缩放级别",
         "max-scale-level":
-          "定义图像的最大缩放级别"
+          "定义图像的最大缩放级别",
+        "z-index": "定义覆盖层的 z-index。未传入时使用共享的自动 z-index 栈"
       },
       "slot": {},
       "variables": {
@@ -939,7 +942,7 @@ export default {
         "close-delay": "关闭对话框前的延迟（毫秒）",
         "close-on-click-modal": "布尔值，允许通过点击外部关闭对话框",
         "show-close": "布尔值，显示对话框中的关闭按钮",
-        "z-index": "定义对话框的 z-index，用于控制覆盖层",
+        "z-index": "定义对话框覆盖层的 z-index。未传入时使用共享的自动 z-index 栈",
         "close-on-overlay": "布尔值，指示是否在点击覆盖区时关闭对话框"
       },
       "slot": {
@@ -972,7 +975,8 @@ export default {
       },
       "api": {
         "show": "控制组件的可见性",
-        "transparent": "布尔值，启用时使组件背景透明"
+        "transparent": "布尔值，启用时使组件背景透明",
+        "z-index": "定义覆盖层的 z-index。未传入时使用共享的自动 z-index 栈"
       },
       "slot": {
         "default": "默认插槽，用于自定义组件内部的内容"
@@ -1042,7 +1046,8 @@ export default {
         "max-width": "设置下拉菜单的最大宽度",
         "x-offset": "调整下拉菜单位置的水平偏移量（以像素为单位）",
         "y-offset": "调整下拉菜单位置的垂直偏移量（以像素为单位）",
-        "fill-width": "布尔值，定义下拉菜单是否应占满整个容器宽度"
+        "fill-width": "布尔值，定义下拉菜单是否应占满整个容器宽度",
+        "z-index": "定义下拉菜单覆盖层的 z-index。未传入时使用共享的自动 z-index 栈"
       },
       "slot": {
         "default": "自定义下拉菜单内部内容的插槽"
@@ -1352,7 +1357,8 @@ export default {
         "placeholder": "当输入框为空时显示的提示文本",
         "clearable": "布尔值，添加按钮清除输入值",
         "list": "输入建议的列表",
-        "action-callback": "当选择一个选项时调用的回调函数"
+        "action-callback": "当选择一个选项时调用的回调函数",
+        "z-index": "定义建议列表覆盖层的 z-index。未传入时使用共享的自动 z-index 栈"
       },
       "slot": {
         "loader": "在获取数据时添加自定义加载器的插槽"
@@ -1487,7 +1493,8 @@ export default {
         "loading": "显示加载状态",
         "fill": "使下拉列表占满容器宽度",
         "options-width": "控制下拉选项宽度：truncate 或 auto",
-        "open": "控制列表可见性的布尔值"
+        "open": "控制列表可见性的布尔值",
+        "z-index": "定义 select 下拉列表的 z-index。未传入时使用共享的自动 z-index 栈"
       },
       "slot": {
         "default": "自定义下拉列表选项的插槽"
@@ -1559,7 +1566,8 @@ export default {
         "placeholder": "没有选择日期时显示的文本",
         "model-value": "当前选择的日期或日期范围",
         "type": "日期选择类型，例如 *单一* 或 *范围*",
-        "text-separator": "范围选择模式中用于分隔开始和结束日期的文本"
+        "text-separator": "范围选择模式中用于分隔开始和结束日期的文本",
+        "z-index": "定义日期选择下拉层的 z-index。未传入时使用共享的自动 z-index 栈"
       },
       "slot": {},
       "variables": {

@@ -10,7 +10,7 @@ import App from "./App.vue";
 import NmorphLibrary from "@nmorph/nmorph-ui-kit";
 const app = createApp(App);
 
-const config = { theme: {...}, i18n: {...} };
+const config = { theme: {...}, i18n: {...}, zIndex: { base: 1000 } };
 
 app.use(NmorphLibrary, config);
 app.mount("#app");

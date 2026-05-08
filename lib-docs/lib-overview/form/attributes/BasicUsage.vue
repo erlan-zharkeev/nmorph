@@ -19,6 +19,7 @@ import {
   NmorphIconEye,
   NmorphIconEyeBlocked,
   type INmorphFromDataExpose,
+  type NmorphFormValueType,
 } from "@nmorph/nmorph-ui-kit";
 import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
@@ -44,8 +45,9 @@ import {
   NmorphFileUpload,
   NmorphButton,
   NmorphIconEye,
-  NmorphIconEyeBlocked
+  NmorphIconEyeBlocked,
   type INmorphFromDataExpose,
+  type NmorphFormValueType,
 } from "@nmorph/nmorph-ui-kit";
 
 const formRef: Ref<INmorphFromDataExpose | null> = ref(null);
@@ -142,7 +144,7 @@ const form = reactive({
       },
     ],
   },
-});
+} satisfies NmorphFormValueType);
 const drinks = [
   {
     disabled: false,
@@ -499,7 +501,7 @@ const form = reactive({
       },
     ],
   },
-});
+} satisfies NmorphFormValueType);
 
 const formRef: Ref<INmorphFromDataExpose | null> = ref(null);
 

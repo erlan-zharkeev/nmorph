@@ -5,7 +5,7 @@ const scriptData = "";
 
 const templateData = `
 <template>
-  <NmorphDatePicker disabled />
+  <NmorphDatePicker :model-value="new Date()" disabled />
 </template>
 `;
 
@@ -20,7 +20,7 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="date-picker-disabled-overview">
           <ClientOnly>
-            <NmorphDatePicker disabled />
+            <NmorphDatePicker :model-value="new Date()" disabled />
           </ClientOnly>
         </div>
       </template>

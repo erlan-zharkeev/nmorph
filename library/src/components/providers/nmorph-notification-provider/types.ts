@@ -1,4 +1,4 @@
-import { INmorphAlertProps } from '@/main';
+import type { INmorphAlertProps } from '../../feedback/nmorph-alert/types';
 
 export interface INmorphNotification extends INmorphAlertProps {
   id?: string;

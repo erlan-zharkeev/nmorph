@@ -2,11 +2,12 @@ import { Ref } from 'vue';
 import { I18n } from 'vue-i18n';
 
 import { NmorphFormValidationDataType } from '@/components';
-import { useNmorphBrowser, useNmorphTheme } from '@/outside-hooks';
+import { useNmorphBrowser, useNmorphTheme, useNmorphZIndex } from '@/outside-hooks';
 
 export interface INmorphInstance {
   theme: ReturnType<typeof useNmorphTheme>;
   browser: ReturnType<typeof useNmorphBrowser>;
+  zIndex: ReturnType<typeof useNmorphZIndex>;
 }
 
 export interface INmorphFromDataExpose {
@@ -107,6 +108,9 @@ export interface INmorphThemeOptions {
 export interface INmorphOptions {
   theme?: INmorphThemeOptions;
   i18n?: INmorphApplyTranslation;
+  zIndex?: {
+    base?: number;
+  };
 }
 
 export type NmorphThemeOptionsType = Record<string, INmorphThemeColors>;

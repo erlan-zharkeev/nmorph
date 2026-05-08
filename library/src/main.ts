@@ -1,6 +1,6 @@
 import { App, Plugin } from 'vue';
 import { useCommonStyles, useNmorphTranslation } from './hooks';
-import { useNmorphBrowser, useNmorphTheme } from './outside-hooks/index.ts';
+import { useNmorphBrowser, useNmorphTheme, useNmorphZIndex } from './outside-hooks/index.ts';
 import { INmorphOptions } from './types/index.ts';
 
 const library: Plugin = {
@@ -26,8 +26,9 @@ const library: Plugin = {
     useCommonStyles();
     const theme = useNmorphTheme(options.theme);
     const browser = useNmorphBrowser();
+    const zIndex = useNmorphZIndex(options.zIndex);
 
-    const nmorph = { theme, browser };
+    const nmorph = { theme, browser, zIndex };
     Vue.provide('nmorph', nmorph);
     return Vue;
   },

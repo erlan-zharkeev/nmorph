@@ -18,6 +18,7 @@ interface INmorphProps extends INmorphCommonInputProps {
   clearable?: boolean;
   list: INmorphAutocompleteListItem[];
   actionCallback?: NmorphAutocompleteActionCallbackType;
+  zIndex?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -145,6 +146,7 @@ const StyledComponent = styled.div`
       :open="open"
       :relative-element="nmorphAutocompleteDOMRef"
       :y-offset="1"
+      :z-index="props.zIndex"
       @on-outside-click="closeHandler"
     >
       <div v-if="loader" class="nmorph-autocomplete__loading">

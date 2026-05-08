@@ -44,6 +44,7 @@ const cssData = `
 const code = [scriptData, templateData, cssData];
 
 const value = ref(new Date());
+const heights = Object.keys(NmorphComponentHeight) as Array<keyof typeof NmorphComponentHeight>;
 </script>
 
 <template>
@@ -52,8 +53,7 @@ const value = ref(new Date());
       <template #overview>
         <div class="date-picker-height-overview">
           <ClientOnly>
-            <NmorphDatePicker v-for="height in Object.keys(NmorphComponentHeight)" :key="height" :height="height"
-              v-model="value" />
+            <NmorphDatePicker v-for="height in heights" :key="height" :height="height" v-model="value" />
           </ClientOnly>
         </div>
       </template>

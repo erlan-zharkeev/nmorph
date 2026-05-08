@@ -43,6 +43,7 @@ const options = ref([
   { value: "two", label: t("overview.two") },
   { value: "three", label: t("overview.three") },
 ]);
+const heights = Object.keys(NmorphComponentHeight) as Array<keyof typeof NmorphComponentHeight>;
 </script>
 
 <template>
@@ -51,8 +52,7 @@ const options = ref([
       <template #overview>
         <div class="select-height-overview">
           <ClientOnly>
-            <NmorphSelect v-for="height in Object.keys(NmorphComponentHeight)" :key="height" :height="height"
-              :options="options" />
+            <NmorphSelect v-for="height in heights" :key="height" :height="height" :options="options" />
           </ClientOnly>
         </div>
       </template>

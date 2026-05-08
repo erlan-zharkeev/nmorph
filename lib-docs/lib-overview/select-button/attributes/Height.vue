@@ -31,6 +31,7 @@ const cssData = ``;
 const code = [scriptData, templateData, cssData];
 
 const value = ref("on");
+const heights = Object.keys(NmorphComponentHeight) as Array<keyof typeof NmorphComponentHeight>;
 </script>
 
 <template>
@@ -40,7 +41,7 @@ const value = ref("on");
         <div class="select-button-height-overview">
           <ClientOnly>
             <NmorphSelectButton
-              v-for="height in Object.keys(NmorphComponentHeight)"
+              v-for="height in heights"
               :key="height"
               v-model="value"
               :height="height"

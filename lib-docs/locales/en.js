@@ -57,7 +57,7 @@ export default {
     },
     "config": {
       "add-config": "Example of adding library configuration",
-      "available": "Currently, there are two available settings: theme and i18n",
+      "available": "Currently, there are three available settings: theme, i18n, and zIndex",
       "theme": "Theme",
       "i18n": "Internationalization (i18n)",
       "ls": "Save current theme in local storage",
@@ -122,6 +122,8 @@ export default {
     "changelog": {
       "title": "Changelog",
       "items": {
+        "overlay-z-index-stack": "Added a shared automatic z-index stack for overlays, dropdowns, selects, dialogs, date pickers, autocomplete, and image previews.",
+        "overlay-z-index-props": "Nmorph overlay-based components now support `zIndex`, and the library install options can set the shared z-index base.",
         "checkbox-height": "NmorphCheckbox and NmorphCheckboxGroup now support `height` with thin, default, and thick component sizes.",
         "radio-height": "NmorphRadio and NmorphRadioGroup now support `height` with thin, default, and thick component sizes.",
         "avatar-preview": "NmorphAvatar now supports image preview on click, including multiple gallery images through `src` or `previewSrc`.",
@@ -770,7 +772,8 @@ export default {
         "min-scale-level":
           "Defines the minimum scale level for the image",
         "max-scale-level":
-          "Defines the maximum scale level for the image"
+          "Defines the maximum scale level for the image",
+        "z-index": "Defines the overlay z-index. Uses the shared automatic z-index stack when omitted"
       },
       "slot": {},
       "variables": {
@@ -941,7 +944,7 @@ export default {
         "close-delay": "Delay in milliseconds before closing the dialog window",
         "close-on-click-modal": "Boolean value that allows closing the dialog window by clicking outside",
         "show-close": "Boolean value that displays the close button in the dialog window",
-        "z-index": "Defines the z-index for controlling the overlay of the dialog window",
+        "z-index": "Defines the dialog overlay z-index. Uses the shared automatic z-index stack when omitted",
         "close-on-overlay": "Boolean value indicating whether the dialog window should be closed when clicking on the overlay area"
       },
       "slot": {
@@ -974,7 +977,8 @@ export default {
       },
       "api": {
         "show": "Controls the visibility of the component",
-        "transparent": "Boolean value that makes the component's background transparent if enabled"
+        "transparent": "Boolean value that makes the component's background transparent if enabled",
+        "z-index": "Defines the overlay z-index. Uses the shared automatic z-index stack when omitted"
       },
       "slot": {
         "default": "Default slot for customizing the content inside the component"
@@ -1044,7 +1048,8 @@ export default {
         "max-width": "Sets the maximum width of the dropdown",
         "x-offset": "Horizontal offset in pixels for adjusting the dropdown position",
         "y-offset": "Vertical offset in pixels for adjusting the dropdown position",
-        "fill-width": "Boolean value defining whether the dropdown should occupy the entire container width"
+        "fill-width": "Boolean value defining whether the dropdown should occupy the entire container width",
+        "z-index": "Defines the dropdown overlay z-index. Uses the shared automatic z-index stack when omitted"
       },
       "slot": {
         "default": "Slot for customizing the content inside the dropdown"
@@ -1354,7 +1359,8 @@ export default {
         "placeholder": "Hint displayed when the input field is empty",
         "clearable": "Boolean value that adds a button to clear the input value",
         "list": "List of suggestions for input",
-        "action-callback": "Callback function called when an option is selected"
+        "action-callback": "Callback function called when an option is selected",
+        "z-index": "Defines the suggestions overlay z-index. Uses the shared automatic z-index stack when omitted"
       },
       "slot": {
         "loader": "Slot to add a custom loader while fetching data"
@@ -1489,7 +1495,8 @@ export default {
         "loading": "Displays loading state",
         "fill": "Makes the dropdown list occupy the full width of its container",
         "options-width": "Controls dropdown option width: truncate or auto",
-        "open": "Boolean value to control the visibility of the list"
+        "open": "Boolean value to control the visibility of the list",
+        "z-index": "Defines the select dropdown z-index. Uses the shared automatic z-index stack when omitted"
       },
       "slot": {
         "default": "Slot for customizing options in the dropdown list"
@@ -1561,7 +1568,8 @@ export default {
         "placeholder": "Text displayed when no date is selected",
         "model-value": "Currently selected date or date range",
         "type": "Type of date selection, such as *single* or *range*",
-        "text-separator": "Text for separating the start and end dates in range selection mode"
+        "text-separator": "Text for separating the start and end dates in range selection mode",
+        "z-index": "Defines the date picker dropdown z-index. Uses the shared automatic z-index stack when omitted"
       },
       "slot": {},
       "variables": {

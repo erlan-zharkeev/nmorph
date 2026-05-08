@@ -3,11 +3,15 @@ import { NmorphAutocomplete } from "@nmorph/nmorph-ui-kit";
 
 import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
 
-const scriptData = "";
+const scriptData = `
+<script setup lang="ts">
+  const list = [];
+<\/script>
+`;
 
 const templateData = `
 <template>
-  <NmorphAutocomplete disabled />
+  <NmorphAutocomplete :list="list" disabled />
 </template>
 `;
 const cssData = "";
@@ -21,7 +25,7 @@ const code = [scriptData, templateData, cssData];
       <template #overview>
         <div class="autocomplete-disabled-overview">
           <ClientOnly>
-            <NmorphAutocomplete disabled />
+            <NmorphAutocomplete :list="[]" disabled />
           </ClientOnly>
         </div>
       </template>

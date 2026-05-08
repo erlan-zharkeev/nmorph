@@ -62,6 +62,11 @@ const attributesData: IAttributesTableData[] = [
     type: "String",
     default: "To",
   },
+  {
+    name: "z-index",
+    type: "Number",
+    default: "auto",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [];

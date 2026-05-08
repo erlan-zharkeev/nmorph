@@ -11,7 +11,7 @@ const scriptData = `
     firstMenuOpen.value = false;
   };
 
-  const secondMenu = ref(false);
+  const secondMenu = ref(null);
   const secondMenuOpen = ref(false);
   const closeHandler = () => {
     secondMenuOpen.value = false;
@@ -116,7 +116,7 @@ const firstMenuCloseHandler = () => {
   firstMenuOpen.value = false;
 };
 
-const secondMenu = ref(false);
+const secondMenu = ref(null);
 const secondMenuOpen = ref(false);
 const closeHandler = () => {
   secondMenuOpen.value = false;

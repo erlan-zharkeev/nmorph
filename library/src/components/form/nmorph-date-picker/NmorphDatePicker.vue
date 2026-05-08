@@ -21,6 +21,7 @@ interface INmorphProps extends INmorphCommonInputProps {
   type?: keyof typeof NmorphSelectionDateType;
   textSeparator?: string;
   initialDate?: Date;
+  zIndex?: number;
 }
 
 const { t } = useI18n();
@@ -233,6 +234,7 @@ const StyledComponent = styled.div`
           :width="324"
           :open="open"
           :relative-element="nmorphInputDOMRef"
+          :z-index="props.zIndex"
           @on-outside-click="closeHandler"
         >
           <NmorphDatePickerContent

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { pascalToSpace } from "~/utils";
+import { componentPathByName, pascalToSpace } from "~/utils";
 
 const list: { name: string; components: string[] }[] = [
   {

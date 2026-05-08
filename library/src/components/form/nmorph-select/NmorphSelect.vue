@@ -30,6 +30,7 @@ interface INmorphProps extends INmorphCommonInputProps {
   open?: boolean;
   fill?: boolean;
   optionsWidth?: 'truncate' | 'auto';
+  zIndex?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -340,7 +341,7 @@ const StyledComponent = styled.div`
     <NmorphDropdown v-if="nmorphSelectDOMRef && !props.disabled" :open="open && !props.loading"
       :relative-element="nmorphSelectDOMRef" :fill-width="!autoOptionsWidth"
       :width="autoOptionsWidth ? 'max-content' : undefined" :min-width="optionsMinWidth"
-      max-width="calc(100vw - 16px)"
+      max-width="calc(100vw - 16px)" :z-index="props.zIndex"
       @on-outside-click="closeHandler">
       <div ref="optionsDOMRef" class="nmorph-select__options">
         <NmorphIcon v-if="props.loading" class="nmorph-select__chevron" size="medium">

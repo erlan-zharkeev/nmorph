@@ -4,6 +4,9 @@ import {
   NmorphTableColumn,
   NmorphTableCell,
   NmorphButton,
+  type NmorphElementDesignType,
+  type NmorphTableSortType,
+  type NmorphDataTableElRecordType,
 } from "@nmorph/nmorph-ui-kit";
 
 import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
@@ -54,13 +57,13 @@ const scriptData = `
     },
   ]);
 
-  const clickHandler = (data: ITableCell) => {
+  const clickHandler = (data: NmorphDataTableElRecordType) => {
     alert(\`My name is \${data.name}!\`);
   };
 
-  const sort = ref({ date: "descending", name: "ascending" });
+  const sort = ref<NmorphTableSortType>({ date: "descending", name: "ascending" });
   const bordered = ref(false);
-  const design = ref("nmorph");
+  const design = ref<NmorphElementDesignType>("nmorph");
   const highlightRowOnHover = ref(false);
 
   const toggleDesignProp = () => {
@@ -112,7 +115,7 @@ const templateData = `
       <NmorphTableColumn
         prop="date"
         label="Date"
-        alignment="start"
+        alignment="left"
         width="100"
       />
       <NmorphTableColumn prop="name" label="Name" />
@@ -200,13 +203,13 @@ const data = ref<ITableCell[]>([
   },
 ]);
 
-const clickHandler = (data: ITableCell) => {
+const clickHandler = (data: NmorphDataTableElRecordType) => {
   alert(`My name is ${data.name}!`);
 };
 
-const sort = ref({ date: "descending", name: "ascending" });
+const sort = ref<NmorphTableSortType>({ date: "descending", name: "ascending" });
 const bordered = ref(false);
-const design = ref("nmorph");
+const design = ref<NmorphElementDesignType>("nmorph");
 const highlightRowOnHover = ref(false);
 
 const toggleDesignProp = () => {
@@ -254,7 +257,7 @@ const clickMeText = `overview.table.basic-usage.click-me-text`;
             </div>
             <NmorphTable :data="data" :bordered="bordered" :row-hover="highlightRowOnHover" :design="design"
               :sort="sort">
-              <NmorphTableColumn prop="date" label="Date" alignment="start" width="100" />
+              <NmorphTableColumn prop="date" label="Date" alignment="left" width="100" />
               <NmorphTableColumn prop="name" label="Name" />
               <NmorphTableColumn prop="address" label="Address" />
               <NmorphTableColumn prop="operations" label="Operations">

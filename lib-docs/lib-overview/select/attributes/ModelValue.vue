@@ -12,7 +12,7 @@ const scriptData = `
     { label: "Two", value: "two" },
     { label: "Three", value: "three" },
   ]);
-  const multipleValue = ["one", "two"];
+  const multipleValue = ref(["one", "two"]);
 <\/script>
 `;
 const templateData = `
@@ -52,7 +52,7 @@ const options = ref([
   { value: "two", label: t("overview.two") },
   { value: "three", label: t("overview.three") },
 ]);
-const multipleValue = ["one", "two"];
+const multipleValue = ref(["one", "two"]);
 </script>
 
 <template>

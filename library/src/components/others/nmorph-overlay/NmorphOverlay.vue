@@ -2,15 +2,20 @@
 import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 import { styled, css } from '@vue-styled-components/core'
+import { useZIndex } from '@/hooks';
 
 interface INmorphProps {
   show: boolean;
   transparent?: boolean;
+  zIndex?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   transparent: false,
 });
+
+const zIndex = useZIndex(computed(() => props.show), () => props.zIndex);
+const styledProps = computed(() => ({ zIndex: zIndex.value }));
 
 const modifiers = computed(() =>
   useModifiers({
@@ -34,7 +39,6 @@ const commonCSS = css`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -53,12 +57,12 @@ const commonCSS = css`
 
 const StyledComponent = styled.div`
   ${commonCSS}
-
+  z-index: ${props => props.zIndex};
 `
 </script>
 
 <template>
-  <StyledComponent :class="modifiers" @click.stop="clickHandler">
+  <StyledComponent :class="modifiers" :props="styledProps" @click.stop="clickHandler">
     <div class="nmorph-overlay__slot" @click.stop>
       <slot />
     </div>

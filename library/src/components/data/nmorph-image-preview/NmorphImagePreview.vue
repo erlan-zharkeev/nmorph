@@ -25,6 +25,7 @@ interface INmorphProps {
   scaleStep?: number;
   minScaleLevel?: number;
   maxScaleLevel?: number;
+  zIndex?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -255,7 +256,7 @@ const StyledComponent = styled.div`
     <div class="nmorph-image-preview__trigger" @click="clickHandler">
       <NmorphImage :src="triggerSource" :alt="props.alt" fit="cover" />
     </div>
-    <NmorphOverlay :show="open" @on-outside-click="closeHandler">
+    <NmorphOverlay :show="open" :z-index="props.zIndex" @on-outside-click="closeHandler">
       <div class="nmorph-image-preview__content">
         <NmorphImage :src="triggerSource" :alt="props.alt" fit="cover"
           :style="{ transform: `rotate(${rotateLevel}deg) scale(${scaleLevel})` }" />

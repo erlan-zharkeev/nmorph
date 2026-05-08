@@ -23,7 +23,6 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   closeDelay: 0,
   closeOnClickModal: true,
   showClose: true,
-  zIndex: 999,
   closeOnOverlay: true,
 });
 
@@ -103,13 +102,12 @@ const commonCSS = css`
 const StyledComponent = styled.div`
   ${commonCSS}
   --width: ${props => props.dialogWidth};
-  z-index: ${props => props.zIndex};
 `
 </script>
 
 <template>
-  <NmorphOverlay :show="isVisible" @on-outside-click="clickOnOverlay">
-    <StyledComponent :class="modifiers" :props="{ dialogWidth: props.width, zIndex: props.zIndex }">
+  <NmorphOverlay :show="isVisible" :z-index="props.zIndex" @on-outside-click="clickOnOverlay">
+    <StyledComponent :class="modifiers" :props="{ dialogWidth: props.width }">
       <div class="nmorph-dialog__header">
         <slot name="header">
           <div class="nmorph-dialog__title">{{ props.title }}</div>

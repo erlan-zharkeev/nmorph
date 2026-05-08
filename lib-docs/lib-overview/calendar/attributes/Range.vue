@@ -10,7 +10,7 @@ const scriptData = `
 
   date2.setDate(date2.getDate() + 2);
 
-  const range = ref([date1, date2]);
+  const range = ref<[Date, Date]>([date1, date2]);
   const model = ref(new Date());
 <\/script>
 `;
@@ -29,7 +29,7 @@ const date2 = new Date();
 
 date2.setDate(date2.getDate() + 2);
 
-const range = ref([date1, date2]);
+const range = ref<[Date, Date]>([date1, date2]);
 const model = ref(new Date());
 </script>
 

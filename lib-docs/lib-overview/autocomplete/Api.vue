@@ -58,6 +58,11 @@ const attributesData: IAttributesTableData[] = [
     type: "(...args: unknown[]) => Promise<unknown> | undefined",
     default: "undefined",
   },
+  {
+    name: "z-index",
+    type: "Number",
+    default: "auto",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "loader" }];
