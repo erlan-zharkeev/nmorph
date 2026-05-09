@@ -10,7 +10,7 @@
     "clean": "rm -rf .nuxt node_modules && npm install",
     "generate": "npm run prepare:library && nuxt generate",
     "preview": "npm run prepare:library && nuxt preview",
-    "postinstall": "nuxt prepare",
+    "postinstall": "npm run prepare:library && nuxt prepare",
     "generate-component": "node generate-component.js",
     "deploy": "npm run generate && gh-pages -d dist"
   },

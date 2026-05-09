@@ -9,7 +9,7 @@
     "build": "npm run prepare:library && nuxt build",
     "generate": "npm run prepare:library && nuxt generate",
     "preview": "nuxt preview --host 127.0.0.1 --port 43120",
-    "postinstall": "nuxt prepare"
+    "postinstall": "npm run prepare:library && nuxt prepare"
   },
   "dependencies": {
     "@nmorph/nmorph-ui-kit": "file:../library",
