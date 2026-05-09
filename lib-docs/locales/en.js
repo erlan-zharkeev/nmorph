@@ -125,17 +125,13 @@ export default {
       "Neumorphism is a design style that combines elements of flat design and skeuomorphism.</p><p>It creates a sense of volume and soft shadows, making the interface look as if it can be touched.</p><p>The neumorphism is based on pastel colors, light gradients and soft shadows, creating the effect of pressed or indented elements.</p>",
   },
   "changelog-page": {
-    roadmap: {
-      title: "Roadmap",
-      items: {
-        "color-picker-formats":
-          "Add support for displaying different color formats in NmorphColorPicker.",
-        performance: "Optimize performance and bundle size.",
-      },
-    },
     changelog: {
       title: "Changelog",
       items: {
+        "avatar-preview-resolve":
+          "NmorphAvatar now resolves NmorphImagePreview internally, so avatar preview works with direct component imports.",
+        "backtop-contrast-icon":
+          "NmorphBacktop now uses the contrast text color for the common design arrow icon.",
         "component-css-splitting":
           "Component chunks now import their own CSS, so direct component imports no longer require pulling the full library stylesheet.",
         "plugin-entry-styles-option":

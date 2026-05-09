@@ -11,6 +11,25 @@ const knownBugItems: string[] = [];
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v2.2.11</h3>
+            <ul>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.avatar-preview-resolve",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.backtop-contrast-icon",
+                  )
+                }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.2.10</h3>
             <ul>
               <li>
@@ -484,16 +503,6 @@ const knownBugItems: string[] = [];
             <li v-for="knownBugItem in knownBugItems" :key="knownBugItem">
               {{ $t(`changelog-page.known-bugs.items.${knownBugItem}`) }}
             </li>
-          </ul>
-        </section>
-        <NmorphDivider />
-        <section id="roadmap">
-          <h2>{{ $t("changelog-page.roadmap.title") }}</h2>
-          <ul>
-            <li>
-              {{ $t("changelog-page.roadmap.items.color-picker-formats") }}
-            </li>
-            <li>{{ $t("changelog-page.roadmap.items.performance") }}</li>
           </ul>
         </section>
       </NmorphScroll>

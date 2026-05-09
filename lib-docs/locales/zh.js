@@ -114,17 +114,13 @@ export default {
       "Neumorphism是一种结合了平面设计和skeuomorphism元素的设计风格。</p><p>它创造了体积感和柔和的阴影，使界面看起来好像可以触摸。</p><p>neumorphism基于柔和的颜色，浅色渐变和柔和的阴影，创造出压制或缩进元素的效果。</p>",
   },
   "changelog-page": {
-    roadmap: {
-      title: "路线图",
-      items: {
-        "color-picker-formats":
-          "为 NmorphColorPicker 添加不同颜色格式的显示能力。",
-        performance: "优化性能与打包体积。",
-      },
-    },
     changelog: {
       title: "变更日志",
       items: {
+        "avatar-preview-resolve":
+          "NmorphAvatar 现在会内部解析 NmorphImagePreview，因此直接导入组件时 avatar preview 也能正常工作。",
+        "backtop-contrast-icon":
+          "NmorphBacktop 的 common design 箭头图标现在使用 contrast text color。",
         "component-css-splitting":
           "组件 chunk 现在会导入自己的 CSS，直接导入单个组件时不再需要引入完整的库样式表。",
         "plugin-entry-styles-option":

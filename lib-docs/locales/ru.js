@@ -127,17 +127,13 @@ export default {
       "<p>Нейморфизм (neumorphism) — это стиль дизайна, который совмещает элементы плоского дизайна и скевоморфизма.</p><p>Он создает ощущение объема и мягких теней, благодаря чему интерфейс выглядит так, словно его можно потрогать.</p><p>В основе нейморфизма лежат пастельные цвета, легкие градиенты и мягкие тени, создавая эффект выдавленных или вдавленных элементов.</p>",
   },
   "changelog-page": {
-    roadmap: {
-      title: "Roadmap",
-      items: {
-        "color-picker-formats":
-          "Добавить в NmorphColorPicker возможность отображать разные форматы цвета.",
-        performance: "Оптимизировать производительность и размер бандла.",
-      },
-    },
     changelog: {
       title: "Changelog",
       items: {
+        "avatar-preview-resolve":
+          "NmorphAvatar теперь сам подключает NmorphImagePreview, поэтому preview аватара работает при direct component imports.",
+        "backtop-contrast-icon":
+          "NmorphBacktop теперь использует contrast text color для стрелки в common design.",
         "component-css-splitting":
           "Component chunks теперь импортируют собственный CSS, поэтому direct component imports больше не требуют подключать полный stylesheet библиотеки.",
         "plugin-entry-styles-option":

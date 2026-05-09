@@ -3,15 +3,15 @@ export const anyToPascalCase = (str: string) =>
 
 export const pascalToSpace = (str: string): string => {
   return str
-    .replace(/([a-z])([A-Z])/g, "$1 $2")
-    .replace(/([A-Z])/g, " $1")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+    .replace(/([a-z\d])([A-Z])/g, "$1 $2")
     .trim();
 };
 
 export const pascalToKebab = (str: string) => {
   return str
-    .replace(/([a-z])([A-Z])/g, "$1-$2")
-    .replace(/([A-Z])/g, "-$1")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+    .replace(/([a-z\d])([A-Z])/g, "$1-$2")
     .toLowerCase()
     .replace(/--+/g, "-")
     .replace(/^-/, "");

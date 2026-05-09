@@ -3,6 +3,7 @@ import { computed, ref, type Component } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphImage, NmorphIcon, NmorphIconAvatar } from '@/components';
 import { INmorphImage, AvatarShapeType } from '@/types';
+import NmorphImagePreview from '../nmorph-image-preview/NmorphImagePreview.vue';
 
 interface INmorphProps extends Omit<INmorphImage, 'src'> {
   src?: string | string[];
