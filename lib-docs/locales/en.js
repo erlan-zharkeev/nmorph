@@ -56,6 +56,7 @@ export default {
         "Choose any package manager you prefer.<br>We recommend using reliable ones like <b>NPM</b>, <b>Yarn</b>, <b>Pnpm</b>",
       plugin: "Library integration",
       "alternative-plugin": "Alternative integration method",
+      nuxt: "Nuxt integration",
       usage: "Basic usage",
     },
     config: {
@@ -127,11 +128,6 @@ export default {
     roadmap: {
       title: "Roadmap",
       items: {
-        "nuxt-support": "Add Nuxt support.",
-        "test-coverage":
-          "Increase test coverage: unit, integration, and e2e tests.",
-        "theming-v2":
-          "Prepare Theming v2 with extended design tokens and presets.",
         "color-picker-formats":
           "Add support for displaying different color formats in NmorphColorPicker.",
         performance: "Optimize performance and bundle size.",
@@ -140,6 +136,14 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "nuxt-module":
+          "Added Nuxt module support through `nmorph-ui-kit/nuxt` with automatic plugin registration.",
+        "image-preview-portal":
+          "NmorphImagePreview now renders its overlay through body, so parent isolation and stacking contexts do not break the preview.",
+        "text-input-prepend-icon":
+          "NmorphTextInput now sizes and colors raw SVG prepend icons correctly.",
+        "docs-actions-align":
+          "Aligned docs example action buttons and removed the test coverage roadmap item.",
         "height-basic-name":
           "Renamed the shared component height value from `default` to `basic`, and updated component defaults and docs to use thick, basic, and thin.",
         "checkbox-radio-defaults":

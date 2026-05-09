@@ -56,6 +56,7 @@ export default {
         "Выберите на ваше усмотрение любой пакетный менеджер.<br>Мы рекомендуем использовать проверенные такие как <b>NPM</b>, <b>Yarn</b>, <b>Pnpm</b>",
       plugin: "Подключение библиотеки",
       "alternative-plugin": "Алтернативый способ подключения",
+      nuxt: "Подключение в Nuxt",
       usage: "Базовое использование",
     },
     config: {
@@ -129,11 +130,6 @@ export default {
     roadmap: {
       title: "Roadmap",
       items: {
-        "nuxt-support": "Добавить поддержку Nuxt.",
-        "test-coverage":
-          "Увеличить тестовое покрытие: unit, integration и e2e тесты.",
-        "theming-v2":
-          "Подготовить Theming v2 с расширенными дизайн-токенами и пресетами.",
         "color-picker-formats":
           "Добавить в NmorphColorPicker возможность отображать разные форматы цвета.",
         performance: "Оптимизировать производительность и размер бандла.",
@@ -142,6 +138,14 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "nuxt-module":
+          "Добавлена поддержка Nuxt module через `nmorph-ui-kit/nuxt` с автоматической регистрацией plugin.",
+        "image-preview-portal":
+          "NmorphImagePreview теперь рендерит overlay через body, поэтому родительские isolation и stacking context не ломают preview.",
+        "text-input-prepend-icon":
+          "NmorphTextInput теперь корректно задает размер и цвет raw SVG prepend-иконкам.",
+        "docs-actions-align":
+          "Выровнены action-кнопки в примерах документации и удален roadmap-пункт про test coverage.",
         "height-basic-name":
           "Общее значение высоты компонентов переименовано с `default` на `basic`; defaults компонентов и документация обновлены на thick, basic и thin.",
         "checkbox-radio-defaults":

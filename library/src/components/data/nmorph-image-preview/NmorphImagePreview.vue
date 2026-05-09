@@ -156,30 +156,7 @@ const emit = defineEmits<INmorphEmit>();
 
 const multipleSources = computed(() => Array.isArray(props.src) && props.src.length > 0);
 
-const commonCSS = css`
-  --width: 50px;
-  --height: 50px;
-
-  width: var(--width);
-  height: var(--height);
-  overflow: hidden;
-
-  .nmorph-image-preview__trigger {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-
-    &:hover {
-      filter: brightness(0.8);
-    }
-
-    .nmorph-image {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
+const previewCSS = css`
   .nmorph-image-preview__content {
     transition: var(--transition-04) opacity ease-in-out;
 
@@ -246,8 +223,38 @@ const commonCSS = css`
   }
 `
 
+const commonCSS = css`
+  --width: 50px;
+  --height: 50px;
+
+  width: var(--width);
+  height: var(--height);
+  overflow: hidden;
+
+  .nmorph-image-preview__trigger {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+
+    .nmorph-image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+`
+
 const StyledComponent = styled.div`
   ${commonCSS}
+`
+
+const StyledPortal = styled.div`
+  display: contents;
+  ${previewCSS}
 `
 </script>
 
@@ -256,41 +263,45 @@ const StyledComponent = styled.div`
     <div class="nmorph-image-preview__trigger" @click="clickHandler">
       <NmorphImage :src="triggerSource" :alt="props.alt" fit="cover" />
     </div>
-    <NmorphOverlay :show="open" :z-index="props.zIndex" @on-outside-click="closeHandler">
-      <div class="nmorph-image-preview__content">
-        <NmorphImage :src="triggerSource" :alt="props.alt" fit="cover"
-          :style="{ transform: `rotate(${rotateLevel}deg) scale(${scaleLevel})` }" />
-      </div>
-      <div v-if="multipleSources" class="nmorph-image-preview__left">
-        <NmorphButton @click="previousHandler">
-          <NmorphIcon>
-            <NmorphIconChevronDown />
-          </NmorphIcon>
-        </NmorphButton>
-      </div>
-      <div v-if="multipleSources" class="nmorph-image-preview__right">
-        <NmorphButton @click="nextHandler">
-          <NmorphIcon>
-            <NmorphIconChevronDown />
-          </NmorphIcon>
-        </NmorphButton>
-      </div>
-      <div class="nmorph-image-preview__actions">
-        <div v-for="(action, idx) in actions" :key="idx" class="nmorph-image-preview__action-element">
-          <NmorphButton @click="action.handler">
-            <NmorphIcon>
-              <component :is="action.icon" />
-            </NmorphIcon>
-          </NmorphButton>
-        </div>
-        <div class="nmorph-image-preview__action-element">
-          <NmorphButton :disabled="scaleLevel === 1" @click="enlargeShrinkActionData.handler">
-            <NmorphIcon>
-              <component :is="enlargeShrinkActionData.icon" />
-            </NmorphIcon>
-          </NmorphButton>
-        </div>
-      </div>
-    </NmorphOverlay>
   </StyledComponent>
+  <Teleport to="body">
+    <StyledPortal :class="modifiers">
+      <NmorphOverlay :show="open" :z-index="props.zIndex" @on-outside-click="closeHandler">
+        <div class="nmorph-image-preview__content">
+          <NmorphImage :src="triggerSource" :alt="props.alt" fit="cover"
+            :style="{ transform: `rotate(${rotateLevel}deg) scale(${scaleLevel})` }" />
+        </div>
+        <div v-if="multipleSources" class="nmorph-image-preview__left">
+          <NmorphButton @click="previousHandler">
+            <NmorphIcon>
+              <NmorphIconChevronDown />
+            </NmorphIcon>
+          </NmorphButton>
+        </div>
+        <div v-if="multipleSources" class="nmorph-image-preview__right">
+          <NmorphButton @click="nextHandler">
+            <NmorphIcon>
+              <NmorphIconChevronDown />
+            </NmorphIcon>
+          </NmorphButton>
+        </div>
+        <div class="nmorph-image-preview__actions">
+          <div v-for="(action, idx) in actions" :key="idx" class="nmorph-image-preview__action-element">
+            <NmorphButton @click="action.handler">
+              <NmorphIcon>
+                <component :is="action.icon" />
+              </NmorphIcon>
+            </NmorphButton>
+          </div>
+          <div class="nmorph-image-preview__action-element">
+            <NmorphButton :disabled="scaleLevel === 1" @click="enlargeShrinkActionData.handler">
+              <NmorphIcon>
+                <component :is="enlargeShrinkActionData.icon" />
+              </NmorphIcon>
+            </NmorphButton>
+          </div>
+        </div>
+      </NmorphOverlay>
+    </StyledPortal>
+  </Teleport>
 </template>

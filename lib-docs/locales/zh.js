@@ -54,6 +54,7 @@ export default {
         "选择您喜欢的包管理器。<br>我们推荐使用可靠的包管理器，如 <b>NPM</b>、<b>Yarn</b>、<b>Pnpm</b>",
       plugin: "库集成",
       "alternative-plugin": "替代集成方法",
+      nuxt: "Nuxt 集成",
       usage: "基础使用",
     },
     config: {
@@ -116,9 +117,6 @@ export default {
     roadmap: {
       title: "路线图",
       items: {
-        "nuxt-support": "添加 Nuxt 支持。",
-        "test-coverage": "提升测试覆盖率：单元测试、集成测试与 e2e 测试。",
-        "theming-v2": "准备 Theming v2，支持扩展设计令牌与预设。",
         "color-picker-formats":
           "为 NmorphColorPicker 添加不同颜色格式的显示能力。",
         performance: "优化性能与打包体积。",
@@ -127,6 +125,14 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "nuxt-module":
+          "新增 Nuxt module 支持，可通过 `nmorph-ui-kit/nuxt` 自动注册 plugin。",
+        "image-preview-portal":
+          "NmorphImagePreview 现在会通过 body 渲染 overlay，父级 isolation 和 stacking context 不再破坏 preview。",
+        "text-input-prepend-icon":
+          "NmorphTextInput 现在会正确设置 raw SVG prepend 图标的尺寸和颜色。",
+        "docs-actions-align":
+          "已对齐文档示例的 action 按钮，并移除 test coverage 路线图项。",
         "height-basic-name":
           "共享组件高度值从 `default` 重命名为 `basic`，并将组件默认值和文档更新为 thick、basic、thin。",
         "checkbox-radio-defaults":

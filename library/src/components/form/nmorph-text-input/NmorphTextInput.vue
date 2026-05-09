@@ -111,6 +111,7 @@ const commonCSS = css`
   align-items: flex-start;
   min-width: 0;
   --prepend-icon-indent: 8px;
+  --prepend-icon-size: 14px;
 
   .nmorph-text-input__input-side {
     position: relative;
@@ -123,7 +124,34 @@ const commonCSS = css`
   .nmorph-text-input__prepend-icon {
     position: absolute;
     left: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--prepend-icon-size);
+    min-width: var(--prepend-icon-size);
+    height: var(--prepend-icon-size);
+    min-height: var(--prepend-icon-size);
     margin-left: var(--prepend-icon-indent);
+    pointer-events: none;
+
+    svg,
+    .nmorph-icon,
+    .nmorph-icon__content {
+      width: 100%;
+      min-width: 100%;
+      height: 100%;
+      min-height: 100%;
+    }
+
+    svg {
+      fill: var(--nmorph-text-color);
+      stroke-width: 0;
+    }
+
+    path {
+      stroke: var(--nmorph-text-color);
+    }
   }
 
   input {
@@ -146,6 +174,18 @@ const commonCSS = css`
 
     background: var(--nmorph-accent-color);
     outline: none;
+  }
+
+  &.nmorph--focused {
+    .nmorph-text-input__prepend-icon {
+      svg {
+        fill: var(--nmorph-focus-text-color);
+      }
+
+      path {
+        stroke: var(--nmorph-focus-text-color);
+      }
+    }
   }
 
   input:-webkit-autofill,
