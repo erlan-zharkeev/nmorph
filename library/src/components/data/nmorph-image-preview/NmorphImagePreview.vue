@@ -25,6 +25,7 @@ interface INmorphProps {
   minScaleLevel?: number;
   maxScaleLevel?: number;
   zIndex?: number;
+  showTrigger?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -34,6 +35,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   scaleStep: 0.2,
   minScaleLevel: 0.2,
   maxScaleLevel: 4,
+  showTrigger: true,
 });
 
 const open = ref(props.modelValue);
@@ -157,9 +159,16 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div v-if="props.showTrigger" :class="modifiers">
     <div class="nmorph-image-preview__trigger" @click="clickHandler">
-      <NmorphImage :src="triggerSource" :alt="props.alt" fit="cover" />
+      <NmorphImage :src="triggerSource" :alt="props.alt" fit="cover" :frame-border="0">
+        <template v-if="$slots.loading" #loading>
+          <slot name="loading" />
+        </template>
+        <template v-if="$slots.error" #error>
+          <slot name="error" />
+        </template>
+      </NmorphImage>
     </div>
   </div>
   <Teleport to="body">
@@ -170,8 +179,16 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
             :src="triggerSource"
             :alt="props.alt"
             fit="cover"
+            :frame-border="0"
             :style="{ transform: `rotate(${rotateLevel}deg) scale(${scaleLevel})` }"
-          />
+          >
+            <template v-if="$slots.loading" #loading>
+              <slot name="loading" />
+            </template>
+            <template v-if="$slots.error" #error>
+              <slot name="error" />
+            </template>
+          </NmorphImage>
         </div>
         <div v-if="multipleSources" class="nmorph-image-preview__left">
           <NmorphButton @click="previousHandler">

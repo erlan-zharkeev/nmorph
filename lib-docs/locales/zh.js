@@ -117,6 +117,14 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "pagination-basic-height":
+          "NmorphPagination 现在默认使用 basic 控件高度，因此页码控件会与分页按钮对齐。",
+        "checkbox-radio-button-controls":
+          "NmorphCheckbox 和 NmorphRadio 现在默认使用 button design，支持 extra-thin 高度，并会同步多个分组共享的 model。",
+        "avatar-image-preview-cleanup":
+          "NmorphAvatar 不再渲染隐藏的 preview trigger，NmorphImagePreview 也移除了 preview frame 阴影。",
+        "nuxt-i18n-merge":
+          "Nuxt module 现在会自动将 Nmorph 翻译合并到已有的 i18n instance 中。",
         "avatar-preview-resolve":
           "NmorphAvatar 现在会内部解析 NmorphImagePreview，因此直接导入组件时 avatar preview 也能正常工作。",
         "backtop-contrast-icon":
@@ -844,6 +852,7 @@ export default {
         "model-value": "当前活动的页码。",
         "elements-quantity-on-page": "每页显示的元素数量。",
         disabled: "布尔值，禁用分页组件。",
+        height: "分页控件的高度。",
         "hide-on-single-page": "如果只有一页，则隐藏分页组件。",
         "max-visible-pages": "定义在分页控件中显示的页面数量。",
         "fast-forward-step": "定义快进时跳过的页面数量。",
@@ -1569,6 +1578,9 @@ export default {
       },
       events: {
         "update:model-value": "当选中的值发生变化时触发的事件",
+      },
+      translates: {
+        noElementPlaceholder: "选择值",
       },
     },
     "select-option": {

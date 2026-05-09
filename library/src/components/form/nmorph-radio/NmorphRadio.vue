@@ -3,11 +3,12 @@ import { computed, inject, ref, type Ref } from 'vue';
 import { useModifiers } from '@/utils';
 import {
   INmorphRadioOption,
-  NmorphComponentHeight,
   NmorphDomElementType,
   NmorphRadioChangeRadioButtonValueHandlerInjectionType,
   NmorphRadioGroupSelectedValueInjectionType,
   NmorphRadioStyleType,
+  NmorphSelectionControlHeight,
+  NmorphSelectionControlHeightType,
 } from '@/types';
 
 const groupSelectedValue = inject<NmorphRadioGroupSelectedValueInjectionType | undefined>(
@@ -18,7 +19,7 @@ const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType
   'change-radio-button-value-handler',
   undefined
 );
-const groupHeight = inject<Ref<keyof typeof NmorphComponentHeight> | undefined>('radio-group-height', undefined);
+const groupHeight = inject<Ref<NmorphSelectionControlHeightType> | undefined>('radio-group-height', undefined);
 
 interface INmorphProps extends Omit<INmorphRadioOption, 'value'> {
   value?: string;
@@ -29,7 +30,7 @@ interface INmorphProps extends Omit<INmorphRadioOption, 'value'> {
 const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   label: '',
-  styleType: 'radio-style',
+  styleType: 'button',
   checked: false,
   tabindex: 0,
   value: '',
@@ -44,7 +45,7 @@ const height = computed(() => props.height || groupHeight?.value || 'thin');
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[height.value]],
+    nmorph: [NmorphSelectionControlHeight[height.value]],
     'nmorph-radio': [`${props.disabled && 'disabled'}`, `${checked.value && 'checked'}`, props.styleType],
   })
 );
@@ -89,7 +90,9 @@ defineExpose({ inputDOMRef });
         <span> {{ props.label }} </span>
       </div>
       <div v-else class="nmorph-radio__fake">
-        <slot name="label" />
+        <slot name="label">
+          <slot />
+        </slot>
       </div>
     </div>
   </label>
@@ -191,6 +194,20 @@ defineExpose({ inputDOMRef });
         var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
         calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
           var(--nmorph-light-shade-color);
+    }
+  }
+
+  &.nmorph--extra-thin-component {
+    .nmorph-radio__fake span,
+    .nmorph-radio__label {
+      font-size: var(--font-size-extra-small);
+      line-height: var(--line-height-line);
+    }
+
+    &.nmorph-radio--button {
+      .nmorph-radio__fake {
+        padding: var(--indentation-02);
+      }
     }
   }
 

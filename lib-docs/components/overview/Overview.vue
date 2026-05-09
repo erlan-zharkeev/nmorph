@@ -333,7 +333,7 @@ const localePath = useLocalePath();
           <NmorphCard>
             <template #header>File upload</template>
             <div class="overview-component-content">
-              <NmorphFileUpload />
+              <NmorphFileUpload :button-text="t('overview.file-upload.translates.selectFile')" />
             </div>
           </NmorphCard>
         </NuxtLink>
@@ -363,7 +363,7 @@ const localePath = useLocalePath();
           <NmorphCard>
             <template #header>Select</template>
             <div class="overview-component-content">
-              <NmorphSelect />
+              <NmorphSelect :no-element-placeholder="t('overview.select.translates.noElementPlaceholder')" />
             </div>
           </NmorphCard>
         </NuxtLink>

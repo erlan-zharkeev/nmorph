@@ -48,9 +48,17 @@ const attributesData: IAttributesTableData[] = [
     type: "Number",
     default: "auto",
   },
+  {
+    name: "show-trigger",
+    type: "Boolean",
+    default: "true",
+  },
 ];
 
-const slotData: ISlotsTableData[] = [];
+const slotData: ISlotsTableData[] = [
+  { name: "loading" },
+  { name: "error" },
+];
 
 const variables: IVariablesTableData[] = [
   { name: "width" },

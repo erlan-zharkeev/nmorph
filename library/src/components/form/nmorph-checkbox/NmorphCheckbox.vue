@@ -5,8 +5,9 @@ import {
   INmorphCheckboxOption,
   NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType,
   NmorphCheckboxGroupSelectedValueInjectionType,
-  NmorphComponentHeight,
   NmorphDomElementType,
+  NmorphSelectionControlHeight,
+  NmorphSelectionControlHeightType,
 } from '@/types';
 
 const groupSelectedValue = inject<NmorphCheckboxGroupSelectedValueInjectionType>(
@@ -18,14 +19,14 @@ const changeValue = inject<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectio
   'change-checkbox-value-handler',
   undefined
 );
-const groupHeight = inject<Ref<keyof typeof NmorphComponentHeight> | undefined>('checkbox-group-height', undefined);
+const groupHeight = inject<Ref<NmorphSelectionControlHeightType> | undefined>('checkbox-group-height', undefined);
 
 const props = withDefaults(defineProps<INmorphCheckboxOption>(), {
   id: '',
   disabled: false,
   modelValue: false,
   label: '',
-  design: 'checkbox',
+  design: 'button',
 });
 
 interface INmorphEmit {
@@ -62,7 +63,7 @@ const handleChange = () => {
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[height.value]],
+    nmorph: [NmorphSelectionControlHeight[height.value]],
     'nmorph-checkbox': [
       `${checked.value && 'checked'}`,
       `${props.disabled && 'disabled'}`,
@@ -100,7 +101,9 @@ const modifiers = computed(() =>
         <span>{{ props.label }}</span>
       </div>
       <div v-else class="nmorph-checkbox__fake">
-        <slot name="label" />
+        <slot name="label">
+          <slot />
+        </slot>
       </div>
     </div>
   </label>
@@ -202,6 +205,20 @@ const modifiers = computed(() =>
         var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
         calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
           var(--nmorph-light-shade-color);
+    }
+  }
+
+  &.nmorph--extra-thin-component {
+    .nmorph-checkbox__label,
+    .nmorph-checkbox__fake span {
+      font-size: var(--font-size-extra-small);
+      line-height: var(--line-height-line);
+    }
+
+    &.nmorph-checkbox--button {
+      .nmorph-checkbox__fake {
+        padding: var(--indentation-02);
+      }
     }
   }
 

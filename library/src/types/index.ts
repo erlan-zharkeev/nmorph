@@ -20,6 +20,13 @@ export enum NmorphComponentHeight {
   thin = 'thin-component',
 }
 
+export const NmorphSelectionControlHeight = {
+  ...NmorphComponentHeight,
+  'extra-thin': 'extra-thin-component',
+} as const;
+
+export type NmorphSelectionControlHeightType = keyof typeof NmorphSelectionControlHeight;
+
 export type NmorphSortOrderType = keyof typeof NmorphSortOrder | undefined;
 
 export enum AvatarShapeType {
@@ -203,7 +210,7 @@ export interface INmorphCheckboxOption {
   modelValue?: boolean;
   label?: string;
   design?: NmorphCheckboxDesignType;
-  height?: keyof typeof NmorphComponentHeight;
+  height?: NmorphSelectionControlHeightType;
 }
 
 export type NmorphCheckboxDesignType = 'button' | 'checkbox';
@@ -219,7 +226,7 @@ export interface INmorphRadioOption {
   label?: string;
   value: string;
   tabindex?: number;
-  height?: keyof typeof NmorphComponentHeight;
+  height?: NmorphSelectionControlHeightType;
 }
 
 export enum NmorphRadioStyleType {

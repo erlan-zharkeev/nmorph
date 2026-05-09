@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { defineComponent, nextTick, reactive } from 'vue';
+import { defineComponent, nextTick, reactive, ref } from 'vue';
 import { describe, expect, it } from 'vitest';
 import {
   NmorphAlert,
@@ -455,5 +455,71 @@ const mountCase = async (renderCase) => {
 describe('components', () => {
   it.each(renderCases)('renders $name', async (renderCase) => {
     await mountCase(renderCase);
+  });
+
+  it('syncs checkbox groups bound to the same model', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphCheckboxGroup },
+        setup() {
+          const value = ref(['second']);
+          return { checkboxOptions, value };
+        },
+        template: `
+          <NmorphCheckboxGroup v-model="value" :options="checkboxOptions" />
+          <NmorphCheckboxGroup v-model="value" :options="checkboxOptions" />
+        `,
+      })
+    );
+
+    await wrapper.findAll('input[type="checkbox"]')[0].trigger('change');
+    await nextTick();
+
+    expect((wrapper.findAll('input[type="checkbox"]')[2].element as HTMLInputElement).checked).toBe(true);
+    wrapper.unmount();
+  });
+
+  it('syncs radio groups bound to the same model', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphRadioGroup },
+        setup() {
+          const value = ref('second');
+          return { options, value };
+        },
+        template: `
+          <NmorphRadioGroup v-model="value" :options="options" />
+          <NmorphRadioGroup v-model="value" :options="options" />
+        `,
+      })
+    );
+
+    await wrapper.findAll('.nmorph-radio')[0].trigger('click');
+    await nextTick();
+
+    expect((wrapper.findAll('input[type="radio"]')[2].element as HTMLInputElement).checked).toBe(true);
+    wrapper.unmount();
+  });
+
+  it('does not render image preview trigger inside avatar preview', async () => {
+    const wrapper = mount(NmorphAvatar, {
+      props: { src: imageSrc, preview: true },
+    });
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-image-preview__trigger').exists()).toBe(false);
+    wrapper.unmount();
+  });
+
+  it('uses basic height for pagination page controls by default', async () => {
+    const wrapper = mount(NmorphPagination, {
+      props: { totalElementsQuantity: 24, elementsQuantityOnPage: 8 },
+    });
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-pagination__page-btn.nmorph-radio').classes()).toContain('nmorph--basic-component');
+    wrapper.unmount();
   });
 });

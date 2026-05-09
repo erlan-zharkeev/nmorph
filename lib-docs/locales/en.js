@@ -128,6 +128,14 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "pagination-basic-height":
+          "NmorphPagination now uses the basic control height by default, so page controls align with pagination buttons.",
+        "checkbox-radio-button-controls":
+          "NmorphCheckbox and NmorphRadio controls now use button design by default, support the extra-thin height, and keep shared models synchronized across groups.",
+        "avatar-image-preview-cleanup":
+          "NmorphAvatar no longer renders a hidden preview trigger, and NmorphImagePreview removes the preview frame shadow.",
+        "nuxt-i18n-merge":
+          "The Nuxt module now merges Nmorph translations into an existing i18n instance automatically.",
         "avatar-preview-resolve":
           "NmorphAvatar now resolves NmorphImagePreview internally, so avatar preview works with direct component imports.",
         "backtop-contrast-icon":
@@ -889,6 +897,7 @@ export default {
         "elements-quantity-on-page":
           "Number of elements displayed on each page.",
         disabled: "Boolean value that disables the pagination component.",
+        height: "Height of pagination controls.",
         "hide-on-single-page":
           "Hides the pagination component if there is only one page.",
         "max-visible-pages":
@@ -1673,6 +1682,9 @@ export default {
       },
       events: {
         "update:model-value": "Event triggered when the selected value changes",
+      },
+      translates: {
+        noElementPlaceholder: "Choose value",
       },
     },
     "select-option": {

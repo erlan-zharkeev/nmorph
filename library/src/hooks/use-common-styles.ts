@@ -213,6 +213,12 @@ export const useCommonStyles = () => {
       height: var(--height);
     }
 
+    .nmorph--extra-thin-component {
+      --height: var(--extra-thin-component);
+
+      height: var(--height);
+    }
+
     .nmorph--thick-component {
       --height: var(--thick-component);
 
@@ -296,15 +302,8 @@ export const useCommonStyles = () => {
       cursor: pointer;
     }
 
-    .nmorph-avatar__preview {
-      position: absolute;
-      width: 0;
-      height: 0;
-      overflow: visible;
-    }
-
-    .nmorph-avatar__preview .nmorph-image-preview__trigger {
-      display: none;
+    .nmorph-avatar--preview:hover > .nmorph-image {
+      filter: brightness(0.8);
     }
 
     .nmorph-image {

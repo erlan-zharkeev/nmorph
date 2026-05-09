@@ -2,6 +2,7 @@
 import { computed, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphRadioGroup, NmorphButton, NmorphIcon, NmorphRadio, NmorphIconChevronDown } from '@/components';
+import { NmorphComponentHeight } from '@/types';
 
 interface INmorphProps {
   totalElementsQuantity: number;
@@ -11,6 +12,7 @@ interface INmorphProps {
   hideOnSinglePage?: boolean;
   maxVisiblePages?: number;
   fastForwardStep?: number;
+  height?: keyof typeof NmorphComponentHeight;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -20,6 +22,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   hideOnSinglePage: true,
   maxVisiblePages: 9,
   fastForwardStep: 5,
+  height: 'basic',
 });
 
 interface INmorphEmit {
@@ -101,6 +104,7 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
   <div v-if="show" :class="modifiers">
     <NmorphButton
       class="nmorph-pagination__btn nmorph-pagination__prev-btn"
+      :height="props.height"
       :disabled="blockPrevButton || props.disabled"
       @click="prevClick"
     >
@@ -111,6 +115,7 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
     <NmorphRadioGroup
       :model-value="selectedPage"
       class="nmorph-pagination__page-group"
+      :height="props.height"
       :disabled="props.disabled"
       @update:model-value="updateSelectedValue"
     >
@@ -119,14 +124,22 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
           v-if="page.value === 'prev' || page.value === 'next'"
           :class="`nmorph-pagination__page-btn nmorph-pagination__${page.value}`"
           :text="page.label"
+          :height="props.height"
           :disabled="props.disabled"
           @click="bigStepUpdate(page.value)"
         />
-        <NmorphRadio v-else v-bind="page" class="nmorph-pagination__page-btn" :disabled="props.disabled" />
+        <NmorphRadio
+          v-else
+          v-bind="page"
+          class="nmorph-pagination__page-btn"
+          :height="props.height"
+          :disabled="props.disabled"
+        />
       </div>
     </NmorphRadioGroup>
     <NmorphButton
       class="nmorph-pagination__btn nmorph-pagination__next-btn"
+      :height="props.height"
       :disabled="blockNextButton || props.disabled"
       @click="nextClick"
     >
@@ -181,7 +194,7 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
 
   .nmorph-pagination__page-btn {
     width: 40px;
-    height: 40px;
+    height: var(--height);
   }
 
   .nmorph-pagination__page-btn-wrapper {

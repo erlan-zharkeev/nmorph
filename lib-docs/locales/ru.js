@@ -130,6 +130,14 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "pagination-basic-height":
+          "NmorphPagination теперь по умолчанию использует высоту basic, поэтому элементы страниц выровнены с кнопками пагинации.",
+        "checkbox-radio-button-controls":
+          "NmorphCheckbox и NmorphRadio теперь по умолчанию используют button design, поддерживают высоту extra-thin и синхронизируют общий model между группами.",
+        "avatar-image-preview-cleanup":
+          "NmorphAvatar больше не рендерит скрытый preview trigger, а NmorphImagePreview убирает shadow у preview frame.",
+        "nuxt-i18n-merge":
+          "Nuxt module теперь автоматически мержит переводы Nmorph в существующий i18n instance.",
         "avatar-preview-resolve":
           "NmorphAvatar теперь сам подключает NmorphImagePreview, поэтому preview аватара работает при direct component imports.",
         "backtop-contrast-icon":
@@ -903,6 +911,7 @@ export default {
         "elements-quantity-on-page":
           "Количество элементов, отображаемых на каждой странице.",
         disabled: "Булево значение, отключающее компонент пагинации.",
+        height: "Высота элементов управления пагинацией.",
         "hide-on-single-page":
           "Скрывает компонент пагинации, если есть только одна страница.",
         "max-visible-pages":
@@ -1704,6 +1713,9 @@ export default {
       events: {
         "update:model-value":
           "Событие всплывает при изменении выбранного значения",
+      },
+      translates: {
+        noElementPlaceholder: "Выберите значение",
       },
     },
     "select-option": {
