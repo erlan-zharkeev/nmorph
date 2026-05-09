@@ -1,56 +1,74 @@
 <script setup lang="ts">
-const { t } = useI18n();
+import { guideGroups, guidePageMap, textByLocale, type GuidePageSlug } from "~/data/guide";
+
+const { locale } = useI18n();
 const localePath = useLocalePath();
+const route = useRoute();
 
-interface IProps {
-  activeAnchor?: string;
-}
+const props = withDefaults(
+  defineProps<{
+    activeSlug?: GuidePageSlug | "";
+  }>(),
+  {
+    activeSlug: "",
+  }
+);
 
-const props = withDefaults(defineProps<IProps>(), {
-  activeAnchor: ''
-})
-
-const list: { name: string; hash: string }[] = [
-  { name: t("guide-menu.quick-start"), hash: "#quick-start" },
-  { name: t("guide-menu.config"), hash: "#config" },
-  { name: t("guide-menu.other"), hash: "#other" },
-];
+const currentSlug = computed(() => props.activeSlug || String(route.params.slug || ""));
 </script>
 
 <template>
-  <div class="docs-guide-menu">
-    <div class="docs-guide-menu__element" v-for="element in list" :key="element.name">
-      <NuxtLink :to="localePath({ path: '/guide', hash: element.hash })" class="docs-guide-menu__element-title"
-        :class="{ 'docs-guide-menu__element-title--active': props.activeAnchor === element.hash }">
-        {{ element.name }}
+  <nav class="docs-guide-menu">
+    <NuxtLink :to="localePath('/guide')" class="docs-guide-menu__root"
+      :class="{ 'docs-guide-menu__link--active': !currentSlug }">
+      {{ $t("guide-page.title") }}
+    </NuxtLink>
+    <div v-for="group in guideGroups" :key="group.title.en" class="docs-guide-menu__group">
+      <div class="docs-guide-menu__group-title">{{ textByLocale(group.title, locale) }}</div>
+      <NuxtLink v-for="slug in group.pages" :key="slug" :to="localePath(`/guide/${slug}`)"
+        class="docs-guide-menu__link" :class="{ 'docs-guide-menu__link--active': currentSlug === slug }">
+        {{ textByLocale(guidePageMap[slug].title, locale) }}
       </NuxtLink>
     </div>
-  </div>
+  </nav>
 </template>
 
 <style lang="scss">
 .docs-guide-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 
   a {
-    font-size: 20px;
-    font-weight: 400;
-  }
-
-  .docs-guide-menu__element {
-    margin-top: 12px;
-  }
-
-  .docs-guide-menu__element-title--active {
-    font-weight: 800;
+    text-decoration: none;
   }
 }
 
-@include max-width-query(768) {
-  .docs-guide-menu {
-    a {
-      font-size: 18px;
-      line-height: 1.3;
-    }
-  }
+.docs-guide-menu__root {
+  font-size: var(--font-size-medium);
+  font-weight: 800;
+}
+
+.docs-guide-menu__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.docs-guide-menu__group-title {
+  color: var(--nmorph-semi-contrast-text-color);
+  font-size: var(--font-size-extra-small);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.docs-guide-menu__link {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-compact);
+}
+
+.docs-guide-menu__link--active {
+  color: var(--nmorph-accent-color);
+  font-weight: 800;
 }
 </style>

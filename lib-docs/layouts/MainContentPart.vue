@@ -36,7 +36,13 @@ const slots = useSlots() as Record<string, unknown>;
     </NmorphScroll>
     <NmorphScroll ref="scroll" class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card"
       id="page-content-part">
-      <main class="docs-main-layout__center" :class="{ 'docs-main-layout__center--full-page': isMainFullPage }">
+      <main
+        class="docs-main-layout__center"
+        :class="{
+          'docs-main-layout__center--full-page': isMainFullPage,
+          'docs-main-layout__center--lib-page': !isMainFullPage,
+        }"
+      >
         <slot name="default" />
       </main>
       <aside class="docs-main-layout__card nmorph--shadow-inset docs-main-layout__center-aside"
@@ -74,6 +80,10 @@ const slots = useSlots() as Record<string, unknown>;
 
 .docs-main-layout__center {
   width: calc(100% - 200px);
+}
+
+.docs-main-layout__center--lib-page {
+  width: calc(100% - 224px);
 }
 
 .docs-main-layout__center--full-page {

@@ -1,16 +1,15 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import {
   NmorphNotificationProvider,
   nmorphLog,
-  NmorphProgress,
   useNmorph,
 } from "@nmorph/nmorph-ui-kit";
 import { notificationProvider, useGlobalStore } from "~/providers";
 import projectData from "./package.json";
 
-const loaded = ref(false);
 const store = useGlobalStore();
+const nmorph = useNmorph();
 
 const updateViewportHeight = () => {
   const vh = window.innerHeight * 0.01;
@@ -20,18 +19,16 @@ const updateViewportHeight = () => {
 onMounted(() => {
   if (import.meta.client) {
     nmorphLog("success", `NMORPH DOCS (v${projectData.version})`);
-    const nmorph = useNmorph();
     store.inferNmorphSetTheme(nmorph.theme.setTheme);
     store.changeTheme(nmorph.theme.currentTheme.value);
     store.inferGetDynamicColorVariables(nmorph.theme.getDynamicColorVariables);
     updateViewportHeight();
     window.addEventListener('resize', updateViewportHeight);
   }
-  loaded.value = true;
 });
 
 onUnmounted(async () => {
-  window.removeEventListener('resize', updateViewportHeight);
+  if (import.meta.client) window.removeEventListener('resize', updateViewportHeight);
 });
 </script>
 
@@ -39,12 +36,7 @@ onUnmounted(async () => {
   <ClientOnly>
     <NmorphNotificationProvider :notifications="notificationProvider.notifications.value" placement="top-center" />
   </ClientOnly>
-  <div class="loader" v-if="!loaded">
-    <ClientOnly>
-      <NmorphProgress :value-right-side="false" indeterminate color="var(--nmorph-accent-color)" />
-    </ClientOnly>
-  </div>
-  <div v-else class="docs-shell">
+  <div class="docs-shell">
     <div class="docs">
       <NuxtLayout name="default" />
     </div>
@@ -62,14 +54,6 @@ onUnmounted(async () => {
 
 html {
   overflow: hidden;
-}
-
-.loader {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  padding: 0 20%;
 }
 
 .docs {

@@ -1,23 +1,28 @@
 import { INmorphCoords, INmorphInstance, NmorphDomElementType, NmorphPlacementType } from '@/types';
-import { Ref, ref, nextTick, onMounted, inject, watch, onUnmounted } from 'vue';
+import { Ref, ref, nextTick, onMounted, inject, watch, onUnmounted, unref } from 'vue';
+
+type TNmorphMaybeRef<T> = T | Ref<T>;
 
 interface INmorphUsePlacementPayload {
-  initialPlacement: NmorphPlacementType;
+  initialPlacement: TNmorphMaybeRef<NmorphPlacementType>;
   contentDOMElement: Ref<NmorphDomElementType>;
   relativeElement: NmorphDomElementType | Ref<NmorphDomElementType>;
-  yOffset?: number;
-  xOffset?: number;
+  yOffset?: TNmorphMaybeRef<number | undefined>;
+  xOffset?: TNmorphMaybeRef<number | undefined>;
+  enabled?: TNmorphMaybeRef<boolean | undefined>;
 }
 
 export const usePlacement = (data: INmorphUsePlacementPayload) => {
-  const { initialPlacement, relativeElement, contentDOMElement, yOffset = 0, xOffset = 0 } = data;
-  const placement = ref<NmorphPlacementType>(initialPlacement);
+  const { initialPlacement, relativeElement, contentDOMElement, yOffset = 0, xOffset = 0, enabled } = data;
+  const placement = ref<NmorphPlacementType>(unref(initialPlacement));
   const placementCoords = ref<INmorphCoords<string>>({ x: '0px', y: '0px' });
-  const nmorph = inject<INmorphInstance>('nmorph');
-  const scrollContainer = ref<HTMLElement | null>(null);
+  const placementReady = ref(false);
+  const nmorph = inject<INmorphInstance | undefined>('nmorph');
+  const scrollListenerOptions: AddEventListenerOptions = { passive: true, capture: true };
+  let mutationObserver: MutationObserver | null = null;
 
   watch(
-    () => nmorph.browser,
+    () => nmorph?.browser,
     () => {
       adjustPlacement();
     },
@@ -26,19 +31,28 @@ export const usePlacement = (data: INmorphUsePlacementPayload) => {
 
   onMounted(() => {
     adjustPlacement();
-    findScrollableContainer();
     addScrollListener();
-    mutationObserver.observe(document.body, {
-      childList: true,
-      subtree: true,
+    window.addEventListener('resize', adjustPlacement, { passive: true });
+    mutationObserver = new MutationObserver(() => {
+      checkForCoordinateChanges();
     });
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
     checkForCoordinateChanges();
   });
 
   onUnmounted(() => {
     removeScrollListener();
-    mutationObserver.disconnect();
+    window.removeEventListener('resize', adjustPlacement);
+    mutationObserver?.disconnect();
   });
+
+  watch(
+    () => [unref(initialPlacement), unref(relativeElement), unref(xOffset), unref(yOffset), unref(enabled)],
+    () => {
+      adjustPlacement();
+    },
+    { flush: 'post' }
+  );
 
   const checkForCoordinateChanges = () => {
     nextTick(() => {
@@ -46,99 +60,139 @@ export const usePlacement = (data: INmorphUsePlacementPayload) => {
     });
   };
 
-  const mutationObserver = new MutationObserver(() => {
-    checkForCoordinateChanges();
-  });
+  const isEnabled = () => enabled === undefined || unref(enabled) !== false;
 
-  const findScrollableContainer = () => {
-    let element = contentDOMElement.value as HTMLElement | null;
+  const parsePlacement = (value: NmorphPlacementType) => {
+    const [side, align] = value.split('-');
 
-    while (element) {
-      const style = window.getComputedStyle(element);
-      if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
-        scrollContainer.value = element;
-        break;
-      }
-      element = element.parentElement;
+    return {
+      side,
+      align: align || 'start',
+      hasAlign: Boolean(align),
+    } as const;
+  };
+
+  const getPlacementName = (side: string, align: string, hasAlign: boolean) =>
+    (hasAlign ? `${side}-${align}` : side) as NmorphPlacementType;
+
+  const getRelativeElement = () => unref(relativeElement);
+
+  const getResolvedSide = (
+    side: string,
+    x: number,
+    y: number,
+    relativeElWidth: number,
+    relativeElHeight: number,
+    dropdownElWidth: number,
+    dropdownElHeight: number
+  ) => {
+    if (side === 'top' && y - dropdownElHeight < 0) {
+      return 'bottom';
     }
+
+    if (side === 'bottom' && y + relativeElHeight + dropdownElHeight > window.innerHeight) {
+      return 'top';
+    }
+
+    if (side === 'left' && x - dropdownElWidth < 0) {
+      return 'right';
+    }
+
+    if (side === 'right' && x + relativeElWidth + dropdownElWidth > window.innerWidth) {
+      return 'left';
+    }
+
+    return side;
   };
 
   const addScrollListener = () => {
-    if (scrollContainer.value) {
-      scrollContainer.value.addEventListener('scroll', adjustPlacement, { passive: true });
-    } else {
-      window.addEventListener('scroll', adjustPlacement, { passive: true });
-    }
+    window.addEventListener('scroll', adjustPlacement, scrollListenerOptions);
   };
 
   const removeScrollListener = () => {
-    if (scrollContainer.value) {
-      scrollContainer.value.removeEventListener('scroll', adjustPlacement);
-    } else {
-      window.removeEventListener('scroll', adjustPlacement);
-    }
+    window.removeEventListener('scroll', adjustPlacement, scrollListenerOptions);
   };
 
   const adjustPlacement = () => {
     nextTick(() => {
-      if (!contentDOMElement.value || !relativeElement) {
-        console.warn('There is no relative element or content DOM element');
+      if (typeof window === 'undefined') return;
+
+      if (!isEnabled()) {
+        placementReady.value = false;
+        return;
+      }
+
+      const actualRelativeEl = getRelativeElement();
+
+      if (!contentDOMElement.value || !actualRelativeEl) {
+        placementReady.value = false;
         return;
       }
 
       const dropdownEl = contentDOMElement.value.getBoundingClientRect();
       const dropdownElWidth = dropdownEl.width;
       const dropdownElHeight = dropdownEl.height;
-
-      const actualRelativeEl = 'value' in relativeElement ? relativeElement.value : relativeElement;
-
-      if (!actualRelativeEl) {
-        console.warn('Relative element is not an HTMLElement');
-        return;
-      }
-
       const relativeEl = (actualRelativeEl as HTMLElement).getBoundingClientRect();
       const { x, y } = relativeEl;
-
       const relativeElWidth = relativeEl.width;
       const relativeElHeight = relativeEl.height;
+      const xOffsetValue = unref(xOffset) || 0;
+      const yOffsetValue = unref(yOffset) || 0;
+      const parsedPlacement = parsePlacement(unref(initialPlacement));
+      const side = getResolvedSide(
+        parsedPlacement.side,
+        x,
+        y,
+        relativeElWidth,
+        relativeElHeight,
+        dropdownElWidth,
+        dropdownElHeight
+      );
 
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
+      let nextX = x;
+      let nextY = y;
 
-      if (placement.value === 'top' && y - dropdownElHeight < 0) {
-        placement.value = 'bottom';
+      if (side === 'top' || side === 'bottom') {
+        const alignMap = {
+          start: x,
+          center: x + relativeElWidth / 2 - dropdownElWidth / 2,
+          end: x + relativeElWidth - dropdownElWidth,
+        };
+
+        nextX = alignMap[parsedPlacement.align as keyof typeof alignMap] ?? alignMap.start;
+        nextY = side === 'top' ? y - dropdownElHeight : y + relativeElHeight;
       }
 
-      if (placement.value === 'bottom' && y + relativeElHeight + dropdownElHeight > screenHeight) {
-        placement.value = 'top';
+      if (side === 'left' || side === 'right') {
+        const alignMap = {
+          start: y,
+          center: y + relativeElHeight / 2 - dropdownElHeight / 2,
+          end: y + relativeElHeight - dropdownElHeight,
+        };
+
+        nextX = side === 'left' ? x - dropdownElWidth : x + relativeElWidth;
+        nextY = alignMap[parsedPlacement.align as keyof typeof alignMap] ?? alignMap.start;
       }
 
-      if (placement.value === 'left' && x - dropdownElWidth < 0) {
-        placement.value = 'right';
-      }
+      placement.value = getPlacementName(side, parsedPlacement.align, parsedPlacement.hasAlign);
+      placementCoords.value = { x: `${nextX + xOffsetValue}px`, y: `${nextY + yOffsetValue}px` };
+      placementReady.value = true;
 
-      if (placement.value === 'right' && x + relativeElWidth + dropdownElWidth > screenWidth) {
-        placement.value = 'left';
-      }
+      if (typeof requestAnimationFrame !== 'function') return;
 
-      if (placement.value === 'top') {
-        placementCoords.value = { x: `${x + xOffset}px`, y: `${y - dropdownElHeight + yOffset}px` };
-      }
+      requestAnimationFrame(() => {
+        const nextRelativeEl = getRelativeElement();
 
-      if (placement.value === 'bottom') {
-        placementCoords.value = { x: `${x + xOffset}px`, y: `${y + relativeElHeight + yOffset}px` };
-      }
+        if (!contentDOMElement.value || !nextRelativeEl || !isEnabled()) return;
 
-      if (placement.value === 'right') {
-        placementCoords.value = { x: `${x + relativeElWidth + xOffset}px`, y: `${y + yOffset}px` };
-      }
+        const currentContent = contentDOMElement.value.getBoundingClientRect();
 
-      if (placement.value === 'left') {
-        placementCoords.value = { x: `${x - dropdownElWidth + xOffset}px`, y: `${y + yOffset}px` };
-      }
+        if (currentContent.width !== dropdownElWidth || currentContent.height !== dropdownElHeight) {
+          adjustPlacement();
+        }
+      });
     });
   };
 
-  return { placement, placementCoords };
+  return { placement, placementCoords, placementReady, adjustPlacement };
 };

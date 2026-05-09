@@ -47,7 +47,7 @@ const attributesData: IAttributesTableData[] = [
     name: "options",
     type: `Array<${docsLink(
       "INmorphSelectOption",
-      "/components/select#content-select-option-attributes"
+      "/components/select#content-select-option-attributes",
     )}>`,
     default: "[]",
   },
@@ -55,7 +55,7 @@ const attributesData: IAttributesTableData[] = [
     name: "options-map",
     type: `Array<${docsLink(
       "INmorphSelectOption",
-      "/components/select#content-select-option-attributes"
+      "/components/select#content-select-option-attributes",
     )}>`,
     default: "[]",
   },
@@ -89,6 +89,26 @@ const attributesData: IAttributesTableData[] = [
     type: "Number",
     default: "auto",
   },
+  {
+    name: "virtual",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "virtual-item-height",
+    type: "Number",
+    default: "auto by height",
+  },
+  {
+    name: "virtual-max-height",
+    type: "Number | String",
+    default: "240",
+  },
+  {
+    name: "virtual-overscan",
+    type: "Number",
+    default: "5",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "default" }];
@@ -121,19 +141,32 @@ const variablesSelectOption: IVariablesTableData[] = [
 ];
 const eventsSelectOption = [{ name: "change-value", type: "String" }];
 
-const translates = [{ name: 'noElementPlaceholder' }]
+const translates = [{ name: "noElementPlaceholder" }];
 </script>
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphSelect" name="select" :attributes="attributesData" :slots="slotData" :variables="variables"
-      :events="events" :translates="translates" />
+    <api-table
+      title="NmorphSelect"
+      name="select"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+      :events="events"
+      :translates="translates"
+    />
   </div>
   <NmorphDivider />
   <div class="docs-api-table">
-    <api-table title="NmorphSelectOption" name="select-option" additional-id="select-option"
-      :attributes="selectOptionAttr" :slots="slotSelectOptionData" :variables="variablesSelectOption"
-      :events="eventsSelectOption" />
+    <api-table
+      title="NmorphSelectOption"
+      name="select-option"
+      additional-id="select-option"
+      :attributes="selectOptionAttr"
+      :slots="slotSelectOptionData"
+      :variables="variablesSelectOption"
+      :events="eventsSelectOption"
+    />
   </div>
 </template>
 

@@ -2,6 +2,7 @@
 import { computed, provide, ref, watch } from 'vue';
 import { generateUUID, useModifiers } from '@/utils';
 import { NmorphDomElementType, NmorphSortOrderType } from '@/types';
+import { useVirtualList } from '@/hooks';
 import {
   NmorphTableDataType,
   NmorphTableSortType,
@@ -17,6 +18,10 @@ interface INmorphProps {
   bordered?: boolean;
   sort?: NmorphTableSortType;
   design?: 'nmorph' | 'common';
+  virtual?: boolean;
+  virtualHeight?: number | string;
+  virtualOverscan?: number;
+  virtualRowHeight?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -25,6 +30,10 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   sort: undefined,
   design: 'nmorph',
   rowHover: true,
+  virtual: false,
+  virtualHeight: '320px',
+  virtualOverscan: 5,
+  virtualRowHeight: 42,
 });
 
 const modifiers = computed(() =>
@@ -33,7 +42,19 @@ const modifiers = computed(() =>
   })
 );
 
-const rows = ref(props.data);
+const rows = ref([...props.data]);
+const virtualEnabled = computed(() => props.virtual);
+const virtualRowHeight = computed(() => props.virtualRowHeight);
+const virtualOverscan = computed(() => props.virtualOverscan);
+const virtualList = useVirtualList(rows, {
+  enabled: virtualEnabled,
+  itemHeight: virtualRowHeight,
+  overscan: virtualOverscan,
+});
+
+const tableRows = computed(() =>
+  virtualEnabled.value ? virtualList.virtualItems.value.map((virtualRow) => virtualRow.item) : rows.value
+);
 
 const sortData = ref(props.sort);
 const onSort = (value: NmorphSortOrderType, prop: string) => {
@@ -59,7 +80,7 @@ const onSort = (value: NmorphSortOrderType, prop: string) => {
 
 const nmorphDOMTable = ref<NmorphDomElementType>(null);
 const columns = ref<INmorphTableColumnProps[]>([]);
-provide<INmorphTableDataInjection>('table-data', { rows, columns });
+provide<INmorphTableDataInjection>('table-data', { rows: tableRows, columns });
 
 const defaultColWidth = computed(() => {
   const columnsWidth = columns.value.map((column) => column.width).filter((width) => Boolean(width));
@@ -85,7 +106,7 @@ watch(
   () => props.data,
   () => {
     key.value = key.value + 1;
-    rows.value = props.data;
+    rows.value = [...props.data];
     columns.value = [];
   },
   {
@@ -95,6 +116,20 @@ watch(
 const tableData = (data: unknown) => (typeof data === 'object' ? '' : data);
 const tableIdentifier = generateUUID();
 provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
+
+const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const virtualHeight = computed(() => getCssSize(props.virtualHeight));
+const tableBodyStyle = computed<Record<string, string | undefined>>(() => ({
+  '--table-virtual-row-height': `${props.virtualRowHeight}px`,
+  height: virtualEnabled.value ? virtualHeight.value : undefined,
+  overflowY: virtualEnabled.value ? 'auto' : undefined,
+}));
+const virtualSpacerStyle = computed(() => ({
+  height: `${virtualList.totalHeight.value}px`,
+}));
+const virtualContentStyle = computed(() => ({
+  transform: `translateY(${virtualList.offsetTop.value}px)`,
+}));
 </script>
 
 <template>
@@ -133,51 +168,107 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
             </tr>
           </thead>
         </table>
-        <div class="nmorph-table__body">
-          <table>
-            <colgroup>
-              <col
-                v-for="columnData in columns"
-                :key="columnData.prop"
-                :style="{ width: `${getWidth(columnData.width)}px` }"
-              />
-            </colgroup>
-            <tbody>
-              <tr
-                v-for="(rowData, idx) in rows"
-                :key="idx"
-                class="nmorph-table__table-data-row"
-                :class="{ 'nmorph-table__table-data-row--row-hover': props.rowHover }"
-              >
-                <td
+        <div
+          :ref="virtualList.containerRef"
+          class="nmorph-table__body"
+          :class="{ 'nmorph-table__body--virtual': virtualEnabled }"
+          :style="tableBodyStyle"
+          @scroll="virtualList.scrollHandler"
+        >
+          <div v-if="virtualEnabled" class="nmorph-table__virtual-spacer" :style="virtualSpacerStyle">
+            <div class="nmorph-table__virtual-content" :style="virtualContentStyle">
+              <table>
+                <colgroup>
+                  <col
+                    v-for="columnData in columns"
+                    :key="columnData.prop"
+                    :style="{ width: `${getWidth(columnData.width)}px` }"
+                  />
+                </colgroup>
+                <tbody>
+                  <tr
+                    v-for="(rowData, idx) in tableRows"
+                    :key="idx"
+                    class="nmorph-table__table-data-row"
+                    :class="{ 'nmorph-table__table-data-row--row-hover': props.rowHover }"
+                  >
+                    <td
+                      v-for="columnData in columns"
+                      :key="columnData.prop"
+                      :class="{ 'nmorph-table__table-data--bordered': props.bordered }"
+                      class="nmorph-table__table-data"
+                    >
+                      <div
+                        :id="`table-cell-${tableIdentifier}-${idx}-${columnData.prop}`"
+                        :style="{ 'text-align': columnData.alignment }"
+                        class="nmorph-table__cell nmorph-table__cell--data"
+                      >
+                        {{ tableData(rowData[columnData.prop]) }}
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table>
+                <colgroup>
+                  <col
+                    v-for="columnData in columns"
+                    :key="columnData.prop"
+                    :style="{ width: `${getWidth(columnData.width)}px` }"
+                  />
+                </colgroup>
+                <tbody class="nmorph-table__slot-columns">
+                  <slot />
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <template v-else>
+            <table>
+              <colgroup>
+                <col
                   v-for="columnData in columns"
                   :key="columnData.prop"
-                  :class="{ 'nmorph-table__table-data--bordered': props.bordered }"
-                  class="nmorph-table__table-data"
+                  :style="{ width: `${getWidth(columnData.width)}px` }"
+                />
+              </colgroup>
+              <tbody>
+                <tr
+                  v-for="(rowData, idx) in tableRows"
+                  :key="idx"
+                  class="nmorph-table__table-data-row"
+                  :class="{ 'nmorph-table__table-data-row--row-hover': props.rowHover }"
                 >
-                  <div
-                    :id="`table-cell-${tableIdentifier}-${idx}-${columnData.prop}`"
-                    :style="{ 'text-align': columnData.alignment }"
-                    class="nmorph-table__cell nmorph-table__cell--data"
+                  <td
+                    v-for="columnData in columns"
+                    :key="columnData.prop"
+                    :class="{ 'nmorph-table__table-data--bordered': props.bordered }"
+                    class="nmorph-table__table-data"
                   >
-                    {{ tableData(rowData[columnData.prop]) }}
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <table>
-            <colgroup>
-              <col
-                v-for="columnData in columns"
-                :key="columnData.prop"
-                :style="{ width: `${getWidth(columnData.width)}px` }"
-              />
-            </colgroup>
-            <tbody class="nmorph-table__slot-columns">
-              <slot />
-            </tbody>
-          </table>
+                    <div
+                      :id="`table-cell-${tableIdentifier}-${idx}-${columnData.prop}`"
+                      :style="{ 'text-align': columnData.alignment }"
+                      class="nmorph-table__cell nmorph-table__cell--data"
+                    >
+                      {{ tableData(rowData[columnData.prop]) }}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table>
+              <colgroup>
+                <col
+                  v-for="columnData in columns"
+                  :key="columnData.prop"
+                  :style="{ width: `${getWidth(columnData.width)}px` }"
+                />
+              </colgroup>
+              <tbody class="nmorph-table__slot-columns">
+                <slot />
+              </tbody>
+            </table>
+          </template>
         </div>
       </div>
     </div>
@@ -231,6 +322,28 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
 
   .nmorph-table__body {
     position: relative;
+  }
+
+  .nmorph-table__body--virtual {
+    overflow-x: hidden;
+  }
+
+  .nmorph-table__body--virtual .nmorph-table__table-data {
+    height: var(--table-virtual-row-height);
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .nmorph-table__virtual-spacer {
+    position: relative;
+    min-width: 100%;
+  }
+
+  .nmorph-table__virtual-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
   }
 
   .nmorph-table__table-data-row--row-hover:hover {

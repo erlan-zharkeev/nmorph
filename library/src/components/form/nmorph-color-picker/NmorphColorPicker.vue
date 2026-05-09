@@ -47,6 +47,8 @@ const normalizeColor = (value?: string, fallback = '#000000') => {
 
 const inputDOMRef = ref<NmorphDomElementType>(null);
 const resolveAccentColor = () => {
+  if (typeof document === 'undefined') return '#006cb6';
+
   const host = inputDOMRef.value || document.documentElement;
   const accentColor = getComputedStyle(host).getPropertyValue('--nmorph-accent-color').trim();
   return normalizeColor(accentColor, '#006cb6');

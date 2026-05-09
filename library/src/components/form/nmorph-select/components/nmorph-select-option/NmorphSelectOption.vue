@@ -17,6 +17,7 @@ const props = withDefaults(defineProps<INmorphSelectOption>(), {
   label: '',
   height: 'basic',
   disabled: false,
+  focused: false,
 });
 
 const emit = defineEmits<{
@@ -47,6 +48,7 @@ const modifiers = computed(() =>
       `${props.disabled && 'disabled'}`,
       `${props.label && 'with-label'}`,
       `${checked.value && 'checked'}`,
+      `${props.focused && 'focused'}`,
     ],
   })
 );

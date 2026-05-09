@@ -1,7 +1,7 @@
 export default {
   meta: {
     description:
-      "Library of UI components for Vue 3 in the neumorphism/sceumorphism style.",
+      "Library of UI components for Vue 3 and Nuxt in the neumorphism/sceumorphism style.",
   },
   guide: "Guide",
   components: "Components",
@@ -19,6 +19,7 @@ export default {
   text: "Text",
   type: "Type",
   default: "Default",
+  loadingText: "Loading ...",
   basic: "Basic",
   data: "Data",
   feedback: "Feedback",
@@ -29,6 +30,20 @@ export default {
   "top-bar": {
     menu: "Menu",
     nav: "Nav",
+    search: "Search",
+    "search-shortcut": "Ctrl K",
+  },
+  "search-dialog": {
+    placeholder: "Search components, guide, API",
+    empty: "Nothing found",
+    hint: "Open with Ctrl K",
+    groups: {
+      guide: "Guide",
+      component: "Component",
+      api: "API",
+      changelog: "Changelog",
+      project: "Project",
+    },
   },
   "footer-bar": {
     license: "Licensed under",
@@ -39,6 +54,10 @@ export default {
       "Open the documentation on a device with a screen width of at least 320px.",
   },
   "guide-page": {
+    title: "Guide",
+    "full-title": "Nmorph UI Kit guide",
+    "full-description":
+      "A practical guide for installing Nmorph, wiring it into Vue and Nuxt, configuring themes, using forms and overlays, and preparing component-heavy interfaces for production.",
     "theme-customize": "Customize theme",
     "custom-theme-color": "Change base color",
     "custom-text-color": "Text color",
@@ -49,7 +68,7 @@ export default {
       '<b class="main-section__subtitle">Neumorphism / Sceumorphism</b>',
     "apply-theme": "Apply theme",
     "main-content":
-      '<p class="main-section__first-explained-content">Vue 3 UI kit for creating unique 3D designs in neumorphic style</p>',
+      '<p class="main-section__first-explained-content">Vue 3 and Nuxt UI kit for creating unique 3D designs in neumorphic style</p>',
     "quick-start": {
       installation: "Installation",
       "choose-package-manager":
@@ -114,20 +133,99 @@ export default {
     },
   },
   "about-page": {
-    "alpha-test": "Current status",
-    "alpha-test-lib":
-      "<p>Testing of the library is currently underway.</p><p>Since the development is carried out by only one developer, fixing possible bugs and testing takes a lot of time.</p><p>I will be glad if you report any problems.</p>",
-    "get-started": "Get started",
+    eyebrow: "About the project",
+    lead:
+      "Nmorph UI Kit is a Vue 3 and Nuxt component library for building tactile interfaces with soft shadows, clear states, and consistent component APIs.",
+    meta: {
+      vue: "Vue 3",
+      nuxt: "Nuxt",
+      typescript: "TypeScript",
+      license: "MIT license",
+    },
+    "overview-title": "What it is",
     "overview-content":
-      "<p>It is a library of UI components for Vue 3, developed using a non-morphic/skeuomorphic design.</p><p>It provides a set of components to create a unique user interface.</p><p>The project was created as a student's work on frontend development.</p>",
-    neumorphism: "What is neomorphism/skeuomorphism?",
-    "neumorphism-content":
-      "Neumorphism is a design style that combines elements of flat design and skeuomorphism.</p><p>It creates a sense of volume and soft shadows, making the interface look as if it can be touched.</p><p>The neumorphism is based on pastel colors, light gradients and soft shadows, creating the effect of pressed or indented elements.</p>",
+      "The project provides ready-made building blocks for product interfaces: form controls, data display components, navigation, feedback elements, theme utilities, and documentation examples. The same package can be used in regular Vue applications and in Nuxt projects through the Nuxt module.",
+    "features-title": "What it provides",
+    features: {
+      components: {
+        title: "Component set",
+        text: "Reusable components for forms, tables, overlays, navigation, feedback, and common UI patterns.",
+      },
+      theme: {
+        title: "Theme system",
+        text: "CSS variables, light and dark themes, dynamic shadows, and utility classes for consistent styling.",
+      },
+      nuxt: {
+        title: "Vue and Nuxt support",
+        text: "Direct Vue plugin setup plus a Nuxt module for integration with Nuxt applications.",
+      },
+      typescript: {
+        title: "Typed API",
+        text: "Typed props, exported enums, helper types, and examples that document the public component API.",
+      },
+    },
+    "system-title": "How the library works",
+    system: {
+      plugin: {
+        title: "Plugin lifecycle",
+        text: "NmorphLibrary installs the common styles, merges i18n messages, prepares theme variables, watches browser dimensions, and provides the shared Nmorph instance used by components.",
+      },
+      themeEngine: {
+        title: "Theme engine",
+        text: "Theme colors are written as CSS variables on the document, switched with the nmorph-data-theme attribute, and can be generated dynamically from the main color when shade tokens are not provided.",
+      },
+      nuxtModule: {
+        title: "Nuxt module",
+        text: "The Nuxt entry transpiles the package, registers the universal plugin for SSR and client rendering, optionally adds the full stylesheet, and merges Nmorph messages into an existing Nuxt i18n setup.",
+      },
+      styles: {
+        title: "Styles and sizes",
+        text: "Component styles share the same height scale, typography classes, radius tokens, shadow utilities, and color variables, so controls can be mixed without manual visual tuning.",
+      },
+      overlays: {
+        title: "Overlay layer",
+        text: "Dropdown, overlay, dialog, select, autocomplete, date picker, and image preview use a shared layering model with Teleport, z-index allocation, outside click handling, and placement helpers.",
+      },
+      forms: {
+        title: "Form model",
+        text: "Form components integrate with NmorphForm and validation hooks, supporting text, numeric, boolean, and array fields while still allowing direct v-model usage.",
+      },
+      virtualization: {
+        title: "Virtualization",
+        text: "Large-option and large-row scenarios are handled through virtual list mechanics for table, select, and autocomplete, with controlled item height, overscan, and scroll positioning.",
+      },
+      accessibility: {
+        title: "Accessibility baseline",
+        text: "Inputs keep native form elements where possible, expose focusable controls, preserve disabled and loading states, and keep icon-only actions inside semantic buttons.",
+      },
+    },
+    "design-title": "Design approach",
+    "design-content":
+      "Nmorph uses a neumorphic and skeuomorphic visual language: soft shadows, inset states, restrained surfaces, and accent colors that make controls feel tactile without hiding their function.",
+    "status-title": "Project status",
+    "status-content":
+      "The library is actively developed and tested. Breaking visual issues, integration problems, and component API gaps are tracked through the project issue board.",
+    "links-title": "Project links",
+    links: {
+      guide: "Guide",
+      components: "Components",
+      changelog: "Changelog",
+      repository: "Repository",
+      issues: "Issues",
+    },
   },
   "changelog-page": {
     changelog: {
       title: "Changelog",
       items: {
+        "virtualized-table-select-autocomplete":
+          "NmorphTable, NmorphSelect, and NmorphAutocomplete now support virtualized large datasets with configurable item height and overscan.",
+        "overlay-dropdown-teleport-placement":
+          "NmorphOverlay and NmorphDropdown now render through body Teleport, recalculate placement after open, and support end alignment such as bottom-end.",
+        "nuxt-ssr-theme-runtime":
+          "Nuxt integration and theme/browser hooks were updated to keep SSR markup available while deferring browser-only work until the client.",
+        "compact-control-visual-fixes":
+          "Fixed compact radio, checkbox, pagination, icon, and color-picker sizing so disabled and extra-thin controls stay aligned and readable.",
         "pagination-basic-height":
           "NmorphPagination now uses the basic control height by default, so page controls align with pagination buttons.",
         "checkbox-radio-button-controls":
@@ -143,7 +241,7 @@ export default {
         "component-css-splitting":
           "Component chunks now import their own CSS, so direct component imports no longer require pulling the full library stylesheet.",
         "plugin-entry-styles-option":
-          "Added the nmorph-ui-kit/plugin entry for plugin setup without component imports, and Nuxt can opt into the full stylesheet with `nmorph.styles: \"all\"`.",
+          'Added the nmorph-ui-kit/plugin entry for plugin setup without component imports, and Nuxt can opt into the full stylesheet with `nmorph.styles: "all"`.',
         "remove-styled-components":
           "Removed styled-components from Nmorph UI components and replaced runtime-generated styled classes with stable Vue markup and SCSS.",
         "avatar-text-input-visual-fixes":
@@ -303,6 +401,7 @@ export default {
   },
   overview: {
     "basic-usage": "Basic usage",
+    basic: "Basic",
     off: "Off",
     on: "On",
     one: "One",
@@ -443,6 +542,9 @@ export default {
       },
       disabled: {
         subtitle: "Inactive state of the link.",
+      },
+      "icon-name": {
+        subtitle: "Adds an icon before the link text by icon name.",
       },
       api: {
         type: "Color type",
@@ -751,6 +853,7 @@ export default {
           "Defines the type of skeleton to display, such as text or circle.",
         design: "Defines the design of the skeleton item.",
         width: "Sets the width of the skeleton item.",
+        height: "Sets the height of the skeleton item.",
       },
     },
     progress: {
@@ -877,8 +980,13 @@ export default {
         "max-scale-level": "Defines the maximum scale level for the image",
         "z-index":
           "Defines the overlay z-index. Uses the shared automatic z-index stack when omitted",
+        "show-trigger":
+          "Defines whether the default preview trigger is rendered",
       },
-      slot: {},
+      slot: {
+        loading: "Slot displayed while the preview image is loading",
+        error: "Slot displayed when the preview image cannot be loaded",
+      },
       variables: {
         width: "Defines the width of the image preview.",
         height: "Defines the height of the image preview.",
@@ -931,6 +1039,11 @@ export default {
           "Boolean value that enables or disables borders around table cells. Works only if 'design' property is set to 'common'",
         sort: "Defines the sorting behavior for table columns",
         design: "Table display style",
+        virtual: "Enables virtual rendering for large table datasets",
+        "virtual-height": "Sets the scroll viewport height for virtual table rows",
+        "virtual-row-height": "Sets the expected height of one virtual table row",
+        "virtual-overscan":
+          "Sets how many extra rows are rendered before and after the visible area",
       },
       slot: {},
       variables: {
@@ -988,6 +1101,9 @@ export default {
         height:
           "Sets the height of the tooltip content. Controls the vertical size of the tooltip",
       },
+      exposes: {
+        tooltipBody: "Original DOM element of the tooltip body",
+      },
     },
     alert: {
       "basic-usage": {
@@ -1016,6 +1132,8 @@ export default {
           "Boolean value that displays an icon based on the alert type",
         bordered: "Adds a border around the alert for emphasis",
         html: "Allows HTML content in the alert body. Use with caution to avoid XSS vulnerabilities",
+        "close-icon-position":
+          "Controls close icon alignment inside the alert",
       },
       slot: {
         icon: "Slot for customizing the icon displayed in the alert",
@@ -1104,6 +1222,10 @@ export default {
           "Boolean value that makes the component's background transparent if enabled",
         "z-index":
           "Defines the overlay z-index. Uses the shared automatic z-index stack when omitted",
+        "teleport-to":
+          "Defines the target where the overlay content is teleported",
+        "disabled-teleport":
+          "Disables Teleport and renders the overlay in place",
       },
       slot: {
         default:
@@ -1147,6 +1269,7 @@ export default {
         "model-value": "Controls the active state of the component",
         stretch:
           "Boolean value that defines whether the component should stretch to fill available space",
+        panes: "List of tab panes rendered by the tabs component",
       },
       slot: {
         default: "Slot for customizing the content inside each tab",
@@ -1189,6 +1312,8 @@ export default {
           "Boolean value defining whether the dropdown should occupy the entire container width",
         "z-index":
           "Defines the dropdown overlay z-index. Uses the shared automatic z-index stack when omitted",
+        placement:
+          "Defines dropdown placement relative to the trigger element, including end alignment",
       },
       slot: {
         default: "Slot for customizing the content inside the dropdown",
@@ -1309,6 +1434,7 @@ export default {
         height: "Defines the height of the input field",
         disabled: "Boolean value that disables the input field",
         placeholder: "Text displayed as a hint when the input field is empty",
+        label: "Text label associated with the input field",
         "type-password":
           "Boolean value that turns the input field into a password field",
         "model-value": "Current value of the input field",
@@ -1525,6 +1651,11 @@ export default {
           "Callback function called when an option is selected",
         "z-index":
           "Defines the suggestions overlay z-index. Uses the shared automatic z-index stack when omitted",
+        virtual: "Enables virtual rendering for large suggestion lists",
+        "virtual-item-height": "Sets the expected height of one virtual item",
+        "virtual-max-height": "Sets the maximum height of the virtual list",
+        "virtual-overscan":
+          "Sets how many extra items are rendered before and after the visible area",
       },
       slot: {
         loader: "Slot to add a custom loader while fetching data",
@@ -1673,6 +1804,11 @@ export default {
         open: "Boolean value to control the visibility of the list",
         "z-index":
           "Defines the select dropdown z-index. Uses the shared automatic z-index stack when omitted",
+        virtual: "Enables virtual rendering for large option lists",
+        "virtual-item-height": "Sets the expected height of one virtual option",
+        "virtual-max-height": "Sets the maximum height of the virtual options list",
+        "virtual-overscan":
+          "Sets how many extra options are rendered before and after the visible area",
       },
       slot: {
         default: "Slot for customizing options in the dropdown list",

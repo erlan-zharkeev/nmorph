@@ -37,6 +37,16 @@ const modifiers = computed(() =>
   })
 );
 
+const heightMap = {
+  thick: 'var(--thick-component)',
+  basic: 'var(--default-thickness-component)',
+  thin: 'var(--thin-component)',
+};
+
+const paginationStyle = computed(() => ({
+  '--nmorph-pagination-height': heightMap[props.height],
+}));
+
 const prevClick = () => {
   selectedPage.value = String(Number(selectedPage.value) - 1);
 };
@@ -101,7 +111,7 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
 </script>
 
 <template>
-  <div v-if="show" :class="modifiers">
+  <div v-if="show" :class="modifiers" :style="paginationStyle">
     <NmorphButton
       class="nmorph-pagination__btn nmorph-pagination__prev-btn"
       :height="props.height"
@@ -193,8 +203,25 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
   }
 
   .nmorph-pagination__page-btn {
+    --height: var(--nmorph-pagination-height);
+    --size: var(--nmorph-pagination-height);
+
     width: 40px;
+    min-width: 40px;
     height: var(--height);
+    min-height: var(--height);
+  }
+
+  .nmorph-pagination__page-btn.nmorph-radio {
+    .nmorph-radio__content,
+    .nmorph-radio__fake {
+      width: 100%;
+      height: 100%;
+    }
+
+    &.nmorph-radio--button .nmorph-radio__fake {
+      padding: 0;
+    }
   }
 
   .nmorph-pagination__page-btn-wrapper {

@@ -49,6 +49,8 @@ export { default as en } from './locales/en.js';
 
 export { nmorphLog } from './outside-utils';
 export { useNmorphTheme, useNmorphBrowser, useNmorphNotification, useNmorph } from './outside-hooks';
+export { getNmorphThemeStyles } from './outside-hooks/use-nmorph-theme';
+export { getCommonStyles } from './hooks/use-common-styles';
 export * from './types/index.ts';
 
 export const NmorphLibrary = library;

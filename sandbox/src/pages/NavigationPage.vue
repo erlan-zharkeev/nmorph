@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 import {
   NmorphBacktop,
   NmorphBreadcrumb,
@@ -8,19 +8,24 @@ import {
   NmorphDropdown,
   NmorphTabPane,
   NmorphTabs,
-} from '@nmorph/nmorph-ui-kit'
-import SandboxSection from '@sandbox/components/SandboxSection.vue'
+} from "@nmorph/nmorph-ui-kit";
+import SandboxSection from "@sandbox/components/SandboxSection.vue";
 
-const activeTab = ref('tab1')
-const panesTab = ref('overview')
-const dropdownOpen = ref(false)
-const dropdownTarget = ref<HTMLElement | null>(null)
+const activeTab = ref("tab1");
+const panesTab = ref("overview");
+const dropdownOpen = ref(false);
+const dropdownTarget = ref<HTMLElement | null>(null);
 
 const panes = [
-  { name: 'overview', label: 'Overview', content: 'Content from panes prop' },
-  { name: 'settings', label: 'Settings', content: 'Second pane from array' },
-  { name: 'disabled', label: 'Disabled', content: 'Disabled content', disabled: true },
-]
+  { name: "overview", label: "Overview", content: "Content from panes prop" },
+  { name: "settings", label: "Settings", content: "Second pane from array" },
+  {
+    name: "disabled",
+    label: "Disabled",
+    content: "Disabled content",
+    disabled: true,
+  },
+];
 </script>
 
 <template>
@@ -48,7 +53,9 @@ const panes = [
         <NmorphBreadcrumb>
           <NmorphBreadcrumbItem to="/basic">Basic</NmorphBreadcrumbItem>
           <NmorphBreadcrumbItem to="/form">Form</NmorphBreadcrumbItem>
-          <NmorphBreadcrumbItem to="/navigation" replace>Navigation</NmorphBreadcrumbItem>
+          <NmorphBreadcrumbItem to="/navigation" replace
+            >Navigation</NmorphBreadcrumbItem
+          >
         </NmorphBreadcrumb>
         <NmorphBreadcrumb separator=">">
           <NmorphBreadcrumbItem to="/data">Data</NmorphBreadcrumbItem>
@@ -61,15 +68,18 @@ const panes = [
     <SandboxSection title="NmorphDropdown">
       <div class="dropdown-demo">
         <div ref="dropdownTarget">
-          <NmorphButton text="Toggle dropdown" @click="dropdownOpen = !dropdownOpen" />
+          <NmorphButton
+            text="Toggle dropdown"
+            @click="dropdownOpen = !dropdownOpen"
+          />
         </div>
         <NmorphDropdown
           v-if="dropdownTarget"
           :open="dropdownOpen"
           :relative-element="dropdownTarget"
+          placement="bottom-end"
           :width="220"
           :fill-width="false"
-          :x-offset="12"
           :y-offset="8"
           @on-outside-click="dropdownOpen = false"
         >
@@ -87,7 +97,12 @@ const panes = [
         <div class="backtop-content">
           <p v-for="item in 18" :key="item">Scroll row {{ item }}</p>
           <NmorphBacktop :right="24" :bottom="24" :visibility-height="80" />
-          <NmorphBacktop :right="76" :bottom="24" :visibility-height="120" design="common">
+          <NmorphBacktop
+            :right="76"
+            :bottom="24"
+            :visibility-height="120"
+            design="common"
+          >
             <NmorphButton text="Top" style-type="transparent" />
           </NmorphBacktop>
         </div>
@@ -112,8 +127,13 @@ const panes = [
 }
 
 .dropdown-demo {
-  display: inline-flex;
-  width: fit-content;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  justify-content: flex-end;
+  width: 260px;
+  padding: 12px;
+  overflow: hidden;
 }
 
 .dropdown-menu {

@@ -1,6 +1,7 @@
 export default {
   meta: {
-    description: "Vue3的UI组件库，采用neumorphism/sceumorphism风格。",
+    description:
+      "适用于 Vue 3 和 Nuxt 的 UI 组件库，采用 neumorphism/sceumorphism 风格。",
   },
   guide: "指南",
   components: "组件",
@@ -18,6 +19,7 @@ export default {
   text: "文本",
   type: "类型",
   default: "默认",
+  loadingText: "加载中 ...",
   basic: "基础",
   data: "数据",
   feedback: "反馈",
@@ -28,6 +30,20 @@ export default {
   "top-bar": {
     menu: "菜单",
     nav: "导航",
+    search: "搜索",
+    "search-shortcut": "Ctrl K",
+  },
+  "search-dialog": {
+    placeholder: "搜索组件、指南、API",
+    empty: "未找到结果",
+    hint: "使用 Ctrl K 打开",
+    groups: {
+      guide: "指南",
+      component: "组件",
+      api: "API",
+      changelog: "变更日志",
+      project: "项目",
+    },
   },
   "footer-bar": {
     license: "许可协议",
@@ -37,6 +53,10 @@ export default {
     description: "请在屏幕宽度不小于 320px 的设备上打开文档。",
   },
   "guide-page": {
+    title: "指南",
+    "full-title": "Nmorph UI Kit 指南",
+    "full-description":
+      "安装 Nmorph、接入 Vue 和 Nuxt、配置主题、使用表单与 overlay，并为包含大量组件的界面做生产准备的实用指南。",
     "theme-customize": "自定义主题",
     "custom-theme-color": "更改基础颜色",
     "custom-text-color": "文本颜色",
@@ -47,7 +67,7 @@ export default {
       '<b class="main-section__subtitle">Neumorphism / Sceumorphism</b>',
     "apply-theme": "应用主题",
     "main-content":
-      '<p class="main-section__first-explained-content">Vue 3 UI 套件，用于创建独特的 3D 设计，以新拟态风格呈现</p>',
+      '<p class="main-section__first-explained-content">适用于 Vue 3 和 Nuxt 的 UI 套件，用于创建独特的 3D 新拟态设计</p>',
     "quick-start": {
       installation: "安装",
       "choose-package-manager":
@@ -103,20 +123,99 @@ export default {
     },
   },
   "about-page": {
-    "alpha-test": "当前状态",
-    "alpha-test-lib":
-      "<p>图书馆的测试目前正在进行中。</p><p>由于开发仅由一名开发人员进行，因此修复可能的错误和测试需要花费大量时间。</p><p>如果您报告任何问题，我会很高兴。</p>",
-    "get-started": "开始使用",
-    "概述-内容":
-      "<p>它是Vue3的UI组件库，使用非形态/skeuomorphic设计开发。</p><p>它提供了一组组件来创建一个独特的用户界面。</p><p>该项目是作为学生在前端开发方面的工作而创建的。</p>",
-    neumorphism: "什么是neomorphism/skeuomorphism？",
-    "新形态-内容":
-      "Neumorphism是一种结合了平面设计和skeuomorphism元素的设计风格。</p><p>它创造了体积感和柔和的阴影，使界面看起来好像可以触摸。</p><p>neumorphism基于柔和的颜色，浅色渐变和柔和的阴影，创造出压制或缩进元素的效果。</p>",
+    eyebrow: "关于项目",
+    lead:
+      "Nmorph UI Kit 是一个适用于 Vue 3 和 Nuxt 的组件库，用于构建带有柔和阴影、清晰状态和一致组件 API 的触感界面。",
+    meta: {
+      vue: "Vue 3",
+      nuxt: "Nuxt",
+      typescript: "TypeScript",
+      license: "MIT 许可证",
+    },
+    "overview-title": "项目简介",
+    "overview-content":
+      "该项目为产品界面提供现成的构建块：表单控件、数据展示组件、导航、反馈组件、主题工具和文档示例。同一个包既可以用于普通 Vue 应用，也可以通过 Nuxt module 用于 Nuxt 项目。",
+    "features-title": "提供能力",
+    features: {
+      components: {
+        title: "组件集合",
+        text: "用于表单、表格、overlay、导航、反馈和常见 UI 场景的可复用组件。",
+      },
+      theme: {
+        title: "主题系统",
+        text: "CSS 变量、明暗主题、动态阴影和工具类，帮助保持统一样式。",
+      },
+      nuxt: {
+        title: "Vue 和 Nuxt 支持",
+        text: "支持直接 Vue plugin 接入，也提供 Nuxt module 以便集成到 Nuxt 应用。",
+      },
+      typescript: {
+        title: "类型化 API",
+        text: "类型化 props、导出的 enum、辅助类型和示例，用于说明组件公开 API。",
+      },
+    },
+    "system-title": "库的内部结构",
+    system: {
+      plugin: {
+        title: "Plugin 生命周期",
+        text: "NmorphLibrary 会安装通用样式、合并 i18n 文案、准备主题 CSS 变量、监听浏览器尺寸，并向组件提供共享的 Nmorph instance。",
+      },
+      themeEngine: {
+        title: "主题引擎",
+        text: "主题颜色会写入文档 CSS 变量，通过 nmorph-data-theme 属性切换，并可在未提供阴影 token 时从 main color 自动生成。",
+      },
+      nuxtModule: {
+        title: "Nuxt module",
+        text: "Nuxt entry 会 transpile 包、为 SSR 和客户端渲染注册 universal plugin、可选加入完整 stylesheet，并把 Nmorph messages 合并到已有 Nuxt i18n 配置中。",
+      },
+      styles: {
+        title: "样式和尺寸",
+        text: "组件共享高度尺度、排版类、圆角 token、阴影工具类和颜色变量，因此不同控件可以组合使用而不需要额外微调。",
+      },
+      overlays: {
+        title: "Overlay layer",
+        text: "Dropdown、overlay、dialog、select、autocomplete、date picker 和 image preview 共享基于 Teleport、z-index、outside click 与 placement helpers 的层级模型。",
+      },
+      forms: {
+        title: "表单模型",
+        text: "表单组件可接入 NmorphForm 和 validation hooks，支持 text、numeric、boolean 与 array 字段，同时保留直接 v-model 的用法。",
+      },
+      virtualization: {
+        title: "虚拟滚动",
+        text: "大量 rows 和 options 的场景通过 table、select、autocomplete 的 virtual list 机制处理，可明确控制 item height、overscan 和 scroll position。",
+      },
+      accessibility: {
+        title: "无障碍基础",
+        text: "输入类组件尽量保留 native form elements，暴露可聚焦控件，保持 disabled 与 loading 状态，并让 icon-only actions 继续使用 semantic buttons。",
+      },
+    },
+    "design-title": "设计方式",
+    "design-content":
+      "Nmorph 使用 neumorphism 和 skeuomorphism 风格：柔和阴影、内嵌状态、克制的表面和强调色，让控件有触感，同时保持功能清晰。",
+    "status-title": "项目状态",
+    "status-content":
+      "该库正在持续开发和测试。视觉问题、集成问题和组件 API 缺口会通过项目 issue board 跟踪。",
+    "links-title": "项目链接",
+    links: {
+      guide: "指南",
+      components: "组件",
+      changelog: "变更日志",
+      repository: "仓库",
+      issues: "Issues",
+    },
   },
   "changelog-page": {
     changelog: {
       title: "变更日志",
       items: {
+        "virtualized-table-select-autocomplete":
+          "NmorphTable、NmorphSelect 和 NmorphAutocomplete 现在支持大数据集虚拟化，可配置 item height 和 overscan。",
+        "overlay-dropdown-teleport-placement":
+          "NmorphOverlay 和 NmorphDropdown 现在通过 body Teleport 渲染，打开后会重新计算位置，并支持 bottom-end 等 end 对齐方式。",
+        "nuxt-ssr-theme-runtime":
+          "Nuxt 集成和 theme/browser hooks 已更新，可保留 SSR 标记，并将 browser-only 工作延后到客户端执行。",
+        "compact-control-visual-fixes":
+          "修复了 compact radio、checkbox、pagination、icon 和 color-picker 尺寸，使 disabled 与 extra-thin 控件保持对齐和可读。",
         "pagination-basic-height":
           "NmorphPagination 现在默认使用 basic 控件高度，因此页码控件会与分页按钮对齐。",
         "checkbox-radio-button-controls":
@@ -132,7 +231,7 @@ export default {
         "component-css-splitting":
           "组件 chunk 现在会导入自己的 CSS，直接导入单个组件时不再需要引入完整的库样式表。",
         "plugin-entry-styles-option":
-          "新增 nmorph-ui-kit/plugin entry，可在不导入组件的情况下安装 plugin；Nuxt 可通过 `nmorph.styles: \"all\"` 选择完整样式表。",
+          '新增 nmorph-ui-kit/plugin entry，可在不导入组件的情况下安装 plugin；Nuxt 可通过 `nmorph.styles: "all"` 选择完整样式表。',
         "remove-styled-components":
           "已从 Nmorph UI 组件中移除 styled-components，并用稳定的 Vue 标记和 SCSS 替代运行时生成的 styled 类。",
         "avatar-text-input-visual-fixes":
@@ -290,6 +389,7 @@ export default {
   },
   overview: {
     "basic-usage": "基础使用",
+    basic: "基础",
     off: "关",
     on: "开",
     one: "一",
@@ -425,6 +525,9 @@ export default {
       },
       disabled: {
         subtitle: "链接的非活动状态。",
+      },
+      "icon-name": {
+        subtitle: "通过图标名称在链接文本前添加图标。",
       },
       api: {
         type: "颜色类型",
@@ -719,6 +822,7 @@ export default {
         variant: "定义要显示的骨架类型，例如文本或圆形。",
         design: "定义骨架项的设计。",
         width: "设置骨架项的宽度。",
+        height: "设置骨架项的高度。",
       },
     },
     progress: {
@@ -833,8 +937,12 @@ export default {
         "min-scale-level": "定义图像的最小缩放级别",
         "max-scale-level": "定义图像的最大缩放级别",
         "z-index": "定义覆盖层的 z-index。未传入时使用共享的自动 z-index 栈",
+        "show-trigger": "定义是否渲染默认的预览触发器",
       },
-      slot: {},
+      slot: {
+        loading: "预览图像加载时显示的插槽",
+        error: "预览图像加载失败时显示的插槽",
+      },
       variables: {
         width: "定义图像预览的宽度。",
         height: "定义图像预览的高度。",
@@ -882,6 +990,10 @@ export default {
           "布尔值，启用或禁用表格单元格的边框。仅在 'design' 属性设置为 'common' 时有效",
         sort: "定义表格列的排序行为",
         design: "表格的显示样式",
+        virtual: "为大量表格数据启用虚拟渲染",
+        "virtual-height": "设置虚拟表格行的滚动视口高度",
+        "virtual-row-height": "设置单个虚拟表格行的预期高度",
+        "virtual-overscan": "设置可见区域前后额外渲染的行数",
       },
       slot: {},
       variables: {
@@ -933,6 +1045,9 @@ export default {
         width: "设置提示框内容的宽度。控制提示框的水平大小",
         height: "设置提示框内容的高度。控制提示框的垂直大小",
       },
+      exposes: {
+        tooltipBody: "tooltip 内容区域的原始 DOM 元素",
+      },
     },
     alert: {
       "basic-usage": {
@@ -958,6 +1073,7 @@ export default {
         "show-icon": "布尔值，基于警告类型显示图标",
         bordered: "为警告添加边框以突出显示",
         html: "允许在警告的正文中使用 HTML 内容。使用时请谨慎，以避免 XSS 漏洞",
+        "close-icon-position": "控制 alert 内关闭图标的对齐方式",
       },
       slot: {
         icon: "自定义警告中显示图标的插槽",
@@ -1036,6 +1152,8 @@ export default {
         show: "控制组件的可见性",
         transparent: "布尔值，启用时使组件背景透明",
         "z-index": "定义覆盖层的 z-index。未传入时使用共享的自动 z-index 栈",
+        "teleport-to": "定义覆盖层内容 Teleport 的目标位置",
+        "disabled-teleport": "禁用 Teleport，并在当前位置渲染覆盖层",
       },
       slot: {
         default: "默认插槽，用于自定义组件内部的内容",
@@ -1071,6 +1189,7 @@ export default {
       api: {
         "model-value": "控制组件的活动状态",
         stretch: "布尔值，定义组件是否应拉伸以填充可用空间",
+        panes: "tabs 组件渲染的 tab pane 列表",
       },
       slot: {
         default: "插槽，用于自定义每个标签内的内容",
@@ -1108,6 +1227,7 @@ export default {
         "fill-width": "布尔值，定义下拉菜单是否应占满整个容器宽度",
         "z-index":
           "定义下拉菜单覆盖层的 z-index。未传入时使用共享的自动 z-index 栈",
+        placement: "定义下拉菜单相对于触发元素的位置，包括边缘对齐",
       },
       slot: {
         default: "自定义下拉菜单内部内容的插槽",
@@ -1222,6 +1342,7 @@ export default {
         height: "定义输入框的高度",
         disabled: "布尔值，禁用输入框",
         placeholder: "当输入框为空时显示的提示文本",
+        label: "与输入框关联的文本标签",
         "type-password": "布尔值，将输入框变为密码字段",
         "model-value": "当前输入框的值",
         clearable: "布尔值，添加一个按钮来清空输入框的值",
@@ -1427,6 +1548,10 @@ export default {
         "action-callback": "当选择一个选项时调用的回调函数",
         "z-index":
           "定义建议列表覆盖层的 z-index。未传入时使用共享的自动 z-index 栈",
+        virtual: "为大量建议列表启用虚拟渲染",
+        "virtual-item-height": "设置单个虚拟项的预期高度",
+        "virtual-max-height": "设置虚拟列表的最大高度",
+        "virtual-overscan": "设置可见区域前后额外渲染的项数",
       },
       slot: {
         loader: "在获取数据时添加自定义加载器的插槽",
@@ -1569,6 +1694,10 @@ export default {
         open: "控制列表可见性的布尔值",
         "z-index":
           "定义 select 下拉列表的 z-index。未传入时使用共享的自动 z-index 栈",
+        virtual: "为大量选项列表启用虚拟渲染",
+        "virtual-item-height": "设置单个虚拟选项的预期高度",
+        "virtual-max-height": "设置虚拟选项列表的最大高度",
+        "virtual-overscan": "设置可见区域前后额外渲染的选项数",
       },
       slot: {
         default: "自定义下拉列表选项的插槽",

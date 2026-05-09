@@ -20,6 +20,11 @@ const attributesData: IAttributesTableData[] = [
     required: true,
   },
   {
+    name: "placement",
+    type: `"top" | "top-start" | "top-center" | "top-end" | "right" | "right-start" | "right-center" | "right-end" | "bottom" | "bottom-start" | "bottom-center" | "bottom-end" | "left" | "left-start" | "left-center" | "left-end"`,
+    default: "bottom",
+  },
+  {
     name: "width",
     type: "Number | String",
     default: "160",
@@ -63,7 +68,13 @@ const eventsData = [{ name: "on-outside-click", type: "void" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphDropdown" name="dropdown" :attributes="attributesData" :slots="slotData"
-      :variables="variables" :events="eventsData" />
+    <api-table
+      title="NmorphDropdown"
+      name="dropdown"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+      :events="eventsData"
+    />
   </div>
 </template>

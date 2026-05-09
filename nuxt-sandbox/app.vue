@@ -14,7 +14,7 @@ import {
   useNmorphNotification,
 } from "@nmorph/nmorph-ui-kit";
 
-const nmorph = import.meta.client ? inject("nmorph") : null;
+const nmorph = inject("nmorph");
 const notificationProvider = useNmorphNotification();
 
 const checked = ref(true);

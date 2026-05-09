@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
+import { useVirtualList } from '@/hooks';
 import {
   NmorphIcon,
   NmorphDropdown,
@@ -18,6 +19,10 @@ interface INmorphProps extends INmorphCommonInputProps {
   list: INmorphAutocompleteListItem[];
   actionCallback?: NmorphAutocompleteActionCallbackType;
   zIndex?: number;
+  virtual?: boolean;
+  virtualItemHeight?: number;
+  virtualMaxHeight?: number | string;
+  virtualOverscan?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -28,6 +33,10 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   clearable: true,
   list: () => [],
   actionCallback: undefined,
+  virtual: false,
+  virtualItemHeight: 34,
+  virtualMaxHeight: 240,
+  virtualOverscan: 5,
 });
 
 const initialValue = ref(props.modelValue);
@@ -63,8 +72,29 @@ const filteredList = computed(() => {
   });
 });
 
-watch(filteredList, (newValue) => {
+const virtualEnabled = computed(() => props.virtual && filteredList.value.length > 0);
+const virtualItemHeight = computed(() => props.virtualItemHeight);
+const virtualOverscan = computed(() => props.virtualOverscan);
+const virtualList = useVirtualList(filteredList, {
+  enabled: virtualEnabled,
+  itemHeight: virtualItemHeight,
+  overscan: virtualOverscan,
+});
+const virtualItems = computed(() => virtualList.virtualItems.value);
+const virtualSpacerStyle = computed(() => ({
+  height: `${virtualList.totalHeight.value}px`,
+}));
+const virtualContentStyle = computed(() => ({
+  transform: `translateY(${virtualList.offsetTop.value}px)`,
+}));
+const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const virtualMaxHeight = computed(() => getCssSize(props.virtualMaxHeight));
+
+watch(filteredList, async (newValue) => {
   open.value = newValue.length > 0;
+  await nextTick();
+  virtualList.scrollToIndex(0);
+  virtualList.refresh();
 });
 
 const clickHandler = (listEl: INmorphAutocompleteListItem) => {
@@ -127,6 +157,26 @@ watch(loader, (newValue) => {
           </NmorphIcon>
         </slot>
       </div>
+      <div
+        v-else-if="virtualEnabled"
+        :ref="virtualList.containerRef"
+        class="nmorph-autocomplete__list nmorph-autocomplete__list--virtual"
+        :style="{ '--autocomplete-virtual-item-height': `${virtualItemHeight}px`, maxHeight: virtualMaxHeight }"
+        @scroll="virtualList.scrollHandler"
+      >
+        <div class="nmorph-autocomplete__virtual-spacer" :style="virtualSpacerStyle">
+          <div class="nmorph-autocomplete__virtual-content" :style="virtualContentStyle">
+            <div
+              v-for="virtualItem in virtualItems"
+              :key="virtualItem.index"
+              class="nmorph-autocomplete__list-item"
+              @click="() => clickHandler(virtualItem.item)"
+            >
+              <slot :scope="virtualItem.item"> {{ virtualItem.item.value }} </slot>
+            </div>
+          </div>
+        </div>
+      </div>
       <div v-else class="nmorph-autocomplete__list">
         <div
           v-for="(listEl, idx) in filteredList"
@@ -163,6 +213,26 @@ watch(loader, (newValue) => {
   .nmorph-autocomplete__list-item:hover {
     color: var(--nmorph-white-color);
     background: var(--nmorph-accent-color);
+  }
+
+  .nmorph-autocomplete__list--virtual {
+    overflow-y: auto;
+  }
+
+  .nmorph-autocomplete__list--virtual .nmorph-autocomplete__list-item {
+    height: var(--autocomplete-virtual-item-height);
+    overflow: hidden;
+  }
+
+  .nmorph-autocomplete__virtual-spacer {
+    position: relative;
+  }
+
+  .nmorph-autocomplete__virtual-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
   }
 }
 </style>

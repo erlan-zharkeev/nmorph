@@ -1,5 +1,7 @@
 # Nuxt Sandbox
 
+This sandbox verifies Nmorph's Nuxt module and SSR support in addition to the Vue 3 package usage.
+
 ```sh
 npm run dev:nuxt-sandbox
 ```
