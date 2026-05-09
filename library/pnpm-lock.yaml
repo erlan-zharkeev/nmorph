@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@vue-styled-components/core':
-        specifier: ^1.9.0
-        version: 1.13.3(vue@3.5.34(typescript@5.1.6))
       vue:
         specifier: ^3.5.13
         version: 3.5.34(typescript@5.1.6)
@@ -1173,11 +1170,6 @@ packages:
       vue:
         optional: true
 
-  '@vue-styled-components/core@1.13.3':
-    resolution: {integrity: sha512-N7eNsUprMzlq00j+PayHEuL9Y09RnJgIWWqkPSTsOdQvTxXsRMfi8oD91f3ztlwi5rnOgnKpjqy56t4J1VwfkQ==}
-    peerDependencies:
-      vue: '>=3.2.0'
-
   '@vue/compiler-core@3.5.34':
     resolution: {integrity: sha512-s9cLyK5mLcvZ4Agva5QgRsQyLKvts9WbU9DB6NqiZkkGEdwmcEiylj5Jbwkp680drF/NNCV8OlAJSe+yMLxaJw==}
 
@@ -2158,9 +2150,6 @@ packages:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
 
-  lodash-es@4.18.1:
-    resolution: {integrity: sha512-J8xewKD/Gk22OZbhpOVSwcs60zhd95ESDwezOFuA3/099925PdHJ7OFHNTGtajL3AlZkykD32HykiMo+BIBI8A==}
-
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
 
@@ -2768,9 +2757,6 @@ packages:
     resolution: {integrity: sha512-v20V59/crfc8sVTAtge0mdafI3AdnzQ2KsWe6v523L4OA1bJO02S7MO2oyXDCS6iWb9ckIPnqAFVItqSBQr7jw==}
     engines: {node: '>=18.12.0'}
     hasBin: true
-
-  stylis@4.4.0:
-    resolution: {integrity: sha512-5Z9ZpRzfuH6l/UAvCPAPUo3665Nk2wLaZU3x+TLHKVzIz33+sbJqbtrYoC3KD4/uVOr2Zp+L0LySezP9OHV9yA==}
 
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
@@ -4089,12 +4075,6 @@ snapshots:
     optionalDependencies:
       vue: 3.5.34(typescript@5.1.6)
 
-  '@vue-styled-components/core@1.13.3(vue@3.5.34(typescript@5.1.6))':
-    dependencies:
-      lodash-es: 4.18.1
-      stylis: 4.4.0
-      vue: 3.5.34(typescript@5.1.6)
-
   '@vue/compiler-core@3.5.34':
     dependencies:
       '@babel/parser': 7.29.3
@@ -5134,8 +5114,6 @@ snapshots:
     dependencies:
       p-locate: 5.0.0
 
-  lodash-es@4.18.1: {}
-
   lodash.merge@4.6.2: {}
 
   lodash.truncate@4.4.2: {}
@@ -5784,8 +5762,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
-
-  stylis@4.4.0: {}
 
   supports-color@7.2.0:
     dependencies:

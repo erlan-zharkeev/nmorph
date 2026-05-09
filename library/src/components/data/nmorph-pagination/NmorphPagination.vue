@@ -2,7 +2,6 @@
 import { computed, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphRadioGroup, NmorphButton, NmorphIcon, NmorphRadio, NmorphIconChevronDown } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   totalElementsQuantity: number;
@@ -96,8 +95,50 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
   if (result >= pages.value.length) result = pages.value.length;
   selectedPage.value = String(result);
 };
+</script>
 
-const commonCSS = css`
+<template>
+  <div v-if="show" :class="modifiers">
+    <NmorphButton
+      class="nmorph-pagination__btn nmorph-pagination__prev-btn"
+      :disabled="blockPrevButton || props.disabled"
+      @click="prevClick"
+    >
+      <NmorphIcon class="nmorph-pagination__prev-icon">
+        <NmorphIconChevronDown />
+      </NmorphIcon>
+    </NmorphButton>
+    <NmorphRadioGroup
+      :model-value="selectedPage"
+      class="nmorph-pagination__page-group"
+      :disabled="props.disabled"
+      @update:model-value="updateSelectedValue"
+    >
+      <div v-for="page in visiblePages" :key="page.value" class="nmorph-pagination__page-btn-wrapper">
+        <NmorphButton
+          v-if="page.value === 'prev' || page.value === 'next'"
+          :class="`nmorph-pagination__page-btn nmorph-pagination__${page.value}`"
+          :text="page.label"
+          :disabled="props.disabled"
+          @click="bigStepUpdate(page.value)"
+        />
+        <NmorphRadio v-else v-bind="page" class="nmorph-pagination__page-btn" :disabled="props.disabled" />
+      </div>
+    </NmorphRadioGroup>
+    <NmorphButton
+      class="nmorph-pagination__btn nmorph-pagination__next-btn"
+      :disabled="blockNextButton || props.disabled"
+      @click="nextClick"
+    >
+      <NmorphIcon class="nmorph-pagination__next-icon">
+        <NmorphIconChevronDown />
+      </NmorphIcon>
+    </NmorphButton>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-pagination {
   display: flex;
   justify-content: center;
   margin-top: var(--indentation-04);
@@ -154,36 +195,5 @@ const commonCSS = css`
   .nmorph-pagination__next-secondary-btn {
     margin-left: 8px;
   }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`
-
-</script>
-
-<template>
-  <StyledComponent v-if="show" :class="modifiers">
-    <NmorphButton class="nmorph-pagination__btn nmorph-pagination__prev-btn"
-      :disabled="blockPrevButton || props.disabled" @click="prevClick">
-      <NmorphIcon class="nmorph-pagination__prev-icon">
-        <NmorphIconChevronDown />
-      </NmorphIcon>
-    </NmorphButton>
-    <NmorphRadioGroup :model-value="selectedPage" class="nmorph-pagination__page-group" :disabled="props.disabled"
-      @update:model-value="updateSelectedValue">
-      <div v-for="page in visiblePages" :key="page.value" class="nmorph-pagination__page-btn-wrapper">
-        <NmorphButton v-if="page.value === 'prev' || page.value === 'next'"
-          :class="`nmorph-pagination__page-btn nmorph-pagination__${page.value}`" :text="page.label"
-          :disabled="props.disabled" @click="bigStepUpdate(page.value)" />
-        <NmorphRadio v-else v-bind="page" class="nmorph-pagination__page-btn" :disabled="props.disabled" />
-      </div>
-    </NmorphRadioGroup>
-    <NmorphButton class="nmorph-pagination__btn nmorph-pagination__next-btn"
-      :disabled="blockNextButton || props.disabled" @click="nextClick">
-      <NmorphIcon class="nmorph-pagination__next-icon">
-        <NmorphIconChevronDown />
-      </NmorphIcon>
-    </NmorphButton>
-  </StyledComponent>
-</template>
+}
+</style>

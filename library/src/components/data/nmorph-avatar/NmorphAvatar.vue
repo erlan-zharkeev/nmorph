@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, type Component } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphImage, NmorphImagePreview, NmorphIcon, NmorphIconAvatar } from '@/components';
+import { NmorphImage, NmorphIcon, NmorphIconAvatar } from '@/components';
 import { INmorphImage, AvatarShapeType } from '@/types';
-import { styled, css } from '@vue-styled-components/core';
-import { nmorphCombined } from '@/utils';
 
 interface INmorphProps extends Omit<INmorphImage, 'src'> {
   src?: string | string[];
@@ -37,13 +35,6 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   previewMaxScaleLevel: 4,
 });
 
-interface INmorphStyledProps {
-  size: string;
-  imagePadding: string;
-  radius: string;
-  frameBorder: number;
-}
-
 interface INmorphEmit {
   (e: 'error', event: Event): void;
   (e: 'load', event: Event): void;
@@ -67,7 +58,7 @@ const getSourceByIndex = (source: string | string[] | undefined, index = 0) => {
 };
 
 const imagePadding = computed(() => `${props.imagePadding}px`);
-const size = computed(() => ` ${props.size}px`);
+const size = computed(() => `${props.size}px`);
 const imageSrc = computed(() => getSourceByIndex(props.src));
 const previewSource = computed(() => props.previewSrc || props.src);
 const hasPreviewSource = computed(() => {
@@ -90,6 +81,16 @@ const modifiers = computed(() =>
 const stubIconSize = computed(() => `${(props.size / 100) * 60}px`);
 const initialsFontSize = computed(() => `${Math.max(12, props.size * 0.38)}px`);
 const radius = computed(() => (props.shape === 'circle' ? '50%' : '4px'));
+const imageRadius = computed(() => (props.shape === 'circle' ? '50%' : '2px'));
+const styles = computed(() => ({
+  width: size.value,
+  height: size.value,
+  '--nmorph-avatar-size': size.value,
+  '--nmorph-avatar-image-padding': imagePadding.value,
+  '--nmorph-avatar-radius': radius.value,
+  '--nmorph-avatar-image-radius': imageRadius.value,
+  '--nmorph-avatar-frame-border': `${props.frameBorder}px`,
+}));
 const fallback = computed(() => props.fallback || NmorphIconAvatar);
 const initials = computed(() => {
   const name = props.name.trim();
@@ -104,75 +105,10 @@ const initials = computed(() => {
 const openPreview = () => {
   if (previewAvailable.value) previewOpen.value = true;
 };
-
-const commonCSS = css`
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &.nmorph-avatar--circle {
-    border-radius: var(--border-radius-circular);
-  }
-
-  &.nmorph-avatar--square {
-    border-radius: var(--default-border-radius);
-  }
-
-  > .nmorph-image {
-    position: absolute;
-  }
-
-  .nmorph-avatar__initials {
-    color: var(--nmorph-accent-color);
-    font-weight: 600;
-    line-height: 1;
-  }
-
-  &.nmorph-avatar--preview {
-    cursor: pointer;
-  }
-
-  .nmorph-avatar__preview {
-    position: absolute;
-    width: 0;
-    height: 0;
-    overflow: visible;
-  }
-
-  .nmorph-avatar__preview .nmorph-image-preview__trigger {
-    display: none;
-  }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-  > .nmorph-image {
-    --width: ${(props) => props.size};
-    --height: ${(props) => props.size};
-
-    padding: ${(props) => props.imagePadding};
-    border-radius: ${(props) => props.radius};
-  }
-
-  &.nmorph--shadow-combined {
-    ${(props) => nmorphCombined(Number(props.frameBorder), true)};
-  }
-
-  > .nmorph-image > img {
-    border-radius: ${(props) => props.radius};
-  }
-`;
 </script>
 
 <template>
-  <StyledComponent
-    :class="modifiers"
-    :style="{ width: size, height: size }"
-    :props="{ size, imagePadding, radius, frameBorder }"
-    @click="openPreview"
-  >
+  <div :class="modifiers" :style="styles" @click="openPreview">
     <NmorphImage
       :fit="props.fit"
       :src="imageSrc"
@@ -213,5 +149,5 @@ const StyledComponent = styled.div`
       :max-scale-level="props.previewMaxScaleLevel"
       @update:model-value="previewOpen = $event"
     />
-  </StyledComponent>
+  </div>
 </template>

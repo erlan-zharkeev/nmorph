@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from 'vue';
-import { body3, nmorphInset, title3, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import {
   NmorphTable,
   NmorphTableColumn,
@@ -19,7 +19,6 @@ import {
 import NmorphCalendarHeader from './inner-components/nmorph-calendar-header/NmorphCalendarHeader.vue';
 import { useCalendarTexts } from './hooks';
 import { NmorphSelectionDateType } from '@/types';
-import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps {
   markToday?: boolean;
@@ -209,8 +208,68 @@ const modifiers = computed(() =>
 const dateData = (data: unknown) => data as INmorphCalendarDate;
 
 updateCalendar();
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <slot name="header">
+      <NmorphCalendarHeader
+        :year="initialDate.getFullYear()"
+        :month="initialDate.getMonth()"
+        :show-previous-month-button="showHeaderButtons.showPreviousMonthButton"
+        :show-today-button="showHeaderButtons.showTodayButton"
+        :show-next-month-button="showHeaderButtons.showNextMonthButton"
+        @click-next-month="setNextMonth"
+        @click-previous-month="setPreviousMonth"
+        @click-today="setTodayMonth"
+      />
+    </slot>
+    <slot name="content">
+      <NmorphTable :data="calendar" bordered :row-hover="false">
+        <NmorphTableColumn
+          v-for="columnName in days"
+          :key="`${columnName}`"
+          :prop="columnName"
+          :label="columnName.toUpperCase()"
+        >
+          <template #default="{ scope }">
+            <NmorphTableCell v-for="(row, idx) in scope.rows" :key="idx" :row="idx">
+              <div
+                :data-date="`${dateData(row[columnName]).date}`"
+                :class="[
+                  'nmorph-calendar-date',
+                  `nmorph-calendar-date--${dateData(row[columnName]).monthType}`,
+                  {
+                    'nmorph-calendar-date--today':
+                      dateData(row[columnName]).isToday && !dateData(row[columnName]).hidden && props.markToday,
+                  },
+                  { 'nmorph-calendar-date--hidden': dateData(row[columnName]).hidden },
+                  {
+                    'nmorph-calendar-date--selected': isValueSelected(dateData(row[columnName]).date),
+                  },
+                ]"
+                @click="clickDate(dateData(row[columnName]))"
+              >
+                <slot
+                  name="date-cell"
+                  :scope="{
+                    ...dateData(row[columnName]),
+                    selected: isValueSelected(dateData(row[columnName]).date),
+                  }"
+                >
+                  {{ dateData(row[columnName]).hidden ? '-' : dateData(row[columnName]).value }}
+                </slot>
+              </div>
+            </NmorphTableCell>
+          </template>
+        </NmorphTableColumn>
+      </NmorphTable>
+    </slot>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-calendar {
   --table-data-cell-height: 50px;
 
   background: var(--nmorph-main-color);
@@ -221,7 +280,10 @@ const commonCSS = css`
 
   .nmorph-table__cell {
     --table-cell-height: var(--table-data-cell-height);
-    ${body3()}
+
+    font-weight: 400;
+    font-size: var(--font-size-extra-small);
+    line-height: var(--line-height-regular);
   }
 
   .nmorph-calendar-date {
@@ -233,7 +295,9 @@ const commonCSS = css`
   }
 
   .nmorph-calendar-date--today {
-    ${title3()}
+    font-weight: 600;
+    font-size: var(--font-size-medium);
+    line-height: var(--line-height-loose);
     color: var(--nmorph-text-color);
     font-weight: 700;
   }
@@ -250,10 +314,16 @@ const commonCSS = css`
     cursor: pointer;
   }
 
-  .nmorph-calendar-date:not(.nmorph-calendar-date--hidden,
-    .nmorph-calendar-date--selected).nmorph-calendar-date--previous,
+  .nmorph-calendar-date:not(
+      .nmorph-calendar-date--hidden,
+      .nmorph-calendar-date--selected
+    ).nmorph-calendar-date--previous,
   .nmorph-calendar-date:not(.nmorph-calendar-date--hidden, .nmorph-calendar-date--selected).nmorph-calendar-date--next {
-    ${nmorphInset()}
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
     color: var(--nmorph-accent-color);
   }
 
@@ -262,51 +332,5 @@ const commonCSS = css`
     box-shadow: none;
     background: var(--nmorph-accent-color);
   }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <slot name="header">
-      <NmorphCalendarHeader :year="initialDate.getFullYear()" :month="initialDate.getMonth()"
-        :show-previous-month-button="showHeaderButtons.showPreviousMonthButton"
-        :show-today-button="showHeaderButtons.showTodayButton"
-        :show-next-month-button="showHeaderButtons.showNextMonthButton" @click-next-month="setNextMonth"
-        @click-previous-month="setPreviousMonth" @click-today="setTodayMonth" />
-    </slot>
-    <slot name="content">
-      <NmorphTable :data="calendar" bordered :row-hover="false">
-        <NmorphTableColumn v-for="columnName in days" :key="`${columnName}`" :prop="columnName"
-          :label="columnName.toUpperCase()">
-          <template #default="{ scope }">
-            <NmorphTableCell v-for="(row, idx) in scope.rows" :key="idx" :row="idx">
-              <div :data-date="`${dateData(row[columnName]).date}`" :class="[
-                'nmorph-calendar-date',
-                `nmorph-calendar-date--${dateData(row[columnName]).monthType}`,
-                {
-                  'nmorph-calendar-date--today':
-                    dateData(row[columnName]).isToday && !dateData(row[columnName]).hidden && props.markToday,
-                },
-                { 'nmorph-calendar-date--hidden': dateData(row[columnName]).hidden },
-                {
-                  'nmorph-calendar-date--selected': isValueSelected(dateData(row[columnName]).date),
-                },
-              ]" @click="clickDate(dateData(row[columnName]))">
-                <slot name="date-cell" :scope="{
-                  ...dateData(row[columnName]),
-                  selected: isValueSelected(dateData(row[columnName]).date),
-                }">
-                  {{ dateData(row[columnName]).hidden ? '-' : dateData(row[columnName]).value }}
-                </slot>
-              </div>
-            </NmorphTableCell>
-          </template>
-        </NmorphTableColumn>
-      </NmorphTable>
-    </slot>
-  </StyledComponent>
-</template>
+}
+</style>

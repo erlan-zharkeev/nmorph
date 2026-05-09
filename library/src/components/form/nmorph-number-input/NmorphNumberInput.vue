@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import { NmorphButton, NmorphIcon, NmorphIconMinusThin, NmorphIconPlusThin } from '@/components';
-import { styled, css } from '@vue-styled-components/core';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
 interface INmorphProps extends INmorphCommonInputProps {
@@ -98,124 +97,10 @@ watch(initialValue, (updatedValue) => {
 
 const inputDOMRef = ref<NmorphDomElementType>(null);
 defineExpose({ inputDOMRef });
-
-const commonCSS = css`
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  .nmorph-number-input__content {
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
-
-  .nmorph-number-input__input-content {
-    display: flex;
-    width: 100%;
-    height: var(--height);
-    height: 100%;
-    border-radius: var(--default-border-radius);
-    ${nmorphOutset()}
-  }
-
-  .nmorph-number-input__decrease {
-    .nmorph-button__content {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-  }
-
-  .nmorph-number-input__increase {
-    .nmorph-button__content {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  }
-
-  input {
-    width: auto;
-    width: 100%;
-    padding: var(--indentation-00) var(--default-indentation-input);
-    text-align: center;
-    border: none;
-    border-top: 1px solid var(--nmorph-main-color);
-    border-bottom: 1px solid var(--nmorph-main-color);
-    transition: ease-in-out var(--transition-01) background;
-    ${nmorphInset()}
-    transition: background 0s;
-    -moz-appearance: textfield;
-  }
-
-  input:focus {
-    background: var(--nmorph-accent-color);
-    outline: none;
-  }
-
-  input::-webkit-inner-spin-button,
-  input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  .nmorph-number-input__action-btns {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &.nmorph-number-input--disabled {
-    ${disabled()}
-
-    .nmorph-number-input__input-content {
-      pointer-events: none;
-    }
-  }
-
-  &.nmorph-number-input--action-btn-position-right {
-    input {
-      border-top-left-radius: var(--default-border-radius);
-      border-bottom-left-radius: var(--default-border-radius);
-    }
-
-    .nmorph-number-input__decrease,
-    .nmorph-number-input__increase {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-    }
-
-    .nmorph-number-input__decrease {
-      .nmorph-button__content {
-        border-radius: 0;
-        border-top-right-radius: var(--default-border-radius);
-      }
-    }
-
-    .nmorph-number-input__increase {
-      .nmorph-button__content {
-        border-radius: 0;
-        border-bottom-right-radius: var(--default-border-radius);
-      }
-    }
-
-    .nmorph-button {
-      width: 100%;
-    }
-  }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-  &.nmorph-number-input--action-btn-position-right {
-    .nmorph-button {
-      --height: ${(props) => props.rightActionBtnHeight};
-    }
-  }
-`;
 </script>
 
 <template>
-  <StyledComponent :class="modifiers" :props="{ rightActionBtnHeight }">
+  <div :class="modifiers" :style="{ '--nmorph-number-input-right-action-height': rightActionBtnHeight }">
     <div class="nmorph-number-input__content">
       <div class="nmorph-number-input__input-content">
         <div v-if="!actionBtnPositionRight" class="nmorph-number-input__decrease">
@@ -273,5 +158,129 @@ const StyledComponent = styled.div`
         </div>
       </div>
     </div>
-  </StyledComponent>
+  </div>
 </template>
+
+<style lang="scss">
+.nmorph-number-input {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .nmorph-number-input__content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .nmorph-number-input__input-content {
+    display: flex;
+    width: 100%;
+    height: var(--height);
+    height: 100%;
+    border-radius: var(--default-border-radius);
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
+  }
+
+  .nmorph-number-input__decrease {
+    .nmorph-button__content {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  .nmorph-number-input__increase {
+    .nmorph-button__content {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  input {
+    width: auto;
+    width: 100%;
+    padding: var(--indentation-00) var(--default-indentation-input);
+    text-align: center;
+    border: none;
+    border-top: 1px solid var(--nmorph-main-color);
+    border-bottom: 1px solid var(--nmorph-main-color);
+    transition: ease-in-out var(--transition-01) background;
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
+    transition: background 0s;
+    -moz-appearance: textfield;
+  }
+
+  input:focus {
+    background: var(--nmorph-accent-color);
+    outline: none;
+  }
+
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .nmorph-number-input__action-btns {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.nmorph-number-input--disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    .nmorph-number-input__input-content {
+      pointer-events: none;
+    }
+  }
+
+  &.nmorph-number-input--action-btn-position-right {
+    input {
+      border-top-left-radius: var(--default-border-radius);
+      border-bottom-left-radius: var(--default-border-radius);
+    }
+
+    .nmorph-number-input__decrease,
+    .nmorph-number-input__increase {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .nmorph-number-input__decrease {
+      .nmorph-button__content {
+        border-radius: 0;
+        border-top-right-radius: var(--default-border-radius);
+      }
+    }
+
+    .nmorph-number-input__increase {
+      .nmorph-button__content {
+        border-radius: 0;
+        border-bottom-right-radius: var(--default-border-radius);
+      }
+    }
+
+    .nmorph-button {
+      width: 100%;
+    }
+  }
+
+  &.nmorph-number-input--action-btn-position-right {
+    .nmorph-button {
+      --height: var(--nmorph-number-input-right-action-height);
+    }
+  }
+}
+</style>

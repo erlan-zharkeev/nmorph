@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphComponentHeight } from '@/types';
-import { disabled, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { inject, computed } from 'vue';
 import {
   INmorphSelectOption,
@@ -9,7 +9,6 @@ import {
   NmorphSelectChangeSelectedValue,
   NmorphSelectSelectedValueInjectionType,
 } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
 
 const selectSelectedValue = inject<NmorphSelectSelectedValueInjectionType>('select-selected-value');
 const selectChangeSelectedValue = inject<NmorphSelectChangeSelectedValue>('select-change-selected-value');
@@ -51,8 +50,22 @@ const modifiers = computed(() =>
     ],
   })
 );
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers" @click="clickHandler" :value="props.value">
+    <div class="nmorph-select-option__content">
+      <span>{{ props.label }}</span>
+      <slot />
+    </div>
+    <NmorphIcon v-if="checked" class="nmorph-select-option__checked">
+      <NmorphIconSuccess />
+    </NmorphIcon>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-select-option {
   --hover-bg: var(--nmorph-accent-color);
   --hover-color: var(--nmorph-white-color);
 
@@ -111,26 +124,10 @@ const commonCSS = css`
   }
 
   &.nmorph-select-option--disabled {
-    ${disabled()}
+    cursor: not-allowed;
+    opacity: 0.6;
 
     pointer-events: none;
   }
-
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers" @click="clickHandler" :value="props.value">
-    <div class="nmorph-select-option__content">
-      <span>{{ props.label }}</span>
-      <slot />
-    </div>
-    <NmorphIcon v-if="checked" class="nmorph-select-option__checked">
-      <NmorphIconSuccess />
-    </NmorphIcon>
-  </StyledComponent>
-</template>
+}
+</style>

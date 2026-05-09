@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { body1, body2, body3, disabled, ellipsis, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, onMounted, ref, watch } from 'vue';
-import { styled, css } from '@vue-styled-components/core';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
 interface INmorphProps extends INmorphCommonInputProps {
@@ -127,8 +126,38 @@ const displayValue = computed(() => {
   if (props.displayFormat === 'hsl') return formatHsl(currentValue.value);
   return currentValue.value.toUpperCase();
 });
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <div class="nmorph-color-picker__content">
+      <input
+        :id="id"
+        ref="inputDOMRef"
+        :name="name"
+        :tabindex="tabindex"
+        class="nmorph-color-picker__native nmorph-native-input"
+        type="color"
+        :value="currentValue"
+        :disabled="props.disabled"
+        @input="handleInput"
+        @focus="
+          focused = true;
+          emit('focus');
+        "
+        @blur="
+          focused = false;
+          emit('blur');
+        "
+      />
+      <div class="nmorph-color-picker__swatch" :style="{ background: currentValue }" />
+      <span v-if="props.showValue" class="nmorph-color-picker__value">{{ displayValue }}</span>
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-color-picker {
   display: inline-flex;
   flex: 0 0 auto;
   flex-direction: column;
@@ -147,7 +176,11 @@ const commonCSS = css`
     padding: 0 var(--default-indentation-input);
     border-radius: var(--default-border-radius);
 
-    ${nmorphInset()}
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
 
   .nmorph-color-picker__native {
@@ -170,8 +203,13 @@ const commonCSS = css`
   }
 
   .nmorph-color-picker__value {
-    ${body2()}
-    ${ellipsis()}
+    font-weight: 400;
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-regular);
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
     flex: 0 0 7ch;
     width: 7ch;
@@ -200,19 +238,27 @@ const commonCSS = css`
 
   &.nmorph--thin-component {
     .nmorph-color-picker__value {
-      ${body3()}
+      font-weight: 400;
+      font-size: var(--font-size-extra-small);
+      line-height: var(--line-height-regular);
     }
   }
 
   &.nmorph--thick-component {
     .nmorph-color-picker__value {
-      ${body1()}
+      font-weight: 400;
+      font-size: var(--font-size-base);
+      line-height: var(--line-height-regular);
     }
   }
 
   &.nmorph--focused {
     .nmorph-color-picker__content {
-      ${nmorphOutset()}
+      background: var(--nmorph-main-color);
+      box-shadow:
+        var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color);
 
       background: var(--nmorph-accent-color);
     }
@@ -223,43 +269,12 @@ const commonCSS = css`
   }
 
   &.nmorph-color-picker--disabled {
-    ${disabled()}
+    cursor: not-allowed;
+    opacity: 0.6;
 
     .nmorph-color-picker__content {
       pointer-events: none;
     }
   }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`;
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <div class="nmorph-color-picker__content">
-      <input
-        :id="id"
-        ref="inputDOMRef"
-        :name="name"
-        :tabindex="tabindex"
-        class="nmorph-color-picker__native nmorph-native-input"
-        type="color"
-        :value="currentValue"
-        :disabled="props.disabled"
-        @input="handleInput"
-        @focus="
-          focused = true;
-          emit('focus');
-        "
-        @blur="
-          focused = false;
-          emit('blur');
-        "
-      />
-      <div class="nmorph-color-picker__swatch" :style="{ background: currentValue }" />
-      <span v-if="props.showValue" class="nmorph-color-picker__value">{{ displayValue }}</span>
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

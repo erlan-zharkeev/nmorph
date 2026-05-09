@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { disabled, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, useSlots } from 'vue';
 import { NmorphIcon, NmorphLinkTarget } from '@/components';
 import { NmorphColor } from '@/types';
-import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   type?: keyof typeof NmorphColor;
@@ -30,8 +29,24 @@ const modifiers = computed(() =>
     'nmorph-link': [props.type, `${props.underline && 'underline'}`, `${props.disabled && 'disabled'}`],
   })
 );
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <a :href="props.href" :target="props.target">
+      <slot name="prepend" />
+
+      {{ text }}
+      <NmorphIcon v-if="slots['icon']" class="nmorph-link__icon" width="10px" height="10px">
+        <slot name="icon" />
+      </NmorphIcon>
+      <slot />
+    </a>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-link {
   --link-color: var(--nmorph-accent-color);
 
   display: inline-block;
@@ -85,25 +100,8 @@ const commonCSS = css`
   }
 
   &.nmorph-link--disabled {
-    ${disabled}
+    cursor: not-allowed;
+    opacity: 0.6;
   }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <a :href="props.href" :target="props.target">
-      <slot name="prepend" />
-
-      {{ text }}
-      <NmorphIcon v-if="slots['icon']" class="nmorph-link__icon" width="10px" height="10px">
-        <slot name="icon" />
-      </NmorphIcon>
-      <slot />
-    </a>
-  </StyledComponent>
-</template>
+}
+</style>

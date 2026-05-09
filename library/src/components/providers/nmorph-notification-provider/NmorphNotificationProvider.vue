@@ -3,7 +3,6 @@ import { NmorphNotificationPlacement } from '@/components/providers';
 import type { INmorphNotification, TNmorphNotificationPlacement } from '@/components/providers';
 import { NmorphAlert } from '@/components';
 import { computed, ref, watch } from 'vue';
-import { styled, css } from '@vue-styled-components/core';
 
 const ANIMATION_DURATION = 500;
 
@@ -99,8 +98,34 @@ watch(
 );
 
 const zIndex = computed(() => props.zIndex);
+</script>
 
-const commonCSS = css`
+<template>
+  <div class="nmorph-notification-provider" :style="{ zIndex }">
+    <transition-group
+      v-for="group in notificationGroups"
+      :key="group.placement"
+      name="nmorph-notification"
+      tag="div"
+      :class="`nmorph-notification-provider__list nmorph-notification-provider__list--${group.placement}`"
+    >
+      <NmorphAlert
+        v-for="notification in group.notifications"
+        :key="notification.id"
+        :style="{ width: notification.width }"
+        :class="[
+          'nmorph-notification-provider__notification',
+          closingIds.includes(notification.id) && 'nmorph-notification-provider__notification--closing',
+        ]"
+        v-bind="notification"
+        @close="() => closeHandler(notification.id)"
+      />
+    </transition-group>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-notification-provider {
   position: fixed;
   top: 0;
   left: 0;
@@ -341,33 +366,5 @@ const commonCSS = css`
     opacity: 0;
     pointer-events: none;
   }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`;
-</script>
-
-<template>
-  <StyledComponent class="nmorph-notification-provider" :style="{ zIndex }">
-    <transition-group
-      v-for="group in notificationGroups"
-      :key="group.placement"
-      name="nmorph-notification"
-      tag="div"
-      :class="`nmorph-notification-provider__list nmorph-notification-provider__list--${group.placement}`"
-    >
-      <NmorphAlert
-        v-for="notification in group.notifications"
-        :key="notification.id"
-        :style="{ width: notification.width }"
-        :class="[
-          'nmorph-notification-provider__notification',
-          closingIds.includes(notification.id) && 'nmorph-notification-provider__notification--closing',
-        ]"
-        v-bind="notification"
-        @close="() => closeHandler(notification.id)"
-      />
-    </transition-group>
-  </StyledComponent>
-</template>
+}
+</style>

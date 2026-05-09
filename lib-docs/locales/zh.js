@@ -125,6 +125,10 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "remove-styled-components":
+          "已从 Nmorph UI 组件中移除 styled-components，并用稳定的 Vue 标记和 SCSS 替代运行时生成的 styled 类。",
+        "avatar-text-input-visual-fixes":
+          "NmorphAvatar 图片圆角已与边框对齐，NmorphTextInput 中的 raw SVG prepend 图标也能正确渲染。",
         "nuxt-module":
           "新增 Nuxt module 支持，可通过 `nmorph-ui-kit/nuxt` 自动注册 plugin。",
         "image-preview-portal":

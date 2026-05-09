@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphIconSize } from '@/components';
-import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps {
   size?: keyof typeof NmorphIconSize;
@@ -32,10 +31,21 @@ const customStyles = computed(() => {
   const styles: { [key: string]: string } = {};
   if (props.width) styles['--width'] = props.width;
   if (props.height) styles['--height'] = props.height;
+  styles['--nmorph-icon-color'] = props.color;
   return styles;
 });
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers" :style="customStyles">
+    <div class="nmorph-icon__content">
+      <slot />
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-icon {
   width: var(--width);
   min-width: var(--width);
   height: var(--height);
@@ -80,18 +90,7 @@ const commonCSS = css`
     --width: 32px;
     --height: 32px;
   }
-`;
 
-const StyledComponent = styled.div`
-  ${commonCSS}
-  --color: ${(props) => props.color};
-`;
-</script>
-
-<template>
-  <StyledComponent :class="modifiers" :style="customStyles" :props="{ color: props.color }">
-    <div class="nmorph-icon__content">
-      <slot />
-    </div>
-  </StyledComponent>
-</template>
+  --color: var(--nmorph-icon-color);
+}
+</style>

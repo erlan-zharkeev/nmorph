@@ -225,7 +225,8 @@ export const useNmorphTheme = (customOptions?: INmorphThemeOptions): INmorphThem
   };
 
   const setThemeColors = (theme: string, colors: INmorphThemeColors) => {
-    const dynamicColors = colors.main && !colors.darkShade && !colors.lightShade ? getDynamicThemeColors(colors.main) : {};
+    const dynamicColors =
+      colors.main && !colors.darkShade && !colors.lightShade ? getDynamicThemeColors(colors.main) : {};
     options.themes[theme] = { ...options.themes[theme], ...colors, ...dynamicColors };
     updateThemeStyles();
   };

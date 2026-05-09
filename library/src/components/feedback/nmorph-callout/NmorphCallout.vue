@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { styled, css } from '@vue-styled-components/core';
-import { body3, title3 } from '@/utils';
 import type { NmorphCalloutType } from './types';
 
 interface INmorphProps {
@@ -13,8 +11,17 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   type: 'info',
   title: '',
 });
+</script>
 
-const commonCSS = css`
+<template>
+  <div class="nmorph-callout" :class="`nmorph-callout--${props.type}`">
+    <div v-if="props.title" class="nmorph-callout__title">{{ props.title }}</div>
+    <div class="nmorph-callout__content" v-html="props.content" />
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-callout {
   --callout-color: var(--nmorph-accent-color);
 
   position: relative;
@@ -56,7 +63,9 @@ const commonCSS = css`
   }
 
   .nmorph-callout__title {
-    ${title3()}
+    font-weight: 600;
+    font-size: var(--font-size-medium);
+    line-height: var(--line-height-loose);
     margin-bottom: 8px;
   }
 
@@ -67,19 +76,10 @@ const commonCSS = css`
   }
 
   .nmorph-callout__content {
-    ${body3()}
+    font-weight: 400;
+    font-size: var(--font-size-extra-small);
+    line-height: var(--line-height-regular);
     white-space: pre-wrap;
   }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`;
-</script>
-
-<template>
-  <StyledComponent class="nmorph-callout" :class="`nmorph-callout--${props.type}`">
-    <div v-if="props.title" class="nmorph-callout__title">{{ props.title }}</div>
-    <div class="nmorph-callout__content" v-html="props.content" />
-  </StyledComponent>
-</template>
+}
+</style>

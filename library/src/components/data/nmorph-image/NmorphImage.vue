@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { INmorphImage } from '@/types';
-import { useModifiers, nmorphBorder } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { styled, css } from '@vue-styled-components/core';
 
 const { t } = useI18n();
 
@@ -55,51 +54,14 @@ const modifiers = computed(() =>
   })
 );
 
-const commonCSS = css`
-  --width: auto;
-  --height: 100%;
-
-  width: var(--width);
-  height: var(--height);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
-
-  .nmorph-image__loading,
-  .nmorph-image__load-failed {
-    padding: 1rem;
-  }
-
-  img {
-    object-fit: ${props.fit};
-  }
-
-  &.nmorph-image--hide {
-    img {
-      width: 0;
-      height: 0;
-      opacity: 0;
-    }
-  }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-
-  .nmorph {
-    ${nmorphBorder(Number(props => props.frameBorder))};
-  }
-`;
+const styles = computed(() => ({
+  '--nmorph-image-fit': props.fit || 'cover',
+  '--nmorph-image-frame-border': `${props.frameBorder}px`,
+}));
 </script>
 
 <template>
-  <StyledComponent v-if="props.src" :class="modifiers" :props="{ frameBorder: props.frameBorder }">
+  <div v-if="props.src" :class="modifiers" :style="styles">
     <img :src="props.src" :alt="props.alt" :srcset="props.srcSet" @load="onImageLoad" @error="onImageError" />
     <div v-if="loadingFailed" class="nmorph-image__load-failed">
       <slot name="error">
@@ -111,5 +73,5 @@ const StyledComponent = styled.div`
         {{ computedLoadingText }}
       </slot>
     </div>
-  </StyledComponent>
+  </div>
 </template>

@@ -136,6 +136,10 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "remove-styled-components":
+          "Removed styled-components from Nmorph UI components and replaced runtime-generated styled classes with stable Vue markup and SCSS.",
+        "avatar-text-input-visual-fixes":
+          "Aligned NmorphAvatar image radius with its frame and fixed raw SVG prepend icon rendering in NmorphTextInput.",
         "nuxt-module":
           "Added Nuxt module support through `nmorph-ui-kit/nuxt` with automatic plugin registration.",
         "image-preview-portal":

@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
-import { disabled, nmorphOutset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, inject, ref } from 'vue';
 import {
   NmorphSelectButtonChangeHandlerInjectionType,
   NmorphSelectButtonSelectedValueInjectionType,
 } from '@/components';
-import { styled, css } from '@vue-styled-components/core';
 
 const selectedValue = inject<NmorphSelectButtonSelectedValueInjectionType | undefined>(
   'select-button-selected-value',
@@ -41,8 +40,31 @@ const clickHandler = () => {
   if (props.disabled) return;
   if (changeHandler) changeHandler(props.value);
 };
+</script>
 
-const commonCSS = css`
+<template>
+  <label
+    :class="modifiers"
+    :tabindex="props.tabindex"
+    @click.prevent="clickHandler"
+    @keydown.space.prevent="clickHandler"
+    @keydown.enter.prevent="clickHandler"
+  >
+    <input
+      ref="inputDOMRef"
+      type="radio"
+      :value="props.value"
+      :checked="checked"
+      :disabled="props.disabled"
+      tabindex="-1"
+      class="nmorph-native-input"
+    />
+    <slot />
+  </label>
+</template>
+
+<style lang="scss">
+.nmorph-select-button-item {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -68,36 +90,17 @@ const commonCSS = css`
 
   &.nmorph-select-button-item--checked {
     opacity: 1;
-    ${nmorphOutset()}
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
 
   &.nmorph-select-button-item--disabled {
-    ${disabled()}
+    cursor: not-allowed;
+    opacity: 0.6;
   }
-`;
-
-const StyledComponent = styled.label`
-  ${commonCSS}
-`;
-</script>
-
-<template>
-  <StyledComponent
-    :class="modifiers"
-    :tabindex="props.tabindex"
-    @click.prevent="clickHandler"
-    @keydown.space.prevent="clickHandler"
-    @keydown.enter.prevent="clickHandler"
-  >
-    <input
-      ref="inputDOMRef"
-      type="radio"
-      :value="props.value"
-      :checked="checked"
-      :disabled="props.disabled"
-      tabindex="-1"
-      class="nmorph-native-input"
-    />
-    <slot />
-  </StyledComponent>
-</template>
+}
+</style>

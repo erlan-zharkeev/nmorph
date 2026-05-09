@@ -245,6 +245,234 @@ export const useCommonStyles = () => {
       }
     }
 
+    .nmorph-avatar {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nmorph-avatar--circle {
+      border-radius: var(--border-radius-circular);
+    }
+
+    .nmorph-avatar--square {
+      border-radius: var(--default-border-radius);
+    }
+
+    .nmorph-avatar > .nmorph-image {
+      position: absolute;
+      --width: var(--nmorph-avatar-size);
+      --height: var(--nmorph-avatar-size);
+      padding: var(--nmorph-avatar-image-padding);
+      border-radius: var(--nmorph-avatar-radius);
+    }
+
+    .nmorph-avatar.nmorph--shadow-combined {
+      border: var(--nmorph-avatar-frame-border) solid var(--nmorph-main-color);
+      background: var(--nmorph-main-color);
+      box-shadow:
+        var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color),
+        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur)
+          var(--nmorph-dark-shade-color),
+        inset calc(-1 * var(--base-shadow-width)) calc(-0.5 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-dark-shade-color);
+    }
+
+    .nmorph-avatar > .nmorph-image > img {
+      border-radius: var(--nmorph-avatar-image-radius);
+    }
+
+    .nmorph-avatar__initials {
+      color: var(--nmorph-accent-color);
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .nmorph-avatar--preview {
+      cursor: pointer;
+    }
+
+    .nmorph-avatar__preview {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: visible;
+    }
+
+    .nmorph-avatar__preview .nmorph-image-preview__trigger {
+      display: none;
+    }
+
+    .nmorph-image {
+      --width: auto;
+      --height: 100%;
+      width: var(--width);
+      height: var(--height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nmorph-image.nmorph--shadow-combined {
+      border: var(--nmorph-image-frame-border) solid var(--nmorph-main-color);
+    }
+
+    .nmorph-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: var(--nmorph-image-fit);
+    }
+
+    .nmorph-image__loading,
+    .nmorph-image__load-failed {
+      padding: 1rem;
+    }
+
+    .nmorph-image--hide img {
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+
+    .nmorph-text-input {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 0;
+      --prepend-icon-indent: 8px;
+      --prepend-icon-size: 14px;
+    }
+
+    .nmorph-text-input__input-side {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      width: 100%;
+    }
+
+    .nmorph-text-input__prepend-icon {
+      position: absolute;
+      left: 0;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--prepend-icon-size);
+      min-width: var(--prepend-icon-size);
+      height: var(--prepend-icon-size);
+      min-height: var(--prepend-icon-size);
+      margin-left: var(--prepend-icon-indent);
+      pointer-events: none;
+    }
+
+    .nmorph-text-input__prepend-icon svg,
+    .nmorph-text-input__prepend-icon .nmorph-icon,
+    .nmorph-text-input__prepend-icon .nmorph-icon__content {
+      width: 100%;
+      min-width: 100%;
+      height: 100%;
+      min-height: 100%;
+    }
+
+    .nmorph-text-input__prepend-icon svg {
+      fill: var(--nmorph-text-color);
+      stroke-width: 0;
+    }
+
+    .nmorph-text-input__prepend-icon path {
+      stroke: var(--nmorph-text-color);
+    }
+
+    .nmorph-text-input input {
+      width: 100%;
+      height: var(--height);
+      text-indent: var(--nmorph-text-input-indentation);
+      border: none;
+      border-radius: var(--default-border-radius);
+      ${nmorphInset()}
+    }
+
+    .nmorph-text-input--with-action input {
+      padding-right: calc(var(--height) + var(--indentation-03));
+    }
+
+    .nmorph-text-input input:focus {
+      ${nmorphOutset()}
+      background: var(--nmorph-accent-color);
+      outline: none;
+    }
+
+    .nmorph-text-input.nmorph--focused .nmorph-text-input__prepend-icon svg {
+      fill: var(--nmorph-focus-text-color);
+    }
+
+    .nmorph-text-input.nmorph--focused .nmorph-text-input__prepend-icon path {
+      stroke: var(--nmorph-focus-text-color);
+    }
+
+    .nmorph-text-input input:-webkit-autofill,
+    .nmorph-text-input input:-webkit-autofill:hover,
+    .nmorph-text-input input:-webkit-autofill:active {
+      -webkit-text-fill-color: var(--nmorph-text-color);
+      caret-color: var(--nmorph-text-color);
+      box-shadow:
+        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color),
+        inset 0 0 0 1000px var(--nmorph-main-color);
+    }
+
+    .nmorph-text-input input:-webkit-autofill:focus {
+      -webkit-text-fill-color: var(--nmorph-focus-text-color);
+      caret-color: var(--nmorph-focus-text-color);
+      box-shadow:
+        var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color),
+        inset 0 0 0 1000px var(--nmorph-accent-color);
+      outline: none;
+    }
+
+    .nmorph-text-input input:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .nmorph-text-input__password-btn {
+      position: absolute;
+      right: 0;
+      height: 100%;
+    }
+
+    .nmorph-text-input__password-btn .nmorph-button__content {
+      padding: var(--indentation-03);
+    }
+
+    .nmorph-text-input.nmorph-button.nmorph--thin-component .nmorph-text-input__password-btn {
+      margin-top: var(--indentation-00);
+    }
+
+    .nmorph-text-input.nmorph-button.nmorph--thin-component .nmorph-text-input__password-btn .nmorph-button {
+      --height: var(--thin-component);
+    }
+
+    .nmorph-text-input.nmorph-button.nmorph--focused .nmorph-text-input__password-btn .nmorph-icon {
+      --color: var(--nmorph-white-color);
+    }
+
+    .nmorph-text-input.nmorph-button.nmorph--focused
+      .nmorph-text-input__password-btn
+      .nmorph-button:not(:disabled, [loading='true']):hover
+      .nmorph-icon {
+      --color: var(--nmorph-white-color);
+    }
+
     .list-enter-active,
     .list-leave-active {
       transition: all var(--transition-02) ease;

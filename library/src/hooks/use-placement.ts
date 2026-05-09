@@ -42,7 +42,7 @@ export const usePlacement = (data: INmorphUsePlacementPayload) => {
 
   const checkForCoordinateChanges = () => {
     nextTick(() => {
-      if (contentDOMElement.value) adjustPlacement()
+      if (contentDOMElement.value) adjustPlacement();
     });
   };
 

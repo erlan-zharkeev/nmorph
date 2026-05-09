@@ -3,7 +3,6 @@ import { usePlacement } from '@/hooks';
 import { INmorphCoords, NmorphDomElementType, NmorphPlacementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
-import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   text?: string;
@@ -50,8 +49,47 @@ const handleMouseLeave = () => {
 const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
 const tooltipBody = ref<NmorphDomElementType>(null);
 defineExpose({ tooltipBody });
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers" :style="{ '--nmorph-tooltip-width': width }">
+    <div
+      ref="tooltipDOMRef"
+      class="nmorph-tooltip__content"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave"
+    >
+      <div ref="slotDOMRef">
+        <slot />
+      </div>
+      <transition-group v-if="props.forceCoordinate" name="opacity" tag="div">
+        <div
+          v-if="showTooltip && props.text"
+          class="nmorph-tooltip__info-content"
+          :style="{ left: forceCoordinate?.x, bottom: forceCoordinate?.y }"
+          ref="tooltipBody"
+        >
+          <div class="nmorph-tooltip__shadow-content">
+            <div v-if="!props.forceCoordinate" class="nmorph-tooltip__triangle" />
+            <span>{{ text }}</span>
+          </div>
+        </div>
+      </transition-group>
+      <transition-group v-else name="opacity" tag="div">
+        <div v-if="showTooltip" class="nmorph-tooltip__info-content">
+          <div class="nmorph-tooltip__shadow-content">
+            <div class="nmorph-tooltip__triangle" />
+            <span v-if="props.text">{{ text }}</span>
+            <slot v-else name="content" />
+          </div>
+        </div>
+      </transition-group>
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-tooltip {
   --max-width: 120px;
 
   --width: fit-content;
@@ -155,48 +193,7 @@ const commonCSS = css`
       transform: none;
     }
   }
-`
 
-const StyledComponent = styled.div`
-  ${commonCSS}
-  width: ${props => props.width};
-
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers" :props="{ width }">
-    <div
-      ref="tooltipDOMRef"
-      class="nmorph-tooltip__content"
-      @mouseenter="handleMouseEnter"
-      @mouseleave="handleMouseLeave"
-    >
-      <div ref="slotDOMRef">
-        <slot />
-      </div>
-      <transition-group v-if="props.forceCoordinate" name="opacity" tag="div">
-        <div
-          v-if="showTooltip && props.text"
-          class="nmorph-tooltip__info-content"
-          :style="{ left: forceCoordinate?.x, bottom: forceCoordinate?.y }"
-          ref="tooltipBody"
-        >
-          <div class="nmorph-tooltip__shadow-content">
-            <div v-if="!props.forceCoordinate" class="nmorph-tooltip__triangle" />
-            <span>{{ text }}</span>
-          </div>
-        </div>
-      </transition-group>
-      <transition-group v-else name="opacity" tag="div">
-        <div v-if="showTooltip" class="nmorph-tooltip__info-content">
-          <div class="nmorph-tooltip__shadow-content">
-            <div class="nmorph-tooltip__triangle" />
-            <span v-if="props.text">{{ text }}</span>
-            <slot v-else name="content" />
-          </div>
-        </div>
-      </transition-group>
-    </div>
-  </StyledComponent>
-</template>
+  width: var(--nmorph-tooltip-width);
+}
+</style>

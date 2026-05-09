@@ -1,6 +1,6 @@
-import { DefineComponent } from 'vue';
+import { type Component } from 'vue';
 
 export interface INmorphAction {
-  icon: DefineComponent<{}, {}, unknown>;
+  icon: Component;
   handler: () => void;
 }

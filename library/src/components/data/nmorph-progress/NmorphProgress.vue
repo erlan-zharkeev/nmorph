@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { body3, nmorphInset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { NmorphProgressColorType, NmorphProgressType } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   type?: NmorphProgressType;
@@ -54,8 +53,51 @@ onMounted(() => {
 
 const circleContainerSize = computed(() => `${props.circleSize}px`);
 const displayPercentage = computed(() => `${props.percentage}%`);
+</script>
 
-const commonCSS = css`
+<template>
+  <div
+    :class="modifiers"
+    :style="{
+      '--nmorph-progress-percentage': displayPercentage,
+      '--nmorph-progress-color': color,
+      '--nmorph-progress-animation': animation,
+      '--nmorph-progress-circle-size': circleContainerSize,
+    }"
+  >
+    <div v-if="props.type === 'linear'" class="nmorph-progress__linear">
+      <div class="nmorph-progress__outer">
+        <div class="nmorph-progress__inner">
+          <div v-if="valueInside" class="nmorph-progress__inner-text">
+            <slot name="inner-text"> {{ displayPercentage }} </slot>
+          </div>
+        </div>
+      </div>
+      <div v-if="valueRightSide" class="nmorph-progress__percentage">
+        <slot name="right-side">{{ displayPercentage }}</slot>
+      </div>
+    </div>
+    <div v-if="props.type === 'circle'" class="nmorph-progress__circle">
+      <div class="nmorph-progress__circle-inner-part">
+        <slot name="circle-inner-part">{{ displayPercentage }}</slot>
+      </div>
+      <svg :width="props.circleSize" :height="props.circleSize">
+        <circle
+          ref="circle"
+          class="nmorph-progress__circle-ring"
+          :cx="props.circleSize / 2"
+          :cy="props.circleSize / 2"
+          :r="props.circleSize / 2 - 2"
+          :stroke-dasharray="strokeDasharray"
+          :stroke-dashoffset="strokeDashoffset"
+        />
+      </svg>
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-progress {
   --height: 8px;
   --width-transition: 0.4s ease-in-out width;
   --animation: slide 2s linear infinite;
@@ -73,7 +115,12 @@ const commonCSS = css`
       height: 100%;
       overflow: hidden;
       border-radius: var(--border-radius-40);
-      ${nmorphInset()}
+
+      background: var(--nmorph-main-color);
+      box-shadow:
+        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color);
     }
 
     .nmorph-progress__inner {
@@ -85,7 +132,9 @@ const commonCSS = css`
 
     .nmorph-progress__percentage,
     .nmorph-progress__inner-text {
-      ${body3()}
+      font-weight: 400;
+      font-size: var(--font-size-extra-small);
+      line-height: var(--line-height-regular);
       margin-left: var(--indentation-03);
     }
 
@@ -101,7 +150,12 @@ const commonCSS = css`
   .nmorph-progress__circle {
     position: relative;
     border-radius: var(--border-radius-circular);
-    ${nmorphInset()}
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
 
     &::after {
       width: 92%;
@@ -134,50 +188,20 @@ const commonCSS = css`
     fill: none;
     stroke-width: 4px;
   }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
 
   .nmorph-progress__inner {
-    width: ${props => props.displayPercentage};
-    background: ${props => props.color};
-    animation: ${props => props.animation};
+    width: var(--nmorph-progress-percentage);
+    background: var(--nmorph-progress-color);
+    animation: var(--nmorph-progress-animation);
   }
 
   .nmorph-progress__circle {
-    width: ${props => props.circleContainerSize};
-    height: ${props => props.circleContainerSize};
+    width: var(--nmorph-progress-circle-size);
+    height: var(--nmorph-progress-circle-size);
   }
 
   .nmorph-progress__circle-ring {
-    stroke: ${props => props.color};
+    stroke: var(--nmorph-progress-color);
   }
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers" :props="{ displayPercentage, color, animation, circleContainerSize }">
-    <div v-if="props.type === 'linear'" class="nmorph-progress__linear">
-      <div class="nmorph-progress__outer">
-        <div class="nmorph-progress__inner">
-          <div v-if="valueInside" class="nmorph-progress__inner-text">
-            <slot name="inner-text"> {{ displayPercentage }} </slot>
-          </div>
-        </div>
-      </div>
-      <div v-if="valueRightSide" class="nmorph-progress__percentage">
-        <slot name="right-side">{{ displayPercentage }}</slot>
-      </div>
-    </div>
-    <div v-if="props.type === 'circle'" class="nmorph-progress__circle">
-      <div class="nmorph-progress__circle-inner-part">
-        <slot name="circle-inner-part">{{ displayPercentage }}</slot>
-      </div>
-      <svg :width="props.circleSize" :height="props.circleSize">
-        <circle ref="circle" class="nmorph-progress__circle-ring" :cx="props.circleSize / 2" :cy="props.circleSize / 2"
-          :r="props.circleSize / 2 - 2" :stroke-dasharray="strokeDasharray" :stroke-dashoffset="strokeDashoffset" />
-      </svg>
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

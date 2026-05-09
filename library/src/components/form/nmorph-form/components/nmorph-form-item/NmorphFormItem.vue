@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { title4, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, inject, provide, toRef } from 'vue';
 import { NmorphComponentHeight } from '@/types';
 import { NmorphValidationIcon, NmorphErrorBox } from './inner-components';
 import { NmorphFormValidationDataType } from '@/components';
-import { styled, css } from '@vue-styled-components/core';
 import { nmorphFormItemInputDataKey } from '../../use-form-item-input';
 import { NmorphFormItemInputDataType } from '../../types';
 
@@ -50,12 +49,31 @@ const modifiers = computed(() =>
     ],
   })
 );
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <label v-if="props.label" :for="props.id">{{ props.label }}</label>
+    <div class="nmorph-form-item__content">
+      <slot />
+      <NmorphValidationIcon
+        v-if="props.showValidationIcon"
+        :valid="Boolean(validationData?.valid)"
+        :show="showStatusIcon"
+      />
+    </div>
+    <NmorphErrorBox :errors="validationData?.errors" :height="props.height" :static-height="staticErrorBoxSpace" />
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-form-item {
   margin: var(--indentation-04) var(--indentation-00);
 
   label {
-    ${title4()}
+    font-weight: 600;
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-loose);
   }
 
   .nmorph-form-item__content {
@@ -82,24 +100,5 @@ const commonCSS = css`
       background: var(--nmorph-error-text-color);
     }
   }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`;
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <label v-if="props.label" :for="props.id">{{ props.label }}</label>
-    <div class="nmorph-form-item__content">
-      <slot />
-      <NmorphValidationIcon
-        v-if="props.showValidationIcon"
-        :valid="Boolean(validationData?.valid)"
-        :show="showStatusIcon"
-      />
-    </div>
-    <NmorphErrorBox :errors="validationData?.errors" :height="props.height" :static-height="staticErrorBoxSpace" />
-  </StyledComponent>
-</template>
+}
+</style>

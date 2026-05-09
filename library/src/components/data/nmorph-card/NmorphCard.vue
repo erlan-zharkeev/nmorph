@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { NmorphShadowType } from '@/types';
 import { computed, useSlots } from 'vue';
-import { styled, css } from '@vue-styled-components/core';
-import { useModifiers, nmorphCombined, body3, title2 } from '@/utils';
+import { useModifiers } from '@/utils';
 
 interface INmorphProps {
   shadowType?: keyof typeof NmorphShadowType;
@@ -22,8 +21,24 @@ const modifiers = computed(() =>
     'nmorph-card': [props.shadowType],
   })
 );
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers" :style="{ '--nmorph-card-combined-border-width': `${props.combinedShadowBorderWidth}px` }">
+    <div class="nmorph-card__header">
+      <slot name="header" />
+    </div>
+    <div class="nmorph-card__content">
+      <slot />
+    </div>
+    <div v-if="slots.footer" class="nmorph-card__footer">
+      <slot name="footer" />
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-card {
   --card-padding: var(--indentation-04);
 
   display: flex;
@@ -37,35 +52,29 @@ const commonCSS = css`
   }
 
   .nmorph-card__header {
-    ${title2()};
+    font-weight: 600;
+    font-size: var(--font-size-large);
+    line-height: var(--line-height-loose);
   }
 
   .nmorph-card__footer {
-    ${body3()};
+    font-weight: 400;
+    font-size: var(--font-size-extra-small);
+    line-height: var(--line-height-regular);
     height: fit-content;
     margin-top: 4px;
   }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
 
   &.nmorph--shadow-combined {
-    ${nmorphCombined(Number((props) => props.combinedShadowBorderWidth))};
+    border: var(--nmorph-card-combined-border-width) solid var(--nmorph-main-color);
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color),
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-0.5 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
-`;
-</script>
-
-<template>
-  <StyledComponent :class="modifiers" :props="{ combinedShadowBorderWidth: props.combinedShadowBorderWidth }">
-    <div class="nmorph-card__header">
-      <slot name="header" />
-    </div>
-    <div class="nmorph-card__content">
-      <slot />
-    </div>
-    <div v-if="slots.footer" class="nmorph-card__footer">
-      <slot name="footer" />
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

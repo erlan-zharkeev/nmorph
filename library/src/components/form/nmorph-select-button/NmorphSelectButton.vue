@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps } from '@/types';
-import { disabled, nmorphInset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, ref, watch, provide } from 'vue';
 import {
   NmorphSelectButtonChangeHandlerInjectionType,
@@ -8,7 +8,6 @@ import {
   INmorphSelectButtonOption,
   NmorphSelectButtonItem,
 } from '@/components';
-import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: string;
@@ -51,8 +50,24 @@ const changeHandler = (value: string) => {
 
 provide<NmorphSelectButtonSelectedValueInjectionType>('select-button-selected-value', initialValue);
 provide<NmorphSelectButtonChangeHandlerInjectionType>('select-button-change-handler', changeHandler);
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <NmorphSelectButtonItem
+      v-for="option in options"
+      :key="option.value"
+      :value="option.value"
+      :disabled="option.disabled"
+    >
+      {{ option.label }}
+    </NmorphSelectButtonItem>
+    <slot />
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-select-button {
   --track-padding: 4px;
   --item-size: calc(var(--default-thickness-component) - var(--track-padding) * 2);
   --item-font-size: var(--font-size-small);
@@ -62,7 +77,12 @@ const commonCSS = css`
   width: fit-content;
   padding: var(--track-padding);
   border-radius: var(--default-border-radius);
-  ${nmorphInset()}
+
+  background: var(--nmorph-main-color);
+  box-shadow:
+    inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+    inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+      var(--nmorph-light-shade-color);
 
   &.nmorph-select-button--thin {
     --item-size: calc(var(--thin-component) - var(--track-padding) * 2);
@@ -75,7 +95,8 @@ const commonCSS = css`
   }
 
   &.nmorph-select-button--disabled {
-    ${disabled()}
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 
   &.nmorph-select-button--fill {
@@ -86,23 +107,5 @@ const commonCSS = css`
       min-width: 0;
     }
   }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`;
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <NmorphSelectButtonItem
-      v-for="option in options"
-      :key="option.value"
-      :value="option.value"
-      :disabled="option.disabled"
-    >
-      {{ option.label }}
-    </NmorphSelectButtonItem>
-    <slot />
-  </StyledComponent>
-</template>
+}
+</style>

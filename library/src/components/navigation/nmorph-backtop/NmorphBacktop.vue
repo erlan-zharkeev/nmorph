@@ -4,7 +4,6 @@ import { useModifiers } from '@/utils';
 import { NmorphButton, NmorphIcon, NmorphIconChevronDown } from '@/components';
 import { NmorphDomElementType, NmorphElementDesignType } from '@/types';
 import { onMounted } from 'vue';
-import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   right?: number;
@@ -61,52 +60,51 @@ onUnmounted(() => {
   if (!container.value) return;
   container.value?.removeEventListener('scroll', scrollHandler);
 });
-
-const commonCSS = css`
-  .nmorph-backtop {
-    position: fixed;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-
-    .nmorph-backtop__up-icon {
-      transform: rotate(180deg);
-    }
-
-    &.nmorph-backtop--show {
-      opacity: 1;
-    }
-
-    &.nmorph-backtop--common {
-      .nmorph-button {
-        background: var(--nmorph-overlay-color);
-        border-radius: 4px;
-      }
-    }
-  }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-  .nmorph-backtop {
-    right: ${props => props.right}px;
-    bottom: ${props => props.bottom}px;
-  }
-`
 </script>
 
 <template>
-  <StyledComponent :props="{ right: props.right, bottom: props.bottom }">
+  <div :style="{ '--nmorph-backtop-right': `${props.right}px`, '--nmorph-backtop-bottom': `${props.bottom}px` }">
     <div ref="selfDOMEl" :class="modifiers">
       <div @click.stop="scrollToTopHandler">
         <slot>
           <NmorphButton :style-type="props.design === 'nmorph' ? 'default' : 'transparent'">
-            <NmorphIcon class="nmorph-backtop__up-icon"
-              :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-white-color)'">
+            <NmorphIcon
+              class="nmorph-backtop__up-icon"
+              :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-white-color)'"
+            >
               <NmorphIconChevronDown />
             </NmorphIcon>
           </NmorphButton>
         </slot>
       </div>
     </div>
-  </StyledComponent>
+  </div>
 </template>
+
+<style lang="scss">
+.nmorph-backtop {
+  position: fixed;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+
+  .nmorph-backtop__up-icon {
+    transform: rotate(180deg);
+  }
+
+  &.nmorph-backtop--show {
+    opacity: 1;
+  }
+
+  &.nmorph-backtop--common {
+    .nmorph-button {
+      background: var(--nmorph-overlay-color);
+      border-radius: 4px;
+    }
+  }
+}
+
+.nmorph-backtop {
+  right: var(--nmorph-backtop-right);
+  bottom: var(--nmorph-backtop-bottom);
+}
+</style>

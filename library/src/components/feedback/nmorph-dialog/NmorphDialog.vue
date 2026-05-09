@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { title2, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { NmorphOverlay, NmorphIcon, NmorphIconCross } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   modelValue?: boolean;
@@ -73,8 +72,30 @@ const clickOnOverlay = () => {
   if (!props.closeOnOverlay) return;
   closeHandler();
 };
+</script>
 
-const commonCSS = css`
+<template>
+  <NmorphOverlay :show="isVisible" :z-index="props.zIndex" @on-outside-click="clickOnOverlay">
+    <div :class="modifiers" :style="{ '--nmorph-dialog-width': props.width }">
+      <div class="nmorph-dialog__header">
+        <slot name="header">
+          <div class="nmorph-dialog__title">{{ props.title }}</div>
+          <div v-if="props.showClose" class="nmorph-dialog__close-icon" @click="closeHandler">
+            <NmorphIcon>
+              <NmorphIconCross />
+            </NmorphIcon>
+          </div>
+        </slot>
+      </div>
+      <div class="nmorph-dialog__content">
+        <slot />
+      </div>
+    </div>
+  </NmorphOverlay>
+</template>
+
+<style lang="scss">
+.nmorph-dialog {
   width: var(--width);
   padding: var(--indentation-04);
   background: var(--nmorph-main-color);
@@ -91,36 +112,15 @@ const commonCSS = css`
     justify-content: space-between;
     font-weight: 600;
 
-    ${title2()}
+    font-weight: 600;
+    font-size: var(--font-size-large);
+    line-height: var(--line-height-loose);
   }
 
   .nmorph-dialog__close-icon {
     cursor: pointer;
   }
-`
 
-const StyledComponent = styled.div`
-  ${commonCSS}
-  --width: ${props => props.dialogWidth};
-`
-</script>
-
-<template>
-  <NmorphOverlay :show="isVisible" :z-index="props.zIndex" @on-outside-click="clickOnOverlay">
-    <StyledComponent :class="modifiers" :props="{ dialogWidth: props.width }">
-      <div class="nmorph-dialog__header">
-        <slot name="header">
-          <div class="nmorph-dialog__title">{{ props.title }}</div>
-          <div v-if="props.showClose" class="nmorph-dialog__close-icon" @click="closeHandler">
-            <NmorphIcon>
-              <NmorphIconCross />
-            </NmorphIcon>
-          </div>
-        </slot>
-      </div>
-      <div class="nmorph-dialog__content">
-        <slot />
-      </div>
-    </StyledComponent>
-  </NmorphOverlay>
-</template>
+  --width: var(--nmorph-dialog-width);
+}
+</style>

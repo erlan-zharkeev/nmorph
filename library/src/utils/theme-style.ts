@@ -66,7 +66,6 @@ export const nmorphBorder = (borderWidth: number) => `
   border: ${borderWidth}px solid var(--nmorph-main-color);
 `;
 
-
 export const nmorphCombined = (borderWidth = 0, isInsetDark = false) => `
   ${nmorphBorder(borderWidth)}
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useSlots } from 'vue';
-import { disabled, generateUUID, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
+import { generateUUID, useModifiers } from '@/utils';
 import { provide } from 'vue';
 import {
   INmorphTabPaneProps,
@@ -9,7 +9,6 @@ import {
   getTabLabelId,
   getTabContentId,
 } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   modelValue?: NmorphTableModelType;
@@ -55,9 +54,44 @@ const updatedPanes = computed(() => {
 });
 
 const slots = useSlots();
+</script>
 
+<template>
+  <div :class="modifiers">
+    <slot />
+    <div class="nmorph-tabs__label-list">
+      <div
+        v-for="tabData in updatedPanes"
+        :id="getTabLabelId(tabsIdentifier, tabData.name)"
+        :key="tabData.name"
+        class="nmorph-tabs__label"
+        :class="[
+          { 'nmorph-tabs__label--selected': tabData.name === props.modelValue },
+          { 'nmorph-tabs__label--disabled': tabData.disabled },
+        ]"
+        @click="changeTab(tabData)"
+        :custom="tabData.disabled"
+      >
+        <div v-if="!slots.default">{{ tabData.label }}</div>
+      </div>
+    </div>
+    <div class="nmorph-tabs__content__wrapper">
+      <div class="nmorph-tabs__content">
+        <div
+          v-for="tabData in updatedPanes"
+          v-show="tabData.name === props.modelValue"
+          :id="getTabContentId(tabsIdentifier, tabData.name)"
+          :key="tabData.name"
+        >
+          <div v-if="!slots.default">{{ tabData.content }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
-const commonCSS = css`
+<style lang="scss">
+.nmorph-tabs {
   border-radius: var(--default-border-radius);
 
   .nmorph-tabs__label-list {
@@ -65,7 +99,12 @@ const commonCSS = css`
     padding: var(--indentation-02);
     border-top-left-radius: var(--default-border-radius);
     border-top-right-radius: var(--default-border-radius);
-    ${nmorphOutset()}
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
 
   .nmorph-tabs__label {
@@ -73,14 +112,24 @@ const commonCSS = css`
     padding: var(--indentation-03);
     border-radius: var(--default-border-radius);
     cursor: pointer;
-    ${nmorphOutset()}
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
 
     &.nmorph-tabs__label--disabled {
-      ${disabled()}
+      cursor: not-allowed;
+      opacity: 0.6;
     }
 
     &.nmorph-tabs__label--selected {
-      ${nmorphInset()}
+      background: var(--nmorph-main-color);
+      box-shadow:
+        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color);
     }
   }
 
@@ -88,13 +137,23 @@ const commonCSS = css`
     padding: var(--indentation-02);
     border-bottom-right-radius: var(--default-border-radius);
     border-bottom-left-radius: var(--default-border-radius);
-    ${nmorphOutset()}
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
 
   .nmorph-tabs__content {
     padding: var(--indentation-03);
     border-radius: var(--default-border-radius);
-    ${nmorphInset()}
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
 
   &.nmorph-tabs--stretch {
@@ -102,33 +161,5 @@ const commonCSS = css`
       width: 100%;
     }
   }
-
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <slot />
-    <div class="nmorph-tabs__label-list">
-      <div v-for="tabData in updatedPanes" :id="getTabLabelId(tabsIdentifier, tabData.name)" :key="tabData.name"
-        class="nmorph-tabs__label" :class="[
-          { 'nmorph-tabs__label--selected': tabData.name === props.modelValue },
-          { 'nmorph-tabs__label--disabled': tabData.disabled },
-        ]" @click="changeTab(tabData)" :custom="tabData.disabled">
-        <div v-if="!slots.default">{{ tabData.label }}</div>
-      </div>
-    </div>
-    <div class="nmorph-tabs__content__wrapper">
-      <div class="nmorph-tabs__content">
-        <div v-for="tabData in updatedPanes" v-show="tabData.name === props.modelValue"
-          :id="getTabContentId(tabsIdentifier, tabData.name)" :key="tabData.name">
-          <div v-if="!slots.default">{{ tabData.content }}</div>
-        </div>
-      </div>
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

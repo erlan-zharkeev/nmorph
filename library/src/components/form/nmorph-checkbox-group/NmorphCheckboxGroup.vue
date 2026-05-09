@@ -10,7 +10,6 @@ import {
   NmorphCheckboxGroupSelectedValueInjectionType,
   NmorphComponentDirection,
 } from '@/types';
-import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue: string[];
@@ -53,8 +52,30 @@ const height = computed(() => props.height);
 provide<NmorphCheckboxGroupSelectedValueInjectionType>('checkbox-group-selected-value', initialValue);
 provide<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>('change-checkbox-value-handler', changeHandler);
 provide('checkbox-group-height', height);
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <div class="nmorph-checkbox-group__wrapper">
+      <div class="nmorph-checkbox-group__content">
+        <NmorphCheckbox
+          v-for="(option, idx) in options"
+          :id="option.id"
+          :key="idx"
+          :label="option.label"
+          :model-value="option.modelValue"
+          :disabled="option.disabled || props.disabled"
+          :design="props.design"
+          :height="option.height || props.height"
+        />
+        <slot />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-checkbox-group {
   display: inline-block;
 
   .nmorph-checkbox-group__wrapper {
@@ -86,22 +107,5 @@ const commonCSS = css`
       margin-bottom: var(--indentation-00);
     }
   }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <div class="nmorph-checkbox-group__wrapper">
-      <div class="nmorph-checkbox-group__content">
-        <NmorphCheckbox v-for="(option, idx) in options" :id="option.id" :key="idx" :label="option.label"
-          :model-value="option.modelValue" :disabled="option.disabled || props.disabled" :design="props.design"
-          :height="option.height || props.height" />
-        <slot />
-      </div>
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

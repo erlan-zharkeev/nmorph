@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphSkeletonItem } from '@/components';
-import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps {
   animated?: boolean;
@@ -21,8 +20,24 @@ const modifiers = computed(() =>
     'nmorph-skeleton': [`${props.animated && props.loading && 'loading'}`],
   })
 );
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <div v-if="props.rows && props.loading" class="nmorph-skeleton__rows">
+      <NmorphSkeletonItem v-for="row in props.rows" :key="row" width="100%" height="14px" variant="rect" />
+    </div>
+    <div v-show="!props.rows && props.loading" class="nmorph-skeleton__template">
+      <slot name="template" />
+    </div>
+    <div v-show="!props.loading" class="nmorph-skeleton__default">
+      <slot name="default" />
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-skeleton {
   &.nmorph-skeleton--loading {
     --loading-gradient: linear-gradient(
       90deg,
@@ -45,23 +60,5 @@ const commonCSS = css`
       pointer-events: none;
     }
   }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`;
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <div v-if="props.rows && props.loading" class="nmorph-skeleton__rows">
-      <NmorphSkeletonItem v-for="row in props.rows" :key="row" width="100%" height="14px" variant="rect" />
-    </div>
-    <div v-show="!props.rows && props.loading" class="nmorph-skeleton__template">
-      <slot name="template" />
-    </div>
-    <div v-show="!props.loading" class="nmorph-skeleton__default">
-      <slot name="default" />
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

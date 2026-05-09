@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, inject, ref, type Ref } from 'vue';
-import { body2, disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import {
   INmorphRadioOption,
   NmorphComponentHeight,
@@ -9,7 +9,6 @@ import {
   NmorphRadioGroupSelectedValueInjectionType,
   NmorphRadioStyleType,
 } from '@/types';
-import { styled, css } from '@vue-styled-components/core';
 
 const groupSelectedValue = inject<NmorphRadioGroupSelectedValueInjectionType | undefined>(
   'radio-group-selected-value',
@@ -52,107 +51,10 @@ const modifiers = computed(() =>
 
 const inputDOMRef = ref<NmorphDomElementType>(null);
 defineExpose({ inputDOMRef });
-
-const commonCSS = css`
-  --size: var(--height);
-
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-
-  .nmorph-radio__content {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  span {
-    margin-top: 2px;
-  }
-
-  .nmorph-radio__input-wrapper {
-    position: relative;
-    width: var(--size);
-    height: var(--size);
-  }
-
-  input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  input:focus-visible {
-    ${nmorphOutset()}
-  }
-
-  .nmorph-radio__fake {
-    border-radius: var(--border-radius-circular);
-
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    ${nmorphInset()}
-  }
-
-  .nmorph-radio__fake span,
-  .nmorph-radio__label {
-    ${body2()}
-  }
-
-  .nmorph-radio__fake-checked {
-    width: 50%;
-    height: 50%;
-    background: var(--nmorph-accent-color);
-    border-radius: var(--border-radius-circular);
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .nmorph-radio__label {
-    margin-left: var(--indentation-02);
-  }
-
-  &.nmorph-radio--button {
-    .nmorph-radio__fake {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: var(--size);
-      padding: var(--indentation-03);
-      white-space: nowrap;
-      border-radius: var(--default-border-radius);
-      ${nmorphOutset()}
-    }
-  }
-
-  &.nmorph-radio--checked {
-    .nmorph-radio__fake {
-      ${nmorphInset()}
-    }
-  }
-
-  &.nmorph-radio--disabled {
-    ${disabled()}
-  }
-`;
-
-const StyledComponent = styled.label`
-  ${commonCSS}
-`;
 </script>
 
 <template>
-  <StyledComponent :class="modifiers" @click.prevent="changeHandler">
+  <label :class="modifiers" @click.prevent="changeHandler">
     <div v-if="props.styleType === 'radio-style'" class="nmorph-radio__content">
       <div class="nmorph-radio__input-wrapper">
         <input
@@ -190,5 +92,121 @@ const StyledComponent = styled.label`
         <slot name="label" />
       </div>
     </div>
-  </StyledComponent>
+  </label>
 </template>
+
+<style lang="scss">
+.nmorph-radio {
+  --size: var(--height);
+
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+
+  .nmorph-radio__content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  span {
+    margin-top: 2px;
+  }
+
+  .nmorph-radio__input-wrapper {
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+  }
+
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  input:focus-visible {
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
+  }
+
+  .nmorph-radio__fake {
+    border-radius: var(--border-radius-circular);
+
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
+  }
+
+  .nmorph-radio__fake span,
+  .nmorph-radio__label {
+    font-weight: 400;
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-regular);
+  }
+
+  .nmorph-radio__fake-checked {
+    width: 50%;
+    height: 50%;
+    background: var(--nmorph-accent-color);
+    border-radius: var(--border-radius-circular);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .nmorph-radio__label {
+    margin-left: var(--indentation-02);
+  }
+
+  &.nmorph-radio--button {
+    .nmorph-radio__fake {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--size);
+      padding: var(--indentation-03);
+      white-space: nowrap;
+      border-radius: var(--default-border-radius);
+
+      background: var(--nmorph-main-color);
+      box-shadow:
+        var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color);
+    }
+  }
+
+  &.nmorph-radio--checked {
+    .nmorph-radio__fake {
+      background: var(--nmorph-main-color);
+      box-shadow:
+        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color);
+    }
+  }
+
+  &.nmorph-radio--disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+</style>

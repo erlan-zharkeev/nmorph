@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { nmorphOutset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { usePlacement } from '@/hooks';
 import { NmorphDomElementType } from '@/types';
 import { NmorphOverlay } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   open: boolean;
@@ -53,44 +52,48 @@ const width = computed(() => (props.fillWidth ? `${props.relativeElement?.client
 const outsideClickHandler = () => {
   emit('on-outside-click');
 };
-
-const commonCSS = css`
-  .nmorph-dropdown {
-    position: fixed;
-    border-radius: var(--default-border-radius);
-    ${nmorphOutset()}
-  }
-
-  .nmorph-dropdown--closed {
-    z-index: -1000;
-    opacity: 0;
-  }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-  .nmorph-dropdown {
-    width: ${props => props.width};
-    min-width: ${props => props.minWidth};
-    max-width: ${props => props.maxWidth};
-  }
-`
 </script>
 
 <template>
-  <StyledComponent
-    :props="{
-      width,
-      minWidth: getCssSize(props.minWidth) || 'auto',
-      maxWidth: getCssSize(props.maxWidth) || 'none',
+  <div
+    :style="{
+      '--nmorph-dropdown-width': width,
+      '--nmorph-dropdown-min-width': getCssSize(props.minWidth) || 'auto',
+      '--nmorph-dropdown-max-width': getCssSize(props.maxWidth) || 'none',
     }"
   >
     <NmorphOverlay :show="props.open" transparent :z-index="props.zIndex" @on-outside-click="outsideClickHandler">
-      <div ref="dropdownDOMRef" :class="modifiers"
-        :style="{ left: `${placementCoords.x}`, top: `${placementCoords.y}` }">
+      <div
+        ref="dropdownDOMRef"
+        :class="modifiers"
+        :style="{ left: `${placementCoords.x}`, top: `${placementCoords.y}` }"
+      >
         <slot />
       </div>
     </NmorphOverlay>
-  </StyledComponent>
-
+  </div>
 </template>
+
+<style lang="scss">
+.nmorph-dropdown {
+  position: fixed;
+  border-radius: var(--default-border-radius);
+
+  background: var(--nmorph-main-color);
+  box-shadow:
+    var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+    calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+      var(--nmorph-light-shade-color);
+}
+
+.nmorph-dropdown--closed {
+  z-index: -1000;
+  opacity: 0;
+}
+
+.nmorph-dropdown {
+  width: var(--nmorph-dropdown-width);
+  min-width: var(--nmorph-dropdown-min-width);
+  max-width: var(--nmorph-dropdown-max-width);
+}
+</style>

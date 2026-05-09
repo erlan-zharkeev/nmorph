@@ -2,7 +2,6 @@
 import { computed, ref, onMounted, nextTick, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphDomElementType } from '@/types';
-import { styled, css } from '@vue-styled-components/core';
 
 type NmorphBadgeSize = 'tiny' | 'extra-small' | 'base';
 
@@ -100,8 +99,30 @@ const updateBadgeSize = async () => {
 onMounted(updateBadgeSize);
 
 watch(() => [props.value, props.max, props.isDot, props.isTag, props.size], updateBadgeSize);
+</script>
 
-const commonCSS = css`
+<template>
+  <div
+    v-if="!props.disabled && (!props.isTag || shouldShowBadge)"
+    :class="modifiers"
+    :style="{ '--nmorph-badge-color': props.color }"
+  >
+    <slot v-if="!props.isTag" />
+    <div v-if="shouldShowBadge" ref="badge" :class="containerModifiers" :style="containerStyle">
+      <div v-if="props.isDot" class="nmorph-badge__dot" />
+      <div v-else class="nmorph-badge__content">
+        <template v-if="props.isTag">
+          {{ displayValue }}
+        </template>
+        <slot v-else name="value" :value="props.value" :display-value="displayValue"> {{ displayValue }} </slot>
+      </div>
+    </div>
+  </div>
+  <slot v-else-if="!props.isTag" />
+</template>
+
+<style lang="scss">
+.nmorph-badge {
   position: relative;
   display: inline-block;
   height: fit-content;
@@ -150,32 +171,9 @@ const commonCSS = css`
     height: var(--dot-size);
     border-radius: var(--border-radius-circular);
   }
-`;
 
-const StyledComponent = styled.div`
-  ${commonCSS}
   .nmorph-badge__container {
-    background: ${(props) => props.color};
+    background: var(--nmorph-badge-color);
   }
-`;
-</script>
-
-<template>
-  <StyledComponent
-    v-if="!props.disabled && (!props.isTag || shouldShowBadge)"
-    :class="modifiers"
-    :props="{ color: props.color }"
-  >
-    <slot v-if="!props.isTag" />
-    <div v-if="shouldShowBadge" ref="badge" :class="containerModifiers" :style="containerStyle">
-      <div v-if="props.isDot" class="nmorph-badge__dot" />
-      <div v-else class="nmorph-badge__content">
-        <template v-if="props.isTag">
-          {{ displayValue }}
-        </template>
-        <slot v-else name="value" :value="props.value" :display-value="displayValue"> {{ displayValue }} </slot>
-      </div>
-    </div>
-  </StyledComponent>
-  <slot v-else-if="!props.isTag" />
-</template>
+}
+</style>

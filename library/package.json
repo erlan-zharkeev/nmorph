@@ -2,7 +2,7 @@
   "name": "@nmorph/nmorph-ui-kit",
   "type": "module",
   "private": false,
-  "version": "2.2.8",
+  "version": "2.2.9",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -68,7 +68,6 @@
     "build:types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist"
   },
   "dependencies": {
-    "@vue-styled-components/core": "^1.9.0",
     "vue": "^3.5.13",
     "vue-i18n": "^9.9.0"
   },
