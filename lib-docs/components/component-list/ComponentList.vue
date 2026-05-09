@@ -1,76 +1,6 @@
 <script setup lang="ts">
+import { componentGroups } from "~/data/components";
 import { componentPathByName, pascalToSpace } from "~/utils";
-
-const list: { name: string; components: string[] }[] = [
-  {
-    name: "basic",
-    components: ["NmorphButton", "NmorphIcon", "NmorphLink", "NmorphScroll"],
-  },
-
-  {
-    name: "data",
-    components: [
-      "NmorphAvatar",
-      "NmorphBadge",
-      "NmorphCard",
-      "NmorphImage",
-      "NmorphTag",
-      "NmorphSkeleton",
-      "NmorphProgress",
-      "NmorphCalendar",
-      "NmorphImagePreview",
-      "NmorphPagination",
-      "NmorphTable",
-    ],
-  },
-
-  {
-    name: "feedback",
-    components: ["NmorphTooltip", "NmorphAlert", "NmorphCallout", "NmorphDialog"],
-  },
-
-  {
-    name: "others",
-    components: ["NmorphDivider", "NmorphOverlay"],
-  },
-
-  {
-    name: "providers",
-    components: ["NmorphNotificationProvider"],
-  },
-
-  {
-    name: "navigation",
-    components: [
-      "NmorphTabs",
-      "NmorphDropdown",
-      "NmorphBacktop",
-      "NmorphBreadcrumb",
-    ],
-  },
-
-  {
-    name: "form",
-    components: [
-      "NmorphTextInput",
-      "NmorphOTPInput",
-      "NmorphColorPicker",
-      "NmorphSwitch",
-      "NmorphCheckbox",
-      "NmorphCheckboxGroup",
-      "NmorphAutocomplete",
-      "NmorphFileUpload",
-      "NmorphNumberInput",
-      "NmorphSelect",
-      "NmorphSlider",
-      "NmorphDatePicker",
-      "NmorphRadio",
-      "NmorphRadioGroup",
-      "NmorphSelectButton",
-      "NmorphForm",
-    ],
-  },
-];
 
 const localePath = useLocalePath();
 const router = useRouter();
@@ -81,7 +11,7 @@ const isRouteExist = (name: string) => {
 
 <template>
   <div class="docs-component-list">
-    <div class="docs-component-list__element" v-for="category in list" :key="category.name">
+    <div class="docs-component-list__element" v-for="category in componentGroups" :key="category.name">
       <div class="docs-component-list__element-title nmorph-title-1">
         {{ category.name }}
       </div>

@@ -7,19 +7,11 @@ const scriptData = ``;
 const templateData = `
 <template>
   <NmorphRadio checked value="1" label="One" />
-  <NmorphRadio value="2" label="Two" />
   <NmorphRadio
-    value="3"
+    value="2"
     checked
     style-type="radio-style"
-    label="Three"
-  />
-  <NmorphRadio
-    value="4"
-    disabled
-    checked
-    style-type="radio-style"
-    label="Four"
+    label="Two"
   />
 </template>
 `;
@@ -46,9 +38,7 @@ const code = [scriptData, templateData, cssData];
         <div class="radio-value-overview">
           <ClientOnly>
             <NmorphRadio checked value="1" :label="$t('overview.one')" />
-            <NmorphRadio value="2" :label="$t('overview.two')" />
-            <NmorphRadio value="3" checked style-type="radio-style" :label="$t('overview.three')" />
-            <NmorphRadio value="4" disabled checked style-type="radio-style" :label="$t('overview.four')" />
+            <NmorphRadio value="2" checked style-type="radio-style" :label="$t('overview.two')" />
           </ClientOnly>
         </div>
       </template>

@@ -119,18 +119,102 @@ const shadeColor = (color: string, percent: number) => {
   return `#${RR}${GG}${BB}`;
 };
 
+const resolveThemeOptions = (customOptions?: INmorphThemeOptions): Required<INmorphThemeOptions> => ({
+  themes: customOptions?.themes ?? DEFAULT_OPTIONS.themes,
+  defaultTheme: customOptions?.defaultTheme ?? DEFAULT_OPTIONS.defaultTheme,
+  saveCurrentThemeToLS: customOptions?.saveCurrentThemeToLS ?? DEFAULT_OPTIONS.saveCurrentThemeToLS,
+  darkShadeGeneratorCoefficient:
+    customOptions?.darkShadeGeneratorCoefficient ?? DEFAULT_OPTIONS.darkShadeGeneratorCoefficient,
+  lightShadeGeneratorCoefficient:
+    customOptions?.lightShadeGeneratorCoefficient ?? DEFAULT_OPTIONS.lightShadeGeneratorCoefficient,
+  other: customOptions?.other ?? DEFAULT_OPTIONS.other,
+});
+
+const getThemeDynamicColors = (
+  options: Required<INmorphThemeOptions>,
+  mainBgColor: string
+): Pick<INmorphThemeColors, 'darkShade' | 'lightShade'> => {
+  try {
+    const validBgColor = asHexColor(mainBgColor);
+    return {
+      darkShade: shadeColor(validBgColor, options.darkShadeGeneratorCoefficient),
+      lightShade: shadeColor(validBgColor, options.lightShadeGeneratorCoefficient),
+    };
+  } catch (e) {
+    console.error(e instanceof Error ? e.message : e);
+    return {};
+  }
+};
+
+const getThemeStaticColorVariables = (colors: INmorphStaticColors | INmorphThemeColors): INmorphColorVariable[] => {
+  return Object.entries(colors)
+    .filter(([, color]) => typeof color === 'string')
+    .map(([key, color]) => {
+      return {
+        name: `--nmorph-${camelToKebab(key)}-color`,
+        color,
+      };
+    });
+};
+
+const generateThemeVariablesAsString = (
+  themes: NmorphThemeMapType,
+  otherVariables: INmorphOtherThemeOptions
+): string => {
+  const convertColorsToString = (colors: INmorphColorVariable[]) =>
+    colors.map((colorObj) => `${colorObj.name}: ${colorObj.color};`).join(' ');
+
+  const transformedOtherVariables = Object.entries(otherVariables)
+    .map(([name, value]) => `--${camelToKebab(name)}: ${value};`)
+    .join(' ');
+
+  const result: string[] = [];
+  Object.entries(themes).forEach(([theme, colors]) => {
+    const defaultThemeColors = getThemeStaticColorVariables(DEFAULT_THEME_COLORS);
+    if (theme === 'common') result.push(convertColorsToString(mergeColorVariables(defaultThemeColors, colors)));
+    else {
+      const themeColors = `
+        &[${THEME_KEY}='${theme}'] {
+          ${convertColorsToString(colors)}
+        }
+      `;
+      result.push(themeColors);
+    }
+  });
+  return `
+    :root {
+      ${result.join(' ')}
+      ${transformedOtherVariables}
+    }
+  `;
+};
+
+const createThemeStylesMap = (options: Required<INmorphThemeOptions>): NmorphThemeMapType => {
+  const themeMap: NmorphThemeMapType = {};
+
+  Object.entries(options.themes).forEach(([theme, colors]) => {
+    themeMap[theme] = [];
+    const darkShade = Boolean(colors.darkShade);
+    const lightShade = Boolean(colors.lightShade);
+    const main = Boolean(colors.main);
+    const computeDynamicColors = main && !darkShade && !lightShade;
+    if (computeDynamicColors && colors.main) {
+      themeMap[theme] = getThemeStaticColorVariables(getThemeDynamicColors(options, colors.main));
+    }
+    themeMap[theme] = [...themeMap[theme], ...getThemeStaticColorVariables(colors)];
+  });
+
+  return themeMap;
+};
+
+export const getNmorphThemeStyles = (customOptions?: INmorphThemeOptions) => {
+  const options = resolveThemeOptions(customOptions);
+  return generateThemeVariablesAsString(createThemeStylesMap(options), options.other);
+};
+
 export const useNmorphTheme = (customOptions?: INmorphThemeOptions): INmorphThemeInstance => {
   nmorphLog('warn', `NMORPH(v${packageData.version})`);
-  const options: Required<INmorphThemeOptions> = {
-    themes: customOptions?.themes ?? DEFAULT_OPTIONS.themes,
-    defaultTheme: customOptions?.defaultTheme ?? DEFAULT_OPTIONS.defaultTheme,
-    saveCurrentThemeToLS: customOptions?.saveCurrentThemeToLS ?? DEFAULT_OPTIONS.saveCurrentThemeToLS,
-    darkShadeGeneratorCoefficient:
-      customOptions?.darkShadeGeneratorCoefficient ?? DEFAULT_OPTIONS.darkShadeGeneratorCoefficient,
-    lightShadeGeneratorCoefficient:
-      customOptions?.lightShadeGeneratorCoefficient ?? DEFAULT_OPTIONS.lightShadeGeneratorCoefficient,
-    other: customOptions?.other ?? DEFAULT_OPTIONS.other,
-  };
+  const options = resolveThemeOptions(customOptions);
 
   const getDynamicThemeColors = (mainBgColor: string): Pick<INmorphThemeColors, 'darkShade' | 'lightShade'> => {
     try {
@@ -206,21 +290,36 @@ export const useNmorphTheme = (customOptions?: INmorphThemeOptions): INmorphThem
     return themeMap;
   };
 
+  const isClient = typeof document !== 'undefined';
+  const currentTheme = ref(options.defaultTheme);
   let themeMap = createThemeMap(options.themes);
+  let style: HTMLStyleElement | null = null;
 
-  const style = document.createElement('style');
-  style.type = 'text/css';
-  style.innerHTML = generateVariablesAsString(themeMap, options.other);
-  document.head.appendChild(style);
+  if (isClient) {
+    style = document.getElementById('nmorph-theme-styles') as HTMLStyleElement | null;
+
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'nmorph-theme-styles';
+      style.type = 'text/css';
+      document.head.appendChild(style);
+    }
+
+    style.innerHTML = generateVariablesAsString(themeMap, options.other);
+  }
 
   const updateThemeStyles = () => {
     themeMap = createThemeMap(options.themes);
-    style.innerHTML = generateVariablesAsString(themeMap, options.other);
+    if (style) style.innerHTML = generateVariablesAsString(themeMap, options.other);
   };
 
   const setTheme = (theme: string) => {
     currentTheme.value = theme;
-    html.setAttribute(THEME_KEY, currentTheme.value);
+
+    if (!isClient) return;
+
+    document.documentElement.setAttribute(THEME_KEY, currentTheme.value);
+    if (typeof localStorage === 'undefined') return;
     options.saveCurrentThemeToLS ? localStorage.setItem(THEME_KEY, theme) : localStorage.removeItem(THEME_KEY);
   };
 
@@ -236,14 +335,13 @@ export const useNmorphTheme = (customOptions?: INmorphThemeOptions): INmorphThem
     setTheme(theme);
   };
 
-  const currentTheme = ref(options.defaultTheme);
-  const html = document.documentElement;
+  if (isClient && typeof localStorage !== 'undefined') {
+    const lsTheme = localStorage.getItem(THEME_KEY);
+    const lsThemeExist = lsTheme ? themeMap[lsTheme] : undefined;
 
-  const lsTheme = localStorage.getItem(THEME_KEY);
-  const lsThemeExist = lsTheme ? themeMap[lsTheme] : undefined;
-
-  if (options.saveCurrentThemeToLS && lsThemeExist) {
-    currentTheme.value = lsTheme;
+    if (options.saveCurrentThemeToLS && lsThemeExist) {
+      currentTheme.value = lsTheme;
+    }
   }
 
   setTheme(currentTheme.value);

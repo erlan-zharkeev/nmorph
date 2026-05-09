@@ -2,21 +2,9 @@
 import {
   NmorphButton,
   NmorphDivider,
-  NmorphIconLoader,
-  NmorphIcon,
 } from "@nmorph/nmorph-ui-kit";
 import { LightBg, DarkBg } from "~/assets/images";
 import { useGlobalStore } from "~/providers";
-
-const isLightImageLoaded = ref(false);
-const isDarkImageLoaded = ref(false);
-
-const areImagesLoaded = computed(() => isLightImageLoaded.value && isDarkImageLoaded.value);
-
-const imageLoaded = (imageType: "light" | "dark") => {
-  if (imageType === "light") isLightImageLoaded.value = true;
-  if (imageType === "dark") isDarkImageLoaded.value = true;
-}
 
 const router = useRouter();
 const localePath = useLocalePath();
@@ -25,9 +13,19 @@ const store = useGlobalStore();
 </script>
 
 <template>
-  <section id="main" class="info-section main-section" v-show="areImagesLoaded">
-    <img :src="LightBg" v-show="store.currentTheme === 'light'" class="main-section__bg" @load="imageLoaded('light')" />
-    <img :src="DarkBg" v-show="store.currentTheme === 'dark'" class="main-section__bg" @load="imageLoaded('dark')" />
+  <section id="main" class="info-section main-section">
+    <img
+      :src="LightBg"
+      :class="['main-section__bg', { 'main-section__bg--visible': store.currentTheme === 'light' }]"
+      alt=""
+      aria-hidden="true"
+    />
+    <img
+      :src="DarkBg"
+      :class="['main-section__bg', { 'main-section__bg--visible': store.currentTheme === 'dark' }]"
+      alt=""
+      aria-hidden="true"
+    />
     <div class="main-section__content nmorph--shadow-inset">
       <div class="main-section__first-info">
         <h1>NMORPH</h1>
@@ -39,26 +37,10 @@ const store = useGlobalStore();
       </div>
     </div>
   </section>
-  <section v-show="!areImagesLoaded">
-    <NmorphIcon class="main-section-loader" width="50px" height="50px" color="var(--nmorph-accent-color)">
-      <NmorphIconLoader />
-    </NmorphIcon>
-  </section>
-
-
 </template>
 
 <style lang="scss">
 $image-size: 450px;
-
-.main-section-loader {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 
 .main-section {
   height: 100%;
@@ -69,11 +51,16 @@ $image-size: 450px;
 
   .main-section__bg {
     position: absolute;
-    opacity: 0.5;
+    opacity: 0;
     rotate: -45deg;
     height: 150%;
     object-fit: cover;
     scale: 1.5;
+    transition: opacity 0.2s ease;
+  }
+
+  .main-section__bg--visible {
+    opacity: 0.5;
   }
 
   .nmorph-divider {

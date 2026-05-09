@@ -25,41 +25,11 @@ export default defineNuxtModule<NmorphNuxtModuleOptions>({
     }
 
     addPluginTemplate({
-      filename: 'nmorph-i18n.mjs',
+      filename: 'nmorph.mjs',
       getContents: () => `
 import { defineNuxtPlugin } from '#app'
-import { en, ru, zh } from '@nmorph/nmorph-ui-kit/plugin'
-
-const options = ${JSON.stringify(pluginOptions)}
-const libraryMessages = { en, ru, zh }
-
-const mergeMessages = (base, overrides = {}) => {
-  const result = { ...base }
-  Object.entries(overrides).forEach(([locale, messages]) => {
-    result[locale] = { ...(result[locale] || {}), ...messages }
-  })
-  return result
-}
-
-export default defineNuxtPlugin((nuxtApp) => {
-  const i18nOptions = { ...(options.i18n || {}) }
-  const messages = mergeMessages(libraryMessages, i18nOptions.messages)
-  const i18n = nuxtApp.$i18n
-
-  if (i18n?.mergeLocaleMessage) {
-    Object.entries(messages).forEach(([locale, localeMessages]) => {
-      i18n.mergeLocaleMessage(locale, localeMessages)
-    })
-  }
-})
-`,
-    });
-
-    addPluginTemplate({
-      filename: 'nmorph.client.mjs',
-      getContents: () => `
-import { defineNuxtPlugin } from '#app'
-import { NmorphLibrary, en, ru, zh } from '@nmorph/nmorph-ui-kit/plugin'
+import { useHead } from '#imports'
+import { NmorphLibrary, en, ru, zh, getCommonStyles, getNmorphThemeStyles } from '@nmorph/nmorph-ui-kit/plugin'
 
 const options = ${JSON.stringify(pluginOptions)}
 const libraryMessages = { en, ru, zh }
@@ -77,6 +47,18 @@ export default defineNuxtPlugin((nuxtApp) => {
   const i18nOptions = { ...(pluginOptions.i18n || {}) }
   const messages = mergeMessages(libraryMessages, i18nOptions.messages)
   const i18n = nuxtApp.$i18n
+
+  if (import.meta.server) {
+    useHead({
+      htmlAttrs: {
+        'nmorph-data-theme': pluginOptions.theme?.defaultTheme || 'dark',
+      },
+      style: [
+        { id: 'nmorph-theme-styles', children: getNmorphThemeStyles(pluginOptions.theme) },
+        { id: 'nmorph-common-styles', children: getCommonStyles() },
+      ],
+    })
+  }
 
   i18nOptions.messages = messages
 

@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { defineComponent, nextTick, reactive, ref } from 'vue';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   NmorphAlert,
   NmorphAutocomplete,
@@ -74,6 +74,18 @@ const checkboxOptions = [
 ];
 
 const tableData = [{ name: 'Button', status: 'Ready' }];
+const rect = (x: number, y: number, width: number, height: number) =>
+  ({
+    x,
+    y,
+    width,
+    height,
+    top: y,
+    left: x,
+    right: x + width,
+    bottom: y + height,
+    toJSON: () => ({}),
+  }) as DOMRect;
 
 const createFormValue = () =>
   reactive({
@@ -457,6 +469,94 @@ describe('components', () => {
     await mountCase(renderCase);
   });
 
+  it('keeps explicit icon color inside transparent button', () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphButton, NmorphIcon, NmorphIconSearch },
+        template: `
+          <NmorphButton style-type="transparent">
+            <NmorphIcon color="var(--nmorph-contrast-text-color)">
+              <NmorphIconSearch />
+            </NmorphIcon>
+          </NmorphButton>
+        `,
+      })
+    );
+
+    const icon = wrapper.find('.nmorph-icon').element as HTMLElement;
+
+    expect(icon.style.getPropertyValue('--nmorph-icon-color')).toBe('var(--nmorph-contrast-text-color)');
+    expect(icon.style.getPropertyValue('--color')).toBe('var(--nmorph-contrast-text-color)');
+
+    wrapper.unmount();
+  });
+
+  it('teleports dropdown overlay and closes from outside click', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphDropdown },
+        setup() {
+          const anchor = ref<HTMLElement | null>(null);
+          const open = ref(true);
+
+          return { anchor, open };
+        },
+        template: `
+          <div class="isolated">
+            <button ref="anchor">Anchor</button>
+            <NmorphDropdown
+              v-if="anchor"
+              :open="open"
+              :relative-element="anchor"
+              placement="bottom-end"
+              @on-outside-click="open = false"
+            >
+              <div class="dropdown-content">Dropdown</div>
+            </NmorphDropdown>
+          </div>
+        `,
+      }),
+      {
+        attachTo: target,
+        global: {
+          stubs: {
+            Teleport: false,
+          },
+        },
+      }
+    );
+
+    await nextTick();
+    await nextTick();
+
+    const dropdown = document.body.querySelector('.nmorph-dropdown') as HTMLElement;
+    const overlay = document.body.querySelector('.nmorph-overlay') as HTMLElement;
+
+    expect(dropdown).toBeTruthy();
+    expect(overlay).toBeTruthy();
+    expect(wrapper.element.contains(dropdown)).toBe(false);
+
+    vi.spyOn(wrapper.find('button').element, 'getBoundingClientRect').mockReturnValue(rect(100, 40, 80, 30));
+    vi.spyOn(dropdown, 'getBoundingClientRect').mockReturnValue(rect(0, 0, 120, 60));
+    window.dispatchEvent(new Event('resize'));
+    await nextTick();
+    await nextTick();
+
+    expect(dropdown.style.left).toBe('60px');
+    expect(dropdown.style.top).toBe('70px');
+
+    overlay.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await nextTick();
+
+    expect(wrapper.vm.open).toBe(false);
+
+    wrapper.unmount();
+    target.remove();
+  });
+
   it('syncs checkbox groups bound to the same model', async () => {
     const wrapper = mount(
       defineComponent({
@@ -519,6 +619,9 @@ describe('components', () => {
 
     await nextTick();
 
+    const pagination = wrapper.find('.nmorph-pagination').element as HTMLElement;
+
+    expect(pagination.style.getPropertyValue('--nmorph-pagination-height')).toBe('var(--default-thickness-component)');
     expect(wrapper.find('.nmorph-pagination__page-btn.nmorph-radio').classes()).toContain('nmorph--basic-component');
     wrapper.unmount();
   });

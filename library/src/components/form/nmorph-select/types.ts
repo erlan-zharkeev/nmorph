@@ -9,4 +9,5 @@ export type NmorphSelectChangeSelectedValue = (value: string) => void;
 export interface INmorphSelectOption extends INmorphCommonInputProps {
   value: string;
   label: string;
+  focused?: boolean;
 }

@@ -105,7 +105,7 @@ const templateData = `
   </div>
   <NmorphPagination
     :disabled="disabled"
-    :quantity-elements-on-page="quantityElementsOnPage"
+    :elements-quantity-on-page="quantityElementsOnPage"
     :total-elements-quantity="total"
     :model-value="currentPage"
     @update:model-value="($e: number) => getData($e - 1)"
@@ -229,7 +229,7 @@ getData(0);
                 </div>
               </div>
             </div>
-            <NmorphPagination :disabled="disabled" :quantity-elements-on-page="quantityElementsOnPage"
+            <NmorphPagination :disabled="disabled" :elements-quantity-on-page="quantityElementsOnPage"
               :total-elements-quantity="total" :model-value="currentPage"
               @update:model-value="($e: number) => getData($e - 1)" />
           </ClientOnly>

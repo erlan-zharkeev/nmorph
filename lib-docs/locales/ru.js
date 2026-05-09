@@ -1,7 +1,7 @@
 export default {
   meta: {
     description:
-      "Бибилиотека ui компонентов для Vue 3 в стиле neumorphism/sceumorphism.",
+      "Библиотека UI-компонентов для Vue 3 и Nuxt в стиле neumorphism/sceumorphism.",
   },
   guide: "Руководство",
   components: "Компоненты",
@@ -19,6 +19,7 @@ export default {
   text: "Текст",
   type: "Тип",
   default: "По умолчанию",
+  loadingText: "Загрузка ...",
   basic: "Основное",
   data: "Данные",
   feedback: "Обратная связь",
@@ -29,6 +30,20 @@ export default {
   "top-bar": {
     menu: "Меню",
     nav: "Навигация",
+    search: "Поиск",
+    "search-shortcut": "Ctrl K",
+  },
+  "search-dialog": {
+    placeholder: "Искать компоненты, гайд, API",
+    empty: "Ничего не найдено",
+    hint: "Открыть через Ctrl K",
+    groups: {
+      guide: "Гайд",
+      component: "Компонент",
+      api: "API",
+      changelog: "Changelog",
+      project: "Проект",
+    },
   },
   "footer-bar": {
     license: "Распространяется по лицензии",
@@ -39,6 +54,10 @@ export default {
       "Откройте документацию на устройстве с шириной экрана не меньше 320px.",
   },
   "guide-page": {
+    title: "Гайд",
+    "full-title": "Гайд по Nmorph UI Kit",
+    "full-description":
+      "Практическое руководство по установке Nmorph, подключению во Vue и Nuxt, настройке тем, работе с формами и overlay, а также подготовке интерфейсов с большим количеством компонентов к production.",
     "theme-customize": "Кастомизировать тему",
     "custom-theme-color": "Изменить базовый цвет",
     "custom-text-color": "Цвет текста",
@@ -49,7 +68,7 @@ export default {
       '<b class="main-section__subtitle">Neumorphism / Sceumorhism</b>',
     "apply-theme": "Применить тему",
     "main-content":
-      '<p class="main-section__first-explained-content">Vue 3&nbsp;ui-kit для создания уникального 3D&nbsp;дизайна в&nbsp;неу(о)морфическом стиле</p>',
+      '<p class="main-section__first-explained-content">Vue 3 и Nuxt&nbsp;ui-kit для создания уникального 3D&nbsp;дизайна в&nbsp;неу(о)морфическом стиле</p>',
     "quick-start": {
       installation: "Установка",
       "choose-package-manager":
@@ -116,20 +135,99 @@ export default {
     },
   },
   "about-page": {
-    "alpha-test": "Текущий статус",
-    "alpha-test-lib":
-      "<p>На данный момент продолжается тестирование библиотеки.</p><p>Так как разработка ведется силами только одного разработчика, исправления возможных багов и тестирование занимает большое количество времени.</p><p>Буду рад если вы сообщите о каких-либо проблемах.</p>",
-    "get-started": "Начать работу",
+    eyebrow: "О проекте",
+    lead:
+      "Nmorph UI Kit — библиотека компонентов для Vue 3 и Nuxt, которая помогает собирать тактильные интерфейсы с мягкими тенями, понятными состояниями и единым API компонентов.",
+    meta: {
+      vue: "Vue 3",
+      nuxt: "Nuxt",
+      typescript: "TypeScript",
+      license: "MIT лицензия",
+    },
+    "overview-title": "Что это",
     "overview-content":
-      "<p>Это библиотека UI-компонентов для Vue 3, разработанная с использованием неуморфического/скевоморфического дизайна.</p><p>Она предоставляет набор компонентов для создания уникального пользовательского интерфейса.</p><p>Проект созадан в качестве студенческой работы по frontend разработке.</p>",
-    neumorphism: "Что такое неуморфизм/скевоморфизм?",
-    "neumorphism-content":
-      "<p>Нейморфизм (neumorphism) — это стиль дизайна, который совмещает элементы плоского дизайна и скевоморфизма.</p><p>Он создает ощущение объема и мягких теней, благодаря чему интерфейс выглядит так, словно его можно потрогать.</p><p>В основе нейморфизма лежат пастельные цвета, легкие градиенты и мягкие тени, создавая эффект выдавленных или вдавленных элементов.</p>",
+      "Проект дает готовые блоки для продуктовых интерфейсов: формы, таблицы, компоненты отображения данных, навигацию, feedback-элементы, систему тем и примеры в документации. Один и тот же пакет можно использовать в обычных Vue-приложениях и в Nuxt через Nuxt module.",
+    "features-title": "Что внутри",
+    features: {
+      components: {
+        title: "Набор компонентов",
+        text: "Переиспользуемые компоненты для форм, таблиц, overlay, навигации, feedback и базовых UI-сценариев.",
+      },
+      theme: {
+        title: "Система тем",
+        text: "CSS-переменные, светлая и темная темы, динамические тени и утилитные классы для единого оформления.",
+      },
+      nuxt: {
+        title: "Поддержка Vue и Nuxt",
+        text: "Прямое подключение через Vue plugin и Nuxt module для интеграции в Nuxt-приложения.",
+      },
+      typescript: {
+        title: "Типизированный API",
+        text: "Типизированные props, экспортируемые enum, вспомогательные типы и примеры, которые описывают публичный API компонентов.",
+      },
+    },
+    "system-title": "Как устроена библиотека",
+    system: {
+      plugin: {
+        title: "Жизненный цикл plugin",
+        text: "NmorphLibrary подключает общие стили, мержит i18n messages, готовит CSS-переменные темы, отслеживает размеры браузера и предоставляет общий Nmorph instance для компонентов.",
+      },
+      themeEngine: {
+        title: "Theme engine",
+        text: "Цвета темы записываются в CSS-переменные документа, переключаются через атрибут nmorph-data-theme и могут генерировать shade tokens из main color, если они не переданы вручную.",
+      },
+      nuxtModule: {
+        title: "Nuxt module",
+        text: "Nuxt entry transpile-ит пакет, регистрирует universal plugin для SSR и client rendering, при необходимости добавляет полный stylesheet и мержит Nmorph messages в существующую Nuxt i18n настройку.",
+      },
+      styles: {
+        title: "Стили и размеры",
+        text: "Компоненты используют общую шкалу высот, типографику, radius tokens, shadow utilities и color variables, поэтому контролы можно смешивать без ручной подгонки.",
+      },
+      overlays: {
+        title: "Overlay layer",
+        text: "Dropdown, overlay, dialog, select, autocomplete, date picker и image preview используют общий layering model с Teleport, z-index allocation, outside click handling и placement helpers.",
+      },
+      forms: {
+        title: "Form model",
+        text: "Компоненты форм интегрируются с NmorphForm и validation hooks, поддерживают text, numeric, boolean и array fields, но при этом остаются удобными для прямого v-model.",
+      },
+      virtualization: {
+        title: "Виртуализация",
+        text: "Сценарии с большим количеством rows и options закрываются через virtual list mechanics для table, select и autocomplete: item height, overscan и scroll positioning контролируются явно.",
+      },
+      accessibility: {
+        title: "Accessibility baseline",
+        text: "Инпуты по возможности сохраняют native form elements, предоставляют фокусируемые controls, корректно передают disabled и loading states, а icon-only actions остаются semantic buttons.",
+      },
+    },
+    "design-title": "Дизайн-подход",
+    "design-content":
+      "Nmorph использует неуморфический и скевоморфический визуальный язык: мягкие тени, inset-состояния, спокойные поверхности и акцентные цвета, чтобы элементы ощущались тактильными и при этом оставались понятными.",
+    "status-title": "Статус проекта",
+    "status-content":
+      "Библиотека активно развивается и тестируется. Визуальные проблемы, ошибки интеграции и пробелы в API компонентов отслеживаются через issue board проекта.",
+    "links-title": "Ссылки проекта",
+    links: {
+      guide: "Гайд",
+      components: "Компоненты",
+      changelog: "Changelog",
+      repository: "Репозиторий",
+      issues: "Issues",
+    },
   },
   "changelog-page": {
     changelog: {
       title: "Changelog",
       items: {
+        "virtualized-table-select-autocomplete":
+          "NmorphTable, NmorphSelect и NmorphAutocomplete теперь поддерживают виртуализацию больших наборов данных с настройкой item height и overscan.",
+        "overlay-dropdown-teleport-placement":
+          "NmorphOverlay и NmorphDropdown теперь рендерятся через Teleport в body, пересчитывают позицию после открытия и поддерживают end-выравнивание вроде bottom-end.",
+        "nuxt-ssr-theme-runtime":
+          "Nuxt integration и theme/browser hooks обновлены так, чтобы SSR-разметка сохранялась, а browser-only работа откладывалась до клиента.",
+        "compact-control-visual-fixes":
+          "Исправлены размеры compact radio, checkbox, pagination, icon и color-picker, чтобы disabled и extra-thin controls оставались выровненными и читаемыми.",
         "pagination-basic-height":
           "NmorphPagination теперь по умолчанию использует высоту basic, поэтому элементы страниц выровнены с кнопками пагинации.",
         "checkbox-radio-button-controls":
@@ -145,7 +243,7 @@ export default {
         "component-css-splitting":
           "Component chunks теперь импортируют собственный CSS, поэтому direct component imports больше не требуют подключать полный stylesheet библиотеки.",
         "plugin-entry-styles-option":
-          "Добавлен entry nmorph-ui-kit/plugin для настройки plugin без импорта компонентов; в Nuxt полный stylesheet можно включить через `nmorph.styles: \"all\"`.",
+          'Добавлен entry nmorph-ui-kit/plugin для настройки plugin без импорта компонентов; в Nuxt полный stylesheet можно включить через `nmorph.styles: "all"`.',
         "remove-styled-components":
           "Styled-components удалены из Nmorph UI компонентов; runtime-generated styled-классы заменены на стабильную Vue-разметку и SCSS.",
         "avatar-text-input-visual-fixes":
@@ -305,6 +403,7 @@ export default {
   },
   overview: {
     "basic-usage": "Основное использование",
+    basic: "Основное",
     off: "Выкл",
     on: "Вкл",
     one: "Один",
@@ -447,6 +546,9 @@ export default {
       },
       disabled: {
         subtitle: "Неактивное состояние ссылки.",
+      },
+      "icon-name": {
+        subtitle: "Добавляет иконку перед текстом ссылки по имени иконки.",
       },
       api: {
         type: "Тип цвета",
@@ -760,6 +862,7 @@ export default {
           "Определяет тип скелетона для отображения, например, текст или круг.",
         design: "Определяет дизайн элемента скелетона.",
         width: "Задает ширину элемента скелетона.",
+        height: "Задает высоту элемента скелетона.",
       },
     },
     progress: {
@@ -891,8 +994,12 @@ export default {
           "Определяет максимальный уровень масштабирования для изображения",
         "z-index":
           "Задает z-index оверлея. Если не передан, используется общий автоматический стек z-index",
+        "show-trigger": "Определяет, рендерится ли стандартный trigger предпросмотра",
       },
-      slot: {},
+      slot: {
+        loading: "Слот, отображаемый во время загрузки изображения",
+        error: "Слот, отображаемый если изображение не удалось загрузить",
+      },
       variables: {
         width: "Определяет ширину предпросмотра изображения.",
         height: "Определяет высоту предпросмотра изображения.",
@@ -945,6 +1052,11 @@ export default {
           "Булево значение, которое включает или отключает границы вокруг ячеек таблицы. Работает только если свойство 'design' установлено в 'common'",
         sort: "Определяет поведение сортировки для столбцов таблицы",
         design: "Стиль отображения таблицы",
+        virtual: "Включает виртуальный рендеринг для больших наборов данных",
+        "virtual-height": "Задает высоту области прокрутки виртуальной таблицы",
+        "virtual-row-height": "Задает ожидаемую высоту одной виртуальной строки",
+        "virtual-overscan":
+          "Задает количество дополнительных строк до и после видимой области",
       },
       slot: {},
       variables: {
@@ -1003,6 +1115,9 @@ export default {
         height:
           "Устанавливает высоту содержимого подсказки. Позволяет контролировать вертикальный размер подсказки",
       },
+      exposes: {
+        tooltipBody: "Оригинальный DOM-элемент тела tooltip",
+      },
     },
     alert: {
       "basic-usage": {
@@ -1031,6 +1146,8 @@ export default {
           "Булево значение, которое отображает иконку на основе типа оповещения",
         bordered: "Добавляет границу вокруг оповещения для выделения",
         html: "Позволяет использовать HTML-контент в теле оповещения. Используйте с осторожностью, чтобы избежать XSS-уязвимостей",
+        "close-icon-position":
+          "Управляет выравниванием иконки закрытия внутри alert",
       },
       slot: {
         icon: "Слот для кастомизации иконки, отображаемой в оповещении",
@@ -1122,6 +1239,10 @@ export default {
           "Булево значение, которое делает фон компонента прозрачным, если включено",
         "z-index":
           "Задает z-index оверлея. Если не передан, используется общий автоматический стек z-index",
+        "teleport-to":
+          "Задает цель, куда будет телепортирован контент оверлея",
+        "disabled-teleport":
+          "Отключает Teleport и рендерит оверлей на месте",
       },
       slot: {
         default:
@@ -1165,6 +1286,7 @@ export default {
         "model-value": "Управляет активным состоянием компонента",
         stretch:
           "Булево значение, которое определяет, должен ли компонент растягиваться, чтобы заполнить доступное пространство",
+        panes: "Список tab pane, которые рендерит компонент tabs",
       },
       slot: {
         default: "Слот для кастомизации содержимого внутри каждой вкладки",
@@ -1207,6 +1329,8 @@ export default {
           "Булево значение, определяющее, должен ли выпадающий список занимать всю ширину контейнера",
         "z-index":
           "Задает z-index оверлея выпадающего списка. Если не передан, используется общий автоматический стек z-index",
+        placement:
+          "Задает положение dropdown относительно trigger-элемента, включая выравнивание по краю",
       },
       slot: {
         default: "Слот для кастомизации содержимого внутри выпадающего списка",
@@ -1332,6 +1456,7 @@ export default {
         disabled: "Булево значение, отключающее текстовое поле",
         placeholder:
           "Текст, отображаемый как подсказка, когда поле ввода пусто",
+        label: "Текстовая метка, связанная с полем ввода",
         "type-password":
           "Булево значение, превращающее поле ввода в поле для пароля",
         "model-value": "Текущее значение поля ввода",
@@ -1552,6 +1677,12 @@ export default {
           "Функция обратного вызова, вызываемая при выборе опции",
         "z-index":
           "Задает z-index оверлея подсказок. Если не передан, используется общий автоматический стек z-index",
+        virtual: "Включает виртуальный рендеринг для больших списков подсказок",
+        "virtual-item-height":
+          "Задает ожидаемую высоту одного виртуального элемента",
+        "virtual-max-height": "Задает максимальную высоту виртуального списка",
+        "virtual-overscan":
+          "Задает количество дополнительных элементов до и после видимой области",
       },
       slot: {
         loader:
@@ -1703,6 +1834,13 @@ export default {
         open: "Булево значение для управления видимостью списка",
         "z-index":
           "Задает z-index выпадающего списка select. Если не передан, используется общий автоматический стек z-index",
+        virtual: "Включает виртуальный рендеринг для больших списков опций",
+        "virtual-item-height":
+          "Задает ожидаемую высоту одной виртуальной опции",
+        "virtual-max-height":
+          "Задает максимальную высоту виртуального списка опций",
+        "virtual-overscan":
+          "Задает количество дополнительных опций до и после видимой области",
       },
       slot: {
         default: "Слот для настройки опций в выпадающем списке",

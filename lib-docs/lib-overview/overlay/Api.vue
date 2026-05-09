@@ -23,6 +23,16 @@ const attributesData: IAttributesTableData[] = [
     type: "Number",
     default: "auto",
   },
+  {
+    name: "teleport-to",
+    type: "String | HTMLElement",
+    default: "body",
+  },
+  {
+    name: "disabled-teleport",
+    type: "Boolean",
+    default: "false",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "default" }];
@@ -32,7 +42,13 @@ const events = [{ name: "on-outside-click", type: "void" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphOverlay" name="overlay" :attributes="attributesData" :slots="slotData"
-      :variables="variables" :events="events" />
+    <api-table
+      title="NmorphOverlay"
+      name="overlay"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+      :events="events"
+    />
   </div>
 </template>

@@ -115,6 +115,7 @@ const modifiers = computed(() =>
 
   display: inline-flex;
   align-items: center;
+  vertical-align: middle;
   cursor: pointer;
 
   .nmorph-checkbox__content {
@@ -196,6 +197,9 @@ const modifiers = computed(() =>
       position: relative;
       display: flex;
       align-items: center;
+      justify-content: center;
+      width: auto;
+      min-width: var(--size);
       height: var(--size);
       padding: var(--indentation-03);
       border-radius: var(--default-border-radius);
@@ -211,7 +215,7 @@ const modifiers = computed(() =>
   &.nmorph--extra-thin-component {
     .nmorph-checkbox__label,
     .nmorph-checkbox__fake span {
-      font-size: var(--font-size-extra-small);
+      font-size: var(--font-size-tiny);
       line-height: var(--line-height-line);
     }
 

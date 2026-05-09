@@ -7,10 +7,14 @@ interface INmorphProps {
   show: boolean;
   transparent?: boolean;
   zIndex?: number;
+  teleportTo?: string | HTMLElement;
+  disabledTeleport?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   transparent: false,
+  teleportTo: 'body',
+  disabledTeleport: false,
 });
 
 const zIndex = useZIndex(
@@ -36,11 +40,13 @@ const emit = defineEmits<INmorphEmit>();
 </script>
 
 <template>
-  <div :class="modifiers" :style="{ '--nmorph-overlay-z-index': zIndex }" @click.stop="clickHandler">
-    <div class="nmorph-overlay__slot" @click.stop>
-      <slot />
+  <Teleport :to="props.teleportTo" :disabled="props.disabledTeleport || !props.show">
+    <div :class="modifiers" :style="{ '--nmorph-overlay-z-index': zIndex }" @click.stop="clickHandler">
+      <div class="nmorph-overlay__slot" @click.stop>
+        <slot />
+      </div>
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <style lang="scss">

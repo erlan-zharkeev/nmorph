@@ -63,6 +63,26 @@ const attributesData: IAttributesTableData[] = [
     type: "Number",
     default: "auto",
   },
+  {
+    name: "virtual",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "virtual-item-height",
+    type: "Number",
+    default: "34",
+  },
+  {
+    name: "virtual-max-height",
+    type: "Number | String",
+    default: "240",
+  },
+  {
+    name: "virtual-overscan",
+    type: "Number",
+    default: "5",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "loader" }];
@@ -75,7 +95,13 @@ const events = [
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphAutocomplete" name="autocomplete" :attributes="attributesData" :slots="slotData"
-      :variables="variables" :events="events" />
+    <api-table
+      title="NmorphAutocomplete"
+      name="autocomplete"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+      :events="events"
+    />
   </div>
 </template>

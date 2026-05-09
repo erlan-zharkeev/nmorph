@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   size: 'small',
   width: undefined,
   height: undefined,
-  color: 'var(--nmorph-text-color)',
+  color: undefined,
 });
 
 const modifiers = computed(() =>
@@ -31,7 +31,10 @@ const customStyles = computed(() => {
   const styles: { [key: string]: string } = {};
   if (props.width) styles['--width'] = props.width;
   if (props.height) styles['--height'] = props.height;
-  styles['--nmorph-icon-color'] = props.color;
+  if (props.color) {
+    styles['--nmorph-icon-color'] = props.color;
+    styles['--color'] = props.color;
+  }
   return styles;
 });
 </script>
@@ -91,6 +94,6 @@ const customStyles = computed(() => {
     --height: 32px;
   }
 
-  --color: var(--nmorph-icon-color);
+  --color: var(--nmorph-icon-color, var(--nmorph-text-color));
 }
 </style>

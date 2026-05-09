@@ -11,6 +11,39 @@ const knownBugItems: string[] = [];
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v2.2.13</h3>
+            <ul>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.virtualized-table-select-autocomplete",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.overlay-dropdown-teleport-placement",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.nuxt-ssr-theme-runtime",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.compact-control-visual-fixes",
+                  )
+                }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.2.12</h3>
             <ul>
               <li>

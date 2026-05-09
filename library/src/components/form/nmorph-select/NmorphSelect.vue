@@ -2,6 +2,7 @@
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick } from 'vue';
+import { useVirtualList } from '@/hooks';
 import {
   NmorphTagItem,
   NmorphIcon,
@@ -30,6 +31,10 @@ interface INmorphProps extends INmorphCommonInputProps {
   fill?: boolean;
   optionsWidth?: 'truncate' | 'auto';
   zIndex?: number;
+  virtual?: boolean;
+  virtualItemHeight?: number;
+  virtualMaxHeight?: number | string;
+  virtualOverscan?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -44,6 +49,10 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   open: false,
   fill: false,
   optionsWidth: 'truncate',
+  virtual: false,
+  virtualItemHeight: 0,
+  virtualMaxHeight: 240,
+  virtualOverscan: 5,
 });
 
 const computedNoElementPlaceholder = computed(() =>
@@ -58,9 +67,6 @@ const initialValue = ref<NmorphSelectModelValueType>(props.modelValue);
 const open = ref(props.open);
 const disabledInput = computed(() => props.disabled || props.loading);
 const autoOptionsWidth = computed(() => props.optionsWidth === 'auto');
-
-const optionsDOMRef = ref<NmorphDomElementType>(null);
-const optionsHeight = ref<string | null>(null);
 const selectedLineOutset = ref(true);
 
 const { id, name, autocomplete, tabindex } = useFormItemInput(props);
@@ -134,34 +140,84 @@ watch(
   }
 );
 
-const nodeOptions = ref<NodeListOf<Element>>();
-const domOptions = ref<Array<string>>([]);
+const optionsMap = computed(() => (props.options.length > 0 ? props.options : props.optionsMap));
+const optionsDOMRef = ref<NmorphDomElementType>(null);
+const slotDomOptions = ref<string[]>([]);
+const renderedOptions = computed(() => props.options);
+const virtualEnabled = computed(() => props.virtual && renderedOptions.value.length > 0);
+const defaultOptionHeight = computed(() => {
+  const heightMap = {
+    basic: 30,
+    thick: 38,
+    thin: 22,
+  };
+  return heightMap[props.height || 'basic'];
+});
+const virtualItemHeight = computed(() => props.virtualItemHeight || defaultOptionHeight.value);
+const virtualOverscan = computed(() => props.virtualOverscan);
+const virtualList = useVirtualList(renderedOptions, {
+  enabled: virtualEnabled,
+  itemHeight: virtualItemHeight,
+  overscan: virtualOverscan,
+});
+const virtualOptions = computed(() => virtualList.virtualItems.value);
+const virtualSpacerStyle = computed(() => ({
+  height: `${virtualList.totalHeight.value}px`,
+}));
+const virtualContentStyle = computed(() => ({
+  transform: `translateY(${virtualList.offsetTop.value}px)`,
+}));
+const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const virtualMaxHeight = computed(() => getCssSize(props.virtualMaxHeight));
+const refreshDomOptions = () => {
+  if (optionsMap.value.length > 0 || !optionsDOMRef.value) return;
+  slotDomOptions.value = Array.from(optionsDOMRef.value.querySelectorAll('.nmorph-select-option'))
+    .map((option) => option.getAttribute('value'))
+    .filter((value): value is string => Boolean(value));
+};
+const domOptions = computed(() =>
+  optionsMap.value.length > 0 ? optionsMap.value.map((option) => option.value) : slotDomOptions.value
+);
+const nativeOptions = computed(() => {
+  if (!virtualEnabled.value) return domOptions.value;
+  if (Array.isArray(initialValue.value)) return initialValue.value;
+  return initialValue.value ? [initialValue.value] : [];
+});
 
 const currentIndex = ref(0);
-const currentFocusedEl = ref('');
+const currentFocusedEl = computed(() => domOptions.value[currentIndex.value] || '');
 
 watch(currentIndex, (newValue) => {
-  currentFocusedEl.value = domOptions.value[newValue];
-  nodeOptions.value.forEach((nodeOption) => {
-    const elementValue = nodeOption.getAttribute('value');
-    const action = elementValue === currentFocusedEl.value ? 'add' : 'remove';
-    nodeOption.classList[action]('nmorph-select-option--focused');
-  });
+  if (open.value && virtualEnabled.value) {
+    virtualList.scrollToIndex(newValue);
+  }
+});
+
+watch(
+  domOptions,
+  (options) => {
+    if (currentIndex.value >= options.length) {
+      currentIndex.value = Math.max(options.length - 1, 0);
+    }
+  },
+  { immediate: true }
+);
+
+watch(open, async (isOpen) => {
+  if (!isOpen) return;
+  await nextTick();
+  refreshDomOptions();
+  if (typeof initialValue.value === 'string') {
+    const selectedIndex = domOptions.value.indexOf(initialValue.value);
+    if (selectedIndex !== -1) currentIndex.value = selectedIndex;
+  }
+  virtualList.refresh();
+  if (virtualEnabled.value) virtualList.scrollToIndex(currentIndex.value);
 });
 
 onMounted(async () => {
   await nextTick();
-  if (!optionsDOMRef.value) return;
-
-  nodeOptions.value = optionsDOMRef.value.querySelectorAll('.nmorph-select-option');
-  nodeOptions.value.forEach((el) => {
-    const element = el.getAttribute('value');
-    if (element) domOptions.value.push(element);
-  });
-
-  currentFocusedEl.value = domOptions.value[currentIndex.value];
-
-  optionsHeight.value = `${optionsDOMRef.value.clientHeight}px`;
+  refreshDomOptions();
   document.addEventListener('click', closeHandler);
 });
 
@@ -172,12 +228,10 @@ onUnmounted(() => {
 const selectedValueTitle = computed(() => {
   if (typeof initialValue.value === 'string') {
     if (initialValue.value === '') return computedNoElementPlaceholder.value;
-    return props.options.find((option) => option.value === initialValue.value)?.label;
+    return optionsMap.value.find((option) => option.value === initialValue.value)?.label;
   }
-  return props.options.find((option) => option.value === initialValue.value)?.label;
+  return optionsMap.value.find((option) => option.value === initialValue.value)?.label;
 });
-
-const optionsMap = computed(() => (props.options.length > 0 ? props.options : props.optionsMap));
 
 const tags = computed(() => {
   const haveMap = optionsMap.value.length > 0;
@@ -211,16 +265,19 @@ const spaceHandler = () => {
 
 const arrowDownHandler = () => {
   if (disabledInput.value) return;
+  if (domOptions.value.length === 0) return;
   currentIndex.value = (currentIndex.value + 1) % domOptions.value.length;
 };
 
 const arrowUpHandler = () => {
   if (disabledInput.value) return;
+  if (domOptions.value.length === 0) return;
   currentIndex.value = (currentIndex.value - 1 + domOptions.value.length) % domOptions.value.length;
 };
 
 const enterHandler = () => {
   if (!open.value) return;
+  if (!currentFocusedEl.value) return;
   changeHandler(currentFocusedEl.value);
 };
 </script>
@@ -241,7 +298,7 @@ const enterHandler = () => {
         @keydown.arrow-up="arrowUpHandler"
         @keydown.enter="enterHandler"
       >
-        <option v-for="option in domOptions" :key="option" :value="option" />
+        <option v-for="option in nativeOptions" :key="option" :value="option" />
       </select>
       <div ref="nmorphSelectDOMRef" class="nmorph-select__selected-values-line" @click.stop="clickHandler">
         <div v-if="typeof initialValue === 'string'" class="nmorph-select__selected-value">
@@ -282,14 +339,35 @@ const enterHandler = () => {
         <NmorphIcon v-if="props.loading" class="nmorph-select__chevron" size="medium">
           <NmorphIconChevronDown />
         </NmorphIcon>
-        <NmorphSelectOption
-          v-else
-          v-for="option in options"
-          :key="option.value"
-          v-bind="option"
-          :height="props.height"
-        />
-        <slot />
+        <div
+          v-else-if="virtualEnabled"
+          :ref="virtualList.containerRef"
+          class="nmorph-select__virtual-list"
+          :style="{ maxHeight: virtualMaxHeight }"
+          @scroll="virtualList.scrollHandler"
+        >
+          <div class="nmorph-select__virtual-spacer" :style="virtualSpacerStyle">
+            <div class="nmorph-select__virtual-content" :style="virtualContentStyle">
+              <NmorphSelectOption
+                v-for="virtualOption in virtualOptions"
+                :key="virtualOption.index"
+                v-bind="virtualOption.item"
+                :focused="virtualOption.item.value === currentFocusedEl"
+                :height="props.height"
+              />
+            </div>
+          </div>
+        </div>
+        <template v-else>
+          <NmorphSelectOption
+            v-for="option in options"
+            :key="option.value"
+            v-bind="option"
+            :focused="option.value === currentFocusedEl"
+            :height="props.height"
+          />
+          <slot />
+        </template>
       </div>
     </NmorphDropdown>
   </div>
@@ -361,6 +439,21 @@ const enterHandler = () => {
       width: max-content;
       max-width: calc(100vw - var(--indentation-02) * 2);
     }
+  }
+
+  .nmorph-select__virtual-list {
+    overflow-y: auto;
+  }
+
+  .nmorph-select__virtual-spacer {
+    position: relative;
+  }
+
+  .nmorph-select__virtual-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
   }
 
   &.nmorph-select--open {

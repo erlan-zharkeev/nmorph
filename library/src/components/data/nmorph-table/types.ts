@@ -1,5 +1,5 @@
 import { NmorphSortOrderType } from '@/types';
-import { Ref } from 'vue';
+import { ComputedRef, Ref } from 'vue';
 
 export type NmorphTableSortType = Record<string, NmorphSortOrderType>;
 
@@ -21,7 +21,7 @@ export interface NmorphTableColumnData extends INmorphTableColumnProps {
 }
 
 export interface INmorphTableDataInjection {
-  rows: Ref<NmorphDataTableElRecordType[]>;
+  rows: Ref<NmorphDataTableElRecordType[]> | ComputedRef<NmorphDataTableElRecordType[]>;
   columns: Ref<NmorphTableColumnData[]>;
 }
 

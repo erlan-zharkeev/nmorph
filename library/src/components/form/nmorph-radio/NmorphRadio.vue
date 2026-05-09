@@ -200,7 +200,7 @@ defineExpose({ inputDOMRef });
   &.nmorph--extra-thin-component {
     .nmorph-radio__fake span,
     .nmorph-radio__label {
-      font-size: var(--font-size-extra-small);
+      font-size: var(--font-size-tiny);
       line-height: var(--line-height-line);
     }
 

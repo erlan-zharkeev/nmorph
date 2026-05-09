@@ -113,6 +113,24 @@ const noControl = { control: false };
 const height = select(['thin', 'basic', 'thick']);
 const direction = select(['row', 'column']);
 const design = select(['nmorph', 'common']);
+const placement = select([
+  'top',
+  'top-start',
+  'top-center',
+  'top-end',
+  'right',
+  'right-start',
+  'right-center',
+  'right-end',
+  'bottom',
+  'bottom-start',
+  'bottom-center',
+  'bottom-end',
+  'left',
+  'left-start',
+  'left-center',
+  'left-end',
+]);
 const commonInputArgTypes = {
   id: text,
   name: text,
@@ -1168,6 +1186,7 @@ export const Dropdown: Story = {
     width: 220,
     minWidth: 160,
     maxWidth: 320,
+    placement: 'bottom-end',
     xOffset: 0,
     yOffset: 8,
     fillWidth: false,
@@ -1179,6 +1198,7 @@ export const Dropdown: Story = {
     width: object,
     minWidth: object,
     maxWidth: object,
+    placement,
     xOffset: number,
     yOffset: number,
     fillWidth: boolean,

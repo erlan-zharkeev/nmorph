@@ -26,7 +26,7 @@ const mixins = {
   'nmorph--shadow-combined': nmorphCombined,
 };
 
-export const useCommonStyles = () => {
+export const getCommonStyles = () => {
   const generateCSS = () => `
     :root {
       --font-size-tiny: 10px;
@@ -547,7 +547,15 @@ export const useCommonStyles = () => {
 }
 `;
   }
+  return css;
+};
+
+export const useCommonStyles = () => {
+  if (typeof document === 'undefined') return;
+  if (document.getElementById('nmorph-common-styles')) return;
+
   const styleElement = document.createElement('style');
-  styleElement.innerHTML = css;
+  styleElement.id = 'nmorph-common-styles';
+  styleElement.innerHTML = getCommonStyles();
   document.head.appendChild(styleElement);
 };

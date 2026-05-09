@@ -74,7 +74,9 @@ export enum NmorphComponentPosition {
   bottom = 'bottom',
 }
 
-export type NmorphPlacementType = keyof typeof NmorphComponentPosition;
+export type NmorphPlacementSideType = keyof typeof NmorphComponentPosition;
+export type NmorphPlacementAlignType = 'start' | 'center' | 'end';
+export type NmorphPlacementType = NmorphPlacementSideType | `${NmorphPlacementSideType}-${NmorphPlacementAlignType}`;
 
 export type NmorphDomElementType = HTMLElement | null;
 

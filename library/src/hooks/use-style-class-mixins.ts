@@ -13,6 +13,8 @@ const mixins = {
 };
 
 export const useStyleClassMixins = () => {
+  if (typeof document === 'undefined') return;
+
   const generateCSS = () => {
     let css = '';
 

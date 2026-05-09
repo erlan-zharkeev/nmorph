@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, toRef, watch } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 import { usePlacement } from '@/hooks';
-import { NmorphDomElementType } from '@/types';
+import { NmorphDomElementType, NmorphPlacementType } from '@/types';
 import { NmorphOverlay } from '@/components';
 
 interface INmorphProps {
   open: boolean;
   relativeElement: NmorphDomElementType;
+  placement?: NmorphPlacementType;
   width?: number | string;
   minWidth?: number | string;
   maxWidth?: number | string;
@@ -18,6 +20,7 @@ interface INmorphProps {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
+  placement: 'bottom',
   width: 160,
   xOffset: 0,
   yOffset: 0,
@@ -31,12 +34,13 @@ const emit = defineEmits<INmorphEmit>();
 
 const dropdownDOMRef = ref<NmorphDomElementType>(null);
 
-const { placementCoords } = usePlacement({
-  initialPlacement: 'bottom',
+const { placementCoords, placementReady, adjustPlacement } = usePlacement({
+  initialPlacement: toRef(props, 'placement'),
   contentDOMElement: dropdownDOMRef,
-  relativeElement: props.relativeElement,
-  yOffset: props.yOffset,
-  xOffset: props.xOffset,
+  relativeElement: toRef(props, 'relativeElement'),
+  yOffset: toRef(props, 'yOffset'),
+  xOffset: toRef(props, 'xOffset'),
+  enabled: toRef(props, 'open'),
 });
 
 const modifiers = computed(() =>
@@ -47,7 +51,26 @@ const modifiers = computed(() =>
 
 const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 
-const width = computed(() => (props.fillWidth ? `${props.relativeElement?.clientWidth}px` : getCssSize(props.width)));
+const width = computed(() =>
+  props.fillWidth && props.relativeElement ? `${props.relativeElement.clientWidth}px` : getCssSize(props.width)
+);
+
+const dropdownStyle = computed<CSSProperties>(() => ({
+  '--nmorph-dropdown-width': width.value,
+  '--nmorph-dropdown-min-width': getCssSize(props.minWidth) || 'auto',
+  '--nmorph-dropdown-max-width': getCssSize(props.maxWidth) || 'none',
+  left: placementCoords.value.x,
+  top: placementCoords.value.y,
+  visibility: props.open && placementReady.value ? 'visible' : 'hidden',
+}));
+
+watch(
+  () => props.open,
+  (open) => {
+    if (open) adjustPlacement();
+  },
+  { flush: 'post' }
+);
 
 const outsideClickHandler = () => {
   emit('on-outside-click');
@@ -55,23 +78,11 @@ const outsideClickHandler = () => {
 </script>
 
 <template>
-  <div
-    :style="{
-      '--nmorph-dropdown-width': width,
-      '--nmorph-dropdown-min-width': getCssSize(props.minWidth) || 'auto',
-      '--nmorph-dropdown-max-width': getCssSize(props.maxWidth) || 'none',
-    }"
-  >
-    <NmorphOverlay :show="props.open" transparent :z-index="props.zIndex" @on-outside-click="outsideClickHandler">
-      <div
-        ref="dropdownDOMRef"
-        :class="modifiers"
-        :style="{ left: `${placementCoords.x}`, top: `${placementCoords.y}` }"
-      >
-        <slot />
-      </div>
-    </NmorphOverlay>
-  </div>
+  <NmorphOverlay :show="props.open" transparent :z-index="props.zIndex" @on-outside-click="outsideClickHandler">
+    <div v-if="props.open" ref="dropdownDOMRef" :class="modifiers" :style="dropdownStyle">
+      <slot />
+    </div>
+  </NmorphOverlay>
 </template>
 
 <style lang="scss">

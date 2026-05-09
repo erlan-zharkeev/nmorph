@@ -400,7 +400,7 @@ const localePath = useLocalePath();
           <NmorphCard>
             <template #header>Pagination</template>
             <div class="overview-component-content">
-              <NmorphPagination :quantity-elements-on-page="2" :total-elements-quantity="4" :model-value="1" />
+              <NmorphPagination :elements-quantity-on-page="2" :total-elements-quantity="4" :model-value="1" />
             </div>
           </NmorphCard>
         </NuxtLink>

@@ -29,6 +29,26 @@ const tableAttributesData: IAttributesTableData[] = [
     type: "nmorph | common",
     default: "nmorph",
   },
+  {
+    name: "virtual",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "virtual-height",
+    type: "Number | String",
+    default: "320px",
+  },
+  {
+    name: "virtual-row-height",
+    type: "Number",
+    default: "42",
+  },
+  {
+    name: "virtual-overscan",
+    type: "Number",
+    default: "5",
+  },
 ];
 
 const tableVariables: IVariablesTableData[] = [
@@ -52,7 +72,7 @@ const tableColumnAttributes: IAttributesTableData[] = [
     name: "width",
     type: docsLink(
       "Width",
-      "https://developer.mozilla.org/ru/docs/Web/CSS/width"
+      "https://developer.mozilla.org/ru/docs/Web/CSS/width",
     ),
     default: "-",
   },
@@ -76,16 +96,30 @@ const tableCellSlots = [{ name: "default" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphTable" name="table" :attributes="tableAttributesData" :variables="tableVariables" />
+    <api-table
+      title="NmorphTable"
+      name="table"
+      :attributes="tableAttributesData"
+      :variables="tableVariables"
+    />
     <NmorphDivider />
     <div class="docs-api-table">
-      <api-table title="NmorphTableColumn" name="table-column" :attributes="tableColumnAttributes"
-        additional-id="table-column" />
+      <api-table
+        title="NmorphTableColumn"
+        name="table-column"
+        :attributes="tableColumnAttributes"
+        additional-id="table-column"
+      />
     </div>
     <NmorphDivider />
     <div class="docs-api-table">
-      <api-table title="NmorphTableCell" name="table-cell" :attributes="tableCellAttributes" :slots="tableCellSlots"
-        additional-id="table-cell" />
+      <api-table
+        title="NmorphTableCell"
+        name="table-cell"
+        :attributes="tableCellAttributes"
+        :slots="tableCellSlots"
+        additional-id="table-cell"
+      />
     </div>
   </div>
 </template>

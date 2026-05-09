@@ -22,7 +22,10 @@ export const useNmorphBrowser = () => {
     }, 400);
   };
 
-  if (window) {
+  if (typeof window !== 'undefined') {
+    dimensions.value.width = window.innerWidth;
+    dimensions.value.height = window.innerHeight;
+    scrollTop.value = window.scrollY;
     window.addEventListener('resize', resizeHandler);
     window.addEventListener('scroll', scrollHandler);
   }

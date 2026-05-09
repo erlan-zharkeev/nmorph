@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import {
+  NmorphButton,
   NmorphIcon,
   NmorphLink,
   NmorphDropdown,
   NmorphCheckbox,
+  NmorphIconSearch,
   NmorphIconMenu,
   NmorphIconLogo,
 } from "@nmorph/nmorph-ui-kit";
 import TranslateIcon from "~/assets/icons/translate.svg";
 import GitlabIcon from "~/assets/icons/gitlab.svg";
 import type { LocaleObject } from "@nuxtjs/i18n";
+import SearchDialog from "~/components/search-dialog/SearchDialog.vue";
 import libraryData from "../../../library/package.json";
 
 const switchLocalePath = useSwitchLocalePath();
-const libraryVersion = libraryData.version;
 
 const { locales, locale } = useI18n();
 const route = useRoute();
@@ -38,6 +40,12 @@ const localePath = useLocalePath();
 
 const translateBtn = ref(null);
 const translateDropdownOpen = ref(false);
+const searchOpen = ref(false);
+
+const openSearch = () => {
+  searchOpen.value = true;
+  mobileNavMenu.value = false;
+};
 
 const closeHandler = () => {
   translateDropdownOpen.value = false;
@@ -61,6 +69,21 @@ const isActive = (path: string) => {
   if (path.includes('components') && route.path.includes('elements')) return true
   return route.path.startsWith(path)
 }
+
+const searchShortcutHandler = (event: KeyboardEvent) => {
+  if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== "k") return;
+
+  event.preventDefault();
+  openSearch();
+};
+
+onMounted(() => {
+  window.addEventListener("keydown", searchShortcutHandler);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", searchShortcutHandler);
+});
 </script>
 
 <template>
@@ -83,9 +106,16 @@ const isActive = (path: string) => {
           </ClientOnly>
         </NuxtLink>
       </div>
-      <div class="docs-top-bar__version">{{ libraryVersion }}</div>
+      <span class="docs-top-bar__version">v{{ libraryData.version }}</span>
     </div>
     <div class="docs-top-bar__right">
+      <NmorphButton class="docs-top-bar__search-btn" style-type="transparent" height="thin" @click="openSearch">
+        <template #icon>
+          <NmorphIconSearch />
+        </template>
+        <span class="docs-top-bar__search-label">{{ $t("top-bar.search") }}</span>
+        <kbd>{{ $t("top-bar.search-shortcut") }}</kbd>
+      </NmorphButton>
       <NmorphLink href="https://gitlab.com/ketjo/nmorph" target="blank" class="git-lab-button">
         <GitlabIcon />
       </NmorphLink>
@@ -160,6 +190,7 @@ const isActive = (path: string) => {
         </li>
       </ul>
     </nav>
+    <SearchDialog v-model:open="searchOpen" />
   </header>
 </template>
 
@@ -211,16 +242,30 @@ $top-bar-height: 50px;
 
 .docs-top-bar__version {
   margin-left: 8px;
-  user-select: none;
-  font-weight: bold;
-  font-size: 12px;
+  color: var(--nmorph-semi-contrast-text-color);
+  font-size: var(--font-size-extra-small);
+  font-weight: 600;
   line-height: 1;
-
+  white-space: nowrap;
 }
 
 .docs-top-bar__right {
   display: flex;
   align-items: center;
+}
+
+.docs-top-bar__search-btn {
+  margin-right: 12px;
+
+  kbd {
+    padding: 2px 6px;
+    border: 0;
+    border-radius: 4px;
+    color: var(--nmorph-semi-contrast-text-color);
+    font-family: inherit;
+    font-size: var(--font-size-extra-small);
+    background: color-mix(in srgb, var(--nmorph-text-color) 8%, transparent);
+  }
 }
 
 .docs-translates__dropdown {
@@ -349,6 +394,15 @@ $top-bar-height: 50px;
 
   .docs-top-bar__nav {
     display: none;
+  }
+
+  .docs-top-bar__search-btn {
+    margin-right: 8px;
+
+    .docs-top-bar__search-label,
+    kbd {
+      display: none;
+    }
   }
 
   .docs-top-bar__nav-menu-btn {
