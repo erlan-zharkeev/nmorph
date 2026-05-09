@@ -5,7 +5,7 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
+import { NmorphSelectionControlHeight } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -16,7 +16,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "height",
-    type: enumToString(NmorphComponentHeight),
+    type: enumToString(NmorphSelectionControlHeight),
     default: "thin",
   },
   {
@@ -35,7 +35,7 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "style-type",
     type: "button | radio-style",
-    default: "radio-style",
+    default: "button",
   },
   {
     name: "direction",

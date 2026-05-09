@@ -11,11 +11,10 @@ const scriptData = `
 
 const templateData = `
 <template>
-  <NmorphCheckbox v-model="value" id="1" />
+  <NmorphCheckbox v-model="value" id="1" design="checkbox" />
   <NmorphCheckbox
     v-model="value"
     id="2"
-    design="button"
     :label="String(value)"
   />
 </template>
@@ -41,8 +40,8 @@ const value = ref(false);
       <template #overview>
         <div class="checkbox-design-overview">
           <ClientOnly>
-            <NmorphCheckbox v-model="value" id="1" />
-            <NmorphCheckbox v-model="value" id="2" design="button" :label="String(value)" />
+            <NmorphCheckbox v-model="value" id="1" design="checkbox" />
+            <NmorphCheckbox v-model="value" id="2" :label="String(value)" />
           </ClientOnly>
         </div>
       </template>

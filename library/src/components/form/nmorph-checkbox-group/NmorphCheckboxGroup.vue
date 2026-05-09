@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, provide, ref } from 'vue';
+import { computed, provide, ref, watch } from 'vue';
 import { NmorphCheckbox } from '@/components';
 import { useModifiers } from '@/utils';
 import {
@@ -9,19 +9,21 @@ import {
   NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType,
   NmorphCheckboxGroupSelectedValueInjectionType,
   NmorphComponentDirection,
+  NmorphSelectionControlHeightType,
 } from '@/types';
 
-interface INmorphProps extends INmorphCommonInputProps {
+interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
   modelValue: string[];
   options?: INmorphCheckboxOption[];
   design?: NmorphCheckboxDesignType;
   direction?: keyof typeof NmorphComponentDirection;
+  height?: NmorphSelectionControlHeightType;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: () => [],
   options: () => [],
-  design: 'checkbox',
+  design: 'button',
   direction: 'row',
   height: 'thin',
   disabled: false,
@@ -31,14 +33,22 @@ interface INmorphEmit {
   (e: 'update:model-value', val: string[]): void;
 }
 
-const initialValue = ref(props.modelValue);
+const initialValue = ref([...props.modelValue]);
+
+watch(
+  () => props.modelValue,
+  (value) => {
+    initialValue.value = [...value];
+  },
+  { deep: true }
+);
 
 const emit = defineEmits<INmorphEmit>();
 
 const changeHandler = (id: string) => {
-  if (initialValue.value.includes(id)) {
-    initialValue.value = initialValue.value.filter((checkboxId) => checkboxId !== id);
-  } else initialValue.value.push(id);
+  initialValue.value = initialValue.value.includes(id)
+    ? initialValue.value.filter((checkboxId) => checkboxId !== id)
+    : [...initialValue.value, id];
   emit('update:model-value', initialValue.value);
 };
 

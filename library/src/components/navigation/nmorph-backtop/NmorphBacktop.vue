@@ -70,7 +70,7 @@ onUnmounted(() => {
           <NmorphButton :style-type="props.design === 'nmorph' ? 'default' : 'transparent'">
             <NmorphIcon
               class="nmorph-backtop__up-icon"
-              :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-white-color)'"
+              :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-contrast-text-color)'"
             >
               <NmorphIconChevronDown />
             </NmorphIcon>

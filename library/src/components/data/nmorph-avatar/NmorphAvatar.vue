@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, ref, type Component } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphImage, NmorphIcon, NmorphIconAvatar } from '@/components';
+import { NmorphImage, NmorphIcon, NmorphIconAvatar, NmorphIconLoader } from '@/components';
 import { INmorphImage, AvatarShapeType } from '@/types';
+import NmorphImagePreview from '../nmorph-image-preview/NmorphImagePreview.vue';
 
 interface INmorphProps extends Omit<INmorphImage, 'src'> {
   src?: string | string[];
@@ -118,6 +119,11 @@ const openPreview = () => {
       @load="onImageLoad"
       @error="onImageError"
     >
+      <template #loading>
+        <NmorphIcon size="small" color="var(--nmorph-accent-color)">
+          <NmorphIconLoader />
+        </NmorphIcon>
+      </template>
       <template #error>
         <slot name="error">
           <span v-if="initials" class="nmorph-avatar__initials" :style="{ fontSize: initialsFontSize }">
@@ -139,7 +145,7 @@ const openPreview = () => {
     </slot>
     <NmorphImagePreview
       v-if="previewAvailable"
-      class="nmorph-avatar__preview"
+      :show-trigger="false"
       :model-value="previewOpen"
       :src="imagePreviewSrc"
       :alt="props.alt"
@@ -148,6 +154,18 @@ const openPreview = () => {
       :min-scale-level="props.previewMinScaleLevel"
       :max-scale-level="props.previewMaxScaleLevel"
       @update:model-value="previewOpen = $event"
-    />
+    >
+      <template #loading>
+        <NmorphIcon size="small" color="var(--nmorph-accent-color)">
+          <NmorphIconLoader />
+        </NmorphIcon>
+      </template>
+    </NmorphImagePreview>
   </div>
 </template>
+
+<style lang="scss">
+.nmorph-avatar--preview:hover > .nmorph-image {
+  filter: brightness(0.8);
+}
+</style>

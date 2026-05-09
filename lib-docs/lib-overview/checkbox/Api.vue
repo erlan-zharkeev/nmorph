@@ -5,7 +5,7 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
+import { NmorphSelectionControlHeight } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -30,13 +30,13 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "height",
-    type: enumToString(NmorphComponentHeight),
+    type: enumToString(NmorphSelectionControlHeight),
     default: "thin",
   },
   {
     name: "design",
     type: "'button' | 'checkbox'",
-    default: "checkbox",
+    default: "button",
   },
 ];
 

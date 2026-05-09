@@ -18,7 +18,7 @@ const scriptData = `
 const templateData = `
 <template>
   <div class="radio-group-el">
-    <NmorphRadioGroup :options="options" v-model="value" height="thin" />
+    <NmorphRadioGroup :options="options" v-model="value" height="extra-thin" />
   </div>
   <div class="radio-group-el">
     <NmorphRadioGroup
@@ -26,7 +26,7 @@ const templateData = `
       v-model="value"
       direction="column"
       style-type="radio-style"
-      height="thick"
+      height="thin"
     />
   </div>
 </template>
@@ -58,10 +58,10 @@ const value = ref("three");
         <div class="radio-group-model-value-overview">
           <ClientOnly>
             <div class="radio-group-el">
-              <NmorphRadioGroup :options="options" v-model="value" height="thin" />
+              <NmorphRadioGroup :options="options" v-model="value" height="extra-thin" />
             </div>
             <div class="radio-group-el">
-              <NmorphRadioGroup :options="options" v-model="value" direction="column" style-type="radio-style" height="thick" />
+              <NmorphRadioGroup :options="options" v-model="value" direction="column" style-type="radio-style" height="thin" />
             </div>
           </ClientOnly>
         </div>

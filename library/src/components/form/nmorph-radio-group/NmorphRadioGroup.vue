@@ -6,6 +6,7 @@ import {
   NmorphRadioChangeRadioButtonValueHandlerInjectionType,
   NmorphRadioGroupSelectedValueInjectionType,
   NmorphRadioStyleType,
+  NmorphSelectionControlHeightType,
 } from '@/types';
 import { useModifiers } from '@/utils';
 import { ref, computed, provide, watch } from 'vue';
@@ -13,16 +14,17 @@ import { NmorphRadio } from '@/components';
 
 type NmorphListRadioOptionElementType = Omit<INmorphRadioOption, 'checked'>;
 
-interface INmorphProps extends INmorphCommonInputProps {
+interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
   modelValue: string;
   options?: NmorphListRadioOptionElementType[];
   styleType?: keyof typeof NmorphRadioStyleType;
   direction?: keyof typeof NmorphComponentDirection;
+  height?: NmorphSelectionControlHeightType;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: '',
-  styleType: 'radio-style',
+  styleType: 'button',
   options: () => [],
   direction: 'row',
   label: '',

@@ -25,6 +25,37 @@ export default defineNuxtModule<NmorphNuxtModuleOptions>({
     }
 
     addPluginTemplate({
+      filename: 'nmorph-i18n.mjs',
+      getContents: () => `
+import { defineNuxtPlugin } from '#app'
+import { en, ru, zh } from '@nmorph/nmorph-ui-kit/plugin'
+
+const options = ${JSON.stringify(pluginOptions)}
+const libraryMessages = { en, ru, zh }
+
+const mergeMessages = (base, overrides = {}) => {
+  const result = { ...base }
+  Object.entries(overrides).forEach(([locale, messages]) => {
+    result[locale] = { ...(result[locale] || {}), ...messages }
+  })
+  return result
+}
+
+export default defineNuxtPlugin((nuxtApp) => {
+  const i18nOptions = { ...(options.i18n || {}) }
+  const messages = mergeMessages(libraryMessages, i18nOptions.messages)
+  const i18n = nuxtApp.$i18n
+
+  if (i18n?.mergeLocaleMessage) {
+    Object.entries(messages).forEach(([locale, localeMessages]) => {
+      i18n.mergeLocaleMessage(locale, localeMessages)
+    })
+  }
+})
+`,
+    });
+
+    addPluginTemplate({
       filename: 'nmorph.client.mjs',
       getContents: () => `
 import { defineNuxtPlugin } from '#app'

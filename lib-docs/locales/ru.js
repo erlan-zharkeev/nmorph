@@ -127,17 +127,21 @@ export default {
       "<p>Нейморфизм (neumorphism) — это стиль дизайна, который совмещает элементы плоского дизайна и скевоморфизма.</p><p>Он создает ощущение объема и мягких теней, благодаря чему интерфейс выглядит так, словно его можно потрогать.</p><p>В основе нейморфизма лежат пастельные цвета, легкие градиенты и мягкие тени, создавая эффект выдавленных или вдавленных элементов.</p>",
   },
   "changelog-page": {
-    roadmap: {
-      title: "Roadmap",
-      items: {
-        "color-picker-formats":
-          "Добавить в NmorphColorPicker возможность отображать разные форматы цвета.",
-        performance: "Оптимизировать производительность и размер бандла.",
-      },
-    },
     changelog: {
       title: "Changelog",
       items: {
+        "pagination-basic-height":
+          "NmorphPagination теперь по умолчанию использует высоту basic, поэтому элементы страниц выровнены с кнопками пагинации.",
+        "checkbox-radio-button-controls":
+          "NmorphCheckbox и NmorphRadio теперь по умолчанию используют button design, поддерживают высоту extra-thin и синхронизируют общий model между группами.",
+        "avatar-image-preview-cleanup":
+          "NmorphAvatar больше не рендерит скрытый preview trigger, а NmorphImagePreview убирает shadow у preview frame.",
+        "nuxt-i18n-merge":
+          "Nuxt module теперь автоматически мержит переводы Nmorph в существующий i18n instance.",
+        "avatar-preview-resolve":
+          "NmorphAvatar теперь сам подключает NmorphImagePreview, поэтому preview аватара работает при direct component imports.",
+        "backtop-contrast-icon":
+          "NmorphBacktop теперь использует contrast text color для стрелки в common design.",
         "component-css-splitting":
           "Component chunks теперь импортируют собственный CSS, поэтому direct component imports больше не требуют подключать полный stylesheet библиотеки.",
         "plugin-entry-styles-option":
@@ -907,6 +911,7 @@ export default {
         "elements-quantity-on-page":
           "Количество элементов, отображаемых на каждой странице.",
         disabled: "Булево значение, отключающее компонент пагинации.",
+        height: "Высота элементов управления пагинацией.",
         "hide-on-single-page":
           "Скрывает компонент пагинации, если есть только одна страница.",
         "max-visible-pages":
@@ -1708,6 +1713,9 @@ export default {
       events: {
         "update:model-value":
           "Событие всплывает при изменении выбранного значения",
+      },
+      translates: {
+        noElementPlaceholder: "Выберите значение",
       },
     },
     "select-option": {
