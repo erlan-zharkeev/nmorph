@@ -125,6 +125,10 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "component-css-splitting":
+          "组件 chunk 现在会导入自己的 CSS，直接导入单个组件时不再需要引入完整的库样式表。",
+        "plugin-entry-styles-option":
+          "新增 nmorph-ui-kit/plugin entry，可在不导入组件的情况下安装 plugin；Nuxt 可通过 `nmorph.styles: \"all\"` 选择完整样式表。",
         "remove-styled-components":
           "已从 Nmorph UI 组件中移除 styled-components，并用稳定的 Vue 标记和 SCSS 替代运行时生成的 styled 类。",
         "avatar-text-input-visual-fixes":

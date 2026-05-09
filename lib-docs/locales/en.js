@@ -136,6 +136,10 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "component-css-splitting":
+          "Component chunks now import their own CSS, so direct component imports no longer require pulling the full library stylesheet.",
+        "plugin-entry-styles-option":
+          "Added the nmorph-ui-kit/plugin entry for plugin setup without component imports, and Nuxt can opt into the full stylesheet with `nmorph.styles: \"all\"`.",
         "remove-styled-components":
           "Removed styled-components from Nmorph UI components and replaced runtime-generated styled classes with stable Vue markup and SCSS.",
         "avatar-text-input-visual-fixes":
