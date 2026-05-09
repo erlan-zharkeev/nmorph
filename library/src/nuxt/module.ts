@@ -1,7 +1,9 @@
 import { addPluginTemplate, defineNuxtModule } from '@nuxt/kit';
 import type { INmorphOptions } from '../types/index.ts';
 
-export type NmorphNuxtModuleOptions = INmorphOptions;
+export type NmorphNuxtModuleOptions = INmorphOptions & {
+  styles?: 'all' | false;
+};
 
 export default defineNuxtModule<NmorphNuxtModuleOptions>({
   meta: {
@@ -11,15 +13,24 @@ export default defineNuxtModule<NmorphNuxtModuleOptions>({
       nuxt: '>=3.0.0',
     },
   },
-  defaults: {},
-  setup(options) {
+  defaults: {
+    styles: false,
+  },
+  setup(options, nuxt) {
+    const { styles, ...pluginOptions } = options;
+    nuxt.options.build.transpile.push('@nmorph/nmorph-ui-kit');
+
+    if (styles === 'all') {
+      nuxt.options.css.push('@nmorph/nmorph-ui-kit/dist/style.css');
+    }
+
     addPluginTemplate({
       filename: 'nmorph.client.mjs',
       getContents: () => `
 import { defineNuxtPlugin } from '#app'
-import { NmorphLibrary, en, ru, zh } from '@nmorph/nmorph-ui-kit'
+import { NmorphLibrary, en, ru, zh } from '@nmorph/nmorph-ui-kit/plugin'
 
-const options = ${JSON.stringify(options)}
+const options = ${JSON.stringify(pluginOptions)}
 const libraryMessages = { en, ru, zh }
 
 const mergeMessages = (base, overrides = {}) => {

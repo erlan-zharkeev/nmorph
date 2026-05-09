@@ -2,7 +2,7 @@
   "name": "@nmorph/nmorph-ui-kit",
   "type": "module",
   "private": false,
-  "version": "2.2.9",
+  "version": "2.2.10",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
   "module": "./dist/index.es.js",
   "style": "./dist/style.css",
   "sideEffects": [
-    "*.css"
+    "**/*.css"
   ],
   "files": [
     "dist",
@@ -35,10 +35,18 @@
       },
       "require": "./dist/index.umd.js"
     },
+    "./plugin": {
+      "types": "./dist/src/plugin.d.ts",
+      "import": "./dist/plugin.js"
+    },
     "./nuxt": {
       "types": "./dist/src/nuxt/module.d.ts",
       "import": "./dist/nuxt.mjs",
       "default": "./dist/nuxt.mjs"
+    },
+    "./components/*": {
+      "types": "./dist/src/components/*.d.ts",
+      "import": "./dist/components/*.js"
     },
     "./dist/index.d.ts": "./dist/index.d.ts",
     "./dist/style.css": "./dist/style.css",
@@ -51,7 +59,7 @@
     "dev": "HOME=/tmp/nmorph-storybook-home STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p 43183",
     "storybook": "HOME=/tmp/nmorph-storybook-home STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p 43183",
     "build:storybook": "HOME=/tmp/nmorph-storybook-home STORYBOOK_DISABLE_TELEMETRY=1 storybook build",
-    "build": "npm run build:types && vite build && vite build --config vite.nuxt.config.ts",
+    "build": "npm run build:types && vite build && vite build --config vite.umd.config.ts && vite build --config vite.nuxt.config.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "watch": "vite build --watch",

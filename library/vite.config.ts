@@ -1,9 +1,36 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import type { Plugin } from 'vite';
+import type { OutputAsset, OutputChunk } from 'rollup';
+import { dirname, relative, resolve } from 'path';
 import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
 import svgLoader from 'vite-svg-loader';
 import { fileURLToPath, URL } from 'url';
+
+const toCssImportPath = (chunkFileName: string, cssFileName: string) => {
+  const importPath = relative(dirname(chunkFileName), cssFileName).replace(/\\/g, '/');
+  return importPath.startsWith('.') ? importPath : `./${importPath}`;
+};
+
+const getChunkCssFileName = (chunkFileName: string, bundle: Record<string, OutputAsset | OutputChunk>) => {
+  const cssFileName = chunkFileName.replace(/\.vue\d*\.js$/, '.css');
+  return bundle[cssFileName]?.type === 'asset' ? cssFileName : undefined;
+};
+
+const injectChunkCss = (): Plugin => ({
+  name: 'nmorph-inject-chunk-css',
+  enforce: 'post',
+  generateBundle(_, bundle) {
+    Object.values(bundle).forEach((chunk) => {
+      if (chunk.type !== 'chunk') return;
+      const chunkCssFileName = getChunkCssFileName(chunk.fileName, bundle);
+
+      if (!chunkCssFileName) return;
+
+      chunk.code = `import '${toCssImportPath(chunk.fileName, chunkCssFileName)}';\n${chunk.code}`;
+    });
+  },
+});
 
 // @ts-expect-error
 export default defineConfig(() => {
@@ -21,17 +48,29 @@ export default defineConfig(() => {
         exclude: ['**/*.spec.ts', '**/*.story.vue', 'node_modules'],
       }),
       svgLoader(),
+      injectChunkCss(),
     ],
     build: {
       target: 'esnext',
+      cssCodeSplit: true,
       lib: {
-        entry: resolve(__dirname, 'src', 'main.ts'),
+        entry: {
+          index: resolve(__dirname, 'src', 'main.ts'),
+          plugin: resolve(__dirname, 'src', 'plugin.ts'),
+        },
         name: 'library',
-        formats: ['es', 'umd'],
-        fileName: (format: string) => `index.${format}.js`,
+        formats: ['es'],
+        fileName: (format: string, entryName: string) =>
+          entryName === 'index' ? `index.${format}.js` : `${entryName}.js`,
       },
       rollupOptions: {
         external: ['vue', 'vue-i18n'],
+        output: {
+          preserveModules: true,
+          preserveModulesRoot: 'src',
+          entryFileNames: (chunkInfo) =>
+            chunkInfo.name === 'index' || chunkInfo.name === 'main' ? 'index.es.js' : '[name].js',
+        },
       },
       assetsInlineLimit: 0,
     },

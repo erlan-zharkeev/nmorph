@@ -8,7 +8,7 @@ pnpm install @nmorph/nmorph-ui-kit --save
 const basicUsageJS = `
 import { createApp } from "vue";
 import App from "./App.vue";
-import NmorphLibrary from "@nmorph/nmorph-ui-kit";
+import { NmorphLibrary } from "@nmorph/nmorph-ui-kit/plugin";
 
 createApp(App).use(NmorphLibrary).mount("#app");
 `;
@@ -16,7 +16,7 @@ createApp(App).use(NmorphLibrary).mount("#app");
 const alternativePlugin = `
 import { createApp } from "vue";
 import App from "./App.vue";
-import NmorphLibrary from "@nmorph/nmorph-ui-kit";
+import { NmorphLibrary } from "@nmorph/nmorph-ui-kit/plugin";
 
 const app = createApp(App);
 app.use(NmorphLibrary);
@@ -36,7 +36,7 @@ export default defineNuxtConfig({
 
 const usage = `
 <script setup lang="ts">
-import { NmorphButton } from "@nmorph/nmorph-ui-kit"
+import NmorphButton from "@nmorph/nmorph-ui-kit/components/basic/nmorph-button/NmorphButton.vue";
 <\/script>
 
 <template>

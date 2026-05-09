@@ -7,7 +7,7 @@ const { t } = useI18n();
 const config = `
 import { createApp } from "vue";
 import App from "./App.vue";
-import NmorphLibrary from "@nmorph/nmorph-ui-kit";
+import { NmorphLibrary } from "@nmorph/nmorph-ui-kit/plugin";
 const app = createApp(App);
 
 const config = { theme: {...}, i18n: {...}, zIndex: { base: 1000 } };
@@ -62,8 +62,7 @@ const i18n = `
 import { createApp } from "vue";
 import App from "./App.vue";
 import { createI18n } from "vue-i18n";
-import { NmorphLibrary, ru, zh } from "@nmorph/nmorph-ui-kit";
-import 'source/style.css';
+import { NmorphLibrary, ru, zh } from "@nmorph/nmorph-ui-kit/plugin";
 
 const i18nApp = createI18n({
   locale: "en",
