@@ -11,6 +11,46 @@ const knownBugItems: string[] = [];
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v2.2.9</h3>
+            <ul>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.remove-styled-components",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.avatar-text-input-visual-fixes",
+                  )
+                }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
+            <h3>v2.2.8</h3>
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.nuxt-module") }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.image-preview-portal")
+                }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.text-input-prepend-icon")
+                }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.docs-actions-align") }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.2.7</h3>
             <ul>
               <li>
@@ -431,9 +471,9 @@ const knownBugItems: string[] = [];
         <section id="roadmap">
           <h2>{{ $t("changelog-page.roadmap.title") }}</h2>
           <ul>
-            <li>{{ $t("changelog-page.roadmap.items.nuxt-support") }}</li>
-            <li>{{ $t("changelog-page.roadmap.items.test-coverage") }}</li>
-            <li>{{ $t("changelog-page.roadmap.items.theming-v2") }}</li>
+            <li>
+              {{ $t("changelog-page.roadmap.items.color-picker-formats") }}
+            </li>
             <li>{{ $t("changelog-page.roadmap.items.performance") }}</li>
           </ul>
         </section>
@@ -454,7 +494,7 @@ const knownBugItems: string[] = [];
 
 .docs-changelog-page {
   section {
-    margin: 24px 0;
+    margin-bottom: 12px;
   }
 
   h2 {

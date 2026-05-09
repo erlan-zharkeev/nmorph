@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { disabled, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { INmorphCommonInputProps, NmorphComponentHeight } from '@/types';
 import { computed, nextTick, ref, watch } from 'vue';
-import { styled, css } from '@vue-styled-components/core';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 import NmorphTextInput from '../nmorph-text-input/NmorphTextInput.vue';
 
@@ -273,8 +272,51 @@ watch(
   },
   { immediate: true }
 );
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <input :name="name" :value="otpValue.join('')" type="hidden" :disabled="props.disabled" />
+    <div class="nmorph-otp-input__content">
+      <NmorphTextInput
+        v-for="(_, index) in otpValue"
+        :id="fieldIds[index]"
+        :key="fieldIds[index]"
+        :ref="(element) => setInputRef(element, index)"
+        class="nmorph-otp-input__field"
+        :model-value="otpValue[index]"
+        :height="props.height"
+        :disabled="props.disabled"
+        :autocomplete="resolvedAutocomplete"
+        :tabindex="getFieldTabindex(index)"
+        indentation="0px"
+        :input-attrs="{
+          name: undefined,
+          maxlength: 1,
+          inputmode: inputMode,
+          pattern: inputPattern,
+          autocapitalize: props.autocapitalize,
+          spellcheck: false,
+          autofocus: props.autofocus && index === 0,
+          'aria-label': `OTP ${index + 1}`,
+        }"
+        @update:model-value="inputHandler($event, index)"
+        @keydown="keydownHandler($event)"
+        @keydown.delete.prevent="deleteKeyHandler($event, index)"
+        @keydown.left.prevent="arrowLeftHandler(index)"
+        @keydown.right.prevent="arrowRightHandler(index)"
+        @keydown.home.prevent="homeHandler"
+        @keydown.end.prevent="endHandler"
+        @paste.prevent="pasteHandler($event, index)"
+        @focus="focusHandler(index)"
+        @blur="blurHandler"
+      />
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-otp-input {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
@@ -312,52 +354,8 @@ const commonCSS = css`
   }
 
   &.nmorph-otp-input--disabled {
-    ${disabled()}
+    cursor: not-allowed;
+    opacity: 0.6;
   }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`;
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <input :name="name" :value="otpValue.join('')" type="hidden" :disabled="props.disabled" />
-    <div class="nmorph-otp-input__content">
-      <NmorphTextInput
-        v-for="(_, index) in otpValue"
-        :id="fieldIds[index]"
-        :key="fieldIds[index]"
-        :ref="(element) => setInputRef(element, index)"
-        class="nmorph-otp-input__field"
-        :model-value="otpValue[index]"
-        :height="props.height"
-        :disabled="props.disabled"
-        :autocomplete="resolvedAutocomplete"
-        :tabindex="getFieldTabindex(index)"
-        indentation="0px"
-        :input-attrs="{
-          name: undefined,
-          maxlength: 1,
-          inputmode: inputMode,
-          pattern: inputPattern,
-          autocapitalize: props.autocapitalize,
-          spellcheck: false,
-          autofocus: props.autofocus && index === 0,
-          'aria-label': `OTP ${index + 1}`,
-        }"
-        @update:model-value="inputHandler($event, index)"
-        @keydown="keydownHandler($event)"
-        @keydown.delete.prevent="deleteKeyHandler($event, index)"
-        @keydown.left.prevent="arrowLeftHandler(index)"
-        @keydown.right.prevent="arrowRightHandler(index)"
-        @keydown.home.prevent="homeHandler"
-        @keydown.end.prevent="endHandler"
-        @paste.prevent="pasteHandler($event, index)"
-        @focus="focusHandler(index)"
-        @blur="blurHandler"
-      />
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

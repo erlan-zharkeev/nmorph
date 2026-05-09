@@ -2,7 +2,6 @@
 import { NmorphComponentHeight } from '@/types';
 import { useModifiers } from '@/utils';
 import { Ref, computed } from 'vue';
-import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   height?: keyof typeof NmorphComponentHeight;
@@ -27,8 +26,18 @@ const modifiers = computed(() =>
     'nmorph-error-box': [`${props.staticHeight && 'static-height'}`, `${currentError.value.length === 0 && 'empty'}`],
   })
 );
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <transition-group name="list" tag="div">
+      <p v-for="error in currentError" :key="error" class="nmorph-error-box__error">{{ error }}</p>
+    </transition-group>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-error-box {
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -45,17 +54,5 @@ const commonCSS = css`
       display: none;
     }
   }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <transition-group name="list" tag="div">
-      <p v-for="error in currentError" :key="error" class="nmorph-error-box__error">{{ error }}</p>
-    </transition-group>
-  </StyledComponent>
-</template>
+}
+</style>

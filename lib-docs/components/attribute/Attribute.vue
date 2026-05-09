@@ -73,7 +73,7 @@ const infoData = `overview.${props.infoName}.info`;
               <NmorphIconCopy />
             </template>
           </NmorphButton>
-          <NmorphCheckbox v-model="codeOpen" design="button" class="docs-attribute__code-btn">
+          <NmorphCheckbox v-model="codeOpen" design="button" height="basic" class="docs-attribute__code-btn">
             <template #label>
               <NmorphIcon>
                 <NmorphIconCode />
@@ -136,10 +136,7 @@ const infoData = `overview.${props.infoName}.info`;
 .docs-component__overview-component-actions {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   padding: 12px 8px;
-}
-
-.nmorph-checkbox--button.docs-attribute__code-btn {
-  --size: 30px;
 }
 </style>

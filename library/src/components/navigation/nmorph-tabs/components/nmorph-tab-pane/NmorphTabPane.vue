@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, inject, onMounted, nextTick } from 'vue';
+import { computed, ref, inject, onMounted } from 'vue';
 import { useModifiers } from '@/utils';
 import { INmorphTabPaneProps, INmorphTabsDataProvider, getTabContentId, getTabLabelId } from '@/components';
 

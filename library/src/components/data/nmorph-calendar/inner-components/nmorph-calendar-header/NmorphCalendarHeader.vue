@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { NmorphButton, getMonthName, NmorphIcon, NmorphIconArrowLeft, NmorphIconArrowRight } from '@/components';
-import { title1, useModifiers } from '@/utils';
-import { styled, css } from '@vue-styled-components/core'
+import { useModifiers } from '@/utils';
 
 interface INmorphProps {
   year: number;
@@ -26,8 +25,44 @@ const modifiers = computed(() =>
     'nmorph-calendar-header': [],
   })
 );
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <slot>
+      <div class="nmorph-calendar-header__text">{{ props.year }} {{ getMonthName(props.month) }}</div>
+      <div class="nmorph-calendar-header__actions">
+        <NmorphButton
+          v-if="showPreviousMonthButton"
+          class="nmorph-calendar-header__action"
+          @click="emit('click-previous-month')"
+        >
+          <NmorphIcon>
+            <NmorphIconArrowLeft />
+          </NmorphIcon>
+        </NmorphButton>
+        <NmorphButton
+          v-if="showTodayButton"
+          class="nmorph-calendar-header__action"
+          text="Today"
+          @click="emit('click-today')"
+        />
+        <NmorphButton
+          v-if="showNextMonthButton"
+          class="nmorph-calendar-header__action"
+          @click="emit('click-next-month')"
+        >
+          <NmorphIcon>
+            <NmorphIconArrowRight />
+          </NmorphIcon>
+        </NmorphButton>
+      </div>
+    </slot>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-calendar-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -42,37 +77,11 @@ const commonCSS = css`
   }
 
   .nmorph-calendar-header__text {
-    ${title1()}
+    font-weight: 800;
+    font-size: var(--font-size-extra-large);
+    line-height: var(--line-height-loose);
     margin-right: 8px;
     width: 160px;
   }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <slot>
-      <div class="nmorph-calendar-header__text">{{ props.year }} {{ getMonthName(props.month) }}</div>
-      <div class="nmorph-calendar-header__actions">
-        <NmorphButton v-if="showPreviousMonthButton" class="nmorph-calendar-header__action"
-          @click="emit('click-previous-month')">
-          <NmorphIcon>
-            <NmorphIconArrowLeft />
-          </NmorphIcon>
-        </NmorphButton>
-        <NmorphButton v-if="showTodayButton" class="nmorph-calendar-header__action" text="Today"
-          @click="emit('click-today')" />
-        <NmorphButton v-if="showNextMonthButton" class="nmorph-calendar-header__action"
-          @click="emit('click-next-month')">
-          <NmorphIcon>
-            <NmorphIconArrowRight />
-          </NmorphIcon>
-        </NmorphButton>
-      </div>
-    </slot>
-  </StyledComponent>
-</template>
+}
+</style>

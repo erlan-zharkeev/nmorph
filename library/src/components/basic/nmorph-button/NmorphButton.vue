@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { body3, disabled, nmorphOutset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, ref, useSlots } from 'vue';
 import {
   NmorphIcon,
@@ -10,7 +10,6 @@ import {
   NmorphButtonShape,
   NmorphIconLoading,
 } from '@/components';
-import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps extends INmorphCommonInputProps {
   styleType?: keyof typeof NmorphButtonStyle;
@@ -72,8 +71,38 @@ const transparentColorStyles = computed(() =>
 );
 
 defineExpose({ buttonDOMElement });
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers" :style="transparentColorStyles">
+    <button
+      ref="buttonDOMElement"
+      class="nmorph-button__content"
+      :disabled="props.disabled"
+      :loading="props.loading"
+      :type="props.type"
+      :tabindex="props.tabindex"
+    >
+      <NmorphIcon v-if="props.loading" :size="loadingButtonSize">
+        <NmorphIconLoading />
+      </NmorphIcon>
+      <NmorphIcon v-else-if="hasIconOnlySlot">
+        <slot name="icon-only" />
+      </NmorphIcon>
+      <template v-else>
+        <NmorphIcon v-if="hasIconSlot">
+          <slot name="icon" />
+        </NmorphIcon>
+        <slot />
+        <span v-if="props.text !== undefined">{{ props.text }}</span>
+        <slot name="append" />
+      </template>
+    </button>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-button {
   display: inline-block;
   width: auto;
 
@@ -95,7 +124,12 @@ const commonCSS = css`
     align-items: center;
     justify-content: center;
     gap: var(--indentation-02);
-    ${nmorphOutset()}
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
 
     span {
       --color: var(--nmorph-white-color);
@@ -217,43 +251,14 @@ const commonCSS = css`
   }
 
   &.nmorph-button.nmorph--thin-component {
-    ${body3()}
+    font-weight: 400;
+    font-size: var(--font-size-extra-small);
+    line-height: var(--line-height-regular);
   }
 
   &.nmorph-button--disabled {
-    ${disabled()}
+    cursor: not-allowed;
+    opacity: 0.6;
   }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`;
-</script>
-
-<template>
-  <StyledComponent :class="modifiers" :style="transparentColorStyles">
-    <button
-      ref="buttonDOMElement"
-      class="nmorph-button__content"
-      :disabled="props.disabled"
-      :loading="props.loading"
-      :type="props.type"
-      :tabindex="props.tabindex"
-    >
-      <NmorphIcon v-if="props.loading" :size="loadingButtonSize">
-        <NmorphIconLoading />
-      </NmorphIcon>
-      <NmorphIcon v-else-if="hasIconOnlySlot">
-        <slot name="icon-only" />
-      </NmorphIcon>
-      <template v-else>
-        <NmorphIcon v-if="hasIconSlot">
-          <slot name="icon" />
-        </NmorphIcon>
-        <slot />
-        <span v-if="props.text !== undefined">{{ props.text }}</span>
-        <slot name="append" />
-      </template>
-    </button>
-  </StyledComponent>
-</template>
+}
+</style>

@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { body3, nmorphInset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphIcon, NmorphIconError } from '@/components';
 import { NmorphComponentHeight } from '@/types';
 import { INmorphTagItemProps } from './../../types';
-import { styled, css } from '@vue-styled-components/core'
 
-interface INmorphProps extends INmorphTagItemProps { }
+interface INmorphProps extends INmorphTagItemProps {}
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'basic',
@@ -30,8 +29,21 @@ const emit = defineEmits<INmorphEmit>();
 const closeHandler = () => {
   emit('close', props.value);
 };
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <div class="nmorph-tag-item__content">
+      <span>{{ text }}</span>
+      <NmorphIcon v-if="props.removable" class="nmorph-tag-item__close-icon" @click.stop="closeHandler">
+        <NmorphIconError />
+      </NmorphIcon>
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-tag-item {
   display: inline-flex;
   margin-right: var(--indentation-02);
   padding: var(--indentation-00) var(--indentation-03);
@@ -51,33 +63,25 @@ const commonCSS = css`
 
   &.nmorph-tag-item--nmorph-design {
     border: none;
-    ${nmorphInset()}
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
 
   &.nmorph-tag-item--thin {
     --height: var(--thin-component);
     span {
-      ${body3()}
+      font-weight: 400;
+      font-size: var(--font-size-extra-small);
+      line-height: var(--line-height-regular);
     }
   }
 
   &.nmorph-tag-item--thick {
     --height: var(--thick-component);
   }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <div class="nmorph-tag-item__content">
-      <span>{{ text }}</span>
-      <NmorphIcon v-if="props.removable" class="nmorph-tag-item__close-icon" @click.stop="closeHandler">
-        <NmorphIconError />
-      </NmorphIcon>
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

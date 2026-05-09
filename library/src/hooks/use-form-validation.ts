@@ -34,7 +34,7 @@ export const useFormValidation = (
       silentFields[fieldName] = useFieldValidation({ inputValue: fieldData.value, rules: fieldData.rules });
       silentFields[fieldName].validate();
     });
-    isFormValid.value = Object.entries(silentFields).every(([_, fieldValue]) => fieldValue.valid);
+    isFormValid.value = Object.values(silentFields).every((fieldValue) => fieldValue.valid);
   };
 
   const validateAll = () => {

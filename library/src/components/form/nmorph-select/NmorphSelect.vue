@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { disabled, ellipsis, focusOutline, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick } from 'vue';
 import {
   NmorphTagItem,
@@ -15,7 +15,6 @@ import {
   NmorphIconChevronDown,
 } from '@/components';
 import { useI18n } from 'vue-i18n';
-import { styled, css } from '@vue-styled-components/core'
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
 const { t } = useI18n();
@@ -224,8 +223,80 @@ const enterHandler = () => {
   if (!open.value) return;
   changeHandler(currentFocusedEl.value);
 };
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <div class="nmorph-select__content">
+      <select
+        :id="id"
+        :name="name"
+        :autocomplete="autocomplete"
+        :tabindex="tabindex"
+        :disabled="disabledInput"
+        @focus="focusHandler"
+        @blur="blurHandler"
+        @keydown.space="spaceHandler"
+        @keydown.arrow-down="arrowDownHandler"
+        @keydown.arrow-up="arrowUpHandler"
+        @keydown.enter="enterHandler"
+      >
+        <option v-for="option in domOptions" :key="option" :value="option" />
+      </select>
+      <div ref="nmorphSelectDOMRef" class="nmorph-select__selected-values-line" @click.stop="clickHandler">
+        <div v-if="typeof initialValue === 'string'" class="nmorph-select__selected-value">
+          {{ selectedValueTitle }}
+        </div>
+        <div v-else-if="initialValue.length === 0" class="nmorph-select__selected-value">
+          {{ computedNoElementPlaceholder }}
+        </div>
+        <div v-else class="nmorph-select__selected-value">
+          <NmorphTagItem
+            v-for="tag in tags"
+            :key="tag.value"
+            v-bind="tag"
+            transparent
+            :removable="tags.length > 1 || !props.valueRequired"
+            height="thin"
+            @close="changeHandler"
+          />
+        </div>
+        <NmorphIcon class="nmorph-select__chevron">
+          <NmorphIconLoader v-if="props.loading" />
+          <NmorphIconChevronDown v-else />
+        </NmorphIcon>
+      </div>
+    </div>
+    <NmorphDropdown
+      v-if="nmorphSelectDOMRef && !props.disabled"
+      :open="open && !props.loading"
+      :relative-element="nmorphSelectDOMRef"
+      :fill-width="!autoOptionsWidth"
+      :width="autoOptionsWidth ? 'max-content' : undefined"
+      :min-width="optionsMinWidth"
+      max-width="calc(100vw - 16px)"
+      :z-index="props.zIndex"
+      @on-outside-click="closeHandler"
+    >
+      <div ref="optionsDOMRef" class="nmorph-select__options">
+        <NmorphIcon v-if="props.loading" class="nmorph-select__chevron" size="medium">
+          <NmorphIconChevronDown />
+        </NmorphIcon>
+        <NmorphSelectOption
+          v-else
+          v-for="option in options"
+          :key="option.value"
+          v-bind="option"
+          :height="props.height"
+        />
+        <slot />
+      </div>
+    </NmorphDropdown>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-select {
   --base-width: 200px;
 
   width: var(--base-width);
@@ -235,7 +306,12 @@ const commonCSS = css`
   .nmorph-select__content {
     position: relative;
     height: 100%;
-    ${nmorphOutset()}
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
 
   .nmorph-select__selected-values-line {
@@ -248,7 +324,9 @@ const commonCSS = css`
   }
 
   .nmorph-select__selected-value {
-    ${ellipsis()}
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   select,
@@ -270,7 +348,8 @@ const commonCSS = css`
   }
 
   &.nmorph-select--disabled {
-    ${disabled()}
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 
   &.nmorph-select--fill {
@@ -290,67 +369,30 @@ const commonCSS = css`
     }
 
     .nmorph-select__content {
-      ${nmorphInset()}
+      background: var(--nmorph-main-color);
+      box-shadow:
+        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color);
     }
   }
 
   &.nmorph-select--selected-line-outset {
     .nmorph-select__content {
-      ${nmorphOutset()}
+      background: var(--nmorph-main-color);
+      box-shadow:
+        var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color);
     }
   }
 
   &.nmorph-select--focus {
-    ${focusOutline()}
+    outline: 2px solid var(--nmorph-accent-color);
 
     .nmorph-select__content {
       box-shadow: none;
     }
   }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <div class="nmorph-select__content">
-      <select :id="id" :name="name" :autocomplete="autocomplete" :tabindex="tabindex" :disabled="disabledInput" @focus="focusHandler" @blur="blurHandler" @keydown.space="spaceHandler"
-        @keydown.arrow-down="arrowDownHandler" @keydown.arrow-up="arrowUpHandler" @keydown.enter="enterHandler">
-        <option v-for="option in domOptions" :key="option" :value="option" />
-      </select>
-      <div ref="nmorphSelectDOMRef" class="nmorph-select__selected-values-line" @click.stop="clickHandler">
-        <div v-if="typeof initialValue === 'string'" class="nmorph-select__selected-value">
-          {{ selectedValueTitle }}
-        </div>
-        <div v-else-if="initialValue.length === 0" class="nmorph-select__selected-value">
-          {{ computedNoElementPlaceholder }}
-        </div>
-        <div v-else class="nmorph-select__selected-value">
-          <NmorphTagItem v-for="tag in tags" :key="tag.value" v-bind="tag" transparent
-            :removable="tags.length > 1 || !props.valueRequired" height="thin" @close="changeHandler" />
-        </div>
-        <NmorphIcon class="nmorph-select__chevron">
-          <NmorphIconLoader v-if="props.loading" />
-          <NmorphIconChevronDown v-else />
-        </NmorphIcon>
-      </div>
-    </div>
-    <NmorphDropdown v-if="nmorphSelectDOMRef && !props.disabled" :open="open && !props.loading"
-      :relative-element="nmorphSelectDOMRef" :fill-width="!autoOptionsWidth"
-      :width="autoOptionsWidth ? 'max-content' : undefined" :min-width="optionsMinWidth"
-      max-width="calc(100vw - 16px)" :z-index="props.zIndex"
-      @on-outside-click="closeHandler">
-      <div ref="optionsDOMRef" class="nmorph-select__options">
-        <NmorphIcon v-if="props.loading" class="nmorph-select__chevron" size="medium">
-          <NmorphIconChevronDown />
-        </NmorphIcon>
-        <NmorphSelectOption v-else v-for="option in options" :key="option.value" v-bind="option"
-          :height="props.height" />
-        <slot />
-      </div>
-    </NmorphDropdown>
-  </StyledComponent>
-</template>
+}
+</style>

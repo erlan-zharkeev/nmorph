@@ -9,7 +9,6 @@ import {
 } from '@/types';
 import { useModifiers } from '@/utils';
 import { ref, computed, provide, watch } from 'vue';
-import { styled, css } from '@vue-styled-components/core';
 import { NmorphRadio } from '@/components';
 
 type NmorphListRadioOptionElementType = Omit<INmorphRadioOption, 'checked'>;
@@ -56,8 +55,30 @@ const height = computed(() => props.height);
 provide<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value', initialValue);
 provide<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-button-value-handler', changeHandler);
 provide('radio-group-height', height);
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <div class="nmorph-radio-group__wrapper">
+      <div class="nmorph-radio-group__content">
+        <NmorphRadio
+          v-for="option in options"
+          :key="option.value"
+          :label="option.label"
+          :value="option.value"
+          :disabled="option.disabled || props.disabled"
+          :style-type="props.styleType"
+          :tabindex="option.tabindex"
+          :height="option.height || props.height"
+        />
+        <slot />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-radio-group {
   display: inline-block;
 
   .nmorph-radio-group__wrapper {
@@ -85,23 +106,6 @@ const commonCSS = css`
       margin-right: var(--indentation-00);
       margin-bottom: var(--indentation-03);
     }
+  }
 }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <div class="nmorph-radio-group__wrapper">
-      <div class="nmorph-radio-group__content">
-        <NmorphRadio v-for="option in options" :key="option.value" :label="option.label" :value="option.value"
-          :disabled="option.disabled || props.disabled" :style-type="props.styleType" :tabindex="option.tabindex"
-          :height="option.height || props.height" />
-        <slot />
-      </div>
-    </div>
-  </StyledComponent>
-</template>
+</style>

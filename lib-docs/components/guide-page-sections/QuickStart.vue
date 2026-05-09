@@ -23,6 +23,17 @@ app.use(NmorphLibrary);
 app.mount("#app");
 `
 
+const nuxtUsage = `
+export default defineNuxtConfig({
+  modules: ["@nmorph/nmorph-ui-kit/nuxt"],
+  nmorph: {
+    theme: {
+      defaultTheme: "dark",
+    },
+  },
+});
+`
+
 const usage = `
 <script setup lang="ts">
 import { NmorphButton } from "@nmorph/nmorph-ui-kit"
@@ -55,6 +66,12 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit"
     <div class="section-element nmorph--shadow-inset">
       <h3 class="section-title">{{ $t("guide-page.quick-start.alternative-plugin") }}</h3>
       <code-example lang="javascript">{{ alternativePlugin }}</code-example>
+    </div>
+    <div class="section-element nmorph--shadow-inset">
+      <h3 class="section-subtitle">
+        {{ $t("guide-page.quick-start.nuxt") }}
+      </h3>
+      <code-example lang="javascript">{{ nuxtUsage }}</code-example>
     </div>
     <div class="section-element nmorph--shadow-inset">
       <h3 class="section-subtitle">

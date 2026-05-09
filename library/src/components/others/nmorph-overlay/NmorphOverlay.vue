@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { computed } from 'vue';
-import { styled, css } from '@vue-styled-components/core'
 import { useZIndex } from '@/hooks';
 
 interface INmorphProps {
@@ -14,8 +13,10 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   transparent: false,
 });
 
-const zIndex = useZIndex(computed(() => props.show), () => props.zIndex);
-const styledProps = computed(() => ({ zIndex: zIndex.value }));
+const zIndex = useZIndex(
+  computed(() => props.show),
+  () => props.zIndex
+);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -32,8 +33,18 @@ interface INmorphEmit {
 }
 
 const emit = defineEmits<INmorphEmit>();
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers" :style="{ '--nmorph-overlay-z-index': zIndex }" @click.stop="clickHandler">
+    <div class="nmorph-overlay__slot" @click.stop>
+      <slot />
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-overlay {
   opacity: 0;
   pointer-events: none;
   position: fixed;
@@ -53,18 +64,7 @@ const commonCSS = css`
     opacity: 1;
     pointer-events: auto;
   }
-`
 
-const StyledComponent = styled.div`
-  ${commonCSS}
-  z-index: ${props => props.zIndex};
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers" :props="styledProps" @click.stop="clickHandler">
-    <div class="nmorph-overlay__slot" @click.stop>
-      <slot />
-    </div>
-  </StyledComponent>
-</template>
+  z-index: var(--nmorph-overlay-z-index);
+}
+</style>

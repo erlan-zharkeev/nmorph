@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { nmorphInset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import {
   NmorphButton,
   NmorphIcon,
@@ -11,7 +11,6 @@ import {
   NmorphIconChevronDown,
 } from '@/components';
 import { INmorphRadioOption, NmorphDatePickerControlsType } from '@/types';
-import { styled, css } from '@vue-styled-components/core'
 
 interface INmorphProps {
   currentDate: Date;
@@ -111,8 +110,34 @@ const value = computed(() => {
 const goToYearsHandler = () => {
   if (props.type === 'month') emit('back-to-years');
 };
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <div class="nmorph-year-month-picker__header">
+      <NmorphButton class="nmorph-year-month-picker__action-btn" @click="buttonClickHandler('decrease')" :tabindex="-1">
+        <NmorphIcon class="nmorph-year-month-picker__chevron-left">
+          <NmorphIconChevronDown />
+        </NmorphIcon>
+      </NmorphButton>
+      <div class="nmorph-year-month-picker__value">
+        <NmorphButton :text="value" style-type="transparent" @click="goToYearsHandler" :tabindex="-1" />
+      </div>
+      <NmorphButton class="nmorph-year-month-picker__action-btn" @click="buttonClickHandler('increase')" :tabindex="-1">
+        <NmorphIcon class="nmorph-year-month-picker__chevron-right">
+          <NmorphIconChevronDown />
+        </NmorphIcon>
+      </NmorphButton>
+    </div>
+    <NmorphDivider />
+    <div class="nmorph-year-month-picker__values">
+      <NmorphRadioGroup :model-value="selectedValue" :options="values" @update:model-value="updateModelValue" />
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-year-month-picker {
   .nmorph-year-month-picker__header {
     display: flex;
     justify-content: space-between;
@@ -120,7 +145,11 @@ const commonCSS = css`
   }
 
   .nmorph-year-month-picker__value {
-    ${nmorphInset()}
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
 
     border-radius: var(--default-border-radius);
   }
@@ -151,33 +180,5 @@ const commonCSS = css`
   .nmorph-year-month-picker__chevron-right {
     rotate: -90deg;
   }
-`
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <div class="nmorph-year-month-picker__header">
-      <NmorphButton class="nmorph-year-month-picker__action-btn" @click="buttonClickHandler('decrease')" :tabindex="-1">
-        <NmorphIcon class="nmorph-year-month-picker__chevron-left">
-          <NmorphIconChevronDown />
-        </NmorphIcon>
-      </NmorphButton>
-      <div class="nmorph-year-month-picker__value">
-        <NmorphButton :text="value" style-type="transparent" @click="goToYearsHandler" :tabindex="-1" />
-      </div>
-      <NmorphButton class="nmorph-year-month-picker__action-btn" @click="buttonClickHandler('increase')" :tabindex="-1">
-        <NmorphIcon class="nmorph-year-month-picker__chevron-right">
-          <NmorphIconChevronDown />
-        </NmorphIcon>
-      </NmorphButton>
-    </div>
-    <NmorphDivider />
-    <div class="nmorph-year-month-picker__values">
-      <NmorphRadioGroup :model-value="selectedValue" :options="values" @update:model-value="updateModelValue" />
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

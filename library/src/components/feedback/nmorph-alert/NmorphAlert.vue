@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, DefineComponent, useSlots } from 'vue';
-import { title3, useModifiers } from '@/utils';
+import { computed, type Component, useSlots } from 'vue';
+import { useModifiers } from '@/utils';
 import {
   NmorphIcon,
   NmorphAlertType,
@@ -11,9 +11,8 @@ import {
   NmorphIconCircleCloseFilled,
   NmorphIconCross,
 } from '@/components';
-import { styled, css } from '@vue-styled-components/core'
 
-interface INmorphProps extends INmorphAlertProps { }
+interface INmorphProps extends INmorphAlertProps {}
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   id: undefined,
@@ -43,7 +42,7 @@ const closeHandler = () => {
   emit('close');
 };
 
-const iconNameMap: Record<NmorphAlertType, DefineComponent<{}, {}, unknown>> = {
+const iconNameMap: Record<NmorphAlertType, Component> = {
   [NmorphAlertType.success]: NmorphIconSuccessFilled,
   [NmorphAlertType.warning]: NmorphIconWarnTriangleFilled,
   [NmorphAlertType.info]: NmorphIconInfoFilled,
@@ -51,8 +50,44 @@ const iconNameMap: Record<NmorphAlertType, DefineComponent<{}, {}, unknown>> = {
 };
 
 const slots = useSlots();
+</script>
 
-const commonCSS = css`
+<template>
+  <div
+    v-if="slots.default || props.title || props.content || props.html"
+    :class="modifiers"
+    :style="{ '--nmorph-alert-close-align': props.closeIconPosition }"
+  >
+    <div v-if="props.html" class="nmorph-alert__html-wrapper" v-html="props.html" />
+    <div v-else class="nmorph-alert__wrapper">
+      <div class="nmorph-alert__left-side">
+        <div v-if="props.showIcon" class="nmorph-alert__icon">
+          <slot name="icon">
+            <NmorphIcon size="medium">
+              <component :is="iconNameMap[props.type]" />
+            </NmorphIcon>
+          </slot>
+        </div>
+        <div class="nmorph-alert__content-wrapper">
+          <div class="nmorph-alert__content-title">
+            <slot v-if="props.title || slots.title" name="title">{{ props.title }}</slot>
+          </div>
+          <div class="nmorph-alert__content">
+            <slot>{{ props.content }}</slot>
+          </div>
+        </div>
+      </div>
+      <div v-if="props.closable" class="nmorph-alert__close" @click="closeHandler">
+        <NmorphIcon width="14px" height="14px">
+          <NmorphIconCross />
+        </NmorphIcon>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-alert {
   --background-color: var(--nmorph-overlay-color);
 
   display: inline-block;
@@ -69,7 +104,10 @@ const commonCSS = css`
   .nmorph-alert__content-title {
     font-weight: 600;
     line-height: 1;
-    ${title3()}
+
+    font-weight: 600;
+    font-size: var(--font-size-medium);
+    line-height: var(--line-height-loose);
   }
 
   .nmorph-alert__html-wrapper {
@@ -91,7 +129,6 @@ const commonCSS = css`
   }
 
   .nmorph-alert__close {
-
     margin-left: var(--indentation-03);
     cursor: pointer;
 
@@ -139,44 +176,9 @@ const commonCSS = css`
   &.nmorph-alert--fill {
     width: 100%;
   }
-`
 
-const StyledComponent = styled.div`
-  ${commonCSS}
   .nmorph-alert__close {
-    align-self: ${props => props.closeButtonPosition};
+    align-self: var(--nmorph-alert-close-align);
   }
-
-`
-</script>
-
-<template>
-  <StyledComponent v-if="slots.default || props.title || props.content || props.html" :class="modifiers"
-    :props="{ closeButtonPosition: props.closeIconPosition }">
-    <div v-if="props.html" class="nmorph-alert__html-wrapper" v-html="props.html" />
-    <div v-else class="nmorph-alert__wrapper">
-      <div class="nmorph-alert__left-side">
-        <div v-if="props.showIcon" class="nmorph-alert__icon">
-          <slot name="icon">
-            <NmorphIcon size="medium">
-              <component :is="iconNameMap[props.type]" />
-            </NmorphIcon>
-          </slot>
-        </div>
-        <div class="nmorph-alert__content-wrapper">
-          <div class="nmorph-alert__content-title">
-            <slot v-if="props.title || slots.title" name="title">{{ props.title }}</slot>
-          </div>
-          <div class="nmorph-alert__content">
-            <slot>{{ props.content }}</slot>
-          </div>
-        </div>
-      </div>
-      <div v-if="props.closable" class="nmorph-alert__close" @click="closeHandler">
-        <NmorphIcon width="14px" height="14px">
-          <NmorphIconCross />
-        </NmorphIcon>
-      </div>
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
-import { body2, disabled, focusOutline, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import { NmorphIcon, NmorphIconLoader } from '@/components';
-import { styled, css } from '@vue-styled-components/core';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
 type NmorphSwitchModelType = boolean | string | number;
@@ -67,8 +66,40 @@ watch(
     initialValue.value = newValue === props.activeValue;
   }
 );
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers">
+    <div class="nmorph-switch__content" @click="changeHandler">
+      <input
+        :id="id"
+        ref="inputDOMRef"
+        :name="name"
+        type="checkbox"
+        :value="initialValue"
+        :disabled="props.disabled"
+        :tabindex="tabindex"
+        class="nmorph-native-input"
+        @focus="focusHandler"
+        @blur="blurHandler"
+      />
+      <div class="nmorph-switch__bg-content" :class="{ 'nmorph-switch__bg-content--enable': initialValue }">
+        <slot v-if="initialValue" name="bg-on" />
+        <slot v-else name="bg-off" />
+      </div>
+      <div class="nmorph-switch-thumb">
+        <NmorphIcon v-if="props.loading" width="14px" height="14px">
+          <NmorphIconLoader />
+        </NmorphIcon>
+        <slot v-else-if="initialValue" name="thumb-on" />
+        <slot v-else name="thumb-off" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-switch {
   --height: 20px;
   --offset: 3px;
   --thumb-height: 14px;
@@ -84,8 +115,15 @@ const commonCSS = css`
     height: 100%;
     border-radius: var(--border-radius-999);
 
-    ${body2()}
-    ${nmorphInset()}
+    font-weight: 400;
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-regular);
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
 
   .nmorph-switch__bg-content {
@@ -124,11 +162,16 @@ const commonCSS = css`
     justify-content: center;
     align-items: center;
 
-    ${nmorphOutset()}
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
 
   &.nmorph-switch--disabled {
-    ${disabled()}
+    cursor: not-allowed;
+    opacity: 0.6;
 
     .nmorph-switch__input-content {
       pointer-events: none;
@@ -148,7 +191,8 @@ const commonCSS = css`
   }
 
   &.nmorph-switch--loading {
-    ${disabled()}
+    cursor: not-allowed;
+    opacity: 0.6;
 
     .nmorph-switch__input-content {
       pointer-events: none;
@@ -156,45 +200,11 @@ const commonCSS = css`
   }
 
   &.nmorph-switch--focus {
-    ${focusOutline()}
+    outline: 2px solid var(--nmorph-accent-color);
 
     .nmorph-switch__content {
       scale: 0.95;
     }
   }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`;
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <div class="nmorph-switch__content" @click="changeHandler">
-      <input
-        :id="id"
-        ref="inputDOMRef"
-        :name="name"
-        type="checkbox"
-        :value="initialValue"
-        :disabled="props.disabled"
-        :tabindex="tabindex"
-        class="nmorph-native-input"
-        @focus="focusHandler"
-        @blur="blurHandler"
-      />
-      <div class="nmorph-switch__bg-content" :class="{ 'nmorph-switch__bg-content--enable': initialValue }">
-        <slot v-if="initialValue" name="bg-on" />
-        <slot v-else name="bg-off" />
-      </div>
-      <div class="nmorph-switch-thumb">
-        <NmorphIcon v-if="props.loading" width="14px" height="14px">
-          <NmorphIconLoader />
-        </NmorphIcon>
-        <slot v-else-if="initialValue" name="thumb-on" />
-        <slot v-else name="thumb-off" />
-      </div>
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

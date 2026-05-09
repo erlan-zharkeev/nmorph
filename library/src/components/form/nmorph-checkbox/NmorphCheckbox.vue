@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, inject, watch, type Ref } from 'vue';
-import { body2, disabled, focusOutline, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import {
   INmorphCheckboxOption,
   NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType,
@@ -8,7 +8,6 @@ import {
   NmorphComponentHeight,
   NmorphDomElementType,
 } from '@/types';
-import { styled, css } from '@vue-styled-components/core';
 
 const groupSelectedValue = inject<NmorphCheckboxGroupSelectedValueInjectionType>(
   'checkbox-group-selected-value',
@@ -71,8 +70,44 @@ const modifiers = computed(() =>
     ],
   })
 );
+</script>
 
-const commonCSS = css`
+<template>
+  <label :class="modifiers">
+    <div v-if="props.design === 'checkbox'" class="nmorph-checkbox__content">
+      <div class="nmorph-checkbox__input-wrapper">
+        <input
+          ref="inputDOMRef"
+          type="checkbox"
+          :disabled="props.disabled"
+          :checked="checked"
+          class="nmorph-native-input"
+          @change="handleChange"
+        />
+        <div class="nmorph-checkbox__fake" />
+        <div v-if="checked" class="nmorph-checkbox__fake-checked" />
+      </div>
+      <div v-if="props.label" class="nmorph-checkbox__label">
+        <span>{{ props.label }}</span>
+      </div>
+      <div v-else class="nmorph-checkbox__label">
+        <slot />
+      </div>
+    </div>
+    <div v-if="props.design === 'button'" class="nmorph-checkbox__content">
+      <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked" @change="handleChange" />
+      <div v-if="props.label" class="nmorph-checkbox__fake">
+        <span>{{ props.label }}</span>
+      </div>
+      <div v-else class="nmorph-checkbox__fake">
+        <slot name="label" />
+      </div>
+    </div>
+  </label>
+</template>
+
+<style lang="scss">
+.nmorph-checkbox {
   --size: var(--height);
 
   display: inline-flex;
@@ -105,7 +140,8 @@ const commonCSS = css`
   input:focus-visible {
     opacity: 1;
     scale: 0.95;
-    ${focusOutline()}
+
+    outline: 2px solid var(--nmorph-accent-color);
   }
 
   .nmorph-checkbox__fake {
@@ -116,12 +152,19 @@ const commonCSS = css`
     position: absolute;
     top: 0;
     left: 0;
-    ${nmorphInset()}
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
 
   .nmorph-checkbox__label,
   .nmorph-checkbox__fake span {
-    ${body2()}
+    font-weight: 400;
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-regular);
   }
 
   .nmorph-checkbox__fake-checked {
@@ -153,56 +196,28 @@ const commonCSS = css`
       height: var(--size);
       padding: var(--indentation-03);
       border-radius: var(--default-border-radius);
-      ${nmorphOutset()}
+
+      background: var(--nmorph-main-color);
+      box-shadow:
+        var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color);
     }
   }
 
   &.nmorph-checkbox--checked {
     .nmorph-checkbox__fake {
-      ${nmorphInset()}
+      background: var(--nmorph-main-color);
+      box-shadow:
+        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color);
     }
   }
 
   &.nmorph-checkbox--disabled {
-    ${disabled()}
+    cursor: not-allowed;
+    opacity: 0.6;
   }
-`;
-
-const StyledComponent = styled.label`
-  ${commonCSS}
-`;
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <div v-if="props.design === 'checkbox'" class="nmorph-checkbox__content">
-      <div class="nmorph-checkbox__input-wrapper">
-        <input
-          ref="inputDOMRef"
-          type="checkbox"
-          :disabled="props.disabled"
-          :checked="checked"
-          class="nmorph-native-input"
-          @change="handleChange"
-        />
-        <div class="nmorph-checkbox__fake" />
-        <div v-if="checked" class="nmorph-checkbox__fake-checked" />
-      </div>
-      <div v-if="props.label" class="nmorph-checkbox__label">
-        <span>{{ props.label }}</span>
-      </div>
-      <div v-else class="nmorph-checkbox__label">
-        <slot />
-      </div>
-    </div>
-    <div v-if="props.design === 'button'" class="nmorph-checkbox__content">
-      <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked" @change="handleChange" />
-      <div v-if="props.label" class="nmorph-checkbox__fake">
-        <span>{{ props.label }}</span>
-      </div>
-      <div v-else class="nmorph-checkbox__fake">
-        <slot name="label" />
-      </div>
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

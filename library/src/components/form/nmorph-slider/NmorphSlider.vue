@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { NmorphDomElementType } from '@/types';
-import { disabled, nmorphInset, nmorphOutset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import { NmorphTooltip } from '@/components';
-import { styled, css } from '@vue-styled-components/core';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 import type { INmorphSliderProps } from './types';
 
@@ -154,8 +153,50 @@ const nativeInputHandler = (event: Event): void => {
 };
 
 const transitionEnabled = ref(true);
+</script>
 
-const commonCSS = css`
+<template>
+  <div :class="modifiers" :style="{ '--nmorph-slider-thumb-width': thumbWidthCss }">
+    <div class="nmorph-slider__content">
+      <div class="nmorph-slider__input-wrapper">
+        <div ref="sliderContainer" class="nmorph-slider__input-container" @pointerdown="pointerDownHandler">
+          <NmorphTooltip
+            v-if="tooltipVisible && !props.disabled"
+            ref="tooltipRootRef"
+            :text="String(thumbValue)"
+            force-show
+            :force-coordinate="{ x: thumbXPercentPosition.tooltip, y: '24px' }"
+            block-position
+          />
+          <div
+            ref="sliderFirst"
+            class="nmorph-slider__thumb"
+            :style="{ left: thumbXPercentPosition.thumb }"
+            :class="{ 'nmorph-slider__thumb--smooth': transitionEnabled }"
+            @mouseenter="handleMouseEnter"
+            @mouseleave="handleMouseLeave"
+          />
+          <input
+            :id="id"
+            :name="name"
+            :tabindex="tabindex"
+            class="nmorph-slide__native-input"
+            type="range"
+            :value="thumbValue"
+            :min="props.min"
+            :max="props.max"
+            :step="props.step"
+            :disabled="props.disabled"
+            @input="nativeInputHandler"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-slider {
   position: relative;
   width: 100%;
   height: 20px;
@@ -176,7 +217,12 @@ const commonCSS = css`
     width: 100%;
     height: var(--value-fixed-container-height);
     border-radius: var(--default-border-radius);
-    ${nmorphInset()}
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
 
   .nmorph-slider__input-container {
@@ -195,7 +241,11 @@ const commonCSS = css`
     border-radius: var(--default-border-radius);
     height: 20px;
 
-    ${nmorphOutset()}
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
 
   .nmorph-slider__thumb--smooth {
@@ -247,57 +297,15 @@ const commonCSS = css`
   }
 
   &.nmorph-slider--disabled {
-    ${disabled()}
+    cursor: not-allowed;
+    opacity: 0.6;
     .nmorph-slider__input-content {
       pointer-events: none;
     }
   }
-`;
 
-const StyledComponent = styled.div`
-  ${commonCSS}
   .nmorph-slider__thumb {
-    width: ${(props) => props.thumbWidthCss};
+    width: var(--nmorph-slider-thumb-width);
   }
-`;
-</script>
-
-<template>
-  <StyledComponent :class="modifiers" :props="{ thumbWidthCss }">
-    <div class="nmorph-slider__content">
-      <div class="nmorph-slider__input-wrapper">
-        <div ref="sliderContainer" class="nmorph-slider__input-container" @pointerdown="pointerDownHandler">
-          <NmorphTooltip
-            v-if="tooltipVisible && !props.disabled"
-            ref="tooltipRootRef"
-            :text="String(thumbValue)"
-            force-show
-            :force-coordinate="{ x: thumbXPercentPosition.tooltip, y: '24px' }"
-            block-position
-          />
-          <div
-            ref="sliderFirst"
-            class="nmorph-slider__thumb"
-            :style="{ left: thumbXPercentPosition.thumb }"
-            :class="{ 'nmorph-slider__thumb--smooth': transitionEnabled }"
-            @mouseenter="handleMouseEnter"
-            @mouseleave="handleMouseLeave"
-          />
-          <input
-            :id="id"
-            :name="name"
-            :tabindex="tabindex"
-            class="nmorph-slide__native-input"
-            type="range"
-            :value="thumbValue"
-            :min="props.min"
-            :max="props.max"
-            :step="props.step"
-            :disabled="props.disabled"
-            @input="nativeInputHandler"
-          />
-        </div>
-      </div>
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

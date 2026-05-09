@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, ref, watch } from 'vue';
-import { useModifiers, nmorphOutset, nmorphInset, disabled } from '@/utils';
+import { useModifiers } from '@/utils';
 import {
   INmorphCollapseItemProps,
   NmorphCollapseDataInjectionType,
   NmorphCollapseUpdateModelInjectionType,
 } from '@/components';
 import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps extends INmorphCollapseItemProps {
   height?: keyof typeof NmorphComponentHeight;
@@ -79,44 +78,10 @@ watch(isOpen, () => {
   contentHeight.value =
     isOpen.value && collapseItemDOMElContent.value ? collapseItemDOMElContent.value?.clientHeight : 0;
 });
-
-const commonCSS = css`
-  --transition-speed: 0.2s;
-
-  margin-bottom: var(--indentation-03);
-
-  .nmorph-collapse-item__title {
-    display: flex;
-    align-items: center;
-    padding: var(--indentation-02);
-    border-radius: var(--default-border-radius);
-    ${nmorphOutset()};
-  }
-
-  .nmorph-collapse-item__content {
-    box-sizing: content-box;
-    overflow: hidden;
-    border-radius: var(--default-border-radius);
-    transition: height var(--transition-speed) ease-in-out;
-    ${nmorphInset()};
-  }
-
-  .nmorph-collapse-item__inner-wrapper {
-    padding: var(--indentation-03);
-  }
-
-  &.nmorph-collapse-item--disabled {
-    ${disabled()};
-  }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`;
 </script>
 
 <template>
-  <StyledComponent :class="modifiers" @click.stop="clickHandler">
+  <div :class="modifiers" @click.stop="clickHandler">
     <div class="nmorph-collapse-item__title" :class="titleModifiers">
       <slot name="title">
         {{ props.title }}
@@ -127,5 +92,48 @@ const StyledComponent = styled.div`
         <slot />
       </div>
     </div>
-  </StyledComponent>
+  </div>
 </template>
+
+<style lang="scss">
+.nmorph-collapse-item {
+  --transition-speed: 0.2s;
+
+  margin-bottom: var(--indentation-03);
+
+  .nmorph-collapse-item__title {
+    display: flex;
+    align-items: center;
+    padding: var(--indentation-02);
+    border-radius: var(--default-border-radius);
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
+  }
+
+  .nmorph-collapse-item__content {
+    box-sizing: content-box;
+    overflow: hidden;
+    border-radius: var(--default-border-radius);
+    transition: height var(--transition-speed) ease-in-out;
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
+  }
+
+  .nmorph-collapse-item__inner-wrapper {
+    padding: var(--indentation-03);
+  }
+
+  &.nmorph-collapse-item--disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+</style>

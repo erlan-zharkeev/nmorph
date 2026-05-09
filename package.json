@@ -6,6 +6,8 @@
     "dev:storybook": "pnpm --dir library dev",
     "dev:all": "npm run dev",
     "dev:sandbox": "cd sandbox && npm run dev",
+    "dev:nuxt-sandbox": "cd nuxt-sandbox && npm run dev",
+    "build:nuxt-sandbox": "cd nuxt-sandbox && npm run build",
     "dev:docs": "cd lib-docs && npm run dev"
   }
 }

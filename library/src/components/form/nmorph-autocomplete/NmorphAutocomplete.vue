@@ -10,7 +10,6 @@ import {
   INmorphAutocompleteListItem,
   NmorphIconLoader,
 } from '@/components';
-import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: string;
@@ -93,38 +92,10 @@ watch(initialValue, async (newValue) => {
 watch(loader, (newValue) => {
   if (newValue) open.value = true;
 });
-
-const commonCSS = css`
-  .nmorph-autocomplete__list-item {
-    padding: var(--indentation-02) var(--indentation-04);
-    cursor: pointer;
-
-    &:last-child {
-      border-bottom-left-radius: var(--indentation-02);
-      border-bottom-right-radius: var(--indentation-02);
-    }
-  }
-
-  .nmorph-autocomplete__loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100px;
-  }
-
-  .nmorph-autocomplete__list-item:hover {
-    color: var(--nmorph-white-color);
-    background: var(--nmorph-accent-color);
-  }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`;
 </script>
 
 <template>
-  <StyledComponent :class="modifiers">
+  <div :class="modifiers">
     <div class="nmorph-autocomplete__input-content">
       <div ref="nmorphAutocompleteDOMRef" class="nmorph-autocomplete__input">
         <NmorphTextInput
@@ -167,5 +138,31 @@ const StyledComponent = styled.div`
         </div>
       </div>
     </NmorphDropdown>
-  </StyledComponent>
+  </div>
 </template>
+
+<style lang="scss">
+.nmorph-autocomplete {
+  .nmorph-autocomplete__list-item {
+    padding: var(--indentation-02) var(--indentation-04);
+    cursor: pointer;
+
+    &:last-child {
+      border-bottom-left-radius: var(--indentation-02);
+      border-bottom-right-radius: var(--indentation-02);
+    }
+  }
+
+  .nmorph-autocomplete__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+  }
+
+  .nmorph-autocomplete__list-item:hover {
+    color: var(--nmorph-white-color);
+    background: var(--nmorph-accent-color);
+  }
+}
+</style>

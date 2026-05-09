@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { nmorphInset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { NmorphIcon, NmorphIconImage, NmorphSkeletonItemPropsType } from '@/components';
 import { NmorphElementDesignType } from '@/types';
-import { styled, css } from '@vue-styled-components/core';
 
 interface INmorphProps {
   variant: keyof typeof NmorphSkeletonItemPropsType;
@@ -27,8 +26,23 @@ const modifiers = computed(() =>
 
 const cssWidth = computed(() => props.width);
 const cssHeight = computed(() => props.height);
+</script>
 
-const commonCSS = css`
+<template>
+  <div
+    :class="modifiers"
+    :style="{ '--nmorph-skeleton-item-width': cssWidth, '--nmorph-skeleton-item-height': cssHeight }"
+  >
+    <div class="nmorph-skeleton-item__element">
+      <NmorphIcon v-if="props.variant === 'image'" :width="props.width" :height="props.height">
+        <NmorphIconImage />
+      </NmorphIcon>
+    </div>
+  </div>
+</template>
+
+<style lang="scss">
+.nmorph-skeleton-item {
   position: relative;
   margin-bottom: var(--indentation-02);
   overflow: hidden;
@@ -47,24 +61,15 @@ const commonCSS = css`
   &.nmorph-skeleton-item--circle {
     border-radius: var(--border-radius-circular);
   }
-`;
 
-const StyledComponent = styled.div`
-  ${commonCSS}
-  width: ${cssWidth.value};
-  height: ${cssHeight.value};
+  width: var(--nmorph-skeleton-item-width);
+  height: var(--nmorph-skeleton-item-height);
   &.nmorph-skeleton-item--nmorph-design {
-    ${nmorphInset()}
+    background: var(--nmorph-main-color);
+    box-shadow:
+      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
   }
-`;
-</script>
-
-<template>
-  <StyledComponent :class="modifiers">
-    <div class="nmorph-skeleton-item__element">
-      <NmorphIcon v-if="props.variant === 'image'" :width="props.width" :height="props.height">
-        <NmorphIconImage />
-      </NmorphIcon>
-    </div>
-  </StyledComponent>
-</template>
+}
+</style>

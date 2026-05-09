@@ -17,10 +17,9 @@ import {
   NmorphIconArchive,
   NmorphIconCross,
 } from '@/components';
-import { ellipsis, nmorphOutset, useModifiers } from '@/utils';
+import { useModifiers } from '@/utils';
 import { NmorphDomElementType } from '@/types';
 import { useI18n } from 'vue-i18n';
-import { styled, css } from '@vue-styled-components/core';
 
 const { t } = useI18n();
 
@@ -110,54 +109,10 @@ const modifiers = computed(() =>
     'nmorph-file-upload': [`${props.disabled && 'disabled'}`],
   })
 );
-
-const commonCSS = css`
-  .nmorph-file-upload__trigger {
-    position: relative;
-  }
-
-  input {
-    display: none;
-  }
-
-  .nmorph-file-upload__list {
-    margin-top: var(--indentation-03);
-  }
-
-  .nmorph-file-upload__file {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: var(--indentation-02);
-    padding: var(--indentation-02) var(--indentation-03);
-    border-radius: var(--default-border-radius);
-    ${nmorphOutset()}
-  }
-
-  .nmorph-file-upload__file-info {
-    display: flex;
-    align-items: center;
-    width: 50%;
-    margin-left: var(--indentation-02);
-  }
-
-  .nmorph-file-upload__file-name {
-    margin-left: var(--indentation-02);
-    ${ellipsis()}
-  }
-
-  .nmorph-file-upload__remove-file {
-    margin-left: var(--indentation-03);
-  }
-`;
-
-const StyledComponent = styled.div`
-  ${commonCSS}
-`;
 </script>
 
 <template>
-  <StyledComponent :class="modifiers">
+  <div :class="modifiers">
     <div class="nmorph-file-upload__trigger">
       <input
         ref="inputDOMRef"
@@ -191,5 +146,55 @@ const StyledComponent = styled.div`
         </div>
       </transition-group>
     </div>
-  </StyledComponent>
+  </div>
 </template>
+
+<style lang="scss">
+.nmorph-file-upload {
+  .nmorph-file-upload__trigger {
+    position: relative;
+  }
+
+  input {
+    display: none;
+  }
+
+  .nmorph-file-upload__list {
+    margin-top: var(--indentation-03);
+  }
+
+  .nmorph-file-upload__file {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--indentation-02);
+    padding: var(--indentation-02) var(--indentation-03);
+    border-radius: var(--default-border-radius);
+
+    background: var(--nmorph-main-color);
+    box-shadow:
+      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+        var(--nmorph-light-shade-color);
+  }
+
+  .nmorph-file-upload__file-info {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    margin-left: var(--indentation-02);
+  }
+
+  .nmorph-file-upload__file-name {
+    margin-left: var(--indentation-02);
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .nmorph-file-upload__remove-file {
+    margin-left: var(--indentation-03);
+  }
+}
+</style>

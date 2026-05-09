@@ -2,7 +2,7 @@
   "name": "@nmorph/nmorph-ui-kit",
   "type": "module",
   "private": false,
-  "version": "2.2.7",
+  "version": "2.2.9",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -35,6 +35,11 @@
       },
       "require": "./dist/index.umd.js"
     },
+    "./nuxt": {
+      "types": "./dist/src/nuxt/module.d.ts",
+      "import": "./dist/nuxt.mjs",
+      "default": "./dist/nuxt.mjs"
+    },
     "./dist/index.d.ts": "./dist/index.d.ts",
     "./dist/style.css": "./dist/style.css",
     "./dist/styles/abstracts/_variables.scss": "./dist/styles/abstracts/_variables.scss",
@@ -46,7 +51,7 @@
     "dev": "HOME=/tmp/nmorph-storybook-home STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p 43183",
     "storybook": "HOME=/tmp/nmorph-storybook-home STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p 43183",
     "build:storybook": "HOME=/tmp/nmorph-storybook-home STORYBOOK_DISABLE_TELEMETRY=1 storybook build",
-    "build": "npm run build:types && vite build",
+    "build": "npm run build:types && vite build && vite build --config vite.nuxt.config.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "watch": "vite build --watch",
@@ -63,11 +68,19 @@
     "build:types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist"
   },
   "dependencies": {
-    "@vue-styled-components/core": "^1.9.0",
     "vue": "^3.5.13",
     "vue-i18n": "^9.9.0"
   },
+  "peerDependencies": {
+    "nuxt": ">=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "nuxt": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@nuxt/kit": "^3.13.1",
     "@storybook/addon-docs": "10.3.6",
     "@storybook/builder-vite": "10.3.6",
     "@storybook/vue3": "10.3.6",

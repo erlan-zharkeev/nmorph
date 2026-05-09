@@ -1,4 +1,13 @@
 CLAUDE.md
+node_modules
+.nuxt
+.output
+nuxt-sandbox/.data
+nuxt-sandbox/.nitro
+nuxt-sandbox/dist
+nuxt-sandbox/*.log
+nuxt-sandbox/.env
+nuxt-sandbox/.env.*
 
 .vscode/*
 !.vscode/extensions.json
