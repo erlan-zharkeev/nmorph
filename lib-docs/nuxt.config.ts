@@ -102,7 +102,9 @@ export default defineNuxtConfig({
     },
   },
   modules: ["@nuxtjs/i18n", "nuxt-svgo", "@nmorph/nmorph-ui-kit/nuxt"],
-  nmorph: {},
+  nmorph: {
+    styles: "all",
+  },
   i18n: {
     lazy: true,
     langDir: "./locales",
