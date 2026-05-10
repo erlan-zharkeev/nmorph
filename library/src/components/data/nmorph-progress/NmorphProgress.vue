@@ -114,9 +114,8 @@ const displayPercentage = computed(() => `${props.percentage}%`);
       width: 100%;
       height: 100%;
       overflow: hidden;
-      border-radius: var(--border-radius-40);
-
       background: var(--nmorph-main-color);
+      border-radius: var(--border-radius-40);
       box-shadow:
         inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
         inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -132,10 +131,10 @@ const displayPercentage = computed(() => `${props.percentage}%`);
 
     .nmorph-progress__percentage,
     .nmorph-progress__inner-text {
+      margin-left: var(--indentation-03);
       font-weight: 400;
       font-size: var(--font-size-extra-small);
       line-height: var(--line-height-regular);
-      margin-left: var(--indentation-03);
     }
 
     .nmorph-progress__inner-text {
@@ -149,35 +148,34 @@ const displayPercentage = computed(() => `${props.percentage}%`);
 
   .nmorph-progress__circle {
     position: relative;
-    border-radius: var(--border-radius-circular);
-
+    width: var(--nmorph-progress-circle-size);
+    height: var(--nmorph-progress-circle-size);
     background: var(--nmorph-main-color);
+    border-radius: var(--border-radius-circular);
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
 
     &::after {
-      width: 92%;
-      height: 92%;
-      border-radius: var(--border-radius-circular);
-      content: '';
-
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      width: 92%;
+      height: 92%;
       background: var(--nmorph-main-color);
+      border-radius: var(--border-radius-circular);
       box-shadow: 0 0 var(--base-shadow-blur) var(--nmorph-dark-shade-color);
+      transform: translate(-50%, -50%);
+      content: '';
     }
   }
 
   .nmorph-progress__circle-inner-part {
-    z-index: 1;
-
     position: absolute;
     top: 50%;
     left: 50%;
+    z-index: 1;
     transform: translate(-50%, -50%);
   }
 
@@ -186,6 +184,7 @@ const displayPercentage = computed(() => `${props.percentage}%`);
     transform-origin: center;
     transition: stroke-dashoffset 0.5s;
     fill: none;
+    stroke: var(--nmorph-progress-color);
     stroke-width: 4px;
   }
 
@@ -193,15 +192,6 @@ const displayPercentage = computed(() => `${props.percentage}%`);
     width: var(--nmorph-progress-percentage);
     background: var(--nmorph-progress-color);
     animation: var(--nmorph-progress-animation);
-  }
-
-  .nmorph-progress__circle {
-    width: var(--nmorph-progress-circle-size);
-    height: var(--nmorph-progress-circle-size);
-  }
-
-  .nmorph-progress__circle-ring {
-    stroke: var(--nmorph-progress-color);
   }
 }
 </style>

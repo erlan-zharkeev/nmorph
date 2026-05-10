@@ -71,7 +71,7 @@ export default {
     "quick-start": {
       installation: "安装",
       "choose-package-manager":
-        "选择您喜欢的包管理器。<br>我们推荐使用可靠的包管理器，如 <b>NPM</b>、<b>Yarn</b>、<b>Pnpm</b>",
+        "使用 <b>pnpm</b> 安装包并在 monorepo 中工作。",
       plugin: "库集成",
       "alternative-plugin": "替代集成方法",
       nuxt: "Nuxt 集成",
@@ -112,6 +112,7 @@ export default {
       "css-var-light-shade": "浅色阴影",
       "css-var-text": "主文字颜色",
       "css-var-scroll-thumb": "滚动条滑块颜色",
+      "css-var-scroll-color-scheme": "原生滚动条配色方案",
       "css-var-accent": "强调色 / 品牌色",
       "css-var-focus-text": "聚焦/强调元素上的文字颜色",
       "css-var-placeholder": "占位符文字颜色",
@@ -208,6 +209,14 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "nuxt-theme-first-paint":
+          "Nuxt 集成现在会在首次绘制前应用已保存的主题，注入 SSR theme/common styles，并避免 reload 时 light/dark 主题闪烁。",
+        "backtop-teleport-safe-area":
+          "NmorphBacktop 现在会 Teleport 到 body，支持 z-index 与 teleport target props，适配移动端 safe-area bottom，并避免在 scroll containers 内被裁切。",
+        "ios-input-scrollbar-fixes":
+          "Common styles 现在会阻止 iOS input auto-zoom，并让原生 scrollbar color scheme/thumb colors 与当前 Nmorph 主题保持一致。",
+        "pnpm-turbo-docs-refresh":
+          "仓库已迁移到 pnpm workspaces 与 Turbo scripts，Sass 使用 modern API，docs 也更新了 Guide/About、移动端导航、layout、search 和 code highlighting。",
         "virtualized-table-select-autocomplete":
           "NmorphTable、NmorphSelect 和 NmorphAutocomplete 现在支持大数据集虚拟化，可配置 item height 和 overscan。",
         "overlay-dropdown-teleport-placement":
@@ -1251,6 +1260,9 @@ export default {
         "visibility-height":
           "定义返回顶部按钮在该滚动高度下变为可见。以像素为单位",
         design: "定义按钮的样式",
+        "z-index": "设置传送后的返回顶部按钮的 z-index",
+        "teleport-to": "返回顶部按钮传送到的 CSS 选择器",
+        "teleport-disabled": "禁用 teleport 并在原位置渲染按钮",
       },
       slot: {
         default: "自定义返回顶部按钮内容的插槽",

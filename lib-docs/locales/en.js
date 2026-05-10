@@ -72,7 +72,7 @@ export default {
     "quick-start": {
       installation: "Installation",
       "choose-package-manager":
-        "Choose any package manager you prefer.<br>We recommend using reliable ones like <b>NPM</b>, <b>Yarn</b>, <b>Pnpm</b>",
+        "Use <b>pnpm</b> to install the package and work with the monorepo.",
       plugin: "Library integration",
       "alternative-plugin": "Alternative integration method",
       nuxt: "Nuxt integration",
@@ -121,6 +121,7 @@ export default {
       "css-var-light-shade": "Light shadow shade",
       "css-var-text": "Primary text color",
       "css-var-scroll-thumb": "Scroll thumb color",
+      "css-var-scroll-color-scheme": "Native scrollbar color scheme",
       "css-var-accent": "Accent / brand color",
       "css-var-focus-text": "Text color on focused/accent elements",
       "css-var-placeholder": "Placeholder text color",
@@ -218,6 +219,14 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "nuxt-theme-first-paint":
+          "Nuxt integration now applies the saved theme before first paint, injects SSR theme/common styles, and avoids the light/dark theme flash on reload.",
+        "backtop-teleport-safe-area":
+          "NmorphBacktop now teleports to body, supports z-index and teleport target props, respects mobile safe-area bottom, and avoids clipping inside scroll containers.",
+        "ios-input-scrollbar-fixes":
+          "Common styles now prevent iOS input auto-zoom and align native scrollbar color scheme/thumb colors with the active Nmorph theme.",
+        "pnpm-turbo-docs-refresh":
+          "The repo moved to pnpm workspaces with Turbo scripts, Sass uses the modern API, and docs received updated Guide/About content, mobile navigation, layout, search, and code highlighting fixes.",
         "virtualized-table-select-autocomplete":
           "NmorphTable, NmorphSelect, and NmorphAutocomplete now support virtualized large datasets with configurable item height and overscan.",
         "overlay-dropdown-teleport-placement":
@@ -1338,6 +1347,9 @@ export default {
         "visibility-height":
           "Defines the scroll height at which the back-to-top button becomes visible. Accepts a number in pixels",
         design: "Defines the style of the button",
+        "z-index": "Sets the z-index of the teleported back-to-top button",
+        "teleport-to": "CSS selector where the back-to-top button is teleported",
+        "teleport-disabled": "Disables teleporting and renders the button in place",
       },
       slot: {
         default: "Slot for customizing the content of the back-to-top button",

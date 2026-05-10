@@ -168,8 +168,8 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
 
   .nmorph-radio-group__content {
     display: flex;
-    justify-content: center;
     gap: 8px;
+    justify-content: center;
   }
 
   .nmorph-radio-group {
@@ -178,8 +178,8 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
   }
 
   .nmorph-radio-group .nmorph-radio:not(:last-child) {
-    margin-bottom: 0;
     margin-right: 0;
+    margin-bottom: 0;
   }
 
   .nmorph-pagination__page-group {

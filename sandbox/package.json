@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "vue-tsc -b",
+    "check": "pnpm run typecheck && pnpm run build"
   },
   "dependencies": {
-    "@nmorph/nmorph-ui-kit": "file:../library",
+    "@nmorph/nmorph-ui-kit": "workspace:*",
     "vue": "^3.5.25",
     "vue-i18n": "^9.14.5",
     "vue-router": "^4.6.4"
@@ -21,6 +23,7 @@
     "sass": "1.69.7",
     "typescript": "~5.4.5",
     "vite": "^5.4.21",
+    "vite-svg-loader": "^5.1.0",
     "vue-tsc": "^2.2.12"
   }
 }

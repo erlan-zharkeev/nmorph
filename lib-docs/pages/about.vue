@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { NmorphCard, NmorphDivider, NmorphLink, NmorphScroll } from "@nmorph/nmorph-ui-kit";
+import libraryData from "../../library/package.json";
 
 const localePath = useLocalePath();
+const repositoryUrl = libraryData.repository.url;
+const issuesUrl = `${repositoryUrl}/-/issues`;
 const featureKeys = ["components", "theme", "nuxt", "typescript"];
 const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays", "forms", "virtualization", "accessibility"];
 </script>
@@ -72,10 +75,10 @@ const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays",
             <NuxtLink :to="localePath('/guide')">{{ $t("about-page.links.guide") }}</NuxtLink>
             <NuxtLink :to="localePath('/components')">{{ $t("about-page.links.components") }}</NuxtLink>
             <NuxtLink :to="localePath('/changelog')">{{ $t("about-page.links.changelog") }}</NuxtLink>
-            <NmorphLink href="https://gitlab.com/ketjo/nmorph" target="blank">
+            <NmorphLink :href="repositoryUrl" target="blank">
               {{ $t("about-page.links.repository") }}
             </NmorphLink>
-            <NmorphLink href="https://gitlab.com/ketjo/nmorph/-/issues" target="blank">
+            <NmorphLink :href="issuesUrl" target="blank">
               {{ $t("about-page.links.issues") }}
             </NmorphLink>
           </div>

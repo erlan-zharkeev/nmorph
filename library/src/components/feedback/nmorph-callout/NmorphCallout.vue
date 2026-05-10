@@ -63,10 +63,10 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   }
 
   .nmorph-callout__title {
+    margin-bottom: 8px;
     font-weight: 600;
     font-size: var(--font-size-medium);
     line-height: var(--line-height-loose);
-    margin-bottom: 8px;
   }
 
   .nmorph-callout__title,

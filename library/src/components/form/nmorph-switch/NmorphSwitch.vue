@@ -113,13 +113,11 @@ watch(
   .nmorph-switch__content {
     position: relative;
     height: 100%;
-    border-radius: var(--border-radius-999);
-
     font-weight: 400;
     font-size: var(--font-size-small);
     line-height: var(--line-height-regular);
-
     background: var(--nmorph-main-color);
+    border-radius: var(--border-radius-999);
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -131,8 +129,8 @@ watch(
     top: 0;
     left: 0;
     display: flex;
-    align-items: center;
     justify-content: flex-end;
+    align-items: center;
     width: 100%;
     height: 100%;
     padding: 8px;
@@ -153,20 +151,18 @@ watch(
     position: absolute;
     top: var(--offset);
     left: var(--offset);
-    width: var(--thumb-height);
-    height: var(--thumb-height);
-    border-radius: var(--border-radius-999);
-    transition: left ease-in-out var(--transition-02);
-
     display: flex;
     justify-content: center;
     align-items: center;
-
+    width: var(--thumb-height);
+    height: var(--thumb-height);
     background: var(--nmorph-main-color);
+    border-radius: var(--border-radius-999);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
+    transition: left ease-in-out var(--transition-02);
   }
 
   &.nmorph-switch--disabled {

@@ -38,9 +38,9 @@ const modifiers = computed(() =>
     <div class="nmorph-date-picker-header__left-side">
       <NmorphButton
         class="nmorph-date-picker-header__action-btn"
+        :tabindex="-1"
         style-type="transparent"
         @click="emit('prev-year')"
-        :tabindex="-1"
       >
         <NmorphIcon class="nmorph-date-picker-header__chevron-double-left">
           <NmorphIconChevronDoubleDown />
@@ -48,9 +48,9 @@ const modifiers = computed(() =>
       </NmorphButton>
       <NmorphButton
         class="nmorph-date-picker-header__action-btn"
+        :tabindex="-1"
         style-type="transparent"
         @click="emit('prev-month')"
-        :tabindex="-1"
       >
         <NmorphIcon class="nmorph-date-picker-header__chevron-left">
           <NmorphIconChevronDown />
@@ -58,21 +58,21 @@ const modifiers = computed(() =>
       </NmorphButton>
     </div>
     <div class="nmorph-date-picker-header__center-side">
-      <NmorphButton :text="props.year" style-type="transparent" fill @click="emit('change-year')" :tabindex="-1" />
+      <NmorphButton :text="props.year" :tabindex="-1" style-type="transparent" fill @click="emit('change-year')" />
       <NmorphButton
         :text="getMonthName(props.month)"
+        :tabindex="-1"
         style-type="transparent"
         fill
         @click="emit('change-month')"
-        :tabindex="-1"
       />
     </div>
     <div class="nmorph-date-picker-header__right-side">
       <NmorphButton
         class="nmorph-date-picker-header__action-btn"
+        :tabindex="-1"
         style-type="transparent"
         @click="emit('next-month')"
-        :tabindex="-1"
       >
         <NmorphIcon class="nmorph-date-picker-header__chevron-right">
           <NmorphIconChevronDown />
@@ -80,9 +80,9 @@ const modifiers = computed(() =>
       </NmorphButton>
       <NmorphButton
         class="nmorph-date-picker-header__action-btn"
+        :tabindex="-1"
         style-type="transparent"
         @click="emit('next-year')"
-        :tabindex="-1"
       >
         <NmorphIcon class="nmorph-date-picker-header__chevron-double-right">
           <NmorphIconChevronDoubleDown />
@@ -103,9 +103,8 @@ const modifiers = computed(() =>
     justify-content: center;
     width: 165px;
     margin: 0 var(--indentation-00);
-    border-radius: var(--default-border-radius);
-
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)

@@ -40,6 +40,7 @@ const modifiers = computed(() =>
 <style lang="scss">
 .nmorph-breadcrumb {
   display: flex;
+
   .nmorph-breadcrumb__content {
     display: flex;
   }

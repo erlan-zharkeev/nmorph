@@ -127,10 +127,7 @@ const zIndex = computed(() => props.zIndex);
 <style lang="scss">
 .nmorph-notification-provider {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   width: 100vw;
   height: 100vh;
   pointer-events: none;
@@ -139,18 +136,18 @@ const zIndex = computed(() => props.zIndex);
     width: fit-content;
     height: fit-content;
     margin: 1rem;
-    pointer-events: all;
     transition:
       transform 0.5s ease,
       opacity 0.5s ease-in-out;
+    pointer-events: all;
   }
 
   .nmorph-notification-provider__list {
+    position: fixed;
     display: flex;
     flex-direction: column;
     width: fit-content;
     max-width: 100vw;
-    position: fixed;
     pointer-events: none;
   }
 
@@ -289,8 +286,8 @@ const zIndex = computed(() => props.zIndex);
 
     .nmorph-icon__content {
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       width: var(--width);
       min-width: var(--width);
       height: var(--height);

@@ -33,6 +33,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   clearable: true,
   list: () => [],
   actionCallback: undefined,
+  zIndex: undefined,
   virtual: false,
   virtualItemHeight: 34,
   virtualMaxHeight: 240,
@@ -198,15 +199,15 @@ watch(loader, (newValue) => {
     cursor: pointer;
 
     &:last-child {
-      border-bottom-left-radius: var(--indentation-02);
       border-bottom-right-radius: var(--indentation-02);
+      border-bottom-left-radius: var(--indentation-02);
     }
   }
 
   .nmorph-autocomplete__loading {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100px;
   }
 

@@ -31,7 +31,9 @@ const nextPage = computed(() => guidePages[currentIndex.value + 1]);
       <ul v-if="section.points?.length" class="docs-guide-article__points">
         <li v-for="point in section.points" :key="point.en">{{ textByLocale(point, locale) }}</li>
       </ul>
-      <pre v-if="section.code" class="docs-guide-article__code"><code>{{ section.code.content }}</code></pre>
+      <div v-if="section.code" class="docs-guide-article__code">
+        <code-example :lang="section.code.language">{{ section.code.content }}</code-example>
+      </div>
     </section>
 
     <NmorphDivider />
@@ -106,7 +108,6 @@ const nextPage = computed(() => guidePages[currentIndex.value + 1]);
   }
 
   &__code {
-    height: auto;
     max-width: 100%;
     margin-top: 16px;
     padding: 16px;

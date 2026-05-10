@@ -4,25 +4,22 @@ import {
   NmorphDivider,
 } from "@nmorph/nmorph-ui-kit";
 import { LightBg, DarkBg } from "~/assets/images";
-import { useGlobalStore } from "~/providers";
 
 const router = useRouter();
 const localePath = useLocalePath();
-
-const store = useGlobalStore();
 </script>
 
 <template>
   <section id="main" class="info-section main-section">
     <img
       :src="LightBg"
-      :class="['main-section__bg', { 'main-section__bg--visible': store.currentTheme === 'light' }]"
+      class="main-section__bg main-section__bg--light"
       alt=""
       aria-hidden="true"
     />
     <img
       :src="DarkBg"
-      :class="['main-section__bg', { 'main-section__bg--visible': store.currentTheme === 'dark' }]"
+      class="main-section__bg main-section__bg--dark"
       alt=""
       aria-hidden="true"
     />
@@ -59,7 +56,8 @@ $image-size: 450px;
     transition: opacity 0.2s ease;
   }
 
-  .main-section__bg--visible {
+  :root[nmorph-data-theme='light'] & .main-section__bg--light,
+  :root[nmorph-data-theme='dark'] & .main-section__bg--dark {
     opacity: 0.5;
   }
 

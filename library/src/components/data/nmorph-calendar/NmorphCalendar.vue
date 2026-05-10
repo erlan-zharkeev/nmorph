@@ -287,19 +287,17 @@ updateCalendar();
   }
 
   .nmorph-calendar-date {
-    height: 100%;
-
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    height: 100%;
   }
 
   .nmorph-calendar-date--today {
-    font-weight: 600;
-    font-size: var(--font-size-medium);
-    line-height: var(--line-height-loose);
     color: var(--nmorph-text-color);
     font-weight: 700;
+    font-size: var(--font-size-medium);
+    line-height: var(--line-height-loose);
   }
 
   .nmorph-table .nmorph-table__cell {
@@ -319,18 +317,18 @@ updateCalendar();
       .nmorph-calendar-date--selected
     ).nmorph-calendar-date--previous,
   .nmorph-calendar-date:not(.nmorph-calendar-date--hidden, .nmorph-calendar-date--selected).nmorph-calendar-date--next {
+    color: var(--nmorph-accent-color);
     background: var(--nmorph-main-color);
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
-    color: var(--nmorph-accent-color);
   }
 
   .nmorph-calendar-date--selected {
     color: var(--nmorph-white-color);
-    box-shadow: none;
     background: var(--nmorph-accent-color);
+    box-shadow: none;
   }
 }
 </style>

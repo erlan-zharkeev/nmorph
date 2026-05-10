@@ -1,0 +1,5 @@
+packages:
+  - library
+  - lib-docs
+  - sandbox
+  - nuxt-sandbox

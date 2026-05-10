@@ -55,7 +55,7 @@ const modifiers = computed(() =>
 </script>
 
 <template>
-  <div :class="modifiers" @click="clickHandler" :value="props.value">
+  <div :class="modifiers" :value="props.value" @click="clickHandler">
     <div class="nmorph-select-option__content">
       <span>{{ props.label }}</span>
       <slot />
@@ -72,9 +72,9 @@ const modifiers = computed(() =>
   --hover-color: var(--nmorph-white-color);
 
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: var(--indentation-01);
+  justify-content: space-between;
+  align-items: center;
   box-sizing: border-box;
   min-width: 0;
   padding: var(--indentation-00) var(--default-indentation-input);
@@ -84,15 +84,15 @@ const modifiers = computed(() =>
     flex: 1 1 auto;
     min-width: 0;
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .nmorph-select-option__content span {
     display: block;
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .nmorph-select-option__checked {
@@ -128,7 +128,6 @@ const modifiers = computed(() =>
   &.nmorph-select-option--disabled {
     cursor: not-allowed;
     opacity: 0.6;
-
     pointer-events: none;
   }
 }

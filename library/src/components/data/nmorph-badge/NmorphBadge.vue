@@ -132,8 +132,9 @@ watch(() => [props.value, props.max, props.isDot, props.isTag, props.size], upda
   .nmorph-badge__container {
     position: absolute;
     display: inline-flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    background: var(--nmorph-badge-color);
     border-radius: var(--default-border-radius);
     opacity: 1;
   }
@@ -170,10 +171,6 @@ watch(() => [props.value, props.max, props.isDot, props.isTag, props.size], upda
     width: var(--dot-size);
     height: var(--dot-size);
     border-radius: var(--border-radius-circular);
-  }
-
-  .nmorph-badge__container {
-    background: var(--nmorph-badge-color);
   }
 }
 </style>

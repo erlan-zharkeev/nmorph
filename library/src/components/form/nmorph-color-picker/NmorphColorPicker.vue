@@ -170,15 +170,14 @@ const displayValue = computed(() => {
   .nmorph-color-picker__content {
     position: relative;
     display: inline-flex;
-    align-items: center;
     gap: var(--indentation-03);
+    align-items: center;
     width: fit-content;
     max-width: 100%;
     height: var(--height);
     padding: 0 var(--default-indentation-input);
-    border-radius: var(--default-border-radius);
-
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -187,39 +186,37 @@ const displayValue = computed(() => {
 
   .nmorph-color-picker__native {
     position: absolute;
-    inset: 0;
     width: 100%;
     height: 100%;
-    opacity: 0;
     cursor: pointer;
+    opacity: 0;
+    inset: 0;
   }
 
   .nmorph-color-picker__swatch {
+    flex: 0 0 auto;
     width: calc(var(--height) - var(--indentation-03));
     height: calc(var(--height) - var(--indentation-03));
     border-radius: var(--default-border-radius);
-    flex: 0 0 auto;
     box-shadow:
-      inset 0 0 0 1px rgb(255 255 255 / 0.25),
-      0 0 0 1px rgb(0 0 0 / 0.12);
+      inset 0 0 0 1px rgb(255 255 255 / 25%),
+      0 0 0 1px rgb(0 0 0 / 12%);
   }
 
   .nmorph-color-picker__value {
-    font-weight: 400;
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-regular);
-
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-
     flex: 0 0 7ch;
     width: 7ch;
     min-width: 7ch;
+    overflow: hidden;
+    font-weight: 400;
+    font-size: var(--font-size-small);
     font-family: monospace;
+    line-height: var(--line-height-regular);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    user-select: none;
     font-variant-numeric: tabular-nums;
     font-feature-settings: 'tnum';
-    user-select: none;
   }
 
   &.nmorph-color-picker--rgb {
@@ -256,13 +253,11 @@ const displayValue = computed(() => {
 
   &.nmorph--focused {
     .nmorph-color-picker__content {
-      background: var(--nmorph-main-color);
+      background: var(--nmorph-accent-color);
       box-shadow:
         var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
         calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
           var(--nmorph-light-shade-color);
-
-      background: var(--nmorph-accent-color);
     }
 
     .nmorph-color-picker__value {

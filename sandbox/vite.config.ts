@@ -1,11 +1,8 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import svgLoader from 'vite-svg-loader'
 import { execFileSync } from 'node:child_process'
 import { resolve } from 'node:path'
-import { createRequire } from 'node:module'
-
-const require = createRequire(import.meta.url)
-const svgLoader = require('../library/node_modules/vite-svg-loader')
 
 const sandboxSrc = resolve(__dirname, 'src')
 const librarySrc = resolve(__dirname, '../library/src')

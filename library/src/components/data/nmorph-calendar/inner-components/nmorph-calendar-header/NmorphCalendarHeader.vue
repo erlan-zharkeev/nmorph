@@ -64,10 +64,11 @@ const modifiers = computed(() =>
 <style lang="scss">
 .nmorph-calendar-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
   flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+
   .nmorph-calendar-header__actions {
     display: flex;
   }
@@ -77,11 +78,11 @@ const modifiers = computed(() =>
   }
 
   .nmorph-calendar-header__text {
+    width: 160px;
+    margin-right: 8px;
     font-weight: 800;
     font-size: var(--font-size-extra-large);
     line-height: var(--line-height-loose);
-    margin-right: 8px;
-    width: 160px;
   }
 }
 </style>

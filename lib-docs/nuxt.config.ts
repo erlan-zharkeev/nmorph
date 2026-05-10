@@ -45,7 +45,7 @@ export default defineNuxtConfig({
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { charset: "utf-8" },
         { name: "description", content: siteDescription },
-        { name: "author", content: "ketjo" },
+        { name: "author", content: "play_def" },
         { name: "robots", content: "index, follow" },
         { property: "og:title", content: siteTitle },
         { property: "og:description", content: siteDescription },
@@ -79,6 +79,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
+          api: "modern",
           additionalData: '@use "~/assets/style/global-mixins.scss" as *;',
         },
       },

@@ -50,6 +50,13 @@ export default defineConfig(() => {
       svgLoader(),
       injectChunkCss(),
     ],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern',
+        },
+      },
+    },
     build: {
       target: 'esnext',
       cssCodeSplit: true,

@@ -49,18 +49,17 @@ const customStyles = computed(() => {
 
 <style lang="scss">
 .nmorph-icon {
+  display: flex;
+  align-items: center;
   width: var(--width);
   min-width: var(--width);
   height: var(--height);
   min-height: var(--height);
 
-  display: flex;
-  align-items: center;
-
   .nmorph-icon__content {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     width: var(--width);
     min-width: var(--width);
     height: var(--height);
@@ -70,7 +69,6 @@ const customStyles = computed(() => {
   svg {
     width: 100%;
     height: 100%;
-
     fill: var(--color);
     stroke-width: 0;
   }

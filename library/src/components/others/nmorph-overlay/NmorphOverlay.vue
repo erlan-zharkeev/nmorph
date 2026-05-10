@@ -13,6 +13,7 @@ interface INmorphProps {
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   transparent: false,
+  zIndex: undefined,
   teleportTo: 'body',
   disabledTeleport: false,
 });
@@ -51,16 +52,17 @@ const emit = defineEmits<INmorphEmit>();
 
 <style lang="scss">
 .nmorph-overlay {
-  opacity: 0;
-  pointer-events: none;
   position: fixed;
   top: 0;
   left: 0;
+  z-index: var(--nmorph-overlay-z-index);
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   background: var(--nmorph-overlay-color);
+  opacity: 0;
   transition: ease-in-out var(--transition-02) opacity;
+  pointer-events: none;
 
   &.nmorph-overlay--transparent {
     background: transparent;
@@ -70,7 +72,5 @@ const emit = defineEmits<INmorphEmit>();
     opacity: 1;
     pointer-events: auto;
   }
-
-  z-index: var(--nmorph-overlay-z-index);
 }
 </style>

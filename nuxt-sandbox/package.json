@@ -4,21 +4,23 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "prepare:library": "sh -c 'test -x ../library/node_modules/.bin/vue-tsc || npm --prefix ../library install --include=dev --no-fund --no-audit; npm --prefix ../library run build'",
-    "dev": "npm run prepare:library && nuxt dev --no-qr --host 127.0.0.1 --port 43119",
-    "build": "npm run prepare:library && nuxt build",
-    "generate": "npm run prepare:library && nuxt generate",
+    "dev": "nuxt dev --no-qr --host 127.0.0.1 --port 43119",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
     "preview": "nuxt preview --host 127.0.0.1 --port 43120",
-    "postinstall": "npm run prepare:library && nuxt prepare"
+    "typecheck": "nuxt typecheck",
+    "check": "pnpm run typecheck && pnpm run build"
   },
   "dependencies": {
-    "@nmorph/nmorph-ui-kit": "file:../library",
+    "@nmorph/nmorph-ui-kit": "workspace:*",
     "@nuxtjs/i18n": "8.3.1",
     "nuxt": "3.13.1",
     "vue": "^3.5.25",
     "vue-i18n": "^9.14.5"
   },
   "devDependencies": {
-    "typescript": "~5.4.5"
+    "typescript": "~5.4.5",
+    "vite": "^5.4.21",
+    "vue-tsc": "^2.2.12"
   }
 }

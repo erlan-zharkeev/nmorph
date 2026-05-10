@@ -45,10 +45,9 @@ const iconSize = '10px';
 
   .nmorph-button__content {
     display: flex;
-    align-items: center;
-    justify-content: center;
-
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .nmorph-sort-button__icon-up {

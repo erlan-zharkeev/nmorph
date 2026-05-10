@@ -35,6 +35,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   scaleStep: 0.2,
   minScaleLevel: 0.2,
   maxScaleLevel: 4,
+  zIndex: undefined,
   showTrigger: true,
 });
 
@@ -255,12 +256,11 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
   display: contents;
 
   .nmorph-image-preview__content {
-    transition: var(--transition-04) opacity ease-in-out;
-
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    transition: var(--transition-04) opacity ease-in-out;
   }
 
   .nmorph-image-preview__actions {

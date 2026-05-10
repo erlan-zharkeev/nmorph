@@ -22,6 +22,7 @@ interface INmorphProps extends Omit<INmorphImage, 'src'> {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
+  src: undefined,
   size: 48,
   shape: 'circle',
   frameBorder: 2,

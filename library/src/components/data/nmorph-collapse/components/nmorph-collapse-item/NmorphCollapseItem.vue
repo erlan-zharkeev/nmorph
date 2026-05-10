@@ -105,9 +105,8 @@ watch(isOpen, () => {
     display: flex;
     align-items: center;
     padding: var(--indentation-02);
-    border-radius: var(--default-border-radius);
-
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -117,14 +116,13 @@ watch(isOpen, () => {
   .nmorph-collapse-item__content {
     box-sizing: content-box;
     overflow: hidden;
-    border-radius: var(--default-border-radius);
-    transition: height var(--transition-speed) ease-in-out;
-
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
+    transition: height var(--transition-speed) ease-in-out;
   }
 
   .nmorph-collapse-item__inner-wrapper {

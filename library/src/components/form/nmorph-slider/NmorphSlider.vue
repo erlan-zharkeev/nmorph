@@ -216,9 +216,8 @@ const transitionEnabled = ref(true);
     align-items: center;
     width: 100%;
     height: var(--value-fixed-container-height);
-    border-radius: var(--default-border-radius);
-
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -237,11 +236,11 @@ const transitionEnabled = ref(true);
   .nmorph-slider__thumb {
     position: absolute;
     z-index: 1;
+    width: var(--nmorph-slider-thumb-width);
+    height: 20px;
+    background: var(--nmorph-main-color);
     border: 0;
     border-radius: var(--default-border-radius);
-    height: 20px;
-
-    background: var(--nmorph-main-color);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -263,10 +262,9 @@ const transitionEnabled = ref(true);
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-
     width: 100%;
     background: transparent;
+    transform: translate(-50%, -50%);
     appearance: none;
   }
 
@@ -299,13 +297,10 @@ const transitionEnabled = ref(true);
   &.nmorph-slider--disabled {
     cursor: not-allowed;
     opacity: 0.6;
+
     .nmorph-slider__input-content {
       pointer-events: none;
     }
-  }
-
-  .nmorph-slider__thumb {
-    width: var(--nmorph-slider-thumb-width);
   }
 }
 </style>
