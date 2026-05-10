@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter, useRoute } from 'vue-router'
 import { NmorphSwitch, useNmorph } from '@nmorph/nmorph-ui-kit'
-import { saveLocale } from '@sandbox/locale'
+import { getStoredLocale, saveLocale } from '@sandbox/locale'
 
 const { locale } = useI18n({ useScope: 'global' })
-const router = useRouter()
 const route = useRoute()
 const { theme } = useNmorph()
 const currentTheme = theme.currentTheme
@@ -31,6 +29,10 @@ const toggleLocale = (value: boolean | string | number) => {
   locale.value = value ? 'ru' : 'en'
 }
 
+onMounted(() => {
+  locale.value = getStoredLocale()
+})
+
 watch(
   locale,
   (value) => {
@@ -44,31 +46,33 @@ watch(
   <div class="layout">
     <header class="layout__header">
       <nav class="layout__nav">
-        <button
+        <NuxtLink
           v-for="item in nav"
           :key="item.path"
+          :to="item.path"
           class="layout__nav-item"
           :class="{ 'layout__nav-item--active': route.path === item.path }"
-          @click="router.push(item.path)"
         >
           {{ item.label }}
-        </button>
+        </NuxtLink>
       </nav>
-      <div class="layout__controls">
-        <div class="layout__control">
-          <span class="layout__control-label">EN</span>
-          <NmorphSwitch :model-value="isRussian" @update:model-value="toggleLocale" />
-          <span class="layout__control-label">RU</span>
+      <ClientOnly>
+        <div class="layout__controls">
+          <div class="layout__control">
+            <span class="layout__control-label">EN</span>
+            <NmorphSwitch :model-value="isRussian" @update:model-value="toggleLocale" />
+            <span class="layout__control-label">RU</span>
+          </div>
+          <div class="layout__control">
+            <span class="layout__control-label">Light</span>
+            <NmorphSwitch :model-value="isDarkTheme" @update:model-value="toggleTheme" />
+            <span class="layout__control-label">Dark</span>
+          </div>
         </div>
-        <div class="layout__control">
-          <span class="layout__control-label">Light</span>
-          <NmorphSwitch :model-value="isDarkTheme" @update:model-value="toggleTheme" />
-          <span class="layout__control-label">Dark</span>
-        </div>
-      </div>
+      </ClientOnly>
     </header>
     <main class="layout__content">
-      <RouterView />
+      <NuxtPage />
     </main>
   </div>
 </template>
@@ -98,6 +102,8 @@ watch(
 }
 
 .layout__nav-item {
+  display: inline-flex;
+  align-items: center;
   padding: 6px 14px;
   border-radius: 6px;
   border: none;
@@ -106,6 +112,7 @@ watch(
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
+  text-decoration: none;
   transition: background 0.15s, color 0.15s;
 }
 

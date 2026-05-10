@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, shallowRef } from "vue";
 import {
   NmorphBacktop,
   NmorphBreadcrumb,
@@ -15,8 +15,16 @@ import SandboxSection from "@sandbox/components/SandboxSection.vue";
 const activeTab = ref("tab1");
 const panesTab = ref("overview");
 const dropdownOpen = ref(false);
-const dropdownTarget = ref<HTMLElement | null>(null);
+const dropdownTarget = shallowRef<HTMLElement | null>(null);
 const contextMenuOpen = ref(false);
+const contextMenuOptions = [
+  "Open",
+  "Rename",
+  {
+    label: "Delete",
+    color: "var(--nmorph-error-text-color)",
+  },
+];
 
 const panes = [
   { name: "overview", label: "Overview", content: "Content from panes prop" },
@@ -96,21 +104,14 @@ const panes = [
 
     <SandboxSection title="NmorphContextMenu">
       <div class="context-menu-demo">
-        <NmorphContextMenu v-model="contextMenuOpen" trigger="both" :width="200" :y-offset="6" aria-label="Context actions">
+        <NmorphContextMenu
+          v-model="contextMenuOpen"
+          :options="contextMenuOptions"
+          trigger="both"
+          :y-offset="6"
+          aria-label="Context actions"
+        >
           <NmorphButton text="Context btn" />
-          <template #menu="{ close }">
-            <div class="context-menu">
-              <NmorphButton text="Open" style-type="transparent" fill @click="close" />
-              <NmorphButton text="Rename" style-type="transparent" fill @click="close" />
-              <NmorphButton
-                text="Delete"
-                style-type="transparent"
-                color="var(--nmorph-error-text-color)"
-                fill
-                @click="close"
-              />
-            </div>
-          </template>
         </NmorphContextMenu>
         <span class="context-menu-state">open: {{ contextMenuOpen }}</span>
       </div>
@@ -185,16 +186,6 @@ const panes = [
   display: flex;
   gap: 12px;
   align-items: center;
-}
-
-.context-menu {
-  display: grid;
-  gap: 4px;
-  padding: 6px;
-}
-
-.context-menu :deep(.nmorph-button--transparent .nmorph-button__content:not(:disabled, [loading='true']):hover) {
-  background: color-mix(in srgb, var(--nmorph-button-hover-color, var(--nmorph-accent-color)) 12%, transparent);
 }
 
 .context-menu-state {

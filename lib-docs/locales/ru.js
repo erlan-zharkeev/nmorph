@@ -221,6 +221,12 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "context-menu-options-api":
+          "NmorphContextMenu теперь принимает options текстом, объектами и компонентами со встроенной раскладкой пунктов, hover states, disabled handling и select events.",
+        "context-menu-scroll-position":
+          "Click trigger у NmorphContextMenu теперь остается привязанным к trigger при скролле, меню от pointer закрывается на scroll, а автоматическая ширина держит пункты прижатыми влево.",
+        "sandbox-nuxt-migration":
+          "Старый nuxt-sandbox workspace удален, а основной sandbox теперь работает на Nuxt и использует для context menu тот же public API, что и документация.",
         "context-menu-trigger-modes":
           "NmorphContextMenu теперь поддерживает trigger modes contextmenu, click и both, корректно работает без v-model и документирует новый trigger API.",
         "badge-min-width":

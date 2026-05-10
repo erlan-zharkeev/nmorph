@@ -1,13 +1,23 @@
+import { resolve } from "node:path";
+
+const sandboxSrc = resolve(__dirname, "src");
+
 export default defineNuxtConfig({
   compatibilityDate: "2024-09-05",
+  debug: false,
+  srcDir: "src",
   ssr: true,
+  telemetry: false,
   devtools: { enabled: false },
-  css: ["~/assets/style.css"],
+  css: ["~/style.css"],
   modules: ["@nuxtjs/i18n", "@nmorph/nmorph-ui-kit/nuxt"],
   nmorph: {},
   devServer: {
-    host: "127.0.0.1",
-    port: 43119,
+    host: "0.0.0.0",
+    port: 43173,
+  },
+  alias: {
+    "@sandbox": sandboxSrc,
   },
   vite: {
     optimizeDeps: {
@@ -27,7 +37,7 @@ export default defineNuxtConfig({
   i18n: {
     strategy: "no_prefix",
     defaultLocale: "en",
-    vueI18n: "./i18n.config.ts",
+    vueI18n: "../i18n.config.ts",
     compilation: {
       strictMessage: false,
     },

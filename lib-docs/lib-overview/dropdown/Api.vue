@@ -79,6 +79,11 @@ const attributesData: IAttributesTableData[] = [
     type: "String",
     default: "-",
   },
+  {
+    name: "content-class",
+    type: "String",
+    default: "-",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "default" }];

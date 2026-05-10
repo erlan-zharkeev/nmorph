@@ -3,6 +3,7 @@ export { default as NmorphBreadcrumb } from './nmorph-breadcrumb/NmorphBreadcrum
 export * from './nmorph-breadcrumb/types';
 export { default as NmorphBreadcrumbItem } from './nmorph-breadcrumb/components/nmorph-breadcrumb-item/NmorphBreadcrumbItem.vue';
 export { default as NmorphContextMenu } from './nmorph-context-menu/NmorphContextMenu.vue';
+export * from './nmorph-context-menu/types';
 export { default as NmorphDropdown } from './nmorph-dropdown/NmorphDropdown.vue';
 export { default as NmorphTabs } from './nmorph-tabs/NmorphTabs.vue';
 export * from './nmorph-tabs/type';

@@ -21,6 +21,7 @@ interface INmorphProps {
   trapFocus?: boolean;
   role?: string;
   ariaLabel?: string;
+  contentClass?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -36,6 +37,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   trapFocus: false,
   role: 'listbox',
   ariaLabel: '',
+  contentClass: '',
 });
 
 interface INmorphEmit {
@@ -106,7 +108,7 @@ const escapeHandler = () => {
     <div
       v-if="props.open"
       ref="dropdownDOMRef"
-      :class="modifiers"
+      :class="[modifiers, props.contentClass]"
       :style="dropdownStyle"
       :role="props.role || undefined"
       :aria-label="props.ariaLabel || undefined"

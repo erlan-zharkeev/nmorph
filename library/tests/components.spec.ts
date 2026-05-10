@@ -710,7 +710,11 @@ describe('components', () => {
     await nextTick();
     await nextTick();
 
-    expect(document.body.querySelector('.nmorph-dropdown')).toBeTruthy();
+    const dropdown = document.body.querySelector('.nmorph-dropdown') as HTMLElement;
+
+    expect(dropdown).toBeTruthy();
+    expect(dropdown.classList.contains('nmorph-context-menu__dropdown')).toBe(true);
+    expect(dropdown.style.getPropertyValue('--nmorph-dropdown-width')).toBe('max-content');
 
     wrapper.unmount();
     target.remove();
@@ -736,6 +740,9 @@ describe('components', () => {
       },
     });
 
+    const root = wrapper.find('.nmorph-context-menu').element as HTMLElement;
+    const rootRect = vi.spyOn(root, 'getBoundingClientRect').mockReturnValue(rect(120, 70, 90, 40));
+
     await wrapper.find('.context-target').trigger('click', { clientX: 120, clientY: 70, button: 0 });
     await nextTick();
     await nextTick();
@@ -750,7 +757,108 @@ describe('components', () => {
     await nextTick();
 
     expect(dropdown.style.left).toBe('120px');
-    expect(dropdown.style.top).toBe('70px');
+    expect(dropdown.style.top).toBe('110px');
+
+    rootRect.mockReturnValue(rect(120, 40, 90, 40));
+    window.dispatchEvent(new Event('scroll'));
+    await nextTick();
+    await nextTick();
+
+    expect(dropdown.style.left).toBe('120px');
+    expect(dropdown.style.top).toBe('80px');
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  it('closes pointer context menu on scroll', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphContextMenu, {
+      attachTo: target,
+      slots: {
+        default: '<button class="context-target">Target</button>',
+        menu: '<button class="context-action">Action</button>',
+      },
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await wrapper.find('.context-target').trigger('contextmenu', { clientX: 100, clientY: 80 });
+    await nextTick();
+    await nextTick();
+
+    expect(document.body.querySelector('.nmorph-dropdown')).toBeTruthy();
+
+    window.dispatchEvent(new Event('scroll'));
+    await nextTick();
+
+    expect(document.body.querySelector('.nmorph-dropdown')).toBeFalsy();
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  it('renders context menu options and emits select', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+    const CustomOption = defineComponent({
+      props: {
+        label: String,
+      },
+      template: '<span class="custom-option">{{ label }}</span>',
+    });
+    const componentOption = {
+      value: 'custom',
+      component: CustomOption,
+      componentProps: { label: 'Custom option' },
+      closeOnClick: false,
+    };
+
+    const wrapper = mount(NmorphContextMenu, {
+      attachTo: target,
+      props: {
+        trigger: 'click',
+        options: ['Open', { label: 'Delete', color: 'var(--nmorph-error-text-color)' }, componentOption],
+      },
+      slots: {
+        default: '<button class="context-target">Target</button>',
+      },
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    vi.spyOn(wrapper.find('.nmorph-context-menu').element, 'getBoundingClientRect').mockReturnValue(rect(20, 30, 80, 32));
+
+    await wrapper.find('.context-target').trigger('click', { button: 0 });
+    await nextTick();
+    await nextTick();
+
+    const items = Array.from(document.body.querySelectorAll<HTMLElement>('.nmorph-context-menu__item'));
+
+    expect(items).toHaveLength(3);
+    expect(items[0].textContent).toContain('Open');
+    expect(items[1].style.getPropertyValue('--nmorph-context-menu-item-color')).toBe('var(--nmorph-error-text-color)');
+    expect(document.body.querySelector('.custom-option')?.textContent).toBe('Custom option');
+
+    items[2].click();
+    await nextTick();
+
+    expect(wrapper.emitted('select')?.[0]).toEqual([componentOption, 2]);
+    expect(document.body.querySelector('.nmorph-dropdown')).toBeTruthy();
+
+    items[0].click();
+    await nextTick();
+
+    expect(wrapper.emitted('select')?.[1]).toEqual(['Open', 0]);
+    expect(document.body.querySelector('.nmorph-dropdown')).toBeFalsy();
 
     wrapper.unmount();
     target.remove();

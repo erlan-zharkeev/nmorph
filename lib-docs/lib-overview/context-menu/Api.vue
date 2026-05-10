@@ -19,6 +19,11 @@ const attributesData: IAttributesTableData[] = [
     default: "contextmenu",
   },
   {
+    name: "options",
+    type: "Array<String | Number | Object>",
+    default: "[]",
+  },
+  {
     name: "placement",
     type: `"top" | "top-start" | "top-center" | "top-end" | "right" | "right-start" | "right-center" | "right-end" | "bottom" | "bottom-start" | "bottom-center" | "bottom-end" | "left" | "left-start" | "left-center" | "left-end"`,
     default: "bottom-start",
@@ -26,7 +31,7 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "width",
     type: "Number | String",
-    default: "160",
+    default: "max-content",
   },
   {
     name: "min-width",
@@ -74,6 +79,11 @@ const attributesData: IAttributesTableData[] = [
     default: "false",
   },
   {
+    name: "close-on-scroll",
+    type: "Boolean",
+    default: "true",
+  },
+  {
     name: "role",
     type: "String",
     default: "menu",
@@ -91,6 +101,7 @@ const eventsData: IEventsTableData[] = [
   { name: "update:model-value", type: "Boolean" },
   { name: "open", type: "MouseEvent | KeyboardEvent" },
   { name: "close", type: "void" },
+  { name: "select", type: "NmorphContextMenuOption, Number" },
   { name: "on-outside-click", type: "void" },
   { name: "on-escape-keydown", type: "void" },
 ];

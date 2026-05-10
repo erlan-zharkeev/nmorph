@@ -209,6 +209,12 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "context-menu-options-api":
+          "NmorphContextMenu 现在支持文本、对象和组件 options，并内置菜单项布局、hover states、disabled handling 与 select events。",
+        "context-menu-scroll-position":
+          "NmorphContextMenu 的 click trigger 现在滚动时保持绑定到触发元素，指针打开的菜单会在 scroll 时关闭，自动宽度也会让菜单项左对齐。",
+        "sandbox-nuxt-migration":
+          "旧的 nuxt-sandbox workspace 已移除，主 sandbox 现在运行在 Nuxt 上，并通过与文档相同的 public API 展示 context menu。",
         "context-menu-trigger-modes":
           "NmorphContextMenu 现在支持 contextmenu、click 和 both trigger modes，修复无 v-model 的 uncontrolled 用法，并补充新 trigger API 文档。",
         "badge-min-width":
