@@ -1,50 +1,16 @@
 <script setup lang="ts">
-import { NmorphButton } from "@nmorph/nmorph-ui-kit";
-
-import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
-
-const scriptData = ``;
-
-const templateData = `
-<template>
-  <NmorphButton style-type="default" loading />
-  <NmorphButton style-type="transparent" loading />
-</template>
-`;
-const cssData = `
-<style lang="scss">
-  .button-loading-overview {
-    .nmorph-button {
-      margin: 0 8px;
-    }
-  }
-</style>
-`;
-const code = [scriptData, templateData, cssData];
+import DocsExample from "~/components/docs-example/DocsExample.vue";
+import LoadingExample from "./Loading.example.vue";
+import loadingSource from "./Loading.example.vue?raw";
 </script>
 
 <template>
   <div id="content-loading">
-    <Attribute header="Loading" :subtitle="$t('overview.button.loading.subtitle')" :codeToCopy="code">
-      <template #overview>
-        <div class="button-loading-overview">
-          <ClientOnly>
-            <NmorphButton style-type="default" loading />
-            <NmorphButton style-type="transparent" loading />
-          </ClientOnly>
-        </div>
-      </template>
-      <template #code>
-        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
-      </template>
-    </attribute>
+    <DocsExample
+      header="Loading"
+      :subtitle="$t('overview.button.loading.subtitle')"
+      :component="LoadingExample"
+      :source="loadingSource"
+    />
   </div>
 </template>
-
-<style lang="scss">
-.button-loading-overview {
-  .nmorph-button {
-    margin: 0 8px;
-  }
-}
-</style>

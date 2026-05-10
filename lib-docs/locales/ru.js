@@ -221,6 +221,16 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "docs-example-source-files":
+          "Примеры attributes в документации теперь используют общие source `.example.vue` файлы, поэтому preview и highlighted code остаются синхронизированными без копирования template и styles.",
+        "docs-code-copy-fix":
+          "Code blocks в документации теперь сохраняют правильный верхний отступ и копируют полный source примера через Clipboard API с fallback.",
+        "callout-default-bottom-spacing":
+          "У NmorphCallout теперь есть default bottom spacing, поэтому stacked callouts и следующий контент больше не прилегают друг к другу.",
+        "storybook-sass-modern-api":
+          "Storybook и library dev configs теперь используют Dart Sass modern API вместо deprecated legacy JS API.",
+        "ci-pnpm-publish":
+          "CI build и publish jobs теперь устанавливают workspace через pnpm и публикуют библиотеку из подготовленного package.",
         "nuxt-theme-first-paint":
           "Nuxt integration теперь применяет сохраненную тему до первого paint, добавляет SSR theme/common styles и убирает мигание light/dark темы при reload.",
         "backtop-teleport-safe-area":

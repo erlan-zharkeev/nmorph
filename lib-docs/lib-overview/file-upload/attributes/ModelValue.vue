@@ -1,50 +1,15 @@
 <script setup lang="ts">
-import { NmorphFileUpload } from "@nmorph/nmorph-ui-kit";
-
-import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
-
-const scriptData = `
-<script lang="ts" setup>
-  const value = ref([]);
-<\/script>
-`;
-
-const templateData = `
-<template>
-  <NmorphFileUpload v-model="value" />
-</template>
-`;
-const cssData = `
-<style lang="scss">
-  .file-upload-model-value-overview {
-    width: 300px;
-  }
-</style>
-`;
-const code = [scriptData, templateData, cssData];
-
-const value = ref([]);
+import DocsExample from "~/components/docs-example/DocsExample.vue";
+import ModelValueExample from "./ModelValue.example.vue";
+import modelValueSource from "./ModelValue.example.vue?raw";
 </script>
 
 <template>
   <div id="content-model-value">
-    <Attribute header="Model-value" :codeToCopy="code">
-      <template #overview>
-        <div class="file-upload-model-value-overview">
-          <ClientOnly>
-            <NmorphFileUpload v-model="value" />
-          </ClientOnly>
-        </div>
-      </template>
-      <template #code>
-        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
-      </template>
-    </Attribute>
+    <DocsExample
+      header="Model-value"
+      :component="ModelValueExample"
+      :source="modelValueSource"
+    />
   </div>
 </template>
-
-<style lang="scss">
-.file-upload-model-value-overview {
-  width: 300px;
-}
-</style>

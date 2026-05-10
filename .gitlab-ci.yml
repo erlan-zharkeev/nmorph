@@ -15,21 +15,26 @@ stages:
 cache:
   key: $CI_COMMIT_REF_SLUG
   paths:
-    - lib-docs/node_modules/
+    - .pnpm-store/
 
 variables:
   NODE_ENV: production
+  PNPM_VERSION: "10.33.0"
+
+.pnpm_setup:
+  before_script:
+    - corepack enable
+    - corepack prepare pnpm@$PNPM_VERSION --activate
+    - pnpm config set store-dir .pnpm-store
 
 build-docs:
   stage: build
-  before_script:
-    - rm -rf lib-docs/node_modules
+  extends: .pnpm_setup
   script:
-    - cd lib-docs
-    - npm ci --ignore-scripts
-    - npm install --no-save --ignore-scripts @rollup/rollup-linux-x64-gnu @esbuild/linux-x64
-    - npm run postinstall
-    - npm run generate
+    - pnpm install --frozen-lockfile --prod=false --ignore-scripts
+    - pnpm --filter @nmorph/nmorph-ui-kit build
+    - pnpm --filter nmorph-lib-docs exec nuxt prepare
+    - pnpm --filter nmorph-lib-docs generate
   artifacts:
     paths:
       - lib-docs/.output/public
@@ -58,6 +63,7 @@ pages:
 publish:
   stage: release
   image: node:24
+  extends: .pnpm_setup
   id_tokens:
     NPM_ID_TOKEN:
       aud: "npm:registry.npmjs.org"
@@ -66,17 +72,15 @@ publish:
   variables:
     NODE_ENV: development
     NPM_CONFIG_PRODUCTION: "false"
-  before_script:
-    - rm -rf library/node_modules
   script:
-    - cd library
     - |
       if [ -z "$NPM_ID_TOKEN" ]; then
         echo "NPM_ID_TOKEN is empty. Trusted publishing requires GitLab.com shared runners and a configured Trusted Publisher on npmjs.com."
         exit 1
       fi
-    - npm ci --include=dev --ignore-scripts
-    - npm install --no-save @rollup/rollup-linux-x64-gnu @esbuild/linux-x64
+    - pnpm install --frozen-lockfile --prod=false --ignore-scripts
+    - pnpm --filter @nmorph/nmorph-ui-kit build
+    - cd library
     - PACKAGE_NAME=$(node -p "require('./package.json').name")
     - PACKAGE_VERSION=$(node -p "require('./package.json').version")
     - PUBLISHED_VERSION=$(npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version --registry=https://registry.npmjs.org/ 2>/dev/null || true)
@@ -85,7 +89,6 @@ publish:
         echo "Version $PACKAGE_VERSION is already published for $PACKAGE_NAME. Skipping publish."
         exit 0
       fi
-    - npm run build
     - npm pack --dry-run
     - npm publish --access public --registry=https://registry.npmjs.org/
   rules:

@@ -29,8 +29,29 @@ watch(codeOpen, (newValue) => {
   accordionOpen.value = newValue ? "1" : "";
 });
 
-const copyHandler = () => {
-  navigator.clipboard.writeText(props.codeToCopy.join(" "));
+const fallbackCopy = (text: string) => {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.top = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+};
+
+const copyHandler = async () => {
+  const text = props.codeToCopy.filter(Boolean).join("\n\n");
+
+  try {
+    if (navigator.clipboard?.writeText)
+      await navigator.clipboard.writeText(text);
+    else fallbackCopy(text);
+  } catch {
+    fallbackCopy(text);
+  }
+
   notificationProvider.notify({
     content: `Copied`,
     duration: 2000,
@@ -44,12 +65,12 @@ const copyHandler = () => {
 function highlightText(str: string) {
   return str.replace(
     /\*([a-zA-Z0-9\s]+)\*/g,
-    `<span class="docs-attribute__props">$1</span>`
+    `<span class="docs-attribute__props">$1</span>`,
   );
 }
 
 const highlightedSubtitle = computed(() =>
-  props.subtitle ? highlightText(props.subtitle) : ""
+  props.subtitle ? highlightText(props.subtitle) : "",
 );
 
 const infoData = `overview.${props.infoName}.info`;
@@ -58,9 +79,17 @@ const infoData = `overview.${props.infoName}.info`;
 <template>
   <div class="docs-attribute">
     <h2 class="docs-attribute__header nmorph-title-3">{{ props.header }}</h2>
-    <NmorphCallout v-if="props.infoName" :title="$t(`${infoData}.title`)" :content="$t(`${infoData}.content`)"
-      :type="props.infoType" />
-    <p class="docs-attribute__subtitle nmorph-body-2" v-if="props.subtitle" v-html="highlightedSubtitle" />
+    <NmorphCallout
+      v-if="props.infoName"
+      :title="$t(`${infoData}.title`)"
+      :content="$t(`${infoData}.content`)"
+      :type="props.infoType"
+    />
+    <p
+      class="docs-attribute__subtitle nmorph-body-2"
+      v-if="props.subtitle"
+      v-html="highlightedSubtitle"
+    />
     <div class="docs-components__tips"></div>
     <div class="docs-attribute__wrapper nmorph--shadow-outset">
       <div class="docs-component__overview">
@@ -68,12 +97,17 @@ const infoData = `overview.${props.infoName}.info`;
       </div>
       <div class="docs-component__overview-component-actions">
         <ClientOnly>
-          <NmorphButton @click="copyHandler">
+          <NmorphButton @click.stop="copyHandler">
             <template #icon-only>
               <NmorphIconCopy />
             </template>
           </NmorphButton>
-          <NmorphCheckbox v-model="codeOpen" design="button" height="basic" class="docs-attribute__code-btn">
+          <NmorphCheckbox
+            v-model="codeOpen"
+            design="button"
+            height="basic"
+            class="docs-attribute__code-btn"
+          >
             <template #label>
               <NmorphIcon>
                 <NmorphIconCode />
@@ -98,16 +132,13 @@ const infoData = `overview.${props.infoName}.info`;
   }
 }
 
-:deep(.nmorph-collapse-item__inner-wrapper) {
-  padding-top: 0;
-}
-
 :deep(.nmorph-collapse-item .nmorph-collapse-item__title) {
   display: none;
 }
 
 :deep(.nmorph-collapse-item__inner-wrapper) {
-  margin-top: -10px;
+  margin-top: 0;
+  padding: 16px 8px 14px;
 }
 
 .docs-attribute {

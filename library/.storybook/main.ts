@@ -35,6 +35,13 @@ const config: StorybookConfig = {
 
     return mergeConfig(config, {
       plugins: [vue(), svgLoader()],
+      css: {
+        preprocessorOptions: {
+          scss: {
+            api: 'modern',
+          },
+        },
+      },
       resolve: {
         alias: {
           '@': resolve(libraryRoot, 'src'),
