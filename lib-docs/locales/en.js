@@ -219,6 +219,16 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "docs-example-source-files":
+          "Docs attribute examples now use shared source `.example.vue` files, so the rendered preview and highlighted code stay in sync without duplicating templates and styles.",
+        "docs-code-copy-fix":
+          "Docs code blocks now keep the correct top spacing and copy the full example source through the clipboard API with a fallback path.",
+        "callout-default-bottom-spacing":
+          "NmorphCallout now has default bottom spacing, so stacked callouts and following content no longer touch each other.",
+        "storybook-sass-modern-api":
+          "Storybook and library dev configs now use the Dart Sass modern API instead of the deprecated legacy JS API.",
+        "ci-pnpm-publish":
+          "CI build and publish jobs now install the workspace with pnpm and publish the library from the prepared package.",
         "nuxt-theme-first-paint":
           "Nuxt integration now applies the saved theme before first paint, injects SSR theme/common styles, and avoids the light/dark theme flash on reload.",
         "backtop-teleport-safe-area":

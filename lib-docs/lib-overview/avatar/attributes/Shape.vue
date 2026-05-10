@@ -1,56 +1,16 @@
 <script setup lang="ts">
-import { NmorphAvatar } from "@nmorph/nmorph-ui-kit";
-import { Dog, Racoon } from "~/assets/images";
-
-import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
-
-const scriptData = ``;
-const templateData = `
-<template>
-  <NmorphAvatar :src="./bear.jpg" :size="70" shape="square" />
-  <NmorphAvatar :src="./cat.jpg" :size="70" shape="circle" />
-</template>
-`;
-
-const cssData = `
-<style lang="scss">
-  .avatar-shape-overview {
-    display: flex;
-    align-items: center;
-    .nmorph-avatar {
-      margin-right: 12px;
-    }
-  }
-</style>
-`;
-const code = [scriptData, templateData, cssData];
+import DocsExample from "~/components/docs-example/DocsExample.vue";
+import ShapeExample from "./Shape.example.vue";
+import shapeSource from "./Shape.example.vue?raw";
 </script>
 
 <template>
   <div id="content-shape">
-    <Attribute header="Shape" :subtitle="$t('overview.avatar.shape.subtitle')" :codeToCopy="code">
-      <template #overview>
-        <div class="avatar-shape-overview">
-          <ClientOnly>
-            <NmorphAvatar :src="Dog" :size="70" shape="square" />
-            <NmorphAvatar :src="Racoon" :size="70" shape="circle" />
-          </ClientOnly>
-        </div>
-      </template>
-      <template #code>
-        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
-      </template>
-    </attribute>
+    <DocsExample
+      header="Shape"
+      :subtitle="$t('overview.avatar.shape.subtitle')"
+      :component="ShapeExample"
+      :source="shapeSource"
+    />
   </div>
 </template>
-
-<style lang="scss">
-.avatar-shape-overview {
-  display: flex;
-  align-items: center;
-
-  .nmorph-avatar {
-    margin-right: 12px;
-  }
-}
-</style>

@@ -209,6 +209,16 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "docs-example-source-files":
+          "文档 attributes 示例现在使用共享的 `.example.vue` source 文件，因此 preview 与 highlighted code 会保持同步，不再复制 template 和 styles。",
+        "docs-code-copy-fix":
+          "文档 code blocks 现在保留正确的顶部间距，并通过 Clipboard API 复制完整示例 source，且带有 fallback。",
+        "callout-default-bottom-spacing":
+          "NmorphCallout 现在带有默认 bottom spacing，连续 callout 与后续内容不再贴在一起。",
+        "storybook-sass-modern-api":
+          "Storybook 和 library dev configs 现在使用 Dart Sass modern API，不再使用 deprecated legacy JS API。",
+        "ci-pnpm-publish":
+          "CI build 与 publish jobs 现在通过 pnpm 安装 workspace，并从准备好的 package 发布库。",
         "nuxt-theme-first-paint":
           "Nuxt 集成现在会在首次绘制前应用已保存的主题，注入 SSR theme/common styles，并避免 reload 时 light/dark 主题闪烁。",
         "backtop-teleport-safe-area":

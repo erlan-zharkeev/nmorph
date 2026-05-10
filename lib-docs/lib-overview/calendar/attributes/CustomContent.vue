@@ -1,61 +1,15 @@
 <script setup lang="ts">
-import { NmorphCalendar } from "@nmorph/nmorph-ui-kit";
-import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
-
-const scriptData = `
-<script lang="ts" setup>
-  const date = ref(new Date());
-<\/script>
-`;
-
-const templateData = `
-<template>
-  <div class="calendar-custom-content-overview">
-    <NmorphCalendar :initial-date="new Date()" v-model="date">
-      <template #date-cell="{ scope }">
-        {{ scope.isToday ? "TODAY" : scope.value }}
-      </template>
-    </NmorphCalendar>
-  </div>
-</template>
-`;
-
-const cssData = `
-<style lang="scss">
-  .calendar-custom-content-overview {
-    width: 100%;
-  }
-</style>
-`;
-
-const code = [scriptData, templateData, cssData];
-
-const date = ref(new Date());
+import DocsExample from "~/components/docs-example/DocsExample.vue";
+import CustomContentExample from "./CustomContent.example.vue";
+import customContentSource from "./CustomContent.example.vue?raw";
 </script>
 
 <template>
   <div id="content-custom-content">
-    <Attribute header="Custom content" :codeToCopy="code">
-      <template #overview>
-        <div class="calendar-custom-content-overview">
-          <ClientOnly>
-            <NmorphCalendar :initial-date="new Date()" v-model="date">
-              <template #date-cell="{ scope }">
-                {{ scope.isToday ? "!TODAY!" : scope.value }}
-              </template>
-            </NmorphCalendar>
-          </ClientOnly>
-        </div>
-      </template>
-      <template #code>
-        <code-slot-data :template-data="templateData" :script-data="scriptData" :css-data="cssData" />
-      </template>
-    </attribute>
+    <DocsExample
+      header="Custom content"
+      :component="CustomContentExample"
+      :source="customContentSource"
+    />
   </div>
 </template>
-
-<style lang="scss">
-.calendar-custom-content-overview {
-  width: 100%;
-}
-</style>
