@@ -6,9 +6,9 @@ import { INmorphOptions } from './types/index.ts';
 type VueI18nApp = App & {
   __VUE_I18N__?: {
     global: {
-      messages: { value?: Record<string, unknown> };
-      locale: { value?: unknown };
-      mergeLocaleMessage: (locale: string, messages: unknown) => void;
+      messages?: { value?: Record<string, unknown> };
+      locale?: { value?: unknown };
+      mergeLocaleMessage?: (locale: string, messages: unknown) => void;
     };
   };
 };
@@ -18,16 +18,19 @@ const library: Plugin = {
     if (!options?.i18n?.outsideMessagesMerge) {
       const libTranslates = useNmorphTranslation(options.i18n);
       const vueI18nInstance = (Vue as VueI18nApp).__VUE_I18N__;
-      if (vueI18nInstance) {
+      const vueI18nGlobal = vueI18nInstance?.global;
+      const hasI18nInstall = Boolean(Vue.component('i18n-t') || Vue.component('I18nT') || Vue.directive('t'));
+
+      if (vueI18nGlobal?.mergeLocaleMessage) {
         if (libTranslates.global.messages.value) {
           Object.entries(libTranslates.global.messages.value).forEach(([locale, messages]) => {
-            vueI18nInstance.global.mergeLocaleMessage(locale, messages);
+            vueI18nGlobal.mergeLocaleMessage?.(locale, messages);
           });
         }
-        if (libTranslates.global.locale.value) {
-          vueI18nInstance.global.locale.value = libTranslates.global.locale.value;
+        if (vueI18nGlobal.locale && libTranslates.global.locale.value) {
+          vueI18nGlobal.locale.value = libTranslates.global.locale.value;
         }
-      } else {
+      } else if (!hasI18nInstall) {
         Vue.use(libTranslates);
       }
     }

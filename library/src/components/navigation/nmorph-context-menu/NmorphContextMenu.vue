@@ -3,8 +3,11 @@ import { computed, ref, watch } from 'vue';
 import NmorphDropdown from '../nmorph-dropdown/NmorphDropdown.vue';
 import type { NmorphDomElementType, NmorphPlacementType } from '@/types';
 
+type NmorphContextMenuTrigger = 'contextmenu' | 'click' | 'both';
+
 interface INmorphProps {
-  modelValue?: boolean;
+  modelValue?: boolean | null;
+  trigger?: NmorphContextMenuTrigger;
   placement?: NmorphPlacementType;
   width?: number | string;
   minWidth?: number | string;
@@ -21,6 +24,8 @@ interface INmorphProps {
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
+  modelValue: null,
+  trigger: 'contextmenu',
   placement: 'bottom-start',
   width: 160,
   minWidth: undefined,
@@ -96,9 +101,15 @@ const openAt = (x: number, y: number, event: MouseEvent | KeyboardEvent) => {
 };
 
 const contextMenuHandler = (event: MouseEvent) => {
-  if (props.disabled) return;
+  if (props.disabled || (props.trigger !== 'contextmenu' && props.trigger !== 'both')) return;
 
   event.preventDefault();
+  openAt(event.clientX, event.clientY, event);
+};
+
+const clickHandler = (event: MouseEvent) => {
+  if (props.disabled || (props.trigger !== 'click' && props.trigger !== 'both') || event.button !== 0) return;
+
   openAt(event.clientX, event.clientY, event);
 };
 
@@ -131,6 +142,7 @@ defineExpose({ close });
   <div
     ref="triggerDOMRef"
     class="nmorph-context-menu"
+    @click="clickHandler"
     @contextmenu="contextMenuHandler"
     @keydown="keydownHandler"
   >

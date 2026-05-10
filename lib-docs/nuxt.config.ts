@@ -13,6 +13,7 @@ const siteUrl = "https://ketjo.gitlab.io/nmorph/";
 
 export default defineNuxtConfig({
   compatibilityDate: "2024-09-05",
+  debug: false,
   ssr: true,
   app: {
     head: {

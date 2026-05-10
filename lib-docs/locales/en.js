@@ -219,6 +219,12 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "context-menu-trigger-modes":
+          "NmorphContextMenu now supports contextmenu, click, and both trigger modes, fixes uncontrolled usage without v-model, and documents the new trigger API.",
+        "badge-min-width":
+          "NmorphBadge now keeps a wider minimum content width so one-character badges stay readable in compact layouts.",
+        "nuxt-hydration-warning-cleanup":
+          "Nuxt docs integration now avoids theme switch hydration mismatches, duplicate vue-i18n registration warnings, and noisy dev hook timing logs.",
         "docs-route-lazy-overviews":
           "Docs component overviews now lazy-load per route, including example sources and icon data, so the initial docs bundle stays smaller.",
         "library-entrypoints-tree-shaking":

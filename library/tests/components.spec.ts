@@ -689,6 +689,73 @@ describe('components', () => {
     target.remove();
   });
 
+  it('opens context menu without v-model', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphContextMenu, {
+      attachTo: target,
+      slots: {
+        default: '<button class="context-target">Target</button>',
+        menu: '<button class="context-action">Action</button>',
+      },
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await wrapper.find('.context-target').trigger('contextmenu', { clientX: 100, clientY: 80 });
+    await nextTick();
+    await nextTick();
+
+    expect(document.body.querySelector('.nmorph-dropdown')).toBeTruthy();
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  it('opens context menu from left click when trigger is click', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphContextMenu, {
+      attachTo: target,
+      props: {
+        trigger: 'click',
+      },
+      slots: {
+        default: '<button class="context-target">Target</button>',
+        menu: '<button class="context-action">Action</button>',
+      },
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await wrapper.find('.context-target').trigger('click', { clientX: 120, clientY: 70, button: 0 });
+    await nextTick();
+    await nextTick();
+
+    const dropdown = document.body.querySelector('.nmorph-dropdown') as HTMLElement;
+
+    expect(dropdown).toBeTruthy();
+
+    vi.spyOn(dropdown, 'getBoundingClientRect').mockReturnValue(rect(0, 0, 120, 60));
+    window.dispatchEvent(new Event('resize'));
+    await nextTick();
+    await nextTick();
+
+    expect(dropdown.style.left).toBe('120px');
+    expect(dropdown.style.top).toBe('70px');
+
+    wrapper.unmount();
+    target.remove();
+  });
+
   it('traps dialog focus and closes from Escape', async () => {
     const wrapper = mount(
       defineComponent({

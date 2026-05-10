@@ -96,7 +96,7 @@ const panes = [
 
     <SandboxSection title="NmorphContextMenu">
       <div class="context-menu-demo">
-        <NmorphContextMenu v-model="contextMenuOpen" :width="200" :y-offset="6" aria-label="Context actions">
+        <NmorphContextMenu v-model="contextMenuOpen" trigger="both" :width="200" :y-offset="6" aria-label="Context actions">
           <NmorphButton text="Context btn" />
           <template #menu="{ close }">
             <div class="context-menu">

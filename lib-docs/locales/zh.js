@@ -209,6 +209,12 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "context-menu-trigger-modes":
+          "NmorphContextMenu 现在支持 contextmenu、click 和 both trigger modes，修复无 v-model 的 uncontrolled 用法，并补充新 trigger API 文档。",
+        "badge-min-width":
+          "NmorphBadge 现在保持更宽的最小内容宽度，使单字符 badges 在紧凑布局中更易读。",
+        "nuxt-hydration-warning-cleanup":
+          "Nuxt docs integration 现在避免 theme switch hydration mismatches、duplicate vue-i18n registration warnings 和 noisy dev hook timing logs。",
         "docs-route-lazy-overviews":
           "文档 component overviews 现在按 route lazy-load，包括示例 source 与 icon data，因此 initial docs bundle 更小。",
         "library-entrypoints-tree-shaking":

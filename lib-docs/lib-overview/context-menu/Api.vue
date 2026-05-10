@@ -10,8 +10,13 @@ import ApiTable from "~/components/api-table/ApiTable.vue";
 const attributesData: IAttributesTableData[] = [
   {
     name: "model-value",
-    type: "Boolean",
+    type: "Boolean | null",
     default: "-",
+  },
+  {
+    name: "trigger",
+    type: `"contextmenu" | "click" | "both"`,
+    default: "contextmenu",
   },
   {
     name: "placement",

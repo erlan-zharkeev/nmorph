@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { NmorphButton, NmorphContextMenu } from "@nmorph/nmorph-ui-kit";
+import { ref } from "vue";
 
 const actions = [
   { label: "Open" },
   { label: "Duplicate" },
   { label: "Archive" },
 ];
+const contextMenuOpen = ref(false);
 </script>
 
 <template>
   <div class="context-menu-basic-usage-overview">
-    <NmorphContextMenu :width="180" :y-offset="4" :z-index="3000" aria-label="Context actions">
+    <NmorphContextMenu v-model="contextMenuOpen" trigger="both" :width="180" :y-offset="4" :z-index="3000" aria-label="Context actions">
       <NmorphButton :text="$t('overview.context-menu.basic-usage.target')" />
       <template #menu="{ close }">
         <div class="context-menu-basic-usage-overview__menu">
