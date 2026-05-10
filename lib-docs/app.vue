@@ -52,17 +52,25 @@ onUnmounted(async () => {
 <style lang="scss">
 @use "~/assets/style/index.scss";
 
-html {
+html,
+body,
+#__nuxt {
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
 .docs {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 
 .docs-shell {
-  min-height: calc(var(--vh, 1vh) * 100);
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
 }
 
 .docs-unsupported {

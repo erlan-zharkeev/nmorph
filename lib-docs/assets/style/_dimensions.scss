@@ -2,9 +2,10 @@
   --header-height: 50px;
   --footer-height: 30px;
   --margin: 8px;
+  --vh: 1vh;
 
   --container-height: calc(
-    calc(var(--vh) * 100) - var(--header-height) - var(--footer-height) -
+    calc(var(--vh, 1vh) * 100) - var(--header-height) - var(--footer-height) -
       (var(--margin) * 3) - 4px
   );
 }
@@ -12,4 +13,6 @@
 .nmorph-docs-content {
   height: var(--container-height);
   margin: var(--margin);
+  min-width: 0;
+  overflow: hidden;
 }

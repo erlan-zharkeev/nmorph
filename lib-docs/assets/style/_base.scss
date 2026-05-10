@@ -13,8 +13,10 @@ code {
 }
 
 .hljs {
+  display: block;
   background: transparent;
-  margin-top: -12px;
+  color: var(--docs-code-text-color);
+  overflow-x: auto;
 }
 
 .docs-attribute__props {
@@ -22,36 +24,91 @@ code {
   color: var(--nmorph-accent-color);
 }
 
-.hljs-name {
-  color: #569cd6;
+:root {
+  --docs-code-text-color: #d4d4d4;
+  --docs-code-comment-color: #6a9955;
+  --docs-code-keyword-color: #569cd6;
+  --docs-code-name-color: #569cd6;
+  --docs-code-title-color: #dcdcaa;
+  --docs-code-type-color: #4ec9b0;
+  --docs-code-attr-color: #9cdcfe;
+  --docs-code-string-color: #ce9178;
+  --docs-code-number-color: #b5cea8;
+  --docs-code-literal-color: #c586c0;
+  --docs-code-meta-color: #c586c0;
 }
 
-.hljs-attr {
-  color: #9cdcfe;
+.hljs-comment,
+.hljs-quote {
+  color: var(--docs-code-comment-color);
 }
 
-.hljs-string {
-  color: #ce723b;
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-section {
+  color: var(--docs-code-keyword-color);
 }
 
-.hljs-selector-class {
-  color: #569cd6;
+.hljs-name,
+.hljs-tag {
+  color: var(--docs-code-name-color);
 }
 
-.hljs-attribute {
-  color: #d7983c;
+.hljs-title,
+.hljs-title.function_,
+.hljs-function {
+  color: var(--docs-code-title-color);
+}
+
+.hljs-type,
+.hljs-class .hljs-title,
+.hljs-title.class_,
+.hljs-template-variable {
+  color: var(--docs-code-type-color);
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-property,
+.hljs-params,
+.hljs-attribute,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-selector-pseudo {
+  color: var(--docs-code-attr-color);
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-symbol,
+.hljs-bullet {
+  color: var(--docs-code-string-color);
 }
 
 .hljs-number {
-  color: #ce9178;
+  color: var(--docs-code-number-color);
+}
+
+.hljs-literal {
+  color: var(--docs-code-literal-color);
+}
+
+.hljs-meta,
+.hljs-doctag {
+  color: var(--docs-code-meta-color);
 }
 
 :root[nmorph-data-theme="light"] {
-  .hljs-attr {
-    color: #0070ac;
-  }
-
-  .hljs {
-    color: rgb(108, 108, 108);
-  }
+  --docs-code-text-color: #6b6f76;
+  --docs-code-comment-color: #6a9955;
+  --docs-code-keyword-color: #007acc;
+  --docs-code-name-color: #569cd6;
+  --docs-code-title-color: #7c6f00;
+  --docs-code-type-color: #16825d;
+  --docs-code-attr-color: #0070ac;
+  --docs-code-string-color: #ce723b;
+  --docs-code-number-color: #8a6500;
+  --docs-code-literal-color: #8f4ec6;
+  --docs-code-meta-color: #8f4ec6;
 }

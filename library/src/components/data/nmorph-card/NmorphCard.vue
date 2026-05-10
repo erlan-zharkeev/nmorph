@@ -58,16 +58,16 @@ const modifiers = computed(() =>
   }
 
   .nmorph-card__footer {
+    height: fit-content;
+    margin-top: 4px;
     font-weight: 400;
     font-size: var(--font-size-extra-small);
     line-height: var(--line-height-regular);
-    height: fit-content;
-    margin-top: 4px;
   }
 
   &.nmorph--shadow-combined {
-    border: var(--nmorph-card-combined-border-width) solid var(--nmorph-main-color);
     background: var(--nmorph-main-color);
+    border: var(--nmorph-card-combined-border-width) solid var(--nmorph-main-color);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)

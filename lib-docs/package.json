@@ -4,18 +4,18 @@
   "type": "module",
   "version": "0.0.8",
   "scripts": {
-    "prepare:library": "sh -c 'test -x ../library/node_modules/.bin/vue-tsc || npm --prefix ../library install --include=dev --no-fund --no-audit; npm --prefix ../library run build'",
-    "build": "npm run prepare:library && nuxt build",
-    "dev": "npm run prepare:library && nuxt dev --no-qr --open",
-    "clean": "rm -rf .nuxt node_modules && npm install",
-    "generate": "npm run prepare:library && nuxt generate",
-    "preview": "npm run prepare:library && nuxt preview",
-    "postinstall": "npm run prepare:library && nuxt prepare",
+    "build": "nuxt build",
+    "dev": "nuxt dev --no-qr --open",
+    "clean": "rm -rf .nuxt node_modules && pnpm install",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck",
+    "check": "pnpm run typecheck && pnpm run build",
     "generate-component": "node generate-component.js",
-    "deploy": "npm run generate && gh-pages -d dist"
+    "deploy": "pnpm run generate && gh-pages -d dist"
   },
   "dependencies": {
-    "@nmorph/nmorph-ui-kit": "file:../library",
+    "@nmorph/nmorph-ui-kit": "workspace:*",
     "@nuxtjs/i18n": "^8.3.1",
     "nuxt": "^3.11.2",
     "nuxt-svgo": "^4.0.1",

@@ -65,9 +65,9 @@ defineExpose({ tooltipBody });
       <transition-group v-if="props.forceCoordinate" name="opacity" tag="div">
         <div
           v-if="showTooltip && props.text"
+          ref="tooltipBody"
           class="nmorph-tooltip__info-content"
           :style="{ left: forceCoordinate?.x, bottom: forceCoordinate?.y }"
-          ref="tooltipBody"
         >
           <div class="nmorph-tooltip__shadow-content">
             <div v-if="!props.forceCoordinate" class="nmorph-tooltip__triangle" />
@@ -103,13 +103,13 @@ defineExpose({ tooltipBody });
 
   .nmorph-tooltip__info-content {
     position: absolute;
-    max-width: var(--max-width);
-    padding: var(--indentation-03);
-    border-radius: var(--default-border-radius);
-    box-shadow: 0px 0px 20px var(--nmorph-dark-shade-color);
     width: var(--width);
+    max-width: var(--max-width);
     height: var(--height);
+    padding: var(--indentation-03);
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
+    box-shadow: 0 0 20px var(--nmorph-dark-shade-color);
   }
 
   span {
@@ -134,8 +134,8 @@ defineExpose({ tooltipBody });
     .nmorph-tooltip__triangle {
       top: 100%;
       left: 50%;
-      border-color: var(--nmorph-main-color) transparent transparent transparent;
       border-width: 8px 8px 0;
+      border-color: var(--nmorph-main-color) transparent transparent transparent;
       transform: translateX(-50%);
     }
   }
@@ -150,8 +150,8 @@ defineExpose({ tooltipBody });
     .nmorph-tooltip__triangle {
       top: 50%;
       right: 100%;
-      border-color: transparent var(--nmorph-main-color) transparent transparent;
       border-width: 8px 8px 8px 0;
+      border-color: transparent var(--nmorph-main-color) transparent transparent;
       transform: translateY(-50%);
     }
   }
@@ -166,8 +166,8 @@ defineExpose({ tooltipBody });
     .nmorph-tooltip__triangle {
       bottom: 100%;
       left: 50%;
-      border-color: transparent transparent var(--nmorph-main-color) transparent;
       border-width: 0 8px 8px;
+      border-color: transparent transparent var(--nmorph-main-color) transparent;
       transform: translateX(-50%);
     }
   }
@@ -182,8 +182,8 @@ defineExpose({ tooltipBody });
     .nmorph-tooltip__triangle {
       top: 50%;
       left: 100%;
-      border-color: transparent transparent transparent var(--nmorph-main-color);
       border-width: 8px 0 8px 8px;
+      border-color: transparent transparent transparent var(--nmorph-main-color);
       transform: translateY(-50%);
     }
   }

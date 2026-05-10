@@ -115,15 +115,15 @@ const goToYearsHandler = () => {
 <template>
   <div :class="modifiers">
     <div class="nmorph-year-month-picker__header">
-      <NmorphButton class="nmorph-year-month-picker__action-btn" @click="buttonClickHandler('decrease')" :tabindex="-1">
+      <NmorphButton class="nmorph-year-month-picker__action-btn" :tabindex="-1" @click="buttonClickHandler('decrease')">
         <NmorphIcon class="nmorph-year-month-picker__chevron-left">
           <NmorphIconChevronDown />
         </NmorphIcon>
       </NmorphButton>
       <div class="nmorph-year-month-picker__value">
-        <NmorphButton :text="value" style-type="transparent" @click="goToYearsHandler" :tabindex="-1" />
+        <NmorphButton :text="value" :tabindex="-1" style-type="transparent" @click="goToYearsHandler" />
       </div>
-      <NmorphButton class="nmorph-year-month-picker__action-btn" @click="buttonClickHandler('increase')" :tabindex="-1">
+      <NmorphButton class="nmorph-year-month-picker__action-btn" :tabindex="-1" @click="buttonClickHandler('increase')">
         <NmorphIcon class="nmorph-year-month-picker__chevron-right">
           <NmorphIconChevronDown />
         </NmorphIcon>
@@ -146,12 +146,11 @@ const goToYearsHandler = () => {
 
   .nmorph-year-month-picker__value {
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
-
-    border-radius: var(--default-border-radius);
   }
 
   .nmorph-year-month-picker__values {

@@ -103,10 +103,8 @@ const slots = useSlots();
 
   .nmorph-alert__content-title {
     font-weight: 600;
-    line-height: 1;
-
-    font-weight: 600;
     font-size: var(--font-size-medium);
+    line-height: 1;
     line-height: var(--line-height-loose);
   }
 
@@ -129,6 +127,7 @@ const slots = useSlots();
   }
 
   .nmorph-alert__close {
+    align-self: var(--nmorph-alert-close-align);
     margin-left: var(--indentation-03);
     cursor: pointer;
 
@@ -175,10 +174,6 @@ const slots = useSlots();
 
   &.nmorph-alert--fill {
     width: 100%;
-  }
-
-  .nmorph-alert__close {
-    align-self: var(--nmorph-alert-close-align);
   }
 }
 </style>

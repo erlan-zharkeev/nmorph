@@ -69,8 +69,8 @@ const slots = useSlots();
           { 'nmorph-tabs__label--selected': tabData.name === props.modelValue },
           { 'nmorph-tabs__label--disabled': tabData.disabled },
         ]"
-        @click="changeTab(tabData)"
         :custom="tabData.disabled"
+        @click="changeTab(tabData)"
       >
         <div v-if="!slots.default">{{ tabData.label }}</div>
       </div>
@@ -97,10 +97,9 @@ const slots = useSlots();
   .nmorph-tabs__label-list {
     display: flex;
     padding: var(--indentation-02);
+    background: var(--nmorph-main-color);
     border-top-left-radius: var(--default-border-radius);
     border-top-right-radius: var(--default-border-radius);
-
-    background: var(--nmorph-main-color);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -110,14 +109,13 @@ const slots = useSlots();
   .nmorph-tabs__label {
     margin-right: var(--indentation-02);
     padding: var(--indentation-03);
-    border-radius: var(--default-border-radius);
-    cursor: pointer;
-
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
+    cursor: pointer;
 
     &.nmorph-tabs__label--disabled {
       cursor: not-allowed;
@@ -135,10 +133,9 @@ const slots = useSlots();
 
   .nmorph-tabs__content__wrapper {
     padding: var(--indentation-02);
+    background: var(--nmorph-main-color);
     border-bottom-right-radius: var(--default-border-radius);
     border-bottom-left-radius: var(--default-border-radius);
-
-    background: var(--nmorph-main-color);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -147,9 +144,8 @@ const slots = useSlots();
 
   .nmorph-tabs__content {
     padding: var(--indentation-03);
-    border-radius: var(--default-border-radius);
-
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)

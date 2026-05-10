@@ -33,6 +33,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   type: 'date',
   textSeparator: '-',
   initialDate: () => new Date(),
+  zIndex: undefined,
 });
 
 const { id, name, autocomplete } = useFormItemInput(props);
@@ -153,6 +154,7 @@ const showClearButton = computed(() => {
 <style lang="scss">
 .nmorph-date-picker {
   --width: 200px;
+
   position: relative;
   width: var(--width);
 
@@ -166,20 +168,18 @@ const showClearButton = computed(() => {
 
   .nmorph-date-picker__input {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     height: 100%;
     padding: 0 var(--indentation-03);
     overflow: hidden;
-
-    border-radius: var(--default-border-radius);
-    cursor: pointer;
-
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
+    cursor: pointer;
   }
 
   .nmorph-date-picker__selected-value {
@@ -212,11 +212,11 @@ const showClearButton = computed(() => {
 
   input {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     opacity: 0;
-    top: 0;
-    left: 0;
     pointer-events: none;
   }
 

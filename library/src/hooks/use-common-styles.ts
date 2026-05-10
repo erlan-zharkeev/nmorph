@@ -201,6 +201,14 @@ export const getCommonStyles = () => {
       background: var(--nmorph-main-color);
     }
 
+    :root[nmorph-data-theme='light'] {
+      --nmorph-scroll-color-scheme: light;
+    }
+
+    :root[nmorph-data-theme='dark'] {
+      --nmorph-scroll-color-scheme: dark;
+    }
+
     .nmorph--basic-component {
       --height: var(--default-thickness-component);
 
@@ -239,6 +247,13 @@ export const getCommonStyles = () => {
 
     .nmorph-native-input::placeholder {
       color: var(--nmorph-placeholder-text-color);
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      .nmorph-native-input {
+        font-size: 16px;
+        font-size: max(16px, var(--nmorph-ios-native-input-font-size, 16px));
+      }
     }
 
     .nmorph--fill {
@@ -515,6 +530,9 @@ export const getCommonStyles = () => {
 
     .nmorph-scroll {
       --thumb-color: var(--nmorph-scroll-thumb-color, var(--nmorph-text-color));
+      color-scheme: var(--nmorph-scroll-color-scheme, light);
+      scrollbar-color: var(--thumb-color) transparent;
+      scrollbar-width: thin;
     }
 
     .nmorph-scroll::-webkit-scrollbar {

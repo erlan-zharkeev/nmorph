@@ -15,4 +15,5 @@ nuxt-sandbox/.env.*
 .DS_Store
 AGENTS.md
 .pnpm-store
+.turbo
 *.timestamp-*.mjs

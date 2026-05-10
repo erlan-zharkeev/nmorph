@@ -76,9 +76,8 @@ provide<NmorphSelectButtonChangeHandlerInjectionType>('select-button-change-hand
   align-items: center;
   width: fit-content;
   padding: var(--track-padding);
-  border-radius: var(--default-border-radius);
-
   background: var(--nmorph-main-color);
+  border-radius: var(--default-border-radius);
   box-shadow:
     inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
     inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)

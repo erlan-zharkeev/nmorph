@@ -66,14 +66,14 @@ const clickHandler = () => {
 <style lang="scss">
 .nmorph-select-button-item {
   display: inline-flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: var(--item-size);
   padding: 0 var(--indentation-04);
+  font-size: var(--item-font-size);
   border-radius: var(--default-border-radius);
   cursor: pointer;
   opacity: 0.45;
-  font-size: var(--item-font-size);
 
   input {
     position: absolute;
@@ -89,13 +89,12 @@ const clickHandler = () => {
   }
 
   &.nmorph-select-button-item--checked {
-    opacity: 1;
-
     background: var(--nmorph-main-color);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
+    opacity: 1;
   }
 
   &.nmorph-select-button-item--disabled {

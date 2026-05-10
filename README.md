@@ -31,7 +31,21 @@ If you encounter any issues, please don't hesitate to report them. Your feedback
 ## Requirements
 
 - **Node.js:** Version 18.13.0 or higher is required to use this library.
+- **pnpm:** The repository uses pnpm workspaces and Turborepo for local development, checks, and builds.
 - **Vue 3 or Nuxt:** Ensure your project is set up with Vue 3 or Nuxt 3 for best compatibility.
+
+---
+
+## Monorepo
+
+```sh
+pnpm install
+pnpm dev
+pnpm build
+pnpm check
+```
+
+The workspace includes the published library, the Nuxt documentation app, the Vue sandbox, and the Nuxt SSR sandbox. Turborepo keeps package build order explicit and caches repeated lint, typecheck, test, and build tasks.
 
 ---
 

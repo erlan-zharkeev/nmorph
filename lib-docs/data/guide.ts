@@ -125,7 +125,7 @@ export const guidePages: GuidePage[] = [
         ],
         code: {
           language: "bash",
-          content: "npm install @nmorph/nmorph-ui-kit\npnpm add @nmorph/nmorph-ui-kit\nyarn add @nmorph/nmorph-ui-kit",
+          content: "pnpm add @nmorph/nmorph-ui-kit",
         },
       },
       {

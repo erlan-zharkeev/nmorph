@@ -14,7 +14,7 @@ fi
 
 # Увеличение версии
 echo "Увеличение версии ($VERSION_TYPE)..."
-NEW_VERSION=$(npm version $VERSION_TYPE)
+NEW_VERSION=$(pnpm version $VERSION_TYPE)
 NEW_VERSION=${NEW_VERSION#v}
 
 # Проверка успешности увеличения версии
@@ -25,7 +25,7 @@ fi
 
 # Сборка проекта
 echo "Сборка проекта..."
-npm run build
+pnpm run build
 
 # Проверка успешности сборки
 if [ $? -ne 0 ]; then
@@ -34,8 +34,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # Публикация пакета
-PACKAGE_NAME=$(npm pkg get name | tr -d '"')
-PUBLISHED_VERSION=$(npm view "$PACKAGE_NAME@$NEW_VERSION" version 2>/dev/null || true)
+PACKAGE_NAME=$(pnpm pkg get name | tr -d '"')
+PUBLISHED_VERSION=$(pnpm view "$PACKAGE_NAME@$NEW_VERSION" version 2>/dev/null || true)
 
 if [ "$PUBLISHED_VERSION" = "$NEW_VERSION" ]; then
   echo "Публикация не выполнена: версия $NEW_VERSION уже опубликована."
@@ -43,7 +43,7 @@ if [ "$PUBLISHED_VERSION" = "$NEW_VERSION" ]; then
 fi
 
 echo "Публикация пакета..."
-npm publish
+pnpm publish
 
 # Проверка успешности публикации
 if [ $? -ne 0 ]; then
@@ -65,7 +65,7 @@ fi
 
 # Установка новой версии пакета
 echo "Установка новой версии пакета..."
-npm install @nmorph/nmorph-ui-kit@$NEW_VERSION
+pnpm add @nmorph/nmorph-ui-kit@$NEW_VERSION
 
 # Проверка успешности установки
 if [ $? -ne 0 ]; then
@@ -87,7 +87,7 @@ echo "Установка новой версии пакета успешно з�
 
 # # Установка новой версии пакета в test-app
 # echo "Установка новой версии пакета в test-app..."
-# npm install @nmorph/nmorph-ui-kit@$NEW_VERSION
+# pnpm add @nmorph/nmorph-ui-kit@$NEW_VERSION
 
 # # Проверка успешности установки
 # if [ $? -ne 0 ]; then

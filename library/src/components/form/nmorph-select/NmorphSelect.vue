@@ -49,6 +49,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   open: false,
   fill: false,
   optionsWidth: 'truncate',
+  zIndex: undefined,
   virtual: false,
   virtualItemHeight: 0,
   virtualMaxHeight: 240,
@@ -384,7 +385,6 @@ const enterHandler = () => {
   .nmorph-select__content {
     position: relative;
     height: 100%;
-
     background: var(--nmorph-main-color);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
@@ -394,8 +394,8 @@ const enterHandler = () => {
 
   .nmorph-select__selected-values-line {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     height: 100%;
     padding: var(--indentation-00) var(--default-indentation-input);
     border-radius: var(--default-border-radius);
@@ -409,12 +409,12 @@ const enterHandler = () => {
 
   select,
   option {
-    opacity: 0;
+    position: absolute;
     width: 0;
     height: 0;
-    border: none;
     padding: 0;
-    position: absolute;
+    border: none;
+    opacity: 0;
   }
 
   &.nmorph-select--loading {

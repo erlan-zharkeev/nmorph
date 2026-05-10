@@ -1,13 +1,36 @@
 {
   "name": "nmorph",
   "private": true,
+  "packageManager": "pnpm@10.33.0",
   "scripts": {
-    "dev": "npm run dev:sandbox & npm run dev:docs & pnpm --dir library dev",
-    "dev:storybook": "pnpm --dir library dev",
-    "dev:all": "npm run dev",
-    "dev:sandbox": "cd sandbox && npm run dev",
-    "dev:nuxt-sandbox": "cd nuxt-sandbox && npm run dev",
-    "build:nuxt-sandbox": "cd nuxt-sandbox && npm run build",
-    "dev:docs": "cd lib-docs && npm run dev"
+    "postinstall": "pnpm --filter @nmorph/nmorph-ui-kit build && pnpm --filter nmorph-lib-docs exec nuxt prepare && pnpm --filter nuxt-sandbox exec nuxt prepare",
+    "dev": "turbo run dev --filter=@nmorph/nmorph-ui-kit --filter=nmorph-lib-docs --filter=sandbox",
+    "dev:all": "turbo run dev",
+    "dev:storybook": "turbo run dev --filter=@nmorph/nmorph-ui-kit",
+    "dev:sandbox": "turbo run dev --filter=sandbox",
+    "dev:nuxt-sandbox": "turbo run dev --filter=nuxt-sandbox",
+    "dev:docs": "turbo run dev --filter=nmorph-lib-docs",
+    "build": "turbo run build",
+    "build:library": "turbo run build --filter=@nmorph/nmorph-ui-kit",
+    "build:docs": "turbo run build --filter=nmorph-lib-docs",
+    "build:sandbox": "turbo run build --filter=sandbox",
+    "build:nuxt-sandbox": "turbo run build --filter=nuxt-sandbox",
+    "generate:docs": "turbo run generate --filter=nmorph-lib-docs",
+    "preview:docs": "turbo run preview --filter=nmorph-lib-docs",
+    "lint": "turbo run lint",
+    "lint:check": "turbo run lint:check",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "check": "pnpm lint:check && pnpm typecheck && pnpm test && pnpm build"
+  },
+  "devDependencies": {
+    "turbo": "^2.9.12"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "vue-demi"
+    ]
   }
 }

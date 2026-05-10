@@ -121,8 +121,8 @@ const modifiers = computed(() =>
   .nmorph-checkbox__content {
     position: relative;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
   }
 
   .nmorph-checkbox__input-wrapper {
@@ -132,32 +132,28 @@ const modifiers = computed(() =>
   }
 
   input {
-    opacity: 0;
-
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    opacity: 0;
   }
 
   input:focus-visible {
+    outline: 2px solid var(--nmorph-accent-color);
     opacity: 1;
     scale: 0.95;
-
-    outline: 2px solid var(--nmorph-accent-color);
   }
 
   .nmorph-checkbox__fake {
-    border-radius: var(--default-border-radius);
-
-    width: 100%;
-    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
-
+    width: 100%;
+    height: 100%;
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -172,14 +168,13 @@ const modifiers = computed(() =>
   }
 
   .nmorph-checkbox__fake-checked {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     width: 50%;
     height: 50%;
     background: var(--nmorph-accent-color);
     border-radius: var(--border-radius-20);
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
   }
 
@@ -196,15 +191,14 @@ const modifiers = computed(() =>
     .nmorph-checkbox__fake {
       position: relative;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       width: auto;
       min-width: var(--size);
       height: var(--size);
       padding: var(--indentation-03);
-      border-radius: var(--default-border-radius);
-
       background: var(--nmorph-main-color);
+      border-radius: var(--default-border-radius);
       box-shadow:
         var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
         calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)

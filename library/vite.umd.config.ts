@@ -7,6 +7,13 @@ import { fileURLToPath, URL } from 'url';
 export default defineConfig(() => {
   return {
     plugins: [vue(), svgLoader()],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern',
+        },
+      },
+    },
     build: {
       target: 'esnext',
       emptyOutDir: false,

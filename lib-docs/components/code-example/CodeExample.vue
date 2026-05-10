@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { nextTick, onMounted, onUpdated, ref } from "vue";
 import { useNuxtApp } from "#app";
 const languageClass = ref("");
 
@@ -20,11 +20,15 @@ watchEffect(() => {
   languageClass.value = `language-${props.lang}`;
 });
 
-onMounted(() => {
+const highlight = () => {
   if (codeExample.value) {
+    codeExample.value.removeAttribute("data-highlighted");
     $hljs.highlightElement(codeExample.value);
   }
-});
+};
+
+onMounted(() => nextTick(highlight));
+onUpdated(() => nextTick(highlight));
 
 const codeExample = ref(null);
 const { $hljs } = useNuxtApp();

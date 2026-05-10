@@ -6,8 +6,8 @@ import {
   NmorphDropdown,
   NmorphCheckbox,
   NmorphIconSearch,
-  NmorphIconMenu,
   NmorphIconLogo,
+  NmorphIconMenu,
 } from "@nmorph/nmorph-ui-kit";
 import TranslateIcon from "~/assets/icons/translate.svg";
 import GitlabIcon from "~/assets/icons/gitlab.svg";
@@ -15,6 +15,7 @@ import type { LocaleObject } from "@nuxtjs/i18n";
 import SearchDialog from "~/components/search-dialog/SearchDialog.vue";
 import libraryData from "../../../library/package.json";
 
+const repositoryUrl = libraryData.repository.url;
 const switchLocalePath = useSwitchLocalePath();
 
 const { locales, locale } = useI18n();
@@ -23,18 +24,6 @@ const route = useRoute();
 const availableLocales = computed<LocaleObject[]>(() => {
   return locales.value.filter((i) => i.code !== locale.value);
 });
-
-interface IProps {
-  isMenuOpen: boolean;
-}
-
-const props = withDefaults(defineProps<IProps>(), {});
-
-interface INmorphEmit {
-  (e: "toggle-menu"): void;
-  (e: "close-menu"): void;
-}
-const emit = defineEmits<INmorphEmit>();
 
 const localePath = useLocalePath();
 
@@ -51,20 +40,11 @@ const closeHandler = () => {
   translateDropdownOpen.value = false;
 };
 
-const updateMenuHandler = () => {
-  emit("toggle-menu");
-};
-
 const mobileNavMenu = ref(false);
 const toggleMobileNavMenu = () => {
   mobileNavMenu.value = !mobileNavMenu.value;
-  if (mobileNavMenu.value) emit('close-menu')
 };
 
-const isRootPage = computed(() => route.path.length <= 3);
-watch(() => props.isMenuOpen, () => {
-  mobileNavMenu.value = false
-})
 const isActive = (path: string) => {
   if (path.includes('components') && route.path.includes('elements')) return true
   return route.path.startsWith(path)
@@ -89,14 +69,6 @@ onUnmounted(() => {
 <template>
   <header class="docs-top-bar nmorph--shadow-outset">
     <div class="docs-top-bar__left">
-      <NmorphCheckbox class="docs-top-bar__menu" :model-value="props.isMenuOpen" @update:model-value="updateMenuHandler"
-        v-if="!isRootPage" design="button">
-        <template #label>
-          <NmorphIcon>
-            <NmorphIconMenu />
-          </NmorphIcon>
-        </template>
-      </NmorphCheckbox>
       <div class="docs-top-bar__logo">
         <NuxtLink :to="localePath('/')">
           <ClientOnly>
@@ -116,7 +88,7 @@ onUnmounted(() => {
         <span class="docs-top-bar__search-label">{{ $t("top-bar.search") }}</span>
         <kbd>{{ $t("top-bar.search-shortcut") }}</kbd>
       </NmorphButton>
-      <NmorphLink href="https://gitlab.com/ketjo/nmorph" target="blank" class="git-lab-button">
+      <NmorphLink :href="repositoryUrl" target="blank" class="git-lab-button">
         <GitlabIcon />
       </NmorphLink>
       <div ref="translateBtn" class="docs-top-bar__translate-btn">
@@ -166,8 +138,19 @@ onUnmounted(() => {
         </ul>
       </nav>
       <theme-changer />
-      <NmorphCheckbox class="docs-top-bar__nav-menu-btn" :model-value="mobileNavMenu"
-        @update:model-value="toggleMobileNavMenu" :label="$t('top-bar.nav')" design="button" />
+      <NmorphCheckbox
+        class="docs-top-bar__nav-menu-btn"
+        :model-value="mobileNavMenu"
+        :aria-label="$t('top-bar.nav')"
+        @update:model-value="toggleMobileNavMenu"
+        design="button"
+      >
+        <template #label>
+          <NmorphIcon>
+            <NmorphIconMenu />
+          </NmorphIcon>
+        </template>
+      </NmorphCheckbox>
     </div>
     <nav class="docs-top-bar__mobile-nav-menu" :class="{ 'docs-top-bar__mobile-nav-menu--open': mobileNavMenu }"
       @click="mobileNavMenu = false">
@@ -333,12 +316,6 @@ $top-bar-height: 50px;
   display: none;
 }
 
-.docs-top-bar__menu {
-  --size: 28px;
-  display: none;
-  margin-right: 8px;
-}
-
 .docs-top-bar__mobile-nav-menu {
   position: fixed;
   opacity: 0;
@@ -384,12 +361,6 @@ $top-bar-height: 50px;
 
   .docs-main-layout {
     grid-template-columns: 1fr;
-  }
-
-  .docs-top-bar__menu {
-    display: block;
-    width: 28px;
-    margin-right: 12px;
   }
 
   .docs-top-bar__nav {

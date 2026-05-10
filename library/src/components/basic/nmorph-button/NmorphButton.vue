@@ -111,25 +111,23 @@ defineExpose({ buttonDOMElement });
   }
 
   .nmorph-button__content {
+    display: flex;
+    gap: var(--indentation-02);
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
     width: 100%;
     height: var(--height);
     padding: var(--indentation-00) var(--indentation-04);
-    box-sizing: border-box;
     line-height: 0;
+    background: var(--nmorph-main-color);
     border: none;
     border-radius: var(--default-border-radius);
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--indentation-02);
-
-    background: var(--nmorph-main-color);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
+    cursor: pointer;
 
     span {
       --color: var(--nmorph-white-color);
@@ -155,6 +153,11 @@ defineExpose({ buttonDOMElement });
     }
 
     .nmorph-button__content::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background-image: radial-gradient(circle, var(--nmorph-main-color) 10%, transparent 10.01%);
       background-repeat: no-repeat;
       background-position: 50%;
@@ -164,12 +167,6 @@ defineExpose({ buttonDOMElement });
         transform 0.3s,
         opacity 1s;
       content: '';
-
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
     }
 
     .nmorph-button__content:active::after {
@@ -212,9 +209,9 @@ defineExpose({ buttonDOMElement });
     padding: var(--indentation-00);
 
     .nmorph-button__content:not(:disabled, [loading='true']):hover {
+      color: var(--nmorph-accent-color);
       background: transparent;
       box-shadow: none;
-      color: var(--nmorph-accent-color);
     }
 
     .nmorph-button__content:not(:disabled, [loading='true']):hover span {
@@ -226,9 +223,9 @@ defineExpose({ buttonDOMElement });
     }
 
     .nmorph-button__content {
+      color: var(--transparent-button-color, var(--nmorph-text-color));
       background: transparent;
       box-shadow: none;
-      color: var(--transparent-button-color, var(--nmorph-text-color));
     }
 
     .nmorph-button__content .nmorph-icon {

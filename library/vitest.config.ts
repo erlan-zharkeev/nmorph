@@ -5,6 +5,13 @@ import svgLoader from 'vite-svg-loader';
 
 export default defineConfig({
   plugins: [vue(), svgLoader()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern',
+      },
+    },
+  },
   resolve: {
     alias: [{ find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) }],
   },

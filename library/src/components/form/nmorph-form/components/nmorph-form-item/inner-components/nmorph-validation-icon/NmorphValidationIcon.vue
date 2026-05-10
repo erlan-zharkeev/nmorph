@@ -37,6 +37,7 @@ const validateIconSize = '18px';
 
 <style lang="scss">
 .nmorph-validation-icon {
+  width: var(--nmorph-validation-icon-size);
   margin-left: var(--indentation-03);
 
   &.nmorph-validation-icon--valid {
@@ -50,7 +51,5 @@ const validateIconSize = '18px';
       --color: var(--nmorph-error-text-color);
     }
   }
-
-  width: var(--nmorph-validation-icon-size);
 }
 </style>

@@ -1,8 +1,6 @@
 <script setup lang="ts">
 const installationPackageManager = `
-npm install @nmorph/nmorph-ui-kit --save
-yarn add @nmorph/nmorph-ui-kit --save
-pnpm install @nmorph/nmorph-ui-kit --save
+pnpm add @nmorph/nmorph-ui-kit
 `;
 
 const basicUsageJS = `

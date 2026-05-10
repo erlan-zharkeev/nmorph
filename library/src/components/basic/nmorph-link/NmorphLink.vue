@@ -82,6 +82,9 @@ const modifiers = computed(() =>
   }
 
   &.nmorph-link--disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+
     a {
       pointer-events: none;
     }
@@ -97,11 +100,6 @@ const modifiers = computed(() =>
 
   &.nmorph-link--error {
     --link-color: var(--nmorph-error-color);
-  }
-
-  &.nmorph-link--disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
   }
 }
 </style>

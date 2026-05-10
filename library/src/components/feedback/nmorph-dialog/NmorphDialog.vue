@@ -22,6 +22,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   closeDelay: 0,
   closeOnClickModal: true,
   showClose: true,
+  zIndex: undefined,
   closeOnOverlay: true,
 });
 
@@ -96,22 +97,19 @@ const clickOnOverlay = () => {
 
 <style lang="scss">
 .nmorph-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: var(--width);
   padding: var(--indentation-04);
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
 
   .nmorph-dialog__header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    font-weight: 600;
-
+    align-items: center;
     font-weight: 600;
     font-size: var(--font-size-large);
     line-height: var(--line-height-loose);

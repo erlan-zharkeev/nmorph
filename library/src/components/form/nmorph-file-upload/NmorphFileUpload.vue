@@ -165,13 +165,12 @@ const modifiers = computed(() =>
 
   .nmorph-file-upload__file {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: var(--indentation-02);
     padding: var(--indentation-02) var(--indentation-03);
-    border-radius: var(--default-border-radius);
-
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -187,7 +186,6 @@ const modifiers = computed(() =>
 
   .nmorph-file-upload__file-name {
     margin-left: var(--indentation-02);
-
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

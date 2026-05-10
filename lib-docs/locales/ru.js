@@ -72,7 +72,7 @@ export default {
     "quick-start": {
       installation: "Установка",
       "choose-package-manager":
-        "Выберите на ваше усмотрение любой пакетный менеджер.<br>Мы рекомендуем использовать проверенные такие как <b>NPM</b>, <b>Yarn</b>, <b>Pnpm</b>",
+        "Используйте <b>pnpm</b> для установки пакета и работы с monorepo.",
       plugin: "Подключение библиотеки",
       "alternative-plugin": "Алтернативый способ подключения",
       nuxt: "Подключение в Nuxt",
@@ -122,6 +122,7 @@ export default {
       "css-var-light-shade": "Светлый теневой оттенок",
       "css-var-text": "Основной цвет текста",
       "css-var-scroll-thumb": "Цвет ползунка прокрутки",
+      "css-var-scroll-color-scheme": "Цветовая схема нативного скролла",
       "css-var-accent": "Акцентный / брендовый цвет",
       "css-var-focus-text":
         "Цвет текста на сфокусированных/акцентных элементах",
@@ -220,6 +221,14 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "nuxt-theme-first-paint":
+          "Nuxt integration теперь применяет сохраненную тему до первого paint, добавляет SSR theme/common styles и убирает мигание light/dark темы при reload.",
+        "backtop-teleport-safe-area":
+          "NmorphBacktop теперь телепортируется в body, поддерживает props для z-index и teleport target, учитывает mobile safe-area bottom и не обрезается внутри scroll containers.",
+        "ios-input-scrollbar-fixes":
+          "Common styles теперь предотвращают iOS input auto-zoom и синхронизируют native scrollbar color scheme/thumb colors с активной темой Nmorph.",
+        "pnpm-turbo-docs-refresh":
+          "Репозиторий переведен на pnpm workspaces с Turbo scripts, Sass использует modern API, а docs получили обновленные Guide/About, mobile navigation, layout, search и code highlighting fixes.",
         "virtualized-table-select-autocomplete":
           "NmorphTable, NmorphSelect и NmorphAutocomplete теперь поддерживают виртуализацию больших наборов данных с настройкой item height и overscan.",
         "overlay-dropdown-teleport-placement":
@@ -1355,6 +1364,9 @@ export default {
         "visibility-height":
           "Определяет высоту прокрутки, при которой кнопка возврата наверх становится видимой. Принимает число в пикселях",
         design: "Определяет стиль кнопки",
+        "z-index": "Задает z-index телепортированной кнопки возврата наверх",
+        "teleport-to": "CSS selector, в который телепортируется кнопка возврата наверх",
+        "teleport-disabled": "Отключает teleport и рендерит кнопку на месте",
       },
       slot: {
         default: "Слот для кастомизации содержимого кнопки возврата наверх",

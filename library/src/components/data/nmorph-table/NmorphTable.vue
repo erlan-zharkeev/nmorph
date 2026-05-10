@@ -352,13 +352,13 @@ const virtualContentStyle = computed(() => ({
 }
 
 .nmorph-table--nmorph {
+  overflow: hidden;
   background: var(--nmorph-main-color);
+  border-radius: var(--default-border-radius);
   box-shadow:
     var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
     calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
       var(--nmorph-light-shade-color);
-  overflow: hidden;
-  border-radius: var(--default-border-radius);
 
   --border-color: transparent;
 

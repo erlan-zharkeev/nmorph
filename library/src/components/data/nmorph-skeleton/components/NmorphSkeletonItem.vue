@@ -44,6 +44,8 @@ const cssHeight = computed(() => props.height);
 <style lang="scss">
 .nmorph-skeleton-item {
   position: relative;
+  width: var(--nmorph-skeleton-item-width);
+  height: var(--nmorph-skeleton-item-height);
   margin-bottom: var(--indentation-02);
   overflow: hidden;
   background: var(--nmorph-text-color);
@@ -62,8 +64,6 @@ const cssHeight = computed(() => props.height);
     border-radius: var(--border-radius-circular);
   }
 
-  width: var(--nmorph-skeleton-item-width);
-  height: var(--nmorph-skeleton-item-height);
   &.nmorph-skeleton-item--nmorph-design {
     background: var(--nmorph-main-color);
     box-shadow:

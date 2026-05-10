@@ -22,9 +22,12 @@ interface INmorphProps {
 const props = withDefaults(defineProps<INmorphProps>(), {
   placement: 'bottom',
   width: 160,
+  minWidth: undefined,
+  maxWidth: undefined,
   xOffset: 0,
   yOffset: 0,
   fillWidth: true,
+  zIndex: undefined,
 });
 
 interface INmorphEmit {
@@ -88,9 +91,11 @@ const outsideClickHandler = () => {
 <style lang="scss">
 .nmorph-dropdown {
   position: fixed;
-  border-radius: var(--default-border-radius);
-
+  width: var(--nmorph-dropdown-width);
+  min-width: var(--nmorph-dropdown-min-width);
+  max-width: var(--nmorph-dropdown-max-width);
   background: var(--nmorph-main-color);
+  border-radius: var(--default-border-radius);
   box-shadow:
     var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
     calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -100,11 +105,5 @@ const outsideClickHandler = () => {
 .nmorph-dropdown--closed {
   z-index: -1000;
   opacity: 0;
-}
-
-.nmorph-dropdown {
-  width: var(--nmorph-dropdown-width);
-  min-width: var(--nmorph-dropdown-min-width);
-  max-width: var(--nmorph-dropdown-max-width);
 }
 </style>

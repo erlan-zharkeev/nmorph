@@ -62,9 +62,8 @@ const closeHandler = () => {
   }
 
   &.nmorph-tag-item--nmorph-design {
-    border: none;
-
     background: var(--nmorph-main-color);
+    border: none;
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -73,6 +72,7 @@ const closeHandler = () => {
 
   &.nmorph-tag-item--thin {
     --height: var(--thin-component);
+
     span {
       font-weight: 400;
       font-size: var(--font-size-extra-small);

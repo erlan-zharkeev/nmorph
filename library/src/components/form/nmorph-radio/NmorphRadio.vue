@@ -109,8 +109,8 @@ defineExpose({ inputDOMRef });
   .nmorph-radio__content {
     position: relative;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
   }
 
   span {
@@ -140,15 +140,13 @@ defineExpose({ inputDOMRef });
   }
 
   .nmorph-radio__fake {
-    border-radius: var(--border-radius-circular);
-
-    width: 100%;
-    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
-
+    width: 100%;
+    height: 100%;
     background: var(--nmorph-main-color);
+    border-radius: var(--border-radius-circular);
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -163,14 +161,13 @@ defineExpose({ inputDOMRef });
   }
 
   .nmorph-radio__fake-checked {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     width: 50%;
     height: 50%;
     background: var(--nmorph-accent-color);
     border-radius: var(--border-radius-circular);
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
   }
 
@@ -182,14 +179,13 @@ defineExpose({ inputDOMRef });
     .nmorph-radio__fake {
       position: relative;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: var(--size);
       padding: var(--indentation-03);
       white-space: nowrap;
-      border-radius: var(--default-border-radius);
-
       background: var(--nmorph-main-color);
+      border-radius: var(--default-border-radius);
       box-shadow:
         var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
         calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)

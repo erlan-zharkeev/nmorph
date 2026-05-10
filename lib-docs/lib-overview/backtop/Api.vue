@@ -25,7 +25,22 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "design",
     type: "common | nmorph",
-    default: "common",
+    default: "nmorph",
+  },
+  {
+    name: "z-index",
+    type: "Number",
+    default: "10",
+  },
+  {
+    name: "teleport-to",
+    type: "String",
+    default: "body",
+  },
+  {
+    name: "teleport-disabled",
+    type: "Boolean",
+    default: "false",
   },
 ];
 

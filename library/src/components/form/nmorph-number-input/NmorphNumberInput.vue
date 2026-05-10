@@ -178,9 +178,8 @@ defineExpose({ inputDOMRef });
     width: 100%;
     height: var(--height);
     height: 100%;
-    border-radius: var(--default-border-radius);
-
     background: var(--nmorph-main-color);
+    border-radius: var(--default-border-radius);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
@@ -206,18 +205,17 @@ defineExpose({ inputDOMRef });
     width: 100%;
     padding: var(--indentation-00) var(--default-indentation-input);
     text-align: center;
+    background: var(--nmorph-main-color);
     border: none;
     border-top: 1px solid var(--nmorph-main-color);
     border-bottom: 1px solid var(--nmorph-main-color);
-    transition: ease-in-out var(--transition-01) background;
-
-    background: var(--nmorph-main-color);
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
+    transition: ease-in-out var(--transition-01) background;
     transition: background 0s;
-    -moz-appearance: textfield;
+    appearance: textfield;
   }
 
   input:focus {
@@ -227,8 +225,8 @@ defineExpose({ inputDOMRef });
 
   input::-webkit-inner-spin-button,
   input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
     margin: 0;
+    appearance: none;
   }
 
   .nmorph-number-input__action-btns {
@@ -273,13 +271,9 @@ defineExpose({ inputDOMRef });
     }
 
     .nmorph-button {
-      width: 100%;
-    }
-  }
-
-  &.nmorph-number-input--action-btn-position-right {
-    .nmorph-button {
       --height: var(--nmorph-number-input-right-action-height);
+
+      width: 100%;
     }
   }
 }

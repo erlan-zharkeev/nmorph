@@ -98,6 +98,7 @@ const cssVariableGroups = computed(() => [
       { name: '--nmorph-light-shade-color', description: t('guide-page.config.css-var-light-shade') },
       { name: '--nmorph-text-color', description: t('guide-page.config.css-var-text') },
       { name: '--nmorph-scroll-thumb-color', description: t('guide-page.config.css-var-scroll-thumb') },
+      { name: '--nmorph-scroll-color-scheme', description: t('guide-page.config.css-var-scroll-color-scheme') },
       { name: '--nmorph-accent-color', description: t('guide-page.config.css-var-accent') },
       { name: '--nmorph-focus-text-color', description: t('guide-page.config.css-var-focus-text') },
       { name: '--nmorph-placeholder-text-color', description: t('guide-page.config.css-var-placeholder') },
