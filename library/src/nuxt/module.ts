@@ -22,7 +22,7 @@ const nmorphNuxtModule: NuxtModule<NmorphNuxtModuleOptions> = defineNuxtModule<N
     nuxt.options.build.transpile.push('@nmorph/nmorph-ui-kit');
 
     if (styles === 'all') {
-      nuxt.options.css.push('@nmorph/nmorph-ui-kit/dist/style.css');
+      nuxt.options.css.push('@nmorph/nmorph-ui-kit/styles.css');
     }
 
     addPluginTemplate({

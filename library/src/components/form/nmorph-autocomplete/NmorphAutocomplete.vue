@@ -23,6 +23,7 @@ interface INmorphProps extends INmorphCommonInputProps {
   virtualItemHeight?: number;
   virtualMaxHeight?: number | string;
   virtualOverscan?: number;
+  virtualDynamicHeight?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -38,6 +39,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   virtualItemHeight: 34,
   virtualMaxHeight: 240,
   virtualOverscan: 5,
+  virtualDynamicHeight: false,
 });
 
 const initialValue = ref(props.modelValue);
@@ -76,10 +78,12 @@ const filteredList = computed(() => {
 const virtualEnabled = computed(() => props.virtual && filteredList.value.length > 0);
 const virtualItemHeight = computed(() => props.virtualItemHeight);
 const virtualOverscan = computed(() => props.virtualOverscan);
+const virtualDynamicHeight = computed(() => props.virtualDynamicHeight);
 const virtualList = useVirtualList(filteredList, {
   enabled: virtualEnabled,
   itemHeight: virtualItemHeight,
   overscan: virtualOverscan,
+  dynamic: virtualDynamicHeight,
 });
 const virtualItems = computed(() => virtualList.virtualItems.value);
 const virtualSpacerStyle = computed(() => ({
@@ -90,20 +94,29 @@ const virtualContentStyle = computed(() => ({
 }));
 const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const virtualMaxHeight = computed(() => getCssSize(props.virtualMaxHeight));
+const currentIndex = ref(0);
+const activeItem = computed(() => filteredList.value[currentIndex.value]);
+const listboxId = computed(() => `${props.id || props.name || 'nmorph-autocomplete'}-listbox`);
+const getOptionId = (index: number) => `${listboxId.value}-option-${index}`;
 
 watch(filteredList, async (newValue) => {
   open.value = newValue.length > 0;
+  currentIndex.value = 0;
   await nextTick();
   virtualList.scrollToIndex(0);
   virtualList.refresh();
 });
 
-const clickHandler = (listEl: INmorphAutocompleteListItem) => {
+const selectItem = (listEl: INmorphAutocompleteListItem) => {
   emit('select', listEl);
   initialValue.value = listEl.value;
   setTimeout(() => {
     open.value = false;
   });
+};
+
+const clickHandler = (listEl: INmorphAutocompleteListItem) => {
+  selectItem(listEl);
 };
 
 const focusHandler = () => {
@@ -123,6 +136,56 @@ watch(initialValue, async (newValue) => {
 watch(loader, (newValue) => {
   if (newValue) open.value = true;
 });
+
+watch(currentIndex, (newValue) => {
+  if (virtualEnabled.value) virtualList.scrollToIndex(newValue);
+});
+
+const arrowDownHandler = () => {
+  if (!filteredList.value.length) return;
+  open.value = true;
+  currentIndex.value = (currentIndex.value + 1) % filteredList.value.length;
+};
+
+const arrowUpHandler = () => {
+  if (!filteredList.value.length) return;
+  open.value = true;
+  currentIndex.value = (currentIndex.value - 1 + filteredList.value.length) % filteredList.value.length;
+};
+
+const enterHandler = () => {
+  if (!open.value || !activeItem.value) return;
+  selectItem(activeItem.value);
+};
+
+const keydownHandler = (event: KeyboardEvent) => {
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    arrowDownHandler();
+  } else if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    arrowUpHandler();
+  } else if (event.key === 'Enter') {
+    event.preventDefault();
+    enterHandler();
+  } else if (event.key === 'Escape') {
+    event.preventDefault();
+    closeHandler();
+  }
+};
+
+const inputAttrs = computed(() => ({
+  role: 'combobox',
+  'aria-autocomplete': 'list',
+  'aria-expanded': open.value,
+  'aria-controls': listboxId.value,
+  'aria-activedescendant': open.value ? getOptionId(currentIndex.value) : undefined,
+}));
+
+const setVirtualItemRef = (element: unknown, index: number) => {
+  const target = element instanceof Element ? element : (element as { $el?: Element } | null)?.$el;
+  virtualList.measureElement(index, target);
+};
 </script>
 
 <template>
@@ -138,7 +201,9 @@ watch(loader, (newValue) => {
           :model-value="initialValue"
           :placeholder="props.placeholder"
           :clearable="props.clearable"
+          :input-attrs="inputAttrs"
           @focus="focusHandler"
+          @keydown="keydownHandler"
           @update:model-value="updateValueHandler"
         />
       </div>
@@ -149,7 +214,9 @@ watch(loader, (newValue) => {
       :relative-element="nmorphAutocompleteDOMRef"
       :y-offset="1"
       :z-index="props.zIndex"
+      :aria-label="props.name || props.id || 'autocomplete'"
       @on-outside-click="closeHandler"
+      @on-escape-keydown="closeHandler"
     >
       <div v-if="loader" class="nmorph-autocomplete__loading">
         <slot name="loader">
@@ -161,16 +228,24 @@ watch(loader, (newValue) => {
       <div
         v-else-if="virtualEnabled"
         :ref="virtualList.containerRef"
+        :id="listboxId"
         class="nmorph-autocomplete__list nmorph-autocomplete__list--virtual"
+        :class="{ 'nmorph-autocomplete__list--dynamic': virtualDynamicHeight }"
         :style="{ '--autocomplete-virtual-item-height': `${virtualItemHeight}px`, maxHeight: virtualMaxHeight }"
+        role="listbox"
         @scroll="virtualList.scrollHandler"
       >
         <div class="nmorph-autocomplete__virtual-spacer" :style="virtualSpacerStyle">
           <div class="nmorph-autocomplete__virtual-content" :style="virtualContentStyle">
             <div
               v-for="virtualItem in virtualItems"
+              :id="getOptionId(virtualItem.index)"
+              :ref="(element) => setVirtualItemRef(element, virtualItem.index)"
               :key="virtualItem.index"
               class="nmorph-autocomplete__list-item"
+              :class="{ 'nmorph-autocomplete__list-item--focused': virtualItem.index === currentIndex }"
+              role="option"
+              :aria-selected="virtualItem.index === currentIndex"
               @click="() => clickHandler(virtualItem.item)"
             >
               <slot :scope="virtualItem.item"> {{ virtualItem.item.value }} </slot>
@@ -178,11 +253,15 @@ watch(loader, (newValue) => {
           </div>
         </div>
       </div>
-      <div v-else class="nmorph-autocomplete__list">
+      <div v-else :id="listboxId" class="nmorph-autocomplete__list" role="listbox">
         <div
           v-for="(listEl, idx) in filteredList"
+          :id="getOptionId(idx)"
           :key="idx"
           class="nmorph-autocomplete__list-item"
+          :class="{ 'nmorph-autocomplete__list-item--focused': idx === currentIndex }"
+          role="option"
+          :aria-selected="idx === currentIndex"
           @click="() => clickHandler(listEl)"
         >
           <slot :scope="listEl"> {{ listEl.value }} </slot>
@@ -211,7 +290,8 @@ watch(loader, (newValue) => {
     height: 100px;
   }
 
-  .nmorph-autocomplete__list-item:hover {
+  .nmorph-autocomplete__list-item:hover,
+  .nmorph-autocomplete__list-item--focused {
     color: var(--nmorph-white-color);
     background: var(--nmorph-accent-color);
   }
@@ -223,6 +303,10 @@ watch(loader, (newValue) => {
   .nmorph-autocomplete__list--virtual .nmorph-autocomplete__list-item {
     height: var(--autocomplete-virtual-item-height);
     overflow: hidden;
+  }
+
+  .nmorph-autocomplete__list--dynamic .nmorph-autocomplete__list-item {
+    height: auto;
   }
 
   .nmorph-autocomplete__virtual-spacer {

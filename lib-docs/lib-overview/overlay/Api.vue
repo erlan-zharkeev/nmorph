@@ -33,11 +33,26 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "false",
   },
+  {
+    name: "close-on-escape",
+    type: "Boolean",
+    default: "true",
+  },
+  {
+    name: "trap-focus",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "restore-focus",
+    type: "Boolean",
+    default: "true",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "default" }];
 const variables: IVariablesTableData[] = [];
-const events = [{ name: "on-outside-click", type: "void" }];
+const events = [{ name: "on-outside-click", type: "void" }, { name: "on-escape-keydown", type: "void" }];
 </script>
 
 <template>

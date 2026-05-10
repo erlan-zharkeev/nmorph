@@ -109,6 +109,11 @@ const attributesData: IAttributesTableData[] = [
     type: "Number",
     default: "5",
   },
+  {
+    name: "virtual-dynamic-height",
+    type: "Boolean",
+    default: "false",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "default" }];

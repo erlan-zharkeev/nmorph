@@ -64,6 +64,8 @@ export default defineConfig(() => {
         entry: {
           index: resolve(__dirname, 'src', 'main.ts'),
           plugin: resolve(__dirname, 'src', 'plugin.ts'),
+          icons: resolve(__dirname, 'src', 'icons.ts'),
+          styles: resolve(__dirname, 'src', 'styles.ts'),
         },
         name: 'library',
         formats: ['es'],

@@ -1,6 +1,8 @@
 import { mount } from '@vue/test-utils';
-import { defineComponent, nextTick, reactive, ref } from 'vue';
+import { createSSRApp, defineComponent, h, nextTick, reactive, ref } from 'vue';
+import { renderToString } from '@vue/server-renderer';
 import { describe, expect, it, vi } from 'vitest';
+import { NmorphLibrary } from '../src/main';
 import {
   NmorphAlert,
   NmorphAutocomplete,
@@ -20,6 +22,7 @@ import {
   NmorphCollapse,
   NmorphCollapseItem,
   NmorphColorPicker,
+  NmorphContextMenu,
   NmorphDatePicker,
   NmorphDialog,
   NmorphDivider,
@@ -409,6 +412,14 @@ const renderCases = [
     }),
   },
   {
+    name: 'NmorphContextMenu',
+    component: defineComponent({
+      components: { NmorphContextMenu },
+      template:
+        '<NmorphContextMenu><button>Target</button><template #menu><button>Action</button></template></NmorphContextMenu>',
+    }),
+  },
+  {
     name: 'NmorphTabs',
     component: defineComponent({
       components: { NmorphTabs, NmorphTabPane },
@@ -491,6 +502,26 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('keeps transparent button color prop and derives hover color from it', () => {
+    const wrapper = mount(NmorphButton, {
+      props: {
+        styleType: 'transparent',
+        color: 'var(--nmorph-error-text-color)',
+        text: 'Delete',
+      },
+    });
+
+    const button = wrapper.find('.nmorph-button').element as HTMLElement;
+
+    expect(button.style.getPropertyValue('--nmorph-button-color')).toBe('var(--nmorph-error-text-color)');
+    expect(button.style.getPropertyValue('--transparent-button-color')).toBe('var(--nmorph-error-text-color)');
+    expect(button.style.getPropertyValue('--nmorph-button-hover-color')).toBe(
+      'color-mix(in srgb, var(--nmorph-error-text-color) 75%, var(--nmorph-white-color))'
+    );
+
+    wrapper.unmount();
+  });
+
   it('teleports dropdown overlay and closes from outside click', async () => {
     const target = document.createElement('div');
     document.body.appendChild(target);
@@ -555,6 +586,223 @@ describe('components', () => {
 
     wrapper.unmount();
     target.remove();
+  });
+
+  it('closes dropdown from Escape', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphDropdown },
+        setup() {
+          const anchor = ref<HTMLElement | null>(null);
+          const open = ref(true);
+
+          return { anchor, open };
+        },
+        template: `
+          <div>
+            <button ref="anchor">Anchor</button>
+            <NmorphDropdown
+              v-if="anchor"
+              :open="open"
+              :relative-element="anchor"
+              @on-escape-keydown="open = false"
+            >
+              <button>Dropdown action</button>
+            </NmorphDropdown>
+          </div>
+        `,
+      }),
+      {
+        attachTo: document.body,
+        global: {
+          stubs: {
+            Teleport: false,
+          },
+        },
+      }
+    );
+
+    await nextTick();
+    await nextTick();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await nextTick();
+
+    expect(wrapper.vm.open).toBe(false);
+    wrapper.unmount();
+  });
+
+  it('opens context menu from right click and closes from Escape', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphContextMenu },
+        setup() {
+          const open = ref(false);
+
+          return { open };
+        },
+        template: `
+          <NmorphContextMenu v-model="open">
+            <button class="context-target">Target</button>
+            <template #menu>
+              <button class="context-action">Action</button>
+            </template>
+          </NmorphContextMenu>
+        `,
+      }),
+      {
+        attachTo: target,
+        global: {
+          stubs: {
+            Teleport: false,
+          },
+        },
+      }
+    );
+
+    await wrapper.find('.context-target').trigger('contextmenu', { clientX: 140, clientY: 90 });
+    await nextTick();
+    await nextTick();
+
+    const dropdown = document.body.querySelector('.nmorph-dropdown') as HTMLElement;
+
+    expect(wrapper.vm.open).toBe(true);
+    expect(dropdown).toBeTruthy();
+
+    vi.spyOn(dropdown, 'getBoundingClientRect').mockReturnValue(rect(0, 0, 120, 60));
+    window.dispatchEvent(new Event('resize'));
+    await nextTick();
+    await nextTick();
+
+    expect(dropdown.style.left).toBe('140px');
+    expect(dropdown.style.top).toBe('90px');
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await nextTick();
+
+    expect(wrapper.vm.open).toBe(false);
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  it('traps dialog focus and closes from Escape', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphDialog },
+        setup() {
+          const open = ref(true);
+          return { open };
+        },
+        template: `
+          <NmorphDialog v-model="open" title="Dialog">
+            <button class="first-action">First</button>
+            <button class="last-action">Last</button>
+          </NmorphDialog>
+        `,
+      }),
+      {
+        attachTo: document.body,
+        global: {
+          stubs: {
+            Teleport: false,
+          },
+        },
+      }
+    );
+
+    await nextTick();
+    await nextTick();
+
+    const firstAction = document.body.querySelector('.first-action') as HTMLButtonElement;
+    const lastAction = document.body.querySelector('.last-action') as HTMLButtonElement;
+
+    expect(document.activeElement).toBe(firstAction);
+
+    lastAction.focus();
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+    await nextTick();
+
+    expect(document.activeElement).toBe(firstAction);
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await nextTick();
+
+    expect(wrapper.vm.open).toBe(false);
+    wrapper.unmount();
+  });
+
+  it('selects select options with keyboard navigation', async () => {
+    const wrapper = mount(NmorphSelect, {
+      props: { modelValue: '', options },
+    });
+
+    const select = wrapper.find('select');
+    await select.trigger('keydown', { key: 'ArrowDown' });
+    await select.trigger('keydown', { key: 'Enter' });
+    await nextTick();
+
+    expect(wrapper.emitted('update:model-value')?.at(-1)?.[0]).toBe('second');
+    wrapper.unmount();
+  });
+
+  it('formats date picker display values with custom tokens', async () => {
+    const wrapper = mount(NmorphDatePicker, {
+      props: {
+        modelValue: new Date(2024, 4, 9),
+        initialDate: new Date(2024, 4, 9),
+        dateFormat: 'DD.MM.YYYY',
+      },
+    });
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-date-picker__selected-value').text()).toBe('09.05.2024');
+    wrapper.unmount();
+  });
+
+  it('renders overlay and form components on the server', async () => {
+    const currentDocument = globalThis.document;
+    vi.stubGlobal('document', undefined);
+
+    const app = createSSRApp(
+      defineComponent({
+        setup() {
+          return () =>
+            h(
+              NmorphOverlay,
+              { show: true, disabledTeleport: true },
+              {
+                default: () => [
+                  h(NmorphSelect, { modelValue: 'first', options }),
+                  h(NmorphDatePicker, { modelValue: new Date(2024, 0, 1) }),
+                ],
+              }
+            );
+        },
+      })
+    );
+
+    app.use(NmorphLibrary, {
+      i18n: {
+        locale: 'en',
+      },
+    });
+
+    const context: { teleports?: Record<string, string> } = {};
+    let renderedHtml = '';
+
+    try {
+      const html = await renderToString(app, context);
+      renderedHtml = [html, ...Object.values(context.teleports || {})].join('');
+    } finally {
+      vi.stubGlobal('document', currentDocument);
+    }
+
+    expect(renderedHtml).toContain('nmorph-overlay');
   });
 
   it('syncs checkbox groups bound to the same model', async () => {
@@ -623,6 +871,39 @@ describe('components', () => {
 
     expect(pagination.style.getPropertyValue('--nmorph-pagination-height')).toBe('var(--default-thickness-component)');
     expect(wrapper.find('.nmorph-pagination__page-btn.nmorph-radio').classes()).toContain('nmorph--basic-component');
+    wrapper.unmount();
+  });
+
+  it('moves virtual table active row with keyboard navigation', async () => {
+    const rows = Array.from({ length: 20 }, (_, index) => ({ name: `Row ${index}` }));
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphTable, NmorphTableColumn },
+        setup() {
+          return { rows };
+        },
+        template:
+          '<NmorphTable virtual virtual-dynamic-height :data="rows" :virtual-row-height="20" virtual-height="40px"><NmorphTableColumn prop="name" label="Name" /></NmorphTable>',
+      })
+    );
+
+    await nextTick();
+    await nextTick();
+
+    const body = wrapper.find('.nmorph-table__body');
+    await body.trigger('keydown', { key: 'ArrowDown' });
+    await nextTick();
+
+    expect(wrapper.findAll('.nmorph-table__table-data-row')[0].classes()).toContain(
+      'nmorph-table__table-data-row--active'
+    );
+
+    await body.trigger('keydown', { key: 'ArrowDown' });
+    await nextTick();
+
+    expect(wrapper.findAll('.nmorph-table__table-data-row')[1].classes()).toContain(
+      'nmorph-table__table-data-row--active'
+    );
     wrapper.unmount();
   });
 });

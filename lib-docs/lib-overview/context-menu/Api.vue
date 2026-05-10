@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   type IAttributesTableData,
+  type IEventsTableData,
   type ISlotsTableData,
   type IVariablesTableData,
 } from "~/types";
@@ -8,21 +9,14 @@ import ApiTable from "~/components/api-table/ApiTable.vue";
 
 const attributesData: IAttributesTableData[] = [
   {
-    name: "open",
+    name: "model-value",
     type: "Boolean",
     default: "-",
-    required: true,
-  },
-  {
-    name: "relative-element",
-    type: "HTMLElement | null",
-    default: "null",
-    required: true,
   },
   {
     name: "placement",
     type: `"top" | "top-start" | "top-center" | "top-end" | "right" | "right-start" | "right-center" | "right-end" | "bottom" | "bottom-start" | "bottom-center" | "bottom-end" | "left" | "left-start" | "left-center" | "left-end"`,
-    default: "bottom",
+    default: "bottom-start",
   },
   {
     name: "width",
@@ -52,7 +46,7 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "fill-width",
     type: "Boolean",
-    default: "true",
+    default: "false",
   },
   {
     name: "z-index",
@@ -70,9 +64,14 @@ const attributesData: IAttributesTableData[] = [
     default: "false",
   },
   {
+    name: "disabled",
+    type: "Boolean",
+    default: "false",
+  },
+  {
     name: "role",
     type: "String",
-    default: "listbox",
+    default: "menu",
   },
   {
     name: "aria-label",
@@ -81,16 +80,22 @@ const attributesData: IAttributesTableData[] = [
   },
 ];
 
-const slotData: ISlotsTableData[] = [{ name: "default" }];
+const slotData: ISlotsTableData[] = [{ name: "default" }, { name: "menu" }];
 const variables: IVariablesTableData[] = [];
-const eventsData = [{ name: "on-outside-click", type: "void" }, { name: "on-escape-keydown", type: "void" }];
+const eventsData: IEventsTableData[] = [
+  { name: "update:model-value", type: "Boolean" },
+  { name: "open", type: "MouseEvent | KeyboardEvent" },
+  { name: "close", type: "void" },
+  { name: "on-outside-click", type: "void" },
+  { name: "on-escape-keydown", type: "void" },
+];
 </script>
 
 <template>
   <div class="docs-api-table">
     <api-table
-      title="NmorphDropdown"
-      name="dropdown"
+      title="NmorphContextMenu"
+      name="context-menu"
       :attributes="attributesData"
       :slots="slotData"
       :variables="variables"

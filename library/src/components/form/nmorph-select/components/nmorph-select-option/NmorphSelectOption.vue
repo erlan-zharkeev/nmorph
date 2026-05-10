@@ -55,7 +55,14 @@ const modifiers = computed(() =>
 </script>
 
 <template>
-  <div :class="modifiers" :value="props.value" @click="clickHandler">
+  <div
+    :class="modifiers"
+    :value="props.value"
+    role="option"
+    :aria-selected="checked"
+    :aria-disabled="props.disabled"
+    @click="clickHandler"
+  >
     <div class="nmorph-select-option__content">
       <span>{{ props.label }}</span>
       <slot />

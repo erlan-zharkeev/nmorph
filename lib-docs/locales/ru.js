@@ -221,6 +221,22 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "docs-route-lazy-overviews":
+          "Component overviews в документации теперь lazy-load по route, включая sources примеров и icon data, поэтому initial docs bundle стал меньше.",
+        "library-entrypoints-tree-shaking":
+          "Library package теперь экспортирует отдельные entrypoints для icons и styles, оставляет CSS в side effects и не заставляет потребителей тянуть лишние иконки или стили.",
+        "context-menu-component":
+          "Добавлен NmorphContextMenu на базе NmorphDropdown: позиция по указателю, keyboard context menu, закрытие по Escape/outside-click, API docs и примеры в sandbox.",
+        "overlay-focus-management":
+          "Dialog, dropdown, select и autocomplete на базе overlay теперь используют общий Escape handling, ARIA roles, outside-click behavior и focus trap support там, где нужно.",
+        "virtualization-keyboard-dynamic-height":
+          "Виртуализация NmorphTable, NmorphSelect и NmorphAutocomplete получила усиленную keyboard navigation, dynamic item heights и сохранение scroll position.",
+        "date-format-flexibility":
+          "NmorphDatePicker и calendar utils теперь поддерживают nullable models и кастомное форматирование дат через Intl options, token patterns или formatter function.",
+        "button-custom-color-hover":
+          "NmorphButton теперь сохраняет custom color prop, по умолчанию использует обычный text color и строит hover color для transparent от переданного цвета вместо accent.",
+        "css-shadow-token-cleanup":
+          "Общие shadow tokens централизуют inset/outset styles и уменьшают дублирование CSS в компонентах и документации.",
         "docs-example-source-files":
           "Примеры attributes в документации теперь используют общие source `.example.vue` файлы, поэтому preview и highlighted code остаются синхронизированными без копирования template и styles.",
         "docs-code-copy-fix":
@@ -1358,6 +1374,48 @@ export default {
       events: {
         "on-outside-click":
           "Событие всплывающее когда пользователь кликает вне выпадающего списка, что можно использовать для его закрытия",
+      },
+    },
+    "context-menu": {
+      "basic-usage": {
+        target: "Кликните правой кнопкой по этой области",
+      },
+      api: {
+        "model-value": "Управляет открытым состоянием контекстного меню",
+        placement:
+          "Задает положение контекстного меню относительно позиции указателя",
+        width: "Указывает ширину контекстного меню",
+        "min-width": "Указывает минимальную ширину контекстного меню",
+        "max-width": "Указывает максимальную ширину контекстного меню",
+        "x-offset":
+          "Горизонтальное смещение в пикселях для настройки позиции контекстного меню",
+        "y-offset":
+          "Вертикальное смещение в пикселях для настройки позиции контекстного меню",
+        "fill-width":
+          "Булево значение, определяющее, должно ли контекстное меню использовать ширину якоря указателя",
+        "z-index":
+          "Задает z-index оверлея контекстного меню. Если не передан, используется общий автоматический стек z-index",
+        "close-on-escape":
+          "Определяет, должно ли контекстное меню закрываться при нажатии Escape",
+        "trap-focus":
+          "Определяет, должен ли фокус удерживаться внутри контекстного меню",
+        disabled: "Отключает trigger контекстного меню",
+        role: "Задает aria role для панели контекстного меню",
+        "aria-label": "Задает aria-label для панели контекстного меню",
+      },
+      slot: {
+        default: "Слот для области, по которой открывается контекстное меню",
+        menu: "Слот для кастомизации содержимого контекстного меню",
+      },
+      variables: {},
+      events: {
+        "update:model-value": "Событие при изменении открытого состояния",
+        open: "Событие при открытии контекстного меню",
+        close: "Событие при закрытии контекстного меню",
+        "on-outside-click":
+          "Событие при клике вне контекстного меню",
+        "on-escape-keydown":
+          "Событие при нажатии Escape, когда контекстное меню открыто",
       },
     },
     backtop: {

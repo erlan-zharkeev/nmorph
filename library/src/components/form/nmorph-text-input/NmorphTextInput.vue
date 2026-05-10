@@ -90,6 +90,7 @@ interface INmorphEmit {
   (e: 'focus'): void;
   (e: 'blur'): void;
   (e: 'on-enter'): void;
+  (e: 'keydown', event: KeyboardEvent): void;
 }
 
 defineExpose({ inputDOMRef, focus, blur, select });
@@ -126,6 +127,7 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
         @input="handleInput"
         @focus="handleFocus"
         @blur="handleBlur"
+        @keydown="emit('keydown', $event)"
         @keyup.enter="emit('on-enter')"
       />
       <NmorphButton

@@ -3,10 +3,10 @@ import {
   NmorphSwitch,
   NmorphRadioGroup,
   NmorphIcon,
+  useNmorph,
 } from "@nmorph/nmorph-ui-kit";
 import MoonIcon from "~/assets/icons/moon.svg";
 import SunIcon from "~/assets/icons/sun.svg";
-import { useGlobalStore } from "~/providers";
 
 interface IProps {
   switchType?: boolean;
@@ -16,13 +16,15 @@ const props = withDefaults(defineProps<IProps>(), {
   switchType: true,
 });
 
-const store = useGlobalStore();
+const nmorph = useNmorph();
+const currentTheme = nmorph.theme.currentTheme;
+const changeTheme = (theme: string) => nmorph.theme.setTheme(theme);
 </script>
 <template>
   <NmorphSwitch
     v-if="props.switchType"
-    :model-value="store.currentTheme"
-    @update:model-value="$event => store.changeTheme($event as string)"
+    :model-value="currentTheme"
+    @update:model-value="$event => changeTheme($event as string)"
     active-value="light"
     inactive-value="dark"
     class="theme-changer"
@@ -42,8 +44,8 @@ const store = useGlobalStore();
   </NmorphSwitch>
   <NmorphRadioGroup
     v-else
-    :model-value="store.currentTheme"
-    @update:model-value="store.changeTheme"
+    :model-value="currentTheme"
+    @update:model-value="changeTheme"
     :options="[
       { value: 'dark', label: 'Dark' },
       { value: 'light', label: 'Light' },

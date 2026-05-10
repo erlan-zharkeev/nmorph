@@ -3,13 +3,9 @@ import { onMounted, onUnmounted } from "vue";
 import {
   NmorphNotificationProvider,
   nmorphLog,
-  useNmorph,
 } from "@nmorph/nmorph-ui-kit";
-import { notificationProvider, useGlobalStore } from "~/providers";
+import { notificationProvider } from "~/providers";
 import projectData from "./package.json";
-
-const store = useGlobalStore();
-const nmorph = useNmorph();
 
 const updateViewportHeight = () => {
   const vh = window.innerHeight * 0.01;
@@ -19,9 +15,6 @@ const updateViewportHeight = () => {
 onMounted(() => {
   if (import.meta.client) {
     nmorphLog("success", `NMORPH DOCS (v${projectData.version})`);
-    store.inferNmorphSetTheme(nmorph.theme.setTheme);
-    store.changeTheme(nmorph.theme.currentTheme.value);
-    store.inferGetDynamicColorVariables(nmorph.theme.getDynamicColorVariables);
     updateViewportHeight();
     window.addEventListener('resize', updateViewportHeight);
   }

@@ -219,6 +219,22 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "docs-route-lazy-overviews":
+          "Docs component overviews now lazy-load per route, including example sources and icon data, so the initial docs bundle stays smaller.",
+        "library-entrypoints-tree-shaking":
+          "The library package now exposes separate icons and styles entrypoints, keeps CSS marked as side effects, and avoids forcing consumers to pull unused icons or styles.",
+        "context-menu-component":
+          "Added NmorphContextMenu based on NmorphDropdown, with pointer positioning, keyboard context menu support, Escape/outside-click closing, API docs, and sandbox examples.",
+        "overlay-focus-management":
+          "Overlay-based dialog, dropdown, select, and autocomplete flows now share Escape handling, ARIA roles, outside-click behavior, and focus trap support where needed.",
+        "virtualization-keyboard-dynamic-height":
+          "NmorphTable, NmorphSelect, and NmorphAutocomplete virtualization now support stronger keyboard navigation, dynamic item heights, and scroll position preservation.",
+        "date-format-flexibility":
+          "NmorphDatePicker and calendar utilities now support nullable models plus custom date formatting through Intl options, token patterns, or a formatter function.",
+        "button-custom-color-hover":
+          "NmorphButton now preserves a custom color prop, uses normal text color by default, and derives transparent hover color from the passed color instead of accent.",
+        "css-shadow-token-cleanup":
+          "Shared shadow tokens now centralize common inset/outset styles, reducing duplicated CSS across components and docs.",
         "docs-example-source-files":
           "Docs attribute examples now use shared source `.example.vue` files, so the rendered preview and highlighted code stay in sync without duplicating templates and styles.",
         "docs-code-copy-fix":
@@ -1341,6 +1357,48 @@ export default {
       events: {
         "on-outside-click":
           "Event triggered when the user clicks outside the dropdown, which can be used to close it",
+      },
+    },
+    "context-menu": {
+      "basic-usage": {
+        target: "Right-click this area",
+      },
+      api: {
+        "model-value": "Controls the open state of the context menu",
+        placement:
+          "Defines context menu placement relative to the pointer position",
+        width: "Sets the width of the context menu",
+        "min-width": "Sets the minimum width of the context menu",
+        "max-width": "Sets the maximum width of the context menu",
+        "x-offset":
+          "Horizontal offset in pixels for adjusting the context menu position",
+        "y-offset":
+          "Vertical offset in pixels for adjusting the context menu position",
+        "fill-width":
+          "Boolean value defining whether the context menu should use the pointer anchor width",
+        "z-index":
+          "Defines the context menu overlay z-index. Uses the shared automatic z-index stack when omitted",
+        "close-on-escape":
+          "Defines whether the context menu should close when Escape is pressed",
+        "trap-focus":
+          "Defines whether focus should be trapped inside the context menu",
+        disabled: "Disables the context menu trigger",
+        role: "Sets the aria role for the context menu panel",
+        "aria-label": "Sets the aria-label for the context menu panel",
+      },
+      slot: {
+        default: "Slot for the right-click target",
+        menu: "Slot for customizing the context menu content",
+      },
+      variables: {},
+      events: {
+        "update:model-value": "Event triggered when the open state changes",
+        open: "Event triggered when the context menu opens",
+        close: "Event triggered when the context menu closes",
+        "on-outside-click":
+          "Event triggered when the user clicks outside the context menu",
+        "on-escape-keydown":
+          "Event triggered when the user presses Escape while the context menu is open",
       },
     },
     backtop: {

@@ -67,6 +67,36 @@ const attributesData: IAttributesTableData[] = [
     type: "Number",
     default: "auto",
   },
+  {
+    name: "date-locale",
+    type: "String | Array<String>",
+    default: "en-CA",
+  },
+  {
+    name: "date-format-options",
+    type: "Intl.DateTimeFormatOptions",
+    default: "{ year: 'numeric', month: '2-digit', day: '2-digit' }",
+  },
+  {
+    name: "date-format",
+    type: "String",
+    default: "-",
+  },
+  {
+    name: "date-formatter",
+    type: "(date: Date) => string",
+    default: "-",
+  },
+  {
+    name: "value-separator",
+    type: "String",
+    default: ", ",
+  },
+  {
+    name: "range-separator",
+    type: "String",
+    default: " - ",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [];

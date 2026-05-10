@@ -2,7 +2,7 @@
   "name": "@nmorph/nmorph-ui-kit",
   "type": "module",
   "private": false,
-  "version": "2.2.15",
+  "version": "2.2.16",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -38,6 +38,16 @@
       "types": "./dist/src/plugin.d.ts",
       "import": "./dist/plugin.js"
     },
+    "./icons": {
+      "types": "./dist/src/icons.d.ts",
+      "import": "./dist/icons.js"
+    },
+    "./styles": {
+      "types": "./dist/src/styles.d.ts",
+      "import": "./dist/styles.js"
+    },
+    "./styles.css": "./dist/style.css",
+    "./style.css": "./dist/style.css",
     "./nuxt": {
       "types": "./dist/src/nuxt/module.d.ts",
       "import": "./dist/nuxt.mjs",

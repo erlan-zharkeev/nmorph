@@ -174,7 +174,13 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
   </div>
   <Teleport to="body">
     <div class="nmorph-image-preview__portal" :class="modifiers">
-      <NmorphOverlay :show="open" :z-index="props.zIndex" @on-outside-click="closeHandler">
+      <NmorphOverlay
+        :show="open"
+        :z-index="props.zIndex"
+        trap-focus
+        @on-outside-click="closeHandler"
+        @on-escape-keydown="closeHandler"
+      >
         <div class="nmorph-image-preview__content">
           <NmorphImage
             :src="triggerSource"

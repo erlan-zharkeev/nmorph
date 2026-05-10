@@ -13,6 +13,7 @@ interface INmorphProps {
   showClose?: boolean;
   zIndex?: number;
   closeOnOverlay?: boolean;
+  closeOnEscape?: boolean;
 }
 const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: false,
@@ -24,6 +25,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   showClose: true,
   zIndex: undefined,
   closeOnOverlay: true,
+  closeOnEscape: true,
 });
 
 interface INmorphEmit {
@@ -64,9 +66,15 @@ watch(
 const closeHandler = () => {
   emit('on-close');
   if (openTimeout) clearTimeout(openTimeout);
-  closeTimeout = setTimeout(() => {
+  const emitClose = () => {
     emit('update:model-value', false);
-  }, props.closeDelay);
+  };
+
+  if (props.closeDelay <= 0) {
+    emitClose();
+  } else {
+    closeTimeout = setTimeout(emitClose, props.closeDelay);
+  }
 };
 
 const clickOnOverlay = () => {
@@ -76,8 +84,21 @@ const clickOnOverlay = () => {
 </script>
 
 <template>
-  <NmorphOverlay :show="isVisible" :z-index="props.zIndex" @on-outside-click="clickOnOverlay">
-    <div :class="modifiers" :style="{ '--nmorph-dialog-width': props.width }">
+  <NmorphOverlay
+    :show="isVisible"
+    :z-index="props.zIndex"
+    :close-on-escape="props.closeOnEscape"
+    trap-focus
+    @on-outside-click="clickOnOverlay"
+    @on-escape-keydown="closeHandler"
+  >
+    <div
+      :class="modifiers"
+      :style="{ '--nmorph-dialog-width': props.width }"
+      role="dialog"
+      aria-modal="true"
+      :aria-label="props.title || undefined"
+    >
       <div class="nmorph-dialog__header">
         <slot name="header">
           <div class="nmorph-dialog__title">{{ props.title }}</div>

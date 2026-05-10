@@ -48,18 +48,12 @@ export const title1 = () => `
 
 export const nmorphOutset = () => `
   background: var(--nmorph-main-color);
-  box-shadow:
-    var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-    calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-      var(--nmorph-light-shade-color);
+  box-shadow: var(--nmorph-shadow-outset);
 `;
 
 export const nmorphInset = () => `
   background: var(--nmorph-main-color);
-  box-shadow:
-    inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-    inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-      var(--nmorph-light-shade-color);
+  box-shadow: var(--nmorph-shadow-inset);
 `;
 
 export const nmorphBorder = (borderWidth: number) => `
@@ -70,14 +64,7 @@ export const nmorphCombined = (borderWidth = 0, isInsetDark = false) => `
   ${nmorphBorder(borderWidth)}
 
   background: var(--nmorph-main-color);
-  box-shadow:
-    var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-    calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-      var(--nmorph-light-shade-color),
-    inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-    inset calc(-1 * var(--base-shadow-width)) calc(-0.5 * var(--base-shadow-width)) var(--base-shadow-blur) ${
-      isInsetDark ? 'var(--nmorph-dark-shade-color)' : 'var(--nmorph-light-shade-color)'
-    };
+  box-shadow: ${isInsetDark ? 'var(--nmorph-shadow-combined-dark)' : 'var(--nmorph-shadow-combined)'};
 `;
 
 export const disabled = () => `

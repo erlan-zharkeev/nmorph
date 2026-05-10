@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
-import { computed } from 'vue';
+import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue';
 import { useZIndex } from '@/hooks';
 
 interface INmorphProps {
@@ -9,6 +9,9 @@ interface INmorphProps {
   zIndex?: number;
   teleportTo?: string | HTMLElement;
   disabledTeleport?: boolean;
+  closeOnEscape?: boolean;
+  trapFocus?: boolean;
+  restoreFocus?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -16,6 +19,9 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   zIndex: undefined,
   teleportTo: 'body',
   disabledTeleport: false,
+  closeOnEscape: true,
+  trapFocus: false,
+  restoreFocus: true,
 });
 
 const zIndex = useZIndex(
@@ -28,6 +34,7 @@ const modifiers = computed(() =>
     'nmorph-overlay': [`${props.show && 'show'}`, `${props.transparent && 'transparent'}`],
   })
 );
+const renderInline = computed(() => props.disabledTeleport || !props.show || typeof document === 'undefined');
 
 const clickHandler = () => {
   emit('on-outside-click');
@@ -35,15 +42,106 @@ const clickHandler = () => {
 
 interface INmorphEmit {
   (e: 'on-outside-click'): void;
+  (e: 'on-escape-keydown'): void;
 }
 
 const emit = defineEmits<INmorphEmit>();
+
+const contentRef = ref<HTMLElement | null>(null);
+let previousActiveElement: HTMLElement | null = null;
+const focusableSelector = [
+  'a[href]',
+  'button:not([disabled])',
+  'textarea:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',');
+
+const getFocusableElements = () => {
+  if (!contentRef.value) return [];
+  return Array.from(contentRef.value.querySelectorAll<HTMLElement>(focusableSelector)).filter(
+    (element) => element.getAttribute('aria-hidden') !== 'true'
+  );
+};
+
+const focusContent = async () => {
+  if (!props.trapFocus) return;
+  await nextTick();
+  const focusableElements = getFocusableElements();
+  const target = focusableElements[0] || contentRef.value;
+  target?.focus();
+};
+
+const keydownHandler = (event: KeyboardEvent) => {
+  if (!props.show) return;
+
+  if (event.key === 'Escape' && props.closeOnEscape) {
+    event.preventDefault();
+    emit('on-escape-keydown');
+    return;
+  }
+
+  if (event.key !== 'Tab' || !props.trapFocus) return;
+
+  const focusableElements = getFocusableElements();
+  if (!focusableElements.length) {
+    event.preventDefault();
+    contentRef.value?.focus();
+    return;
+  }
+
+  const firstElement = focusableElements[0];
+  const lastElement = focusableElements[focusableElements.length - 1];
+
+  if (event.shiftKey && document.activeElement === firstElement) {
+    event.preventDefault();
+    lastElement.focus();
+  } else if (!event.shiftKey && document.activeElement === lastElement) {
+    event.preventDefault();
+    firstElement.focus();
+  }
+};
+
+const addKeydownListener = () => {
+  if (typeof document === 'undefined') return;
+  document.addEventListener('keydown', keydownHandler);
+};
+
+const removeKeydownListener = () => {
+  if (typeof document === 'undefined') return;
+  document.removeEventListener('keydown', keydownHandler);
+};
+
+watch(
+  () => props.show,
+  (show) => {
+    if (typeof document === 'undefined') return;
+    if (show) {
+      previousActiveElement = document.activeElement as HTMLElement | null;
+      addKeydownListener();
+      focusContent();
+    } else {
+      removeKeydownListener();
+      if (props.restoreFocus) previousActiveElement?.focus?.();
+      previousActiveElement = null;
+    }
+  },
+  { immediate: true, flush: 'post' }
+);
+
+onBeforeUnmount(removeKeydownListener);
 </script>
 
 <template>
-  <Teleport :to="props.teleportTo" :disabled="props.disabledTeleport || !props.show">
+  <div v-if="renderInline" :class="modifiers" :style="{ '--nmorph-overlay-z-index': zIndex }" @click.stop="clickHandler">
+    <div ref="contentRef" class="nmorph-overlay__slot" :tabindex="props.trapFocus ? -1 : undefined" @click.stop>
+      <slot />
+    </div>
+  </div>
+  <Teleport v-else :to="props.teleportTo">
     <div :class="modifiers" :style="{ '--nmorph-overlay-z-index': zIndex }" @click.stop="clickHandler">
-      <div class="nmorph-overlay__slot" @click.stop>
+      <div ref="contentRef" class="nmorph-overlay__slot" :tabindex="props.trapFocus ? -1 : undefined" @click.stop>
         <slot />
       </div>
     </div>
