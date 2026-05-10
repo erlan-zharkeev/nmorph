@@ -85,9 +85,6 @@ importers:
       '@types/vue':
         specifier: ^2.0.0
         version: 2.0.0(typescript@5.1.6)
-      '@types/vue-router':
-        specifier: ^2.0.0
-        version: 2.0.0(vue@3.5.34(typescript@5.1.6))
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.18.1
         version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.1.6))(eslint@8.57.1)(typescript@5.1.6)
@@ -1814,10 +1811,6 @@ packages:
 
   '@types/semver@7.7.1':
     resolution: {integrity: sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==}
-
-  '@types/vue-router@2.0.0':
-    resolution: {integrity: sha512-E454lQ6tp9ftVWdZ8VGZpRcIV4YeqVAcx/uifl3P1GGwscYsxOFdYfgIuKasKO0Fm6Np2JM/L378D3bcRQE9hg==}
-    deprecated: This is a stub types definition for vue-router (https://github.com/vuejs/vue-router). ecmarkup provides its own type definitions, so you don\'t need @types/ecmarkup installed!
 
   '@types/vue@2.0.0':
     resolution: {integrity: sha512-WDElkBv/o4lVwu6wYHB06AXs4Xo2fwDjJUpvPRc1QQdzkUSiGFjrYuSCy8raxLE5FObgKq8ND7R5gSZTFLK60w==}
@@ -7386,12 +7379,6 @@ snapshots:
   '@types/resolve@1.20.2': {}
 
   '@types/semver@7.7.1': {}
-
-  '@types/vue-router@2.0.0(vue@3.5.34(typescript@5.1.6))':
-    dependencies:
-      vue-router: 4.6.4(vue@3.5.34(typescript@5.1.6))
-    transitivePeerDependencies:
-      - vue
 
   '@types/vue@2.0.0(typescript@5.1.6)':
     dependencies:
