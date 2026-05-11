@@ -219,6 +219,8 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "context-menu-neutral-hover":
+          "NmorphContextMenu now derives the default option hover background from the base text color instead of the accent color, while custom colored items still use their own color.",
         "context-menu-options-api":
           "NmorphContextMenu now accepts text, object, and component options with built-in item layout, hover states, disabled handling, and select events.",
         "context-menu-scroll-position":

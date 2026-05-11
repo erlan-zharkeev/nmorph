@@ -209,6 +209,8 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "context-menu-neutral-hover":
+          "NmorphContextMenu 现在会从基础 text color 推导默认选项 hover background，而不是使用 accent color；自定义颜色的选项仍使用自己的颜色。",
         "context-menu-options-api":
           "NmorphContextMenu 现在支持文本、对象和组件 options，并内置菜单项布局、hover states、disabled handling 与 select events。",
         "context-menu-scroll-position":

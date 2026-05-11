@@ -221,6 +221,8 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "context-menu-neutral-hover":
+          "NmorphContextMenu теперь строит дефолтный hover background пункта от базового text color вместо accent color, а пункты с кастомным цветом продолжают использовать свой цвет.",
         "context-menu-options-api":
           "NmorphContextMenu теперь принимает options текстом, объектами и компонентами со встроенной раскладкой пунктов, hover states, disabled handling и select events.",
         "context-menu-scroll-position":
