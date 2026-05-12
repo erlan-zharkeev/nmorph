@@ -50,6 +50,11 @@ const attributesData: IAttributesTableData[] = [
     type: "Number",
     default: "auto",
   },
+  {
+    name: "close-on-escape",
+    type: "Boolean",
+    default: "true",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "header" }, { name: "default" }];

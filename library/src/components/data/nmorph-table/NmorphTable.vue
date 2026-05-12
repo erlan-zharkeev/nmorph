@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, provide, ref, watch } from 'vue';
+import { computed, nextTick, provide, ref, watch } from 'vue';
 import { generateUUID, useModifiers } from '@/utils';
 import { NmorphDomElementType, NmorphSortOrderType } from '@/types';
 import { useVirtualList } from '@/hooks';
@@ -22,6 +22,7 @@ interface INmorphProps {
   virtualHeight?: number | string;
   virtualOverscan?: number;
   virtualRowHeight?: number;
+  virtualDynamicHeight?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -34,6 +35,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   virtualHeight: '320px',
   virtualOverscan: 5,
   virtualRowHeight: 42,
+  virtualDynamicHeight: false,
 });
 
 const modifiers = computed(() =>
@@ -46,15 +48,20 @@ const rows = ref([...props.data]);
 const virtualEnabled = computed(() => props.virtual);
 const virtualRowHeight = computed(() => props.virtualRowHeight);
 const virtualOverscan = computed(() => props.virtualOverscan);
+const virtualDynamicHeight = computed(() => props.virtualDynamicHeight);
 const virtualList = useVirtualList(rows, {
   enabled: virtualEnabled,
   itemHeight: virtualRowHeight,
   overscan: virtualOverscan,
+  dynamic: virtualDynamicHeight,
 });
 
-const tableRows = computed(() =>
-  virtualEnabled.value ? virtualList.virtualItems.value.map((virtualRow) => virtualRow.item) : rows.value
+const renderedRows = computed(() =>
+  virtualEnabled.value ? virtualList.virtualItems.value : rows.value.map((item, index) => ({ item, index }))
 );
+const tableRows = computed(() => renderedRows.value.map((row) => row.item));
+const activeRowIndex = ref(-1);
+const lastScrollTop = ref(0);
 
 const sortData = ref(props.sort);
 const onSort = (value: NmorphSortOrderType, prop: string) => {
@@ -104,10 +111,18 @@ const getWidth = (width: string | undefined) => {
 const key = ref(0);
 watch(
   () => props.data,
-  () => {
+  async () => {
     key.value = key.value + 1;
     rows.value = [...props.data];
     columns.value = [];
+    await nextTick();
+    const element = virtualList.containerRef.value;
+    if (!element) return;
+    element.scrollTop = Math.min(
+      lastScrollTop.value,
+      Math.max(virtualList.totalHeight.value - element.clientHeight, 0)
+    );
+    virtualList.refresh();
   },
   {
     immediate: true,
@@ -130,6 +145,52 @@ const virtualSpacerStyle = computed(() => ({
 const virtualContentStyle = computed(() => ({
   transform: `translateY(${virtualList.offsetTop.value}px)`,
 }));
+
+const setVirtualRowRef = (element: unknown, index: number) => {
+  virtualList.measureElement(index, element as Element | null);
+};
+
+const scrollHandler = () => {
+  virtualList.scrollHandler();
+  lastScrollTop.value = virtualList.containerRef.value?.scrollTop || 0;
+};
+
+const moveActiveRow = (delta: number) => {
+  if (!rows.value.length) return;
+  const nextIndex =
+    activeRowIndex.value < 0 ? 0 : Math.min(Math.max(activeRowIndex.value + delta, 0), rows.value.length - 1);
+  activeRowIndex.value = nextIndex;
+  virtualList.scrollToIndex(nextIndex);
+};
+
+const tableKeydownHandler = (event: KeyboardEvent) => {
+  if (!virtualEnabled.value) return;
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    moveActiveRow(1);
+  } else if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    moveActiveRow(-1);
+  } else if (event.key === 'Home') {
+    event.preventDefault();
+    activeRowIndex.value = 0;
+    virtualList.scrollToIndex(0);
+  } else if (event.key === 'End') {
+    event.preventDefault();
+    activeRowIndex.value = rows.value.length - 1;
+    virtualList.scrollToIndex(rows.value.length - 1);
+  } else if (event.key === 'PageDown') {
+    event.preventDefault();
+    moveActiveRow(
+      Math.max(Math.floor((virtualList.viewportHeight.value || props.virtualRowHeight) / props.virtualRowHeight), 1)
+    );
+  } else if (event.key === 'PageUp') {
+    event.preventDefault();
+    moveActiveRow(
+      -Math.max(Math.floor((virtualList.viewportHeight.value || props.virtualRowHeight) / props.virtualRowHeight), 1)
+    );
+  }
+};
 </script>
 
 <template>
@@ -171,9 +232,15 @@ const virtualContentStyle = computed(() => ({
         <div
           :ref="virtualList.containerRef"
           class="nmorph-table__body"
-          :class="{ 'nmorph-table__body--virtual': virtualEnabled }"
+          :class="{
+            'nmorph-table__body--virtual': virtualEnabled,
+            'nmorph-table__body--dynamic': props.virtualDynamicHeight,
+          }"
           :style="tableBodyStyle"
-          @scroll="virtualList.scrollHandler"
+          :tabindex="virtualEnabled ? 0 : undefined"
+          role="grid"
+          @keydown="tableKeydownHandler"
+          @scroll="scrollHandler"
         >
           <div v-if="virtualEnabled" class="nmorph-table__virtual-spacer" :style="virtualSpacerStyle">
             <div class="nmorph-table__virtual-content" :style="virtualContentStyle">
@@ -187,10 +254,15 @@ const virtualContentStyle = computed(() => ({
                 </colgroup>
                 <tbody>
                   <tr
-                    v-for="(rowData, idx) in tableRows"
-                    :key="idx"
+                    v-for="(rowData, idx) in renderedRows"
+                    :key="rowData.index"
+                    :ref="(element) => setVirtualRowRef(element, rowData.index)"
                     class="nmorph-table__table-data-row"
-                    :class="{ 'nmorph-table__table-data-row--row-hover': props.rowHover }"
+                    :class="{
+                      'nmorph-table__table-data-row--row-hover': props.rowHover,
+                      'nmorph-table__table-data-row--active': activeRowIndex === rowData.index,
+                    }"
+                    role="row"
                   >
                     <td
                       v-for="columnData in columns"
@@ -203,7 +275,7 @@ const virtualContentStyle = computed(() => ({
                         :style="{ 'text-align': columnData.alignment }"
                         class="nmorph-table__cell nmorph-table__cell--data"
                       >
-                        {{ tableData(rowData[columnData.prop]) }}
+                        {{ tableData(rowData.item[columnData.prop]) }}
                       </div>
                     </td>
                   </tr>
@@ -234,7 +306,7 @@ const virtualContentStyle = computed(() => ({
               </colgroup>
               <tbody>
                 <tr
-                  v-for="(rowData, idx) in tableRows"
+                  v-for="(rowData, idx) in renderedRows"
                   :key="idx"
                   class="nmorph-table__table-data-row"
                   :class="{ 'nmorph-table__table-data-row--row-hover': props.rowHover }"
@@ -250,7 +322,7 @@ const virtualContentStyle = computed(() => ({
                       :style="{ 'text-align': columnData.alignment }"
                       class="nmorph-table__cell nmorph-table__cell--data"
                     >
-                      {{ tableData(rowData[columnData.prop]) }}
+                      {{ tableData(rowData.item[columnData.prop]) }}
                     </div>
                   </td>
                 </tr>
@@ -334,6 +406,10 @@ const virtualContentStyle = computed(() => ({
     padding-bottom: 0;
   }
 
+  .nmorph-table__body--virtual.nmorph-table__body--dynamic .nmorph-table__table-data {
+    height: auto;
+  }
+
   .nmorph-table__virtual-spacer {
     position: relative;
     min-width: 100%;
@@ -349,16 +425,17 @@ const virtualContentStyle = computed(() => ({
   .nmorph-table__table-data-row--row-hover:hover {
     background: var(--table-background-row-hover);
   }
+
+  .nmorph-table__table-data-row--active {
+    background: var(--table-background-row-hover);
+  }
 }
 
 .nmorph-table--nmorph {
   overflow: hidden;
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
-  box-shadow:
-    var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-    calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-      var(--nmorph-light-shade-color);
+  box-shadow: var(--nmorph-shadow-outset);
 
   --border-color: transparent;
 
@@ -368,10 +445,7 @@ const virtualContentStyle = computed(() => ({
 
   .nmorph-table__table-row {
     background: var(--nmorph-main-color);
-    box-shadow:
-      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-        var(--nmorph-light-shade-color);
+    box-shadow: var(--nmorph-shadow-inset);
   }
 }
 </style>

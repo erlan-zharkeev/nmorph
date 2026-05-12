@@ -22,7 +22,7 @@ const nmorphNuxtModule: NuxtModule<NmorphNuxtModuleOptions> = defineNuxtModule<N
     nuxt.options.build.transpile.push('@nmorph/nmorph-ui-kit');
 
     if (styles === 'all') {
-      nuxt.options.css.push('@nmorph/nmorph-ui-kit/dist/style.css');
+      nuxt.options.css.push('@nmorph/nmorph-ui-kit/styles.css');
     }
 
     addPluginTemplate({
@@ -61,11 +61,15 @@ const mergeMessages = (base, overrides = {}) => {
   return result
 }
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin({
+  name: 'nmorph',
+  enforce: 'post',
+  setup(nuxtApp) {
   const pluginOptions = { ...options }
   const i18nOptions = { ...(pluginOptions.i18n || {}) }
   const messages = mergeMessages(libraryMessages, i18nOptions.messages)
-  const i18n = nuxtApp.$i18n
+  const vueI18nGlobal = nuxtApp.vueApp.__VUE_I18N__?.global
+  const i18n = nuxtApp.$i18n?.mergeLocaleMessage ? nuxtApp.$i18n : vueI18nGlobal
 
 	  if (import.meta.server) {
 	    useHead({
@@ -98,6 +102,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   pluginOptions.i18n = i18nOptions
   nuxtApp.vueApp.use(NmorphLibrary, pluginOptions)
+  }
 })
 `,
     });

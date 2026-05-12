@@ -138,7 +138,7 @@ export const guidePages: GuidePage[] = [
         ],
         code: {
           language: "ts",
-          content: 'import "@nmorph/nmorph-ui-kit/dist/style.css";',
+          content: 'import "@nmorph/nmorph-ui-kit/styles.css";',
         },
       },
       {
@@ -171,7 +171,7 @@ export const guidePages: GuidePage[] = [
         code: {
           language: "ts",
           content:
-            'import { createApp } from "vue";\nimport { NmorphLibrary } from "@nmorph/nmorph-ui-kit/plugin";\nimport "@nmorph/nmorph-ui-kit/dist/style.css";\nimport App from "./App.vue";\n\ncreateApp(App).use(NmorphLibrary).mount("#app");',
+            'import { createApp } from "vue";\nimport { NmorphLibrary } from "@nmorph/nmorph-ui-kit/plugin";\nimport "@nmorph/nmorph-ui-kit/styles.css";\nimport App from "./App.vue";\n\ncreateApp(App).use(NmorphLibrary).mount("#app");',
         },
       },
       {

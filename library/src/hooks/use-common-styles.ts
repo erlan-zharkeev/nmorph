@@ -69,6 +69,30 @@ export const getCommonStyles = () => {
       --indentation-04: 16px;
 
       --base-shadow-blur: calc(var(--base-shadow-width) * var(--base-shadow-blur-coefficient));
+      --nmorph-shadow-outset:
+        var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color);
+      --nmorph-shadow-inset:
+        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color);
+      --nmorph-shadow-combined:
+        var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color),
+        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur)
+          var(--nmorph-dark-shade-color),
+        inset calc(-1 * var(--base-shadow-width)) calc(-0.5 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color);
+      --nmorph-shadow-combined-dark:
+        var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+        calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-light-shade-color),
+        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur)
+          var(--nmorph-dark-shade-color),
+        inset calc(-1 * var(--base-shadow-width)) calc(-0.5 * var(--base-shadow-width)) var(--base-shadow-blur)
+          var(--nmorph-dark-shade-color);
       --nmorph-wrapper-padding: calc(var(--base-shadow-width) * 1.5);
 
       --transition-04: 0.4s;
@@ -293,14 +317,7 @@ export const getCommonStyles = () => {
     .nmorph-avatar.nmorph--shadow-combined {
       border: var(--nmorph-avatar-frame-border) solid var(--nmorph-main-color);
       background: var(--nmorph-main-color);
-      box-shadow:
-        var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-        calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-          var(--nmorph-light-shade-color),
-        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur)
-          var(--nmorph-dark-shade-color),
-        inset calc(-1 * var(--base-shadow-width)) calc(-0.5 * var(--base-shadow-width)) var(--base-shadow-blur)
-          var(--nmorph-dark-shade-color);
+      box-shadow: var(--nmorph-shadow-combined-dark);
     }
 
     .nmorph-avatar > .nmorph-image > img {
@@ -435,21 +452,13 @@ export const getCommonStyles = () => {
     .nmorph-text-input input:-webkit-autofill:active {
       -webkit-text-fill-color: var(--nmorph-text-color);
       caret-color: var(--nmorph-text-color);
-      box-shadow:
-        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-        inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-          var(--nmorph-light-shade-color),
-        inset 0 0 0 1000px var(--nmorph-main-color);
+      box-shadow: var(--nmorph-shadow-inset), inset 0 0 0 1000px var(--nmorph-main-color);
     }
 
     .nmorph-text-input input:-webkit-autofill:focus {
       -webkit-text-fill-color: var(--nmorph-focus-text-color);
       caret-color: var(--nmorph-focus-text-color);
-      box-shadow:
-        var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-        calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-          var(--nmorph-light-shade-color),
-        inset 0 0 0 1000px var(--nmorph-accent-color);
+      box-shadow: var(--nmorph-shadow-outset), inset 0 0 0 1000px var(--nmorph-accent-color);
       outline: none;
     }
 

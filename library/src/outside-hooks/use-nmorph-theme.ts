@@ -335,16 +335,25 @@ export const useNmorphTheme = (customOptions?: INmorphThemeOptions): INmorphThem
     setTheme(theme);
   };
 
-  if (isClient && typeof localStorage !== 'undefined') {
-    const lsTheme = localStorage.getItem(THEME_KEY);
-    const lsThemeExist = lsTheme ? themeMap[lsTheme] : undefined;
+  const resolveClientTheme = () => {
+    const documentTheme = document.documentElement.getAttribute(THEME_KEY);
+    const lsTheme = typeof localStorage !== 'undefined' ? localStorage.getItem(THEME_KEY) : null;
+    const lsThemeExists = lsTheme ? themeMap[lsTheme] : undefined;
+    const documentThemeExists = documentTheme ? themeMap[documentTheme] : undefined;
 
-    if (options.saveCurrentThemeToLS && lsThemeExist) {
-      currentTheme.value = lsTheme;
-    }
+    if (options.saveCurrentThemeToLS && lsTheme && lsThemeExists) return lsTheme;
+    if (documentTheme && documentThemeExists) return documentTheme;
+    return currentTheme.value;
+  };
+
+  if (isClient) {
+    const hasThemeAttribute = document.documentElement.hasAttribute(THEME_KEY);
+    if (hasThemeAttribute) window.requestAnimationFrame(() => setTheme(resolveClientTheme()));
+    else setTheme(resolveClientTheme());
+  } else {
+    setTheme(currentTheme.value);
   }
 
-  setTheme(currentTheme.value);
   const data = options as INmorphThemeOptions;
   return {
     setTheme,

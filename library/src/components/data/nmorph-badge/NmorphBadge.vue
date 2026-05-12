@@ -149,10 +149,16 @@ watch(() => [props.value, props.max, props.isDot, props.isTag, props.size], upda
   }
 
   .nmorph-badge__content {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    min-width: calc(1em * var(--line-height-regular) + 4px);
     padding: 2px 4px;
     color: var(--nmorph-light-shade-color);
     font-size: var(--font-size-base);
     line-height: var(--line-height-regular);
+    text-align: center;
   }
 
   &.nmorph-badge--tiny .nmorph-badge__content {

@@ -35,6 +35,7 @@ interface INmorphProps extends INmorphCommonInputProps {
   virtualItemHeight?: number;
   virtualMaxHeight?: number | string;
   virtualOverscan?: number;
+  virtualDynamicHeight?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -54,6 +55,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   virtualItemHeight: 0,
   virtualMaxHeight: 240,
   virtualOverscan: 5,
+  virtualDynamicHeight: false,
 });
 
 const computedNoElementPlaceholder = computed(() =>
@@ -156,10 +158,12 @@ const defaultOptionHeight = computed(() => {
 });
 const virtualItemHeight = computed(() => props.virtualItemHeight || defaultOptionHeight.value);
 const virtualOverscan = computed(() => props.virtualOverscan);
+const virtualDynamicHeight = computed(() => props.virtualDynamicHeight);
 const virtualList = useVirtualList(renderedOptions, {
   enabled: virtualEnabled,
   itemHeight: virtualItemHeight,
   overscan: virtualOverscan,
+  dynamic: virtualDynamicHeight,
 });
 const virtualOptions = computed(() => virtualList.virtualItems.value);
 const virtualSpacerStyle = computed(() => ({
@@ -187,6 +191,8 @@ const nativeOptions = computed(() => {
 
 const currentIndex = ref(0);
 const currentFocusedEl = computed(() => domOptions.value[currentIndex.value] || '');
+const listboxId = computed(() => `${id.value}-listbox`);
+const getOptionId = (value: string) => `${id.value}-option-${value.replace(/\s+/g, '-')}`;
 
 watch(currentIndex, (newValue) => {
   if (open.value && virtualEnabled.value) {
@@ -267,12 +273,14 @@ const spaceHandler = () => {
 const arrowDownHandler = () => {
   if (disabledInput.value) return;
   if (domOptions.value.length === 0) return;
+  if (!open.value) open.value = true;
   currentIndex.value = (currentIndex.value + 1) % domOptions.value.length;
 };
 
 const arrowUpHandler = () => {
   if (disabledInput.value) return;
   if (domOptions.value.length === 0) return;
+  if (!open.value) open.value = true;
   currentIndex.value = (currentIndex.value - 1 + domOptions.value.length) % domOptions.value.length;
 };
 
@@ -280,6 +288,23 @@ const enterHandler = () => {
   if (!open.value) return;
   if (!currentFocusedEl.value) return;
   changeHandler(currentFocusedEl.value);
+};
+
+const setVirtualOptionRef = (element: unknown, index: number) => {
+  const target = element instanceof Element ? element : (element as { $el?: Element } | null)?.$el;
+  virtualList.measureElement(index, target);
+};
+
+const escapeHandler = () => {
+  open.value = false;
+};
+
+const homeHandler = () => {
+  currentIndex.value = 0;
+};
+
+const endHandler = () => {
+  currentIndex.value = Math.max(domOptions.value.length - 1, 0);
 };
 </script>
 
@@ -292,16 +317,28 @@ const enterHandler = () => {
         :autocomplete="autocomplete"
         :tabindex="tabindex"
         :disabled="disabledInput"
+        role="combobox"
+        :aria-expanded="open"
+        :aria-controls="listboxId"
+        :aria-activedescendant="open && currentFocusedEl ? getOptionId(currentFocusedEl) : undefined"
         @focus="focusHandler"
         @blur="blurHandler"
-        @keydown.space="spaceHandler"
-        @keydown.arrow-down="arrowDownHandler"
-        @keydown.arrow-up="arrowUpHandler"
-        @keydown.enter="enterHandler"
+        @keydown.space.prevent="spaceHandler"
+        @keydown.arrow-down.prevent="arrowDownHandler"
+        @keydown.arrow-up.prevent="arrowUpHandler"
+        @keydown.enter.prevent="enterHandler"
+        @keydown.escape.prevent="escapeHandler"
+        @keydown.home.prevent="homeHandler"
+        @keydown.end.prevent="endHandler"
       >
         <option v-for="option in nativeOptions" :key="option" :value="option" />
       </select>
-      <div ref="nmorphSelectDOMRef" class="nmorph-select__selected-values-line" @click.stop="clickHandler">
+      <div
+        ref="nmorphSelectDOMRef"
+        class="nmorph-select__selected-values-line"
+        aria-hidden="true"
+        @click.stop="clickHandler"
+      >
         <div v-if="typeof initialValue === 'string'" class="nmorph-select__selected-value">
           {{ selectedValueTitle }}
         </div>
@@ -334,9 +371,11 @@ const enterHandler = () => {
       :min-width="optionsMinWidth"
       max-width="calc(100vw - 16px)"
       :z-index="props.zIndex"
+      :aria-label="name"
       @on-outside-click="closeHandler"
+      @on-escape-keydown="escapeHandler"
     >
-      <div ref="optionsDOMRef" class="nmorph-select__options">
+      <div :id="listboxId" ref="optionsDOMRef" class="nmorph-select__options" role="listbox">
         <NmorphIcon v-if="props.loading" class="nmorph-select__chevron" size="medium">
           <NmorphIconChevronDown />
         </NmorphIcon>
@@ -351,6 +390,8 @@ const enterHandler = () => {
             <div class="nmorph-select__virtual-content" :style="virtualContentStyle">
               <NmorphSelectOption
                 v-for="virtualOption in virtualOptions"
+                :id="getOptionId(virtualOption.item.value)"
+                :ref="(element) => setVirtualOptionRef(element, virtualOption.index)"
                 :key="virtualOption.index"
                 v-bind="virtualOption.item"
                 :focused="virtualOption.item.value === currentFocusedEl"
@@ -362,6 +403,7 @@ const enterHandler = () => {
         <template v-else>
           <NmorphSelectOption
             v-for="option in options"
+            :id="getOptionId(option.value)"
             :key="option.value"
             v-bind="option"
             :focused="option.value === currentFocusedEl"
@@ -386,10 +428,7 @@ const enterHandler = () => {
     position: relative;
     height: 100%;
     background: var(--nmorph-main-color);
-    box-shadow:
-      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-        var(--nmorph-light-shade-color);
+    box-shadow: var(--nmorph-shadow-outset);
   }
 
   .nmorph-select__selected-values-line {
@@ -463,20 +502,14 @@ const enterHandler = () => {
 
     .nmorph-select__content {
       background: var(--nmorph-main-color);
-      box-shadow:
-        inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-        inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-          var(--nmorph-light-shade-color);
+      box-shadow: var(--nmorph-shadow-inset);
     }
   }
 
   &.nmorph-select--selected-line-outset {
     .nmorph-select__content {
       background: var(--nmorph-main-color);
-      box-shadow:
-        var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-        calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-          var(--nmorph-light-shade-color);
+      box-shadow: var(--nmorph-shadow-outset);
     }
   }
 

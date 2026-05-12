@@ -209,8 +209,38 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "context-menu-neutral-hover":
+          "NmorphContextMenu 现在会从基础 text color 推导默认选项 hover background，而不是使用 accent color；自定义颜色的选项仍使用自己的颜色。",
+        "context-menu-options-api":
+          "NmorphContextMenu 现在支持文本、对象和组件 options，并内置菜单项布局、hover states、disabled handling 与 select events。",
+        "context-menu-scroll-position":
+          "NmorphContextMenu 的 click trigger 现在滚动时保持绑定到触发元素，指针打开的菜单会在 scroll 时关闭，自动宽度也会让菜单项左对齐。",
+        "sandbox-nuxt-migration":
+          "旧的 nuxt-sandbox workspace 已移除，主 sandbox 现在运行在 Nuxt 上，并通过与文档相同的 public API 展示 context menu。",
+        "context-menu-trigger-modes":
+          "NmorphContextMenu 现在支持 contextmenu、click 和 both trigger modes，修复无 v-model 的 uncontrolled 用法，并补充新 trigger API 文档。",
+        "badge-min-width":
+          "NmorphBadge 现在保持更宽的最小内容宽度，使单字符 badges 在紧凑布局中更易读。",
+        "nuxt-hydration-warning-cleanup":
+          "Nuxt docs integration 现在避免 theme switch hydration mismatches、duplicate vue-i18n registration warnings 和 noisy dev hook timing logs。",
+        "docs-route-lazy-overviews":
+          "文档 component overviews 现在按 route lazy-load，包括示例 source 与 icon data，因此 initial docs bundle 更小。",
+        "library-entrypoints-tree-shaking":
+          "库 package 现在提供独立 icons 与 styles entrypoints，CSS 保持 side effects 标记，避免消费者拉取未使用的图标或样式。",
+        "context-menu-component":
+          "新增基于 NmorphDropdown 的 NmorphContextMenu，支持指针定位、键盘 context menu、Escape/outside-click 关闭、API 文档和 sandbox 示例。",
+        "overlay-focus-management":
+          "基于 overlay 的 dialog、dropdown、select 与 autocomplete 现在共享 Escape handling、ARIA roles、outside-click behavior 和必要的 focus trap support。",
+        "virtualization-keyboard-dynamic-height":
+          "NmorphTable、NmorphSelect 与 NmorphAutocomplete 的虚拟化增强了键盘导航、dynamic item heights 和 scroll position 保留。",
+        "date-format-flexibility":
+          "NmorphDatePicker 与 calendar utilities 现在支持 nullable models，并可通过 Intl options、token patterns 或 formatter function 自定义日期格式。",
+        "button-custom-color-hover":
+          "NmorphButton 现在会保留 custom color prop，默认使用普通 text color，并从传入颜色推导 transparent hover color，而不是使用 accent。",
+        "css-shadow-token-cleanup":
+          "共享 shadow tokens 现在集中管理常用 inset/outset styles，减少组件和文档中的重复 CSS。",
         "image-preview-fullscreen-controls":
-          "NmorphImagePreview now keeps the preview image visible in fullscreen mode, keeps gallery and zoom controls above the overlay, and closes from the backdrop or Escape.",
+          "NmorphImagePreview 现在会在 fullscreen mode 中保持 preview 图片可见，让 gallery 和 zoom controls 位于 overlay 之上，并支持通过 backdrop 或 Escape 关闭。",
         "docs-example-source-files":
           "文档 attributes 示例现在使用共享的 `.example.vue` source 文件，因此 preview 与 highlighted code 会保持同步，不再复制 template 和 styles。",
         "docs-code-copy-fix":
@@ -1260,6 +1290,41 @@ export default {
       variables: {},
       events: {
         "on-outside-click": "当用户点击下拉菜单外部时触发的事件，可用于关闭它",
+      },
+    },
+    "context-menu": {
+      "basic-usage": {
+        target: "右键点击此区域",
+      },
+      api: {
+        "model-value": "控制上下文菜单的打开状态",
+        placement: "定义上下文菜单相对于指针位置的放置方式",
+        width: "设置上下文菜单的宽度",
+        "min-width": "设置上下文菜单的最小宽度",
+        "max-width": "设置上下文菜单的最大宽度",
+        "x-offset": "调整上下文菜单位置的水平偏移量（以像素为单位）",
+        "y-offset": "调整上下文菜单位置的垂直偏移量（以像素为单位）",
+        "fill-width": "布尔值，定义上下文菜单是否使用指针锚点宽度",
+        "z-index":
+          "定义上下文菜单覆盖层的 z-index。未传入时使用共享的自动 z-index 栈",
+        "close-on-escape": "定义按下 Escape 时是否关闭上下文菜单",
+        "trap-focus": "定义焦点是否应限制在上下文菜单内",
+        disabled: "禁用上下文菜单触发",
+        role: "设置上下文菜单面板的 aria role",
+        "aria-label": "设置上下文菜单面板的 aria-label",
+      },
+      slot: {
+        default: "右键目标区域的插槽",
+        menu: "自定义上下文菜单内容的插槽",
+      },
+      variables: {},
+      events: {
+        "update:model-value": "打开状态变化时触发的事件",
+        open: "上下文菜单打开时触发的事件",
+        close: "上下文菜单关闭时触发的事件",
+        "on-outside-click": "用户点击上下文菜单外部时触发的事件",
+        "on-escape-keydown":
+          "上下文菜单打开时用户按下 Escape 触发的事件",
       },
     },
     backtop: {

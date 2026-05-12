@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
-import { ComputedRef, computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { ComputedRef, computed, ref, watch } from 'vue';
 import {
   NmorphImage,
   NmorphButton,
@@ -66,18 +66,6 @@ const closeHandler = () => {
   open.value = false;
   emit('update:model-value', open.value);
 };
-
-const keydownHandler = (event: KeyboardEvent) => {
-  if (event.key === 'Escape' && open.value) closeHandler();
-};
-
-onMounted(() => {
-  window.addEventListener('keydown', keydownHandler);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', keydownHandler);
-});
 
 interface INmorphEmit {
   (e: 'update:model-value', value: boolean): void;
@@ -186,7 +174,14 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
   </div>
   <Teleport to="body">
     <div class="nmorph-image-preview__portal" :class="modifiers">
-      <NmorphOverlay :show="open" :z-index="props.zIndex" disabled-teleport @on-outside-click="closeHandler">
+      <NmorphOverlay
+        :show="open"
+        :z-index="props.zIndex"
+        disabled-teleport
+        trap-focus
+        @on-outside-click="closeHandler"
+        @on-escape-keydown="closeHandler"
+      >
         <div class="nmorph-image-preview__content">
           <NmorphImage
             :src="triggerSource"

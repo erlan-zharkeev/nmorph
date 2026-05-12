@@ -2,7 +2,7 @@
   "name": "@nmorph/nmorph-ui-kit",
   "type": "module",
   "private": false,
-  "version": "2.2.15",
+  "version": "2.2.19",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -38,6 +38,16 @@
       "types": "./dist/src/plugin.d.ts",
       "import": "./dist/plugin.js"
     },
+    "./icons": {
+      "types": "./dist/src/icons.d.ts",
+      "import": "./dist/icons.js"
+    },
+    "./styles": {
+      "types": "./dist/src/styles.d.ts",
+      "import": "./dist/styles.js"
+    },
+    "./styles.css": "./dist/style.css",
+    "./style.css": "./dist/style.css",
     "./nuxt": {
       "types": "./dist/src/nuxt/module.d.ts",
       "import": "./dist/nuxt.mjs",
@@ -100,6 +110,7 @@
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
     "@vitejs/plugin-vue": "^5.2.4",
+    "@vue/server-renderer": "3.5.34",
     "@vue/test-utils": "^2.4.10",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",

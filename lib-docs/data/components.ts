@@ -33,7 +33,7 @@ export const componentGroups = [
   },
   {
     name: "navigation",
-    components: ["NmorphTabs", "NmorphDropdown", "NmorphBacktop", "NmorphBreadcrumb"],
+    components: ["NmorphTabs", "NmorphDropdown", "NmorphContextMenu", "NmorphBacktop", "NmorphBreadcrumb"],
   },
   {
     name: "form",

@@ -1,4 +1,9 @@
-import { NmorphCalendarDatesType, NmorphCalendarRangeType, NmorphSelectedDateModelType } from './types';
+import {
+  INmorphDateFormatOptions,
+  NmorphCalendarDatesType,
+  NmorphCalendarRangeType,
+  NmorphSelectedDateModelType,
+} from './types';
 import { useCalendarTexts } from './hooks';
 import { Ref } from 'vue';
 
@@ -11,21 +16,46 @@ export const getDecadeYears = (year: number) => {
   return years;
 };
 
-export const formatDateIntl = (date: NmorphSelectedDateModelType) => {
+const defaultDateFormatOptions: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+};
+
+const padDatePart = (value: number) => String(value).padStart(2, '0');
+
+const formatDateByPattern = (date: Date, format: string) => {
+  const values: Record<string, string> = {
+    YYYY: String(date.getFullYear()),
+    YY: String(date.getFullYear()).slice(-2),
+    MM: padDatePart(date.getMonth() + 1),
+    M: String(date.getMonth() + 1),
+    DD: padDatePart(date.getDate()),
+    D: String(date.getDate()),
+  };
+
+  return format.replace(/YYYY|YY|MM|M|DD|D/g, (token) => values[token]);
+};
+
+export const formatDate = (date: NmorphSelectedDateModelType, formatOptions: INmorphDateFormatOptions = {}) => {
   if (!date) return;
 
-  const locale = 'en-CA';
-  const config = {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  } as Intl.DateTimeFormatOptions;
+  const formatSingleDate = (value: Date) => {
+    if (formatOptions.formatter) return formatOptions.formatter(value);
+    if (formatOptions.format) return formatDateByPattern(value, formatOptions.format);
+    return new Intl.DateTimeFormat(
+      formatOptions.locale || 'en-CA',
+      formatOptions.options || defaultDateFormatOptions
+    ).format(value);
+  };
 
   if (Array.isArray(date)) {
-    return date.map((value) => (value ? new Intl.DateTimeFormat(locale, config).format(value) : null));
+    return date.map((value) => (value ? formatSingleDate(value) : null));
   }
-  return new Intl.DateTimeFormat(locale, config).format(date);
+  return formatSingleDate(date);
 };
+
+export const formatDateIntl = (date: NmorphSelectedDateModelType) => formatDate(date);
 
 export const hasAnyRangeDateInPrevMonth = (currentDate: Date, prevMonthRange: Date) => {
   return currentDate.getMonth() > prevMonthRange.getMonth();

@@ -11,14 +11,6 @@ Neumorphism is a design trend that blends elements of flat design and skeuomorph
 tactile interfaces with raised or inset effects, subtle gradients, and delicate shadows. This style aims to make UI
 components feel tangible and visually engaging.
 
-## Status: Testing
-
-The library is currently in its **testing phase**. As the sole developer behind this project, I am working on improving
-its stability, fixing bugs, and ensuring high-quality components.
-
-If you encounter any issues, please don't hesitate to report them. Your feedback is highly appreciated and will help
-enhance the library.
-
 **Documentation:** For detailed instructions and examples, visit the [official documentation site](https://nmorph.dev).
 
 ---

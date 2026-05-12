@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, shallowRef } from "vue";
 import {
   NmorphBacktop,
   NmorphBreadcrumb,
   NmorphBreadcrumbItem,
   NmorphButton,
+  NmorphContextMenu,
   NmorphDropdown,
   NmorphTabPane,
   NmorphTabs,
@@ -14,7 +15,16 @@ import SandboxSection from "@sandbox/components/SandboxSection.vue";
 const activeTab = ref("tab1");
 const panesTab = ref("overview");
 const dropdownOpen = ref(false);
-const dropdownTarget = ref<HTMLElement | null>(null);
+const dropdownTarget = shallowRef<HTMLElement | null>(null);
+const contextMenuOpen = ref(false);
+const contextMenuOptions = [
+  "Open",
+  "Rename",
+  {
+    label: "Delete",
+    color: "var(--nmorph-error-text-color)",
+  },
+];
 
 const panes = [
   { name: "overview", label: "Overview", content: "Content from panes prop" },
@@ -92,6 +102,21 @@ const panes = [
       </div>
     </SandboxSection>
 
+    <SandboxSection title="NmorphContextMenu">
+      <div class="context-menu-demo">
+        <NmorphContextMenu
+          v-model="contextMenuOpen"
+          :options="contextMenuOptions"
+          trigger="both"
+          :y-offset="6"
+          aria-label="Context actions"
+        >
+          <NmorphButton text="Context btn" />
+        </NmorphContextMenu>
+        <span class="context-menu-state">open: {{ contextMenuOpen }}</span>
+      </div>
+    </SandboxSection>
+
     <SandboxSection title="NmorphBacktop">
       <div class="backtop-scroll">
         <div class="backtop-content">
@@ -155,6 +180,17 @@ const panes = [
 .dropdown-menu button:hover {
   background: var(--nmorph-accent-color);
   color: var(--nmorph-focus-text-color);
+}
+
+.context-menu-demo {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.context-menu-state {
+  color: var(--nmorph-semi-contrast-text-color);
+  font-size: 13px;
 }
 
 .backtop-scroll {

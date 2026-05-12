@@ -5,7 +5,8 @@ import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType, N
 import {
   NmorphDropdown,
   NmorphIcon,
-  formatDateIntl,
+  formatDate,
+  NmorphDateFormatterType,
   NmorphSelectedDateModelType,
   NmorphIconCalendar,
 } from '@/components';
@@ -21,6 +22,12 @@ interface INmorphProps extends INmorphCommonInputProps {
   textSeparator?: string;
   initialDate?: Date;
   zIndex?: number;
+  dateLocale?: string | string[];
+  dateFormatOptions?: Intl.DateTimeFormatOptions;
+  dateFormat?: string;
+  dateFormatter?: NmorphDateFormatterType;
+  valueSeparator?: string;
+  rangeSeparator?: string;
 }
 
 const { t } = useI18n();
@@ -34,6 +41,12 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   textSeparator: '-',
   initialDate: () => new Date(),
   zIndex: undefined,
+  dateLocale: undefined,
+  dateFormatOptions: undefined,
+  dateFormat: '',
+  dateFormatter: undefined,
+  valueSeparator: ', ',
+  rangeSeparator: ' - ',
 });
 
 const { id, name, autocomplete } = useFormItemInput(props);
@@ -74,13 +87,20 @@ const toggleOpen = () => {
 
 const displayValue = computed(() => {
   if (!selectedDate.value) return placeholderText.value;
+  const formatOptions = {
+    locale: props.dateLocale,
+    options: props.dateFormatOptions,
+    format: props.dateFormat,
+    formatter: props.dateFormatter,
+  };
+
   if (Array.isArray(selectedDate.value)) {
     if (selectedDate.value.length === 0) return placeholderText.value;
-    const arrayResult = formatDateIntl(selectedDate.value) as unknown[];
-    const separator = props.type === 'daterange' ? ' - ' : ', ';
+    const arrayResult = formatDate(selectedDate.value, formatOptions) as unknown[];
+    const separator = props.type === 'daterange' ? props.rangeSeparator : props.valueSeparator;
     return arrayResult.join(separator);
   } else {
-    return formatDateIntl(selectedDate.value);
+    return formatDate(selectedDate.value, formatOptions);
   }
 });
 
@@ -175,10 +195,7 @@ const showClearButton = computed(() => {
     overflow: hidden;
     background: var(--nmorph-main-color);
     border-radius: var(--default-border-radius);
-    box-shadow:
-      var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-      calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-        var(--nmorph-light-shade-color);
+    box-shadow: var(--nmorph-shadow-outset);
     cursor: pointer;
   }
 
@@ -190,10 +207,7 @@ const showClearButton = computed(() => {
 
   .nmorph-date-picker__input--open {
     background: var(--nmorph-main-color);
-    box-shadow:
-      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-        var(--nmorph-light-shade-color);
+    box-shadow: var(--nmorph-shadow-inset);
   }
 
   .nmorph-date-picker__calendar-icon {

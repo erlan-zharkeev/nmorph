@@ -17,6 +17,11 @@ interface INmorphProps {
   yOffset?: number;
   fillWidth?: boolean;
   zIndex?: number;
+  closeOnEscape?: boolean;
+  trapFocus?: boolean;
+  role?: string;
+  ariaLabel?: string;
+  contentClass?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -28,10 +33,16 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   yOffset: 0,
   fillWidth: true,
   zIndex: undefined,
+  closeOnEscape: true,
+  trapFocus: false,
+  role: 'listbox',
+  ariaLabel: '',
+  contentClass: '',
 });
 
 interface INmorphEmit {
   (e: 'on-outside-click'): void;
+  (e: 'on-escape-keydown'): void;
 }
 const emit = defineEmits<INmorphEmit>();
 
@@ -78,11 +89,30 @@ watch(
 const outsideClickHandler = () => {
   emit('on-outside-click');
 };
+
+const escapeHandler = () => {
+  emit('on-escape-keydown');
+};
 </script>
 
 <template>
-  <NmorphOverlay :show="props.open" transparent :z-index="props.zIndex" @on-outside-click="outsideClickHandler">
-    <div v-if="props.open" ref="dropdownDOMRef" :class="modifiers" :style="dropdownStyle">
+  <NmorphOverlay
+    :show="props.open"
+    transparent
+    :z-index="props.zIndex"
+    :close-on-escape="props.closeOnEscape"
+    :trap-focus="props.trapFocus"
+    @on-outside-click="outsideClickHandler"
+    @on-escape-keydown="escapeHandler"
+  >
+    <div
+      v-if="props.open"
+      ref="dropdownDOMRef"
+      :class="[modifiers, props.contentClass]"
+      :style="dropdownStyle"
+      :role="props.role || undefined"
+      :aria-label="props.ariaLabel || undefined"
+    >
       <slot />
     </div>
   </NmorphOverlay>
@@ -96,10 +126,7 @@ const outsideClickHandler = () => {
   max-width: var(--nmorph-dropdown-max-width);
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
-  box-shadow:
-    var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-    calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-      var(--nmorph-light-shade-color);
+  box-shadow: var(--nmorph-shadow-outset);
 }
 
 .nmorph-dropdown--closed {

@@ -11,6 +11,71 @@ const knownBugItems: string[] = [];
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v2.2.19</h3>
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.context-menu-neutral-hover") }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
+            <h3>v2.2.18</h3>
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.context-menu-options-api") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.context-menu-scroll-position") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.sandbox-nuxt-migration") }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
+            <h3>v2.2.17</h3>
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.context-menu-trigger-modes") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.badge-min-width") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.nuxt-hydration-warning-cleanup") }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
+            <h3>v2.2.16</h3>
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.docs-route-lazy-overviews") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.library-entrypoints-tree-shaking") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.context-menu-component") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.overlay-focus-management") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.virtualization-keyboard-dynamic-height") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.date-format-flexibility") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.button-custom-color-hover") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.css-shadow-token-cleanup") }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.2.15</h3>
             <ul>
               <li>

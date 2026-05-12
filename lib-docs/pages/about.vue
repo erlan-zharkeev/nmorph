@@ -93,28 +93,30 @@ const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays",
   width: calc(100% - 16px);
   border-radius: 4px;
   overflow: hidden;
+}
 
-  &__scroll {
-    height: 100% !important;
-  }
+.docs-about-page__scroll {
+  height: 100% !important;
+}
 
-  &__content {
-    padding: 24px 32px 24px 24px;
-    box-sizing: border-box;
-  }
+.docs-about-page__content {
+  padding: 24px 32px 24px 24px;
+  box-sizing: border-box;
+}
 
-  &__hero {
-    padding: 32px;
-    border-radius: 4px;
-    margin-bottom: 24px;
-  }
+.docs-about-page__hero {
+  padding: 32px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
 
-  &__eyebrow {
-    margin: 0 0 8px;
-    color: var(--nmorph-accent-color);
-    font-weight: 700;
-  }
+.docs-about-page__eyebrow {
+  margin: 0 0 8px;
+  color: var(--nmorph-accent-color);
+  font-weight: 700;
+}
 
+.docs-about-page {
   h1 {
     margin: 0;
     font-size: 44px;
@@ -140,96 +142,96 @@ const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays",
   p {
     line-height: 1.7;
   }
+}
 
-  &__lead {
-    max-width: 900px;
-    margin-top: 16px;
-    font-size: var(--font-size-large);
-  }
+.docs-about-page__lead {
+  max-width: 900px;
+  margin-top: 16px;
+  font-size: var(--font-size-large);
+}
 
-  &__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 24px;
+.docs-about-page__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
 
-    span {
-      padding: 8px 12px;
-      border-radius: 4px;
-      font-size: var(--font-size-small);
-      font-weight: 700;
-      color: var(--nmorph-accent-color);
-      background: color-mix(in srgb, var(--nmorph-accent-color) 10%, transparent);
-    }
-  }
-
-  &__section {
-    margin: 24px 0;
-  }
-
-  &__feature-grid,
-  &__system-grid,
-  &__text-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-  }
-
-  &__feature-card {
-    padding: 16px;
-  }
-
-  &__system-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  &__system-item {
-    padding: 16px;
+  span {
+    padding: 8px 12px;
     border-radius: 4px;
-    box-shadow:
-      inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
-      inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
-        var(--nmorph-light-shade-color);
+    font-size: var(--font-size-small);
+    font-weight: 700;
+    color: var(--nmorph-accent-color);
+    background: color-mix(in srgb, var(--nmorph-accent-color) 10%, transparent);
   }
+}
 
-  &__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+.docs-about-page__section {
+  margin: 24px 0;
+}
 
-    a,
-    :deep(.nmorph-link a) {
-      min-height: 32px;
-      display: inline-flex;
-      align-items: center;
-      padding: 0 12px;
-      border-radius: 4px;
-      color: var(--nmorph-accent-color);
-      font-weight: 700;
-      text-decoration: none;
-    }
+.docs-about-page__feature-grid,
+.docs-about-page__system-grid,
+.docs-about-page__text-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.docs-about-page__feature-card {
+  padding: 16px;
+}
+
+.docs-about-page__system-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.docs-about-page__system-item {
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow:
+    inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+    inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+      var(--nmorph-light-shade-color);
+}
+
+.docs-about-page__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  a,
+  :deep(.nmorph-link a) {
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: 4px;
+    color: var(--nmorph-accent-color);
+    font-weight: 700;
+    text-decoration: none;
   }
 }
 
 @media (max-width: 720px) {
+  .docs-about-page__content {
+    padding: 16px 24px 16px 16px;
+  }
+
+  .docs-about-page__hero {
+    padding: 24px;
+  }
+
   .docs-about-page {
-    &__content {
-      padding: 16px 24px 16px 16px;
-    }
-
-    &__hero {
-      padding: 24px;
-    }
-
     h1 {
       font-size: 34px;
     }
+  }
 
-    &__feature-grid,
-    &__system-grid,
-    &__text-grid {
-      grid-template-columns: 1fr;
-    }
+  .docs-about-page__feature-grid,
+  .docs-about-page__system-grid,
+  .docs-about-page__text-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>

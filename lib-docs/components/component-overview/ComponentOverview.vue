@@ -1,47 +1,6 @@
 <script setup lang="ts">
+import { nextTick, shallowRef } from "vue";
 import { pascalToSpace, anyToPascalCase } from "~/utils";
-import Button from "~/lib-overview/button";
-import Icon from "~/lib-overview/icon";
-import Link from "~/lib-overview/link";
-import Scroll from "~/lib-overview/scroll";
-import Avatar from "~/lib-overview/avatar";
-import Badge from "~/lib-overview/badge";
-import Card from "~/lib-overview/card";
-import Image from "~/lib-overview/image";
-import Tag from "~/lib-overview/tag";
-import Skeleton from "~/lib-overview/skeleton";
-import Progress from "~/lib-overview/progress";
-import Calendar from "~/lib-overview/calendar";
-import ImagePreview from "~/lib-overview/image-preview";
-import Pagination from "~/lib-overview/pagination";
-import Table from "~/lib-overview/table";
-import Tooltip from "~/lib-overview/tooltip";
-import Alert from "~/lib-overview/alert";
-import Callout from "~/lib-overview/callout";
-import Dialog from "~/lib-overview/dialog";
-import Divider from "~/lib-overview/divider";
-import Overlay from "~/lib-overview/overlay";
-import NotificationProvider from "~/lib-overview/notification-provider";
-import Tabs from "~/lib-overview/tabs";
-import Dropdown from "~/lib-overview/dropdown";
-import Backtop from "~/lib-overview/backtop";
-import Breadcrumb from "~/lib-overview/breadcrumb";
-import TextInput from "~/lib-overview/text-input";
-import OtpInput from "~/lib-overview/otp-input";
-import ColorPicker from "~/lib-overview/color-picker";
-import NumberInput from "~/lib-overview/number-input";
-import SwitchInput from "~/lib-overview/switch";
-import Checkbox from "~/lib-overview/checkbox";
-import CheckboxGroup from "~/lib-overview/checkbox-group";
-import Autocomplete from "~/lib-overview/autocomplete";
-import FileUpload from "~/lib-overview/file-upload";
-import Select from "~/lib-overview/select";
-import Slider from "~/lib-overview/slider";
-import Radio from "~/lib-overview/radio";
-import RadioGroup from "~/lib-overview/radio-group";
-import SelectButton from "~/lib-overview/select-button";
-import Form from "~/lib-overview/form";
-import DatePicker from "~/lib-overview/date-picker";
 import MainContentPart from "~/layouts/MainContentPart.vue";
 import ComponentsList from "~/components/component-list/ComponentList.vue";
 
@@ -50,69 +9,71 @@ interface IProps {
 }
 const props = withDefaults(defineProps<IProps>(), {});
 
-const componentsMap: Record<string, unknown[]> = {
-  button: Button,
-  icon: Icon,
-  link: Link,
-  scroll: Scroll,
-  avatar: Avatar,
-  badge: Badge,
-  card: Card,
-  image: Image,
-  tag: Tag,
-  skeleton: Skeleton,
-  progress: Progress,
-  calendar: Calendar,
-  "image-preview": ImagePreview,
-  pagination: Pagination,
-  table: Table,
-  tooltip: Tooltip,
-  alert: Alert,
-  callout: Callout,
-  dialog: Dialog,
-  divider: Divider,
-  overlay: Overlay,
-  "notification-provider": NotificationProvider,
-  tabs: Tabs,
-  dropdown: Dropdown,
-  backtop: Backtop,
-  breadcrumb: Breadcrumb,
-  "text-input": TextInput,
-  "otp-input": OtpInput,
-  "color-picker": ColorPicker,
-  "number-input": NumberInput,
-  switch: SwitchInput,
-  checkbox: Checkbox,
-  "checkbox-group": CheckboxGroup,
-  autocomplete: Autocomplete,
-  "file-upload": FileUpload,
-  select: Select,
-  slider: Slider,
-  radio: Radio,
-  "radio-group": RadioGroup,
-  "select-button": SelectButton,
-  form: Form,
-  "date-picker": DatePicker,
+type OverviewModule = { default: unknown[] };
+
+const overviewLoaders: Record<string, () => Promise<OverviewModule>> = {
+  button: () => import("~/lib-overview/button"),
+  icon: () => import("~/lib-overview/icon"),
+  link: () => import("~/lib-overview/link"),
+  scroll: () => import("~/lib-overview/scroll"),
+  avatar: () => import("~/lib-overview/avatar"),
+  badge: () => import("~/lib-overview/badge"),
+  card: () => import("~/lib-overview/card"),
+  image: () => import("~/lib-overview/image"),
+  tag: () => import("~/lib-overview/tag"),
+  skeleton: () => import("~/lib-overview/skeleton"),
+  progress: () => import("~/lib-overview/progress"),
+  calendar: () => import("~/lib-overview/calendar"),
+  "image-preview": () => import("~/lib-overview/image-preview"),
+  pagination: () => import("~/lib-overview/pagination"),
+  table: () => import("~/lib-overview/table"),
+  tooltip: () => import("~/lib-overview/tooltip"),
+  alert: () => import("~/lib-overview/alert"),
+  callout: () => import("~/lib-overview/callout"),
+  dialog: () => import("~/lib-overview/dialog"),
+  divider: () => import("~/lib-overview/divider"),
+  overlay: () => import("~/lib-overview/overlay"),
+  "notification-provider": () => import("~/lib-overview/notification-provider"),
+  tabs: () => import("~/lib-overview/tabs"),
+  dropdown: () => import("~/lib-overview/dropdown"),
+  "context-menu": () => import("~/lib-overview/context-menu"),
+  backtop: () => import("~/lib-overview/backtop"),
+  breadcrumb: () => import("~/lib-overview/breadcrumb"),
+  "text-input": () => import("~/lib-overview/text-input"),
+  "otp-input": () => import("~/lib-overview/otp-input"),
+  "color-picker": () => import("~/lib-overview/color-picker"),
+  "number-input": () => import("~/lib-overview/number-input"),
+  switch: () => import("~/lib-overview/switch"),
+  checkbox: () => import("~/lib-overview/checkbox"),
+  "checkbox-group": () => import("~/lib-overview/checkbox-group"),
+  autocomplete: () => import("~/lib-overview/autocomplete"),
+  "file-upload": () => import("~/lib-overview/file-upload"),
+  select: () => import("~/lib-overview/select"),
+  slider: () => import("~/lib-overview/slider"),
+  radio: () => import("~/lib-overview/radio"),
+  "radio-group": () => import("~/lib-overview/radio-group"),
+  "select-button": () => import("~/lib-overview/select-button"),
+  form: () => import("~/lib-overview/form"),
+  "date-picker": () => import("~/lib-overview/date-picker"),
 };
 
+const overviewComponents = shallowRef<unknown[]>([]);
 const navigationContents = ref<string[]>([]);
-const timeoutScrollId = ref(null);
-const scrollDOMRef = ref(null);
+const timeoutScrollId = ref<ReturnType<typeof setTimeout> | null>(null);
+const scrollDOMRef = ref<any>(null);
 const componentPage = ref<HTMLElement | null>(null);
 const router = useRouter();
 
 const scrollToAnchor = (anchor: string) => {
-  if (document !== null || !scrollDOMRef.value || !anchor) return;
-  const offsetFromCurrent = document
-    // @ts-ignore ///
-    .getElementById(anchor)
-    .getBoundingClientRect().top;
+  if (typeof document === "undefined" || !scrollDOMRef.value || !anchor) return;
+  const target = document.getElementById(anchor);
+  const scroll = scrollDOMRef.value.scroll;
+  const scrollContainer = scroll?.scrollDOMContainer;
+  if (!target || !scrollContainer) return;
 
-  const y =
-    // @ts-ignore ///
-    offsetFromCurrent + scrollDOMRef.value.scroll.scrollDOMContainer.scrollTop;
-  // @ts-ignore ///
-  scrollDOMRef.value.scroll.moveTo({ x: 0, y });
+  const offsetFromCurrent = target.getBoundingClientRect().top;
+  const y = offsetFromCurrent + scrollContainer.scrollTop;
+  scroll.moveTo({ x: 0, y });
 };
 
 watch(
@@ -129,7 +90,7 @@ onMounted(() => {
     threshold: 0,
   });
   doUpdate();
-  const timeoutScrollId = setTimeout(() => {
+  timeoutScrollId.value = setTimeout(() => {
     scrollToAnchor(router.currentRoute.value.hash.substring(1));
   }, 400);
 });
@@ -142,6 +103,7 @@ onUnmounted(() => {
 
 const doUpdate = () => {
   if (!componentPage.value) return;
+  observer.value?.disconnect();
   const matchedEl = componentPage.value.querySelectorAll('[id^="content-"]');
   navigationContents.value = [];
   matchedEl.forEach((element) => {
@@ -169,6 +131,18 @@ const linkName = (anchor: string) => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 };
+
+const loadOverview = async () => {
+  const loader = overviewLoaders[props.name];
+  overviewComponents.value = [];
+  if (!loader) return;
+  const module = await loader();
+  overviewComponents.value = module.default;
+  await nextTick();
+  doUpdate();
+};
+
+watch(() => props.name, loadOverview, { immediate: true });
 </script>
 
 <template>
@@ -184,7 +158,7 @@ const linkName = (anchor: string) => {
               {{ pascalToSpace(anyToPascalCase(props.name)) }}
             </div>
             <slot />
-            <div v-for="(el, idx) in componentsMap[props.name]" :key="idx">
+            <div v-for="(el, idx) in overviewComponents" :key="idx">
               <component :is="el" />
             </div>
           </div>

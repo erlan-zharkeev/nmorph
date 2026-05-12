@@ -53,6 +53,7 @@ const modifiers = computed(() =>
       `${props.accentBgOnHover && 'accent-bg-on-hover'}`,
       `${props.ripple && 'ripple'}`,
       `${hasIconOnlySlot.value && 'icon-only'}`,
+      `${props.color && 'custom-color'}`,
     ],
   })
 );
@@ -66,15 +67,20 @@ const iconSizeMap = {
 };
 
 const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIconSize);
-const transparentColorStyles = computed(() =>
-  props.styleType === 'transparent' && props.color ? { '--transparent-button-color': props.color } : {}
-);
+const buttonColorStyles = computed(() => {
+  if (!props.color) return {};
+  return {
+    '--nmorph-button-color': props.color,
+    '--transparent-button-color': props.color,
+    '--nmorph-button-hover-color': `color-mix(in srgb, ${props.color} 75%, var(--nmorph-white-color))`,
+  };
+});
 
 defineExpose({ buttonDOMElement });
 </script>
 
 <template>
-  <div :class="modifiers" :style="transparentColorStyles">
+  <div :class="modifiers" :style="buttonColorStyles">
     <button
       ref="buttonDOMElement"
       class="nmorph-button__content"
@@ -119,6 +125,7 @@ defineExpose({ buttonDOMElement });
     width: 100%;
     height: var(--height);
     padding: var(--indentation-00) var(--indentation-04);
+    color: var(--nmorph-button-color, var(--nmorph-text-color));
     line-height: 0;
     background: var(--nmorph-main-color);
     border: none;
@@ -130,12 +137,16 @@ defineExpose({ buttonDOMElement });
     cursor: pointer;
 
     span {
-      --color: var(--nmorph-white-color);
+      color: var(--nmorph-button-color, var(--nmorph-text-color));
+
+      --color: var(--nmorph-button-color, var(--nmorph-text-color));
     }
   }
 
   .nmorph-button__content > .nmorph-icon {
     flex-shrink: 0;
+
+    --color: var(--nmorph-button-color, var(--nmorph-text-color));
   }
 
   .nmorph-button__content:disabled {
@@ -178,6 +189,7 @@ defineExpose({ buttonDOMElement });
 
   &.nmorph-button--accent-bg-on-hover {
     .nmorph-button__content:not(:disabled, [loading='true']):hover {
+      color: var(--nmorph-white-color);
       background: var(--nmorph-accent-color);
       box-shadow: none;
     }
@@ -214,22 +226,42 @@ defineExpose({ buttonDOMElement });
       box-shadow: none;
     }
 
+    &.nmorph-button--custom-color .nmorph-button__content:not(:disabled, [loading='true']):hover {
+      color: var(--nmorph-button-hover-color);
+    }
+
     .nmorph-button__content:not(:disabled, [loading='true']):hover span {
       color: var(--nmorph-accent-color);
+    }
+
+    &.nmorph-button--custom-color .nmorph-button__content:not(:disabled, [loading='true']):hover span {
+      color: var(--nmorph-button-hover-color);
+
+      --color: var(--nmorph-button-hover-color);
     }
 
     .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
       --color: var(--nmorph-accent-color);
     }
 
+    &.nmorph-button--custom-color .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
+      --color: var(--nmorph-button-hover-color);
+    }
+
     .nmorph-button__content {
-      color: var(--transparent-button-color, var(--nmorph-text-color));
+      color: var(--nmorph-button-color, var(--transparent-button-color, var(--nmorph-text-color)));
       background: transparent;
       box-shadow: none;
     }
 
+    .nmorph-button__content span {
+      color: var(--nmorph-button-color, var(--transparent-button-color, var(--nmorph-text-color)));
+
+      --color: var(--nmorph-button-color, var(--transparent-button-color, var(--nmorph-text-color)));
+    }
+
     .nmorph-button__content .nmorph-icon {
-      --color: var(--transparent-button-color, var(--nmorph-text-color));
+      --color: var(--nmorph-button-color, var(--transparent-button-color, var(--nmorph-text-color)));
     }
   }
 
