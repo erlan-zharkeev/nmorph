@@ -43,9 +43,10 @@ export const formatDate = (date: NmorphSelectedDateModelType, formatOptions: INm
   const formatSingleDate = (value: Date) => {
     if (formatOptions.formatter) return formatOptions.formatter(value);
     if (formatOptions.format) return formatDateByPattern(value, formatOptions.format);
-    return new Intl.DateTimeFormat(formatOptions.locale || 'en-CA', formatOptions.options || defaultDateFormatOptions).format(
-      value
-    );
+    return new Intl.DateTimeFormat(
+      formatOptions.locale || 'en-CA',
+      formatOptions.options || defaultDateFormatOptions
+    ).format(value);
   };
 
   if (Array.isArray(date)) {

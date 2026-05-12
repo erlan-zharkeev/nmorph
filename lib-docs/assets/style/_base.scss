@@ -24,6 +24,10 @@ code {
   color: var(--nmorph-accent-color);
 }
 
+.docs .nmorph-callout {
+  margin-bottom: 12px;
+}
+
 :root {
   --docs-code-text-color: #d4d4d4;
   --docs-code-comment-color: #6a9955;

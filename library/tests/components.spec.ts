@@ -1035,6 +1035,58 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('keeps image preview overlay controls inside preview portal', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphImagePreview, {
+      props: { modelValue: true, src: [imageSrc, imageSrc], alt: 'Preview' },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const portal = document.body.querySelector('.nmorph-image-preview__portal') as HTMLElement;
+    const overlay = document.body.querySelector('.nmorph-overlay') as HTMLElement;
+    const actions = document.body.querySelector('.nmorph-image-preview__actions') as HTMLElement;
+
+    expect(portal).toBeTruthy();
+    expect(overlay).toBeTruthy();
+    expect(actions).toBeTruthy();
+    expect(portal.contains(overlay)).toBe(true);
+    expect(portal.contains(actions)).toBe(true);
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  it('closes image preview from backdrop and Escape key', async () => {
+    const wrapper = mount(NmorphImagePreview, {
+      props: { modelValue: true, src: imageSrc, alt: 'Preview' },
+    });
+
+    await nextTick();
+
+    await wrapper.find('.nmorph-overlay').trigger('click');
+
+    expect(wrapper.emitted('update:model-value')?.at(-1)).toEqual([false]);
+
+    await wrapper.setProps({ modelValue: true });
+    await nextTick();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await nextTick();
+
+    expect(wrapper.emitted('update:model-value')?.at(-1)).toEqual([false]);
+    wrapper.unmount();
+  });
+
   it('uses basic height for pagination page controls by default', async () => {
     const wrapper = mount(NmorphPagination, {
       props: { totalElementsQuantity: 24, elementsQuantityOnPage: 8 },

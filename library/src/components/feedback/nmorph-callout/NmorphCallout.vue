@@ -25,7 +25,6 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   --callout-color: var(--nmorph-accent-color);
 
   position: relative;
-  margin-bottom: 12px;
   padding: 8px 12px;
   overflow: hidden;
   border-radius: 4px;

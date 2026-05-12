@@ -125,6 +125,7 @@ defineExpose({ buttonDOMElement });
     width: 100%;
     height: var(--height);
     padding: var(--indentation-00) var(--indentation-04);
+    color: var(--nmorph-button-color, var(--nmorph-text-color));
     line-height: 0;
     background: var(--nmorph-main-color);
     border: none;
@@ -133,7 +134,6 @@ defineExpose({ buttonDOMElement });
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
-    color: var(--nmorph-button-color, var(--nmorph-text-color));
     cursor: pointer;
 
     span {
@@ -189,8 +189,8 @@ defineExpose({ buttonDOMElement });
 
   &.nmorph-button--accent-bg-on-hover {
     .nmorph-button__content:not(:disabled, [loading='true']):hover {
-      background: var(--nmorph-accent-color);
       color: var(--nmorph-white-color);
+      background: var(--nmorph-accent-color);
       box-shadow: none;
     }
 

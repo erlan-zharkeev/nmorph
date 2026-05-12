@@ -65,9 +65,9 @@
     "./dist/styles/main.scss": "./dist/styles/main.scss"
   },
   "scripts": {
-    "dev": "HOME=/tmp/nmorph-storybook-home STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p 43183",
-    "storybook": "HOME=/tmp/nmorph-storybook-home STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p 43183",
-    "build:storybook": "HOME=/tmp/nmorph-storybook-home STORYBOOK_DISABLE_TELEMETRY=1 storybook build",
+    "dev": "node ./scripts/run-storybook.cjs dev -p 43183",
+    "storybook": "node ./scripts/run-storybook.cjs dev -p 43183",
+    "build:storybook": "node ./scripts/run-storybook.cjs build",
     "build": "pnpm run build:types && vite build && vite build --config vite.umd.config.ts && vite build --config vite.nuxt.config.ts",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -81,7 +81,7 @@
     "dev:type": "vue-tsc -p ./tsconfig.json",
     "typecheck": "vue-tsc -p ./tsconfig.json",
     "check": "pnpm run lint:check && pnpm run typecheck && pnpm run test",
-    "prepare": "command -v husky >/dev/null 2>&1 && cd .. && husky install ./library/.husky || true",
+    "prepare": "node ./scripts/install-husky.cjs",
     "validate-branch-name": "node .husky/validate-branch-name.cjs",
     "validate-commit-msg": "node .husky/validate-commit-msg.cjs",
     "build:types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist"
@@ -110,6 +110,7 @@
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
     "@vitejs/plugin-vue": "^5.2.4",
+    "@vue/server-renderer": "3.5.34",
     "@vue/test-utils": "^2.4.10",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",

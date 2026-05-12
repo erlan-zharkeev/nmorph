@@ -337,7 +337,7 @@ defineExpose({ close });
   text-align: left;
 }
 
-.nmorph-context-menu__item:not(:disabled):not(.nmorph-context-menu__item--disabled):hover {
+.nmorph-context-menu__item:not(:disabled, .nmorph-context-menu__item--disabled):hover {
   background: color-mix(in srgb, var(--nmorph-context-menu-item-color, var(--nmorph-text-color)) 12%, transparent);
 }
 
@@ -357,10 +357,15 @@ defineExpose({ close });
   text-align: left;
 }
 
-.nmorph-context-menu__dropdown .nmorph-button--transparent .nmorph-button__content:not(:disabled, [loading='true']):hover {
+.nmorph-context-menu__dropdown
+  .nmorph-button--transparent
+  .nmorph-button__content:not(:disabled, [loading='true']):hover {
   background: color-mix(
     in srgb,
-    var(--nmorph-button-hover-color, var(--nmorph-button-color, var(--transparent-button-color, var(--nmorph-text-color))))
+    var(
+        --nmorph-button-hover-color,
+        var(--nmorph-button-color, var(--transparent-button-color, var(--nmorph-text-color)))
+      )
       12%,
     transparent
   );

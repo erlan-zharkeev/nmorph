@@ -5,7 +5,7 @@
   "version": "0.0.8",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev --no-qr --open",
+    "dev": "nuxt dev --no-qr --host 127.0.0.1 --port 43117 --open",
     "clean": "rm -rf .nuxt node_modules && pnpm install",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -17,6 +17,7 @@
   "dependencies": {
     "@nmorph/nmorph-ui-kit": "workspace:*",
     "@nuxtjs/i18n": "^8.3.1",
+    "highlight.js": "10.7.3",
     "nuxt": "^3.11.2",
     "nuxt-svgo": "^4.0.1",
     "vue": "^3.4.27",

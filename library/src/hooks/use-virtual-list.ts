@@ -79,7 +79,9 @@ export const useVirtualList = <T>(items: Readonly<Ref<T[]>>, options: INmorphVir
     return Math.min(Math.max(end, startIndex.value + overscan.value), items.value.length);
   });
 
-  const offsetTop = computed(() => (dynamic.value ? itemOffsets.value.offsets[startIndex.value] || 0 : startIndex.value * itemHeight.value));
+  const offsetTop = computed(() =>
+    dynamic.value ? itemOffsets.value.offsets[startIndex.value] || 0 : startIndex.value * itemHeight.value
+  );
 
   const virtualItems = computed(() => {
     if (!enabled.value) {
@@ -96,7 +98,9 @@ export const useVirtualList = <T>(items: Readonly<Ref<T[]>>, options: INmorphVir
     const element = containerRef.value;
     if (!element || !enabled.value) return;
     const normalizedIndex = Math.min(Math.max(index, 0), Math.max(items.value.length - 1, 0));
-    const scrollValue = dynamic.value ? itemOffsets.value.offsets[normalizedIndex] || 0 : normalizedIndex * itemHeight.value;
+    const scrollValue = dynamic.value
+      ? itemOffsets.value.offsets[normalizedIndex] || 0
+      : normalizedIndex * itemHeight.value;
     element.scrollTop = scrollValue;
     refresh();
   };

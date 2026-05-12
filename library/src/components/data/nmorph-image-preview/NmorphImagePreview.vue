@@ -177,6 +177,7 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
       <NmorphOverlay
         :show="open"
         :z-index="props.zIndex"
+        disabled-teleport
         trap-focus
         @on-outside-click="closeHandler"
         @on-escape-keydown="closeHandler"
@@ -265,8 +266,24 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
     position: absolute;
     top: 50%;
     left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: min(calc(100vw - 96px), 960px);
+    height: min(calc(100vh - 180px), 720px);
     transform: translate(-50%, -50%);
     transition: var(--transition-04) opacity ease-in-out;
+
+    .nmorph-image {
+      width: 100%;
+      height: 100%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
   }
 
   .nmorph-image-preview__actions {

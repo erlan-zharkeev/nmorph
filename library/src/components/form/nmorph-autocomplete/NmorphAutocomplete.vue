@@ -227,8 +227,8 @@ const setVirtualItemRef = (element: unknown, index: number) => {
       </div>
       <div
         v-else-if="virtualEnabled"
-        :ref="virtualList.containerRef"
         :id="listboxId"
+        :ref="virtualList.containerRef"
         class="nmorph-autocomplete__list nmorph-autocomplete__list--virtual"
         :class="{ 'nmorph-autocomplete__list--dynamic': virtualDynamicHeight }"
         :style="{ '--autocomplete-virtual-item-height': `${virtualItemHeight}px`, maxHeight: virtualMaxHeight }"

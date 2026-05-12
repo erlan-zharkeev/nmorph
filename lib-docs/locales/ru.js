@@ -251,14 +251,20 @@ export default {
           "NmorphButton теперь сохраняет custom color prop, по умолчанию использует обычный text color и строит hover color для transparent от переданного цвета вместо accent.",
         "css-shadow-token-cleanup":
           "Общие shadow tokens централизуют inset/outset styles и уменьшают дублирование CSS в компонентах и документации.",
+        "image-preview-fullscreen-controls":
+          "NmorphImagePreview теперь держит preview-картинку видимой в fullscreen mode, оставляет gallery и zoom controls поверх overlay и закрывается по backdrop или Escape.",
         "docs-example-source-files":
           "Примеры attributes в документации теперь используют общие source `.example.vue` файлы, поэтому preview и highlighted code остаются синхронизированными без копирования template и styles.",
         "docs-code-copy-fix":
           "Code blocks в документации теперь сохраняют правильный верхний отступ и копируют полный source примера через Clipboard API с fallback.",
+        "callout-docs-bottom-spacing":
+          "NmorphCallout no longer ships bottom margin in the library; docs apply their own callout spacing where notices need separation.",
         "callout-default-bottom-spacing":
           "У NmorphCallout теперь есть default bottom spacing, поэтому stacked callouts и следующий контент больше не прилегают друг к другу.",
         "storybook-sass-modern-api":
           "Storybook и library dev configs теперь используют Dart Sass modern API вместо deprecated legacy JS API.",
+        "workspace-dev-script-fixes":
+          "Docs and Storybook dev scripts now use local host/path helpers, include asset/raw import typings, and avoid pulling Storybook into the default dev run.",
         "ci-pnpm-publish":
           "CI build и publish jobs теперь устанавливают workspace через pnpm и публикуют библиотеку из подготовленного package.",
         "nuxt-theme-first-paint":

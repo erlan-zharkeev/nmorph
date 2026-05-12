@@ -134,7 +134,12 @@ onBeforeUnmount(removeKeydownListener);
 </script>
 
 <template>
-  <div v-if="renderInline" :class="modifiers" :style="{ '--nmorph-overlay-z-index': zIndex }" @click.stop="clickHandler">
+  <div
+    v-if="renderInline"
+    :class="modifiers"
+    :style="{ '--nmorph-overlay-z-index': zIndex }"
+    @click.stop="clickHandler"
+  >
     <div ref="contentRef" class="nmorph-overlay__slot" :tabindex="props.trapFocus ? -1 : undefined" @click.stop>
       <slot />
     </div>

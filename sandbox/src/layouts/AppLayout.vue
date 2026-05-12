@@ -143,24 +143,38 @@ watch(
   align-items: center;
   padding: 6px 14px;
   border-radius: 6px;
-  border: none;
+  border: 1px solid transparent;
   background: transparent;
   color: var(--nmorph-semi-contrast-text-color);
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s,
+    color 0.15s;
   text-decoration: none;
-  transition: background 0.15s, color 0.15s;
 }
 
 .layout-top-bar__nav-item:hover {
-  background: color-mix(in srgb, var(--nmorph-text-color) 10%, transparent);
+  border-color: color-mix(in srgb, var(--nmorph-accent-color) 26%, transparent);
+  background: color-mix(in srgb, var(--nmorph-accent-color) 12%, var(--nmorph-main-color));
   color: var(--nmorph-text-color);
 }
 
 .layout-top-bar__nav-item--active {
+  border-color: color-mix(in srgb, var(--nmorph-accent-color) 70%, var(--nmorph-light-shade-color));
   background: var(--nmorph-accent-color);
-  color: var(--nmorph-white-color);
+  color: var(--nmorph-focus-text-color);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--nmorph-accent-color) 34%, transparent),
+    0 6px 14px color-mix(in srgb, var(--nmorph-accent-color) 26%, transparent);
+}
+
+.layout-top-bar__nav-item--active:hover {
+  background: color-mix(in srgb, var(--nmorph-accent-color) 88%, var(--nmorph-text-color));
+  color: var(--nmorph-focus-text-color);
 }
 
 .layout-top-bar__controls {

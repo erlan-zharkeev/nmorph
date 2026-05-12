@@ -118,7 +118,10 @@ watch(
     await nextTick();
     const element = virtualList.containerRef.value;
     if (!element) return;
-    element.scrollTop = Math.min(lastScrollTop.value, Math.max(virtualList.totalHeight.value - element.clientHeight, 0));
+    element.scrollTop = Math.min(
+      lastScrollTop.value,
+      Math.max(virtualList.totalHeight.value - element.clientHeight, 0)
+    );
     virtualList.refresh();
   },
   {
@@ -154,7 +157,8 @@ const scrollHandler = () => {
 
 const moveActiveRow = (delta: number) => {
   if (!rows.value.length) return;
-  const nextIndex = activeRowIndex.value < 0 ? 0 : Math.min(Math.max(activeRowIndex.value + delta, 0), rows.value.length - 1);
+  const nextIndex =
+    activeRowIndex.value < 0 ? 0 : Math.min(Math.max(activeRowIndex.value + delta, 0), rows.value.length - 1);
   activeRowIndex.value = nextIndex;
   virtualList.scrollToIndex(nextIndex);
 };
@@ -177,10 +181,14 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
     virtualList.scrollToIndex(rows.value.length - 1);
   } else if (event.key === 'PageDown') {
     event.preventDefault();
-    moveActiveRow(Math.max(Math.floor((virtualList.viewportHeight.value || props.virtualRowHeight) / props.virtualRowHeight), 1));
+    moveActiveRow(
+      Math.max(Math.floor((virtualList.viewportHeight.value || props.virtualRowHeight) / props.virtualRowHeight), 1)
+    );
   } else if (event.key === 'PageUp') {
     event.preventDefault();
-    moveActiveRow(-Math.max(Math.floor((virtualList.viewportHeight.value || props.virtualRowHeight) / props.virtualRowHeight), 1));
+    moveActiveRow(
+      -Math.max(Math.floor((virtualList.viewportHeight.value || props.virtualRowHeight) / props.virtualRowHeight), 1)
+    );
   }
 };
 </script>
@@ -224,7 +232,10 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
         <div
           :ref="virtualList.containerRef"
           class="nmorph-table__body"
-          :class="{ 'nmorph-table__body--virtual': virtualEnabled, 'nmorph-table__body--dynamic': props.virtualDynamicHeight }"
+          :class="{
+            'nmorph-table__body--virtual': virtualEnabled,
+            'nmorph-table__body--dynamic': props.virtualDynamicHeight,
+          }"
           :style="tableBodyStyle"
           :tabindex="virtualEnabled ? 0 : undefined"
           role="grid"
