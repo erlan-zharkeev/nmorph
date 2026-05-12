@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
-import { ComputedRef, computed, ref, watch } from 'vue';
+import { ComputedRef, computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import {
   NmorphImage,
   NmorphButton,
@@ -66,6 +66,18 @@ const closeHandler = () => {
   open.value = false;
   emit('update:model-value', open.value);
 };
+
+const keydownHandler = (event: KeyboardEvent) => {
+  if (event.key === 'Escape' && open.value) closeHandler();
+};
+
+onMounted(() => {
+  window.addEventListener('keydown', keydownHandler);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', keydownHandler);
+});
 
 interface INmorphEmit {
   (e: 'update:model-value', value: boolean): void;
@@ -174,7 +186,7 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
   </div>
   <Teleport to="body">
     <div class="nmorph-image-preview__portal" :class="modifiers">
-      <NmorphOverlay :show="open" :z-index="props.zIndex" @on-outside-click="closeHandler">
+      <NmorphOverlay :show="open" :z-index="props.zIndex" disabled-teleport @on-outside-click="closeHandler">
         <div class="nmorph-image-preview__content">
           <NmorphImage
             :src="triggerSource"
@@ -259,8 +271,24 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
     position: absolute;
     top: 50%;
     left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: min(calc(100vw - 96px), 960px);
+    height: min(calc(100vh - 180px), 720px);
     transform: translate(-50%, -50%);
     transition: var(--transition-04) opacity ease-in-out;
+
+    .nmorph-image {
+      width: 100%;
+      height: 100%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
   }
 
   .nmorph-image-preview__actions {

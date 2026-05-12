@@ -100,23 +100,37 @@ watch(
 .layout__nav-item {
   padding: 6px 14px;
   border-radius: 6px;
-  border: none;
+  border: 1px solid transparent;
   background: transparent;
-  color: var(--nmorph-text-secondary);
+  color: var(--nmorph-semi-contrast-text-color);
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s,
+    color 0.15s;
 }
 
 .layout__nav-item:hover {
-  background: var(--nmorph-hover-bg);
+  border-color: color-mix(in srgb, var(--nmorph-accent-color) 26%, transparent);
+  background: color-mix(in srgb, var(--nmorph-accent-color) 12%, var(--nmorph-main-color));
   color: var(--nmorph-text-color);
 }
 
 .layout__nav-item--active {
-  background: var(--nmorph-primary-color);
-  color: #fff;
+  border-color: color-mix(in srgb, var(--nmorph-accent-color) 70%, var(--nmorph-light-shade-color));
+  background: var(--nmorph-accent-color);
+  color: var(--nmorph-focus-text-color);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--nmorph-accent-color) 34%, transparent),
+    0 6px 14px color-mix(in srgb, var(--nmorph-accent-color) 26%, transparent);
+}
+
+.layout__nav-item--active:hover {
+  background: color-mix(in srgb, var(--nmorph-accent-color) 88%, var(--nmorph-text-color));
+  color: var(--nmorph-focus-text-color);
 }
 
 .layout__controls {

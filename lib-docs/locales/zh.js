@@ -209,14 +209,20 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "image-preview-fullscreen-controls":
+          "NmorphImagePreview now keeps the preview image visible in fullscreen mode, keeps gallery and zoom controls above the overlay, and closes from the backdrop or Escape.",
         "docs-example-source-files":
           "文档 attributes 示例现在使用共享的 `.example.vue` source 文件，因此 preview 与 highlighted code 会保持同步，不再复制 template 和 styles。",
         "docs-code-copy-fix":
           "文档 code blocks 现在保留正确的顶部间距，并通过 Clipboard API 复制完整示例 source，且带有 fallback。",
+        "callout-docs-bottom-spacing":
+          "NmorphCallout no longer ships bottom margin in the library; docs apply their own callout spacing where notices need separation.",
         "callout-default-bottom-spacing":
           "NmorphCallout 现在带有默认 bottom spacing，连续 callout 与后续内容不再贴在一起。",
         "storybook-sass-modern-api":
           "Storybook 和 library dev configs 现在使用 Dart Sass modern API，不再使用 deprecated legacy JS API。",
+        "workspace-dev-script-fixes":
+          "Docs and Storybook dev scripts now use local host/path helpers, include asset/raw import typings, and avoid pulling Storybook into the default dev run.",
         "ci-pnpm-publish":
           "CI build 与 publish jobs 现在通过 pnpm 安装 workspace，并从准备好的 package 发布库。",
         "nuxt-theme-first-paint":

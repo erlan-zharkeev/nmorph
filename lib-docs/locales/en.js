@@ -219,14 +219,20 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "image-preview-fullscreen-controls":
+          "NmorphImagePreview now keeps the preview image visible in fullscreen mode, keeps gallery and zoom controls above the overlay, and closes from the backdrop or Escape.",
         "docs-example-source-files":
           "Docs attribute examples now use shared source `.example.vue` files, so the rendered preview and highlighted code stay in sync without duplicating templates and styles.",
         "docs-code-copy-fix":
           "Docs code blocks now keep the correct top spacing and copy the full example source through the clipboard API with a fallback path.",
+        "callout-docs-bottom-spacing":
+          "NmorphCallout no longer ships bottom margin in the library; docs apply their own callout spacing where notices need separation.",
         "callout-default-bottom-spacing":
           "NmorphCallout now has default bottom spacing, so stacked callouts and following content no longer touch each other.",
         "storybook-sass-modern-api":
           "Storybook and library dev configs now use the Dart Sass modern API instead of the deprecated legacy JS API.",
+        "workspace-dev-script-fixes":
+          "Docs and Storybook dev scripts now use local host/path helpers, include asset/raw import typings, and avoid pulling Storybook into the default dev run.",
         "ci-pnpm-publish":
           "CI build and publish jobs now install the workspace with pnpm and publish the library from the prepared package.",
         "nuxt-theme-first-paint":

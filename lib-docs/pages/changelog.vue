@@ -16,6 +16,13 @@ const knownBugItems: string[] = [];
               <li>
                 {{
                   $t(
+                    "changelog-page.changelog.items.image-preview-fullscreen-controls",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
                     "changelog-page.changelog.items.docs-example-source-files",
                   )
                 }}
@@ -30,7 +37,7 @@ const knownBugItems: string[] = [];
               <li>
                 {{
                   $t(
-                    "changelog-page.changelog.items.callout-default-bottom-spacing",
+                    "changelog-page.changelog.items.callout-docs-bottom-spacing",
                   )
                 }}
               </li>
@@ -38,6 +45,13 @@ const knownBugItems: string[] = [];
                 {{
                   $t(
                     "changelog-page.changelog.items.storybook-sass-modern-api",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.workspace-dev-script-fixes",
                   )
                 }}
               </li>
