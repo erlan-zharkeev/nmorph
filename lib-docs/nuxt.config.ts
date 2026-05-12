@@ -1,12 +1,4 @@
-import { createRequire } from "node:module";
-import { dirname } from "node:path";
 import { guidePages } from "./data/guide";
-
-const require = createRequire(import.meta.url);
-const piniaPackagePath = require.resolve("pinia/package.json");
-const vueDevtoolsApiEsm = require.resolve("@vue/devtools-api/lib/esm/index.js", {
-  paths: [dirname(piniaPackagePath)],
-});
 
 const guideRoutes = guidePages.flatMap((page) => [
   `/guide/${page.slug}`,
@@ -77,12 +69,6 @@ export default defineNuxtConfig({
       exclude: ["@nmorph/nmorph-ui-kit"],
     },
     resolve: {
-      alias: [
-        {
-          find: /^@vue\/devtools-api$/,
-          replacement: vueDevtoolsApiEsm,
-        },
-      ],
       dedupe: [
         "vue",
         "vue-i18n",
