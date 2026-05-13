@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { computed, useSlots } from 'vue';
+import type { CSSProperties } from 'vue';
 import { NmorphIcon, NmorphLinkTarget } from '@/components';
 import { NmorphColor } from '@/types';
 
@@ -11,6 +12,7 @@ interface INmorphProps {
   text?: string;
   target?: keyof typeof NmorphLinkTarget;
   disabled?: boolean;
+  color?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -20,6 +22,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   text: '',
   target: 'self',
   disabled: false,
+  color: undefined,
 });
 
 const slots = useSlots();
@@ -29,10 +32,14 @@ const modifiers = computed(() =>
     'nmorph-link': [props.type, `${props.underline && 'underline'}`, `${props.disabled && 'disabled'}`],
   })
 );
+
+const styles = computed<CSSProperties>(() => ({
+  ...(props.color !== undefined && { '--link-color': props.color }),
+}));
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="styles">
     <a :href="props.href" :target="props.target">
       <slot name="prepend" />
 

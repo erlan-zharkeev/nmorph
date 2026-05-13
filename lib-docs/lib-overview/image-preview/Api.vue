@@ -53,6 +53,21 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "true",
   },
+  {
+    name: "width",
+    type: "String | Number",
+    default: "undefined",
+  },
+  {
+    name: "height",
+    type: "String | Number",
+    default: "undefined",
+  },
+  {
+    name: "navigation-button-margin",
+    type: "String | Number",
+    default: "undefined",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [
@@ -63,6 +78,7 @@ const slotData: ISlotsTableData[] = [
 const variables: IVariablesTableData[] = [
   { name: "width" },
   { name: "height" },
+  { name: "nmorph-image-preview-btn-margin" },
 ];
 
 const events = [

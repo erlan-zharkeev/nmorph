@@ -2,6 +2,7 @@
 import { NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
+import type { CSSProperties } from 'vue';
 import { NmorphTooltip } from '@/components';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 import type { INmorphSliderProps } from './types';
@@ -14,6 +15,9 @@ const props = withDefaults(defineProps<INmorphSliderProps>(), {
   disabled: false,
   fill: true,
   showTooltip: true,
+  thumbWidth: 50,
+  sliderHeight: undefined,
+  valueFixedContainerHeight: undefined,
 });
 
 const { id, name, tabindex } = useFormItemInput(props);
@@ -25,8 +29,7 @@ const modifiers = computed(() =>
   })
 );
 
-const thumbWidth = 50;
-const thumbWidthCss = `${thumbWidth}px`;
+const thumbWidthCss = computed(() => `${props.thumbWidth}px`);
 const tooltipVisible = ref(props.showTooltip);
 
 const emit = defineEmits<{
@@ -55,14 +58,14 @@ const thumbXPercentPosition = computed(() => {
   const range = props.max - props.min + resizeRecomputeTrigger;
   const basePosition = ((thumbValue.value - props.min) / range) * 100;
   const containerWidth = sliderContainer.value?.clientWidth || 0;
-  const thumbPercentWidth = (thumbWidth / containerWidth) * 100;
+  const thumbPercentWidth = (props.thumbWidth / containerWidth) * 100;
   const halfThumbPercent = thumbPercentWidth / 2;
   let adjustedPosition = basePosition - halfThumbPercent;
   const thumbPosition = Math.max(0, Math.min(100 - thumbPercentWidth, adjustedPosition));
   const thumb = `${thumbPosition}%`;
 
   const onePercentInPx = containerWidth / 100;
-  const halfThumbInPx = thumbWidth / 2;
+  const halfThumbInPx = props.thumbWidth / 2;
   const tooltipOffsetInPercent = halfThumbInPx / onePercentInPx;
 
   const selfWidthInPx = tooltipRootRef.value?.tooltipBody.clientWidth ?? 24;
@@ -153,10 +156,18 @@ const nativeInputHandler = (event: Event): void => {
 };
 
 const transitionEnabled = ref(true);
+const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const styles = computed<CSSProperties>(() => ({
+  '--nmorph-slider-thumb-width': thumbWidthCss.value,
+  ...(props.sliderHeight !== undefined && { '--slider-height': getCssSize(props.sliderHeight) }),
+  ...(props.valueFixedContainerHeight !== undefined && {
+    '--value-fixed-container-height': getCssSize(props.valueFixedContainerHeight),
+  }),
+}));
 </script>
 
 <template>
-  <div :class="modifiers" :style="{ '--nmorph-slider-thumb-width': thumbWidthCss }">
+  <div :class="modifiers" :style="styles">
     <div class="nmorph-slider__content">
       <div class="nmorph-slider__input-wrapper">
         <div ref="sliderContainer" class="nmorph-slider__input-container" @pointerdown="pointerDownHandler">

@@ -1,16 +1,23 @@
 <script setup lang="ts">
 import { NmorphShadowType } from '@/types';
 import { computed, useSlots } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 
 interface INmorphProps {
   shadowType?: keyof typeof NmorphShadowType;
   combinedShadowBorderWidth?: number;
+  cardPadding?: number | string;
+  fill?: boolean;
+  tag?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   shadowType: 'outset',
   combinedShadowBorderWidth: 0,
+  cardPadding: undefined,
+  fill: true,
+  tag: 'div',
 });
 
 const slots = useSlots();
@@ -18,13 +25,20 @@ const slots = useSlots();
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphShadowType[props.shadowType]],
-    'nmorph-card': [props.shadowType],
+    'nmorph-card': [props.shadowType, props.fill ? 'fill' : 'fit-content'],
   })
 );
+
+const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+
+const styles = computed<CSSProperties>(() => ({
+  '--nmorph-card-combined-border-width': `${props.combinedShadowBorderWidth}px`,
+  ...(props.cardPadding !== undefined && { '--card-padding': getCssSize(props.cardPadding) }),
+}));
 </script>
 
 <template>
-  <div :class="modifiers" :style="{ '--nmorph-card-combined-border-width': `${props.combinedShadowBorderWidth}px` }">
+  <component :is="props.tag" :class="modifiers" :style="styles">
     <div class="nmorph-card__header">
       <slot name="header" />
     </div>
@@ -34,7 +48,7 @@ const modifiers = computed(() =>
     <div v-if="slots.footer" class="nmorph-card__footer">
       <slot name="footer" />
     </div>
-  </div>
+  </component>
 </template>
 
 <style lang="scss">
@@ -43,9 +57,14 @@ const modifiers = computed(() =>
 
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
   padding: var(--card-padding);
   border-radius: var(--default-border-radius);
+
+  &.nmorph-card--fill {
+    width: 100%;
+  }
 
   .nmorph-card__content {
     height: 100%;

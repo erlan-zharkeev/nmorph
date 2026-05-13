@@ -2,6 +2,7 @@
 import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
+import type { CSSProperties } from 'vue';
 import { NmorphIcon, NmorphIconLoader } from '@/components';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
@@ -12,6 +13,10 @@ interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
   loading?: boolean;
   activeValue?: NmorphSwitchModelType;
   inactiveValue?: NmorphSwitchModelType;
+  width?: number | string;
+  height?: number | string;
+  offset?: number | string;
+  thumbHeight?: number | string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -20,6 +25,10 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   activeValue: true,
   inactiveValue: false,
+  width: undefined,
+  height: undefined,
+  offset: undefined,
+  thumbHeight: undefined,
 });
 
 const { id, name, tabindex } = useFormItemInput(props);
@@ -60,6 +69,14 @@ interface INmorphEmit {
 const inputDOMRef = ref<NmorphDomElementType>(null);
 defineExpose({ inputDOMRef });
 
+const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const styles = computed<CSSProperties>(() => ({
+  ...(props.width !== undefined && { '--width': getCssSize(props.width) }),
+  ...(props.height !== undefined && { '--height': getCssSize(props.height) }),
+  ...(props.offset !== undefined && { '--offset': getCssSize(props.offset) }),
+  ...(props.thumbHeight !== undefined && { '--thumb-height': getCssSize(props.thumbHeight) }),
+}));
+
 watch(
   () => props.modelValue,
   (newValue) => {
@@ -69,7 +86,7 @@ watch(
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="styles">
     <div class="nmorph-switch__content" @click="changeHandler">
       <input
         :id="id"
@@ -101,11 +118,12 @@ watch(
 
 <style lang="scss">
 .nmorph-switch {
+  --width: 40px;
   --height: 20px;
   --offset: 3px;
   --thumb-height: 14px;
 
-  width: 40px;
+  width: var(--width);
   height: var(--height);
   overflow: hidden;
   border-radius: var(--border-radius-999);
@@ -182,7 +200,7 @@ watch(
     }
 
     .nmorph-switch-thumb {
-      left: calc(100% - 16px);
+      left: calc(100% - var(--thumb-height) - var(--offset));
       box-shadow: none;
     }
   }

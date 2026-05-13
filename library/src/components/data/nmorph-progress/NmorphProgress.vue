@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphProgressColorType, NmorphProgressType } from '@/components';
 
@@ -11,16 +12,21 @@ interface INmorphProps {
   valueRightSide?: boolean;
   indeterminate?: boolean;
   circleSize?: number;
+  height?: number | string;
+  widthTransition?: string;
+  indeterminateAnimation?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
-  height: 'basic',
   type: 'linear',
   color: 'var(--nmorph-accent-color)',
   valueInside: false,
   valueRightSide: true,
   indeterminate: false,
   circleSize: 120,
+  height: undefined,
+  widthTransition: undefined,
+  indeterminateAnimation: undefined,
 });
 
 const modifiers = computed(() =>
@@ -53,18 +59,20 @@ onMounted(() => {
 
 const circleContainerSize = computed(() => `${props.circleSize}px`);
 const displayPercentage = computed(() => `${props.percentage}%`);
+const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const styles = computed<CSSProperties>(() => ({
+  '--nmorph-progress-percentage': displayPercentage.value,
+  '--nmorph-progress-color': color.value,
+  '--nmorph-progress-animation': animation.value,
+  '--nmorph-progress-circle-size': circleContainerSize.value,
+  ...(props.height !== undefined && { '--height': getCssSize(props.height) }),
+  ...(props.widthTransition !== undefined && { '--width-transition': props.widthTransition }),
+  ...(props.indeterminateAnimation !== undefined && { '--animation': props.indeterminateAnimation }),
+}));
 </script>
 
 <template>
-  <div
-    :class="modifiers"
-    :style="{
-      '--nmorph-progress-percentage': displayPercentage,
-      '--nmorph-progress-color': color,
-      '--nmorph-progress-animation': animation,
-      '--nmorph-progress-circle-size': circleContainerSize,
-    }"
-  >
+  <div :class="modifiers" :style="styles">
     <div v-if="props.type === 'linear'" class="nmorph-progress__linear">
       <div class="nmorph-progress__outer">
         <div class="nmorph-progress__inner">

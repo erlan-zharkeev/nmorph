@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, nextTick, watch } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphDomElementType } from '@/types';
 
@@ -17,6 +18,7 @@ interface INmorphProps {
   offsetX?: number;
   zIndex?: number;
   disabled?: boolean;
+  dotSize?: number | string;
 }
 
 type NmorphBadgeValueSlotProps = {
@@ -36,6 +38,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   offsetY: 0,
   zIndex: 1,
   disabled: false,
+  dotSize: undefined,
 });
 
 defineSlots<{
@@ -84,6 +87,13 @@ const containerStyle = computed(() => {
   };
 });
 
+const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+
+const styles = computed<CSSProperties>(() => ({
+  '--nmorph-badge-color': props.color,
+  ...(props.dotSize !== undefined && { '--dot-size': getCssSize(props.dotSize) }),
+}));
+
 const badge = ref<NmorphDomElementType>(null);
 
 const badgeWidth = ref(0);
@@ -102,11 +112,7 @@ watch(() => [props.value, props.max, props.isDot, props.isTag, props.size], upda
 </script>
 
 <template>
-  <div
-    v-if="!props.disabled && (!props.isTag || shouldShowBadge)"
-    :class="modifiers"
-    :style="{ '--nmorph-badge-color': props.color }"
-  >
+  <div v-if="!props.disabled && (!props.isTag || shouldShowBadge)" :class="modifiers" :style="styles">
     <slot v-if="!props.isTag" />
     <div v-if="shouldShowBadge" ref="badge" :class="containerModifiers" :style="containerStyle">
       <div v-if="props.isDot" class="nmorph-badge__dot" />

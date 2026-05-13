@@ -97,10 +97,23 @@ const attributesData: IAttributesTableData[] = [
     type: "String",
     default: " - ",
   },
+  {
+    name: "width",
+    type: "String | Number",
+    default: "undefined",
+  },
+  {
+    name: "calendar-cell-height",
+    type: "String | Number",
+    default: "undefined",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [];
-const variables: IVariablesTableData[] = [{ name: "width" }];
+const variables: IVariablesTableData[] = [
+  { name: "width" },
+  { name: "date-picker-calendar-cell-height" },
+];
 
 const events = [
   { name: "update:model-value", type: `${date} | Array<${date}>[]` },

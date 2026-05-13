@@ -10,6 +10,7 @@ import {
   NmorphCarouselItem,
   NmorphCollapse,
   NmorphCollapseItem,
+  NmorphEmpty,
   NmorphIcon,
   NmorphIconImage,
   NmorphIconUsers,
@@ -90,7 +91,7 @@ const progressColor = (value: number) => {
         <NmorphBadge :value="128" :max="99" :offset-x="4" :offset-y="-2">
           <NmorphButton text="Max" />
         </NmorphBadge>
-        <NmorphBadge is-dot color="var(--nmorph-error-color)">
+        <NmorphBadge is-dot color="var(--nmorph-error-color)" :dot-size="10">
           <NmorphButton text="Dot" />
         </NmorphBadge>
         <NmorphBadge :value="12" color="var(--nmorph-success-color)">
@@ -128,6 +129,44 @@ const progressColor = (value: number) => {
           <template #header>Combined</template>
           <p>Combined border and shadow.</p>
         </NmorphCard>
+        <NmorphCard tag="article" :fill="false" card-padding="12px">
+          <template #header>Fit content</template>
+          <p>Compact article card.</p>
+        </NmorphCard>
+      </div>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphEmpty">
+      <div class="empty-grid">
+        <NmorphEmpty
+          title="No dashboards"
+          description="Create a dashboard to start tracking this workspace."
+        >
+          <template #action>
+            <NmorphButton text="Create dashboard" height="thin" />
+          </template>
+        </NmorphEmpty>
+        <NmorphEmpty
+          design="common"
+          title="No media"
+          description="Drop assets here or connect an external source."
+          :icon-size="42"
+          min-height="150px"
+        >
+          <template #icon>
+            <NmorphIcon width="42px" height="42px" color="var(--nmorph-accent-color)">
+              <NmorphIconImage />
+            </NmorphIcon>
+          </template>
+        </NmorphEmpty>
+        <NmorphEmpty
+          title="Compact"
+          description="A tighter state for small panels."
+          :icon-size="32"
+          :min-height="112"
+          :padding="12"
+          shadow-type="outset"
+        />
       </div>
     </SandboxSection>
 
@@ -155,13 +194,20 @@ const progressColor = (value: number) => {
     <SandboxSection title="NmorphImagePreview">
       <div class="row">
         <NmorphImagePreview :src="imageOne" alt="Single preview" />
-        <NmorphImagePreview :src="[imageOne, imageTwo, imageThree]" :initial-index="1" :scale-step="0.25" />
+        <NmorphImagePreview
+          :src="[imageOne, imageTwo, imageThree]"
+          :initial-index="1"
+          :scale-step="0.25"
+          :width="190"
+          :height="130"
+          :navigation-button-margin="32"
+        />
       </div>
     </SandboxSection>
 
     <SandboxSection title="NmorphProgress">
       <div class="stack">
-        <NmorphProgress :percentage="progressValue" />
+        <NmorphProgress :percentage="progressValue" :height="10" />
         <NmorphProgress :percentage="progressValue" value-inside :value-right-side="false" color="var(--nmorph-success-color)" />
         <NmorphProgress :percentage="100" indeterminate />
         <div class="row">
@@ -178,7 +224,10 @@ const progressColor = (value: number) => {
 
     <SandboxSection title="NmorphSkeleton">
       <div class="cards">
-        <NmorphSkeleton :rows="3" />
+        <NmorphSkeleton
+          :rows="3"
+          loading-gradient="linear-gradient(90deg, var(--nmorph-accent-color) 20%, var(--nmorph-white-color) 45%, var(--nmorph-accent-color) 70%)"
+        />
         <NmorphSkeleton>
           <template #template>
             <div class="skeleton-template">
@@ -212,7 +261,16 @@ const progressColor = (value: number) => {
     </SandboxSection>
 
     <SandboxSection title="NmorphTable">
-      <NmorphTable :data="tableData" :sort="tableSort" bordered row-hover design="nmorph">
+      <NmorphTable
+        :data="tableData"
+        :sort="tableSort"
+        bordered
+        row-hover
+        design="nmorph"
+        border-color="color-mix(in srgb, var(--nmorph-accent-color) 55%, transparent)"
+        :cell-height="44"
+        row-hover-background="color-mix(in srgb, var(--nmorph-accent-color) 10%, transparent)"
+      >
         <NmorphTableColumn prop="name" label="Name" width="180" alignment="left" />
         <NmorphTableColumn prop="status" label="Status" width="160">
           <template #default="{ scope }">
@@ -238,7 +296,7 @@ const progressColor = (value: number) => {
 
     <SandboxSection title="NmorphCollapse">
       <NmorphCollapse v-model="collapseValue">
-        <NmorphCollapseItem name="availability" title="Availability" :block="false">
+        <NmorphCollapseItem name="availability" title="Availability" :block="false" :transition-speed="220">
           <p>Multiple panels can stay opened.</p>
         </NmorphCollapseItem>
         <NmorphCollapseItem name="disabled" title="Disabled" disabled :block="false">
@@ -256,7 +314,7 @@ const progressColor = (value: number) => {
     <SandboxSection title="NmorphCalendar">
       <div class="calendar-grid">
         <NmorphCalendar v-model="activeCalendarDate" :initial-date="new Date(2026, 4, 1)" />
-        <NmorphCalendar v-model="selectedCalendarDates" type="dates" :mark-today="false" />
+        <NmorphCalendar v-model="selectedCalendarDates" type="dates" :mark-today="false" :cell-height="42" />
         <NmorphCalendar
           v-model="selectedCalendarRange"
           type="daterange"
@@ -302,6 +360,12 @@ const progressColor = (value: number) => {
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+.empty-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
 }
 

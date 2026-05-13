@@ -19,10 +19,15 @@ const attributesData: IAttributesTableData[] = [
     default: "-",
     required: true,
   },
+  {
+    name: "color",
+    type: "String",
+    default: "undefined",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [];
-const variables: IVariablesTableData[] = [];
+const variables: IVariablesTableData[] = [{ name: "callout-color" }];
 </script>
 
 <template>

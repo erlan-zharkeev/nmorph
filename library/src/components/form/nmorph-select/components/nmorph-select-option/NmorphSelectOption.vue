@@ -2,6 +2,7 @@
 import { NmorphComponentHeight } from '@/types';
 import { useModifiers } from '@/utils';
 import { inject, computed } from 'vue';
+import type { CSSProperties } from 'vue';
 import {
   INmorphSelectOption,
   NmorphIcon,
@@ -18,6 +19,8 @@ const props = withDefaults(defineProps<INmorphSelectOption>(), {
   height: 'basic',
   disabled: false,
   focused: false,
+  hoverBackground: undefined,
+  hoverColor: undefined,
 });
 
 const emit = defineEmits<{
@@ -52,11 +55,17 @@ const modifiers = computed(() =>
     ],
   })
 );
+
+const styles = computed<CSSProperties>(() => ({
+  ...(props.hoverBackground !== undefined && { '--hover-bg': props.hoverBackground }),
+  ...(props.hoverColor !== undefined && { '--hover-color': props.hoverColor }),
+}));
 </script>
 
 <template>
   <div
     :class="modifiers"
+    :style="styles"
     :value="props.value"
     role="option"
     :aria-selected="checked"

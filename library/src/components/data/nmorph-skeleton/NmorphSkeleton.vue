@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphSkeletonItem } from '@/components';
 
@@ -7,12 +8,14 @@ interface INmorphProps {
   animated?: boolean;
   loading?: boolean;
   rows?: number;
+  loadingGradient?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   animated: true,
   loading: true,
   rows: 0,
+  loadingGradient: undefined,
 });
 
 const modifiers = computed(() =>
@@ -20,10 +23,14 @@ const modifiers = computed(() =>
     'nmorph-skeleton': [`${props.animated && props.loading && 'loading'}`],
   })
 );
+
+const styles = computed<CSSProperties>(() => ({
+  ...(props.loadingGradient !== undefined && { '--loading-gradient': props.loadingGradient }),
+}));
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="styles">
     <div v-if="props.rows && props.loading" class="nmorph-skeleton__rows">
       <NmorphSkeletonItem v-for="row in props.rows" :key="row" width="100%" height="14px" variant="rect" />
     </div>

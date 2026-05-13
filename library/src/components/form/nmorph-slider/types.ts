@@ -5,5 +5,9 @@ export interface INmorphSliderProps extends Omit<INmorphCommonInputProps, 'heigh
   max?: number;
   min?: number;
   step?: number;
+  fill?: boolean;
   showTooltip?: boolean;
+  thumbWidth?: number;
+  sliderHeight?: number | string;
+  valueFixedContainerHeight?: number | string;
 }

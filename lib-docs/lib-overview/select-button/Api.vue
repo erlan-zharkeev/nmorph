@@ -31,10 +31,29 @@ const attributesData: IAttributesTableData[] = [
     type: `Array<INmorphSelectButtonOption>`,
     default: "[]",
   },
+  {
+    name: "track-padding",
+    type: "String | Number",
+    default: "undefined",
+  },
+  {
+    name: "item-size",
+    type: "String | Number",
+    default: "undefined",
+  },
+  {
+    name: "item-font-size",
+    type: "String",
+    default: "undefined",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "default" }];
-const variables: IVariablesTableData[] = [];
+const variables: IVariablesTableData[] = [
+  { name: "track-padding" },
+  { name: "item-size" },
+  { name: "item-font-size" },
+];
 const events = [{ name: "update:model-value", type: "String" }];
 </script>
 

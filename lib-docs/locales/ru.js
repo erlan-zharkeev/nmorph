@@ -227,6 +227,16 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "empty-state-component":
+          "Добавлен NmorphEmpty для пустых состояний: typed props, слоты, документация и примеры в sandbox.",
+        "card-padding-prop":
+          "NmorphCard теперь принимает prop cardPadding, который передается в CSS-переменную --card-padding; числовые значения переводятся в пиксели.",
+        "card-fill-prop":
+          "NmorphCard теперь занимает доступную ширину по умолчанию и может сжиматься по контенту, когда fill равен false.",
+        "card-tag-prop":
+          "NmorphCard теперь принимает prop tag, чтобы корневой элемент можно было отрендерить как div, article, section или другой HTML-тег.",
+        "css-variable-prop-overrides":
+          "CSS variable overrides can now be passed through props for badges, tooltips, form controls, tables, progress, alerts, and related components.",
         "context-menu-neutral-hover":
           "NmorphContextMenu теперь строит дефолтный hover background пункта от базового text color вместо accent color, а пункты с кастомным цветом продолжают использовать свой цвет.",
         "tooltip-z-index-stack":
@@ -632,6 +642,7 @@ export default {
         "icon-name": "Имя из списка иконок",
         target: "Нативный атрибут target",
         disabled: "Отключить ссылку",
+        color: "Overrides the link color",
       },
       slot: {
         default: "Кастомное содержимое ссылки",
@@ -789,6 +800,7 @@ export default {
         "z-index": "Определяет порядок наложения бейджа",
         "offset-y": "Вертикальное смещение бейджа. Игнорируется при is-tag",
         "offset-x": "Горизонтальное смещение бейджа. Игнорируется при is-tag",
+        "dot-size": "Overrides the dot size. Numbers are treated as pixel values",
       },
       slot: {
         default:
@@ -804,8 +816,20 @@ export default {
       "shadow-type": {
         subtitle: "Определяет тип тени для карточки.",
       },
+      "card-padding": {
+        subtitle: "Задает отступ карточки тем же CSS-значением, которое использует переменная `--card-padding`.",
+      },
+      fill: {
+        subtitle: "Управляет тем, растягивается карточка на доступную ширину или занимает ширину контента.",
+      },
+      tag: {
+        subtitle: "Меняет HTML-тег, который используется для корневого элемента карточки.",
+      },
       api: {
         "shadow-type": "Определяет видимость тени карточки.",
+        "card-padding": "Переопределяет отступ карточки. Числа считаются значениями в пикселях.",
+        fill: "Если true, карточка занимает доступную ширину. Передайте false, чтобы ширина шла по контенту.",
+        tag: "HTML-тег, который используется для корневого элемента карточки.",
       },
       slot: {
         header: "Заголовок карточки",
@@ -813,6 +837,35 @@ export default {
       },
       variables: {
         "card-padding": "Отступ для всех краев",
+      },
+    },
+    empty: {
+      "basic-usage": {
+        subtitle:
+          "Показывает пустые состояния с дефолтным содержимым, кастомными иконками, действиями и common/nmorph-поверхностями.",
+      },
+      api: {
+        title: "Основной заголовок пустого состояния.",
+        description: "Дополнительное сообщение пустого состояния.",
+        "icon-size": "Размер дефолтной иконки. Числа считаются значениями в пикселях.",
+        "min-height": "Минимальная высота пустого состояния. Числа считаются значениями в пикселях.",
+        padding: "Внутренний отступ пустого состояния. Числа считаются значениями в пикселях.",
+        design: "Визуальный дизайн поверхности пустого состояния.",
+        "shadow-type": "Nmorph-тень, которая используется при design='nmorph'.",
+        "hide-icon": "Скрывает дефолтную иконку. Слот icon все равно отображается, если передан.",
+        role: "ARIA role контейнера пустого состояния.",
+        "aria-label": "Доступная подпись. Если не передана, используется title.",
+      },
+      slot: {
+        icon: "Кастомное содержимое иконки.",
+        title: "Кастомное содержимое заголовка.",
+        description: "Кастомное содержимое описания.",
+        action: "Область действия под сообщением.",
+      },
+      variables: {
+        "nmorph-empty-icon-size": "Ширина и высота дефолтной иконки.",
+        "nmorph-empty-min-height": "Минимальная высота пустого состояния.",
+        "nmorph-empty-padding": "Внутренний отступ пустого состояния.",
       },
     },
     image: {
@@ -934,6 +987,11 @@ export default {
         disabled: "Отключает панель",
         block: "Запрещает переключение панели, если установлено в true",
         height: "Задает высоту заголовка",
+        "transition-speed":
+          "Overrides the panel open and close transition speed. Numbers are treated as milliseconds",
+      },
+      variables: {
+        "transition-speed": "Panel content transition speed",
       },
       slot: {
         default: "Содержимое панели",
@@ -956,6 +1014,7 @@ export default {
         animated: "Включает анимацию для компонента скелетона",
         loading: "Определяет, отображается ли скелетон.",
         rows: "Задает количество строк в скелетоне.",
+        "loading-gradient": "Overrides the skeleton loading gradient",
       },
       slot: {
         template: "Слот для пользовательской структуры скелетона при загрузке.",
@@ -1010,6 +1069,9 @@ export default {
         type: "Указывает тип индикатора прогресса",
         color: "Задает цвет индикатора прогресса",
         percentage: "Устанавливает процентное значение прогресса",
+        height: "Overrides the linear progress bar height. Numbers are treated as pixel values",
+        "width-transition": "Overrides the width transition used by the linear progress bar",
+        "indeterminate-animation": "Overrides the animation used by indeterminate progress",
         "value-inside": "Отображает текст прогресса внутри полосы",
         "value-right-side": "Показывает или скрывает текст с процентом справа",
         indeterminate: "Включает анимацию неопределенного прогресса",
@@ -1046,6 +1108,7 @@ export default {
           "Устанавливает начальную дату, отображаемую в календаре",
         "model-value": "Представляет выбранную дату (даты) в календаре",
         type: "Определяет тип выбора в календаре",
+        "cell-height": "Overrides the height of each date cell. Numbers are treated as pixel values",
         range:
           "Включает режим выбора диапазона в календаре, позволяя выбирать диапазон дат календаря. Не выбранный диапозон, а диапозон отображемого календаря",
       },
@@ -1105,6 +1168,10 @@ export default {
         "z-index":
           "Задает z-index оверлея. Если не передан, используется общий автоматический стек z-index",
         "show-trigger": "Определяет, рендерится ли стандартный trigger предпросмотра",
+        width: "Overrides the preview trigger width. Numbers are treated as pixel values",
+        height: "Overrides the preview trigger height. Numbers are treated as pixel values",
+        "navigation-button-margin":
+          "Overrides the distance between gallery navigation buttons and the viewport edge",
       },
       slot: {
         loading: "Слот, отображаемый во время загрузки изображения",
@@ -1113,6 +1180,8 @@ export default {
       variables: {
         width: "Определяет ширину предпросмотра изображения.",
         height: "Определяет высоту предпросмотра изображения.",
+        "nmorph-image-preview-btn-margin":
+          "Distance between gallery navigation buttons and the viewport edge",
       },
       events: {
         "update:model-value": "Событие для перехвата двусторонней привязки",
@@ -1167,11 +1236,19 @@ export default {
         "virtual-row-height": "Задает ожидаемую высоту одной виртуальной строки",
         "virtual-overscan":
           "Задает количество дополнительных строк до и после видимой области",
+        "virtual-dynamic-height":
+          "Allows virtual table rows to measure their own height dynamically",
+        "border-color": "Overrides the table border color",
+        "cell-height": "Overrides the data cell height. Numbers are treated as pixel values",
+        "row-hover-background":
+          "Overrides the background used for hovered and keyboard-active rows",
       },
       slot: {},
       variables: {
         "border-color": "Устанавливает цвет границы таблицы",
         "table-cell-height": "Определяет высоту ячеек таблицы",
+        "table-background-row-hover":
+          "Defines the background used for hovered and keyboard-active rows",
       },
     },
     "table-column": {
@@ -1218,6 +1295,10 @@ export default {
           "Позволяет вручную управлять координатами подсказки",
         "z-index":
           "Переопределяет общий автоматический z-index, пока подсказка видима",
+        width: "Overrides the tooltip content width. Numbers are treated as pixel values",
+        "max-width":
+          "Overrides the tooltip content max width. Numbers are treated as pixel values",
+        height: "Overrides the tooltip content height. Numbers are treated as pixel values",
       },
       slot: {},
       variables: {
@@ -1260,13 +1341,17 @@ export default {
         html: "Позволяет использовать HTML-контент в теле оповещения. Используйте с осторожностью, чтобы избежать XSS-уязвимостей",
         "close-icon-position":
           "Управляет выравниванием иконки закрытия внутри alert",
+        "background-color": "Overrides the alert background color",
       },
       slot: {
         icon: "Слот для кастомизации иконки, отображаемой в оповещении",
         title: "Слот для кастомизации заголовка оповещения",
         default: "Слот для кастомизации основного содержимого оповещения",
       },
-      variables: {},
+      variables: {
+        "background-color": "Alert background color",
+        "nmorph-alert-close-align": "Close icon align-self value",
+      },
       events: {
         close:
           "Событие срабатывающее когда оповещение закрывается пользователем",
@@ -1288,6 +1373,10 @@ export default {
         type: "Определяет тип callout",
         title: "Заголовок, отображаемый в callout",
         content: "Контент, отображаемый в callout",
+        color: "Overrides the callout accent color",
+      },
+      variables: {
+        "callout-color": "Callout accent color",
       },
     },
     dialog: {
@@ -1713,6 +1802,9 @@ export default {
           "Булево значение, показывающее индикатор загрузки на переключателе",
         "active-value": "Значение, когда переключатель включен",
         "inactive-value": "Значение, когда переключатель выключен",
+        width: "Overrides the switch width. Numbers are treated as pixel values",
+        offset: "Overrides the thumb offset. Numbers are treated as pixel values",
+        "thumb-height": "Overrides the switch thumb size. Numbers are treated as pixel values",
       },
       slot: {
         "bg-on": "Слот для кастомизации фона, когда переключатель включен",
@@ -1722,6 +1814,7 @@ export default {
           "Слот для кастомизации кнопки, когда переключатель выключен",
       },
       variables: {
+        width: "Defines the width of the switch",
         height: "Определяет высоту переключателя",
         offset: "Указывает смещение кнопки переключателя",
         "thumb-height": "Определяет высоту кнопки переключателя",
@@ -1942,9 +2035,17 @@ export default {
         disabled: "Отключает компонент",
         fill: "Растягивает компонент на всю ширину контейнера",
         options: "Список опций для отображения",
+        "track-padding": "Overrides the inner padding around items. Numbers are treated as pixel values",
+        "item-size": "Overrides each item size. Numbers are treated as pixel values",
+        "item-font-size": "Overrides each item font size",
       },
       slot: {
         default: "Слот для элементов NmorphSelectButtonItem",
+      },
+      variables: {
+        "track-padding": "Inner padding around items",
+        "item-size": "Select button item size",
+        "item-font-size": "Select button item font size",
       },
       events: {
         "update:model-value": "Срабатывает при изменении выбранного значения",
@@ -1991,6 +2092,7 @@ export default {
         open: "Булево значение для управления видимостью списка",
         "z-index":
           "Задает z-index выпадающего списка select. Если не передан, используется общий автоматический стек z-index",
+        width: "Overrides the base select width. Numbers are treated as pixel values",
         virtual: "Включает виртуальный рендеринг для больших списков опций",
         "virtual-item-height":
           "Задает ожидаемую высоту одной виртуальной опции",
@@ -2020,6 +2122,8 @@ export default {
         height: "Задает высоту опции выбора",
         disabled:
           "Булево значение, которое указывает, отключена ли опция и не может быть выбрана",
+        "hover-background": "Overrides the option hover background",
+        "hover-color": "Overrides the option hover text and icon color",
       },
       slot: {
         default: "Слот для настройки отображаемого контента для этой опции",
@@ -2051,9 +2155,14 @@ export default {
         step: "Шаг для увеличения или уменьшения значения",
         "show-tooltip":
           "Булево значение для управления видимостью всплывающей подсказки",
+        "thumb-width": "Overrides the slider thumb width in pixels",
+        "slider-height": "Overrides the slider hit area height. Numbers are treated as pixel values",
+        "value-fixed-container-height":
+          "Overrides the visual track container height. Numbers are treated as pixel values",
       },
       slot: {},
       variables: {
+        "nmorph-slider-thumb-width": "Slider thumb width",
         "slider-height": "Определяет высоту слайдера",
         "value-fixed-container-height": "Устанавливает высоту контейнера",
       },
@@ -2083,10 +2192,14 @@ export default {
           "Текст для разделения начальной и конечной дат в режиме выбора диапазона",
         "z-index":
           "Задает z-index выпадающего календаря. Если не передан, используется общий автоматический стек z-index",
+        width: "Overrides the date picker width. Numbers are treated as pixel values",
+        "calendar-cell-height":
+          "Overrides the calendar date cell height. Numbers are treated as pixel values",
       },
       slot: {},
       variables: {
         width: "Определяет ширину компонента выбора даты",
+        "date-picker-calendar-cell-height": "Date picker calendar cell height",
       },
       events: {
         "update:model-value":
@@ -2122,6 +2235,10 @@ export default {
         "max-time": "Максимально доступное время",
         clearable: "Показывает кнопку очистки, когда значение выбрано",
         "z-index": "Z-index выпадающего меню",
+        width: "Overrides the time picker width. Numbers are treated as pixel values",
+      },
+      variables: {
+        width: "Defines the width of the time picker",
       },
       events: {
         "update:model-value": "Событие при изменении выбранного времени",

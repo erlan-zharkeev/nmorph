@@ -35,6 +35,11 @@ const attributesData: IAttributesTableData[] = [
     type: enumToString(NmorphSelectionDateType),
     default: "date",
   },
+  {
+    name: "cell-height",
+    type: "String | Number",
+    default: "undefined",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "header" }, { name: "content" }];

@@ -28,6 +28,11 @@ const attributesData = [
     type: "Boolean",
     default: "false",
   },
+  {
+    name: "color",
+    type: "String",
+    default: "undefined",
+  },
 ];
 
 const slotData = [

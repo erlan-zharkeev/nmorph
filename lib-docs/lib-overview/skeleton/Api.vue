@@ -23,6 +23,11 @@ const attributesData: IAttributesTableData[] = [
     type: "Number",
     default: "0",
   },
+  {
+    name: "loading-gradient",
+    type: "String",
+    default: "undefined",
+  },
 ];
 
 const itemAttributesData: IAttributesTableData[] = [

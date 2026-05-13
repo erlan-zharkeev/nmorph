@@ -52,10 +52,26 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "true",
   },
+  {
+    name: "thumb-width",
+    type: "Number",
+    default: "50",
+  },
+  {
+    name: "slider-height",
+    type: "String | Number",
+    default: "undefined",
+  },
+  {
+    name: "value-fixed-container-height",
+    type: "String | Number",
+    default: "undefined",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [];
 const variables: IVariablesTableData[] = [
+  { name: "nmorph-slider-thumb-width" },
   { name: "slider-height" },
   { name: "value-fixed-container-height" },
 ];

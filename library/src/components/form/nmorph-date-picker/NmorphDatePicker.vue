@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType, NmorphSelectionDateType } from '@/types';
 import {
@@ -28,6 +29,8 @@ interface INmorphProps extends INmorphCommonInputProps {
   dateFormatter?: NmorphDateFormatterType;
   valueSeparator?: string;
   rangeSeparator?: string;
+  width?: number | string;
+  calendarCellHeight?: number | string;
 }
 
 const { t } = useI18n();
@@ -47,6 +50,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   dateFormatter: undefined,
   valueSeparator: ', ',
   rangeSeparator: ' - ',
+  width: undefined,
+  calendarCellHeight: undefined,
 });
 
 const { id, name, autocomplete } = useFormItemInput(props);
@@ -74,6 +79,14 @@ const modifiers = computed(() =>
     'nmorph-date-picker': [`${props.disabled && 'disabled'}`, props.type, `${focus.value && 'focus'}`],
   })
 );
+
+const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const styles = computed<CSSProperties>(() => ({
+  ...(props.width !== undefined && { '--width': getCssSize(props.width) }),
+  ...(props.calendarCellHeight !== undefined && {
+    '--date-picker-calendar-cell-height': getCssSize(props.calendarCellHeight),
+  }),
+}));
 
 const open = ref(false);
 const nmorphInputDOMRef = ref<NmorphDomElementType>(null);
@@ -124,7 +137,7 @@ const showClearButton = computed(() => {
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="styles">
     <div class="nmorph-date-picker__date-wrapper">
       <div
         ref="nmorphInputDOMRef"
@@ -174,6 +187,7 @@ const showClearButton = computed(() => {
 <style lang="scss">
 .nmorph-date-picker {
   --width: 200px;
+  --date-picker-calendar-cell-height: 42px;
 
   position: relative;
   width: var(--width);
@@ -235,7 +249,7 @@ const showClearButton = computed(() => {
   }
 
   .nmorph-calendar {
-    --table-data-cell-height: 42px;
+    --table-data-cell-height: var(--date-picker-calendar-cell-height);
   }
 
   &.nmorph-date-picker--daterange {

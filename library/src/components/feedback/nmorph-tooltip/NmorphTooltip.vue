@@ -3,6 +3,7 @@ import { usePlacement, useZIndex } from '@/hooks';
 import { INmorphCoords, NmorphDomElementType, NmorphPlacementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
+import type { CSSProperties } from 'vue';
 
 interface INmorphProps {
   text?: string;
@@ -10,6 +11,9 @@ interface INmorphProps {
   forceShow?: boolean;
   forceCoordinate?: Partial<INmorphCoords<string>> | null;
   zIndex?: number;
+  width?: number | string;
+  maxWidth?: number | string;
+  height?: number | string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -18,6 +22,9 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   forceShow: false,
   forceCoordinate: null,
   zIndex: undefined,
+  width: undefined,
+  maxWidth: undefined,
+  height: undefined,
 });
 
 const showTooltip = ref(props.forceShow);
@@ -48,23 +55,25 @@ const handleMouseLeave = () => {
   showTooltip.value = false;
 };
 
-const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
+const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const rootWidth = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
 const zIndex = useZIndex(
   () => showTooltip.value,
   () => props.zIndex
 );
+const styles = computed<CSSProperties>(() => ({
+  '--nmorph-tooltip-width': rootWidth.value,
+  '--nmorph-tooltip-z-index': zIndex.value,
+  ...(props.width !== undefined && { '--width': getCssSize(props.width) }),
+  ...(props.maxWidth !== undefined && { '--max-width': getCssSize(props.maxWidth) }),
+  ...(props.height !== undefined && { '--height': getCssSize(props.height) }),
+}));
 const tooltipBody = ref<NmorphDomElementType>(null);
 defineExpose({ tooltipBody });
 </script>
 
 <template>
-  <div
-    :class="modifiers"
-    :style="{
-      '--nmorph-tooltip-width': width,
-      '--nmorph-tooltip-z-index': zIndex,
-    }"
-  >
+  <div :class="modifiers" :style="styles">
     <div
       ref="tooltipDOMRef"
       class="nmorph-tooltip__content"

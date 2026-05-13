@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, provide, ref, watch } from 'vue';
+import type { CSSProperties } from 'vue';
 import { generateUUID, useModifiers } from '@/utils';
 import { NmorphDomElementType, NmorphSortOrderType } from '@/types';
 import { useVirtualList } from '@/hooks';
@@ -23,6 +24,9 @@ interface INmorphProps {
   virtualOverscan?: number;
   virtualRowHeight?: number;
   virtualDynamicHeight?: boolean;
+  borderColor?: string;
+  cellHeight?: number | string;
+  rowHoverBackground?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -36,6 +40,9 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   virtualOverscan: 5,
   virtualRowHeight: 42,
   virtualDynamicHeight: false,
+  borderColor: undefined,
+  cellHeight: undefined,
+  rowHoverBackground: undefined,
 });
 
 const modifiers = computed(() =>
@@ -134,6 +141,11 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
 
 const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const virtualHeight = computed(() => getCssSize(props.virtualHeight));
+const tableStyle = computed<CSSProperties>(() => ({
+  ...(props.borderColor !== undefined && { '--border-color': props.borderColor }),
+  ...(props.cellHeight !== undefined && { '--table-cell-height': getCssSize(props.cellHeight) }),
+  ...(props.rowHoverBackground !== undefined && { '--table-background-row-hover': props.rowHoverBackground }),
+}));
 const tableBodyStyle = computed<Record<string, string | undefined>>(() => ({
   '--table-virtual-row-height': `${props.virtualRowHeight}px`,
   height: virtualEnabled.value ? virtualHeight.value : undefined,
@@ -195,7 +207,7 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
 
 <template>
   <div>
-    <div ref="nmorphDOMTable" :key="key" :class="modifiers">
+    <div ref="nmorphDOMTable" :key="key" :class="modifiers" :style="tableStyle">
       <div class="nmorph-table__wrapper">
         <table class="nmorph-table__header">
           <colgroup>

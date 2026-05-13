@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 import {
   NmorphTable,
@@ -26,6 +27,7 @@ interface INmorphProps {
   range?: NmorphCalendarRangeType;
   type?: keyof typeof NmorphSelectionDateType;
   modelValue?: NmorphSelectedDateModelType;
+  cellHeight?: number | string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -34,6 +36,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   range: undefined,
   type: 'date',
   modelValue: () => new Date(),
+  cellHeight: undefined,
 });
 
 const emit = defineEmits<INmorphEmit>();
@@ -205,13 +208,17 @@ const modifiers = computed(() =>
     'nmorph-calendar': [],
   })
 );
+const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const styles = computed<CSSProperties>(() => ({
+  ...(props.cellHeight !== undefined && { '--table-data-cell-height': getCssSize(props.cellHeight) }),
+}));
 const dateData = (data: unknown) => data as INmorphCalendarDate;
 
 updateCalendar();
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="styles">
     <slot name="header">
       <NmorphCalendarHeader
         :year="initialDate.getFullYear()"

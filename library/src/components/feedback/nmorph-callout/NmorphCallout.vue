@@ -1,20 +1,28 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+import type { CSSProperties } from 'vue';
 import type { NmorphCalloutType } from './types';
 
 interface INmorphProps {
   type?: NmorphCalloutType;
   title?: string;
   content: string;
+  color?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   type: 'info',
   title: '',
+  color: undefined,
 });
+
+const styles = computed<CSSProperties>(() => ({
+  ...(props.color !== undefined && { '--callout-color': props.color }),
+}));
 </script>
 
 <template>
-  <div class="nmorph-callout" :class="`nmorph-callout--${props.type}`">
+  <div class="nmorph-callout" :class="`nmorph-callout--${props.type}`" :style="styles">
     <div v-if="props.title" class="nmorph-callout__title">{{ props.title }}</div>
     <div class="nmorph-callout__content" v-html="props.content" />
   </div>

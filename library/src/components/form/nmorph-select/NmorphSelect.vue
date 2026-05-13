@@ -2,6 +2,7 @@
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useVirtualList } from '@/hooks';
 import {
   NmorphTagItem,
@@ -36,6 +37,7 @@ interface INmorphProps extends INmorphCommonInputProps {
   virtualMaxHeight?: number | string;
   virtualOverscan?: number;
   virtualDynamicHeight?: boolean;
+  width?: number | string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -56,6 +58,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   virtualMaxHeight: 240,
   virtualOverscan: 5,
   virtualDynamicHeight: false,
+  width: undefined,
 });
 
 const computedNoElementPlaceholder = computed(() =>
@@ -119,6 +122,11 @@ const modifiers = computed(() =>
   })
 );
 
+const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const styles = computed<CSSProperties>(() => ({
+  ...(props.width !== undefined && { '--base-width': getCssSize(props.width) }),
+}));
+
 const clickHandler = () => {
   if (disabledInput.value) return;
   open.value = !open.value;
@@ -172,7 +180,6 @@ const virtualSpacerStyle = computed(() => ({
 const virtualContentStyle = computed(() => ({
   transform: `translateY(${virtualList.offsetTop.value}px)`,
 }));
-const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const virtualMaxHeight = computed(() => getCssSize(props.virtualMaxHeight));
 const refreshDomOptions = () => {
   if (optionsMap.value.length > 0 || !optionsDOMRef.value) return;
@@ -309,7 +316,7 @@ const endHandler = () => {
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="styles">
     <div class="nmorph-select__content">
       <select
         :id="id"

@@ -61,6 +61,11 @@ const attributesData: IAttributesTableData[] = [
     ),
     default: "center",
   },
+  {
+    name: "background-color",
+    type: "String",
+    default: "undefined",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [
@@ -68,7 +73,10 @@ const slotData: ISlotsTableData[] = [
   { name: "title" },
   { name: "default" },
 ];
-const variables: IVariablesTableData[] = [];
+const variables: IVariablesTableData[] = [
+  { name: "background-color" },
+  { name: "nmorph-alert-close-align" },
+];
 const events = [{ name: "close", type: "void" }];
 </script>
 

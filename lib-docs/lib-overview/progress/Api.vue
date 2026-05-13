@@ -21,7 +21,22 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "color",
     type: "String",
-    default: "var(--nmorph-info-color)",
+    default: "var(--nmorph-accent-color)",
+  },
+  {
+    name: "height",
+    type: "String | Number",
+    default: "undefined",
+  },
+  {
+    name: "width-transition",
+    type: "String",
+    default: "undefined",
+  },
+  {
+    name: "indeterminate-animation",
+    type: "String",
+    default: "undefined",
   },
   {
     name: "value-inside",

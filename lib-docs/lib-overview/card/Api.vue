@@ -13,6 +13,21 @@ const attributesData: IAttributesTableData[] = [
     type: enumToString(NmorphShadowType),
     default: "outset",
   },
+  {
+    name: "card-padding",
+    type: "string | number",
+    default: "undefined",
+  },
+  {
+    name: "fill",
+    type: "boolean",
+    default: "true",
+  },
+  {
+    name: "tag",
+    type: "string",
+    default: "div",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "header" }, { name: "footer" }];

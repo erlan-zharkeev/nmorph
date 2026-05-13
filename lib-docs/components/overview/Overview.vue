@@ -11,6 +11,7 @@ import {
   NmorphAvatar,
   NmorphBadge,
   NmorphImage,
+  NmorphEmpty,
   NmorphTagList,
   NmorphTagItem,
   NmorphSkeleton,
@@ -133,6 +134,16 @@ const localePath = useLocalePath();
               <NmorphCard shadow-type="combined">
                 <NmorphImage :src="Autumn" />
               </NmorphCard>
+            </div>
+          </NmorphCard>
+        </NuxtLink>
+      </div>
+      <div class="overview-component-wrapper empty">
+        <NuxtLink :to="localePath('/elements/empty')">
+          <NmorphCard>
+            <template #header>Empty</template>
+            <div class="overview-component-content">
+              <NmorphEmpty title="No data" :min-height="100" :icon-size="36" padding="10px" />
             </div>
           </NmorphCard>
         </NuxtLink>

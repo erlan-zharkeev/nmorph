@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, type Component, useSlots } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 import {
   NmorphIcon,
@@ -25,6 +26,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   bordered: true,
   html: '',
   closeIconPosition: 'center',
+  backgroundColor: undefined,
 });
 
 interface INmorphEmit {
@@ -37,6 +39,11 @@ const modifiers = computed(() =>
     'nmorph-alert': [props.type, `${props.bordered && 'bordered'}`, `${props.fill && 'fill'}`],
   })
 );
+
+const styles = computed<CSSProperties>(() => ({
+  '--nmorph-alert-close-align': props.closeIconPosition,
+  ...(props.backgroundColor !== undefined && { '--background-color': props.backgroundColor }),
+}));
 
 const closeHandler = () => {
   emit('close');
@@ -53,11 +60,7 @@ const slots = useSlots();
 </script>
 
 <template>
-  <div
-    v-if="slots.default || props.title || props.content || props.html"
-    :class="modifiers"
-    :style="{ '--nmorph-alert-close-align': props.closeIconPosition }"
-  >
+  <div v-if="slots.default || props.title || props.content || props.html" :class="modifiers" :style="styles">
     <div v-if="props.html" class="nmorph-alert__html-wrapper" v-html="props.html" />
     <div v-else class="nmorph-alert__wrapper">
       <div class="nmorph-alert__left-side">

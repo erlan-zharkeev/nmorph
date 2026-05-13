@@ -27,6 +27,7 @@ import {
   NmorphDialog,
   NmorphDivider,
   NmorphDropdown,
+  NmorphEmpty,
   NmorphFileUpload,
   NmorphForm,
   NmorphFormItem,
@@ -175,6 +176,11 @@ const renderCases = [
       template:
         '<NmorphCollapse :model-value="[\'first\']"><NmorphCollapseItem name="first" title="First" /></NmorphCollapse>',
     }),
+  },
+  {
+    name: 'NmorphEmpty',
+    component: NmorphEmpty,
+    props: { title: 'Nothing here', description: 'Create the first item to get started.' },
   },
   {
     name: 'NmorphImage',
@@ -484,6 +490,392 @@ const mountCase = async (renderCase) => {
 describe('components', () => {
   it.each(renderCases)('renders $name', async (renderCase) => {
     await mountCase(renderCase);
+  });
+
+  it('passes card padding prop to the card CSS variable', () => {
+    const wrapper = mount(NmorphCard, {
+      props: {
+        cardPadding: 24,
+      },
+      slots: {
+        default: 'Content',
+      },
+    });
+
+    const card = wrapper.find('.nmorph-card').element as HTMLElement;
+
+    expect(card.style.getPropertyValue('--card-padding')).toBe('24px');
+
+    wrapper.unmount();
+  });
+
+  it('fills the available width by default and can fit content', () => {
+    const filled = mount(NmorphCard, {
+      slots: {
+        default: 'Content',
+      },
+    });
+    const fitted = mount(NmorphCard, {
+      props: {
+        fill: false,
+      },
+      slots: {
+        default: 'Content',
+      },
+    });
+
+    expect(filled.find('.nmorph-card').classes()).toContain('nmorph-card--fill');
+    expect(fitted.find('.nmorph-card').classes()).toContain('nmorph-card--fit-content');
+
+    filled.unmount();
+    fitted.unmount();
+  });
+
+  it('renders the card root with a custom tag', () => {
+    const wrapper = mount(NmorphCard, {
+      props: {
+        tag: 'article',
+      },
+      slots: {
+        default: 'Content',
+      },
+    });
+
+    expect(wrapper.find('.nmorph-card').element.tagName).toBe('ARTICLE');
+
+    wrapper.unmount();
+  });
+
+  it('renders empty action and forwards size variables', () => {
+    const wrapper = mount(NmorphEmpty, {
+      props: {
+        title: 'No results',
+        iconSize: 32,
+        minHeight: '120px',
+        padding: 12,
+      },
+      slots: {
+        action: '<button>Create</button>',
+      },
+    });
+
+    const empty = wrapper.find('.nmorph-empty').element as HTMLElement;
+
+    expect(empty.style.getPropertyValue('--nmorph-empty-icon-size')).toBe('32px');
+    expect(empty.style.getPropertyValue('--nmorph-empty-min-height')).toBe('120px');
+    expect(empty.style.getPropertyValue('--nmorph-empty-padding')).toBe('12px');
+    expect(wrapper.find('.nmorph-empty__action button').text()).toBe('Create');
+
+    wrapper.unmount();
+  });
+
+  it('forwards CSS variable props on data and feedback components', async () => {
+    const assertStyles = async (wrapper, selector, expected) => {
+      await nextTick();
+
+      const element = wrapper.find(selector).element as HTMLElement;
+
+      for (const [name, value] of Object.entries(expected)) {
+        expect(element.style.getPropertyValue(name)).toBe(value);
+      }
+
+      wrapper.unmount();
+    };
+
+    await assertStyles(mount(NmorphBadge, { props: { isDot: true, dotSize: 9 } }), '.nmorph-badge', {
+      '--dot-size': '9px',
+    });
+
+    await assertStyles(
+      mount(NmorphProgress, {
+        props: {
+          percentage: 50,
+          height: 12,
+          widthTransition: 'width 120ms ease',
+          indeterminateAnimation: 'pulse 1s linear infinite',
+        },
+      }),
+      '.nmorph-progress',
+      {
+        '--height': '12px',
+        '--width-transition': 'width 120ms ease',
+        '--animation': 'pulse 1s linear infinite',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphCalendar, {
+        props: {
+          initialDate: new Date(2024, 0, 1),
+          modelValue: new Date(2024, 0, 1),
+          cellHeight: 44,
+        },
+      }),
+      '.nmorph-calendar',
+      {
+        '--table-data-cell-height': '44px',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphSkeleton, {
+        props: {
+          loadingGradient: 'linear-gradient(90deg, red, blue)',
+        },
+      }),
+      '.nmorph-skeleton',
+      {
+        '--loading-gradient': 'linear-gradient(90deg, red, blue)',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphTable, {
+        props: {
+          data: tableData,
+          borderColor: '#123456',
+          cellHeight: 52,
+          rowHoverBackground: 'rgba(1, 2, 3, 0.2)',
+        },
+      }),
+      '.nmorph-table',
+      {
+        '--border-color': '#123456',
+        '--table-cell-height': '52px',
+        '--table-background-row-hover': 'rgba(1, 2, 3, 0.2)',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphImagePreview, {
+        props: {
+          src: imageSrc,
+          width: 222,
+          height: '130px',
+        },
+      }),
+      '.nmorph-image-preview',
+      {
+        '--width': '222px',
+        '--height': '130px',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphTooltip, {
+        props: {
+          forceShow: true,
+          text: 'Tooltip',
+          width: 180,
+          maxWidth: '220px',
+          height: 48,
+        },
+        slots: {
+          default: '<button>Target</button>',
+        },
+      }),
+      '.nmorph-tooltip',
+      {
+        '--width': '180px',
+        '--max-width': '220px',
+        '--height': '48px',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphAlert, {
+        props: {
+          id: 'alert-style',
+          type: 'info',
+          title: 'Alert',
+          content: 'Content',
+          backgroundColor: 'rgba(10, 20, 30, 0.2)',
+        },
+      }),
+      '.nmorph-alert',
+      {
+        '--background-color': 'rgba(10, 20, 30, 0.2)',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphCallout, {
+        props: {
+          type: 'info',
+          title: 'Callout',
+          content: 'Content',
+          color: '#345678',
+        },
+      }),
+      '.nmorph-callout',
+      {
+        '--callout-color': '#345678',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphLink, {
+        props: {
+          href: '#',
+          text: 'Link',
+          color: '#abcdef',
+        },
+      }),
+      '.nmorph-link',
+      {
+        '--link-color': '#abcdef',
+      }
+    );
+  });
+
+  it('forwards CSS variable props on form controls', async () => {
+    const assertStyles = async (wrapper, selector, expected) => {
+      await nextTick();
+
+      const element = wrapper.find(selector).element as HTMLElement;
+
+      for (const [name, value] of Object.entries(expected)) {
+        expect(element.style.getPropertyValue(name)).toBe(value);
+      }
+
+      wrapper.unmount();
+    };
+
+    await assertStyles(
+      mount(NmorphSwitch, {
+        props: {
+          modelValue: true,
+          width: 54,
+          height: 30,
+          offset: 4,
+          thumbHeight: 22,
+        },
+      }),
+      '.nmorph-switch',
+      {
+        '--width': '54px',
+        '--height': '30px',
+        '--offset': '4px',
+        '--thumb-height': '22px',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphSelectButton, {
+        props: {
+          modelValue: 'first',
+          options,
+          trackPadding: 3,
+          itemSize: 36,
+          itemFontSize: '13px',
+        },
+      }),
+      '.nmorph-select-button',
+      {
+        '--track-padding': '3px',
+        '--item-size': '36px',
+        '--item-font-size': '13px',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphSelect, {
+        props: {
+          modelValue: 'first',
+          options,
+          width: 280,
+        },
+      }),
+      '.nmorph-select',
+      {
+        '--base-width': '280px',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphSelectOption, {
+        props: {
+          value: 'first',
+          label: 'First',
+          hoverBackground: '#111111',
+          hoverColor: '#eeeeee',
+        },
+        global: {
+          provide: {
+            'select-selected-value': ref('first'),
+            'select-change-selected-value': () => undefined,
+          },
+        },
+      }),
+      '.nmorph-select-option',
+      {
+        '--hover-bg': '#111111',
+        '--hover-color': '#eeeeee',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphSlider, {
+        props: {
+          modelValue: 40,
+          thumbWidth: 64,
+          sliderHeight: 28,
+          valueFixedContainerHeight: 12,
+        },
+      }),
+      '.nmorph-slider',
+      {
+        '--nmorph-slider-thumb-width': '64px',
+        '--slider-height': '28px',
+        '--value-fixed-container-height': '12px',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphDatePicker, {
+        props: {
+          modelValue: new Date(2024, 0, 1),
+          initialDate: new Date(2024, 0, 1),
+          width: 260,
+          calendarCellHeight: 38,
+        },
+      }),
+      '.nmorph-date-picker',
+      {
+        '--width': '260px',
+        '--date-picker-calendar-cell-height': '38px',
+      }
+    );
+
+    await assertStyles(
+      mount(NmorphTimePicker, {
+        props: {
+          modelValue: '09:30',
+          width: 180,
+        },
+      }),
+      '.nmorph-time-picker',
+      {
+        '--width': '180px',
+      }
+    );
+
+    await assertStyles(
+      mount(
+        defineComponent({
+          components: { NmorphCollapse, NmorphCollapseItem },
+          template: `
+            <NmorphCollapse :model-value="['first']">
+              <NmorphCollapseItem name="first" title="First" :transition-speed="220">Content</NmorphCollapseItem>
+            </NmorphCollapse>
+          `,
+        })
+      ),
+      '.nmorph-collapse-item',
+      {
+        '--transition-speed': '220ms',
+      }
+    );
   });
 
   it('keeps explicit icon color inside transparent button', () => {

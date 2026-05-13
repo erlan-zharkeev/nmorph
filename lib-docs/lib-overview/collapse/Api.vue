@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { type IAttributesTableData, type IEventsTableData, type ISlotsTableData } from "~/types";
+import {
+  type IAttributesTableData,
+  type IEventsTableData,
+  type ISlotsTableData,
+  type IVariablesTableData,
+} from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
 import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
 
@@ -51,6 +56,11 @@ const itemAttributesData: IAttributesTableData[] = [
     type: enumToString(NmorphComponentHeight),
     default: "basic",
   },
+  {
+    name: "transition-speed",
+    type: "String | Number",
+    default: "undefined",
+  },
 ];
 
 const slots: ISlotsTableData[] = [
@@ -61,6 +71,7 @@ const slots: ISlotsTableData[] = [
     name: "title",
   },
 ];
+const itemVariables: IVariablesTableData[] = [{ name: "transition-speed" }];
 </script>
 
 <template>
@@ -68,7 +79,13 @@ const slots: ISlotsTableData[] = [
     <api-table title="NmorphCollapse" name="collapse" :attributes="attributesData" :events="events" />
   </div>
   <div class="docs-api-table">
-    <api-table title="NmorphCollapseItem" name="collapse-item" :attributes="itemAttributesData" :slots="slots" />
+    <api-table
+      title="NmorphCollapseItem"
+      name="collapse-item"
+      :attributes="itemAttributesData"
+      :slots="slots"
+      :variables="itemVariables"
+    />
   </div>
 </template>
 

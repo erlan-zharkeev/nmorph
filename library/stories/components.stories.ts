@@ -384,10 +384,14 @@ export const Card: Story = {
   args: {
     shadowType: 'outset',
     combinedShadowBorderWidth: 2,
+    fill: true,
+    tag: 'div',
   },
   argTypes: {
     shadowType: select(['inset', 'outset', 'combined', 'not-defined']),
     combinedShadowBorderWidth: number,
+    fill: boolean,
+    tag: text,
   },
   render: render(
     { NmorphCard },

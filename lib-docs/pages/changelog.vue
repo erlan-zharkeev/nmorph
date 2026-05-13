@@ -14,6 +14,21 @@ const knownBugItems: string[] = [];
             <h3>v2.2.19</h3>
             <ul>
               <li>
+                {{ $t("changelog-page.changelog.items.empty-state-component") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.card-padding-prop") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.card-fill-prop") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.card-tag-prop") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.css-variable-prop-overrides") }}
+              </li>
+              <li>
                 {{ $t("changelog-page.changelog.items.context-menu-neutral-hover") }}
               </li>
               <li>

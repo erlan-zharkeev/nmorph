@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { type IAttributesTableData, type IEventsTableData, type ITranslates } from "~/types";
+import {
+  type IAttributesTableData,
+  type IEventsTableData,
+  type ITranslates,
+  type IVariablesTableData,
+} from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
 import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
 
@@ -79,6 +84,11 @@ const attributesData: IAttributesTableData[] = [
     type: "Number",
     default: "auto",
   },
+  {
+    name: "width",
+    type: "String | Number",
+    default: "undefined",
+  },
 ];
 
 const events: IEventsTableData[] = [
@@ -97,6 +107,7 @@ const events: IEventsTableData[] = [
 ];
 
 const translates: ITranslates[] = [{ name: "pickATime" }];
+const variables: IVariablesTableData[] = [{ name: "width" }];
 </script>
 
 <template>
@@ -106,6 +117,7 @@ const translates: ITranslates[] = [{ name: "pickATime" }];
       name="time-picker"
       :attributes="attributesData"
       :events="events"
+      :variables="variables"
       :translates="translates"
     />
   </div>

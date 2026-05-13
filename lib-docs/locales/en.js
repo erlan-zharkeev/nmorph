@@ -225,6 +225,16 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "empty-state-component":
+          "Added NmorphEmpty for empty states, including typed props, slots, docs, and sandbox examples.",
+        "card-padding-prop":
+          "NmorphCard now accepts a cardPadding prop that forwards to the --card-padding CSS variable, with numeric values converted to pixels.",
+        "card-fill-prop":
+          "NmorphCard now fills the available width by default and can fit its content when fill is false.",
+        "card-tag-prop":
+          "NmorphCard now accepts a tag prop so the root element can render as div, article, section, or another HTML tag.",
+        "css-variable-prop-overrides":
+          "Component CSS variables can now be overridden through props across badges, tooltips, form controls, tables, progress, alerts, and related components.",
         "context-menu-neutral-hover":
           "NmorphContextMenu now derives the default option hover background from the base text color instead of the accent color, while custom colored items still use their own color.",
         "tooltip-z-index-stack":
@@ -628,6 +638,7 @@ export default {
         "icon-name": "Name from the icon list",
         target: "Native target attribute",
         disabled: "Disable the link",
+        color: "Overrides the link color",
       },
       slot: {
         default: "Custom content of the link",
@@ -783,6 +794,7 @@ export default {
         "offset-y": "Vertical offset of the badge. Ignored when is-tag is true",
         "offset-x":
           "Horizontal offset of the badge. Ignored when is-tag is true",
+        "dot-size": "Overrides the dot size. Numbers are treated as pixel values",
       },
       slot: {
         default:
@@ -798,8 +810,20 @@ export default {
       "shadow-type": {
         subtitle: "Defines the shadow type for the card.",
       },
+      "card-padding": {
+        subtitle: "Sets the card padding through the same CSS value used by the `--card-padding` variable.",
+      },
+      fill: {
+        subtitle: "Controls whether the card stretches to the available width or fits its content.",
+      },
+      tag: {
+        subtitle: "Changes the HTML tag used for the card root element.",
+      },
       api: {
         "shadow-type": "Defines the visibility of the card's shadow.",
+        "card-padding": "Overrides the card padding. Numbers are treated as pixel values.",
+        fill: "When true, the card takes the available width. Set false to fit the content width.",
+        tag: "HTML tag used for the card root element.",
       },
       slot: {
         header: "Card header",
@@ -807,6 +831,35 @@ export default {
       },
       variables: {
         "card-padding": "Padding for all edges",
+      },
+    },
+    empty: {
+      "basic-usage": {
+        subtitle:
+          "Shows empty states with default content, custom icons, actions, and common or nmorph surfaces.",
+      },
+      api: {
+        title: "Main empty state title.",
+        description: "Secondary empty state message.",
+        "icon-size": "Default icon size. Numbers are treated as pixel values.",
+        "min-height": "Minimum empty state height. Numbers are treated as pixel values.",
+        padding: "Inner empty state padding. Numbers are treated as pixel values.",
+        design: "Visual design of the empty state surface.",
+        "shadow-type": "Nmorph shadow used when design is nmorph.",
+        "hide-icon": "Hides the default icon. The icon slot still renders when provided.",
+        role: "ARIA role applied to the empty state container.",
+        "aria-label": "Accessible label. Falls back to the title when omitted.",
+      },
+      slot: {
+        icon: "Custom icon content.",
+        title: "Custom title content.",
+        description: "Custom description content.",
+        action: "Action area below the message.",
+      },
+      variables: {
+        "nmorph-empty-icon-size": "Default icon width and height.",
+        "nmorph-empty-min-height": "Minimum empty state height.",
+        "nmorph-empty-padding": "Inner empty state padding.",
       },
     },
     image: {
@@ -925,10 +978,15 @@ export default {
         disabled: "Disables the panel",
         block: "Prevents toggling the panel when set to true",
         height: "Sets the title height",
+        "transition-speed":
+          "Overrides the panel open and close transition speed. Numbers are treated as milliseconds",
       },
       slot: {
         default: "Panel content",
         title: "Custom panel title",
+      },
+      variables: {
+        "transition-speed": "Panel content transition speed",
       },
     },
     skeleton: {
@@ -947,6 +1005,7 @@ export default {
         animated: "Enables animation for the skeleton component",
         loading: "Defines whether the skeleton is displayed.",
         rows: "Sets the number of rows in the skeleton.",
+        "loading-gradient": "Overrides the skeleton loading gradient",
       },
       slot: {
         template: "Slot for custom skeleton structure during loading.",
@@ -1000,6 +1059,9 @@ export default {
         type: "Specifies the type of progress indicator",
         color: "Sets the color of the progress indicator",
         percentage: "Sets the percentage of progress",
+        height: "Overrides the linear progress bar height. Numbers are treated as pixel values",
+        "width-transition": "Overrides the width transition used by the linear progress bar",
+        "indeterminate-animation": "Overrides the animation used by indeterminate progress",
         "value-inside": "Displays the progress text inside the bar",
         "value-right-side": "Shows or hides the percentage text on the right",
         indeterminate: "Enables the indeterminate progress animation",
@@ -1035,6 +1097,7 @@ export default {
         "initial-date": "Sets the initial date displayed in the calendar",
         "model-value": "Represents the selected date(s) in the calendar",
         type: "Defines the selection type in the calendar",
+        "cell-height": "Overrides the height of each date cell. Numbers are treated as pixel values",
         range:
           "Enables range selection mode in the calendar, allowing date range selection in the calendar. Not the selected range, but the displayed calendar range.",
       },
@@ -1092,6 +1155,10 @@ export default {
           "Defines the overlay z-index. Uses the shared automatic z-index stack when omitted",
         "show-trigger":
           "Defines whether the default preview trigger is rendered",
+        width: "Overrides the preview trigger width. Numbers are treated as pixel values",
+        height: "Overrides the preview trigger height. Numbers are treated as pixel values",
+        "navigation-button-margin":
+          "Overrides the distance between gallery navigation buttons and the viewport edge",
       },
       slot: {
         loading: "Slot displayed while the preview image is loading",
@@ -1100,6 +1167,8 @@ export default {
       variables: {
         width: "Defines the width of the image preview.",
         height: "Defines the height of the image preview.",
+        "nmorph-image-preview-btn-margin":
+          "Distance between gallery navigation buttons and the viewport edge",
       },
       events: {
         "update:model-value": "Event for intercepting two-way binding",
@@ -1154,11 +1223,19 @@ export default {
         "virtual-row-height": "Sets the expected height of one virtual table row",
         "virtual-overscan":
           "Sets how many extra rows are rendered before and after the visible area",
+        "virtual-dynamic-height":
+          "Allows virtual table rows to measure their own height dynamically",
+        "border-color": "Overrides the table border color",
+        "cell-height": "Overrides the data cell height. Numbers are treated as pixel values",
+        "row-hover-background":
+          "Overrides the background used for hovered and keyboard-active rows",
       },
       slot: {},
       variables: {
         "border-color": "Sets the table border color",
         "table-cell-height": "Defines the height of table cells",
+        "table-background-row-hover":
+          "Defines the background used for hovered and keyboard-active rows",
       },
     },
     "table-column": {
@@ -1204,6 +1281,10 @@ export default {
           "Allows manual control over the tooltip's coordinates",
         "z-index":
           "Overrides the shared automatic z-index used while the tooltip is visible",
+        width: "Overrides the tooltip content width. Numbers are treated as pixel values",
+        "max-width":
+          "Overrides the tooltip content max width. Numbers are treated as pixel values",
+        height: "Overrides the tooltip content height. Numbers are treated as pixel values",
       },
       slot: {},
       variables: {
@@ -1246,13 +1327,17 @@ export default {
         html: "Allows HTML content in the alert body. Use with caution to avoid XSS vulnerabilities",
         "close-icon-position":
           "Controls close icon alignment inside the alert",
+        "background-color": "Overrides the alert background color",
       },
       slot: {
         icon: "Slot for customizing the icon displayed in the alert",
         title: "Slot for customizing the alert's title",
         default: "Slot for customizing the main content of the alert",
       },
-      variables: {},
+      variables: {
+        "background-color": "Alert background color",
+        "nmorph-alert-close-align": "Close icon align-self value",
+      },
       events: {
         close: "Event triggered when the alert is closed by the user",
       },
@@ -1273,6 +1358,10 @@ export default {
         type: "Defines the callout type",
         title: "Title displayed in the callout",
         content: "Content displayed in the callout",
+        color: "Overrides the callout accent color",
+      },
+      variables: {
+        "callout-color": "Callout accent color",
       },
     },
     dialog: {
@@ -1691,6 +1780,9 @@ export default {
         loading: "Boolean value that shows a loading indicator on the switch",
         "active-value": "Value when the switch is on",
         "inactive-value": "Value when the switch is off",
+        width: "Overrides the switch width. Numbers are treated as pixel values",
+        offset: "Overrides the thumb offset. Numbers are treated as pixel values",
+        "thumb-height": "Overrides the switch thumb size. Numbers are treated as pixel values",
       },
       slot: {
         "bg-on": "Slot for customizing the background when the switch is on",
@@ -1699,6 +1791,7 @@ export default {
         "thumb-off": "Slot for customizing the thumb when the switch is off",
       },
       variables: {
+        width: "Defines the width of the switch",
         height: "Defines the height of the switch",
         offset: "Specifies the offset of the switch thumb",
         "thumb-height": "Defines the height of the switch thumb",
@@ -1913,9 +2006,17 @@ export default {
         disabled: "Disables the component",
         fill: "Makes the component occupy the full width of its container",
         options: "List of options to render",
+        "track-padding": "Overrides the inner padding around items. Numbers are treated as pixel values",
+        "item-size": "Overrides each item size. Numbers are treated as pixel values",
+        "item-font-size": "Overrides each item font size",
       },
       slot: {
         default: "Slot for NmorphSelectButtonItem elements",
+      },
+      variables: {
+        "track-padding": "Inner padding around items",
+        "item-size": "Select button item size",
+        "item-font-size": "Select button item font size",
       },
       events: {
         "update:model-value": "Triggered when the selected value changes",
@@ -1961,6 +2062,7 @@ export default {
         open: "Boolean value to control the visibility of the list",
         "z-index":
           "Defines the select dropdown z-index. Uses the shared automatic z-index stack when omitted",
+        width: "Overrides the base select width. Numbers are treated as pixel values",
         virtual: "Enables virtual rendering for large option lists",
         "virtual-item-height": "Sets the expected height of one virtual option",
         "virtual-max-height": "Sets the maximum height of the virtual options list",
@@ -1987,6 +2089,8 @@ export default {
         height: "Sets the height of the select option",
         disabled:
           "Boolean value indicating whether the option is disabled and cannot be selected",
+        "hover-background": "Overrides the option hover background",
+        "hover-color": "Overrides the option hover text and icon color",
       },
       slot: {
         default: "Slot for customizing the displayed content for this option",
@@ -2018,9 +2122,14 @@ export default {
         step: "Step for incrementing or decrementing the value",
         "show-tooltip":
           "Boolean value to control the visibility of the tooltip",
+        "thumb-width": "Overrides the slider thumb width in pixels",
+        "slider-height": "Overrides the slider hit area height. Numbers are treated as pixel values",
+        "value-fixed-container-height":
+          "Overrides the visual track container height. Numbers are treated as pixel values",
       },
       slot: {},
       variables: {
+        "nmorph-slider-thumb-width": "Slider thumb width",
         "slider-height": "Defines the height of the slider",
         "value-fixed-container-height": "Sets the height of the container",
       },
@@ -2049,10 +2158,14 @@ export default {
           "Text for separating the start and end dates in range selection mode",
         "z-index":
           "Defines the date picker dropdown z-index. Uses the shared automatic z-index stack when omitted",
+        width: "Overrides the date picker width. Numbers are treated as pixel values",
+        "calendar-cell-height":
+          "Overrides the calendar date cell height. Numbers are treated as pixel values",
       },
       slot: {},
       variables: {
         width: "Defines the width of the date picker component",
+        "date-picker-calendar-cell-height": "Date picker calendar cell height",
       },
       events: {
         "update:model-value":
@@ -2088,6 +2201,10 @@ export default {
         "max-time": "Maximum selectable time",
         clearable: "Shows the clear action when a value is selected",
         "z-index": "Dropdown z-index",
+        width: "Overrides the time picker width. Numbers are treated as pixel values",
+      },
+      variables: {
+        width: "Defines the width of the time picker",
       },
       events: {
         "update:model-value": "Event triggered when the selected time changes",

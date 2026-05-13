@@ -114,6 +114,11 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "false",
   },
+  {
+    name: "width",
+    type: "Number | String",
+    default: "undefined",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "default" }];
@@ -137,6 +142,16 @@ const selectOptionAttr = [
     name: "disabled",
     type: "Boolean",
     default: "false",
+  },
+  {
+    name: "hover-background",
+    type: "String",
+    default: "undefined",
+  },
+  {
+    name: "hover-color",
+    type: "String",
+    default: "undefined",
   },
 ];
 const slotSelectOptionData: ISlotsTableData[] = [{ name: "default" }];

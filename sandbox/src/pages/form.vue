@@ -158,7 +158,7 @@ watch(runtimeAccentColor, (accent) => {
 
     <SandboxSection title="NmorphSelect">
       <div class="grid">
-        <NmorphSelect v-model="selectValue" :options="selectOptions" no-element-placeholder="Select status" />
+        <NmorphSelect v-model="selectValue" :options="selectOptions" no-element-placeholder="Select status" :width="260" />
         <NmorphSelect model-value="review" :options="selectOptions" fill />
         <NmorphSelect model-value="teams" :options="longSelectOptions" options-width="auto" />
         <NmorphSelect
@@ -171,7 +171,12 @@ watch(runtimeAccentColor, (accent) => {
         <NmorphSelect v-model="optionSelectValue" height="thin">
           <NmorphSelectOption value="small" label="Small" />
           <NmorphSelectOption value="medium" label="Medium" />
-          <NmorphSelectOption value="large" label="Large" />
+          <NmorphSelectOption
+            value="large"
+            label="Large"
+            hover-background="color-mix(in srgb, var(--nmorph-accent-color) 18%, transparent)"
+            hover-color="var(--nmorph-accent-color)"
+          />
         </NmorphSelect>
         <NmorphSelect model-value="" :options="selectOptions" loading />
         <NmorphSelect model-value="draft" :options="selectOptions" disabled />
@@ -213,7 +218,7 @@ watch(runtimeAccentColor, (accent) => {
           <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
           <NmorphSelectButtonItem value="maybe" disabled>Maybe</NmorphSelectButtonItem>
         </NmorphSelectButton>
-        <NmorphSelectButton model-value="compact" height="thin">
+        <NmorphSelectButton model-value="compact" height="thin" :track-padding="3" :item-size="30" item-font-size="12px">
           <NmorphSelectButtonItem value="compact">Compact</NmorphSelectButtonItem>
           <NmorphSelectButtonItem value="wide">Wide</NmorphSelectButtonItem>
         </NmorphSelectButton>
@@ -286,7 +291,7 @@ watch(runtimeAccentColor, (accent) => {
           <template #bg-on>ON</template>
           <template #bg-off>OFF</template>
         </NmorphSwitch>
-        <NmorphSwitch v-model="loadingSwitchValue" loading />
+        <NmorphSwitch v-model="loadingSwitchValue" loading :width="52" :height="30" :offset="4" :thumb-height="22" />
         <NmorphSwitch model-value="disabled" active-value="enabled" inactive-value="disabled" disabled />
       </div>
       <p class="hint">value: {{ switchValue }}</p>
@@ -295,7 +300,16 @@ watch(runtimeAccentColor, (accent) => {
     <SandboxSection title="NmorphSlider">
       <div class="stack">
         <NmorphSlider v-model="sliderValue" />
-        <NmorphSlider v-model="steppedSliderValue" :min="20" :max="100" :step="10" :show-tooltip="false" />
+        <NmorphSlider
+          v-model="steppedSliderValue"
+          :min="20"
+          :max="100"
+          :step="10"
+          :show-tooltip="false"
+          :thumb-width="60"
+          :slider-height="28"
+          :value-fixed-container-height="12"
+        />
         <NmorphSlider :model-value="30" disabled />
       </div>
       <p class="hint">values: {{ sliderValue }} / {{ steppedSliderValue }}</p>
@@ -303,7 +317,7 @@ watch(runtimeAccentColor, (accent) => {
 
     <SandboxSection title="NmorphDatePicker">
       <div class="row">
-        <NmorphDatePicker v-model="dateValue" placeholder="Date" />
+        <NmorphDatePicker v-model="dateValue" placeholder="Date" :width="260" :calendar-cell-height="40" />
         <NmorphDatePicker v-model="datesValue" type="dates" placeholder="Dates" height="thin" />
         <NmorphDatePicker v-model="rangeValue" type="daterange" placeholder="Range" height="thick" />
         <NmorphDatePicker :model-value="dateValue" disabled />
@@ -312,7 +326,7 @@ watch(runtimeAccentColor, (accent) => {
 
     <SandboxSection title="NmorphTimePicker">
       <div class="row">
-        <NmorphTimePicker v-model="timeValue" placeholder="Time" />
+        <NmorphTimePicker v-model="timeValue" placeholder="Time" :width="180" />
         <NmorphTimePicker v-model="preciseTimeValue" show-seconds :minute-step="15" :second-step="10" height="thick" />
         <NmorphTimePicker model-value="12:00" min-time="09:00" max-time="18:00" height="thin" />
         <NmorphTimePicker model-value="08:00" disabled />

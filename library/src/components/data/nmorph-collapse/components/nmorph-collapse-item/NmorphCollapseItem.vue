@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 import {
   INmorphCollapseItemProps,
@@ -11,6 +12,7 @@ import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
 interface INmorphProps extends INmorphCollapseItemProps {
   height?: keyof typeof NmorphComponentHeight;
   block?: boolean;
+  transitionSpeed?: number | string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -18,6 +20,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   title: '',
   disabled: false,
   block: false,
+  transitionSpeed: undefined,
 });
 
 interface INmorphEmit {
@@ -42,6 +45,10 @@ const titleModifiers = computed(() =>
     nmorph: [NmorphComponentHeight[props.height]],
   })
 );
+const getCssDuration = (value?: number | string) => (typeof value === 'number' ? `${value}ms` : value);
+const styles = computed<CSSProperties>(() => ({
+  ...(props.transitionSpeed !== undefined && { '--transition-speed': getCssDuration(props.transitionSpeed) }),
+}));
 
 const collapseData = inject<NmorphCollapseDataInjectionType>('collapse-data');
 const updateModel = inject<NmorphCollapseUpdateModelInjectionType>('update-model');
@@ -97,7 +104,7 @@ watch(isOpen, updateContentHeightAfterRender);
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="styles">
     <div class="nmorph-collapse-item__title" :class="titleModifiers" @click.stop="clickHandler">
       <slot name="title">
         {{ props.title }}

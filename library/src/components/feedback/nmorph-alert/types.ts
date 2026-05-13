@@ -16,4 +16,5 @@ export interface INmorphAlertProps {
   bordered?: boolean;
   html?: string;
   closeIconPosition?: string;
+  backgroundColor?: string;
 }

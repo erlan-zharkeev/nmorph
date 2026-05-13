@@ -215,6 +215,16 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "empty-state-component":
+          "Added NmorphEmpty for empty states, including typed props, slots, docs, and sandbox examples.",
+        "card-padding-prop":
+          "NmorphCard now accepts a cardPadding prop that forwards to the --card-padding CSS variable, with numeric values converted to pixels.",
+        "card-fill-prop":
+          "NmorphCard now fills the available width by default and can fit its content when fill is false.",
+        "card-tag-prop":
+          "NmorphCard now accepts a tag prop so the root element can render as div, article, section, or another HTML tag.",
+        "css-variable-prop-overrides":
+          "CSS variable overrides can now be passed through props for badges, tooltips, form controls, tables, progress, alerts, and related components.",
         "context-menu-neutral-hover":
           "NmorphContextMenu 现在会从基础 text color 推导默认选项 hover background，而不是使用 accent color；自定义颜色的选项仍使用自己的颜色。",
         "tooltip-z-index-stack":
@@ -611,6 +621,7 @@ export default {
         "icon-name": "图标列表中的名称",
         target: "原生 target 属性",
         disabled: "禁用链接",
+        color: "Overrides the link color",
       },
       slot: {
         default: "链接的自定义内容",
@@ -760,6 +771,7 @@ export default {
         "offset-y": "Vertical offset of the badge. Ignored when is-tag is true",
         "offset-x":
           "Horizontal offset of the badge. Ignored when is-tag is true",
+        "dot-size": "Overrides the dot size. Numbers are treated as pixel values",
       },
       slot: {
         default:
@@ -775,8 +787,20 @@ export default {
       "shadow-type": {
         subtitle: "Defines the shadow type for the card.",
       },
+      "card-padding": {
+        subtitle: "Sets the card padding through the same CSS value used by the `--card-padding` variable.",
+      },
+      fill: {
+        subtitle: "Controls whether the card stretches to the available width or fits its content.",
+      },
+      tag: {
+        subtitle: "Changes the HTML tag used for the card root element.",
+      },
       api: {
         "shadow-type": "Defines the visibility of the card's shadow.",
+        "card-padding": "Overrides the card padding. Numbers are treated as pixel values.",
+        fill: "When true, the card takes the available width. Set false to fit the content width.",
+        tag: "HTML tag used for the card root element.",
       },
       slot: {
         header: "Card header",
@@ -784,6 +808,35 @@ export default {
       },
       variables: {
         "card-padding": "Padding for all edges",
+      },
+    },
+    empty: {
+      "basic-usage": {
+        subtitle:
+          "Shows empty states with default content, custom icons, actions, and common or nmorph surfaces.",
+      },
+      api: {
+        title: "Main empty state title.",
+        description: "Secondary empty state message.",
+        "icon-size": "Default icon size. Numbers are treated as pixel values.",
+        "min-height": "Minimum empty state height. Numbers are treated as pixel values.",
+        padding: "Inner empty state padding. Numbers are treated as pixel values.",
+        design: "Visual design of the empty state surface.",
+        "shadow-type": "Nmorph shadow used when design is nmorph.",
+        "hide-icon": "Hides the default icon. The icon slot still renders when provided.",
+        role: "ARIA role applied to the empty state container.",
+        "aria-label": "Accessible label. Falls back to the title when omitted.",
+      },
+      slot: {
+        icon: "Custom icon content.",
+        title: "Custom title content.",
+        description: "Custom description content.",
+        action: "Action area below the message.",
+      },
+      variables: {
+        "nmorph-empty-icon-size": "Default icon width and height.",
+        "nmorph-empty-min-height": "Minimum empty state height.",
+        "nmorph-empty-padding": "Inner empty state padding.",
       },
     },
     image: {
@@ -898,6 +951,11 @@ export default {
         disabled: "禁用面板",
         block: "设置为 true 时禁止切换面板",
         height: "设置标题高度",
+        "transition-speed":
+          "Overrides the panel open and close transition speed. Numbers are treated as milliseconds",
+      },
+      variables: {
+        "transition-speed": "Panel content transition speed",
       },
       slot: {
         default: "面板内容",
@@ -918,6 +976,7 @@ export default {
         animated: "启用骨架组件的动画",
         loading: "定义骨架是否显示。",
         rows: "设置骨架中的行数。",
+        "loading-gradient": "Overrides the skeleton loading gradient",
       },
       slot: {
         template: "加载期间自定义骨架结构的插槽。",
@@ -965,6 +1024,9 @@ export default {
         type: "指定进度指示器的类型",
         color: "设置进度指示器的颜色",
         percentage: "设置进度的百分比",
+        height: "Overrides the linear progress bar height. Numbers are treated as pixel values",
+        "width-transition": "Overrides the width transition used by the linear progress bar",
+        "indeterminate-animation": "Overrides the animation used by indeterminate progress",
         "value-inside": "在进度条内显示进度文本",
         "value-right-side": "显示或隐藏右侧的百分比文本",
         indeterminate: "启用不确定进度动画",
@@ -996,6 +1058,7 @@ export default {
         "initial-date": "设置日历中显示的初始日期",
         "model-value": "表示日历中选定的日期",
         type: "定义日历中的选择类型",
+        "cell-height": "Overrides the height of each date cell. Numbers are treated as pixel values",
         range:
           "启用日历中的范围选择模式，允许选择日历中的日期范围。不是选定的范围，而是显示的日历范围。",
       },
@@ -1048,6 +1111,10 @@ export default {
         "max-scale-level": "定义图像的最大缩放级别",
         "z-index": "定义覆盖层的 z-index。未传入时使用共享的自动 z-index 栈",
         "show-trigger": "定义是否渲染默认的预览触发器",
+        width: "Overrides the preview trigger width. Numbers are treated as pixel values",
+        height: "Overrides the preview trigger height. Numbers are treated as pixel values",
+        "navigation-button-margin":
+          "Overrides the distance between gallery navigation buttons and the viewport edge",
       },
       slot: {
         loading: "预览图像加载时显示的插槽",
@@ -1056,6 +1123,8 @@ export default {
       variables: {
         width: "定义图像预览的宽度。",
         height: "定义图像预览的高度。",
+        "nmorph-image-preview-btn-margin":
+          "Distance between gallery navigation buttons and the viewport edge",
       },
       events: {
         "update:model-value": "拦截双向绑定的事件",
@@ -1104,11 +1173,19 @@ export default {
         "virtual-height": "设置虚拟表格行的滚动视口高度",
         "virtual-row-height": "设置单个虚拟表格行的预期高度",
         "virtual-overscan": "设置可见区域前后额外渲染的行数",
+        "virtual-dynamic-height":
+          "Allows virtual table rows to measure their own height dynamically",
+        "border-color": "Overrides the table border color",
+        "cell-height": "Overrides the data cell height. Numbers are treated as pixel values",
+        "row-hover-background":
+          "Overrides the background used for hovered and keyboard-active rows",
       },
       slot: {},
       variables: {
         "border-color": "设置表格的边框颜色",
         "table-cell-height": "定义表格单元格的高度",
+        "table-background-row-hover":
+          "Defines the background used for hovered and keyboard-active rows",
       },
     },
     "table-column": {
@@ -1149,6 +1226,10 @@ export default {
         "force-show": "强制显示提示框的布尔值",
         "force-coordinate": "允许手动控制提示框的坐标",
         "z-index": "覆盖提示框可见时使用的共享自动 z-index",
+        width: "Overrides the tooltip content width. Numbers are treated as pixel values",
+        "max-width":
+          "Overrides the tooltip content max width. Numbers are treated as pixel values",
+        height: "Overrides the tooltip content height. Numbers are treated as pixel values",
       },
       slot: {},
       variables: {
@@ -1185,13 +1266,17 @@ export default {
         bordered: "为警告添加边框以突出显示",
         html: "允许在警告的正文中使用 HTML 内容。使用时请谨慎，以避免 XSS 漏洞",
         "close-icon-position": "控制 alert 内关闭图标的对齐方式",
+        "background-color": "Overrides the alert background color",
       },
       slot: {
         icon: "自定义警告中显示图标的插槽",
         title: "自定义警告标题的插槽",
         default: "自定义警告主要内容的插槽",
       },
-      variables: {},
+      variables: {
+        "background-color": "Alert background color",
+        "nmorph-alert-close-align": "Close icon align-self value",
+      },
       events: {
         close: "当用户关闭警告时触发的事件",
       },
@@ -1212,6 +1297,10 @@ export default {
         type: "定义 callout 类型",
         title: "在 callout 中显示的标题",
         content: "在 callout 中显示的内容",
+        color: "Overrides the callout accent color",
+      },
+      variables: {
+        "callout-color": "Callout accent color",
       },
     },
     dialog: {
@@ -1583,6 +1672,9 @@ export default {
         loading: "布尔值，显示开关上的加载指示器",
         "active-value": "开关打开时的值",
         "inactive-value": "开关关闭时的值",
+        width: "Overrides the switch width. Numbers are treated as pixel values",
+        offset: "Overrides the thumb offset. Numbers are treated as pixel values",
+        "thumb-height": "Overrides the switch thumb size. Numbers are treated as pixel values",
       },
       slot: {
         "bg-on": "插槽，用于自定义开关打开时的背景",
@@ -1591,6 +1683,7 @@ export default {
         "thumb-off": "插槽，用于自定义开关关闭时的按钮",
       },
       variables: {
+        width: "Defines the width of the switch",
         height: "定义开关的高度",
         offset: "指定开关按钮的偏移量",
         "thumb-height": "定义开关按钮的高度",
@@ -1796,9 +1889,17 @@ export default {
         disabled: "禁用组件",
         fill: "使组件占满容器宽度",
         options: "渲染的选项列表",
+        "track-padding": "Overrides the inner padding around items. Numbers are treated as pixel values",
+        "item-size": "Overrides each item size. Numbers are treated as pixel values",
+        "item-font-size": "Overrides each item font size",
       },
       slot: {
         default: "用于放置 NmorphSelectButtonItem 元素的插槽",
+      },
+      variables: {
+        "track-padding": "Inner padding around items",
+        "item-size": "Select button item size",
+        "item-font-size": "Select button item font size",
       },
       events: {
         "update:model-value": "当选中值改变时触发",
@@ -1843,6 +1944,7 @@ export default {
         open: "控制列表可见性的布尔值",
         "z-index":
           "定义 select 下拉列表的 z-index。未传入时使用共享的自动 z-index 栈",
+        width: "Overrides the base select width. Numbers are treated as pixel values",
         virtual: "为大量选项列表启用虚拟渲染",
         "virtual-item-height": "设置单个虚拟选项的预期高度",
         "virtual-max-height": "设置虚拟选项列表的最大高度",
@@ -1866,6 +1968,8 @@ export default {
         label: "定义显示在下拉列表中的选项标签",
         height: "设置选项的高度",
         disabled: "布尔值，指示选项是否禁用，无法选择",
+        "hover-background": "Overrides the option hover background",
+        "hover-color": "Overrides the option hover text and icon color",
       },
       slot: {
         default: "用于自定义此选项显示内容的插槽",
@@ -1895,9 +1999,14 @@ export default {
         min: "滑块的最小值",
         step: "用于增加或减少值的步长",
         "show-tooltip": "布尔值，控制提示框的可见性",
+        "thumb-width": "Overrides the slider thumb width in pixels",
+        "slider-height": "Overrides the slider hit area height. Numbers are treated as pixel values",
+        "value-fixed-container-height":
+          "Overrides the visual track container height. Numbers are treated as pixel values",
       },
       slot: {},
       variables: {
+        "nmorph-slider-thumb-width": "Slider thumb width",
         "slider-height": "定义滑块的高度",
         "value-fixed-container-height": "设置容器的高度",
       },
@@ -1925,10 +2034,14 @@ export default {
         "text-separator": "范围选择模式中用于分隔开始和结束日期的文本",
         "z-index":
           "定义日期选择下拉层的 z-index。未传入时使用共享的自动 z-index 栈",
+        width: "Overrides the date picker width. Numbers are treated as pixel values",
+        "calendar-cell-height":
+          "Overrides the calendar date cell height. Numbers are treated as pixel values",
       },
       slot: {},
       variables: {
         width: "定义日期选择组件的宽度",
+        "date-picker-calendar-cell-height": "Date picker calendar cell height",
       },
       events: {
         "update:model-value": "当选择的日期或日期范围发生变化时触发的事件",
@@ -1963,6 +2076,10 @@ export default {
         "max-time": "最大可选时间",
         clearable: "选择值后显示清除按钮",
         "z-index": "下拉层级 z-index",
+        width: "Overrides the time picker width. Numbers are treated as pixel values",
+      },
+      variables: {
+        width: "Defines the width of the time picker",
       },
       events: {
         "update:model-value": "选中时间变化时触发",

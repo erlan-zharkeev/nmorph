@@ -2,6 +2,7 @@
 import { INmorphCommonInputProps } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref, watch, provide } from 'vue';
+import type { CSSProperties } from 'vue';
 import {
   NmorphSelectButtonChangeHandlerInjectionType,
   NmorphSelectButtonSelectedValueInjectionType,
@@ -13,6 +14,9 @@ interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: string;
   options?: INmorphSelectButtonOption[];
   fill?: boolean;
+  trackPadding?: number | string;
+  itemSize?: number | string;
+  itemFontSize?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -21,6 +25,9 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
   options: () => [],
   fill: false,
+  trackPadding: undefined,
+  itemSize: undefined,
+  itemFontSize: undefined,
 });
 
 const emit = defineEmits<{
@@ -42,6 +49,13 @@ const modifiers = computed(() =>
   })
 );
 
+const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const styles = computed<CSSProperties>(() => ({
+  ...(props.trackPadding !== undefined && { '--track-padding': getCssSize(props.trackPadding) }),
+  ...(props.itemSize !== undefined && { '--item-size': getCssSize(props.itemSize) }),
+  ...(props.itemFontSize !== undefined && { '--item-font-size': props.itemFontSize }),
+}));
+
 const changeHandler = (value: string) => {
   if (props.disabled) return;
   initialValue.value = value;
@@ -53,7 +67,7 @@ provide<NmorphSelectButtonChangeHandlerInjectionType>('select-button-change-hand
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="styles">
     <NmorphSelectButtonItem
       v-for="option in options"
       :key="option.value"

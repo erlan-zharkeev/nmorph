@@ -32,6 +32,21 @@ const attributesData: IAttributesTableData[] = [
     type: "Number",
     default: "-",
   },
+  {
+    name: "width",
+    type: "String | Number",
+    default: "undefined",
+  },
+  {
+    name: "max-width",
+    type: "String | Number",
+    default: "undefined",
+  },
+  {
+    name: "height",
+    type: "String | Number",
+    default: "undefined",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [];

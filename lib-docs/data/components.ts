@@ -9,6 +9,7 @@ export const componentGroups = [
       "NmorphAvatar",
       "NmorphBadge",
       "NmorphCard",
+      "NmorphEmpty",
       "NmorphImage",
       "NmorphTagList",
       "NmorphTagItem",

@@ -54,11 +54,27 @@ const tableAttributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "false",
   },
+  {
+    name: "border-color",
+    type: "String",
+    default: "undefined",
+  },
+  {
+    name: "cell-height",
+    type: "Number | String",
+    default: "undefined",
+  },
+  {
+    name: "row-hover-background",
+    type: "String",
+    default: "undefined",
+  },
 ];
 
 const tableVariables: IVariablesTableData[] = [
   { name: "border-color" },
   { name: "table-cell-height" },
+  { name: "table-background-row-hover" },
 ];
 
 const tableColumnAttributes: IAttributesTableData[] = [

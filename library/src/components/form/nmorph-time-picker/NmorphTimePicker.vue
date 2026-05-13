@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { computed, ref, watch } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useModifiers } from '@/utils';
 import { NmorphDropdown, NmorphIcon, NmorphIconCircleClose, NmorphIconClock } from '@/components';
@@ -24,6 +25,7 @@ interface INmorphProps extends INmorphCommonInputProps {
   maxTime?: string;
   clearable?: boolean;
   zIndex?: number;
+  width?: number | string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -39,6 +41,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   maxTime: '',
   clearable: true,
   zIndex: undefined,
+  width: undefined,
 });
 
 const emit = defineEmits<{
@@ -174,11 +177,16 @@ const modifiers = computed(() =>
   })
 );
 
+const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const styles = computed<CSSProperties>(() => ({
+  ...(props.width !== undefined && { '--width': getCssSize(props.width) }),
+}));
+
 defineExpose({ inputDOMRef });
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="styles">
     <div
       ref="inputDOMRef"
       class="nmorph-time-picker__input"

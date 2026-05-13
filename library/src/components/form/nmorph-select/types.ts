@@ -10,4 +10,6 @@ export interface INmorphSelectOption extends INmorphCommonInputProps {
   value: string;
   label: string;
   focused?: boolean;
+  hoverBackground?: string;
+  hoverColor?: string;
 }

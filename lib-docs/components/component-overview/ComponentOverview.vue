@@ -10,6 +10,7 @@ import scrollOverview from "~/lib-overview/scroll";
 import avatarOverview from "~/lib-overview/avatar";
 import badgeOverview from "~/lib-overview/badge";
 import cardOverview from "~/lib-overview/card";
+import emptyOverview from "~/lib-overview/empty";
 import imageOverview from "~/lib-overview/image";
 import tagListOverview from "~/lib-overview/tag-list";
 import tagItemOverview from "~/lib-overview/tag-item";
@@ -64,6 +65,7 @@ const overviewComponentsByName: Record<string, unknown[]> = {
   avatar: avatarOverview,
   badge: badgeOverview,
   card: cardOverview,
+  empty: emptyOverview,
   image: imageOverview,
   "tag-list": tagListOverview,
   "tag-item": tagItemOverview,

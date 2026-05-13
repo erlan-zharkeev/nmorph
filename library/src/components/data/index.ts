@@ -11,6 +11,7 @@ export { default as NmorphCarouselItem } from './nmorph-carousel/components/nmor
 export { default as NmorphCollapse } from './nmorph-collapse/NmorphCollapse.vue';
 export { default as NmorphCollapseItem } from './nmorph-collapse/components/nmorph-collapse-item/NmorphCollapseItem.vue';
 export * from './nmorph-collapse/types';
+export { default as NmorphEmpty } from './nmorph-empty/NmorphEmpty.vue';
 export { default as NmorphImage } from './nmorph-image/NmorphImage.vue';
 export { default as NmorphImagePreview } from './nmorph-image-preview/NmorphImagePreview.vue';
 export * from './nmorph-image-preview/types';

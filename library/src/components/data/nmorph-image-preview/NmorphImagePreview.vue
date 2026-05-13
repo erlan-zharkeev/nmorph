@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { ComputedRef, computed, ref, watch } from 'vue';
+import type { CSSProperties } from 'vue';
 import {
   NmorphImage,
   NmorphButton,
@@ -26,6 +27,9 @@ interface INmorphProps {
   maxScaleLevel?: number;
   zIndex?: number;
   showTrigger?: boolean;
+  width?: number | string;
+  height?: number | string;
+  navigationButtonMargin?: number | string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -37,6 +41,9 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   maxScaleLevel: 4,
   zIndex: undefined,
   showTrigger: true,
+  width: undefined,
+  height: undefined,
+  navigationButtonMargin: undefined,
 });
 
 const open = ref(props.modelValue);
@@ -157,10 +164,20 @@ const actions: INmorphAction[] = [
 const emit = defineEmits<INmorphEmit>();
 
 const multipleSources = computed(() => Array.isArray(props.src) && props.src.length > 0);
+const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+const triggerStyle = computed<CSSProperties>(() => ({
+  ...(props.width !== undefined && { '--width': getCssSize(props.width) }),
+  ...(props.height !== undefined && { '--height': getCssSize(props.height) }),
+}));
+const portalStyle = computed<CSSProperties>(() => ({
+  ...(props.navigationButtonMargin !== undefined && {
+    '--nmorph-image-preview-btn-margin': getCssSize(props.navigationButtonMargin),
+  }),
+}));
 </script>
 
 <template>
-  <div v-if="props.showTrigger" :class="modifiers">
+  <div v-if="props.showTrigger" :class="modifiers" :style="triggerStyle">
     <div class="nmorph-image-preview__trigger" @click="clickHandler">
       <NmorphImage :src="triggerSource" :alt="props.alt" fit="cover" :frame-border="0">
         <template v-if="$slots.loading" #loading>
@@ -173,7 +190,7 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
     </div>
   </div>
   <Teleport to="body">
-    <div class="nmorph-image-preview__portal" :class="modifiers">
+    <div class="nmorph-image-preview__portal" :class="modifiers" :style="portalStyle">
       <NmorphOverlay
         :show="open"
         :z-index="props.zIndex"

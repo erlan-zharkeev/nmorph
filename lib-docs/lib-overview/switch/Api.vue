@@ -42,6 +42,26 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean | String | Number",
     default: "false",
   },
+  {
+    name: "width",
+    type: "String | Number",
+    default: "undefined",
+  },
+  {
+    name: "height",
+    type: "String | Number",
+    default: "undefined",
+  },
+  {
+    name: "offset",
+    type: "String | Number",
+    default: "undefined",
+  },
+  {
+    name: "thumb-height",
+    type: "String | Number",
+    default: "undefined",
+  },
 ];
 const slotData: ISlotsTableData[] = [
   { name: "bg-on" },
@@ -50,6 +70,7 @@ const slotData: ISlotsTableData[] = [
   { name: "thumb-off" },
 ];
 const variables: IVariablesTableData[] = [
+  { name: "width" },
   { name: "height" },
   { name: "offset" },
   { name: "thumb-height" },

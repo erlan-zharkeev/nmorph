@@ -57,6 +57,11 @@ const attributesData: IAttributesTableData[] = [
     type: "Number",
     default: "0",
   },
+  {
+    name: "dot-size",
+    type: "String | Number",
+    default: "undefined",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "default" }, { name: "value" }];
