@@ -69,6 +69,9 @@ export default defineNuxtConfig({
       exclude: ["@nmorph/nmorph-ui-kit"],
     },
     resolve: {
+      alias: {
+        "@vue/devtools-api": "vue-devtools-stub",
+      },
       dedupe: [
         "vue",
         "vue-i18n",

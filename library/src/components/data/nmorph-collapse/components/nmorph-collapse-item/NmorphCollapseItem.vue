@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, onMounted, ref, watch } from 'vue';
+import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import {
   INmorphCollapseItemProps,
@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'basic',
   title: '',
   disabled: false,
-  block: true,
+  block: false,
 });
 
 interface INmorphEmit {
@@ -29,7 +29,11 @@ const isOpen = ref(false);
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-collapse-item': [`${props.disabled && 'disabled'}`, `${isOpen.value && 'is-open'}`],
+    'nmorph-collapse-item': [
+      `${props.disabled && 'disabled'}`,
+      `${props.block && 'block'}`,
+      `${isOpen.value && 'is-open'}`,
+    ],
   })
 );
 
@@ -45,44 +49,56 @@ const updateModel = inject<NmorphCollapseUpdateModelInjectionType>('update-model
 const collapseItemDOMElContent = ref<NmorphDomElementType>(null);
 
 const contentHeight = ref(0);
+let resizeObserver: ResizeObserver | null = null;
+
+const isValueOpen = (value: NmorphCollapseDataInjectionType['value'] | undefined) => {
+  if (Array.isArray(value)) return value.includes(props.name);
+  return value === props.name;
+};
+
+const updateContentHeight = () => {
+  contentHeight.value =
+    isOpen.value && collapseItemDOMElContent.value ? collapseItemDOMElContent.value.scrollHeight : 0;
+};
+
+const updateContentHeightAfterRender = () => nextTick(updateContentHeight);
 
 const clickHandler = () => {
-  if (props.block) return;
+  if (props.disabled || props.block) return;
   isOpen.value = !isOpen.value;
-  if (!updateModel) return;
-  updateModel(props.name, isOpen.value);
+  updateModel?.(props.name, isOpen.value);
   emit('click-item', { id: props.name, isOpen: isOpen.value });
 };
 
 onMounted(() => {
-  if (Array.isArray(collapseData?.value)) {
-    isOpen.value = collapseData.value.includes(props.name);
-  } else {
-    isOpen.value = collapseData?.value === props.name;
+  isOpen.value = isValueOpen(collapseData?.value);
+  updateContentHeightAfterRender();
+
+  if ('ResizeObserver' in window && collapseItemDOMElContent.value) {
+    resizeObserver = new ResizeObserver(updateContentHeight);
+    resizeObserver.observe(collapseItemDOMElContent.value);
   }
+});
+
+onBeforeUnmount(() => {
+  resizeObserver?.disconnect();
 });
 
 watch(
   () => collapseData?.value,
   (newValue) => {
-    if (Array.isArray(newValue)) {
-      isOpen.value = newValue.includes(props.name);
-    } else {
-      isOpen.value = newValue === props.name;
-    }
+    isOpen.value = isValueOpen(newValue);
+    updateContentHeightAfterRender();
   },
   { deep: true }
 );
 
-watch(isOpen, () => {
-  contentHeight.value =
-    isOpen.value && collapseItemDOMElContent.value ? collapseItemDOMElContent.value?.clientHeight : 0;
-});
+watch(isOpen, updateContentHeightAfterRender);
 </script>
 
 <template>
-  <div :class="modifiers" @click.stop="clickHandler">
-    <div class="nmorph-collapse-item__title" :class="titleModifiers">
+  <div :class="modifiers">
+    <div class="nmorph-collapse-item__title" :class="titleModifiers" @click.stop="clickHandler">
       <slot name="title">
         {{ props.title }}
       </slot>
@@ -111,6 +127,7 @@ watch(isOpen, () => {
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
+    cursor: pointer;
   }
 
   .nmorph-collapse-item__content {
@@ -132,6 +149,16 @@ watch(isOpen, () => {
   &.nmorph-collapse-item--disabled {
     cursor: not-allowed;
     opacity: 0.6;
+
+    .nmorph-collapse-item__title {
+      cursor: not-allowed;
+    }
+  }
+
+  &.nmorph-collapse-item--block {
+    .nmorph-collapse-item__title {
+      cursor: default;
+    }
   }
 }
 </style>

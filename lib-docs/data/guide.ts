@@ -412,10 +412,23 @@ export const guidePages: GuidePage[] = [
     slug: "performance",
     title: { en: "Performance", ru: "Performance" },
     description: {
-      en: "Virtual lists and practical guidance for large option/data sets.",
-      ru: "Virtual lists и практические рекомендации для больших option/data sets.",
+      en: "Bundle size, tree-shaking, virtual lists, and practical guidance for large option/data sets.",
+      ru: "Размер bundle, tree-shaking, virtual lists и практические рекомендации для больших option/data sets.",
     },
     sections: [
+      {
+        title: { en: "Bundle strategy", ru: "Bundle strategy" },
+        paragraphs: [
+          {
+            en: "Nmorph is intentionally very small and supports tree-shaking. Import only the components, icons, and style entrypoints your screen uses so modern bundlers can remove unused exports from the final application bundle.",
+            ru: "Nmorph специально сделан очень маленьким и поддерживает tree-shaking. Импортируйте только компоненты, иконки и style entrypoints, которые нужны экрану, чтобы современные сборщики могли убрать неиспользуемые экспорты из финального bundle приложения.",
+          },
+          {
+            en: "CSS stays marked as side effects, so component styles remain reliable while JavaScript and icon exports can still be optimized by the bundler.",
+            ru: "CSS остается помеченным как side effects, поэтому стили компонентов подключаются надежно, а JavaScript и icon exports все еще могут оптимизироваться сборщиком.",
+          },
+        ],
+      },
       {
         title: { en: "Virtualization", ru: "Virtualization" },
         paragraphs: [

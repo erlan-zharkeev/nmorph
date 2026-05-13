@@ -19,6 +19,7 @@ export default {
   nov: '十一月',
   dec: '十二月',
   pickADate: '选择日期',
+  pickATime: '选择时间',
   loadingText: '加载中...',
   loadFailedText: '图片加载失败',
   noElementPlaceholder: '选择值',

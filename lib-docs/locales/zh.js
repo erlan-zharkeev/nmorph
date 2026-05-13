@@ -131,6 +131,8 @@ export default {
       vue: "Vue 3",
       nuxt: "Nuxt",
       typescript: "TypeScript",
+      lightweight: "极小体积",
+      treeShaking: "Tree-shaking",
       license: "MIT 许可证",
     },
     "overview-title": "项目简介",
@@ -141,6 +143,10 @@ export default {
       components: {
         title: "组件集合",
         text: "用于表单、表格、overlay、导航、反馈和常见 UI 场景的可复用组件。",
+      },
+      bundle: {
+        title: "轻量 bundle",
+        text: "该包有意保持小体积并支持 tree-shaking：只导入需要的组件、图标和样式入口，现代构建工具可以移除未使用的导出。",
       },
       theme: {
         title: "主题系统",
@@ -211,6 +217,16 @@ export default {
       items: {
         "context-menu-neutral-hover":
           "NmorphContextMenu 现在会从基础 text color 推导默认选项 hover background，而不是使用 accent color；自定义颜色的选项仍使用自己的颜色。",
+        "carousel-collapse-docs":
+          "Carousel 和 Collapse 现在已加入组件 registry、文档页面、API tables、examples 和 sandbox checks。",
+        "time-picker-component":
+          "新增 NmorphTimePicker，包含 typed exports、locale strings、docs overview 和 sandbox examples。",
+        "image-preview-overlay-fit":
+          "NmorphImagePreview 会把 overlay content 保持在 preview portal 内，并用 contain sizing 限制打开后的图片。",
+        "compact-sandbox-visual-fixes":
+          "修复 tag 删除按钮 cursor、number input 右侧按钮顺序、carousel loop、collapse 重新打开，以及 Windows scrollbar buttons。",
+        "dev-open-workflow":
+          "Root dev scripts 现在通过共享 helper 打开 docs 和 sandbox，Nuxt dev configs 也 stub Vue devtools API 以避免 devtools export error。",
         "context-menu-options-api":
           "NmorphContextMenu 现在支持文本、对象和组件 options，并内置菜单项布局、hover states、disabled handling 与 select events。",
         "context-menu-scroll-position":
@@ -847,6 +863,41 @@ export default {
       },
       events: {
         close: "返回关闭标签的值",
+      },
+    },
+    carousel: {
+      api: {
+        loop: "从最后一张循环到第一张，也可以从第一张循环到最后一张",
+      },
+      events: {
+        change: "返回当前激活 slide 的索引",
+      },
+    },
+    "carousel-item": {
+      api: {
+        name: "carousel registry 使用的唯一 slide 名称",
+      },
+    },
+    collapse: {
+      api: {
+        "model-value": "当前打开的面板名称",
+        accordion: "同一时间只允许打开一个面板",
+      },
+      events: {
+        "update:model-value": "打开的面板变化时触发",
+      },
+    },
+    "collapse-item": {
+      api: {
+        name: "collapse model 使用的唯一面板名称",
+        title: "面板标题文本",
+        disabled: "禁用面板",
+        block: "设置为 true 时禁止切换面板",
+        height: "设置标题高度",
+      },
+      slot: {
+        default: "面板内容",
+        title: "自定义面板标题",
       },
     },
     skeleton: {
@@ -1879,6 +1930,42 @@ export default {
       },
       translates: {
         pickADate: "选择日期",
+      },
+    },
+    "time-picker": {
+      "basic-usage": {
+        subtitle: "基础时间选择，输出 HH:mm 格式。",
+      },
+      seconds: {
+        subtitle: "启用秒数，并控制分钟和秒的步长。",
+      },
+      disabled: {
+        subtitle: "禁用时间选择器。",
+      },
+      api: {
+        id: "原生 input id",
+        name: "原生 input name",
+        "model-value": "选中的时间，格式为 HH:mm 或 HH:mm:ss",
+        height: "设置组件高度",
+        disabled: "禁用时间选择器",
+        autocomplete: "原生 autocomplete 属性",
+        placeholder: "未选择时间时显示的占位文本",
+        "hour-step": "可选小时值之间的步长",
+        "minute-step": "可选分钟值之间的步长",
+        "second-step": "可选秒值之间的步长",
+        "show-seconds": "显示秒列并返回 HH:mm:ss 值",
+        "min-time": "最小可选时间",
+        "max-time": "最大可选时间",
+        clearable: "选择值后显示清除按钮",
+        "z-index": "下拉层级 z-index",
+      },
+      events: {
+        "update:model-value": "选中时间变化时触发",
+        focus: "聚焦事件",
+        blur: "失焦事件",
+      },
+      translates: {
+        pickATime: "选择时间",
       },
     },
     radio: {

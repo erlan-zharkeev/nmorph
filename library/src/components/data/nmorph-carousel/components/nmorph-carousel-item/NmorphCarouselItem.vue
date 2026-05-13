@@ -2,7 +2,7 @@
 import { computed, inject, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { INmorphCarouselInjection } from '@/components';
-import { onMounted } from 'vue';
+import { onBeforeUnmount, onMounted } from 'vue';
 
 interface INmorphProps {
   name: string;
@@ -24,6 +24,12 @@ onMounted(() => {
   isMounted.value = true;
   if (!carouselData) return;
   carouselData.data.value.push(props.name);
+});
+
+onBeforeUnmount(() => {
+  if (!carouselData) return;
+  const index = carouselData.data.value.indexOf(props.name);
+  if (index !== -1) carouselData.data.value.splice(index, 1);
 });
 </script>
 

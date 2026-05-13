@@ -2,11 +2,11 @@ import { componentGroups } from "~/data/components";
 import { guidePages, textByLocale } from "~/data/guide";
 import { componentPathByName, pascalToSpace } from "~/utils";
 
-const apiSources = import.meta.glob("../lib-overview/**/Api.vue", {
+const apiSources = import.meta.glob<string>("../lib-overview/**/Api.vue", {
   eager: true,
   import: "default",
   query: "?raw",
-}) as Record<string, string>;
+});
 
 const pascalFromSlug = (slug: string) =>
   slug

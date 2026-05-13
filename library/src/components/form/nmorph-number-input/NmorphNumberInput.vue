@@ -141,17 +141,17 @@ defineExpose({ inputDOMRef });
           </NmorphButton>
         </div>
         <div v-else class="nmorph-number-input__action-btns">
-          <div class="nmorph-number-input__decrease">
-            <NmorphButton style-type="transparent" :disabled="minBtnDisabled" @click="decreaseHandler">
-              <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
-                <NmorphIconMinusThin />
-              </NmorphIcon>
-            </NmorphButton>
-          </div>
           <div class="nmorph-number-input__increase">
             <NmorphButton style-type="transparent" :disabled="maxBtnDisabled" @click="increaseHandler">
               <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
                 <NmorphIconPlusThin />
+              </NmorphIcon>
+            </NmorphButton>
+          </div>
+          <div class="nmorph-number-input__decrease">
+            <NmorphButton style-type="transparent" :disabled="minBtnDisabled" @click="decreaseHandler">
+              <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
+                <NmorphIconMinusThin />
               </NmorphIcon>
             </NmorphButton>
           </div>
@@ -256,14 +256,14 @@ defineExpose({ inputDOMRef });
       width: 100%;
     }
 
-    .nmorph-number-input__decrease {
+    .nmorph-number-input__increase {
       .nmorph-button__content {
         border-radius: 0;
         border-top-right-radius: var(--default-border-radius);
       }
     }
 
-    .nmorph-number-input__increase {
+    .nmorph-number-input__decrease {
       .nmorph-button__content {
         border-radius: 0;
         border-bottom-right-radius: var(--default-border-radius);

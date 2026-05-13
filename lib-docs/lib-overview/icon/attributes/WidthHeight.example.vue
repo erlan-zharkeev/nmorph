@@ -4,17 +4,15 @@ import { NmorphIcon, NmorphIconLoader } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="icon-width-height-overview">
-    <ClientOnly>
-      <NmorphIcon width="33px" height="33px">
-        <NmorphIconLoader />
-      </NmorphIcon>
-      <NmorphIcon width="23px" height="23px">
-        <NmorphIconLoader />
-      </NmorphIcon>
-      <NmorphIcon width="12px" height="12px">
-        <NmorphIconLoader />
-      </NmorphIcon>
-    </ClientOnly>
+    <NmorphIcon width="33px" height="33px">
+      <NmorphIconLoader />
+    </NmorphIcon>
+    <NmorphIcon width="23px" height="23px">
+      <NmorphIconLoader />
+    </NmorphIcon>
+    <NmorphIcon width="12px" height="12px">
+      <NmorphIconLoader />
+    </NmorphIcon>
   </div>
 </template>
 

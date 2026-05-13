@@ -186,7 +186,7 @@ const multipleSources = computed(() => Array.isArray(props.src) && props.src.len
           <NmorphImage
             :src="triggerSource"
             :alt="props.alt"
-            fit="cover"
+            fit="contain"
             :frame-border="0"
             :style="{ transform: `rotate(${rotateLevel}deg) scale(${scaleLevel})` }"
           >

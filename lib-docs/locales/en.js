@@ -141,6 +141,8 @@ export default {
       vue: "Vue 3",
       nuxt: "Nuxt",
       typescript: "TypeScript",
+      lightweight: "Very small bundle",
+      treeShaking: "Tree-shaking",
       license: "MIT license",
     },
     "overview-title": "What it is",
@@ -151,6 +153,10 @@ export default {
       components: {
         title: "Component set",
         text: "Reusable components for forms, tables, overlays, navigation, feedback, and common UI patterns.",
+      },
+      bundle: {
+        title: "Lightweight bundle",
+        text: "The package is intentionally small and tree-shakable: import only the components, icons, and style entrypoints you use, and modern bundlers can drop unused exports.",
       },
       theme: {
         title: "Theme system",
@@ -221,6 +227,16 @@ export default {
       items: {
         "context-menu-neutral-hover":
           "NmorphContextMenu now derives the default option hover background from the base text color instead of the accent color, while custom colored items still use their own color.",
+        "carousel-collapse-docs":
+          "Carousel and Collapse are now covered by the component registry, docs pages, API tables, examples, and sandbox checks.",
+        "time-picker-component":
+          "Added NmorphTimePicker with typed exports, locale strings, docs overview, and sandbox examples.",
+        "image-preview-overlay-fit":
+          "NmorphImagePreview keeps its overlay content inside the preview portal and constrains opened images with contain sizing.",
+        "compact-sandbox-visual-fixes":
+          "Fixed tag remove cursor, right-side number input action order, carousel looping, collapse reopening, and Windows scrollbar button styling.",
+        "dev-open-workflow":
+          "Root dev scripts now open docs and sandbox through a shared helper, and Nuxt dev configs stub Vue devtools API to avoid the devtools export error.",
         "context-menu-options-api":
           "NmorphContextMenu now accepts text, object, and component options with built-in item layout, hover states, disabled handling, and select events.",
         "context-menu-scroll-position":
@@ -874,6 +890,41 @@ export default {
       },
       events: {
         close: "Returns the value of the closed tag",
+      },
+    },
+    carousel: {
+      api: {
+        loop: "Cycles from the last slide back to the first one, and from the first slide back to the last one",
+      },
+      events: {
+        change: "Emits the active slide index",
+      },
+    },
+    "carousel-item": {
+      api: {
+        name: "Unique slide name used by the carousel registry",
+      },
+    },
+    collapse: {
+      api: {
+        "model-value": "Names of the currently opened panels",
+        accordion: "Allows only one panel to be opened at a time",
+      },
+      events: {
+        "update:model-value": "Event triggered when opened panels change",
+      },
+    },
+    "collapse-item": {
+      api: {
+        name: "Unique panel name used in the collapse model",
+        title: "Panel title text",
+        disabled: "Disables the panel",
+        block: "Prevents toggling the panel when set to true",
+        height: "Sets the title height",
+      },
+      slot: {
+        default: "Panel content",
+        title: "Custom panel title",
       },
     },
     skeleton: {
@@ -2003,6 +2054,42 @@ export default {
       },
       translates: {
         pickADate: "Pick a date",
+      },
+    },
+    "time-picker": {
+      "basic-usage": {
+        subtitle: "Basic time selection with HH:mm output.",
+      },
+      seconds: {
+        subtitle: "Enable seconds and control minute/second step values.",
+      },
+      disabled: {
+        subtitle: "Disables the time picker.",
+      },
+      api: {
+        id: "Native input id",
+        name: "Native input name",
+        "model-value": "Selected time in HH:mm or HH:mm:ss format",
+        height: "Sets the component height",
+        disabled: "Disables the time picker",
+        autocomplete: "Native autocomplete attribute",
+        placeholder: "Placeholder text when no time is selected",
+        "hour-step": "Step between selectable hour values",
+        "minute-step": "Step between selectable minute values",
+        "second-step": "Step between selectable second values",
+        "show-seconds": "Shows the seconds column and emits HH:mm:ss values",
+        "min-time": "Minimum selectable time",
+        "max-time": "Maximum selectable time",
+        clearable: "Shows the clear action when a value is selected",
+        "z-index": "Dropdown z-index",
+      },
+      events: {
+        "update:model-value": "Event triggered when the selected time changes",
+        focus: "Focus event",
+        blur: "Blur event",
+      },
+      translates: {
+        pickATime: "Pick a time",
       },
     },
     radio: {

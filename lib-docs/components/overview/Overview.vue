@@ -4,6 +4,7 @@ import {
   NmorphIcon,
   NmorphIconArchive,
   NmorphIconImage,
+  NmorphIconInfo,
   NmorphCard,
   NmorphButton,
   NmorphLink,
@@ -196,7 +197,9 @@ const localePath = useLocalePath();
             <template #header>Tooltip</template>
             <div class="overview-component-content">
               <NmorphTooltip force-show text="Tooltip">
-                <NmorphIcon name="info" width="40px" />
+                <NmorphIcon width="40px">
+                  <NmorphIconInfo />
+                </NmorphIcon>
               </NmorphTooltip>
             </div>
           </NmorphCard>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, shallowRef, type Component } from "vue";
+import { computed, reactive } from "vue";
+import { nmorphIconNames, nmorphIconRegistry } from "~/data/icon-registry";
 import { notificationProvider } from "~/providers";
 import { pascalToSpace } from "~/utils";
 
@@ -10,15 +11,6 @@ import {
   NmorphIcon,
 } from "@nmorph/nmorph-ui-kit";
 
-const iconList = shallowRef<Record<string, Component>>({});
-
-onMounted(async () => {
-  const icons = await import("@nmorph/nmorph-ui-kit/icons");
-  iconList.value = Object.fromEntries(
-    Object.entries(icons).filter(([name]) => name.startsWith("NmorphIcon") && name !== "NmorphIcon")
-  ) as Record<string, Component>;
-});
-
 const form = reactive({
   searchText: {
     value: "",
@@ -28,9 +20,8 @@ const form = reactive({
 
 const filteredIconNames = computed(() => {
   const searchText = form.searchText.value.trim().toLowerCase();
-  const iconNames = Object.keys(iconList.value);
-  if (!searchText) return iconNames;
-  return iconNames.filter((iconName) => {
+  if (!searchText) return nmorphIconNames;
+  return nmorphIconNames.filter((iconName) => {
     const plainName = pascalToSpace(iconName.slice(10)).toLowerCase();
     return plainName.includes(searchText) || iconName.toLowerCase().includes(searchText);
   });
@@ -91,11 +82,9 @@ const clickIconHandler = async (iconName: string) => {
         <div class="docs-icon__list-content nmorph--shadow-outset" v-if="filteredIconNames.length">
           <div class="docs-icon__list-el nmorph--shadow-outset" v-for="(el, idx) in filteredIconNames" :key="idx"
             @click="() => clickIconHandler(String(el))">
-            <ClientOnly>
-              <NmorphIcon size="medium">
-                <component :is="iconList[String(el)]" />
-              </NmorphIcon>
-            </ClientOnly>
+            <NmorphIcon size="medium">
+              <component :is="nmorphIconRegistry[String(el)]" />
+            </NmorphIcon>
             <span class="docs-icon__icon-name">{{
               pascalToSpace(el.slice(10)).toLowerCase()
               }}</span>

@@ -59,6 +59,7 @@ const closeHandler = () => {
 
   .nmorph-tag-item__close-icon {
     margin-left: 4px;
+    cursor: pointer;
   }
 
   &.nmorph-tag-item--nmorph-design {

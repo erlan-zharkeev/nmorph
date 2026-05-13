@@ -19,6 +19,7 @@ export default {
   nov: 'Ноябрь',
   dec: 'Декабрь',
   pickADate: 'Выберите дату',
+  pickATime: 'Выберите время',
   loadingText: 'Загрузка ...',
   loadFailedText: 'Не удалось загрузить изображение',
   noElementPlaceholder: 'Выберите значение',

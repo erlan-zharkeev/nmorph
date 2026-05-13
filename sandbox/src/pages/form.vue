@@ -21,6 +21,7 @@ import {
   NmorphSlider,
   NmorphSwitch,
   NmorphTextInput,
+  NmorphTimePicker,
   useNmorph,
 } from '@nmorph/nmorph-ui-kit'
 import type { INmorphCustomFileData, NmorphFormValueType, NmorphSelectModelValueType } from '@nmorph/nmorph-ui-kit'
@@ -53,6 +54,8 @@ const steppedSliderValue = ref(60)
 const dateValue = ref(new Date(2026, 4, 5))
 const datesValue = ref([new Date(2026, 4, 5), new Date(2026, 4, 12)])
 const rangeValue = ref([new Date(2026, 4, 5), new Date(2026, 4, 18)])
+const timeValue = ref('09:30')
+const preciseTimeValue = ref('14:45:20')
 const uploadedFiles = ref<INmorphCustomFileData[]>([
   {
     data: new File([], 'cat.jpg', { type: 'image/jpeg' }),
@@ -305,6 +308,16 @@ watch(runtimeAccentColor, (accent) => {
         <NmorphDatePicker v-model="rangeValue" type="daterange" placeholder="Range" height="thick" />
         <NmorphDatePicker :model-value="dateValue" disabled />
       </div>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphTimePicker">
+      <div class="row">
+        <NmorphTimePicker v-model="timeValue" placeholder="Time" />
+        <NmorphTimePicker v-model="preciseTimeValue" show-seconds :minute-step="15" :second-step="10" height="thick" />
+        <NmorphTimePicker model-value="12:00" min-time="09:00" max-time="18:00" height="thin" />
+        <NmorphTimePicker model-value="08:00" disabled />
+      </div>
+      <p class="hint">time: {{ timeValue || 'empty' }} / {{ preciseTimeValue || 'empty' }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphFileUpload">

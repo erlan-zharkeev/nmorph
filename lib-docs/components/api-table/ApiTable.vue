@@ -49,12 +49,12 @@ const getDescriptions = (
   });
 };
 
-const updatedAttributes = getDescriptions(props.attributes, "api");
-const updatedSlots = getDescriptions(props.slots, "slot");
-const updatedVariables = getDescriptions(props.variables, "variables");
-const updatedExposes = getDescriptions(props.exposes, "exposes");
-const updatedEvents = getDescriptions(props.events, "events");
-const updatedTranslates = getDescriptions(props.translates, 'translates')
+const updatedAttributes = computed(() => getDescriptions(props.attributes, "api"));
+const updatedSlots = computed(() => getDescriptions(props.slots, "slot"));
+const updatedVariables = computed(() => getDescriptions(props.variables, "variables"));
+const updatedExposes = computed(() => getDescriptions(props.exposes, "exposes"));
+const updatedEvents = computed(() => getDescriptions(props.events, "events"));
+const updatedTranslates = computed(() => getDescriptions(props.translates, "translates"));
 
 const getID = (name: string) => {
   return `content-${props.additionalId ? `${props.additionalId}-${name}` : name
@@ -78,109 +78,97 @@ const attributeNameLabel = (name: string, required: boolean) =>
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("attributes") }}
       </h3>
-      <ClientOnly>
-        <NmorphTable v-if="updatedAttributes" :data="updatedAttributes" bordered :row-hover="false">
-          <NmorphTableColumn prop="name" :label="$t('name')" alignment="left">
-            <template #default="{ scope }">
-              <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
-                {{
-                  attributeNameLabel(row.name as string, Boolean(row.required))
-                }}
-              </NmorphTableCell>
-            </template>
-          </NmorphTableColumn>
-          <NmorphTableColumn prop="description" :label="$t('description')" alignment="center" />
-          <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
-            <template #default="{ scope }">
-              <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
-                <NmorphDialog v-model="dialogs[row.modalName as string]" title="Type" width="auto">
-                  <code-example lang="javascript">{{ row.type }}</code-example>
-                </NmorphDialog>
-                <a v-if="row.modalName" class="docs-link" @click="() => clickDialog(row.modalName as string)">
-                  {{ row.modalName }}
-                </a>
-                <p v-html="row.type" class="no-wrap" v-else />
-              </NmorphTableCell>
-            </template>
-          </NmorphTableColumn>
-          <NmorphTableColumn prop="default" :label="$t('default')" alignment="center" />
-        </NmorphTable>
-      </ClientOnly>
+      <NmorphTable v-if="updatedAttributes" :data="updatedAttributes" bordered :row-hover="false">
+        <NmorphTableColumn prop="name" :label="$t('name')" alignment="left">
+          <template #default="{ scope }">
+            <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
+              {{
+                attributeNameLabel(row.name as string, Boolean(row.required))
+              }}
+            </NmorphTableCell>
+          </template>
+        </NmorphTableColumn>
+        <NmorphTableColumn prop="description" :label="$t('description')" alignment="center" />
+        <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
+          <template #default="{ scope }">
+            <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
+              <NmorphDialog v-model="dialogs[row.modalName as string]" title="Type" width="auto">
+                <code-example lang="javascript">{{ row.type }}</code-example>
+              </NmorphDialog>
+              <a v-if="row.modalName" class="docs-link" @click="() => clickDialog(row.modalName as string)">
+                {{ row.modalName }}
+              </a>
+              <p v-html="row.type" class="no-wrap" v-else />
+            </NmorphTableCell>
+          </template>
+        </NmorphTableColumn>
+        <NmorphTableColumn prop="default" :label="$t('default')" alignment="center" />
+      </NmorphTable>
     </div>
     <div v-if="updatedSlots?.length" class="docs-api-table__slots" :id="getID('slots')">
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("slots") }}
       </h3>
-      <ClientOnly>
-        <NmorphTable :data="updatedSlots" bordered :row-hover="false">
-          <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
-          <NmorphTableColumn prop="description" :label="$t('description')" alignment="right" />
-        </NmorphTable>
-      </ClientOnly>
+      <NmorphTable :data="updatedSlots" bordered :row-hover="false">
+        <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
+        <NmorphTableColumn prop="description" :label="$t('description')" alignment="right" />
+      </NmorphTable>
     </div>
     <div v-if="updatedVariables?.length" class="docs-api-table__variables" :id="getID('variables')">
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("variables") }}
       </h3>
-      <ClientOnly>
-        <NmorphTable :data="updatedVariables" bordered :row-hover="false">
-          <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
-          <NmorphTableColumn prop="description" :label="$t('description')" alignment="right" />
-        </NmorphTable>
-      </ClientOnly>
+      <NmorphTable :data="updatedVariables" bordered :row-hover="false">
+        <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
+        <NmorphTableColumn prop="description" :label="$t('description')" alignment="right" />
+      </NmorphTable>
     </div>
     <div v-if="updatedExposes?.length" class="docs-api-table__exposes" :id="getID('exposes')">
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("exposes") }}
       </h3>
-      <ClientOnly>
-        <NmorphTable :data="updatedExposes" bordered :row-hover="false">
-          <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
-          <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
-            <template #default="{ scope }">
-              <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
-                <NmorphDialog v-model="dialogs[row.modalName as string]" title="Type" width="auto">
-                  <code-example lang="javascript">{{ row.type }}</code-example>
-                </NmorphDialog>
-                <a v-if="row.modalName" class="docs-link" @click="() => clickDialog(row.modalName as string)">
-                  {{ row.modalName }}
-                </a>
-                <p v-html="row.type" class="no-wrap" v-else />
-              </NmorphTableCell>
-            </template>
-          </NmorphTableColumn>
-          <NmorphTableColumn prop="description" :label="$t('description')" alignment="right" />
-        </NmorphTable>
-      </ClientOnly>
+      <NmorphTable :data="updatedExposes" bordered :row-hover="false">
+        <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
+        <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
+          <template #default="{ scope }">
+            <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
+              <NmorphDialog v-model="dialogs[row.modalName as string]" title="Type" width="auto">
+                <code-example lang="javascript">{{ row.type }}</code-example>
+              </NmorphDialog>
+              <a v-if="row.modalName" class="docs-link" @click="() => clickDialog(row.modalName as string)">
+                {{ row.modalName }}
+              </a>
+              <p v-html="row.type" class="no-wrap" v-else />
+            </NmorphTableCell>
+          </template>
+        </NmorphTableColumn>
+        <NmorphTableColumn prop="description" :label="$t('description')" alignment="right" />
+      </NmorphTable>
     </div>
     <div v-if="updatedEvents?.length" class="docs-api-table__events" :id="getID('events')">
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("events") }}
       </h3>
-      <ClientOnly>
-        <NmorphTable :data="updatedEvents" bordered :row-hover="false">
-          <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
-          <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
-            <template #default="{ scope }">
-              <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
-                <p v-html="row.type" class="no-wrap" />
-              </NmorphTableCell>
-            </template>
-          </NmorphTableColumn>
-          <NmorphTableColumn prop="description" :label="$t('description')" alignment="right" />
-        </NmorphTable>
-      </ClientOnly>
+      <NmorphTable :data="updatedEvents" bordered :row-hover="false">
+        <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
+        <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
+          <template #default="{ scope }">
+            <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
+              <p v-html="row.type" class="no-wrap" />
+            </NmorphTableCell>
+          </template>
+        </NmorphTableColumn>
+        <NmorphTableColumn prop="description" :label="$t('description')" alignment="right" />
+      </NmorphTable>
     </div>
     <div v-if="updatedTranslates?.length" class="docs-api-table__translates" :id="getID('translates')">
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("translates") }}
       </h3>
-      <ClientOnly>
-        <NmorphTable :data="updatedTranslates" bordered :row-hover="false">
-          <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
-          <NmorphTableColumn prop="description" :label="$t('text')" alignment="right" />
-        </NmorphTable>
-      </ClientOnly>
+      <NmorphTable :data="updatedTranslates" bordered :row-hover="false">
+        <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
+        <NmorphTableColumn prop="description" :label="$t('text')" alignment="right" />
+      </NmorphTable>
     </div>
   </div>
 </template>

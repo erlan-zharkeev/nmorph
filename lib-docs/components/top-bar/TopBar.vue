@@ -71,11 +71,9 @@ onUnmounted(() => {
     <div class="docs-top-bar__left">
       <div class="docs-top-bar__logo">
         <NuxtLink :to="localePath('/')">
-          <ClientOnly>
-            <NmorphIcon width="40px">
-              <NmorphIconLogo />
-            </NmorphIcon>
-          </ClientOnly>
+          <NmorphIcon width="40px">
+            <NmorphIconLogo />
+          </NmorphIcon>
         </NuxtLink>
       </div>
       <span class="docs-top-bar__version">v{{ libraryData.version }}</span>
@@ -95,11 +93,9 @@ onUnmounted(() => {
         <NmorphCheckbox v-model="translateDropdownOpen" size="small" class="docs-top-bar__translate-checkbox"
           design="button">
           <template #label>
-            <ClientOnly>
-              <NmorphIcon>
-                <TranslateIcon />
-              </NmorphIcon>
-            </ClientOnly>
+            <NmorphIcon>
+              <TranslateIcon />
+            </NmorphIcon>
           </template>
         </NmorphCheckbox>
         <NmorphDropdown v-if="translateBtn" :fill-width="false" :open="translateDropdownOpen"

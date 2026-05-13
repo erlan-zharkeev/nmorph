@@ -221,6 +221,46 @@ export const getCommonStyles = () => {
       display: none;
     }
 
+    *::-webkit-scrollbar {
+      width: var(--nmorph-native-scrollbar-size, 8px);
+      height: var(--nmorph-native-scrollbar-size, 8px);
+      background: transparent;
+    }
+
+    *::-webkit-scrollbar-button,
+    *::-webkit-scrollbar-button:single-button,
+    *::-webkit-scrollbar-button:double-button,
+    *::-webkit-scrollbar-button:vertical:start:decrement,
+    *::-webkit-scrollbar-button:vertical:end:increment,
+    *::-webkit-scrollbar-button:horizontal:start:decrement,
+    *::-webkit-scrollbar-button:horizontal:end:increment {
+      display: none !important;
+      width: 0 !important;
+      min-width: 0 !important;
+      max-width: 0 !important;
+      height: 0 !important;
+      min-height: 0 !important;
+      max-height: 0 !important;
+      border: 0 !important;
+      background: transparent !important;
+      background-image: none !important;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    *::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    *::-webkit-scrollbar-thumb {
+      border-radius: var(--border-radius-999);
+      background: color-mix(in srgb, var(--nmorph-scroll-thumb-color, var(--nmorph-text-color)) 42%, transparent);
+    }
+
+    *::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+
     html {
       background: var(--nmorph-main-color);
     }
@@ -540,8 +580,13 @@ export const getCommonStyles = () => {
     .nmorph-scroll {
       --thumb-color: var(--nmorph-scroll-thumb-color, var(--nmorph-text-color));
       color-scheme: var(--nmorph-scroll-color-scheme, light);
-      scrollbar-color: var(--thumb-color) transparent;
-      scrollbar-width: thin;
+    }
+
+    @-moz-document url-prefix() {
+      .nmorph-scroll {
+        scrollbar-color: var(--thumb-color) transparent;
+        scrollbar-width: thin;
+      }
     }
 
     .nmorph-scroll::-webkit-scrollbar {
@@ -550,6 +595,27 @@ export const getCommonStyles = () => {
       background-color: transparent;
       cursor: pointer;
       transition: width ease-in-out 0.2s;
+    }
+
+    .nmorph-scroll::-webkit-scrollbar-button,
+    .nmorph-scroll::-webkit-scrollbar-button:single-button,
+    .nmorph-scroll::-webkit-scrollbar-button:double-button,
+    .nmorph-scroll::-webkit-scrollbar-button:vertical:start:decrement,
+    .nmorph-scroll::-webkit-scrollbar-button:vertical:end:increment,
+    .nmorph-scroll::-webkit-scrollbar-button:horizontal:start:decrement,
+    .nmorph-scroll::-webkit-scrollbar-button:horizontal:end:increment {
+      display: none !important;
+      width: 0 !important;
+      min-width: 0 !important;
+      max-width: 0 !important;
+      height: 0 !important;
+      min-height: 0 !important;
+      max-height: 0 !important;
+      border: 0 !important;
+      background: transparent !important;
+      background-image: none !important;
+      -webkit-appearance: none;
+      appearance: none;
     }
 
     .nmorph-scroll::-webkit-scrollbar-track {

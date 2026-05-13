@@ -9,17 +9,15 @@ import {
 
 <template>
   <div class="icon-color-overview">
-    <ClientOnly>
-      <NmorphIcon color="var(--nmorph-accent-color)" size="large">
-        <NmorphIconAddLocation />
-      </NmorphIcon>
-      <NmorphIcon color="#694295" size="large">
-        <NmorphIconAvatar />
-      </NmorphIcon>
-      <NmorphIcon color="hsl(148, 60%, 39%)" size="large">
-        <NmorphIconArchive />
-      </NmorphIcon>
-    </ClientOnly>
+    <NmorphIcon color="var(--nmorph-accent-color)" size="large">
+      <NmorphIconAddLocation />
+    </NmorphIcon>
+    <NmorphIcon color="#694295" size="large">
+      <NmorphIconAvatar />
+    </NmorphIcon>
+    <NmorphIcon color="hsl(148, 60%, 39%)" size="large">
+      <NmorphIconArchive />
+    </NmorphIcon>
   </div>
 </template>
 

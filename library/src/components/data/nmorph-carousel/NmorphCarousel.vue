@@ -1,18 +1,9 @@
 <script setup lang="ts">
 import { generateUUID, useModifiers } from '@/utils';
-import { computed, onMounted, provide, reactive, ref, watch, nextTick } from 'vue';
+import { computed, provide, ref, watch } from 'vue';
 import { NmorphIcon, INmorphCarouselInjection, NmorphIconChevronDown } from '@/components';
-import { NmorphDomElementType } from '@/types';
 
 const currentSlide = ref(0);
-
-const prevSlide = () => {
-  currentSlide.value = currentSlide.value + 1;
-};
-
-const nextSlide = () => {
-  currentSlide.value = currentSlide.value - 1;
-};
 
 interface INmorphProps {
   loop?: boolean;
@@ -36,78 +27,51 @@ const carouselData = ref<string[]>([]);
 const carouselId = generateUUID();
 provide<INmorphCarouselInjection>('carousel-data', { data: carouselData, carouselId });
 
-const carouselWrapper = ref<NmorphDomElementType>(null);
-const slidesRefs = reactive<Record<number, NmorphDomElementType>>({});
+const slideCount = computed(() => carouselData.value.length);
 
-const addInitialCloneSlides = () => {
-  const prevSlide = slidesRefs[Object.keys(slidesRefs).length - 1]?.cloneNode(true) as Node;
-  const nextSlide = slidesRefs[0]?.cloneNode(true) as Node;
-  carouselWrapper.value?.prepend(prevSlide);
-  carouselWrapper.value?.append(nextSlide);
-  currentSlide.value += 1;
+const normalizeSlideIndex = (index: number) => {
+  if (!slideCount.value) return 0;
+  if (!props.loop) return Math.min(Math.max(index, 0), slideCount.value - 1);
+  return (index + slideCount.value) % slideCount.value;
 };
 
-const transitionEndHandler = () => {
-  if (currentSlide.value === 0) {
-    currentSlide.value = Object.keys(slidesRefs).length;
-    transitionEnabled.value = false;
-  }
-  if (currentSlide.value > Object.keys(slidesRefs).length) {
-    currentSlide.value = 1;
-    transitionEnabled.value = false;
-  }
+const goToSlide = (index: number) => {
+  const nextSlide = normalizeSlideIndex(index);
+  if (nextSlide === currentSlide.value) return;
+  currentSlide.value = nextSlide;
 };
 
-onMounted(() => {
-  if (props.loop && currentSlide.value === 0) {
-    nextTick(() => addInitialCloneSlides());
-    carouselWrapper.value?.addEventListener('transitionend', transitionEndHandler);
-  }
-});
-
-watch(currentSlide, (newValue) => {
-  emit('change', currentSlide.value);
-
-  if (newValue === 1 || newValue === Object.keys(slidesRefs).length) {
-    setTimeout(() => {
-      transitionEnabled.value = true;
-    });
-  }
-});
-
-const setItemRef = (el: unknown, idx: number) => {
-  const element = el as NmorphDomElementType;
-  slidesRefs[idx] = element;
-};
+const prevSlide = () => goToSlide(currentSlide.value - 1);
+const nextSlide = () => goToSlide(currentSlide.value + 1);
 
 const translateX = computed(() => {
   return `translateX(-${currentSlide.value * 100}%)`;
 });
 
-const transitionEnabled = ref(true);
-
 const isCurrentElementActive = (idx: number) => {
-  return idx === currentSlide.value - 1;
+  return idx === currentSlide.value;
 };
 
 const elementIndicator = (idx: number) => {
-  currentSlide.value = idx + 1;
+  goToSlide(idx);
 };
+
+watch(slideCount, (count) => {
+  if (currentSlide.value > count - 1) currentSlide.value = Math.max(count - 1, 0);
+});
+
+watch(currentSlide, () => {
+  emit('change', currentSlide.value);
+});
 </script>
 
 <template>
   <div :class="modifiers">
-    <div
-      ref="carouselWrapper"
-      class="nmorph-carousel__wrapper"
-      :style="{ transform: translateX }"
-      :class="{ 'transition-enabled': transitionEnabled }"
-    >
+    <div class="nmorph-carousel__wrapper transition-enabled" :style="{ transform: translateX }">
       <div
-        v-for="(itemName, idx) in carouselData"
+        v-for="itemName in carouselData"
         :id="`nmorph-carousel-item-${carouselId}-${itemName}`"
         :key="itemName"
-        :ref="(el) => setItemRef(el, idx)"
         class="nmorph-carousel__item"
       />
     </div>
@@ -124,12 +88,12 @@ const elementIndicator = (idx: number) => {
         />
       </div>
     </div>
-    <div class="nmorph-carousel__action-btn nmorph-carousel__prev" @click="prevSlide">
+    <div class="nmorph-carousel__action-btn nmorph-carousel__prev" @click="nextSlide">
       <NmorphIcon>
         <NmorphIconChevronDown />
       </NmorphIcon>
     </div>
-    <div class="nmorph-carousel__action-btn nmorph-carousel__next" @click="nextSlide">
+    <div class="nmorph-carousel__action-btn nmorph-carousel__next" @click="prevSlide">
       <NmorphIcon>
         <NmorphIconChevronDown />
       </NmorphIcon>

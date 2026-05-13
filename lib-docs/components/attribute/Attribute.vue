@@ -96,25 +96,23 @@ const infoData = `overview.${props.infoName}.info`;
         <slot name="overview" />
       </div>
       <div class="docs-component__overview-component-actions">
-        <ClientOnly>
-          <NmorphButton @click.stop="copyHandler">
-            <template #icon-only>
-              <NmorphIconCopy />
-            </template>
-          </NmorphButton>
-          <NmorphCheckbox
-            v-model="codeOpen"
-            design="button"
-            height="basic"
-            class="docs-attribute__code-btn"
-          >
-            <template #label>
-              <NmorphIcon>
-                <NmorphIconCode />
-              </NmorphIcon>
-            </template>
-          </NmorphCheckbox>
-        </ClientOnly>
+        <NmorphButton @click.stop="copyHandler">
+          <template #icon-only>
+            <NmorphIconCopy />
+          </template>
+        </NmorphButton>
+        <NmorphCheckbox
+          v-model="codeOpen"
+          design="button"
+          height="basic"
+          class="docs-attribute__code-btn"
+        >
+          <template #label>
+            <NmorphIcon>
+              <NmorphIconCode />
+            </NmorphIcon>
+          </template>
+        </NmorphCheckbox>
       </div>
       <NmorphCollapse :model-value="accordionOpen">
         <NmorphCollapseItem id="1" name="1">

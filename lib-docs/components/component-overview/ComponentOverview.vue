@@ -21,6 +21,8 @@ const overviewLoaders: Record<string, () => Promise<OverviewModule>> = {
   card: () => import("~/lib-overview/card"),
   image: () => import("~/lib-overview/image"),
   tag: () => import("~/lib-overview/tag"),
+  carousel: () => import("~/lib-overview/carousel"),
+  collapse: () => import("~/lib-overview/collapse"),
   skeleton: () => import("~/lib-overview/skeleton"),
   progress: () => import("~/lib-overview/progress"),
   calendar: () => import("~/lib-overview/calendar"),
@@ -55,6 +57,7 @@ const overviewLoaders: Record<string, () => Promise<OverviewModule>> = {
   "select-button": () => import("~/lib-overview/select-button"),
   form: () => import("~/lib-overview/form"),
   "date-picker": () => import("~/lib-overview/date-picker"),
+  "time-picker": () => import("~/lib-overview/time-picker"),
 };
 
 const overviewComponents = shallowRef<unknown[]>([]);

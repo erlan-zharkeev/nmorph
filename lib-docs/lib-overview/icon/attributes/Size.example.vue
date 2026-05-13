@@ -4,17 +4,15 @@ import { NmorphIcon, NmorphIconEye } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="icon-size-overview">
-    <ClientOnly>
-      <NmorphIcon size="large">
-        <NmorphIconEye />
-      </NmorphIcon>
-      <NmorphIcon size="medium">
-        <NmorphIconEye />
-      </NmorphIcon>
-      <NmorphIcon size="small">
-        <NmorphIconEye />
-      </NmorphIcon>
-    </ClientOnly>
+    <NmorphIcon size="large">
+      <NmorphIconEye />
+    </NmorphIcon>
+    <NmorphIcon size="medium">
+      <NmorphIconEye />
+    </NmorphIcon>
+    <NmorphIcon size="small">
+      <NmorphIconEye />
+    </NmorphIcon>
   </div>
 </template>
 

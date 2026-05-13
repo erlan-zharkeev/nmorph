@@ -5,7 +5,7 @@ import libraryData from "../../library/package.json";
 const localePath = useLocalePath();
 const repositoryUrl = libraryData.repository.url;
 const issuesUrl = `${repositoryUrl}/-/issues`;
-const featureKeys = ["components", "theme", "nuxt", "typescript"];
+const featureKeys = ["components", "bundle", "theme", "nuxt", "typescript"];
 const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays", "forms", "virtualization", "accessibility"];
 </script>
 
@@ -21,6 +21,8 @@ const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays",
             <span>{{ $t("about-page.meta.vue") }}</span>
             <span>{{ $t("about-page.meta.nuxt") }}</span>
             <span>{{ $t("about-page.meta.typescript") }}</span>
+            <span>{{ $t("about-page.meta.lightweight") }}</span>
+            <span>{{ $t("about-page.meta.treeShaking") }}</span>
             <span>{{ $t("about-page.meta.license") }}</span>
           </div>
         </section>

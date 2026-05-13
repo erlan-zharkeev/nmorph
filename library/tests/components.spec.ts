@@ -52,6 +52,7 @@ import {
   NmorphSkeletonItem,
   NmorphSlider,
   NmorphSwitch,
+  NmorphTimePicker,
   NmorphTabPane,
   NmorphTable,
   NmorphTableCell,
@@ -383,6 +384,11 @@ const renderCases = [
     props: { modelValue: '', placeholder: 'Text', clearable: true },
   },
   {
+    name: 'NmorphTimePicker',
+    component: NmorphTimePicker,
+    props: { modelValue: '09:30', placeholder: 'Time' },
+  },
+  {
     name: 'NmorphBacktop',
     component: NmorphBacktop,
     props: { visibilityHeight: 0 },
@@ -518,6 +524,86 @@ describe('components', () => {
     expect(button.style.getPropertyValue('--nmorph-button-hover-color')).toBe(
       'color-mix(in srgb, var(--nmorph-error-text-color) 75%, var(--nmorph-white-color))'
     );
+
+    wrapper.unmount();
+  });
+
+  it('renders number input right action buttons with increase above decrease', () => {
+    const wrapper = mount(NmorphNumberInput, {
+      props: {
+        modelValue: 10,
+        actionBtnPositionRight: true,
+      },
+    });
+
+    const actionButtons = wrapper.findAll('.nmorph-number-input__action-btns > div');
+
+    expect(actionButtons[0].classes()).toContain('nmorph-number-input__increase');
+    expect(actionButtons[1].classes()).toContain('nmorph-number-input__decrease');
+
+    wrapper.unmount();
+  });
+
+  it('loops carousel navigation without rendering blank slides', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphCarousel, NmorphCarouselItem },
+        template: `
+          <NmorphCarousel>
+            <NmorphCarouselItem name="first">First</NmorphCarouselItem>
+            <NmorphCarouselItem name="second">Second</NmorphCarouselItem>
+            <NmorphCarouselItem name="third">Third</NmorphCarouselItem>
+          </NmorphCarousel>
+        `,
+      })
+    );
+
+    await nextTick();
+    await nextTick();
+
+    const rightButton = wrapper.find('.nmorph-carousel__prev');
+    await rightButton.trigger('click');
+    expect(wrapper.find('.nmorph-carousel__wrapper').attributes('style')).toContain('translateX(-100%)');
+
+    await rightButton.trigger('click');
+    expect(wrapper.find('.nmorph-carousel__wrapper').attributes('style')).toContain('translateX(-200%)');
+
+    await rightButton.trigger('click');
+    expect(wrapper.find('.nmorph-carousel__wrapper').attributes('style')).toContain('translateX(-0%)');
+    expect(wrapper.findAll('.nmorph-carousel__item')).toHaveLength(3);
+
+    wrapper.unmount();
+  });
+
+  it('keeps collapse title available after closing and opens it again', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphCollapse, NmorphCollapseItem },
+        setup() {
+          const model = ref(['first']);
+
+          return { model };
+        },
+        template: `
+          <NmorphCollapse v-model="model">
+            <NmorphCollapseItem name="first" title="First">Content</NmorphCollapseItem>
+          </NmorphCollapse>
+        `,
+      })
+    );
+
+    await nextTick();
+    await nextTick();
+
+    const title = wrapper.find('.nmorph-collapse-item__title');
+    expect(title.exists()).toBe(true);
+
+    await title.trigger('click');
+    expect(wrapper.vm.model).toEqual([]);
+    expect(wrapper.find('.nmorph-collapse-item__title').exists()).toBe(true);
+
+    await wrapper.find('.nmorph-collapse-item__title').trigger('click');
+    expect(wrapper.vm.model).toEqual(['first']);
 
     wrapper.unmount();
   });
@@ -835,7 +921,9 @@ describe('components', () => {
       },
     });
 
-    vi.spyOn(wrapper.find('.nmorph-context-menu').element, 'getBoundingClientRect').mockReturnValue(rect(20, 30, 80, 32));
+    vi.spyOn(wrapper.find('.nmorph-context-menu').element, 'getBoundingClientRect').mockReturnValue(
+      rect(20, 30, 80, 32)
+    );
 
     await wrapper.find('.context-target').trigger('click', { button: 0 });
     await nextTick();
@@ -1032,6 +1120,19 @@ describe('components', () => {
     await nextTick();
 
     expect(wrapper.find('.nmorph-image-preview__trigger').exists()).toBe(false);
+    wrapper.unmount();
+  });
+
+  it('opens image preview from the trigger', async () => {
+    const wrapper = mount(NmorphImagePreview, {
+      props: { src: imageSrc, alt: 'Preview' },
+    });
+
+    await nextTick();
+    await wrapper.find('.nmorph-image-preview__trigger').trigger('click');
+    await nextTick();
+
+    expect(wrapper.emitted('update:model-value')?.at(-1)).toEqual([true]);
     wrapper.unmount();
   });
 

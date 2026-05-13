@@ -143,6 +143,8 @@ export default {
       vue: "Vue 3",
       nuxt: "Nuxt",
       typescript: "TypeScript",
+      lightweight: "Очень маленький bundle",
+      treeShaking: "Tree-shaking",
       license: "MIT лицензия",
     },
     "overview-title": "Что это",
@@ -153,6 +155,10 @@ export default {
       components: {
         title: "Набор компонентов",
         text: "Переиспользуемые компоненты для форм, таблиц, overlay, навигации, feedback и базовых UI-сценариев.",
+      },
+      bundle: {
+        title: "Легкий bundle",
+        text: "Пакет специально сделан маленьким и tree-shakable: импортируйте только нужные компоненты, иконки и style entrypoints, а современные сборщики отбросят неиспользуемые экспорты.",
       },
       theme: {
         title: "Система тем",
@@ -223,6 +229,16 @@ export default {
       items: {
         "context-menu-neutral-hover":
           "NmorphContextMenu теперь строит дефолтный hover background пункта от базового text color вместо accent color, а пункты с кастомным цветом продолжают использовать свой цвет.",
+        "carousel-collapse-docs":
+          "Carousel и Collapse теперь добавлены в registry компонентов, страницы документации, API tables, examples и sandbox checks.",
+        "time-picker-component":
+          "Добавлен NmorphTimePicker с typed exports, строками локализации, docs overview и примерами в sandbox.",
+        "image-preview-overlay-fit":
+          "NmorphImagePreview держит overlay content внутри preview portal и ограничивает открытые изображения через contain sizing.",
+        "compact-sandbox-visual-fixes":
+          "Исправлены cursor у удаления tag, порядок right-side action buttons в number input, carousel loop, повторное открытие collapse и Windows scrollbar buttons.",
+        "dev-open-workflow":
+          "Root dev scripts теперь открывают docs и sandbox через общий helper, а Nuxt dev configs stub-ят Vue devtools API, чтобы убрать devtools export error.",
         "context-menu-options-api":
           "NmorphContextMenu теперь принимает options текстом, объектами и компонентами со встроенной раскладкой пунктов, hover states, disabled handling и select events.",
         "context-menu-scroll-position":
@@ -883,6 +899,41 @@ export default {
       },
       events: {
         close: "Возвращает значение закрытого тега",
+      },
+    },
+    carousel: {
+      api: {
+        loop: "Зацикливает прокрутку с последнего слайда к первому и с первого к последнему",
+      },
+      events: {
+        change: "Возвращает индекс активного слайда",
+      },
+    },
+    "carousel-item": {
+      api: {
+        name: "Уникальное имя слайда для registry карусели",
+      },
+    },
+    collapse: {
+      api: {
+        "model-value": "Имена открытых панелей",
+        accordion: "Разрешает открыть только одну панель одновременно",
+      },
+      events: {
+        "update:model-value": "Событие при изменении открытых панелей",
+      },
+    },
+    "collapse-item": {
+      api: {
+        name: "Уникальное имя панели в модели collapse",
+        title: "Текст заголовка панели",
+        disabled: "Отключает панель",
+        block: "Запрещает переключение панели, если установлено в true",
+        height: "Задает высоту заголовка",
+      },
+      slot: {
+        default: "Содержимое панели",
+        title: "Кастомный заголовок панели",
       },
     },
     skeleton: {
@@ -2037,6 +2088,42 @@ export default {
       },
       translates: {
         pickADate: "Выберите дату",
+      },
+    },
+    "time-picker": {
+      "basic-usage": {
+        subtitle: "Базовый выбор времени с результатом в формате HH:mm.",
+      },
+      seconds: {
+        subtitle: "Включает секунды и позволяет настроить шаг минут и секунд.",
+      },
+      disabled: {
+        subtitle: "Отключает выбор времени.",
+      },
+      api: {
+        id: "Нативный id поля ввода",
+        name: "Нативное name поля ввода",
+        "model-value": "Выбранное время в формате HH:mm или HH:mm:ss",
+        height: "Задает высоту компонента",
+        disabled: "Отключает выбор времени",
+        autocomplete: "Нативный атрибут autocomplete",
+        placeholder: "Placeholder, когда время не выбрано",
+        "hour-step": "Шаг между доступными значениями часов",
+        "minute-step": "Шаг между доступными значениями минут",
+        "second-step": "Шаг между доступными значениями секунд",
+        "show-seconds": "Показывает колонку секунд и возвращает значения HH:mm:ss",
+        "min-time": "Минимально доступное время",
+        "max-time": "Максимально доступное время",
+        clearable: "Показывает кнопку очистки, когда значение выбрано",
+        "z-index": "Z-index выпадающего меню",
+      },
+      events: {
+        "update:model-value": "Событие при изменении выбранного времени",
+        focus: "Событие фокуса",
+        blur: "Событие потери фокуса",
+      },
+      translates: {
+        pickATime: "Выберите время",
       },
     },
     radio: {

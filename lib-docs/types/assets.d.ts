@@ -29,6 +29,6 @@ interface ImportMeta {
       eager?: boolean;
       import?: string;
       query?: string | Record<string, string | number | boolean>;
-    }
+    },
   ): Record<string, T>;
 }
