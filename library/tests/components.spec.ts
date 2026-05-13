@@ -509,6 +509,40 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('adds combined border width variable only for combined cards', () => {
+    const regular = mount(NmorphCard, {
+      props: {
+        combinedShadowBorderWidth: 2,
+      },
+      slots: {
+        default: 'Content',
+      },
+    });
+    const combined = mount(NmorphCard, {
+      props: {
+        shadowType: 'combined',
+        combinedShadowBorderWidth: 2,
+      },
+      slots: {
+        default: 'Content',
+      },
+    });
+
+    expect(
+      (regular.find('.nmorph-card').element as HTMLElement).style.getPropertyValue(
+        '--nmorph-card-combined-border-width'
+      )
+    ).toBe('');
+    expect(
+      (combined.find('.nmorph-card').element as HTMLElement).style.getPropertyValue(
+        '--nmorph-card-combined-border-width'
+      )
+    ).toBe('2px');
+
+    regular.unmount();
+    combined.unmount();
+  });
+
   it('fills the available width by default and can fit content', () => {
     const filled = mount(NmorphCard, {
       slots: {
@@ -544,6 +578,26 @@ describe('components', () => {
     expect(wrapper.find('.nmorph-card').element.tagName).toBe('ARTICLE');
 
     wrapper.unmount();
+  });
+
+  it('renders card header wrapper only when header slot exists', () => {
+    const withoutHeader = mount(NmorphCard, {
+      slots: {
+        default: 'Content',
+      },
+    });
+    const withHeader = mount(NmorphCard, {
+      slots: {
+        header: 'Header',
+        default: 'Content',
+      },
+    });
+
+    expect(withoutHeader.find('.nmorph-card__header').exists()).toBe(false);
+    expect(withHeader.find('.nmorph-card__header').exists()).toBe(true);
+
+    withoutHeader.unmount();
+    withHeader.unmount();
   });
 
   it('renders empty action and forwards size variables', () => {

@@ -215,6 +215,10 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "card-header-slot-wrapper":
+          "NmorphCard now renders the header wrapper only when the header slot is provided.",
+        "card-combined-border-style":
+          "NmorphCard now forwards --nmorph-card-combined-border-width only for combined shadow cards.",
         "empty-state-component":
           "Added NmorphEmpty for empty states, including typed props, slots, docs, and sandbox examples.",
         "card-padding-prop":
@@ -799,11 +803,12 @@ export default {
       api: {
         "shadow-type": "Defines the visibility of the card's shadow.",
         "card-padding": "Overrides the card padding. Numbers are treated as pixel values.",
+        "combined-shadow-border-width": "Border width used only when shadow-type is combined.",
         fill: "When true, the card takes the available width. Set false to fit the content width.",
         tag: "HTML tag used for the card root element.",
       },
       slot: {
-        header: "Card header",
+        header: "Card header. The header wrapper renders only when this slot is provided.",
         footer: "Card footer",
       },
       variables: {

@@ -32,14 +32,16 @@ const modifiers = computed(() =>
 const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-card-combined-border-width': `${props.combinedShadowBorderWidth}px`,
+  ...(props.shadowType === 'combined' && {
+    '--nmorph-card-combined-border-width': `${props.combinedShadowBorderWidth}px`,
+  }),
   ...(props.cardPadding !== undefined && { '--card-padding': getCssSize(props.cardPadding) }),
 }));
 </script>
 
 <template>
   <component :is="props.tag" :class="modifiers" :style="styles">
-    <div class="nmorph-card__header">
+    <div v-if="slots.header" class="nmorph-card__header">
       <slot name="header" />
     </div>
     <div class="nmorph-card__content">

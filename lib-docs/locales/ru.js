@@ -227,6 +227,10 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "card-header-slot-wrapper":
+          "NmorphCard теперь рендерит обертку header только когда передан слот header.",
+        "card-combined-border-style":
+          "NmorphCard теперь передает --nmorph-card-combined-border-width только для карточек с combined shadow.",
         "empty-state-component":
           "Добавлен NmorphEmpty для пустых состояний: typed props, слоты, документация и примеры в sandbox.",
         "card-padding-prop":
@@ -828,11 +832,12 @@ export default {
       api: {
         "shadow-type": "Определяет видимость тени карточки.",
         "card-padding": "Переопределяет отступ карточки. Числа считаются значениями в пикселях.",
+        "combined-shadow-border-width": "Ширина border, которая используется только при shadow-type='combined'.",
         fill: "Если true, карточка занимает доступную ширину. Передайте false, чтобы ширина шла по контенту.",
         tag: "HTML-тег, который используется для корневого элемента карточки.",
       },
       slot: {
-        header: "Заголовок карточки",
+        header: "Заголовок карточки. Обертка header рендерится только когда слот передан.",
         footer: "Нижний колонтитул карточки",
       },
       variables: {

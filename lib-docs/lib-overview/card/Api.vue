@@ -19,6 +19,11 @@ const attributesData: IAttributesTableData[] = [
     default: "undefined",
   },
   {
+    name: "combined-shadow-border-width",
+    type: "number",
+    default: "0",
+  },
+  {
     name: "fill",
     type: "boolean",
     default: "true",
