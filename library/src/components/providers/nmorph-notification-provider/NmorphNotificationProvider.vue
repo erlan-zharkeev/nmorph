@@ -51,19 +51,17 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 });
 
 const notificationGroups = computed(() =>
-  placementList
-    .map((placement) => {
-      const notifications = renderedNotifications.value.filter(
-        (notification) => (notification.placement ?? props.placement) === placement
-      );
-      const start = Math.max(notifications.length - props.quantity, 0);
+  placementList.map((placement) => {
+    const notifications = renderedNotifications.value.filter(
+      (notification) => (notification.placement ?? props.placement) === placement
+    );
+    const start = Math.max(notifications.length - props.quantity, 0);
 
-      return {
-        placement,
-        notifications: notifications.slice(start),
-      };
-    })
-    .filter((group) => group.notifications.length > 0)
+    return {
+      placement,
+      notifications: notifications.slice(start),
+    };
+  })
 );
 
 watch(
@@ -105,6 +103,7 @@ const zIndex = computed(() => props.zIndex);
     <transition-group
       v-for="group in notificationGroups"
       :key="group.placement"
+      appear
       name="nmorph-notification"
       tag="div"
       :class="`nmorph-notification-provider__list nmorph-notification-provider__list--${group.placement}`"

@@ -17,6 +17,12 @@ const knownBugItems: string[] = [];
                 {{ $t("changelog-page.changelog.items.context-menu-neutral-hover") }}
               </li>
               <li>
+                {{ $t("changelog-page.changelog.items.tooltip-z-index-stack") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.notification-provider-first-animation") }}
+              </li>
+              <li>
                 {{
                   $t(
                     "changelog-page.changelog.items.carousel-collapse-docs",

@@ -12,6 +12,7 @@ import {
   NmorphBadge,
   NmorphImage,
   NmorphTagList,
+  NmorphTagItem,
   NmorphSkeleton,
   NmorphProgress,
   NmorphTooltip,
@@ -146,15 +147,26 @@ const localePath = useLocalePath();
           </NmorphCard>
         </NuxtLink>
       </div>
-      <div class="overview-component-wrapper tag">
-        <NuxtLink :to="localePath('/elements/tag')">
+      <div class="overview-component-wrapper tag-list">
+        <NuxtLink :to="localePath('/elements/tag-list')">
           <NmorphCard>
-            <template #header>Tag</template>
+            <template #header>Tag List</template>
             <div class="overview-component-content">
               <NmorphTagList :model-value="[
                 { value: '1', text: 'Lorem' },
                 { value: '2', text: 'Ipsum' },
               ]" />
+            </div>
+          </NmorphCard>
+        </NuxtLink>
+      </div>
+      <div class="overview-component-wrapper tag-item">
+        <NuxtLink :to="localePath('/elements/tag-item')">
+          <NmorphCard>
+            <template #header>Tag Item</template>
+            <div class="overview-component-content">
+              <NmorphTagItem value="1" text="Lorem" removable />
+              <NmorphTagItem value="2" text="Ipsum" design="common" />
             </div>
           </NmorphCard>
         </NuxtLink>
@@ -438,7 +450,7 @@ const localePath = useLocalePath();
         ['Dropdown', 'dropdown'],
         ['Calendar', 'calendar'],
       ]">
-        <NuxtLink :to="`/elements/${el[1]}`">
+        <NuxtLink :to="localePath(`/elements/${el[1]}`)">
           <NmorphCard>
             <template #header>{{ el[0] }}</template>
             <div class="overview-component-content">{{ el[0] }}</div>
@@ -517,7 +529,8 @@ const localePath = useLocalePath();
     }
   }
 
-  .tag {
+  .tag-list,
+  .tag-item {
     .nmorph-tag-item {
       margin-bottom: 4px;
     }

@@ -217,6 +217,10 @@ export default {
       items: {
         "context-menu-neutral-hover":
           "NmorphContextMenu 现在会从基础 text color 推导默认选项 hover background，而不是使用 accent color；自定义颜色的选项仍使用自己的颜色。",
+        "tooltip-z-index-stack":
+          "NmorphTooltip now participates in the shared automatic z-index stack and supports an explicit zIndex override.",
+        "notification-provider-first-animation":
+          "NmorphNotificationProvider now keeps placement transition groups mounted so the first notification animates like the following ones.",
         "carousel-collapse-docs":
           "Carousel 和 Collapse 现在已加入组件 registry、文档页面、API tables、examples 和 sandbox checks。",
         "time-picker-component":
@@ -1144,6 +1148,7 @@ export default {
         position: "设置提示框相对于目标元素的位置",
         "force-show": "强制显示提示框的布尔值",
         "force-coordinate": "允许手动控制提示框的坐标",
+        "z-index": "覆盖提示框可见时使用的共享自动 z-index",
       },
       slot: {},
       variables: {

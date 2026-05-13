@@ -1,4 +1,6 @@
 import { guidePages } from "./data/guide";
+import { componentGroups } from "./data/components";
+import { pascalToKebab } from "./utils/case-transformers";
 
 const guideRoutes = guidePages.flatMap((page) => [
   `/guide/${page.slug}`,
@@ -6,6 +8,14 @@ const guideRoutes = guidePages.flatMap((page) => [
   `/zh/guide/${page.slug}`,
 ]);
 const guideIndexRoutes = ["/guide", "/ru/guide", "/zh/guide"];
+const localePrefixes = ["", "/ru", "/zh"];
+const componentPathByName = (name: string) =>
+  `/elements/${pascalToKebab(name).substring(7).toLowerCase()}`;
+const elementRoutes = componentGroups.flatMap((group) =>
+  group.components.flatMap((componentName) =>
+    localePrefixes.map((prefix) => `${prefix}${componentPathByName(componentName)}`),
+  ),
+);
 const siteTitle = "Nmorph UI Kit";
 const siteDescription =
   "Vue 3 and Nuxt component library for building tactile product interfaces with neumorphic styling, forms, tables, overlays, theming, and typed component APIs.";
@@ -103,7 +113,7 @@ export default defineNuxtConfig({
     preset: "static",
     prerender: {
       crawlLinks: true,
-      routes: ["/", ...guideIndexRoutes, ...guideRoutes],
+      routes: ["/", ...guideIndexRoutes, ...guideRoutes, ...elementRoutes],
     },
   },
   modules: ["@nuxtjs/i18n", "nuxt-svgo", "@nmorph/nmorph-ui-kit/nuxt"],

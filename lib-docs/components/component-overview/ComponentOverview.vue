@@ -3,61 +3,107 @@ import { nextTick, shallowRef } from "vue";
 import { pascalToSpace, anyToPascalCase } from "~/utils";
 import MainContentPart from "~/layouts/MainContentPart.vue";
 import ComponentsList from "~/components/component-list/ComponentList.vue";
+import buttonOverview from "~/lib-overview/button";
+import iconOverview from "~/lib-overview/icon";
+import linkOverview from "~/lib-overview/link";
+import scrollOverview from "~/lib-overview/scroll";
+import avatarOverview from "~/lib-overview/avatar";
+import badgeOverview from "~/lib-overview/badge";
+import cardOverview from "~/lib-overview/card";
+import imageOverview from "~/lib-overview/image";
+import tagListOverview from "~/lib-overview/tag-list";
+import tagItemOverview from "~/lib-overview/tag-item";
+import carouselOverview from "~/lib-overview/carousel";
+import collapseOverview from "~/lib-overview/collapse";
+import skeletonOverview from "~/lib-overview/skeleton";
+import progressOverview from "~/lib-overview/progress";
+import calendarOverview from "~/lib-overview/calendar";
+import imagePreviewOverview from "~/lib-overview/image-preview";
+import paginationOverview from "~/lib-overview/pagination";
+import tableOverview from "~/lib-overview/table";
+import tooltipOverview from "~/lib-overview/tooltip";
+import alertOverview from "~/lib-overview/alert";
+import calloutOverview from "~/lib-overview/callout";
+import dialogOverview from "~/lib-overview/dialog";
+import dividerOverview from "~/lib-overview/divider";
+import overlayOverview from "~/lib-overview/overlay";
+import notificationProviderOverview from "~/lib-overview/notification-provider";
+import tabsOverview from "~/lib-overview/tabs";
+import dropdownOverview from "~/lib-overview/dropdown";
+import contextMenuOverview from "~/lib-overview/context-menu";
+import backtopOverview from "~/lib-overview/backtop";
+import breadcrumbOverview from "~/lib-overview/breadcrumb";
+import textInputOverview from "~/lib-overview/text-input";
+import otpInputOverview from "~/lib-overview/otp-input";
+import colorPickerOverview from "~/lib-overview/color-picker";
+import numberInputOverview from "~/lib-overview/number-input";
+import switchOverview from "~/lib-overview/switch";
+import checkboxOverview from "~/lib-overview/checkbox";
+import checkboxGroupOverview from "~/lib-overview/checkbox-group";
+import autocompleteOverview from "~/lib-overview/autocomplete";
+import fileUploadOverview from "~/lib-overview/file-upload";
+import selectOverview from "~/lib-overview/select";
+import sliderOverview from "~/lib-overview/slider";
+import radioOverview from "~/lib-overview/radio";
+import radioGroupOverview from "~/lib-overview/radio-group";
+import selectButtonOverview from "~/lib-overview/select-button";
+import formOverview from "~/lib-overview/form";
+import datePickerOverview from "~/lib-overview/date-picker";
+import timePickerOverview from "~/lib-overview/time-picker";
 
 interface IProps {
   name: string;
 }
 const props = withDefaults(defineProps<IProps>(), {});
 
-type OverviewModule = { default: unknown[] };
-
-const overviewLoaders: Record<string, () => Promise<OverviewModule>> = {
-  button: () => import("~/lib-overview/button"),
-  icon: () => import("~/lib-overview/icon"),
-  link: () => import("~/lib-overview/link"),
-  scroll: () => import("~/lib-overview/scroll"),
-  avatar: () => import("~/lib-overview/avatar"),
-  badge: () => import("~/lib-overview/badge"),
-  card: () => import("~/lib-overview/card"),
-  image: () => import("~/lib-overview/image"),
-  tag: () => import("~/lib-overview/tag"),
-  carousel: () => import("~/lib-overview/carousel"),
-  collapse: () => import("~/lib-overview/collapse"),
-  skeleton: () => import("~/lib-overview/skeleton"),
-  progress: () => import("~/lib-overview/progress"),
-  calendar: () => import("~/lib-overview/calendar"),
-  "image-preview": () => import("~/lib-overview/image-preview"),
-  pagination: () => import("~/lib-overview/pagination"),
-  table: () => import("~/lib-overview/table"),
-  tooltip: () => import("~/lib-overview/tooltip"),
-  alert: () => import("~/lib-overview/alert"),
-  callout: () => import("~/lib-overview/callout"),
-  dialog: () => import("~/lib-overview/dialog"),
-  divider: () => import("~/lib-overview/divider"),
-  overlay: () => import("~/lib-overview/overlay"),
-  "notification-provider": () => import("~/lib-overview/notification-provider"),
-  tabs: () => import("~/lib-overview/tabs"),
-  dropdown: () => import("~/lib-overview/dropdown"),
-  "context-menu": () => import("~/lib-overview/context-menu"),
-  backtop: () => import("~/lib-overview/backtop"),
-  breadcrumb: () => import("~/lib-overview/breadcrumb"),
-  "text-input": () => import("~/lib-overview/text-input"),
-  "otp-input": () => import("~/lib-overview/otp-input"),
-  "color-picker": () => import("~/lib-overview/color-picker"),
-  "number-input": () => import("~/lib-overview/number-input"),
-  switch: () => import("~/lib-overview/switch"),
-  checkbox: () => import("~/lib-overview/checkbox"),
-  "checkbox-group": () => import("~/lib-overview/checkbox-group"),
-  autocomplete: () => import("~/lib-overview/autocomplete"),
-  "file-upload": () => import("~/lib-overview/file-upload"),
-  select: () => import("~/lib-overview/select"),
-  slider: () => import("~/lib-overview/slider"),
-  radio: () => import("~/lib-overview/radio"),
-  "radio-group": () => import("~/lib-overview/radio-group"),
-  "select-button": () => import("~/lib-overview/select-button"),
-  form: () => import("~/lib-overview/form"),
-  "date-picker": () => import("~/lib-overview/date-picker"),
-  "time-picker": () => import("~/lib-overview/time-picker"),
+const overviewComponentsByName: Record<string, unknown[]> = {
+  button: buttonOverview,
+  icon: iconOverview,
+  link: linkOverview,
+  scroll: scrollOverview,
+  avatar: avatarOverview,
+  badge: badgeOverview,
+  card: cardOverview,
+  image: imageOverview,
+  "tag-list": tagListOverview,
+  "tag-item": tagItemOverview,
+  carousel: carouselOverview,
+  collapse: collapseOverview,
+  skeleton: skeletonOverview,
+  progress: progressOverview,
+  calendar: calendarOverview,
+  "image-preview": imagePreviewOverview,
+  pagination: paginationOverview,
+  table: tableOverview,
+  tooltip: tooltipOverview,
+  alert: alertOverview,
+  callout: calloutOverview,
+  dialog: dialogOverview,
+  divider: dividerOverview,
+  overlay: overlayOverview,
+  "notification-provider": notificationProviderOverview,
+  tabs: tabsOverview,
+  dropdown: dropdownOverview,
+  "context-menu": contextMenuOverview,
+  backtop: backtopOverview,
+  breadcrumb: breadcrumbOverview,
+  "text-input": textInputOverview,
+  "otp-input": otpInputOverview,
+  "color-picker": colorPickerOverview,
+  "number-input": numberInputOverview,
+  switch: switchOverview,
+  checkbox: checkboxOverview,
+  "checkbox-group": checkboxGroupOverview,
+  autocomplete: autocompleteOverview,
+  "file-upload": fileUploadOverview,
+  select: selectOverview,
+  slider: sliderOverview,
+  radio: radioOverview,
+  "radio-group": radioGroupOverview,
+  "select-button": selectButtonOverview,
+  form: formOverview,
+  "date-picker": datePickerOverview,
+  "time-picker": timePickerOverview,
 };
 
 const overviewComponents = shallowRef<unknown[]>([]);
@@ -136,11 +182,7 @@ const linkName = (anchor: string) => {
 };
 
 const loadOverview = async () => {
-  const loader = overviewLoaders[props.name];
-  overviewComponents.value = [];
-  if (!loader) return;
-  const module = await loader();
-  overviewComponents.value = module.default;
+  overviewComponents.value = overviewComponentsByName[props.name] ?? [];
   await nextTick();
   doUpdate();
 };

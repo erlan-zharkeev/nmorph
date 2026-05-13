@@ -528,6 +528,48 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('keeps tooltip content above adjacent controls through z-index', async () => {
+    const wrapper = mount(NmorphTooltip, {
+      props: {
+        forceShow: true,
+        text: 'Tooltip',
+        zIndex: 1234,
+      },
+      slots: {
+        default: '<button>Target</button>',
+      },
+    });
+
+    await nextTick();
+
+    const tooltip = wrapper.find('.nmorph-tooltip').element as HTMLElement;
+    const content = wrapper.find('.nmorph-tooltip__info-content').element as HTMLElement;
+
+    expect(tooltip.style.getPropertyValue('--nmorph-tooltip-z-index')).toBe('1234');
+    expect(content).toBeTruthy();
+
+    wrapper.unmount();
+  });
+
+  it('keeps notification transition groups mounted for first-item enter animations', async () => {
+    const wrapper = mount(NmorphNotificationProvider, {
+      props: {
+        notifications: [],
+      },
+    });
+
+    expect(wrapper.findAll('.nmorph-notification-provider__list')).toHaveLength(6);
+
+    await wrapper.setProps({
+      notifications: [{ id: 'first', type: 'info', title: 'First' }],
+    });
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-notification-provider__notification').exists()).toBe(true);
+
+    wrapper.unmount();
+  });
+
   it('renders number input right action buttons with increase above decrease', () => {
     const wrapper = mount(NmorphNumberInput, {
       props: {

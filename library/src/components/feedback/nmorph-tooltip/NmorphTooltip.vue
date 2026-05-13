@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { usePlacement } from '@/hooks';
+import { usePlacement, useZIndex } from '@/hooks';
 import { INmorphCoords, NmorphDomElementType, NmorphPlacementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
@@ -9,6 +9,7 @@ interface INmorphProps {
   position?: NmorphPlacementType;
   forceShow?: boolean;
   forceCoordinate?: Partial<INmorphCoords<string>> | null;
+  zIndex?: number;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -16,6 +17,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   position: 'top',
   forceShow: false,
   forceCoordinate: null,
+  zIndex: undefined,
 });
 
 const showTooltip = ref(props.forceShow);
@@ -47,12 +49,22 @@ const handleMouseLeave = () => {
 };
 
 const width = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
+const zIndex = useZIndex(
+  () => showTooltip.value,
+  () => props.zIndex
+);
 const tooltipBody = ref<NmorphDomElementType>(null);
 defineExpose({ tooltipBody });
 </script>
 
 <template>
-  <div :class="modifiers" :style="{ '--nmorph-tooltip-width': width }">
+  <div
+    :class="modifiers"
+    :style="{
+      '--nmorph-tooltip-width': width,
+      '--nmorph-tooltip-z-index': zIndex,
+    }"
+  >
     <div
       ref="tooltipDOMRef"
       class="nmorph-tooltip__content"
@@ -103,6 +115,7 @@ defineExpose({ tooltipBody });
 
   .nmorph-tooltip__info-content {
     position: absolute;
+    z-index: var(--nmorph-tooltip-z-index);
     width: var(--width);
     max-width: var(--max-width);
     height: var(--height);

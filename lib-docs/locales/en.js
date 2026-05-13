@@ -227,6 +227,10 @@ export default {
       items: {
         "context-menu-neutral-hover":
           "NmorphContextMenu now derives the default option hover background from the base text color instead of the accent color, while custom colored items still use their own color.",
+        "tooltip-z-index-stack":
+          "NmorphTooltip now participates in the shared automatic z-index stack and supports an explicit zIndex override.",
+        "notification-provider-first-animation":
+          "NmorphNotificationProvider now keeps placement transition groups mounted so the first notification animates like the following ones.",
         "carousel-collapse-docs":
           "Carousel and Collapse are now covered by the component registry, docs pages, API tables, examples, and sandbox checks.",
         "time-picker-component":
@@ -1198,6 +1202,8 @@ export default {
         "force-show": "Boolean value that forcibly shows the tooltip",
         "force-coordinate":
           "Allows manual control over the tooltip's coordinates",
+        "z-index":
+          "Overrides the shared automatic z-index used while the tooltip is visible",
       },
       slot: {},
       variables: {

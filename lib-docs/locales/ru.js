@@ -229,6 +229,10 @@ export default {
       items: {
         "context-menu-neutral-hover":
           "NmorphContextMenu теперь строит дефолтный hover background пункта от базового text color вместо accent color, а пункты с кастомным цветом продолжают использовать свой цвет.",
+        "tooltip-z-index-stack":
+          "NmorphTooltip now participates in the shared automatic z-index stack and supports an explicit zIndex override.",
+        "notification-provider-first-animation":
+          "NmorphNotificationProvider now keeps placement transition groups mounted so the first notification animates like the following ones.",
         "carousel-collapse-docs":
           "Carousel и Collapse теперь добавлены в registry компонентов, страницы документации, API tables, examples и sandbox checks.",
         "time-picker-component":
@@ -1212,6 +1216,8 @@ export default {
           "Булево значение, которое принудительно показывает подсказку",
         "force-coordinate":
           "Позволяет вручную управлять координатами подсказки",
+        "z-index":
+          "Переопределяет общий автоматический z-index, пока подсказка видима",
       },
       slot: {},
       variables: {
