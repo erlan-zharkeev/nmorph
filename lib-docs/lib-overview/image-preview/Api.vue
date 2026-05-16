@@ -54,6 +54,16 @@ const attributesData: IAttributesTableData[] = [
     default: "true",
   },
   {
+    name: "show-navigation-buttons",
+    type: "Boolean",
+    default: "true",
+  },
+  {
+    name: "show-action-bar",
+    type: "Boolean",
+    default: "true",
+  },
+  {
     name: "width",
     type: "String | Number",
     default: "undefined",

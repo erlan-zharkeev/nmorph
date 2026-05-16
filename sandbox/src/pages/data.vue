@@ -202,6 +202,13 @@ const progressColor = (value: number) => {
           :height="130"
           :navigation-button-margin="32"
         />
+        <NmorphImagePreview
+          :src="[imageThree, imageTwo]"
+          :width="190"
+          :height="130"
+          :show-navigation-buttons="false"
+          :show-action-bar="false"
+        />
       </div>
     </SandboxSection>
 

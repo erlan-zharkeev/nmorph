@@ -1655,6 +1655,51 @@ describe('components', () => {
     target.remove();
   });
 
+  it('can hide image preview navigation buttons and action bar independently', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphImagePreview, {
+      props: {
+        modelValue: true,
+        src: [imageSrc, imageSrc],
+        alt: 'Preview',
+        showNavigationButtons: false,
+        showActionBar: false,
+      },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    expect(document.body.querySelector('.nmorph-image-preview__left')).toBeFalsy();
+    expect(document.body.querySelector('.nmorph-image-preview__right')).toBeFalsy();
+    expect(document.body.querySelector('.nmorph-image-preview__actions')).toBeFalsy();
+
+    await wrapper.setProps({ showNavigationButtons: true });
+    await nextTick();
+
+    expect(document.body.querySelector('.nmorph-image-preview__left')).toBeTruthy();
+    expect(document.body.querySelector('.nmorph-image-preview__right')).toBeTruthy();
+    expect(document.body.querySelector('.nmorph-image-preview__actions')).toBeFalsy();
+
+    await wrapper.setProps({ showNavigationButtons: false, showActionBar: true });
+    await nextTick();
+
+    expect(document.body.querySelector('.nmorph-image-preview__left')).toBeFalsy();
+    expect(document.body.querySelector('.nmorph-image-preview__right')).toBeFalsy();
+    expect(document.body.querySelector('.nmorph-image-preview__actions')).toBeTruthy();
+
+    wrapper.unmount();
+    target.remove();
+  });
+
   it('closes image preview from backdrop and Escape key', async () => {
     const wrapper = mount(NmorphImagePreview, {
       props: { modelValue: true, src: imageSrc, alt: 'Preview' },

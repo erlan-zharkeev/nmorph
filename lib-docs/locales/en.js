@@ -229,6 +229,10 @@ export default {
           "NmorphCard now renders the header wrapper only when the header slot is provided.",
         "card-combined-border-style":
           "NmorphCard now forwards --nmorph-card-combined-border-width only for combined shadow cards.",
+        "send-icons":
+          "Added NmorphIconSend and NmorphIconSendFilled paper plane icons.",
+        "message-action-icons":
+          "Added NmorphIconReply, NmorphIconReplyFilled, NmorphIconForward, and NmorphIconForwardFilled for chat message actions.",
         "empty-state-component":
           "Added NmorphEmpty for empty states, including typed props, slots, docs, and sandbox examples.",
         "card-padding-prop":
@@ -251,6 +255,8 @@ export default {
           "Added NmorphTimePicker with typed exports, locale strings, docs overview, and sandbox examples.",
         "image-preview-overlay-fit":
           "NmorphImagePreview keeps its overlay content inside the preview portal and constrains opened images with contain sizing.",
+        "image-preview-control-visibility":
+          "NmorphImagePreview now lets consumers hide gallery navigation buttons and the bottom action bar independently.",
         "compact-sandbox-visual-fixes":
           "Fixed tag remove cursor, right-side number input action order, carousel looping, collapse reopening, and Windows scrollbar button styling.",
         "dev-open-workflow":
@@ -1160,6 +1166,10 @@ export default {
           "Defines the overlay z-index. Uses the shared automatic z-index stack when omitted",
         "show-trigger":
           "Defines whether the default preview trigger is rendered",
+        "show-navigation-buttons":
+          "Defines whether gallery navigation buttons are rendered for image sets",
+        "show-action-bar":
+          "Defines whether the bottom rotate and zoom action bar is rendered",
         width: "Overrides the preview trigger width. Numbers are treated as pixel values",
         height: "Overrides the preview trigger height. Numbers are treated as pixel values",
         "navigation-button-margin":

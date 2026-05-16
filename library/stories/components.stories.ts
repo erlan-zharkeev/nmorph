@@ -475,6 +475,8 @@ export const ImagePreview: Story = {
     minScaleLevel: 0.2,
     maxScaleLevel: 4,
     zIndex: 43183,
+    showNavigationButtons: true,
+    showActionBar: true,
   },
   argTypes: {
     modelValue: boolean,
@@ -485,6 +487,8 @@ export const ImagePreview: Story = {
     minScaleLevel: number,
     maxScaleLevel: number,
     zIndex: number,
+    showNavigationButtons: boolean,
+    showActionBar: boolean,
   },
   render: render(
     { NmorphImagePreview },

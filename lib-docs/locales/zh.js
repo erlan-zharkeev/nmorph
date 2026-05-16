@@ -219,6 +219,10 @@ export default {
           "NmorphCard now renders the header wrapper only when the header slot is provided.",
         "card-combined-border-style":
           "NmorphCard now forwards --nmorph-card-combined-border-width only for combined shadow cards.",
+        "send-icons":
+          "新增 NmorphIconSend 和 NmorphIconSendFilled 纸飞机图标。",
+        "message-action-icons":
+          "新增用于聊天消息操作的 NmorphIconReply、NmorphIconReplyFilled、NmorphIconForward 和 NmorphIconForwardFilled。",
         "empty-state-component":
           "Added NmorphEmpty for empty states, including typed props, slots, docs, and sandbox examples.",
         "card-padding-prop":
@@ -241,6 +245,8 @@ export default {
           "新增 NmorphTimePicker，包含 typed exports、locale strings、docs overview 和 sandbox examples。",
         "image-preview-overlay-fit":
           "NmorphImagePreview 会把 overlay content 保持在 preview portal 内，并用 contain sizing 限制打开后的图片。",
+        "image-preview-control-visibility":
+          "NmorphImagePreview 现在支持分别隐藏图库导航按钮和底部操作栏。",
         "compact-sandbox-visual-fixes":
           "修复 tag 删除按钮 cursor、number input 右侧按钮顺序、carousel loop、collapse 重新打开，以及 Windows scrollbar buttons。",
         "dev-open-workflow":
@@ -1116,6 +1122,10 @@ export default {
         "max-scale-level": "定义图像的最大缩放级别",
         "z-index": "定义覆盖层的 z-index。未传入时使用共享的自动 z-index 栈",
         "show-trigger": "定义是否渲染默认的预览触发器",
+        "show-navigation-buttons":
+          "定义图像组是否渲染图库导航按钮",
+        "show-action-bar":
+          "定义是否渲染底部旋转和缩放操作栏",
         width: "Overrides the preview trigger width. Numbers are treated as pixel values",
         height: "Overrides the preview trigger height. Numbers are treated as pixel values",
         "navigation-button-margin":

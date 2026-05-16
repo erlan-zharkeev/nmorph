@@ -27,6 +27,8 @@ interface INmorphProps {
   maxScaleLevel?: number;
   zIndex?: number;
   showTrigger?: boolean;
+  showNavigationButtons?: boolean;
+  showActionBar?: boolean;
   width?: number | string;
   height?: number | string;
   navigationButtonMargin?: number | string;
@@ -41,6 +43,8 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   maxScaleLevel: 4,
   zIndex: undefined,
   showTrigger: true,
+  showNavigationButtons: true,
+  showActionBar: true,
   width: undefined,
   height: undefined,
   navigationButtonMargin: undefined,
@@ -164,6 +168,7 @@ const actions: INmorphAction[] = [
 const emit = defineEmits<INmorphEmit>();
 
 const multipleSources = computed(() => Array.isArray(props.src) && props.src.length > 0);
+const showNavigation = computed(() => props.showNavigationButtons && multipleSources.value);
 const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const triggerStyle = computed<CSSProperties>(() => ({
   ...(props.width !== undefined && { '--width': getCssSize(props.width) }),
@@ -215,21 +220,21 @@ const portalStyle = computed<CSSProperties>(() => ({
             </template>
           </NmorphImage>
         </div>
-        <div v-if="multipleSources" class="nmorph-image-preview__left">
+        <div v-if="showNavigation" class="nmorph-image-preview__left">
           <NmorphButton @click="previousHandler">
             <NmorphIcon>
               <NmorphIconChevronDown />
             </NmorphIcon>
           </NmorphButton>
         </div>
-        <div v-if="multipleSources" class="nmorph-image-preview__right">
+        <div v-if="showNavigation" class="nmorph-image-preview__right">
           <NmorphButton @click="nextHandler">
             <NmorphIcon>
               <NmorphIconChevronDown />
             </NmorphIcon>
           </NmorphButton>
         </div>
-        <div class="nmorph-image-preview__actions">
+        <div v-if="props.showActionBar" class="nmorph-image-preview__actions">
           <div v-for="(action, idx) in actions" :key="idx" class="nmorph-image-preview__action-element">
             <NmorphButton @click="action.handler">
               <NmorphIcon>

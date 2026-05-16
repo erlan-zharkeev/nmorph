@@ -19,6 +19,15 @@ const knownBugItems: string[] = [];
               <li>
                 {{ $t("changelog-page.changelog.items.card-combined-border-style") }}
               </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.send-icons") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.message-action-icons") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.image-preview-control-visibility") }}
+              </li>
             </ul>
           </div>
           <div class="docs-changelog-page__release">

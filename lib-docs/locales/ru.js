@@ -231,6 +231,10 @@ export default {
           "NmorphCard теперь рендерит обертку header только когда передан слот header.",
         "card-combined-border-style":
           "NmorphCard теперь передает --nmorph-card-combined-border-width только для карточек с combined shadow.",
+        "send-icons":
+          "Добавлены иконки бумажного самолетика NmorphIconSend и NmorphIconSendFilled.",
+        "message-action-icons":
+          "Добавлены NmorphIconReply, NmorphIconReplyFilled, NmorphIconForward и NmorphIconForwardFilled для действий с сообщениями в чатах.",
         "empty-state-component":
           "Добавлен NmorphEmpty для пустых состояний: typed props, слоты, документация и примеры в sandbox.",
         "card-padding-prop":
@@ -253,6 +257,8 @@ export default {
           "Добавлен NmorphTimePicker с typed exports, строками локализации, docs overview и примерами в sandbox.",
         "image-preview-overlay-fit":
           "NmorphImagePreview держит overlay content внутри preview portal и ограничивает открытые изображения через contain sizing.",
+        "image-preview-control-visibility":
+          "NmorphImagePreview теперь позволяет отдельно скрывать кнопки навигации галереи и нижний action bar.",
         "compact-sandbox-visual-fixes":
           "Исправлены cursor у удаления tag, порядок right-side action buttons в number input, carousel loop, повторное открытие collapse и Windows scrollbar buttons.",
         "dev-open-workflow":
@@ -1173,6 +1179,10 @@ export default {
         "z-index":
           "Задает z-index оверлея. Если не передан, используется общий автоматический стек z-index",
         "show-trigger": "Определяет, рендерится ли стандартный trigger предпросмотра",
+        "show-navigation-buttons":
+          "Определяет, рендерятся ли кнопки навигации галереи для набора изображений",
+        "show-action-bar":
+          "Определяет, рендерится ли нижний action bar с поворотом и масштабированием",
         width: "Overrides the preview trigger width. Numbers are treated as pixel values",
         height: "Overrides the preview trigger height. Numbers are treated as pixel values",
         "navigation-button-margin":
