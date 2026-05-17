@@ -235,6 +235,8 @@ export default {
           "Добавлены иконки бумажного самолетика NmorphIconSend и NmorphIconSendFilled.",
         "message-action-icons":
           "Добавлены NmorphIconReply, NmorphIconReplyFilled, NmorphIconForward и NmorphIconForwardFilled для действий с сообщениями в чатах.",
+        "empty-border-box":
+          "NmorphEmpty теперь включает padding в ширину компонента, поэтому содержимое empty state не прижимается к краям grid или docs preview.",
         "empty-state-component":
           "Добавлен NmorphEmpty для пустых состояний: typed props, слоты, документация и примеры в sandbox.",
         "card-padding-prop":

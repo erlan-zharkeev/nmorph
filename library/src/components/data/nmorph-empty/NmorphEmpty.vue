@@ -78,6 +78,7 @@ const styles = computed<CSSProperties>(() => ({
   gap: 8px;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
   width: 100%;
   min-height: var(--nmorph-empty-min-height);
   padding: var(--nmorph-empty-padding);

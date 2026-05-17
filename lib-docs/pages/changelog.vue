@@ -11,14 +11,8 @@ const knownBugItems: string[] = [];
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.20</h3>
+            <h3>v2.2.21</h3>
             <ul>
-              <li>
-                {{ $t("changelog-page.changelog.items.card-header-slot-wrapper") }}
-              </li>
-              <li>
-                {{ $t("changelog-page.changelog.items.card-combined-border-style") }}
-              </li>
               <li>
                 {{ $t("changelog-page.changelog.items.send-icons") }}
               </li>
@@ -26,7 +20,21 @@ const knownBugItems: string[] = [];
                 {{ $t("changelog-page.changelog.items.message-action-icons") }}
               </li>
               <li>
+                {{ $t("changelog-page.changelog.items.empty-border-box") }}
+              </li>
+              <li>
                 {{ $t("changelog-page.changelog.items.image-preview-control-visibility") }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
+            <h3>v2.2.20</h3>
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.card-header-slot-wrapper") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.card-combined-border-style") }}
               </li>
             </ul>
           </div>
