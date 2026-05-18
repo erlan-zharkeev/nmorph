@@ -245,6 +245,14 @@ export default {
           "Root docs dev script теперь открывает lib-docs на 127.0.0.1 вместо LAN-адреса.",
         "autocomplete-close-clear-spacing":
           "NmorphAutocomplete теперь закрывается без повторного фокуса, оставляет clear action кликабельным при открытом списке и применяет базовые отступы к dropdown items.",
+        "badge-ribbon-type":
+          "NmorphBadge теперь поддерживает ribbon display type для диагональных corner labels с выбором угла, примерами в docs и sandbox.",
+        "notification-provider-z-index-stack":
+          "NmorphNotificationProvider теперь по умолчанию следует общему z-index stack, поэтому уведомления остаются поверх активных overlay и dialog.",
+        "dialog-viewport-scroll":
+          "NmorphDialog теперь остается внутри viewport, сохраняет header видимым и прокручивает переполненный контент внутри body диалога.",
+        "sandbox-source-aliases":
+          "Sandbox Nuxt dev/build теперь резолвит runtime imports nmorph из library/src, чтобы примеры отражали изменения исходников без пересборки dist.",
         "empty-border-box":
           "NmorphEmpty теперь включает padding в ширину компонента, поэтому содержимое empty state не прижимается к краям grid или docs preview.",
         "empty-state-component":
@@ -787,6 +795,13 @@ export default {
         subtitle:
           "Максимальное значение для бейджа. Если оно было задано как число и превышено, отображается как max+.",
       },
+      type: {
+        subtitle:
+          "Переключает отображение бейджа между default, dot и ribbon режимами.",
+      },
+      "ribbon-corner": {
+        subtitle: "Выбирает угол для диагонального ribbon-бейджа.",
+      },
       "is-dot": {
         subtitle:
           "Отображает бейдж в виде маленькой точки, если установлено в *true*. Работает даже без `value`.",
@@ -813,6 +828,8 @@ export default {
         value:
           "Отображаемое значение в бейдже. Если `undefined` и `is-dot` выключен, бейдж скрывается",
         max: "Максимальное допустимое отображаемое значение",
+        type: "Задает тип отображения бейджа: default, dot или ribbon",
+        "ribbon-corner": "Задает угол ribbon-бейджа, когда type равен ribbon",
         "is-dot": "Отображает бейдж в виде точки",
         "is-tag":
           "Переключает бейдж в standalone tag-режим без absolute-позиционирования и без default slot",
@@ -832,6 +849,11 @@ export default {
       },
       variables: {
         "dot-size": "Ширина и высота точки",
+        "nmorph-badge-ribbon-height": "Высота ribbon-полосы бейджа",
+        "nmorph-badge-ribbon-width": "Ширина ribbon-полосы бейджа",
+        "nmorph-badge-ribbon-corner-size": "Размер угловой зоны, по которой позиционируется ribbon-полоса",
+        "nmorph-badge-ribbon-offset-x": "Ручное горизонтальное смещение угловой зоны ribbon-полосы",
+        "nmorph-badge-ribbon-offset-y": "Ручное вертикальное смещение угловой зоны ribbon-полосы",
       },
     },
     card: {
@@ -1416,6 +1438,8 @@ export default {
           "Булево значение, которое управляет видимостью диалогового окна",
         title: "Определяет текст заголовка диалога",
         width: "Задает ширину диалогового окна",
+        "max-height":
+          "Задает максимальную высоту диалогового окна, после которой контент начинает прокручиваться",
         "open-delay":
           "Задержка в миллисекундах перед открытием диалогового окна",
         "close-delay":
@@ -1441,6 +1465,8 @@ export default {
       },
       variables: {
         width: "Определяет ширину компонента диалогового окна.",
+        "nmorph-dialog-max-height": "Максимальная высота диалога до прокрутки контента",
+        "nmorph-dialog-max-width": "Максимальная ширина диалога, удерживающая его внутри viewport",
       },
     },
     divider: {
@@ -1491,7 +1517,7 @@ export default {
       },
       "z-index": {
         subtitle:
-          "Задает z-index для уведомлений, чтобы контролировать их порядок наложения.",
+          "Переопределяет общий z-index stack для уведомлений.",
       },
       quantity: {
         subtitle:
@@ -1502,7 +1528,8 @@ export default {
           "Массив, содержащий уведомления. Каждое уведомление может переопределить placement",
         placement:
           "Позиция по умолчанию для уведомлений без собственного placement",
-        "z-index": "Определяет порядок наложения уведомлений",
+        "z-index":
+          "Задает фиксированный z-index уведомлений. Если не передан, используется слой над общим стеком",
         quantity:
           "Максимальное количество уведомлений, которое может быть на экране одновременно",
       },

@@ -233,6 +233,14 @@ export default {
           "根 docs dev 脚本现在会在 127.0.0.1 打开 lib-docs，而不是 LAN 地址。",
         "autocomplete-close-clear-spacing":
           "NmorphAutocomplete 现在关闭时不会重新聚焦自身，打开列表时 clear action 仍可点击，并为 dropdown items 应用默认间距。",
+        "badge-ribbon-type":
+          "NmorphBadge 现在支持 ribbon 显示类型，用于可选择角落的斜向角标，并已添加 docs 和 sandbox 示例。",
+        "notification-provider-z-index-stack":
+          "NmorphNotificationProvider 现在默认跟随共享 z-index 栈，因此通知会显示在活动 overlay 和 dialog 之上。",
+        "dialog-viewport-scroll":
+          "NmorphDialog 现在会保持在 viewport 内，header 始终可见，并在 dialog body 内滚动溢出内容。",
+        "sandbox-source-aliases":
+          "Sandbox Nuxt dev/build 现在会从 library/src 解析 nmorph runtime imports，因此示例无需重建 dist 也能反映源码变更。",
         "empty-border-box":
           "NmorphEmpty 现在会把 padding 计入组件宽度，避免 empty state 内容贴近 grid 或 docs preview 的边缘。",
         "empty-state-component":
@@ -758,6 +766,12 @@ export default {
         subtitle:
           "Maximum value for the badge. If it's set as a number and exceeded, it's displayed as max+.",
       },
+      type: {
+        subtitle: "在 default、dot 和 ribbon badge 显示之间切换。",
+      },
+      "ribbon-corner": {
+        subtitle: "选择 diagonal ribbon badge 使用的角落。",
+      },
       "is-dot": {
         subtitle:
           "Displays the badge as a small dot if set to *true*. Works even when `value` is omitted.",
@@ -783,6 +797,8 @@ export default {
         value:
           "The displayed value on the badge. If undefined and is-dot is false, the badge is hidden",
         max: "Maximum value to display",
+        type: "设置 badge 显示类型：default、dot 或 ribbon",
+        "ribbon-corner": "当 type 为 ribbon 时设置 ribbon 角落",
         "is-dot": "Displays the badge as a dot",
         "is-tag":
           "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
@@ -803,6 +819,11 @@ export default {
       },
       variables: {
         "dot-size": "Width and height of the dot",
+        "nmorph-badge-ribbon-height": "ribbon badge 条带高度",
+        "nmorph-badge-ribbon-width": "ribbon badge 条带宽度",
+        "nmorph-badge-ribbon-corner-size": "用于定位 ribbon 条带的角落区域尺寸",
+        "nmorph-badge-ribbon-offset-x": "ribbon 角落区域的手动水平偏移",
+        "nmorph-badge-ribbon-offset-y": "ribbon 角落区域的手动垂直偏移",
       },
     },
     card: {
@@ -1339,6 +1360,7 @@ export default {
         "model-value": "控制对话框可见性的布尔值",
         title: "定义对话框的标题文本",
         width: "设置对话框的宽度",
+        "max-height": "设置对话框窗口的最大高度，超过后内容会在内部滚动",
         "open-delay": "打开对话框前的延迟（毫秒）",
         "close-delay": "关闭对话框前的延迟（毫秒）",
         "close-on-click-modal": "布尔值，允许通过点击外部关闭对话框",
@@ -1357,6 +1379,8 @@ export default {
       },
       variables: {
         width: "定义对话框组件的宽度。",
+        "nmorph-dialog-max-height": "内容开始滚动前的对话框最大高度",
+        "nmorph-dialog-max-width": "用于让对话框保持在 viewport 内的最大宽度",
       },
     },
     divider: {
@@ -1398,7 +1422,7 @@ export default {
         subtitle: "定义通知在屏幕上的位置。",
       },
       "z-index": {
-        subtitle: "设置通知的 z-index，以控制其堆叠顺序。",
+        subtitle: "覆盖通知使用的共享 z-index 栈。",
       },
       quantity: {
         subtitle: "限制同时显示的最大通知数量。",
@@ -1406,7 +1430,7 @@ export default {
       api: {
         notifications: "包含通知的数组。每条通知都可以覆盖 placement",
         placement: "未定义 placement 的通知所使用的默认位置",
-        "z-index": "定义通知的堆叠顺序",
+        "z-index": "定义固定的通知 z-index。未传入时使用共享栈上方的一层",
         quantity: "同时可以在屏幕上显示的最大通知数量",
       },
       slot: {},

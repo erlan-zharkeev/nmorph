@@ -1,6 +1,14 @@
 import { resolve } from "node:path";
+import svgLoader from "vite-svg-loader";
 
 const sandboxSrc = resolve(__dirname, "src");
+const nmorphSrc = resolve(__dirname, "../library/src");
+const nmorphAliases = {
+  "@nmorph/nmorph-ui-kit/plugin": resolve(nmorphSrc, "plugin.ts"),
+  "@nmorph/nmorph-ui-kit/icons": resolve(nmorphSrc, "icons.ts"),
+  "@nmorph/nmorph-ui-kit/styles": resolve(nmorphSrc, "styles.ts"),
+  "@nmorph/nmorph-ui-kit": resolve(nmorphSrc, "main.ts"),
+};
 
 export default defineNuxtConfig({
   compatibilityDate: "2024-09-05",
@@ -20,13 +28,16 @@ export default defineNuxtConfig({
     "@sandbox": sandboxSrc,
   },
   vite: {
+    plugins: [svgLoader()],
     optimizeDeps: {
       exclude: ["@nmorph/nmorph-ui-kit"],
     },
     resolve: {
-      alias: {
-        "@vue/devtools-api": "vue-devtools-stub",
-      },
+      alias: [
+        { find: /^@\//, replacement: `${nmorphSrc}/` },
+        { find: "@vue/devtools-api", replacement: "vue-devtools-stub" },
+        ...Object.entries(nmorphAliases).map(([find, replacement]) => ({ find, replacement })),
+      ],
       dedupe: [
         "vue",
         "vue-i18n",

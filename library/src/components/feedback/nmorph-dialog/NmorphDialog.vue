@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphOverlay, NmorphIcon, NmorphIconCross } from '@/components';
 
@@ -7,6 +8,7 @@ interface INmorphProps {
   modelValue?: boolean;
   title?: string;
   width?: string;
+  maxHeight?: string;
   openDelay?: number;
   closeDelay?: number;
   closeOnClickModal?: boolean;
@@ -19,6 +21,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: false,
   title: '',
   width: '330px',
+  maxHeight: undefined,
   openDelay: 0,
   closeDelay: 0,
   closeOnClickModal: true,
@@ -39,6 +42,11 @@ const modifiers = computed(() =>
     'nmorph-dialog': [],
   })
 );
+
+const dialogStyle = computed<CSSProperties>(() => ({
+  '--nmorph-dialog-width': props.width,
+  ...(props.maxHeight && { '--nmorph-dialog-max-height': props.maxHeight }),
+}));
 
 const isVisible = ref(props.modelValue);
 
@@ -92,13 +100,7 @@ const clickOnOverlay = () => {
     @on-outside-click="clickOnOverlay"
     @on-escape-keydown="closeHandler"
   >
-    <div
-      :class="modifiers"
-      :style="{ '--nmorph-dialog-width': props.width }"
-      role="dialog"
-      aria-modal="true"
-      :aria-label="props.title || undefined"
-    >
+    <div :class="modifiers" :style="dialogStyle" role="dialog" aria-modal="true" :aria-label="props.title || undefined">
       <div class="nmorph-dialog__header">
         <slot name="header">
           <div class="nmorph-dialog__title">{{ props.title }}</div>
@@ -121,14 +123,27 @@ const clickOnOverlay = () => {
   position: absolute;
   top: 50%;
   left: 50%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
   width: var(--width);
+  max-width: var(--nmorph-dialog-max-width, calc(100vw - 32px));
+  max-height: var(--nmorph-dialog-max-height, var(--nmorph-dialog-default-max-height));
   padding: var(--indentation-04);
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
   transform: translate(-50%, -50%);
 
+  --width: var(--nmorph-dialog-width);
+  --nmorph-dialog-default-max-height: calc(100vh - 32px);
+
+  @supports (height: 100dvh) {
+    --nmorph-dialog-default-max-height: calc(100dvh - 32px);
+  }
+
   .nmorph-dialog__header {
     display: flex;
+    flex: 0 0 auto;
     justify-content: space-between;
     align-items: center;
     font-weight: 600;
@@ -137,9 +152,13 @@ const clickOnOverlay = () => {
   }
 
   .nmorph-dialog__close-icon {
+    flex: 0 0 auto;
     cursor: pointer;
   }
 
-  --width: var(--nmorph-dialog-width);
+  .nmorph-dialog__content {
+    min-height: 0;
+    overflow-y: auto;
+  }
 }
 </style>

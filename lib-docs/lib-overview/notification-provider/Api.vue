@@ -22,7 +22,7 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "z-index",
     type: "Number",
-    default: "1000",
+    default: "auto",
   },
   {
     name: "quantity",

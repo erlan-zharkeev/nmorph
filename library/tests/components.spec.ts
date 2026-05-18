@@ -782,6 +782,31 @@ describe('components', () => {
     );
   });
 
+  it('renders ribbon badge in the selected corner', async () => {
+    const wrapper = mount(NmorphBadge, {
+      props: {
+        value: 'New',
+        type: 'ribbon',
+        ribbonCorner: 'bottom-left',
+      },
+      slots: {
+        default: '<div>Card</div>',
+      },
+    });
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-badge__ribbon-frame').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-badge__ribbon-corner').classes()).toContain(
+      'nmorph-badge__ribbon-corner--bottom-left'
+    );
+    expect(wrapper.find('.nmorph-badge__container').classes()).toContain(
+      'nmorph-badge__container--ribbon-bottom-left'
+    );
+
+    wrapper.unmount();
+  });
+
   it('forwards CSS variable props on form controls', async () => {
     const assertStyles = async (wrapper, selector, expected) => {
       await nextTick();
@@ -1483,6 +1508,35 @@ describe('components', () => {
     await nextTick();
 
     expect(wrapper.vm.open).toBe(false);
+    wrapper.unmount();
+  });
+
+  it('keeps dialog content scrollable inside a constrained dialog', async () => {
+    const wrapper = mount(NmorphDialog, {
+      props: {
+        modelValue: true,
+        width: '960px',
+        maxHeight: '240px',
+      },
+      slots: {
+        default: '<div style="height: 600px;">Tall content</div>',
+      },
+      global: {
+        stubs: {
+          Teleport: true,
+        },
+      },
+    });
+
+    await nextTick();
+
+    const dialog = wrapper.find('.nmorph-dialog').element as HTMLElement;
+
+    expect(dialog.style.getPropertyValue('--nmorph-dialog-width')).toBe('960px');
+    expect(dialog.style.getPropertyValue('--nmorph-dialog-max-height')).toBe('240px');
+    expect(wrapper.find('.nmorph-dialog__header').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-dialog__content').exists()).toBe(true);
+
     wrapper.unmount();
   });
 

@@ -18,6 +18,16 @@ const attributesData: IAttributesTableData[] = [
     default: "99",
   },
   {
+    name: "type",
+    type: "'default' | 'dot' | 'ribbon'",
+    default: "default",
+  },
+  {
+    name: "ribbon-corner",
+    type: "'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'",
+    default: "top-right",
+  },
+  {
     name: "is-dot",
     type: "Boolean",
     default: "false",
@@ -66,7 +76,14 @@ const attributesData: IAttributesTableData[] = [
 
 const slotData: ISlotsTableData[] = [{ name: "default" }, { name: "value" }];
 
-const variables: IVariablesTableData[] = [{ name: "dot-size" }];
+const variables: IVariablesTableData[] = [
+  { name: "dot-size" },
+  { name: "nmorph-badge-ribbon-height" },
+  { name: "nmorph-badge-ribbon-width" },
+  { name: "nmorph-badge-ribbon-corner-size" },
+  { name: "nmorph-badge-ribbon-offset-x" },
+  { name: "nmorph-badge-ribbon-offset-y" },
+];
 </script>
 
 <template>

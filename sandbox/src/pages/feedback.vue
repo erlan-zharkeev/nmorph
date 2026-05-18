@@ -19,8 +19,10 @@ const notificationPlacements = Object.values(NmorphNotificationPlacement)
 
 const dialogOpen = ref(false)
 const customDialogOpen = ref(false)
+const tallDialogOpen = ref(false)
 const closableAlertVisible = ref(true)
 const notificationProvider = useNmorphNotification()
+const tallDialogItems = Array.from({ length: 16 }, (_, index) => `Dynamic row ${index + 1}`)
 
 const showNotification = (type: 'success' | 'info' | 'warning' | 'error') => {
   notificationProvider.notify({
@@ -94,6 +96,7 @@ const showStickyNotification = () => {
       <div class="row">
         <NmorphButton text="Open dialog" @click="dialogOpen = true" />
         <NmorphButton text="Custom header" style-type="transparent" @click="customDialogOpen = true" />
+        <NmorphButton text="Tall content" style-type="transparent" @click="tallDialogOpen = true" />
       </div>
       <NmorphDialog v-model="dialogOpen" title="Dialog title" width="380px" :close-delay="120" :z-index="1100">
         <p>Dialog content goes here.</p>
@@ -112,6 +115,11 @@ const showStickyNotification = () => {
           </div>
         </template>
         <p>Overlay click is disabled for this dialog.</p>
+      </NmorphDialog>
+      <NmorphDialog v-model="tallDialogOpen" title="Scrollable content" width="420px" max-height="260px">
+        <div class="dialog-scroll-list">
+          <p v-for="item in tallDialogItems" :key="item">{{ item }}</p>
+        </div>
       </NmorphDialog>
     </SandboxSection>
 
@@ -195,6 +203,11 @@ const showStickyNotification = () => {
   justify-content: space-between;
   width: 100%;
   gap: 12px;
+}
+
+.dialog-scroll-list {
+  display: grid;
+  gap: 8px;
 }
 
 p {

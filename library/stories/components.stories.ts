@@ -330,6 +330,8 @@ export const Badge: Story = {
   args: {
     value: 12,
     max: 99,
+    type: 'default',
+    ribbonCorner: 'top-right',
     isDot: false,
     isTag: false,
     hidden: false,
@@ -343,6 +345,8 @@ export const Badge: Story = {
   argTypes: {
     value: text,
     max: number,
+    type: select(['default', 'dot', 'ribbon']),
+    ribbonCorner: select(['top-left', 'top-right', 'bottom-left', 'bottom-right']),
     isDot: boolean,
     isTag: boolean,
     hidden: boolean,
@@ -656,6 +660,7 @@ export const Dialog: Story = {
     modelValue: true,
     title: 'Dialog',
     width: '330px',
+    maxHeight: undefined,
     openDelay: 0,
     closeDelay: 0,
     closeOnClickModal: true,
@@ -667,6 +672,7 @@ export const Dialog: Story = {
     modelValue: boolean,
     title: text,
     width: text,
+    maxHeight: text,
     openDelay: number,
     closeDelay: number,
     closeOnClickModal: boolean,

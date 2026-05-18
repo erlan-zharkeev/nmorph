@@ -103,6 +103,15 @@ const progressColor = (value: number) => {
           </template>
           <NmorphButton text="Slot" />
         </NmorphBadge>
+        <NmorphBadge value="Top right" type="ribbon" ribbon-corner="top-right">
+          <div class="badge-ribbon-card">Ribbon</div>
+        </NmorphBadge>
+        <NmorphBadge value="asdf" type="ribbon" ribbon-corner="top-left" color="var(--nmorph-error-color)">
+          <div class="badge-ribbon-card">Corner</div>
+        </NmorphBadge>
+        <NmorphBadge value="Bottom right" type="ribbon" ribbon-corner="bottom-right" color="var(--nmorph-warn-color)">
+          <div class="badge-ribbon-card">Bottom</div>
+        </NmorphBadge>
         <NmorphBadge value="Tag" is-tag size="extra-small" />
         <NmorphBadge value="Base Tag" is-tag size="base" />
         <NmorphBadge value="Hidden" hidden>
@@ -385,6 +394,17 @@ const progressColor = (value: number) => {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+}
+
+.badge-ribbon-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 110px;
+  background: var(--nmorph-main-color);
+  border-radius: var(--default-border-radius);
+  box-shadow: var(--nmorph-shadow-outset);
 }
 
 .image-demo {

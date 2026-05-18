@@ -243,6 +243,14 @@ export default {
           "Root docs dev script now opens lib-docs at 127.0.0.1 instead of a LAN address.",
         "autocomplete-close-clear-spacing":
           "NmorphAutocomplete now closes without refocusing itself, keeps its clear action clickable while open, and applies default spacing to dropdown items.",
+        "badge-ribbon-type":
+          "NmorphBadge now supports a ribbon display type for diagonal corner labels with selectable corners, docs, and sandbox examples.",
+        "notification-provider-z-index-stack":
+          "NmorphNotificationProvider now follows the shared z-index stack by default so notifications stay above active overlays and dialogs.",
+        "dialog-viewport-scroll":
+          "NmorphDialog now stays within the viewport, keeps its header visible, and scrolls overflowing content inside the dialog body.",
+        "sandbox-source-aliases":
+          "Sandbox Nuxt dev/build now resolves nmorph runtime imports from library/src so examples reflect source changes without rebuilding dist.",
         "empty-border-box":
           "NmorphEmpty now includes its padding inside the component width, preventing empty-state content from pressing against grid or docs preview edges.",
         "empty-state-component":
@@ -781,6 +789,13 @@ export default {
         subtitle:
           "Maximum value for the badge. If it's set as a number and exceeded, it's displayed as max+.",
       },
+      type: {
+        subtitle:
+          "Switches between the default badge, dot badge, and ribbon badge display.",
+      },
+      "ribbon-corner": {
+        subtitle: "Selects the corner used by the diagonal ribbon badge.",
+      },
       "is-dot": {
         subtitle:
           "Displays the badge as a small dot if set to *true*. Works even when `value` is omitted.",
@@ -806,6 +821,8 @@ export default {
         value:
           "The displayed value on the badge. If undefined and is-dot is false, the badge is hidden",
         max: "Maximum value to display",
+        type: "Sets the badge display type: default, dot, or ribbon",
+        "ribbon-corner": "Sets the ribbon corner when type is ribbon",
         "is-dot": "Displays the badge as a dot",
         "is-tag":
           "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
@@ -826,6 +843,11 @@ export default {
       },
       variables: {
         "dot-size": "Width and height of the dot",
+        "nmorph-badge-ribbon-height": "Height of the ribbon badge strip",
+        "nmorph-badge-ribbon-width": "Width of the ribbon badge strip",
+        "nmorph-badge-ribbon-corner-size": "Size of the corner zone used to position the ribbon strip",
+        "nmorph-badge-ribbon-offset-x": "Manual horizontal offset for the ribbon corner zone",
+        "nmorph-badge-ribbon-offset-y": "Manual vertical offset for the ribbon corner zone",
       },
     },
     card: {
@@ -1401,6 +1423,8 @@ export default {
           "Boolean value that controls the visibility of the dialog window",
         title: "Defines the text of the dialog header",
         width: "Sets the width of the dialog window",
+        "max-height":
+          "Sets the maximum height of the dialog window before the content starts scrolling",
         "open-delay": "Delay in milliseconds before opening the dialog window",
         "close-delay": "Delay in milliseconds before closing the dialog window",
         "close-on-click-modal":
@@ -1424,6 +1448,8 @@ export default {
       },
       variables: {
         width: "Defines the width of the dialog component.",
+        "nmorph-dialog-max-height": "Maximum dialog height before the content scrolls",
+        "nmorph-dialog-max-width": "Maximum dialog width used to keep the dialog inside the viewport",
       },
     },
     divider: {
@@ -1474,7 +1500,7 @@ export default {
       },
       "z-index": {
         subtitle:
-          "Sets the z-index for the notifications to control their stacking order.",
+          "Overrides the shared z-index stack used for notifications.",
       },
       quantity: {
         subtitle:
@@ -1485,7 +1511,8 @@ export default {
           "Array containing the notifications. Each notification can override placement",
         placement:
           "Default position for notifications that do not define placement",
-        "z-index": "Defines the stacking order of the notifications",
+        "z-index":
+          "Defines a fixed notification z-index. Uses one layer above the shared stack when omitted",
         quantity:
           "Maximum number of notifications that can be on the screen at the same time",
       },

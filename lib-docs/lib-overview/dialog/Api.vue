@@ -26,6 +26,14 @@ const attributesData: IAttributesTableData[] = [
     default: "330px",
   },
   {
+    name: "max-height",
+    type: docsLink(
+      "Max-height",
+      "https://developer.mozilla.org/ru/docs/Web/CSS/max-height"
+    ),
+    default: "calc(100dvh - 32px)",
+  },
+  {
     name: "open-delay",
     type: "Number",
     default: "0",
@@ -58,7 +66,11 @@ const attributesData: IAttributesTableData[] = [
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "header" }, { name: "default" }];
-const variables: IVariablesTableData[] = [{ name: "width" }];
+const variables: IVariablesTableData[] = [
+  { name: "width" },
+  { name: "nmorph-dialog-max-height" },
+  { name: "nmorph-dialog-max-width" },
+];
 const events = [
   { name: "on-close", type: "void" },
   { name: "update:model-value", type: "Boolean" },

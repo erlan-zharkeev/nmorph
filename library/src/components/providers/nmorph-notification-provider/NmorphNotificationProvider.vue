@@ -2,7 +2,8 @@
 import { NmorphNotificationPlacement } from '@/components/providers';
 import type { INmorphNotification, TNmorphNotificationPlacement } from '@/components/providers';
 import { NmorphAlert } from '@/components';
-import { computed, ref, watch } from 'vue';
+import { computed, inject, ref, watch } from 'vue';
+import type { INmorphInstance } from '@/types';
 
 const ANIMATION_DURATION = 500;
 
@@ -46,9 +47,11 @@ interface INmorphProps {
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   placement: 'top-right',
-  zIndex: 1000,
+  zIndex: undefined,
   quantity: 100,
 });
+
+const nmorph = inject<INmorphInstance | undefined>('nmorph', undefined);
 
 const notificationGroups = computed(() =>
   placementList.map((placement) => {
@@ -95,7 +98,7 @@ watch(
   { deep: true, immediate: true }
 );
 
-const zIndex = computed(() => props.zIndex);
+const zIndex = computed(() => props.zIndex ?? (nmorph?.zIndex.current.value ?? 1000) + 1);
 </script>
 
 <template>
