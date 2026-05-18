@@ -235,6 +235,8 @@ export default {
           "Добавлены иконки бумажного самолетика NmorphIconSend и NmorphIconSendFilled.",
         "message-action-icons":
           "Добавлены NmorphIconReply, NmorphIconReplyFilled, NmorphIconForward и NmorphIconForwardFilled для действий с сообщениями в чатах.",
+        "smile-icon":
+          "Добавлена NmorphIconSmile для emoji-изображений и реакций.",
         "empty-border-box":
           "NmorphEmpty теперь включает padding в ширину компонента, поэтому содержимое empty state не прижимается к краям grid или docs preview.",
         "empty-state-component":

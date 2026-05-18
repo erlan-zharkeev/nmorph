@@ -20,6 +20,9 @@ const knownBugItems: string[] = [];
                 {{ $t("changelog-page.changelog.items.message-action-icons") }}
               </li>
               <li>
+                {{ $t("changelog-page.changelog.items.smile-icon") }}
+              </li>
+              <li>
                 {{ $t("changelog-page.changelog.items.empty-border-box") }}
               </li>
               <li>

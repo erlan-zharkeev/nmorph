@@ -233,6 +233,8 @@ export default {
           "Added NmorphIconSend and NmorphIconSendFilled paper plane icons.",
         "message-action-icons":
           "Added NmorphIconReply, NmorphIconReplyFilled, NmorphIconForward, and NmorphIconForwardFilled for chat message actions.",
+        "smile-icon":
+          "Added NmorphIconSmile for emoji images and reactions.",
         "empty-border-box":
           "NmorphEmpty now includes its padding inside the component width, preventing empty-state content from pressing against grid or docs preview edges.",
         "empty-state-component":

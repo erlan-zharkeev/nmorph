@@ -216,6 +216,7 @@ export { default as NmorphIconShoppingBag } from '@/assets/icons/shopping-bag.sv
 export { default as NmorphIconShoppingCartFull } from '@/assets/icons/shopping-cart-full.svg';
 export { default as NmorphIconShoppingCart } from '@/assets/icons/shopping-cart.svg';
 export { default as NmorphIconShrink } from '@/assets/icons/shrink.svg';
+export { default as NmorphIconSmile } from '@/assets/icons/smile.svg';
 export { default as NmorphIconSmoking } from '@/assets/icons/smoking.svg';
 export { default as NmorphIconSoccer } from '@/assets/icons/soccer.svg';
 export { default as NmorphIconSoldOut } from '@/assets/icons/sold-out.svg';

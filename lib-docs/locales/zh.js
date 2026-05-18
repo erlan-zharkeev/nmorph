@@ -223,6 +223,8 @@ export default {
           "新增 NmorphIconSend 和 NmorphIconSendFilled 纸飞机图标。",
         "message-action-icons":
           "新增用于聊天消息操作的 NmorphIconReply、NmorphIconReplyFilled、NmorphIconForward 和 NmorphIconForwardFilled。",
+        "smile-icon":
+          "新增 NmorphIconSmile，用于 emoji 图片和反应。",
         "empty-border-box":
           "NmorphEmpty 现在会把 padding 计入组件宽度，避免 empty state 内容贴近 grid 或 docs preview 的边缘。",
         "empty-state-component":
