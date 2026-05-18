@@ -59,12 +59,12 @@ const attributesData = [
   {
     name: "y-gap-in-px",
     type: "Number",
-    default: "4",
+    default: "0",
   },
   {
     name: "x-gap-in-px",
     type: "Number",
-    default: "4",
+    default: "0",
   },
 ];
 

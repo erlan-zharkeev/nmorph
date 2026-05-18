@@ -6,6 +6,7 @@ const apps = {
   docs: {
     filter: "nmorph-lib-docs",
     label: "lib-docs",
+    browserHost: "127.0.0.1",
     path: "/",
     port: 43117,
   },
@@ -118,11 +119,21 @@ const openUrl = (url) => {
   child.unref();
 };
 
-const browserHost = getBrowserHost();
-const urls = selectedApps.map((app) => ({
-  ...app,
-  url: `http://${browserHost}:${app.port}${app.path}`,
-}));
+let defaultBrowserHost;
+const getDefaultBrowserHost = () => {
+  defaultBrowserHost ??= getBrowserHost();
+  return defaultBrowserHost;
+};
+
+const urls = selectedApps.map((app) => {
+  const appBrowserHost = app.browserHost ?? getDefaultBrowserHost();
+
+  return {
+    ...app,
+    browserHost: appBrowserHost,
+    url: `http://${appBrowserHost}:${app.port}${app.path}`,
+  };
+});
 const turboArgs = [
   "run",
   "dev",
@@ -130,7 +141,7 @@ const turboArgs = [
 ];
 
 if (dryRun) {
-  console.log(`browser host: ${browserHost}`);
+  if (defaultBrowserHost) console.log(`default browser host: ${defaultBrowserHost}`);
   console.log(`turbo ${turboArgs.join(" ")}`);
   for (const app of urls) console.log(`${app.label}: ${app.url}`);
   process.exit(0);

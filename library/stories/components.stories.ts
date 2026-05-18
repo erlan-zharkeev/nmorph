@@ -261,8 +261,8 @@ export const Scroll: Story = {
     updateOnlyOnScrollEnd: false,
     yBarWidthInPx: 6,
     xBarWidthInPx: 6,
-    yGapInPx: 4,
-    xGapInPx: 4,
+    yGapInPx: 0,
+    xGapInPx: 0,
   },
   argTypes: {
     height: text,

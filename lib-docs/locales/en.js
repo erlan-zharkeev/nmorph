@@ -235,6 +235,14 @@ export default {
           "Added NmorphIconReply, NmorphIconReplyFilled, NmorphIconForward, and NmorphIconForwardFilled for chat message actions.",
         "smile-icon":
           "Added NmorphIconSmile for emoji images and reactions.",
+        "scroll-gap-defaults":
+          "NmorphScroll now defaults xGapInPx and yGapInPx to 0 so custom scrollbars sit flush by default.",
+        "image-preview-click-through":
+          "NmorphImagePreview now lets empty preview space close the overlay instead of blocking outside clicks.",
+        "docs-localhost-open":
+          "Root docs dev script now opens lib-docs at 127.0.0.1 instead of a LAN address.",
+        "autocomplete-close-clear-spacing":
+          "NmorphAutocomplete now closes without refocusing itself, keeps its clear action clickable while open, and applies default spacing to dropdown items.",
         "empty-border-box":
           "NmorphEmpty now includes its padding inside the component width, preventing empty-state content from pressing against grid or docs preview edges.",
         "empty-state-component":
@@ -1534,6 +1542,8 @@ export default {
           "Defines the dropdown overlay z-index. Uses the shared automatic z-index stack when omitted",
         placement:
           "Defines dropdown placement relative to the trigger element, including end alignment",
+        "restore-focus":
+          "Defines whether focus should return to the previously focused element after close",
       },
       slot: {
         default: "Slot for customizing the content inside the dropdown",

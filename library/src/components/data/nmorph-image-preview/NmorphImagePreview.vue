@@ -285,25 +285,34 @@ const portalStyle = computed<CSSProperties>(() => ({
   display: contents;
 
   .nmorph-image-preview__content {
+    --nmorph-image-preview-content-width: min(calc(100vw - 96px), 960px);
+    --nmorph-image-preview-content-height: min(calc(100vh - 180px), 720px);
+
     position: absolute;
     top: 50%;
     left: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: min(calc(100vw - 96px), 960px);
-    height: min(calc(100vh - 180px), 720px);
+    width: var(--nmorph-image-preview-content-width);
+    height: var(--nmorph-image-preview-content-height);
     transform: translate(-50%, -50%);
     transition: var(--transition-04) opacity ease-in-out;
+    pointer-events: none;
 
     .nmorph-image {
       width: 100%;
       height: 100%;
+      pointer-events: none;
 
       img {
-        width: 100%;
-        height: 100%;
+        display: block;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
         object-fit: contain;
+        pointer-events: auto;
       }
     }
   }

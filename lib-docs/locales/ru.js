@@ -237,6 +237,14 @@ export default {
           "Добавлены NmorphIconReply, NmorphIconReplyFilled, NmorphIconForward и NmorphIconForwardFilled для действий с сообщениями в чатах.",
         "smile-icon":
           "Добавлена NmorphIconSmile для emoji-изображений и реакций.",
+        "scroll-gap-defaults":
+          "NmorphScroll теперь по умолчанию задает xGapInPx и yGapInPx как 0, поэтому кастомные скроллбары прилегают без отступа.",
+        "image-preview-click-through":
+          "NmorphImagePreview теперь закрывается по клику в пустую область preview, вместо того чтобы блокировать outside click.",
+        "docs-localhost-open":
+          "Root docs dev script теперь открывает lib-docs на 127.0.0.1 вместо LAN-адреса.",
+        "autocomplete-close-clear-spacing":
+          "NmorphAutocomplete теперь закрывается без повторного фокуса, оставляет clear action кликабельным при открытом списке и применяет базовые отступы к dropdown items.",
         "empty-border-box":
           "NmorphEmpty теперь включает padding в ширину компонента, поэтому содержимое empty state не прижимается к краям grid или docs preview.",
         "empty-state-component":
@@ -1551,6 +1559,8 @@ export default {
           "Задает z-index оверлея выпадающего списка. Если не передан, используется общий автоматический стек z-index",
         placement:
           "Задает положение dropdown относительно trigger-элемента, включая выравнивание по краю",
+        "restore-focus":
+          "Определяет, нужно ли возвращать фокус на предыдущий элемент после закрытия",
       },
       slot: {
         default: "Слот для кастомизации содержимого внутри выпадающего списка",

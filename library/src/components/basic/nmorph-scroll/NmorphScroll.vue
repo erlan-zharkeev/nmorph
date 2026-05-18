@@ -18,8 +18,8 @@ const props = withDefaults(defineProps<INmorphScrollProps>(), {
   updateOnlyOnScrollEnd: false,
   yBarWidthInPx: 6,
   xBarWidthInPx: 6,
-  yGapInPx: 4,
-  xGapInPx: 4,
+  yGapInPx: 0,
+  xGapInPx: 0,
 });
 
 const scrollDOMContainer = ref<NmorphDomElementType>(null);

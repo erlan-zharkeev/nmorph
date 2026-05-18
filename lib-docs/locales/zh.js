@@ -225,6 +225,14 @@ export default {
           "新增用于聊天消息操作的 NmorphIconReply、NmorphIconReplyFilled、NmorphIconForward 和 NmorphIconForwardFilled。",
         "smile-icon":
           "新增 NmorphIconSmile，用于 emoji 图片和反应。",
+        "scroll-gap-defaults":
+          "NmorphScroll 现在默认将 xGapInPx 和 yGapInPx 设为 0，因此自定义滚动条默认贴边显示。",
+        "image-preview-click-through":
+          "NmorphImagePreview 现在会让预览空白区域关闭 overlay，而不是阻止 outside click。",
+        "docs-localhost-open":
+          "根 docs dev 脚本现在会在 127.0.0.1 打开 lib-docs，而不是 LAN 地址。",
+        "autocomplete-close-clear-spacing":
+          "NmorphAutocomplete 现在关闭时不会重新聚焦自身，打开列表时 clear action 仍可点击，并为 dropdown items 应用默认间距。",
         "empty-border-box":
           "NmorphEmpty 现在会把 padding 计入组件宽度，避免 empty state 内容贴近 grid 或 docs preview 的边缘。",
         "empty-state-component":
@@ -1447,6 +1455,7 @@ export default {
         "z-index":
           "定义下拉菜单覆盖层的 z-index。未传入时使用共享的自动 z-index 栈",
         placement: "定义下拉菜单相对于触发元素的位置，包括边缘对齐",
+        "restore-focus": "定义关闭后是否将焦点返回到之前聚焦的元素",
       },
       slot: {
         default: "自定义下拉菜单内部内容的插槽",

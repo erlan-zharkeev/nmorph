@@ -19,6 +19,7 @@ interface INmorphProps {
   zIndex?: number;
   closeOnEscape?: boolean;
   trapFocus?: boolean;
+  restoreFocus?: boolean;
   role?: string;
   ariaLabel?: string;
   contentClass?: string;
@@ -35,6 +36,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   zIndex: undefined,
   closeOnEscape: true,
   trapFocus: false,
+  restoreFocus: true,
   role: 'listbox',
   ariaLabel: '',
   contentClass: '',
@@ -102,6 +104,7 @@ const escapeHandler = () => {
     :z-index="props.zIndex"
     :close-on-escape="props.closeOnEscape"
     :trap-focus="props.trapFocus"
+    :restore-focus="props.restoreFocus"
     @on-outside-click="outsideClickHandler"
     @on-escape-keydown="escapeHandler"
   >

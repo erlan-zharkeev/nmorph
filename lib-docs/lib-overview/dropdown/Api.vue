@@ -70,6 +70,11 @@ const attributesData: IAttributesTableData[] = [
     default: "false",
   },
   {
+    name: "restore-focus",
+    type: "Boolean",
+    default: "true",
+  },
+  {
     name: "role",
     type: "String",
     default: "listbox",

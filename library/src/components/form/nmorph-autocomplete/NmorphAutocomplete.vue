@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue';
+import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
-import { useVirtualList } from '@/hooks';
+import { useVirtualList, useZIndex } from '@/hooks';
 import {
   NmorphIcon,
   NmorphDropdown,
@@ -52,18 +53,23 @@ const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-autocomplete': [],
+    'nmorph-autocomplete': [`${open.value && 'open'}`],
   })
 );
 
+const userClosed = ref(false);
 const updateValueHandler = (value: string) => {
+  userClosed.value = value === '';
   initialValue.value = value;
+  open.value = !userClosed.value && filteredList.value.length > 0;
+  currentIndex.value = 0;
   emit('update:model-value', initialValue.value);
 };
 
 const open = ref(false);
 const nmorphAutocompleteDOMRef = ref<NmorphDomElementType>(null);
 const closeHandler = () => {
+  userClosed.value = true;
   open.value = false;
 };
 
@@ -99,8 +105,16 @@ const activeItem = computed(() => filteredList.value[currentIndex.value]);
 const listboxId = computed(() => `${props.id || props.name || 'nmorph-autocomplete'}-listbox`);
 const getOptionId = (index: number) => `${listboxId.value}-option-${index}`;
 
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    if (newValue === initialValue.value) return;
+    initialValue.value = newValue;
+  }
+);
+
 watch(filteredList, async (newValue) => {
-  open.value = newValue.length > 0;
+  open.value = !userClosed.value && initialValue.value !== '' && newValue.length > 0;
   currentIndex.value = 0;
   await nextTick();
   virtualList.scrollToIndex(0);
@@ -110,7 +124,9 @@ watch(filteredList, async (newValue) => {
 const selectItem = (listEl: INmorphAutocompleteListItem) => {
   emit('select', listEl);
   initialValue.value = listEl.value;
+  emit('update:model-value', initialValue.value);
   setTimeout(() => {
+    userClosed.value = true;
     open.value = false;
   });
 };
@@ -120,6 +136,7 @@ const clickHandler = (listEl: INmorphAutocompleteListItem) => {
 };
 
 const focusHandler = () => {
+  userClosed.value = false;
   open.value = filteredList.value.length > 0;
 };
 
@@ -186,10 +203,15 @@ const setVirtualItemRef = (element: unknown, index: number) => {
   const target = element instanceof Element ? element : (element as { $el?: Element } | null)?.$el;
   virtualList.measureElement(index, target);
 };
+
+const dropdownZIndex = useZIndex(open, () => props.zIndex);
+const styles = computed<CSSProperties>(() => ({
+  '--nmorph-autocomplete-input-z-index': dropdownZIndex.value + 1,
+}));
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="styles">
     <div class="nmorph-autocomplete__input-content">
       <div ref="nmorphAutocompleteDOMRef" class="nmorph-autocomplete__input">
         <NmorphTextInput
@@ -213,7 +235,9 @@ const setVirtualItemRef = (element: unknown, index: number) => {
       :open="open"
       :relative-element="nmorphAutocompleteDOMRef"
       :y-offset="1"
-      :z-index="props.zIndex"
+      :z-index="dropdownZIndex"
+      :restore-focus="false"
+      content-class="nmorph-autocomplete__dropdown"
       :aria-label="props.name || props.id || 'autocomplete'"
       @on-outside-click="closeHandler"
       @on-escape-keydown="closeHandler"
@@ -273,51 +297,61 @@ const setVirtualItemRef = (element: unknown, index: number) => {
 
 <style lang="scss">
 .nmorph-autocomplete {
-  .nmorph-autocomplete__list-item {
-    padding: var(--indentation-02) var(--indentation-04);
-    cursor: pointer;
-
-    &:last-child {
-      border-bottom-right-radius: var(--indentation-02);
-      border-bottom-left-radius: var(--indentation-02);
-    }
-  }
-
-  .nmorph-autocomplete__loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-  }
-
-  .nmorph-autocomplete__list-item:hover,
-  .nmorph-autocomplete__list-item--focused {
-    color: var(--nmorph-white-color);
-    background: var(--nmorph-accent-color);
-  }
-
-  .nmorph-autocomplete__list--virtual {
-    overflow-y: auto;
-  }
-
-  .nmorph-autocomplete__list--virtual .nmorph-autocomplete__list-item {
-    height: var(--autocomplete-virtual-item-height);
-    overflow: hidden;
-  }
-
-  .nmorph-autocomplete__list--dynamic .nmorph-autocomplete__list-item {
-    height: auto;
-  }
-
-  .nmorph-autocomplete__virtual-spacer {
+  .nmorph-autocomplete__input-content {
     position: relative;
   }
 
-  .nmorph-autocomplete__virtual-content {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
+  &.nmorph-autocomplete--open {
+    .nmorph-autocomplete__input-content {
+      z-index: var(--nmorph-autocomplete-input-z-index);
+    }
   }
+}
+
+.nmorph-autocomplete__list {
+  padding: var(--indentation-01) 0;
+}
+
+.nmorph-autocomplete__list-item {
+  box-sizing: border-box;
+  padding: var(--indentation-00) var(--default-indentation-input);
+  cursor: pointer;
+}
+
+.nmorph-autocomplete__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.nmorph-autocomplete__list-item:hover,
+.nmorph-autocomplete__list-item--focused {
+  color: var(--nmorph-white-color);
+  background: var(--nmorph-accent-color);
+}
+
+.nmorph-autocomplete__list--virtual {
+  overflow-y: auto;
+}
+
+.nmorph-autocomplete__list--virtual .nmorph-autocomplete__list-item {
+  height: var(--autocomplete-virtual-item-height);
+  overflow: hidden;
+}
+
+.nmorph-autocomplete__list--dynamic .nmorph-autocomplete__list-item {
+  height: auto;
+}
+
+.nmorph-autocomplete__virtual-spacer {
+  position: relative;
+}
+
+.nmorph-autocomplete__virtual-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
 }
 </style>

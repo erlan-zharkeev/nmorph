@@ -137,6 +137,7 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
         style-type="transparent"
         width="32px"
         :height="props.height"
+        @mousedown.prevent
         @click="actionButtonClickHandler"
       >
         <NmorphIcon>
