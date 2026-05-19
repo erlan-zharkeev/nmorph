@@ -241,6 +241,8 @@ export default {
           "NmorphBadge dot 尺寸现在来自 size variants 和 --nmorph-badge-dot-size CSS variable，不再使用 dotSize prop。",
         "badge-hide-on-falsy-value":
           "NmorphBadge 现在支持 hideOnFalsyValue，可在 value 为 falsy（包括 0）时隐藏 badge indicator。",
+        "file-upload-truncate-grid":
+          "NmorphFileUpload 现在可在 grid 和 dialog layouts 中正确截断已选文件名，不再撑开整行。",
         "image-preview-closed-portal":
           "NmorphImagePreview 现在会让关闭状态的 preview portal 退出 hit testing，因此带 inline preview 的 dialog 仍可交互。",
         "file-upload-preview-flex":

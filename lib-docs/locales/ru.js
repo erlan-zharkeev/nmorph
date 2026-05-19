@@ -253,6 +253,8 @@ export default {
           "Размер dot у NmorphBadge теперь задается size-вариантами и CSS-переменной --nmorph-badge-dot-size вместо prop dotSize.",
         "badge-hide-on-falsy-value":
           "NmorphBadge теперь принимает hideOnFalsyValue, чтобы скрывать индикатор бейджа при falsy value, включая 0.",
+        "file-upload-truncate-grid":
+          "NmorphFileUpload теперь корректно обрезает имена выбранных файлов внутри grid и dialog layouts, не растягивая строку.",
         "image-preview-closed-portal":
           "NmorphImagePreview теперь скрывает закрытый preview portal из hit testing, поэтому dialog с inline preview остается интерактивным.",
         "file-upload-preview-flex":

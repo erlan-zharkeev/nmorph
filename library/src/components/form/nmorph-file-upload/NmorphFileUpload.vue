@@ -151,6 +151,10 @@ const modifiers = computed(() =>
 
 <style lang="scss">
 .nmorph-file-upload {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+
   .nmorph-file-upload__trigger {
     position: relative;
   }
@@ -160,7 +164,15 @@ const modifiers = computed(() =>
   }
 
   .nmorph-file-upload__list {
+    width: 100%;
+    min-width: 0;
     margin-top: var(--indentation-03);
+  }
+
+  .nmorph-file-upload__list > div {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
   }
 
   .nmorph-file-upload__file {
@@ -168,7 +180,9 @@ const modifiers = computed(() =>
     gap: var(--indentation-02);
     align-items: center;
     box-sizing: border-box;
+    width: 100%;
     min-width: 0;
+    max-width: 100%;
     margin-bottom: var(--indentation-02);
     padding: var(--indentation-02) var(--indentation-03);
     background: var(--nmorph-main-color);
@@ -189,6 +203,7 @@ const modifiers = computed(() =>
     gap: var(--indentation-02);
     align-items: center;
     min-width: 0;
+    overflow: hidden;
   }
 
   .nmorph-file-upload__file-info > .nmorph-icon {
@@ -196,7 +211,10 @@ const modifiers = computed(() =>
   }
 
   .nmorph-file-upload__file-name {
+    display: block;
+    flex: 1 1 auto;
     min-width: 0;
+    max-width: 100%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
