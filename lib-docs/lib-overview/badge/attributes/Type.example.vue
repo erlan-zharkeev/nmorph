@@ -34,6 +34,9 @@ const ribbonCorners = ["top-left", "top-right", "bottom-left", "bottom-right"] a
       >
         <div class="badge-type-overview__card">flat corner</div>
       </NmorphBadge>
+      <NmorphBadge value="Tiny" type="ribbon" size="tiny" ribbon-corner="bottom-right">
+        <div class="badge-type-overview__card">tiny ribbon</div>
+      </NmorphBadge>
     </ClientOnly>
   </div>
 </template>

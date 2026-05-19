@@ -255,6 +255,8 @@ export default {
           "NmorphBadge теперь принимает hideOnFalsyValue, чтобы скрывать индикатор бейджа при falsy value, включая 0.",
         "badge-ribbon-tilt":
           "NmorphBadge ribbon mode теперь поддерживает ровное размещение в углах через ribbonTilt, скругленные края ribbon и расширенные примеры в docs и sandbox.",
+        "badge-ribbon-inner-radius-tiny":
+          "NmorphBadge ribbon теперь использует мягкий radius 4px только на видимой внутренней стороне, а tiny ribbons рендерятся более легким и мелким текстом.",
         "callout-size-props":
           "NmorphCallout теперь принимает size props для padding, border radius, ширины accent strip, отступа title и размеров шрифта title/content.",
         "file-upload-truncate-grid":

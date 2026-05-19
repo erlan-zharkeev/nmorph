@@ -134,6 +134,9 @@ const progressColor = (value: number) => {
         >
           <div class="badge-ribbon-card">{{ example.label }}</div>
         </NmorphBadge>
+        <NmorphBadge value="Tiny" type="ribbon" size="tiny" ribbon-corner="bottom-right">
+          <div class="badge-ribbon-card">Tiny</div>
+        </NmorphBadge>
         <NmorphBadge value="Tag" type="tag" size="extra-small" />
         <NmorphBadge value="Base Tag" type="tag" size="base" />
         <NmorphBadge value="Hidden" hidden>

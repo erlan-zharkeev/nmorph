@@ -274,7 +274,7 @@ $nmorph-badge-dot-size-base: 4px;
     left: 50%;
     width: var(--nmorph-badge-ribbon-width);
     height: var(--nmorph-badge-ribbon-height);
-    border-radius: calc(var(--nmorph-badge-ribbon-height) / 2);
+    border-radius: 0;
     box-shadow: var(--nmorph-shadow-outset);
 
     .nmorph-badge__content {
@@ -296,6 +296,8 @@ $nmorph-badge-dot-size-base: 4px;
     left: var(--nmorph-badge-ribbon-offset-x);
 
     .nmorph-badge__container--ribbon {
+      border-bottom-right-radius: var(--border-radius-40);
+      border-bottom-left-radius: var(--border-radius-40);
       transform: translate(-50%, -50%) rotate(-45deg);
     }
   }
@@ -305,6 +307,8 @@ $nmorph-badge-dot-size-base: 4px;
     right: var(--nmorph-badge-ribbon-offset-x);
 
     .nmorph-badge__container--ribbon {
+      border-bottom-right-radius: var(--border-radius-40);
+      border-bottom-left-radius: var(--border-radius-40);
       transform: translate(-50%, -50%) rotate(45deg);
     }
   }
@@ -314,6 +318,8 @@ $nmorph-badge-dot-size-base: 4px;
     left: var(--nmorph-badge-ribbon-offset-x);
 
     .nmorph-badge__container--ribbon {
+      border-top-left-radius: var(--border-radius-40);
+      border-top-right-radius: var(--border-radius-40);
       transform: translate(-50%, -50%) rotate(45deg);
     }
   }
@@ -323,6 +329,8 @@ $nmorph-badge-dot-size-base: 4px;
     bottom: var(--nmorph-badge-ribbon-offset-y);
 
     .nmorph-badge__container--ribbon {
+      border-top-left-radius: var(--border-radius-40);
+      border-top-right-radius: var(--border-radius-40);
       transform: translate(-50%, -50%) rotate(-45deg);
     }
   }
@@ -337,6 +345,11 @@ $nmorph-badge-dot-size-base: 4px;
       left: auto;
       transform: none;
     }
+  }
+
+  &.nmorph-badge--tiny .nmorph-badge__container--ribbon .nmorph-badge__content {
+    font-weight: 400;
+    font-size: var(--font-size-tiny);
   }
 
   .nmorph-badge__dot {

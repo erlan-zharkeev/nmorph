@@ -253,6 +253,8 @@ export default {
           "NmorphBadge now accepts hideOnFalsyValue to hide the badge indicator when value is falsy, including 0.",
         "badge-ribbon-tilt":
           "NmorphBadge ribbon mode now supports flat corner placement through ribbonTilt, rounded ribbon edges, and expanded docs and sandbox examples.",
+        "badge-ribbon-inner-radius-tiny":
+          "NmorphBadge ribbon corners now use a subtle 4px radius only on the visible inner side, and tiny ribbons render with lighter, smaller text.",
         "callout-size-props":
           "NmorphCallout now exposes size props for padding, border radius, accent strip width, title gap, and title/content font sizes.",
         "file-upload-truncate-grid":
