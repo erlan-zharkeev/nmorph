@@ -1779,6 +1779,42 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('hides closed image preview portal from hit testing', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphImagePreview, {
+      props: { src: imageSrc, alt: 'Preview' },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const portal = Array.from(document.body.querySelectorAll<HTMLElement>('.nmorph-image-preview__portal')).at(-1);
+
+    expect(portal?.style.display).toBe('none');
+
+    await wrapper.find('.nmorph-image-preview__trigger').trigger('click');
+    await nextTick();
+
+    expect(portal?.style.display).not.toBe('none');
+
+    const overlay = Array.from(document.body.querySelectorAll<HTMLElement>('.nmorph-overlay')).at(-1);
+    overlay?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await nextTick();
+
+    expect(portal?.style.display).toBe('none');
+
+    wrapper.unmount();
+    target.remove();
+  });
+
   it('keeps image preview overlay controls inside preview portal', async () => {
     const target = document.createElement('div');
     document.body.appendChild(target);

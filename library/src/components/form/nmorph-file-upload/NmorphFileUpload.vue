@@ -165,8 +165,10 @@ const modifiers = computed(() =>
 
   .nmorph-file-upload__file {
     display: flex;
-    justify-content: space-between;
+    gap: var(--indentation-02);
     align-items: center;
+    box-sizing: border-box;
+    min-width: 0;
     margin-bottom: var(--indentation-02);
     padding: var(--indentation-02) var(--indentation-03);
     background: var(--nmorph-main-color);
@@ -177,22 +179,31 @@ const modifiers = computed(() =>
         var(--nmorph-light-shade-color);
   }
 
+  .nmorph-file-upload__file > .nmorph-image-preview {
+    flex: 0 0 auto;
+  }
+
   .nmorph-file-upload__file-info {
     display: flex;
+    flex: 1 1 auto;
+    gap: var(--indentation-02);
     align-items: center;
-    width: 50%;
-    margin-left: var(--indentation-02);
+    min-width: 0;
+  }
+
+  .nmorph-file-upload__file-info > .nmorph-icon {
+    flex: 0 0 auto;
   }
 
   .nmorph-file-upload__file-name {
-    margin-left: var(--indentation-02);
+    min-width: 0;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
 
   .nmorph-file-upload__remove-file {
-    margin-left: var(--indentation-03);
+    flex: 0 0 auto;
   }
 }
 </style>

@@ -253,6 +253,12 @@ export default {
           "Размер dot у NmorphBadge теперь задается size-вариантами и CSS-переменной --nmorph-badge-dot-size вместо prop dotSize.",
         "badge-hide-on-falsy-value":
           "NmorphBadge теперь принимает hideOnFalsyValue, чтобы скрывать индикатор бейджа при falsy value, включая 0.",
+        "image-preview-closed-portal":
+          "NmorphImagePreview теперь скрывает закрытый preview portal из hit testing, поэтому dialog с inline preview остается интерактивным.",
+        "file-upload-preview-flex":
+          "NmorphFileUpload теперь раскладывает строки выбранных изображений через гибкий file info и фиксированные preview/remove controls, чтобы не создавать горизонтальный overflow в dialog.",
+        "dialog-indentation-03-padding":
+          "NmorphDialog теперь использует indentation-03 для внешнего padding.",
         "dialog-content-overflow-x":
           "NmorphDialog теперь скрывает горизонтальный overflow внутри content area, сохраняя вертикальную прокрутку контента.",
         "card-content-class-prop":

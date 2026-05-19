@@ -195,7 +195,7 @@ const portalStyle = computed<CSSProperties>(() => ({
     </div>
   </div>
   <Teleport to="body">
-    <div class="nmorph-image-preview__portal" :class="modifiers" :style="portalStyle">
+    <div v-show="open" class="nmorph-image-preview__portal" :class="modifiers" :style="portalStyle">
       <NmorphOverlay
         :show="open"
         :z-index="props.zIndex"

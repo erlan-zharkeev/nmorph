@@ -241,6 +241,12 @@ export default {
           "NmorphBadge dot 尺寸现在来自 size variants 和 --nmorph-badge-dot-size CSS variable，不再使用 dotSize prop。",
         "badge-hide-on-falsy-value":
           "NmorphBadge 现在支持 hideOnFalsyValue，可在 value 为 falsy（包括 0）时隐藏 badge indicator。",
+        "image-preview-closed-portal":
+          "NmorphImagePreview 现在会让关闭状态的 preview portal 退出 hit testing，因此带 inline preview 的 dialog 仍可交互。",
+        "file-upload-preview-flex":
+          "NmorphFileUpload 现在使用 flexible file info 和固定的 preview/remove controls 布局已选图片行，避免在 dialog 中产生水平 overflow。",
+        "dialog-indentation-03-padding":
+          "NmorphDialog 现在使用 indentation-03 作为外层 padding。",
         "dialog-content-overflow-x":
           "NmorphDialog 现在会隐藏 content area 的水平 overflow，同时保留垂直内容滚动。",
         "card-content-class-prop":

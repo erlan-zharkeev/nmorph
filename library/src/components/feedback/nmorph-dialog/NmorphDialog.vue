@@ -129,7 +129,7 @@ const clickOnOverlay = () => {
   width: var(--width);
   max-width: var(--nmorph-dialog-max-width, calc(100vw - 32px));
   max-height: var(--nmorph-dialog-max-height, var(--nmorph-dialog-default-max-height));
-  padding: var(--indentation-02);
+  padding: var(--indentation-03);
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
   transform: translate(-50%, -50%);

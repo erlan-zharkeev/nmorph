@@ -251,6 +251,12 @@ export default {
           "NmorphBadge dot sizing now comes from size variants and the --nmorph-badge-dot-size CSS variable instead of a dotSize prop.",
         "badge-hide-on-falsy-value":
           "NmorphBadge now accepts hideOnFalsyValue to hide the badge indicator when value is falsy, including 0.",
+        "image-preview-closed-portal":
+          "NmorphImagePreview now removes the closed preview portal from hit testing so dialogs with inline previews remain interactive.",
+        "file-upload-preview-flex":
+          "NmorphFileUpload now lays out selected image rows with flexible file info, fixed preview and remove controls, and no horizontal overflow in dialogs.",
+        "dialog-indentation-03-padding":
+          "NmorphDialog now uses indentation-03 for its outer padding.",
         "dialog-content-overflow-x":
           "NmorphDialog now hides horizontal overflow inside the content area while keeping vertical content scrolling available.",
         "card-content-class-prop":
