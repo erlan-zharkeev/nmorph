@@ -257,6 +257,8 @@ export default {
           "NmorphBadge ribbon mode теперь поддерживает ровное размещение в углах через ribbonTilt, скругленные края ribbon и расширенные примеры в docs и sandbox.",
         "badge-ribbon-inner-radius-tiny":
           "NmorphBadge ribbon теперь использует мягкий radius 4px только на видимой внутренней стороне, а tiny ribbons рендерятся более легким и мелким текстом.",
+        "file-upload-controlled-reset":
+          "NmorphFileUpload теперь синхронизирует внутренний список с modelValue, очищает native file input при сбросе, удалении и unsupported type, а тот же файл можно выбрать повторно без :key reset.",
         "callout-size-props":
           "NmorphCallout теперь принимает size props для padding, border radius, ширины accent strip, отступа title и размеров шрифта title/content.",
         "file-upload-truncate-grid":
@@ -2061,7 +2063,8 @@ export default {
           "Если установлено в *true*, загруженные фотографии будут отображаться с предварительным просмотром.",
       },
       api: {
-        "model-value": "Представляет загруженные файлы",
+        "model-value":
+          "Представляет выбранные файлы. Передача [] очищает внутренний список и native file input.",
         disabled: "Булево значение, отключающее компонент загрузки файлов",
         multiple: "Булево значение, позволяющее выбрать несколько файлов",
         "allowed-types": "Определяет типы файлов, которые можно загрузить",

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref, type Component } from 'vue';
+import { computed, onBeforeUnmount, ref, watch, type Component } from 'vue';
 import {
   INmorphCustomFileData,
   NmorphArchiveResolution,
@@ -41,6 +41,12 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   buttonText: '',
 });
 
+interface INmorphEmit {
+  (e: 'update:model-value', val: INmorphCustomFileData[]): void;
+  (e: 'on-unsupported-file-type-error', val: string): void;
+}
+
+const emit = defineEmits<INmorphEmit>();
 const computedButtonText = computed(() => (props.buttonText ? props.buttonText : t('selectFile')));
 
 const getPlainType = (resolution: string) => resolution.split('/')[1];
@@ -55,9 +61,34 @@ const typeFileIconMap = (resolution: string): Component => {
   return result;
 };
 
-let files = reactive<INmorphCustomFileData[]>(props.modelValue);
-
 const inputDOMRef = ref<NmorphDomElementType>(null);
+const files = ref<INmorphCustomFileData[]>([...props.modelValue]);
+const createdPreviewUrls = new Set<string>();
+
+const resetInputValue = () => {
+  const input = inputDOMRef.value as HTMLInputElement | null;
+  if (!input) return;
+  input.value = '';
+};
+
+const revokePreviewUrl = (previewUrl: string) => {
+  if (!createdPreviewUrls.has(previewUrl)) return;
+  URL.revokeObjectURL(previewUrl);
+  createdPreviewUrls.delete(previewUrl);
+};
+
+const revokeRemovedPreviewUrls = (nextFiles: INmorphCustomFileData[]) => {
+  const nextPreviewUrls = new Set(nextFiles.map((file) => file.previewUrl));
+  Array.from(createdPreviewUrls).forEach((previewUrl) => {
+    if (!nextPreviewUrls.has(previewUrl)) revokePreviewUrl(previewUrl);
+  });
+};
+
+const filesChanged = (nextFiles: INmorphCustomFileData[]) => {
+  const nextValue = [...nextFiles];
+  files.value = nextValue;
+  emit('update:model-value', nextValue);
+};
 
 const openFileSelector = () => {
   if (props.disabled || !inputDOMRef.value) return;
@@ -67,42 +98,55 @@ const openFileSelector = () => {
 const handleFileUpload = (event: Event) => {
   if (props.disabled) return;
   const target = event.target as HTMLInputElement;
-  if (target.files) {
-    Array.from(target.files).forEach((file) => {
-      const resolution = getPlainType(file.type) as NmorphResolutionType;
-      if (!props.allowedTypes.includes(resolution)) {
-        return emit('on-unsupported-file-type-error', file.type);
-      }
-      const previewUrl = URL.createObjectURL(file);
-      const result = { data: file, previewUrl };
-      files.push(result);
-    });
-    if (files.length === 0) return;
-    filesChanged();
-  }
-};
+  const selectedFiles = Array.from(target.files || []);
+  const acceptedFiles: INmorphCustomFileData[] = [];
 
-const filesChanged = () => {
-  emit('update:model-value', files);
+  selectedFiles.forEach((file) => {
+    const resolution = getPlainType(file.type) as NmorphResolutionType;
+    if (!props.allowedTypes.includes(resolution)) {
+      emit('on-unsupported-file-type-error', file.type);
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(file);
+    createdPreviewUrls.add(previewUrl);
+    acceptedFiles.push({ data: file, previewUrl });
+  });
+
+  resetInputValue();
+
+  if (acceptedFiles.length > 0) {
+    filesChanged([...files.value, ...acceptedFiles]);
+  }
 };
 
 const removeFile = (fileName: string) => {
   if (props.disabled) return;
-  const index = files.findIndex((file) => file.data.name === fileName);
+  const index = files.value.findIndex((file) => file.data.name === fileName);
   if (index !== -1) {
-    URL.revokeObjectURL(files[index].previewUrl);
-    files.splice(index, 1);
-    filesChanged();
+    const removedFile = files.value[index];
+    revokePreviewUrl(removedFile.previewUrl);
+    resetInputValue();
+    filesChanged(files.value.filter((_, fileIndex) => fileIndex !== index));
   }
 };
 
-interface INmorphEmit {
-  (e: 'update:model-value', val: INmorphCustomFileData[]): void;
-  (e: 'on-unsupported-file-type-error', val: string): void;
-}
+watch(
+  () => props.modelValue,
+  (nextFiles) => {
+    const nextValue = [...nextFiles];
+    revokeRemovedPreviewUrls(nextValue);
+    files.value = nextValue;
+    if (nextValue.length === 0) resetInputValue();
+  },
+  { deep: true }
+);
+
+onBeforeUnmount(() => {
+  Array.from(createdPreviewUrls).forEach((previewUrl) => revokePreviewUrl(previewUrl));
+});
 
 defineExpose({ inputDOMRef });
-const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

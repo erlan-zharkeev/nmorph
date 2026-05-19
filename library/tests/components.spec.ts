@@ -92,6 +92,67 @@ const rect = (x: number, y: number, width: number, height: number) =>
     toJSON: () => ({}),
   }) as DOMRect;
 
+type FileUploadValue = { data: File; previewUrl: string };
+
+const createTestFile = (name: string, type = 'image/png') => new File(['content'], name, { type });
+
+const setFileInputState = (input: HTMLInputElement, files: File[], value = 'selected') => {
+  Object.defineProperty(input, 'files', {
+    configurable: true,
+    value: files,
+  });
+  Object.defineProperty(input, 'value', {
+    configurable: true,
+    writable: true,
+    value,
+  });
+};
+
+const mockObjectUrlApi = (urls: string[] = []) => {
+  const urlApi = URL as unknown as Record<'createObjectURL' | 'revokeObjectURL', unknown>;
+  const originalCreateObjectURL = urlApi.createObjectURL;
+  const originalRevokeObjectURL = urlApi.revokeObjectURL;
+  const createObjectURL = vi.fn(() => urls.shift() || `blob:file-${createObjectURL.mock.calls.length}`);
+  const revokeObjectURL = vi.fn();
+
+  Object.defineProperty(URL, 'createObjectURL', {
+    configurable: true,
+    writable: true,
+    value: createObjectURL,
+  });
+  Object.defineProperty(URL, 'revokeObjectURL', {
+    configurable: true,
+    writable: true,
+    value: revokeObjectURL,
+  });
+
+  return {
+    createObjectURL,
+    revokeObjectURL,
+    restore: () => {
+      if (originalCreateObjectURL === undefined) {
+        delete urlApi.createObjectURL;
+      } else {
+        Object.defineProperty(URL, 'createObjectURL', {
+          configurable: true,
+          writable: true,
+          value: originalCreateObjectURL,
+        });
+      }
+
+      if (originalRevokeObjectURL === undefined) {
+        delete urlApi.revokeObjectURL;
+      } else {
+        Object.defineProperty(URL, 'revokeObjectURL', {
+          configurable: true,
+          writable: true,
+          value: originalRevokeObjectURL,
+        });
+      }
+    },
+  };
+};
+
 const createFormValue = () =>
   reactive({
     email: {
@@ -946,6 +1007,148 @@ describe('components', () => {
 
     visibleZero.unmount();
     hiddenZero.unmount();
+  });
+
+  it('syncs file upload list when model value is cleared from outside', async () => {
+    const initialValue: FileUploadValue[] = [
+      {
+        data: createTestFile('avatar.png'),
+        previewUrl: 'blob:external',
+      },
+    ];
+    const wrapper = mount(NmorphFileUpload, {
+      props: {
+        modelValue: initialValue,
+      },
+    });
+
+    await nextTick();
+
+    const input = wrapper.find('input[type="file"]').element as HTMLInputElement;
+    setFileInputState(input, [], 'selected');
+
+    expect(wrapper.find('.nmorph-file-upload__file-name').text()).toBe('avatar.png');
+
+    await wrapper.setProps({ modelValue: [] });
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-file-upload__file').exists()).toBe(false);
+    expect(input.value).toBe('');
+
+    wrapper.unmount();
+  });
+
+  it('clears native file input after upload so the same file can be selected after reset', async () => {
+    const objectUrls = mockObjectUrlApi(['blob:first', 'blob:second']);
+    const wrapper = mount(NmorphFileUpload, {
+      props: {
+        modelValue: [],
+      },
+    });
+
+    try {
+      const file = createTestFile('avatar.png');
+      const inputWrapper = wrapper.find('input[type="file"]');
+      const input = inputWrapper.element as HTMLInputElement;
+
+      setFileInputState(input, [file]);
+      await inputWrapper.trigger('change');
+      await nextTick();
+
+      const firstPayload = wrapper.emitted('update:model-value')?.at(-1)?.[0] as FileUploadValue[];
+
+      expect(firstPayload).toHaveLength(1);
+      expect(input.value).toBe('');
+
+      await wrapper.setProps({ modelValue: firstPayload });
+      await wrapper.setProps({ modelValue: [] });
+      await nextTick();
+
+      setFileInputState(input, [file]);
+      await inputWrapper.trigger('change');
+      await nextTick();
+
+      const lastPayload = wrapper.emitted('update:model-value')?.at(-1)?.[0] as FileUploadValue[];
+
+      expect(objectUrls.createObjectURL).toHaveBeenCalledTimes(2);
+      expect(objectUrls.revokeObjectURL).toHaveBeenCalledWith('blob:first');
+      expect(lastPayload).toHaveLength(1);
+      expect(lastPayload[0].previewUrl).toBe('blob:second');
+      expect(input.value).toBe('');
+    } finally {
+      wrapper.unmount();
+      objectUrls.restore();
+    }
+  });
+
+  it('emits a new file list, clears input, and revokes preview when removing a file', async () => {
+    const objectUrls = mockObjectUrlApi(['blob:first', 'blob:second']);
+    const wrapper = mount(NmorphFileUpload, {
+      props: {
+        modelValue: [],
+        multiple: true,
+      },
+    });
+
+    try {
+      const firstFile = createTestFile('first.png');
+      const secondFile = createTestFile('second.png');
+      const inputWrapper = wrapper.find('input[type="file"]');
+      const input = inputWrapper.element as HTMLInputElement;
+
+      setFileInputState(input, [firstFile, secondFile]);
+      await inputWrapper.trigger('change');
+      await nextTick();
+
+      const firstPayload = wrapper.emitted('update:model-value')?.at(-1)?.[0] as FileUploadValue[];
+
+      await wrapper.setProps({ modelValue: firstPayload });
+      await nextTick();
+      setFileInputState(input, [], 'selected');
+
+      await wrapper.findAll('.nmorph-file-upload__remove-file .nmorph-button')[0].trigger('click');
+      await nextTick();
+
+      const lastPayload = wrapper.emitted('update:model-value')?.at(-1)?.[0] as FileUploadValue[];
+
+      expect(lastPayload).not.toBe(firstPayload);
+      expect(lastPayload).toHaveLength(1);
+      expect(lastPayload[0].data.name).toBe('second.png');
+      expect(firstPayload).toHaveLength(2);
+      expect(input.value).toBe('');
+      expect(objectUrls.revokeObjectURL).toHaveBeenCalledWith('blob:first');
+    } finally {
+      wrapper.unmount();
+      objectUrls.restore();
+    }
+  });
+
+  it('clears unsupported file selections without adding them to input list', async () => {
+    const objectUrls = mockObjectUrlApi();
+    const wrapper = mount(NmorphFileUpload, {
+      props: {
+        modelValue: [],
+        allowedTypes: ['png'],
+      },
+    });
+
+    try {
+      const inputWrapper = wrapper.find('input[type="file"]');
+      const input = inputWrapper.element as HTMLInputElement;
+
+      setFileInputState(input, [createTestFile('report.pdf', 'application/pdf')]);
+      await inputWrapper.trigger('change');
+      await nextTick();
+
+      expect(wrapper.emitted('on-unsupported-file-type-error')?.at(-1)).toEqual(['application/pdf']);
+      expect(wrapper.emitted('update:model-value')).toBeUndefined();
+      expect(wrapper.find('.nmorph-file-upload__file').exists()).toBe(false);
+      expect(input.value).toBe('');
+      expect(objectUrls.createObjectURL).not.toHaveBeenCalled();
+    } finally {
+      wrapper.unmount();
+      objectUrls.restore();
+    }
   });
 
   it('forwards CSS variable props on form controls', async () => {

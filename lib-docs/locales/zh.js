@@ -245,6 +245,8 @@ export default {
           "NmorphBadge ribbon mode 现在支持通过 ribbonTilt 平放在角落、圆角 ribbon 边缘，并扩展了 docs 和 sandbox 示例。",
         "badge-ribbon-inner-radius-tiny":
           "NmorphBadge ribbon 现在仅在可见的内侧使用轻微 4px 圆角，tiny ribbons 会以更轻、更小的文字渲染。",
+        "file-upload-controlled-reset":
+          "NmorphFileUpload 现在会与 modelValue 同步内部文件列表，在重置、删除或 unsupported type 时清空原生 file input，并允许无需 :key reset 再次选择同一个文件。",
         "callout-size-props":
           "NmorphCallout 现在支持用于 padding、border radius、accent strip 宽度、title gap 以及 title/content 字号的 size props。",
         "file-upload-truncate-grid":
@@ -1914,7 +1916,8 @@ export default {
         subtitle: "如果设置为 *true*，上传的照片将显示预览。",
       },
       api: {
-        "model-value": "表示上传的文件",
+        "model-value":
+          "表示已选择的文件。传入 [] 会清空内部列表和原生 file input。",
         disabled: "布尔值，禁用文件上传组件",
         multiple: "布尔值，允许选择多个文件",
         "allowed-types": "定义可以上传的文件类型",
