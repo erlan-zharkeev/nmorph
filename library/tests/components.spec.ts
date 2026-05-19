@@ -774,11 +774,23 @@ describe('components', () => {
           title: 'Callout',
           content: 'Content',
           color: '#345678',
+          padding: 14,
+          borderRadius: 'var(--border-radius-80)',
+          accentWidth: 6,
+          titleGap: 10,
+          titleFontSize: '18px',
+          contentFontSize: '13px',
         },
       }),
       '.nmorph-callout',
       {
         '--callout-color': '#345678',
+        '--callout-padding': '14px',
+        '--callout-border-radius': 'var(--border-radius-80)',
+        '--callout-accent-width': '6px',
+        '--callout-title-gap': '10px',
+        '--callout-title-font-size': '18px',
+        '--callout-content-font-size': '13px',
       }
     );
 
@@ -824,6 +836,34 @@ describe('components', () => {
     expect(wrapper.find('.nmorph-badge__container').classes()).toContain(
       'nmorph-badge__container--ribbon-bottom-left'
     );
+
+    wrapper.unmount();
+  });
+
+  it('can render ribbon badge flat in the selected corner', async () => {
+    const wrapper = mount(NmorphBadge, {
+      props: {
+        value: 'Flat',
+        type: 'ribbon',
+        ribbonCorner: 'top-right',
+        ribbonTilt: false,
+        offsetX: 12,
+        offsetY: 4,
+      },
+      slots: {
+        default: '<div>Card</div>',
+      },
+    });
+
+    await nextTick();
+
+    const badge = wrapper.find('.nmorph-badge').element as HTMLElement;
+    const ribbonCorner = wrapper.find('.nmorph-badge__ribbon-corner');
+
+    expect(badge.style.getPropertyValue('--nmorph-badge-ribbon-offset-x')).toBe('12px');
+    expect(badge.style.getPropertyValue('--nmorph-badge-ribbon-offset-y')).toBe('4px');
+    expect(ribbonCorner.classes()).toContain('nmorph-badge__ribbon-corner--top-right');
+    expect(ribbonCorner.classes()).toContain('nmorph-badge__ribbon-corner--flat');
 
     wrapper.unmount();
   });

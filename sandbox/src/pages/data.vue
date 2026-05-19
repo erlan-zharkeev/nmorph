@@ -63,6 +63,13 @@ const tags = ref([
   { text: 'Preview', value: 'preview', design: 'common' as const },
 ])
 
+const flatRibbonExamples = [
+  { corner: 'top-left', value: 'Flat TL', label: 'Top left', offsetX: 0, offsetY: 0 },
+  { corner: 'top-right', value: 'Flat TR', label: 'Top right', offsetX: 0, offsetY: 0 },
+  { corner: 'bottom-left', value: 'Flat BL', label: 'Bottom left', offsetX: 8, offsetY: 8 },
+  { corner: 'bottom-right', value: 'Flat BR', label: 'Bottom right', offsetX: 0, offsetY: 0 },
+] as const
+
 const tableData = ref([
   { name: 'Avatar', status: 'Ready', count: 12 },
   { name: 'Progress', status: 'Review', count: 8 },
@@ -113,6 +120,19 @@ const progressColor = (value: number) => {
         </NmorphBadge>
         <NmorphBadge value="Bottom right" type="ribbon" ribbon-corner="bottom-right" color="var(--nmorph-warn-color)">
           <div class="badge-ribbon-card">Bottom</div>
+        </NmorphBadge>
+        <NmorphBadge
+          v-for="example in flatRibbonExamples"
+          :key="example.corner"
+          :value="example.value"
+          type="ribbon"
+          :ribbon-corner="example.corner"
+          :ribbon-tilt="false"
+          :offset-x="example.offsetX"
+          :offset-y="example.offsetY"
+          color="var(--nmorph-success-color)"
+        >
+          <div class="badge-ribbon-card">{{ example.label }}</div>
         </NmorphBadge>
         <NmorphBadge value="Tag" type="tag" size="extra-small" />
         <NmorphBadge value="Base Tag" type="tag" size="base" />

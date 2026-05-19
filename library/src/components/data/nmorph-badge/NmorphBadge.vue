@@ -13,6 +13,7 @@ interface INmorphProps {
   max?: number;
   type?: NmorphBadgeType;
   ribbonCorner?: NmorphBadgeRibbonCorner;
+  ribbonTilt?: boolean;
   /**
    * @deprecated Use `type="dot"` instead.
    */
@@ -41,6 +42,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   max: 99,
   type: 'default',
   ribbonCorner: 'top-right',
+  ribbonTilt: true,
   isDot: false,
   isTag: false,
   hidden: false,
@@ -93,7 +95,7 @@ const containerModifiers = computed(() =>
 
 const ribbonCornerModifiers = computed(() =>
   useModifiers({
-    'nmorph-badge__ribbon-corner': [`${props.ribbonCorner}`],
+    'nmorph-badge__ribbon-corner': [`${props.ribbonCorner}`, `${!props.ribbonTilt && 'flat'}`],
   })
 );
 
@@ -154,7 +156,15 @@ const ribbonFrameStyle = computed<CSSProperties>(() => ({
 onMounted(updateBadgeSize);
 
 watch(
-  () => [props.value, props.max, resolvedType.value, props.ribbonCorner, props.size, props.hideOnFalsyValue],
+  () => [
+    props.value,
+    props.max,
+    resolvedType.value,
+    props.ribbonCorner,
+    props.ribbonTilt,
+    props.size,
+    props.hideOnFalsyValue,
+  ],
   updateBadgeSize
 );
 </script>
@@ -264,7 +274,7 @@ $nmorph-badge-dot-size-base: 4px;
     left: 50%;
     width: var(--nmorph-badge-ribbon-width);
     height: var(--nmorph-badge-ribbon-height);
-    border-radius: 0;
+    border-radius: calc(var(--nmorph-badge-ribbon-height) / 2);
     box-shadow: var(--nmorph-shadow-outset);
 
     .nmorph-badge__content {
@@ -314,6 +324,18 @@ $nmorph-badge-dot-size-base: 4px;
 
     .nmorph-badge__container--ribbon {
       transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+
+  .nmorph-badge__ribbon-corner--flat {
+    width: var(--nmorph-badge-ribbon-width);
+    height: var(--nmorph-badge-ribbon-height);
+
+    .nmorph-badge__container--ribbon {
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
     }
   }
 

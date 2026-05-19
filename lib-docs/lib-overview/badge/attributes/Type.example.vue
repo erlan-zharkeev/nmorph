@@ -25,6 +25,15 @@ const ribbonCorners = ["top-left", "top-right", "bottom-left", "bottom-right"] a
       >
         <div class="badge-type-overview__card">{{ corner }}</div>
       </NmorphBadge>
+      <NmorphBadge
+        value="Flat"
+        type="ribbon"
+        ribbon-corner="top-right"
+        :ribbon-tilt="false"
+        color="var(--nmorph-success-color)"
+      >
+        <div class="badge-type-overview__card">flat corner</div>
+      </NmorphBadge>
     </ClientOnly>
   </div>
 </template>

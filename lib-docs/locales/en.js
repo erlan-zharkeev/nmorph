@@ -251,6 +251,10 @@ export default {
           "NmorphBadge dot sizing now comes from size variants and the --nmorph-badge-dot-size CSS variable instead of a dotSize prop.",
         "badge-hide-on-falsy-value":
           "NmorphBadge now accepts hideOnFalsyValue to hide the badge indicator when value is falsy, including 0.",
+        "badge-ribbon-tilt":
+          "NmorphBadge ribbon mode now supports flat corner placement through ribbonTilt, rounded ribbon edges, and expanded docs and sandbox examples.",
+        "callout-size-props":
+          "NmorphCallout now exposes size props for padding, border radius, accent strip width, title gap, and title/content font sizes.",
         "file-upload-truncate-grid":
           "NmorphFileUpload now keeps selected file names truncating correctly inside grid and dialog layouts without expanding the row.",
         "image-preview-closed-portal":
@@ -816,7 +820,11 @@ export default {
           "Switches between default, dot, tag, and ribbon badge display.",
       },
       "ribbon-corner": {
-        subtitle: "Selects the corner used by the diagonal ribbon badge.",
+        subtitle: "Selects the corner used by the ribbon badge.",
+      },
+      "ribbon-tilt": {
+        subtitle:
+          "Controls whether the ribbon badge is tilted diagonally or placed flat in the selected corner.",
       },
       "is-dot": {
         subtitle:
@@ -845,6 +853,8 @@ export default {
         max: "Maximum value to display",
         type: "Sets the badge display type: default, dot, tag, or ribbon",
         "ribbon-corner": "Sets the ribbon corner when type is ribbon",
+        "ribbon-tilt":
+          "Tilts the ribbon diagonally when enabled, or keeps it flat in the selected corner when disabled",
         "is-dot": "Displays the badge as a dot",
         "is-tag":
           "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
@@ -1431,9 +1441,21 @@ export default {
         title: "Title displayed in the callout",
         content: "Content displayed in the callout",
         color: "Overrides the callout accent color",
+        padding: "Sets the callout inner spacing",
+        "border-radius": "Sets the callout border radius",
+        "accent-width": "Sets the width of the accent strip",
+        "title-gap": "Sets the spacing between title and content",
+        "title-font-size": "Sets the title font size",
+        "content-font-size": "Sets the content font size",
       },
       variables: {
         "callout-color": "Callout accent color",
+        "callout-padding": "Callout inner spacing",
+        "callout-border-radius": "Callout border radius",
+        "callout-accent-width": "Accent strip width",
+        "callout-title-gap": "Spacing between title and content",
+        "callout-title-font-size": "Title font size",
+        "callout-content-font-size": "Content font size",
       },
     },
     dialog: {

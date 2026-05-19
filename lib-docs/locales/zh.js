@@ -241,6 +241,10 @@ export default {
           "NmorphBadge dot 尺寸现在来自 size variants 和 --nmorph-badge-dot-size CSS variable，不再使用 dotSize prop。",
         "badge-hide-on-falsy-value":
           "NmorphBadge 现在支持 hideOnFalsyValue，可在 value 为 falsy（包括 0）时隐藏 badge indicator。",
+        "badge-ribbon-tilt":
+          "NmorphBadge ribbon mode 现在支持通过 ribbonTilt 平放在角落、圆角 ribbon 边缘，并扩展了 docs 和 sandbox 示例。",
+        "callout-size-props":
+          "NmorphCallout 现在支持用于 padding、border radius、accent strip 宽度、title gap 以及 title/content 字号的 size props。",
         "file-upload-truncate-grid":
           "NmorphFileUpload 现在可在 grid 和 dialog layouts 中正确截断已选文件名，不再撑开整行。",
         "image-preview-closed-portal":
@@ -794,6 +798,10 @@ export default {
       "ribbon-corner": {
         subtitle: "选择 diagonal ribbon badge 使用的角落。",
       },
+      "ribbon-tilt": {
+        subtitle:
+          "控制 ribbon badge 是斜向显示，还是平放在选定角落。",
+      },
       "is-dot": {
         subtitle:
           "Displays the badge as a small dot if set to *true*. Works even when `value` is omitted.",
@@ -821,6 +829,7 @@ export default {
         max: "Maximum value to display",
         type: "设置 badge 显示类型：default、dot、tag 或 ribbon",
         "ribbon-corner": "当 type 为 ribbon 时设置 ribbon 角落",
+        "ribbon-tilt": "启用时让 ribbon 斜向显示，禁用时平放在选定角落",
         "is-dot": "Displays the badge as a dot",
         "is-tag":
           "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
@@ -1369,9 +1378,21 @@ export default {
         title: "在 callout 中显示的标题",
         content: "在 callout 中显示的内容",
         color: "Overrides the callout accent color",
+        padding: "Sets the callout inner spacing",
+        "border-radius": "Sets the callout border radius",
+        "accent-width": "Sets the width of the accent strip",
+        "title-gap": "Sets the spacing between title and content",
+        "title-font-size": "Sets the title font size",
+        "content-font-size": "Sets the content font size",
       },
       variables: {
         "callout-color": "Callout accent color",
+        "callout-padding": "Callout inner spacing",
+        "callout-border-radius": "Callout border radius",
+        "callout-accent-width": "Accent strip width",
+        "callout-title-gap": "Spacing between title and content",
+        "callout-title-font-size": "Title font size",
+        "callout-content-font-size": "Content font size",
       },
     },
     dialog: {

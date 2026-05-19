@@ -26,6 +26,16 @@ import { NmorphCallout } from "@nmorph/nmorph-ui-kit";
       :title="$t('overview.callout.basic-usage.error-title')"
       :content="$t('overview.callout.basic-usage.error-content')"
     />
+    <NmorphCallout
+      type="success"
+      title="Custom sizing"
+      content="Callout sizes can follow design tokens through props."
+      padding="var(--indentation-04)"
+      border-radius="var(--border-radius-80)"
+      accent-width="var(--indentation-02)"
+      title-font-size="var(--font-size-large)"
+      content-font-size="var(--font-size-base)"
+    />
   </div>
 </template>
 

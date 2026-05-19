@@ -28,6 +28,11 @@ const attributesData: IAttributesTableData[] = [
     default: "top-right",
   },
   {
+    name: "ribbon-tilt",
+    type: "Boolean",
+    default: "true",
+  },
+  {
     name: "hidden",
     type: "Boolean",
     default: "false",

@@ -24,10 +24,48 @@ const attributesData: IAttributesTableData[] = [
     type: "String",
     default: "undefined",
   },
+  {
+    name: "padding",
+    type: "Number | String",
+    default: "var(--indentation-03) var(--indentation-04)",
+  },
+  {
+    name: "border-radius",
+    type: "Number | String",
+    default: "var(--default-border-radius)",
+  },
+  {
+    name: "accent-width",
+    type: "Number | String",
+    default: "var(--indentation-02)",
+  },
+  {
+    name: "title-gap",
+    type: "Number | String",
+    default: "var(--indentation-03)",
+  },
+  {
+    name: "title-font-size",
+    type: "Number | String",
+    default: "var(--font-size-medium)",
+  },
+  {
+    name: "content-font-size",
+    type: "Number | String",
+    default: "var(--font-size-extra-small)",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [];
-const variables: IVariablesTableData[] = [{ name: "callout-color" }];
+const variables: IVariablesTableData[] = [
+  { name: "callout-color" },
+  { name: "callout-padding" },
+  { name: "callout-border-radius" },
+  { name: "callout-accent-width" },
+  { name: "callout-title-gap" },
+  { name: "callout-title-font-size" },
+  { name: "callout-content-font-size" },
+];
 </script>
 
 <template>

@@ -89,6 +89,17 @@ const showStickyNotification = () => {
         <NmorphCallout type="warning" title="Attention" content="Important content for this section." />
         <NmorphCallout type="success" title="Success" content="Successful content for this section." />
         <NmorphCallout type="error" title="Error" content="Error content for this section." />
+        <NmorphCallout
+          type="success"
+          title="Custom sizes"
+          content="Padding, radius, accent strip and text sizes are controlled by props."
+          padding="var(--indentation-04)"
+          border-radius="var(--border-radius-80)"
+          accent-width="var(--indentation-02)"
+          title-gap="var(--indentation-02)"
+          title-font-size="var(--font-size-large)"
+          content-font-size="var(--font-size-base)"
+        />
       </div>
     </SandboxSection>
 
