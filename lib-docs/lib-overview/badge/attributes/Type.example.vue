@@ -10,9 +10,11 @@ const ribbonCorners = ["top-left", "top-right", "bottom-left", "bottom-right"] a
       <NmorphBadge value="4">
         <NmorphButton text="Default" />
       </NmorphBadge>
-      <NmorphBadge type="dot" color="var(--nmorph-error-color)" :dot-size="9">
-        <NmorphButton text="Dot" />
-      </NmorphBadge>
+      <div class="badge-type-overview__dot">
+        <NmorphBadge type="dot" color="var(--nmorph-error-color)">
+          <NmorphButton text="Dot" />
+        </NmorphBadge>
+      </div>
       <NmorphBadge type="tag" value="Tag" color="var(--nmorph-success-color)" />
       <NmorphBadge
         v-for="corner in ribbonCorners"
@@ -44,5 +46,9 @@ const ribbonCorners = ["top-left", "top-right", "bottom-left", "bottom-right"] a
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
   box-shadow: var(--nmorph-shadow-outset);
+}
+
+.badge-type-overview__dot .nmorph-badge {
+  --nmorph-badge-dot-size: 9px;
 }
 </style>

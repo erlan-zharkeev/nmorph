@@ -91,9 +91,11 @@ const progressColor = (value: number) => {
         <NmorphBadge :value="128" :max="99" :offset-x="4" :offset-y="-2">
           <NmorphButton text="Max" />
         </NmorphBadge>
-        <NmorphBadge type="dot" color="var(--nmorph-error-color)" :dot-size="10">
-          <NmorphButton text="Dot" />
-        </NmorphBadge>
+        <div class="badge-dot-demo">
+          <NmorphBadge type="dot" color="var(--nmorph-error-color)">
+            <NmorphButton text="Dot" />
+          </NmorphBadge>
+        </div>
         <NmorphBadge :value="12" color="var(--nmorph-success-color)">
           <template #value="{ displayValue }">
             <div class="badge-value">
@@ -106,7 +108,7 @@ const progressColor = (value: number) => {
         <NmorphBadge value="Top right" type="ribbon" ribbon-corner="top-right">
           <div class="badge-ribbon-card">Ribbon</div>
         </NmorphBadge>
-        <NmorphBadge value="asdf" type="ribbon" ribbon-corner="top-left" color="var(--nmorph-error-color)">
+        <NmorphBadge value="asdf" type="ribbon" :offset-x="20" ribbon-corner="top-left" color="var(--nmorph-error-color)">
           <div class="badge-ribbon-card">Corner</div>
         </NmorphBadge>
         <NmorphBadge value="Bottom right" type="ribbon" ribbon-corner="bottom-right" color="var(--nmorph-warn-color)">
@@ -394,6 +396,10 @@ const progressColor = (value: number) => {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+}
+
+.badge-dot-demo :deep(.nmorph-badge) {
+  --nmorph-badge-dot-size: 10px;
 }
 
 .badge-ribbon-card {

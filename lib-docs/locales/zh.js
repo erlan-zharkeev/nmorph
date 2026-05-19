@@ -237,6 +237,14 @@ export default {
           "NmorphBadge 现在支持 ribbon 显示类型，用于可选择角落的斜向角标，并已添加 docs 和 sandbox 示例。",
         "badge-type-display-source":
           "NmorphBadge 现在使用 `type` prop 作为主要显示模式，包括 dot 和 tag，并将 offset props 转发到 ribbon CSS variables。",
+        "badge-dot-css-variable":
+          "NmorphBadge dot 尺寸现在来自 size variants 和 --nmorph-badge-dot-size CSS variable，不再使用 dotSize prop。",
+        "card-content-class-prop":
+          "NmorphCard 现在支持 contentClass，可直接为内容 wrapper 添加 class，无需穿透嵌套选择器。",
+        "dialog-compact-section-padding":
+          "NmorphDialog 现在使用 4px 外层 padding，并为 header 和 content 分别设置 4px padding。",
+        "sandbox-component-examples":
+          "Sandbox examples 现在通过 CSS variables 演示 badge dot 尺寸，并以 checkbox design 展示 checkbox group column 状态。",
         "notification-provider-z-index-stack":
           "NmorphNotificationProvider 现在默认跟随共享 z-index 栈，因此通知会显示在活动 overlay 和 dialog 之上。",
         "dialog-viewport-scroll":
@@ -811,7 +819,6 @@ export default {
         "offset-y": "Vertical offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-y. Ignored when type is tag",
         "offset-x":
           "Horizontal offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-x. Ignored when type is tag",
-        "dot-size": "Overrides the dot size. Numbers are treated as pixel values",
       },
       slot: {
         default:
@@ -844,6 +851,7 @@ export default {
       api: {
         "shadow-type": "Defines the visibility of the card's shadow.",
         "card-padding": "Overrides the card padding. Numbers are treated as pixel values.",
+        "content-class": "Adds a custom class to the card content wrapper.",
         "combined-shadow-border-width": "Border width used only when shadow-type is combined.",
         fill: "When true, the card takes the available width. Set false to fit the content width.",
         tag: "HTML tag used for the card root element.",

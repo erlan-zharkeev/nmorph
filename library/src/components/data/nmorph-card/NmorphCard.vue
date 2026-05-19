@@ -8,6 +8,7 @@ interface INmorphProps {
   shadowType?: keyof typeof NmorphShadowType;
   combinedShadowBorderWidth?: number;
   cardPadding?: number | string;
+  contentClass?: string;
   fill?: boolean;
   tag?: string;
 }
@@ -16,6 +17,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   shadowType: 'outset',
   combinedShadowBorderWidth: 0,
   cardPadding: undefined,
+  contentClass: '',
   fill: true,
   tag: 'div',
 });
@@ -44,7 +46,7 @@ const styles = computed<CSSProperties>(() => ({
     <div v-if="slots.header" class="nmorph-card__header">
       <slot name="header" />
     </div>
-    <div class="nmorph-card__content">
+    <div :class="['nmorph-card__content', props.contentClass]">
       <slot />
     </div>
     <div v-if="slots.footer" class="nmorph-card__footer">

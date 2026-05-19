@@ -129,7 +129,7 @@ const clickOnOverlay = () => {
   width: var(--width);
   max-width: var(--nmorph-dialog-max-width, calc(100vw - 32px));
   max-height: var(--nmorph-dialog-max-height, var(--nmorph-dialog-default-max-height));
-  padding: var(--indentation-04);
+  padding: var(--indentation-02);
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
   transform: translate(-50%, -50%);
@@ -146,6 +146,8 @@ const clickOnOverlay = () => {
     flex: 0 0 auto;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box;
+    padding: var(--indentation-02);
     font-weight: 600;
     font-size: var(--font-size-large);
     line-height: var(--line-height-loose);
@@ -157,7 +159,10 @@ const clickOnOverlay = () => {
   }
 
   .nmorph-dialog__content {
+    flex: 1 1 auto;
+    box-sizing: border-box;
     min-height: 0;
+    padding: var(--indentation-02);
     overflow-y: auto;
   }
 }

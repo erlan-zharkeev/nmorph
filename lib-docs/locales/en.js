@@ -247,6 +247,14 @@ export default {
           "NmorphBadge now supports a ribbon display type for diagonal corner labels with selectable corners, docs, and sandbox examples.",
         "badge-type-display-source":
           "NmorphBadge now uses the `type` prop as the primary display mode, including dot and tag modes, and forwards offset props to ribbon CSS variables.",
+        "badge-dot-css-variable":
+          "NmorphBadge dot sizing now comes from size variants and the --nmorph-badge-dot-size CSS variable instead of a dotSize prop.",
+        "card-content-class-prop":
+          "NmorphCard now accepts contentClass so consumers can style the content wrapper without reaching through nested selectors.",
+        "dialog-compact-section-padding":
+          "NmorphDialog now uses 4px outer padding and separate 4px padding for the header and content sections.",
+        "sandbox-component-examples":
+          "Sandbox examples now demonstrate badge dot sizing through CSS variables and the checkbox group column state with checkbox design.",
         "notification-provider-z-index-stack":
           "NmorphNotificationProvider now follows the shared z-index stack by default so notifications stay above active overlays and dialogs.",
         "dialog-viewport-scroll":
@@ -835,7 +843,6 @@ export default {
         "offset-y": "Vertical offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-y. Ignored when type is tag",
         "offset-x":
           "Horizontal offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-x. Ignored when type is tag",
-        "dot-size": "Overrides the dot size. Numbers are treated as pixel values",
       },
       slot: {
         default:
@@ -868,6 +875,7 @@ export default {
       api: {
         "shadow-type": "Defines the visibility of the card's shadow.",
         "card-padding": "Overrides the card padding. Numbers are treated as pixel values.",
+        "content-class": "Adds a custom class to the card content wrapper.",
         "combined-shadow-border-width": "Border width used only when shadow-type is combined.",
         fill: "When true, the card takes the available width. Set false to fit the content width.",
         tag: "HTML tag used for the card root element.",

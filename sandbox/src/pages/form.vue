@@ -268,7 +268,7 @@ watch(runtimeAccentColor, (accent) => {
           <NmorphCheckbox v-model="checked" design="button" label="Button checkbox" height="thick" />
         </div>
         <NmorphCheckboxGroup v-model="checkboxGroupValue" :options="checkboxOptions" height="thin" />
-        <NmorphCheckboxGroup v-model="checkboxButtonGroupValue" :options="checkboxOptions" design="button" direction="column" height="thick" />
+        <NmorphCheckboxGroup v-model="checkboxButtonGroupValue" :options="checkboxOptions" design="checkbox" direction="column" height="thick" />
       </div>
       <p class="hint">checked: {{ checked }} / group: {{ checkboxGroupValue }} / buttons: {{ checkboxButtonGroupValue }}</p>
     </SandboxSection>

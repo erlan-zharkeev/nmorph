@@ -28,7 +28,6 @@ interface INmorphProps {
   offsetX?: number;
   zIndex?: number;
   disabled?: boolean;
-  dotSize?: number | string;
 }
 
 type NmorphBadgeValueSlotProps = {
@@ -50,7 +49,6 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   offsetY: 0,
   zIndex: 1,
   disabled: false,
-  dotSize: undefined,
 });
 
 defineSlots<{
@@ -137,7 +135,6 @@ const styles = computed<CSSProperties>(() => ({
   '--nmorph-badge-color': props.color,
   ...(props.offsetX !== 0 && { '--nmorph-badge-ribbon-offset-x': getCssSize(props.offsetX) }),
   ...(props.offsetY !== 0 && { '--nmorph-badge-ribbon-offset-y': getCssSize(props.offsetY) }),
-  ...(props.dotSize !== undefined && { '--nmorph-badge-dot-size': getCssSize(props.dotSize) }),
 }));
 
 const updateBadgeSize = async () => {
@@ -182,14 +179,16 @@ watch(() => [props.value, props.max, resolvedType.value, props.ribbonCorner, pro
 </template>
 
 <style lang="scss">
-$nmorph-badge-dot-size: 4px;
+$nmorph-badge-dot-size-tiny: 3px;
+$nmorph-badge-dot-size-extra-small: 4px;
+$nmorph-badge-dot-size-base: 4px;
 
 .nmorph-badge {
   position: relative;
   display: inline-block;
   height: fit-content;
 
-  --nmorph-badge-dot-size: #{$nmorph-badge-dot-size};
+  --nmorph-badge-dot-size: #{$nmorph-badge-dot-size-base};
   --nmorph-badge-ribbon-height: 24px;
   --nmorph-badge-ribbon-corner-size: 62px;
   --nmorph-badge-ribbon-width: 116px;
@@ -265,13 +264,14 @@ $nmorph-badge-dot-size: 4px;
     .nmorph-badge__content {
       width: 100%;
       min-width: 0;
+      height: 100%;
       padding: 0 var(--indentation-03);
       overflow: hidden;
       font-weight: 600;
       font-size: var(--font-size-extra-small);
+      line-height: 1;
       white-space: nowrap;
       text-overflow: ellipsis;
-      transform: translateY(-1px);
     }
   }
 
@@ -318,12 +318,14 @@ $nmorph-badge-dot-size: 4px;
   }
 
   &.nmorph-badge--tiny {
+    --nmorph-badge-dot-size: #{$nmorph-badge-dot-size-tiny};
     --nmorph-badge-ribbon-height: 18px;
     --nmorph-badge-ribbon-corner-size: 50px;
     --nmorph-badge-ribbon-width: 92px;
   }
 
   &.nmorph-badge--extra-small {
+    --nmorph-badge-dot-size: #{$nmorph-badge-dot-size-extra-small};
     --nmorph-badge-ribbon-height: 20px;
     --nmorph-badge-ribbon-corner-size: 56px;
     --nmorph-badge-ribbon-width: 104px;

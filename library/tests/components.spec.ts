@@ -600,6 +600,21 @@ describe('components', () => {
     withHeader.unmount();
   });
 
+  it('applies custom class to the card content wrapper', () => {
+    const wrapper = mount(NmorphCard, {
+      props: {
+        contentClass: 'custom-card-content',
+      },
+      slots: {
+        default: 'Content',
+      },
+    });
+
+    expect(wrapper.find('.nmorph-card__content').classes()).toContain('custom-card-content');
+
+    wrapper.unmount();
+  });
+
   it('renders empty action and forwards size variables', () => {
     const wrapper = mount(NmorphEmpty, {
       props: {
@@ -636,8 +651,8 @@ describe('components', () => {
       wrapper.unmount();
     };
 
-    await assertStyles(mount(NmorphBadge, { props: { type: 'dot', dotSize: 9 } }), '.nmorph-badge', {
-      '--nmorph-badge-dot-size': '9px',
+    await assertStyles(mount(NmorphBadge, { props: { color: '#123456' } }), '.nmorph-badge', {
+      '--nmorph-badge-color': '#123456',
     });
 
     await assertStyles(
@@ -856,6 +871,9 @@ describe('components', () => {
     expect(tag.text()).not.toContain('Ignored');
 
     expect(legacyDot.find('.nmorph-badge__dot').exists()).toBe(true);
+    expect((legacyDot.find('.nmorph-badge').element as HTMLElement).style.getPropertyValue('--nmorph-badge-dot-size')).toBe(
+      ''
+    );
 
     ribbon.unmount();
     tag.unmount();

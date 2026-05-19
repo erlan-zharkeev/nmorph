@@ -19,6 +19,11 @@ const attributesData: IAttributesTableData[] = [
     default: "undefined",
   },
   {
+    name: "content-class",
+    type: "string",
+    default: "-",
+  },
+  {
     name: "combined-shadow-border-width",
     type: "number",
     default: "0",

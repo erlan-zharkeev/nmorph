@@ -249,6 +249,14 @@ export default {
           "NmorphBadge теперь поддерживает ribbon display type для диагональных corner labels с выбором угла, примерами в docs и sandbox.",
         "badge-type-display-source":
           "NmorphBadge теперь использует prop `type` как основной режим отображения, включая dot и tag, а offset props прокидываются в CSS variables ribbon.",
+        "badge-dot-css-variable":
+          "Размер dot у NmorphBadge теперь задается size-вариантами и CSS-переменной --nmorph-badge-dot-size вместо prop dotSize.",
+        "card-content-class-prop":
+          "NmorphCard теперь принимает contentClass, чтобы можно было стилизовать обертку контента без вложенных селекторов.",
+        "dialog-compact-section-padding":
+          "NmorphDialog теперь использует внешний padding 4px и отдельные padding 4px для header и content.",
+        "sandbox-component-examples":
+          "Sandbox examples теперь показывают размер dot через CSS variables и column-состояние checkbox group в checkbox design.",
         "notification-provider-z-index-stack":
           "NmorphNotificationProvider теперь по умолчанию следует общему z-index stack, поэтому уведомления остаются поверх активных overlay и dialog.",
         "dialog-viewport-scroll":
@@ -841,7 +849,6 @@ export default {
         "z-index": "Определяет порядок наложения бейджа",
         "offset-y": "Вертикальное смещение бейджа. Для ribbon прокидывается в --nmorph-badge-ribbon-offset-y. Игнорируется при type tag",
         "offset-x": "Горизонтальное смещение бейджа. Для ribbon прокидывается в --nmorph-badge-ribbon-offset-x. Игнорируется при type tag",
-        "dot-size": "Overrides the dot size. Numbers are treated as pixel values",
       },
       slot: {
         default:
@@ -874,6 +881,7 @@ export default {
       api: {
         "shadow-type": "Определяет видимость тени карточки.",
         "card-padding": "Переопределяет отступ карточки. Числа считаются значениями в пикселях.",
+        "content-class": "Добавляет кастомный класс на обертку контента карточки.",
         "combined-shadow-border-width": "Ширина border, которая используется только при shadow-type='combined'.",
         fill: "Если true, карточка занимает доступную ширину. Передайте false, чтобы ширина шла по контенту.",
         tag: "HTML-тег, который используется для корневого элемента карточки.",
