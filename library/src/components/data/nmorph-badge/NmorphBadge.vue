@@ -22,6 +22,7 @@ interface INmorphProps {
    */
   isTag?: boolean;
   hidden?: boolean;
+  hideOnFalsyValue?: boolean;
   color?: string;
   size?: NmorphBadgeSize;
   offsetY?: number;
@@ -43,6 +44,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   isDot: false,
   isTag: false,
   hidden: false,
+  hideOnFalsyValue: false,
   color: 'var(--nmorph-accent-color)',
   size: 'base',
   offsetX: 0,
@@ -100,7 +102,8 @@ const displayValue = computed(() => {
   return isHaveMaxValue ? `${props.max}+` : props.value;
 });
 
-const shouldShowBadge = computed(() => isDotType.value || props.value !== undefined);
+const shouldHideOnFalsyValue = computed(() => props.hideOnFalsyValue && !props.value);
+const shouldShowBadge = computed(() => (isDotType.value || props.value !== undefined) && !shouldHideOnFalsyValue.value);
 
 const appliedOffset = computed(() => {
   const x = `${(badgeWidth?.value / 2 + props.offsetX) * -1}px`;
@@ -150,7 +153,10 @@ const ribbonFrameStyle = computed<CSSProperties>(() => ({
 
 onMounted(updateBadgeSize);
 
-watch(() => [props.value, props.max, resolvedType.value, props.ribbonCorner, props.size], updateBadgeSize);
+watch(
+  () => [props.value, props.max, resolvedType.value, props.ribbonCorner, props.size, props.hideOnFalsyValue],
+  updateBadgeSize
+);
 </script>
 
 <template>

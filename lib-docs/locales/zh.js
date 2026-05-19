@@ -239,6 +239,8 @@ export default {
           "NmorphBadge 现在使用 `type` prop 作为主要显示模式，包括 dot 和 tag，并将 offset props 转发到 ribbon CSS variables。",
         "badge-dot-css-variable":
           "NmorphBadge dot 尺寸现在来自 size variants 和 --nmorph-badge-dot-size CSS variable，不再使用 dotSize prop。",
+        "badge-hide-on-falsy-value":
+          "NmorphBadge 现在支持 hideOnFalsyValue，可在 value 为 falsy（包括 0）时隐藏 badge indicator。",
         "card-content-class-prop":
           "NmorphCard 现在支持 contentClass，可直接为内容 wrapper 添加 class，无需穿透嵌套选择器。",
         "dialog-compact-section-padding":
@@ -813,6 +815,7 @@ export default {
         "is-tag":
           "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
         hidden: "Hides the badge",
+        "hide-on-falsy-value": "Hides the badge indicator when value is falsy, including 0 and an empty string.",
         color: "Sets the background color of the badge",
         size: "Sets the badge text size: tiny, extra-small, or base",
         "z-index": "Defines the stacking order of the badge",

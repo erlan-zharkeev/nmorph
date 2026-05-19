@@ -880,6 +880,34 @@ describe('components', () => {
     legacyDot.unmount();
   });
 
+  it('can hide the badge when value is falsy', async () => {
+    const visibleZero = mount(NmorphBadge, {
+      props: {
+        value: 0,
+      },
+      slots: {
+        default: '<button>Inbox</button>',
+      },
+    });
+    const hiddenZero = mount(NmorphBadge, {
+      props: {
+        value: 0,
+        hideOnFalsyValue: true,
+      },
+      slots: {
+        default: '<button>Inbox</button>',
+      },
+    });
+
+    expect(visibleZero.find('.nmorph-badge__container').exists()).toBe(true);
+    expect(visibleZero.text()).toContain('0');
+    expect(hiddenZero.find('.nmorph-badge__container').exists()).toBe(false);
+    expect(hiddenZero.text()).toBe('Inbox');
+
+    visibleZero.unmount();
+    hiddenZero.unmount();
+  });
+
   it('forwards CSS variable props on form controls', async () => {
     const assertStyles = async (wrapper, selector, expected) => {
       await nextTick();

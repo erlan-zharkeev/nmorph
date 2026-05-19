@@ -249,6 +249,8 @@ export default {
           "NmorphBadge now uses the `type` prop as the primary display mode, including dot and tag modes, and forwards offset props to ribbon CSS variables.",
         "badge-dot-css-variable":
           "NmorphBadge dot sizing now comes from size variants and the --nmorph-badge-dot-size CSS variable instead of a dotSize prop.",
+        "badge-hide-on-falsy-value":
+          "NmorphBadge now accepts hideOnFalsyValue to hide the badge indicator when value is falsy, including 0.",
         "card-content-class-prop":
           "NmorphCard now accepts contentClass so consumers can style the content wrapper without reaching through nested selectors.",
         "dialog-compact-section-padding":
@@ -837,6 +839,7 @@ export default {
         "is-tag":
           "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
         hidden: "Hides the badge",
+        "hide-on-falsy-value": "Hides the badge indicator when value is falsy, including 0 and an empty string.",
         color: "Sets the background color of the badge",
         size: "Sets the badge text size: tiny, extra-small, or base",
         "z-index": "Defines the stacking order of the badge",

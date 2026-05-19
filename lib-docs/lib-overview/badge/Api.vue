@@ -33,6 +33,11 @@ const attributesData: IAttributesTableData[] = [
     default: "false",
   },
   {
+    name: "hide-on-falsy-value",
+    type: "Boolean",
+    default: "false",
+  },
+  {
     name: "color",
     type: "String",
     default: "var(--nmorph-accent-color)",

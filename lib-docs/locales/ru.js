@@ -251,6 +251,8 @@ export default {
           "NmorphBadge теперь использует prop `type` как основной режим отображения, включая dot и tag, а offset props прокидываются в CSS variables ribbon.",
         "badge-dot-css-variable":
           "Размер dot у NmorphBadge теперь задается size-вариантами и CSS-переменной --nmorph-badge-dot-size вместо prop dotSize.",
+        "badge-hide-on-falsy-value":
+          "NmorphBadge теперь принимает hideOnFalsyValue, чтобы скрывать индикатор бейджа при falsy value, включая 0.",
         "card-content-class-prop":
           "NmorphCard теперь принимает contentClass, чтобы можно было стилизовать обертку контента без вложенных селекторов.",
         "dialog-compact-section-padding":
@@ -844,6 +846,7 @@ export default {
         "is-tag":
           "Переключает бейдж в standalone tag-режим без absolute-позиционирования и без default slot",
         hidden: "Скрывает бейдж",
+        "hide-on-falsy-value": "Скрывает индикатор бейджа, когда value falsy, включая 0 и пустую строку.",
         color: "Устанавливает цвет фона бейджа",
         size: "Устанавливает размер текста бейджа: tiny, extra-small или base",
         "z-index": "Определяет порядок наложения бейджа",
