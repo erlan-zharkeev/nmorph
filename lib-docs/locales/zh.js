@@ -235,6 +235,8 @@ export default {
           "NmorphAutocomplete 现在关闭时不会重新聚焦自身，打开列表时 clear action 仍可点击，并为 dropdown items 应用默认间距。",
         "badge-ribbon-type":
           "NmorphBadge 现在支持 ribbon 显示类型，用于可选择角落的斜向角标，并已添加 docs 和 sandbox 示例。",
+        "badge-type-display-source":
+          "NmorphBadge 现在使用 `type` prop 作为主要显示模式，包括 dot 和 tag，并将 offset props 转发到 ribbon CSS variables。",
         "notification-provider-z-index-stack":
           "NmorphNotificationProvider 现在默认跟随共享 z-index 栈，因此通知会显示在活动 overlay 和 dialog 之上。",
         "dialog-viewport-scroll":
@@ -756,7 +758,7 @@ export default {
     badge: {
       value: {
         subtitle:
-          "The displayed value on the badge, can be *string* or *number*. If omitted and `is-dot` is false, the badge is not rendered.",
+          "The displayed value on the badge, can be *string* or *number*. If omitted and `type` is not `dot`, the badge is not rendered.",
       },
       "value-slot": {
         subtitle:
@@ -767,7 +769,7 @@ export default {
           "Maximum value for the badge. If it's set as a number and exceeded, it's displayed as max+.",
       },
       type: {
-        subtitle: "在 default、dot 和 ribbon badge 显示之间切换。",
+        subtitle: "在 default、dot、tag 和 ribbon badge 显示之间切换。",
       },
       "ribbon-corner": {
         subtitle: "选择 diagonal ribbon badge 使用的角落。",
@@ -795,9 +797,9 @@ export default {
       },
       api: {
         value:
-          "The displayed value on the badge. If undefined and is-dot is false, the badge is hidden",
+          "The displayed value on the badge. If undefined and type is not dot, the badge is hidden",
         max: "Maximum value to display",
-        type: "设置 badge 显示类型：default、dot 或 ribbon",
+        type: "设置 badge 显示类型：default、dot、tag 或 ribbon",
         "ribbon-corner": "当 type 为 ribbon 时设置 ribbon 角落",
         "is-dot": "Displays the badge as a dot",
         "is-tag":
@@ -806,19 +808,19 @@ export default {
         color: "Sets the background color of the badge",
         size: "Sets the badge text size: tiny, extra-small, or base",
         "z-index": "Defines the stacking order of the badge",
-        "offset-y": "Vertical offset of the badge. Ignored when is-tag is true",
+        "offset-y": "Vertical offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-y. Ignored when type is tag",
         "offset-x":
-          "Horizontal offset of the badge. Ignored when is-tag is true",
+          "Horizontal offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-x. Ignored when type is tag",
         "dot-size": "Overrides the dot size. Numbers are treated as pixel values",
       },
       slot: {
         default:
-          "Wrapped content the badge is attached to. Not used when `is-tag` is true.",
+          "Wrapped content the badge is attached to. Not used when `type` is `tag`.",
         value:
           "Custom content inside the badge instead of the plain `value`. Works only in overlay mode.",
       },
       variables: {
-        "dot-size": "Width and height of the dot",
+        "nmorph-badge-dot-size": "Width and height of the dot",
         "nmorph-badge-ribbon-height": "ribbon badge 条带高度",
         "nmorph-badge-ribbon-width": "ribbon badge 条带宽度",
         "nmorph-badge-ribbon-corner-size": "用于定位 ribbon 条带的角落区域尺寸",

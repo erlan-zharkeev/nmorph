@@ -5,9 +5,9 @@ import { NmorphBadge } from "@nmorph/nmorph-ui-kit";
 <template>
   <div class="badge-size-overview">
     <ClientOnly>
-      <NmorphBadge is-tag value="tiny" size="tiny" />
-      <NmorphBadge is-tag value="extra-small" size="extra-small" />
-      <NmorphBadge is-tag value="base" size="base" />
+      <NmorphBadge type="tag" value="tiny" size="tiny" />
+      <NmorphBadge type="tag" value="extra-small" size="extra-small" />
+      <NmorphBadge type="tag" value="base" size="base" />
     </ClientOnly>
   </div>
 </template>

@@ -247,6 +247,8 @@ export default {
           "NmorphAutocomplete теперь закрывается без повторного фокуса, оставляет clear action кликабельным при открытом списке и применяет базовые отступы к dropdown items.",
         "badge-ribbon-type":
           "NmorphBadge теперь поддерживает ribbon display type для диагональных corner labels с выбором угла, примерами в docs и sandbox.",
+        "badge-type-display-source":
+          "NmorphBadge теперь использует prop `type` как основной режим отображения, включая dot и tag, а offset props прокидываются в CSS variables ribbon.",
         "notification-provider-z-index-stack":
           "NmorphNotificationProvider теперь по умолчанию следует общему z-index stack, поэтому уведомления остаются поверх активных overlay и dialog.",
         "dialog-viewport-scroll":
@@ -785,7 +787,7 @@ export default {
     badge: {
       value: {
         subtitle:
-          "Отображаемое значение на бейдже, может быть *string* или *number*. Если не передано и `is-dot` выключен, бейдж не рендерится.",
+          "Отображаемое значение на бейдже, может быть *string* или *number*. Если не передано и `type` не равен `dot`, бейдж не рендерится.",
       },
       "value-slot": {
         subtitle:
@@ -797,7 +799,7 @@ export default {
       },
       type: {
         subtitle:
-          "Переключает отображение бейджа между default, dot и ribbon режимами.",
+          "Переключает отображение бейджа между default, dot, tag и ribbon режимами.",
       },
       "ribbon-corner": {
         subtitle: "Выбирает угол для диагонального ribbon-бейджа.",
@@ -826,9 +828,9 @@ export default {
       },
       api: {
         value:
-          "Отображаемое значение в бейдже. Если `undefined` и `is-dot` выключен, бейдж скрывается",
+          "Отображаемое значение в бейдже. Если `undefined` и type не равен dot, бейдж скрывается",
         max: "Максимальное допустимое отображаемое значение",
-        type: "Задает тип отображения бейджа: default, dot или ribbon",
+        type: "Задает тип отображения бейджа: default, dot, tag или ribbon",
         "ribbon-corner": "Задает угол ribbon-бейджа, когда type равен ribbon",
         "is-dot": "Отображает бейдж в виде точки",
         "is-tag":
@@ -837,18 +839,18 @@ export default {
         color: "Устанавливает цвет фона бейджа",
         size: "Устанавливает размер текста бейджа: tiny, extra-small или base",
         "z-index": "Определяет порядок наложения бейджа",
-        "offset-y": "Вертикальное смещение бейджа. Игнорируется при is-tag",
-        "offset-x": "Горизонтальное смещение бейджа. Игнорируется при is-tag",
+        "offset-y": "Вертикальное смещение бейджа. Для ribbon прокидывается в --nmorph-badge-ribbon-offset-y. Игнорируется при type tag",
+        "offset-x": "Горизонтальное смещение бейджа. Для ribbon прокидывается в --nmorph-badge-ribbon-offset-x. Игнорируется при type tag",
         "dot-size": "Overrides the dot size. Numbers are treated as pixel values",
       },
       slot: {
         default:
-          "Контент, поверх которого отображается бейдж. Не используется при `is-tag`.",
+          "Контент, поверх которого отображается бейдж. Не используется при `type=\"tag\"`.",
         value:
           "Кастомное содержимое внутри бейджа вместо текстового `value`. Работает только в overlay-режиме.",
       },
       variables: {
-        "dot-size": "Ширина и высота точки",
+        "nmorph-badge-dot-size": "Ширина и высота точки",
         "nmorph-badge-ribbon-height": "Высота ribbon-полосы бейджа",
         "nmorph-badge-ribbon-width": "Ширина ribbon-полосы бейджа",
         "nmorph-badge-ribbon-corner-size": "Размер угловой зоны, по которой позиционируется ribbon-полоса",

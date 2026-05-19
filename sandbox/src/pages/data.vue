@@ -91,7 +91,7 @@ const progressColor = (value: number) => {
         <NmorphBadge :value="128" :max="99" :offset-x="4" :offset-y="-2">
           <NmorphButton text="Max" />
         </NmorphBadge>
-        <NmorphBadge is-dot color="var(--nmorph-error-color)" :dot-size="10">
+        <NmorphBadge type="dot" color="var(--nmorph-error-color)" :dot-size="10">
           <NmorphButton text="Dot" />
         </NmorphBadge>
         <NmorphBadge :value="12" color="var(--nmorph-success-color)">
@@ -112,8 +112,8 @@ const progressColor = (value: number) => {
         <NmorphBadge value="Bottom right" type="ribbon" ribbon-corner="bottom-right" color="var(--nmorph-warn-color)">
           <div class="badge-ribbon-card">Bottom</div>
         </NmorphBadge>
-        <NmorphBadge value="Tag" is-tag size="extra-small" />
-        <NmorphBadge value="Base Tag" is-tag size="base" />
+        <NmorphBadge value="Tag" type="tag" size="extra-small" />
+        <NmorphBadge value="Base Tag" type="tag" size="base" />
         <NmorphBadge value="Hidden" hidden>
           <NmorphButton text="Hidden" />
         </NmorphBadge>
@@ -291,7 +291,7 @@ const progressColor = (value: number) => {
         <NmorphTableColumn prop="status" label="Status" width="160">
           <template #default="{ scope }">
             <NmorphTableCell v-for="(_, index) in scope.rows" :key="index" :row="index">
-              <NmorphBadge :value="String(scope.rows[index].status)" is-tag color="var(--nmorph-success-color)" />
+              <NmorphBadge :value="String(scope.rows[index].status)" type="tag" color="var(--nmorph-success-color)" />
             </NmorphTableCell>
           </template>
         </NmorphTableColumn>

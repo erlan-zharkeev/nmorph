@@ -13,6 +13,7 @@ const ribbonCorners = ["top-left", "top-right", "bottom-left", "bottom-right"] a
       <NmorphBadge type="dot" color="var(--nmorph-error-color)" :dot-size="9">
         <NmorphButton text="Dot" />
       </NmorphBadge>
+      <NmorphBadge type="tag" value="Tag" color="var(--nmorph-success-color)" />
       <NmorphBadge
         v-for="corner in ribbonCorners"
         :key="corner"

@@ -6,7 +6,7 @@ import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
   <div class="badge-color-overview">
     <ClientOnly>
       <div class="badge-value-overview__element">
-        <NmorphBadge is-dot color="red">
+        <NmorphBadge type="dot" color="red">
           <NmorphButton text="button" />
         </NmorphBadge>
       </div>

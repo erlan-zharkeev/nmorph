@@ -5,7 +5,7 @@ import { useModifiers } from '@/utils';
 import { NmorphDomElementType } from '@/types';
 
 type NmorphBadgeSize = 'tiny' | 'extra-small' | 'base';
-type NmorphBadgeType = 'default' | 'dot' | 'ribbon';
+type NmorphBadgeType = 'default' | 'dot' | 'tag' | 'ribbon';
 type NmorphBadgeRibbonCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 
 interface INmorphProps {
@@ -13,7 +13,13 @@ interface INmorphProps {
   max?: number;
   type?: NmorphBadgeType;
   ribbonCorner?: NmorphBadgeRibbonCorner;
+  /**
+   * @deprecated Use `type="dot"` instead.
+   */
   isDot?: boolean;
+  /**
+   * @deprecated Use `type="tag"` instead.
+   */
   isTag?: boolean;
   hidden?: boolean;
   color?: string;
@@ -52,15 +58,21 @@ defineSlots<{
   value?: (props: NmorphBadgeValueSlotProps) => unknown;
 }>();
 
-const resolvedType = computed<NmorphBadgeType>(() => (props.isDot ? 'dot' : props.type));
+const resolvedType = computed<NmorphBadgeType>(() => {
+  if (props.type !== 'default') return props.type;
+  if (props.isDot) return 'dot';
+  if (props.isTag) return 'tag';
+  return 'default';
+});
 const isDotType = computed(() => resolvedType.value === 'dot');
-const isRibbon = computed(() => resolvedType.value === 'ribbon' && !props.isTag);
+const isTagType = computed(() => resolvedType.value === 'tag');
+const isRibbon = computed(() => resolvedType.value === 'ribbon');
 
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-badge': [
       `${props.hidden && 'hidden'}`,
-      `${props.isTag && 'tag'}`,
+      `${isTagType.value && 'tag'}`,
       `${isRibbon.value && 'ribbon'}`,
       `${isRibbon.value && `ribbon-${props.ribbonCorner}`}`,
       props.size,
@@ -72,7 +84,7 @@ const containerModifiers = computed(() =>
   useModifiers({
     'nmorph-badge__container': [
       `${props.hidden && 'hidden'}`,
-      `${props.isTag && 'tag'}`,
+      `${isTagType.value && 'tag'}`,
       `${isRibbon.value && 'ribbon'}`,
       `${isRibbon.value && `ribbon-${props.ribbonCorner}`}`,
     ],
@@ -102,7 +114,7 @@ const appliedOffset = computed(() => {
 });
 
 const containerStyle = computed(() => {
-  if (props.isTag || isRibbon.value) {
+  if (isTagType.value || isRibbon.value) {
     return {
       zIndex: props.zIndex,
     };
@@ -123,12 +135,14 @@ const badgeHeight = ref(0);
 
 const styles = computed<CSSProperties>(() => ({
   '--nmorph-badge-color': props.color,
-  ...(props.dotSize !== undefined && { '--dot-size': getCssSize(props.dotSize) }),
+  ...(props.offsetX !== 0 && { '--nmorph-badge-ribbon-offset-x': getCssSize(props.offsetX) }),
+  ...(props.offsetY !== 0 && { '--nmorph-badge-ribbon-offset-y': getCssSize(props.offsetY) }),
+  ...(props.dotSize !== undefined && { '--nmorph-badge-dot-size': getCssSize(props.dotSize) }),
 }));
 
 const updateBadgeSize = async () => {
   await nextTick();
-  if (!badge.value || props.isTag || isRibbon.value) return;
+  if (!badge.value || isTagType.value || isRibbon.value) return;
   badgeWidth.value = badge.value.clientWidth;
   badgeHeight.value = badge.value.clientHeight;
 };
@@ -139,12 +153,12 @@ const ribbonFrameStyle = computed<CSSProperties>(() => ({
 
 onMounted(updateBadgeSize);
 
-watch(() => [props.value, props.max, resolvedType.value, props.ribbonCorner, props.isTag, props.size], updateBadgeSize);
+watch(() => [props.value, props.max, resolvedType.value, props.ribbonCorner, props.size], updateBadgeSize);
 </script>
 
 <template>
-  <div v-if="!props.disabled && (!props.isTag || shouldShowBadge)" :class="modifiers" :style="styles">
-    <slot v-if="!props.isTag" />
+  <div v-if="!props.disabled && (!isTagType || shouldShowBadge)" :class="modifiers" :style="styles">
+    <slot v-if="!isTagType" />
     <div v-if="shouldShowBadge && isRibbon" class="nmorph-badge__ribbon-frame" :style="ribbonFrameStyle">
       <div :class="ribbonCornerModifiers">
         <div ref="badge" :class="containerModifiers" :style="containerStyle">
@@ -157,23 +171,25 @@ watch(() => [props.value, props.max, resolvedType.value, props.ribbonCorner, pro
     <div v-else-if="shouldShowBadge" ref="badge" :class="containerModifiers" :style="containerStyle">
       <div v-if="isDotType" class="nmorph-badge__dot" />
       <div v-else class="nmorph-badge__content">
-        <template v-if="props.isTag">
+        <template v-if="isTagType">
           {{ displayValue }}
         </template>
         <slot v-else name="value" :value="props.value" :display-value="displayValue"> {{ displayValue }} </slot>
       </div>
     </div>
   </div>
-  <slot v-else-if="!props.isTag" />
+  <slot v-else-if="!isTagType" />
 </template>
 
 <style lang="scss">
+$nmorph-badge-dot-size: 4px;
+
 .nmorph-badge {
   position: relative;
   display: inline-block;
   height: fit-content;
 
-  --dot-size: 4px;
+  --nmorph-badge-dot-size: #{$nmorph-badge-dot-size};
   --nmorph-badge-ribbon-height: 24px;
   --nmorph-badge-ribbon-corner-size: 62px;
   --nmorph-badge-ribbon-width: 116px;
@@ -296,8 +312,8 @@ watch(() => [props.value, props.max, resolvedType.value, props.ribbonCorner, pro
   }
 
   .nmorph-badge__dot {
-    width: var(--dot-size);
-    height: var(--dot-size);
+    width: var(--nmorph-badge-dot-size);
+    height: var(--nmorph-badge-dot-size);
     border-radius: var(--border-radius-circular);
   }
 

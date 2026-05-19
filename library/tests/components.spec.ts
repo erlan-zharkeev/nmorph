@@ -636,8 +636,8 @@ describe('components', () => {
       wrapper.unmount();
     };
 
-    await assertStyles(mount(NmorphBadge, { props: { isDot: true, dotSize: 9 } }), '.nmorph-badge', {
-      '--dot-size': '9px',
+    await assertStyles(mount(NmorphBadge, { props: { type: 'dot', dotSize: 9 } }), '.nmorph-badge', {
+      '--nmorph-badge-dot-size': '9px',
     });
 
     await assertStyles(
@@ -788,6 +788,8 @@ describe('components', () => {
         value: 'New',
         type: 'ribbon',
         ribbonCorner: 'bottom-left',
+        offsetX: -6,
+        offsetY: 8,
       },
       slots: {
         default: '<div>Card</div>',
@@ -796,6 +798,10 @@ describe('components', () => {
 
     await nextTick();
 
+    const badge = wrapper.find('.nmorph-badge').element as HTMLElement;
+
+    expect(badge.style.getPropertyValue('--nmorph-badge-ribbon-offset-x')).toBe('-6px');
+    expect(badge.style.getPropertyValue('--nmorph-badge-ribbon-offset-y')).toBe('8px');
     expect(wrapper.find('.nmorph-badge__ribbon-frame').exists()).toBe(true);
     expect(wrapper.find('.nmorph-badge__ribbon-corner').classes()).toContain(
       'nmorph-badge__ribbon-corner--bottom-left'
@@ -805,6 +811,55 @@ describe('components', () => {
     );
 
     wrapper.unmount();
+  });
+
+  it('uses badge type as the primary display mode', async () => {
+    const ribbon = mount(NmorphBadge, {
+      props: {
+        value: 'New',
+        type: 'ribbon',
+        isDot: true,
+        isTag: true,
+      },
+      slots: {
+        default: '<div>Card</div>',
+      },
+    });
+    const tag = mount(NmorphBadge, {
+      props: {
+        value: 'Stable',
+        type: 'tag',
+        size: 'tiny',
+      },
+      slots: {
+        default: '<button>Ignored</button>',
+      },
+    });
+    const legacyDot = mount(NmorphBadge, {
+      props: {
+        isDot: true,
+      },
+      slots: {
+        default: '<button>Legacy</button>',
+      },
+    });
+
+    await nextTick();
+
+    expect(ribbon.find('.nmorph-badge__ribbon-frame').exists()).toBe(true);
+    expect(ribbon.find('.nmorph-badge__dot').exists()).toBe(false);
+    expect(ribbon.find('.nmorph-badge').classes()).not.toContain('nmorph-badge--tag');
+
+    expect(tag.find('.nmorph-badge').classes()).toContain('nmorph-badge--tag');
+    expect(tag.find('.nmorph-badge').classes()).toContain('nmorph-badge--tiny');
+    expect(tag.text()).toContain('Stable');
+    expect(tag.text()).not.toContain('Ignored');
+
+    expect(legacyDot.find('.nmorph-badge__dot').exists()).toBe(true);
+
+    ribbon.unmount();
+    tag.unmount();
+    legacyDot.unmount();
   });
 
   it('forwards CSS variable props on form controls', async () => {

@@ -245,6 +245,8 @@ export default {
           "NmorphAutocomplete now closes without refocusing itself, keeps its clear action clickable while open, and applies default spacing to dropdown items.",
         "badge-ribbon-type":
           "NmorphBadge now supports a ribbon display type for diagonal corner labels with selectable corners, docs, and sandbox examples.",
+        "badge-type-display-source":
+          "NmorphBadge now uses the `type` prop as the primary display mode, including dot and tag modes, and forwards offset props to ribbon CSS variables.",
         "notification-provider-z-index-stack":
           "NmorphNotificationProvider now follows the shared z-index stack by default so notifications stay above active overlays and dialogs.",
         "dialog-viewport-scroll":
@@ -779,7 +781,7 @@ export default {
     badge: {
       value: {
         subtitle:
-          "The displayed value on the badge, can be *string* or *number*. If omitted and `is-dot` is false, the badge is not rendered.",
+          "The displayed value on the badge, can be *string* or *number*. If omitted and `type` is not `dot`, the badge is not rendered.",
       },
       "value-slot": {
         subtitle:
@@ -791,7 +793,7 @@ export default {
       },
       type: {
         subtitle:
-          "Switches between the default badge, dot badge, and ribbon badge display.",
+          "Switches between default, dot, tag, and ribbon badge display.",
       },
       "ribbon-corner": {
         subtitle: "Selects the corner used by the diagonal ribbon badge.",
@@ -819,9 +821,9 @@ export default {
       },
       api: {
         value:
-          "The displayed value on the badge. If undefined and is-dot is false, the badge is hidden",
+          "The displayed value on the badge. If undefined and type is not dot, the badge is hidden",
         max: "Maximum value to display",
-        type: "Sets the badge display type: default, dot, or ribbon",
+        type: "Sets the badge display type: default, dot, tag, or ribbon",
         "ribbon-corner": "Sets the ribbon corner when type is ribbon",
         "is-dot": "Displays the badge as a dot",
         "is-tag":
@@ -830,19 +832,19 @@ export default {
         color: "Sets the background color of the badge",
         size: "Sets the badge text size: tiny, extra-small, or base",
         "z-index": "Defines the stacking order of the badge",
-        "offset-y": "Vertical offset of the badge. Ignored when is-tag is true",
+        "offset-y": "Vertical offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-y. Ignored when type is tag",
         "offset-x":
-          "Horizontal offset of the badge. Ignored when is-tag is true",
+          "Horizontal offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-x. Ignored when type is tag",
         "dot-size": "Overrides the dot size. Numbers are treated as pixel values",
       },
       slot: {
         default:
-          "Wrapped content the badge is attached to. Not used when `is-tag` is true.",
+          "Wrapped content the badge is attached to. Not used when `type` is `tag`.",
         value:
           "Custom content inside the badge instead of the plain `value`. Works only in overlay mode.",
       },
       variables: {
-        "dot-size": "Width and height of the dot",
+        "nmorph-badge-dot-size": "Width and height of the dot",
         "nmorph-badge-ribbon-height": "Height of the ribbon badge strip",
         "nmorph-badge-ribbon-width": "Width of the ribbon badge strip",
         "nmorph-badge-ribbon-corner-size": "Size of the corner zone used to position the ribbon strip",
