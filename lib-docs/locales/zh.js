@@ -241,6 +241,8 @@ export default {
           "NmorphBadge dot 尺寸现在来自 size variants 和 --nmorph-badge-dot-size CSS variable，不再使用 dotSize prop。",
         "badge-hide-on-falsy-value":
           "NmorphBadge 现在支持 hideOnFalsyValue，可在 value 为 falsy（包括 0）时隐藏 badge indicator。",
+        "dialog-content-overflow-x":
+          "NmorphDialog 现在会隐藏 content area 的水平 overflow，同时保留垂直内容滚动。",
         "card-content-class-prop":
           "NmorphCard 现在支持 contentClass，可直接为内容 wrapper 添加 class，无需穿透嵌套选择器。",
         "dialog-compact-section-padding":

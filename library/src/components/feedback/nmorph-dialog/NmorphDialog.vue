@@ -163,7 +163,7 @@ const clickOnOverlay = () => {
     box-sizing: border-box;
     min-height: 0;
     padding: var(--indentation-02);
-    overflow-y: auto;
+    overflow: hidden auto;
   }
 }
 </style>

@@ -253,6 +253,8 @@ export default {
           "Размер dot у NmorphBadge теперь задается size-вариантами и CSS-переменной --nmorph-badge-dot-size вместо prop dotSize.",
         "badge-hide-on-falsy-value":
           "NmorphBadge теперь принимает hideOnFalsyValue, чтобы скрывать индикатор бейджа при falsy value, включая 0.",
+        "dialog-content-overflow-x":
+          "NmorphDialog теперь скрывает горизонтальный overflow внутри content area, сохраняя вертикальную прокрутку контента.",
         "card-content-class-prop":
           "NmorphCard теперь принимает contentClass, чтобы можно было стилизовать обертку контента без вложенных селекторов.",
         "dialog-compact-section-padding":

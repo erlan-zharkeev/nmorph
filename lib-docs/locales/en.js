@@ -251,6 +251,8 @@ export default {
           "NmorphBadge dot sizing now comes from size variants and the --nmorph-badge-dot-size CSS variable instead of a dotSize prop.",
         "badge-hide-on-falsy-value":
           "NmorphBadge now accepts hideOnFalsyValue to hide the badge indicator when value is falsy, including 0.",
+        "dialog-content-overflow-x":
+          "NmorphDialog now hides horizontal overflow inside the content area while keeping vertical content scrolling available.",
         "card-content-class-prop":
           "NmorphCard now accepts contentClass so consumers can style the content wrapper without reaching through nested selectors.",
         "dialog-compact-section-padding":
