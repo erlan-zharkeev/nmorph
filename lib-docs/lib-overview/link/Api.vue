@@ -30,7 +30,7 @@ const attributesData = [
   },
   {
     name: "color",
-    type: "String",
+    type: "Color",
     default: "undefined",
   },
   {

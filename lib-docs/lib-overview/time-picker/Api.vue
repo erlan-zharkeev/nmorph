@@ -86,7 +86,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "width",
-    type: "String | Number",
+    type: "Width",
     default: "undefined",
   },
 ];

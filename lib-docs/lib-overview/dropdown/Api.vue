@@ -26,17 +26,17 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "width",
-    type: "Number | String",
+    type: "Width",
     default: "160",
   },
   {
     name: "min-width",
-    type: "Number | String",
+    type: "Min-width",
     default: "-",
   },
   {
     name: "max-width",
-    type: "Number | String",
+    type: "Max-width",
     default: "-",
   },
   {
@@ -88,6 +88,11 @@ const attributesData: IAttributesTableData[] = [
     name: "content-class",
     type: "String",
     default: "-",
+  },
+  {
+    name: "hide-shadow",
+    type: "Boolean",
+    default: "false",
   },
 ];
 

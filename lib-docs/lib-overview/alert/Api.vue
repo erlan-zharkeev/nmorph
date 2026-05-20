@@ -63,7 +63,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "background-color",
-    type: "String",
+    type: "Color",
     default: "undefined",
   },
 ];

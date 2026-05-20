@@ -94,15 +94,15 @@ const exposes = [
   },
   {
     name: "focus",
-    type: "() => void",
+    type: "void",
   },
   {
     name: "blur",
-    type: "() => void",
+    type: "void",
   },
   {
     name: "select",
-    type: "() => void",
+    type: "void",
   },
 ];
 </script>

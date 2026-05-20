@@ -1,27 +1,73 @@
 <script setup lang="ts">
-import { NmorphScroll, NmorphBacktop } from "@nmorph/nmorph-ui-kit";
-import { useSlots } from 'vue'
+import { NmorphScroll, NmorphBacktop, type INmorphScrollExpose } from "@nmorph/nmorph-ui-kit";
+import { nextTick, useSlots } from "vue";
+
+interface IProps {
+  leftAsideScrollKey?: string;
+}
+
+const props = withDefaults(defineProps<IProps>(), {
+  leftAsideScrollKey: "",
+});
+
 const router = useRouter();
 
-const scroll = ref(null);
+const scroll = ref<INmorphScrollExpose | null>(null);
+const leftAsideScroll = ref<INmorphScrollExpose | null>(null);
 defineExpose({ scroll });
 
 const isRouteReady = ref(false);
 
 let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
+const leftAsideStorageKey = computed(() => {
+  const key = props.leftAsideScrollKey || router.currentRoute.value.path;
+
+  return `nmorph-docs:left-aside-scroll:${key}`;
+});
+
+const saveLeftAsideScroll = (event?: Event) => {
+  if (!import.meta.client) return;
+
+  const target = event?.target as HTMLElement | undefined;
+  const scrollContainer = target ?? leftAsideScroll.value?.scrollDOMContainer;
+
+  if (!scrollContainer) return;
+
+  sessionStorage.setItem(leftAsideStorageKey.value, String(Math.trunc(scrollContainer.scrollTop)));
+};
+
+const restoreLeftAsideScroll = async () => {
+  if (!import.meta.client) return;
+
+  await nextTick();
+
+  const scrollContainer = leftAsideScroll.value?.scrollDOMContainer;
+  const savedScrollTop = Number(sessionStorage.getItem(leftAsideStorageKey.value) ?? 0);
+
+  if (!scrollContainer || !Number.isFinite(savedScrollTop)) return;
+
+  scrollContainer.scrollTop = savedScrollTop;
+};
+
 onMounted(async () => {
   await router.isReady();
+  await restoreLeftAsideScroll();
   timeoutId = setTimeout(() => {
     isRouteReady.value = true;
   }, 0);
 });
+
+onBeforeUnmount(saveLeftAsideScroll);
 
 onUnmounted(() => {
   if (timeoutId !== null) {
     clearTimeout(timeoutId);
   }
 });
+
+watch(leftAsideStorageKey, restoreLeftAsideScroll);
+
 const isMainFullPage = computed(() => !router.currentRoute.value.fullPath.includes("elements"));
 const slots = useSlots() as Record<string, unknown>;
 </script>
@@ -29,7 +75,10 @@ const slots = useSlots() as Record<string, unknown>;
 <template>
   <div class="docs-main-layout">
     <NmorphScroll
-      class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card docs-main-layout__left-aside">
+      ref="leftAsideScroll"
+      class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card docs-main-layout__left-aside"
+      @on-scroll="saveLeftAsideScroll"
+    >
       <aside>
         <slot name="aside" />
       </aside>

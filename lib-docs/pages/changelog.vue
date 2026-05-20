@@ -11,6 +11,80 @@ const knownBugItems: string[] = [];
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v2.2.35</h3>
+            <ul>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.avatar-initials-text-color",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.empty-padding-token")
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.docs-collapse-title-scope",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.sandbox-table-border-color",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.docs-skeleton-loading-example",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.docs-css-type-links")
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.dropdown-hide-shadow-prop",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.backtop-teleport-styles")
+                }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.docs-void-expose-types") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.docs-left-aside-scroll") }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.form-menu-option-height")
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.file-upload-all-file-types",
+                  )
+                }}
+              </li>
+              <li>{{ $t("changelog-page.changelog.items.pin-icon") }}</li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.2.34</h3>
             <ul>
               <li>

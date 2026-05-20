@@ -2,7 +2,7 @@
 import { computed, nextTick, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
-import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
+import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useVirtualList, useZIndex } from '@/hooks';
 import {
   NmorphIcon,
@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   actionCallback: undefined,
   zIndex: undefined,
   virtual: false,
-  virtualItemHeight: 34,
+  virtualItemHeight: undefined,
   virtualMaxHeight: 240,
   virtualOverscan: 5,
   virtualDynamicHeight: false,
@@ -82,7 +82,15 @@ const filteredList = computed(() => {
 });
 
 const virtualEnabled = computed(() => props.virtual && filteredList.value.length > 0);
-const virtualItemHeight = computed(() => props.virtualItemHeight);
+const defaultOptionHeight = computed(() => {
+  const heightMap = {
+    basic: 30,
+    thick: 38,
+    thin: 22,
+  };
+  return heightMap[props.height || 'basic'];
+});
+const virtualItemHeight = computed(() => props.virtualItemHeight || defaultOptionHeight.value);
 const virtualOverscan = computed(() => props.virtualOverscan);
 const virtualDynamicHeight = computed(() => props.virtualDynamicHeight);
 const virtualList = useVirtualList(filteredList, {
@@ -208,6 +216,11 @@ const dropdownZIndex = useZIndex(open, () => props.zIndex);
 const styles = computed<CSSProperties>(() => ({
   '--nmorph-autocomplete-input-z-index': dropdownZIndex.value + 1,
 }));
+const optionHeightModifiers = computed(() =>
+  useModifiers({
+    nmorph: [NmorphComponentHeight[props.height]],
+  })
+);
 </script>
 
 <template>
@@ -267,7 +280,10 @@ const styles = computed<CSSProperties>(() => ({
               :ref="(element) => setVirtualItemRef(element, virtualItem.index)"
               :key="virtualItem.index"
               class="nmorph-autocomplete__list-item"
-              :class="{ 'nmorph-autocomplete__list-item--focused': virtualItem.index === currentIndex }"
+              :class="[
+                optionHeightModifiers,
+                { 'nmorph-autocomplete__list-item--focused': virtualItem.index === currentIndex },
+              ]"
               role="option"
               :aria-selected="virtualItem.index === currentIndex"
               @click="() => clickHandler(virtualItem.item)"
@@ -283,7 +299,7 @@ const styles = computed<CSSProperties>(() => ({
           :id="getOptionId(idx)"
           :key="idx"
           class="nmorph-autocomplete__list-item"
-          :class="{ 'nmorph-autocomplete__list-item--focused': idx === currentIndex }"
+          :class="[optionHeightModifiers, { 'nmorph-autocomplete__list-item--focused': idx === currentIndex }]"
           role="option"
           :aria-selected="idx === currentIndex"
           @click="() => clickHandler(listEl)"
@@ -313,8 +329,14 @@ const styles = computed<CSSProperties>(() => ({
 }
 
 .nmorph-autocomplete__list-item {
+  display: flex;
+  align-items: center;
   box-sizing: border-box;
+  min-width: 0;
   padding: var(--indentation-00) var(--default-indentation-input);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   cursor: pointer;
 }
 

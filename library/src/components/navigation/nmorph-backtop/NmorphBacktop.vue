@@ -35,6 +35,12 @@ const modifiers = computed(() =>
   })
 );
 
+const styles = computed(() => ({
+  '--nmorph-backtop-right': `${props.right}px`,
+  '--nmorph-backtop-bottom': `${props.bottom}px`,
+  '--nmorph-backtop-z-index': props.zIndex,
+}));
+
 const container = ref<NmorphDomElementType>(null);
 const placeholderDOMEl = ref<NmorphDomElementType>(null);
 const selfDOMEl = ref<NmorphDomElementType>(null);
@@ -71,16 +77,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div
-    ref="placeholderDOMEl"
-    :style="{
-      '--nmorph-backtop-right': `${props.right}px`,
-      '--nmorph-backtop-bottom': `${props.bottom}px`,
-      '--nmorph-backtop-z-index': props.zIndex,
-    }"
-  >
+  <div ref="placeholderDOMEl">
     <Teleport :to="props.teleportTo" :disabled="!isMounted || props.teleportDisabled">
-      <div ref="selfDOMEl" :class="modifiers">
+      <div ref="selfDOMEl" :class="modifiers" :style="styles">
         <div @click.stop="scrollToTopHandler">
           <slot>
             <NmorphButton :style-type="props.design === 'nmorph' ? 'default' : 'transparent'">

@@ -54,17 +54,17 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "thumb-width",
-    type: "Number",
+    type: "Width",
     default: "50",
   },
   {
     name: "slider-height",
-    type: "String | Number",
+    type: "Height",
     default: "undefined",
   },
   {
     name: "value-fixed-container-height",
-    type: "String | Number",
+    type: "Height",
     default: "undefined",
   },
 ];

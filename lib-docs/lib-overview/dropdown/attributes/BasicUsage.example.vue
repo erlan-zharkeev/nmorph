@@ -83,6 +83,7 @@ const closeHandler = () => {
 .dropdown-basic-usage-overview {
   .wrapper {
     display: flex;
+    padding: 8px 12px 48px;
   }
 
   .first-menu {

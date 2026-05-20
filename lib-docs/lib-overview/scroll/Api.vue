@@ -8,12 +8,12 @@ import ApiTable from "~/components/api-table/ApiTable.vue";
 const attributesData = [
   {
     name: "height",
-    type: "String",
+    type: "Height",
     default: "100%",
   },
   {
     name: "max-height",
-    type: "String",
+    type: "Max-height",
     default: "none",
   },
   {

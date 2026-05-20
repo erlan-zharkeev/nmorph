@@ -58,7 +58,7 @@ const itemAttributesData: IAttributesTableData[] = [
   },
   {
     name: "transition-speed",
-    type: "String | Number",
+    type: "Transition-duration",
     default: "undefined",
   },
 ];

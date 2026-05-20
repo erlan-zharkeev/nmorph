@@ -99,12 +99,12 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "width",
-    type: "String | Number",
+    type: "Width",
     default: "undefined",
   },
   {
     name: "calendar-cell-height",
-    type: "String | Number",
+    type: "Height",
     default: "undefined",
   },
 ];

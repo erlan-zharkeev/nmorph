@@ -34,17 +34,17 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "width",
-    type: "String | Number",
+    type: "Width",
     default: "undefined",
   },
   {
     name: "max-width",
-    type: "String | Number",
+    type: "Max-width",
     default: "undefined",
   },
   {
     name: "height",
-    type: "String | Number",
+    type: "Height",
     default: "undefined",
   },
 ];

@@ -33,17 +33,17 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "track-padding",
-    type: "String | Number",
+    type: "Padding",
     default: "undefined",
   },
   {
     name: "item-size",
-    type: "String | Number",
+    type: "Length",
     default: "undefined",
   },
   {
     name: "item-font-size",
-    type: "String",
+    type: "Font-size",
     default: "undefined",
   },
 ];

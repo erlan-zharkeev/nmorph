@@ -30,17 +30,17 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "width",
-    type: "Number | String",
+    type: "Width",
     default: "max-content",
   },
   {
     name: "min-width",
-    type: "Number | String",
+    type: "Min-width",
     default: "-",
   },
   {
     name: "max-width",
-    type: "Number | String",
+    type: "Max-width",
     default: "-",
   },
   {
@@ -92,6 +92,11 @@ const attributesData: IAttributesTableData[] = [
     name: "aria-label",
     type: "String",
     default: "-",
+  },
+  {
+    name: "hide-shadow",
+    type: "Boolean",
+    default: "false",
   },
 ];
 

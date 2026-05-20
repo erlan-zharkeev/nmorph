@@ -37,7 +37,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "cell-height",
-    type: "String | Number",
+    type: "Height",
     default: "undefined",
   },
 ];

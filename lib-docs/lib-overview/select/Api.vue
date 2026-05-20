@@ -103,7 +103,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "virtual-max-height",
-    type: "Number | String",
+    type: "Max-height",
     default: "240",
   },
   {
@@ -118,7 +118,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "width",
-    type: "Number | String",
+    type: "Width",
     default: "undefined",
   },
 ];
@@ -138,7 +138,7 @@ const selectOptionAttr = [
   {
     name: "height",
     type: enumToString(NmorphComponentHeight),
-    default: "basic",
+    default: "parent select height | basic",
   },
   {
     name: "disabled",
@@ -147,12 +147,12 @@ const selectOptionAttr = [
   },
   {
     name: "hover-background",
-    type: "String",
+    type: "Background",
     default: "undefined",
   },
   {
     name: "hover-color",
-    type: "String",
+    type: "Color",
     default: "undefined",
   },
 ];

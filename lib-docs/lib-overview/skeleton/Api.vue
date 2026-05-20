@@ -25,7 +25,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "loading-gradient",
-    type: "String",
+    type: "Gradient",
     default: "undefined",
   },
 ];
@@ -43,18 +43,12 @@ const itemAttributesData: IAttributesTableData[] = [
   },
   {
     name: "width",
-    type: docsLink(
-      "Width",
-      "https://developer.mozilla.org/ru/docs/Web/CSS/width"
-    ),
+    type: "Width",
     default: "auto",
   },
   {
     name: "height",
-    type: docsLink(
-      "Height",
-      "https://developer.mozilla.org/ru/docs/Web/CSS/height"
-    ),
+    type: "Height",
     default: "auto",
   },
 ];

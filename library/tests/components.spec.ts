@@ -3,6 +3,7 @@ import { createSSRApp, defineComponent, h, nextTick, reactive, ref } from 'vue';
 import { renderToString } from '@vue/server-renderer';
 import { describe, expect, it, vi } from 'vitest';
 import { NmorphLibrary } from '../src/main';
+import { getCommonStyles } from '../src/hooks/use-common-styles';
 import {
   NmorphAlert,
   NmorphAutocomplete,
@@ -32,6 +33,7 @@ import {
   NmorphForm,
   NmorphFormItem,
   NmorphIcon,
+  NmorphIconPin,
   NmorphIconSearch,
   NmorphImage,
   NmorphImagePreview,
@@ -170,8 +172,8 @@ const renderCases = [
   {
     name: 'NmorphIcon',
     component: defineComponent({
-      components: { NmorphIcon, NmorphIconSearch },
-      template: '<NmorphIcon><NmorphIconSearch /></NmorphIcon>',
+      components: { NmorphIcon, NmorphIconPin, NmorphIconSearch },
+      template: '<NmorphIcon><NmorphIconSearch /></NmorphIcon><NmorphIcon><NmorphIconPin /></NmorphIcon>',
     }),
   },
   {
@@ -699,6 +701,52 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('keeps empty default padding token defined', () => {
+    const wrapper = mount(NmorphEmpty);
+    const empty = wrapper.find('.nmorph-empty').element as HTMLElement;
+
+    expect(empty.style.getPropertyValue('--nmorph-empty-padding')).toBe('var(--indentation-05)');
+    expect(getCommonStyles()).toContain('--indentation-05: 24px;');
+
+    wrapper.unmount();
+  });
+
+  it('keeps backtop position variables on the teleported element', async () => {
+    const target = document.createElement('div');
+    const portal = document.createElement('div');
+    portal.id = 'backtop-portal-test';
+    document.body.append(target, portal);
+
+    const wrapper = mount(NmorphBacktop, {
+      props: {
+        right: 24,
+        bottom: 32,
+        zIndex: 99,
+        teleportTo: '#backtop-portal-test',
+      },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const backtop = portal.querySelector('.nmorph-backtop') as HTMLElement;
+
+    expect(backtop).toBeTruthy();
+    expect(backtop.style.getPropertyValue('--nmorph-backtop-right')).toBe('24px');
+    expect(backtop.style.getPropertyValue('--nmorph-backtop-bottom')).toBe('32px');
+    expect(backtop.style.getPropertyValue('--nmorph-backtop-z-index')).toBe('99');
+
+    wrapper.unmount();
+    target.remove();
+    portal.remove();
+  });
+
   it('forwards CSS variable props on data and feedback components', async () => {
     const assertStyles = async (wrapper, selector, expected) => {
       await nextTick();
@@ -1169,6 +1217,37 @@ describe('components', () => {
     }
   });
 
+  it('accepts non-image files by default without rendering image previews', async () => {
+    const objectUrls = mockObjectUrlApi(['blob:report']);
+    const wrapper = mount(NmorphFileUpload, {
+      props: {
+        modelValue: [],
+      },
+    });
+
+    try {
+      const inputWrapper = wrapper.find('input[type="file"]');
+      const input = inputWrapper.element as HTMLInputElement;
+      const file = createTestFile('report.pdf', 'application/pdf');
+
+      setFileInputState(input, [file]);
+      await inputWrapper.trigger('change');
+      await nextTick();
+
+      const payload = wrapper.emitted('update:model-value')?.at(-1)?.[0] as FileUploadValue[];
+
+      expect(payload).toHaveLength(1);
+      expect(payload[0].data.name).toBe('report.pdf');
+      expect(wrapper.emitted('on-unsupported-file-type-error')).toBeUndefined();
+      expect(wrapper.find('.nmorph-file-upload__file-name').text()).toBe('report.pdf');
+      expect(wrapper.find('.nmorph-image-preview').exists()).toBe(false);
+      expect(wrapper.find('.nmorph-file-upload__file-info .nmorph-icon').exists()).toBe(true);
+    } finally {
+      wrapper.unmount();
+      objectUrls.restore();
+    }
+  });
+
   it('forwards CSS variable props on form controls', async () => {
     const assertStyles = async (wrapper, selector, expected) => {
       await nextTick();
@@ -1317,6 +1396,49 @@ describe('components', () => {
         '--transition-speed': '220ms',
       }
     );
+  });
+
+  it('aligns dropdown option heights with their form control height', async () => {
+    const autocomplete = mount(NmorphAutocomplete, {
+      props: {
+        height: 'thick',
+        list: options,
+      },
+    });
+
+    await autocomplete.find('input').trigger('focus');
+    await nextTick();
+
+    expect(autocomplete.find('.nmorph-autocomplete__list-item').classes()).toContain('nmorph--thick-component');
+    autocomplete.unmount();
+
+    const select = mount(
+      defineComponent({
+        components: { NmorphSelect, NmorphSelectOption },
+        template: `
+          <NmorphSelect :open="true" height="thin" :model-value="''">
+            <NmorphSelectOption value="first" label="First" />
+          </NmorphSelect>
+        `,
+      })
+    );
+
+    await nextTick();
+
+    expect(select.find('.nmorph-select-option').classes()).toContain('nmorph--thin-component');
+    select.unmount();
+
+    const timePicker = mount(NmorphTimePicker, {
+      props: {
+        height: 'thick',
+      },
+    });
+
+    await timePicker.find('.nmorph-time-picker__input').trigger('click');
+    await nextTick();
+
+    expect(timePicker.find('.nmorph-time-picker__option').classes()).toContain('nmorph--thick-component');
+    timePicker.unmount();
   });
 
   it('keeps explicit icon color inside transparent button', () => {
@@ -2040,6 +2162,10 @@ describe('components', () => {
     expect(icon.style.getPropertyValue('--color')).toBe('');
 
     wrapper.unmount();
+  });
+
+  it('uses default text color for avatar initials', () => {
+    expect(getCommonStyles()).toContain('.nmorph-avatar__initials {\n      color: var(--nmorph-text-color);');
   });
 
   it('opens image preview from the trigger', async () => {

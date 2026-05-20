@@ -44,22 +44,22 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "width",
-    type: "String | Number",
+    type: "Width",
     default: "undefined",
   },
   {
     name: "height",
-    type: "String | Number",
+    type: "Height",
     default: "undefined",
   },
   {
     name: "offset",
-    type: "String | Number",
+    type: "Length",
     default: "undefined",
   },
   {
     name: "thumb-height",
-    type: "String | Number",
+    type: "Height",
     default: "undefined",
   },
 ];

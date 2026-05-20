@@ -36,7 +36,7 @@ const tableAttributesData: IAttributesTableData[] = [
   },
   {
     name: "virtual-height",
-    type: "Number | String",
+    type: "Height",
     default: "320px",
   },
   {
@@ -56,17 +56,17 @@ const tableAttributesData: IAttributesTableData[] = [
   },
   {
     name: "border-color",
-    type: "String",
+    type: "Color",
     default: "undefined",
   },
   {
     name: "cell-height",
-    type: "Number | String",
+    type: "Height",
     default: "undefined",
   },
   {
     name: "row-hover-background",
-    type: "String",
+    type: "Background",
     default: "undefined",
   },
 ];
@@ -91,10 +91,7 @@ const tableColumnAttributes: IAttributesTableData[] = [
   },
   {
     name: "width",
-    type: docsLink(
-      "Width",
-      "https://developer.mozilla.org/ru/docs/Web/CSS/width",
-    ),
+    type: "Width",
     default: "-",
   },
   {

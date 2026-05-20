@@ -228,14 +228,39 @@ export default {
           "NmorphLink now accepts iconName/icon-name to render a library icon before the link text, with docs and tests covering the new prop.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
+        "avatar-initials-text-color":
+          "NmorphAvatar fallback initials now use the default text color instead of the accent color.",
         "badge-flat-ribbon-radius":
           "NmorphBadge flat corner ribbons now render without rounded outer edges while corner ribbons keep their visible inner radius.",
+        "empty-padding-token":
+          "NmorphEmpty now has a valid default padding token, keeps text inside its content area, and the docs example wraps on narrow screens.",
+        "docs-collapse-title-scope":
+          "Collapse examples in the docs now keep their clickable item titles visible while the source-code accordion still hides its internal title.",
+        "sandbox-table-border-color":
+          "The sandbox table example no longer applies an accent border override, so it matches the default Nmorph table surface more closely.",
+        "docs-skeleton-loading-example":
+          "The Skeleton loading docs example now imports NmorphSkeletonItem correctly, so the loading placeholder renders when loading is enabled.",
+        "docs-css-type-links":
+          "Docs API tables now link CSS value types such as Width, Height, Padding, Color, Background, and Transition-duration to MDN.",
         "docs-api-type-links":
           "Docs API tables now auto-link known attribute, expose, and event types, and stale component links now point to the correct element anchors.",
         "docs-example-english-source":
           "Docs example source blocks now use plain English example text instead of copying runtime i18n expressions.",
         "nuxt-build-dir-isolation":
           "Docs and sandbox Nuxt production builds now write to .nuxt-build so build commands no longer overwrite active dev-server metadata.",
+        "dropdown-hide-shadow-prop":
+          "NmorphDropdown and NmorphContextMenu now accept hide-shadow to render menu panels without the default neumorphic shadow.",
+        "backtop-teleport-styles":
+          "NmorphBacktop now keeps its position variables on the teleported button, and the docs example has a fixed scroll area so the button can appear.",
+        "docs-void-expose-types":
+          "Docs API tables now show expose methods without arguments and return values as void instead of () => void.",
+        "docs-left-aside-scroll":
+          "Docs component navigation now restores the left sidebar scroll position when moving between component pages.",
+        "form-menu-option-height":
+          "Autocomplete, Select slot options, and TimePicker menu options now align their item height with the control height.",
+        "file-upload-all-file-types":
+          "NmorphFileUpload now accepts all files by default, matches restricted types by MIME or extension, and only renders image previews for image files.",
+        "pin-icon": "Added NmorphIconPin.",
         "card-header-slot-wrapper":
           "NmorphCard now renders the header wrapper only when the header slot is provided.",
         "card-combined-border-style":
@@ -1654,6 +1679,8 @@ export default {
           "Defines dropdown placement relative to the trigger element, including end alignment",
         "restore-focus":
           "Defines whether focus should return to the previously focused element after close",
+        "hide-shadow":
+          "Disables the default neumorphic shadow on the dropdown panel",
       },
       slot: {
         default: "Slot for customizing the content inside the dropdown",
@@ -1690,6 +1717,8 @@ export default {
         disabled: "Disables the context menu trigger",
         role: "Sets the aria role for the context menu panel",
         "aria-label": "Sets the aria-label for the context menu panel",
+        "hide-shadow":
+          "Disables the default neumorphic shadow on the context menu panel",
       },
       slot: {
         default: "Slot for the right-click target",
@@ -2078,7 +2107,8 @@ export default {
           "Represents selected files. Setting it to [] clears the internal list and native file input.",
         disabled: "Boolean value that disables the file upload component",
         multiple: "Boolean value that allows multiple files to be selected",
-        "allowed-types": "Defines the file types that can be uploaded",
+        "allowed-types":
+          "Defines the file types that can be uploaded. Leave empty to accept all files",
         "photo-with-preview": "Displays a preview of the uploaded images",
         fill: "Allows the upload button to fill its container",
       },

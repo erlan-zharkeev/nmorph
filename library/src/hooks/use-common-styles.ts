@@ -67,6 +67,7 @@ export const getCommonStyles = () => {
       --indentation-02: 4px;
       --indentation-03: 8px;
       --indentation-04: 16px;
+      --indentation-05: 24px;
 
       --base-shadow-blur: calc(var(--base-shadow-width) * var(--base-shadow-blur-coefficient));
       --nmorph-shadow-outset:
@@ -365,7 +366,7 @@ export const getCommonStyles = () => {
     }
 
     .nmorph-avatar__initials {
-      color: var(--nmorph-accent-color);
+      color: var(--nmorph-text-color);
       font-weight: 600;
       line-height: 1;
     }

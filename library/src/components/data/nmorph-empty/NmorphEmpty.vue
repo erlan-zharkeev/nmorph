@@ -100,22 +100,26 @@ const styles = computed<CSSProperties>(() => ({
   }
 
   .nmorph-empty__title {
+    max-width: 100%;
     font-weight: 600;
     font-size: var(--font-size-large);
     line-height: var(--line-height-regular);
+    overflow-wrap: anywhere;
   }
 
   .nmorph-empty__description {
-    max-width: 420px;
+    max-width: min(420px, 100%);
     color: var(--nmorph-semi-contrast-text-color);
     font-weight: 400;
     font-size: var(--font-size-small);
     line-height: var(--line-height-loose);
+    overflow-wrap: anywhere;
   }
 
   .nmorph-empty__action {
     display: flex;
     justify-content: center;
+    max-width: 100%;
     margin-top: 4px;
   }
 

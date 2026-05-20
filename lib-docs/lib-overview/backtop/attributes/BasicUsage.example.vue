@@ -5,13 +5,18 @@ import { NmorphBacktop, NmorphScroll } from "@nmorph/nmorph-ui-kit";
 <template>
   <div class="backtop-basic-usage-overview">
     <ClientOnly>
-      <NmorphScroll width="100%">
-        <div class="content">
+      <NmorphScroll width="100%" height="260px">
+        <ul class="backtop-basic-usage-overview__content">
           <li v-for="(_, idx) in Array.from({ length: 200 })" :key="idx">
             Scroll down
           </li>
-        </div>
-        <NmorphBacktop design="common" />
+        </ul>
+        <NmorphBacktop
+          design="common"
+          :right="24"
+          :bottom="24"
+          :visibility-height="80"
+        />
       </NmorphScroll>
     </ClientOnly>
   </div>
@@ -20,5 +25,20 @@ import { NmorphBacktop, NmorphScroll } from "@nmorph/nmorph-ui-kit";
 <style lang="scss">
 .backtop-basic-usage-overview {
   width: 100%;
+}
+
+.backtop-basic-usage-overview__content {
+  display: grid;
+  gap: 8px;
+  min-height: 720px;
+  margin: 0;
+  padding: 12px 16px 64px;
+  list-style: none;
+}
+
+.backtop-basic-usage-overview__content li {
+  padding: 10px 12px;
+  border-radius: 4px;
+  background: var(--nmorph-main-color);
 }
 </style>

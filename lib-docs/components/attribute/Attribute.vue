@@ -114,7 +114,7 @@ const infoData = `overview.${props.infoName}.info`;
           </template>
         </NmorphCheckbox>
       </div>
-      <NmorphCollapse :model-value="accordionOpen">
+      <NmorphCollapse :model-value="accordionOpen" class="docs-attribute__code-collapse">
         <NmorphCollapseItem id="1" name="1">
           <slot name="code" />
         </NmorphCollapseItem>
@@ -130,11 +130,11 @@ const infoData = `overview.${props.infoName}.info`;
   }
 }
 
-:deep(.nmorph-collapse-item .nmorph-collapse-item__title) {
+:deep(.docs-attribute__code-collapse > .nmorph-collapse-item > .nmorph-collapse-item__title) {
   display: none;
 }
 
-:deep(.nmorph-collapse-item__inner-wrapper) {
+:deep(.docs-attribute__code-collapse .nmorph-collapse-item__inner-wrapper) {
   margin-top: 0;
   padding: 16px 8px 14px;
 }

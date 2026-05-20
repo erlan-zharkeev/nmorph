@@ -23,6 +23,7 @@ interface INmorphProps {
   role?: string;
   ariaLabel?: string;
   contentClass?: string;
+  hideShadow?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -40,6 +41,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   role: 'listbox',
   ariaLabel: '',
   contentClass: '',
+  hideShadow: false,
 });
 
 interface INmorphEmit {
@@ -61,7 +63,7 @@ const { placementCoords, placementReady, adjustPlacement } = usePlacement({
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-dropdown': [`${!props.open && 'closed'}`],
+    'nmorph-dropdown': [`${!props.open && 'closed'}`, `${props.hideShadow && 'hide-shadow'}`],
   })
 );
 
@@ -135,5 +137,9 @@ const escapeHandler = () => {
 .nmorph-dropdown--closed {
   z-index: -1000;
   opacity: 0;
+}
+
+.nmorph-dropdown--hide-shadow {
+  box-shadow: none;
 }
 </style>

@@ -217,14 +217,39 @@ export default {
           "NmorphLink now accepts iconName/icon-name to render a library icon before the link text, with docs and tests covering the new prop.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
+        "avatar-initials-text-color":
+          "NmorphAvatar fallback initials 现在使用默认 text color，而不是 accent color。",
         "badge-flat-ribbon-radius":
           "NmorphBadge flat corner ribbons now render without rounded outer edges while corner ribbons keep their visible inner radius.",
+        "empty-padding-token":
+          "NmorphEmpty 现在拥有有效的默认 padding token，文本会留在内容区域内，docs 示例在窄屏下也会自动换行布局。",
+        "docs-collapse-title-scope":
+          "文档中的 Collapse 示例现在会保留可点击的 item title，同时 source code accordion 仍会隐藏自己的内部 title。",
+        "sandbox-table-border-color":
+          "Sandbox 表格示例不再应用 accent border override，因此视觉上更接近默认的 Nmorph table surface。",
+        "docs-skeleton-loading-example":
+          "Skeleton loading 文档示例现在会正确导入 NmorphSkeletonItem，因此启用 loading 时会渲染 loading placeholder。",
+        "docs-css-type-links":
+          "Docs API tables 现在会将 Width、Height、Padding、Color、Background 和 Transition-duration 等 CSS value types 链接到 MDN。",
         "docs-api-type-links":
           "Docs API tables now auto-link known attribute, expose, and event types, and stale component links now point to the correct element anchors.",
         "docs-example-english-source":
           "Docs example source blocks now use plain English example text instead of copying runtime i18n expressions.",
         "nuxt-build-dir-isolation":
           "Docs and sandbox Nuxt production builds now write to .nuxt-build so build commands no longer overwrite active dev-server metadata.",
+        "dropdown-hide-shadow-prop":
+          "NmorphDropdown 和 NmorphContextMenu 现在支持 hide-shadow，可渲染没有默认 neumorphic 阴影的菜单面板。",
+        "backtop-teleport-styles":
+          "NmorphBacktop 现在会把定位 CSS variables 保留在 teleport 后的按钮上，文档示例也加入了固定滚动区域，因此按钮可以正常出现。",
+        "docs-void-expose-types":
+          "Docs API tables 现在会把没有参数和返回值的 expose 方法显示为 void，而不是 () => void。",
+        "docs-left-aside-scroll":
+          "Docs 组件导航现在会在组件页面之间切换时恢复左侧 sidebar 的滚动位置。",
+        "form-menu-option-height":
+          "Autocomplete、Select slot options 和 TimePicker menu options 现在会让选项高度与控件 height 保持一致。",
+        "file-upload-all-file-types":
+          "NmorphFileUpload 现在默认接受所有文件，会按 MIME 或扩展名匹配 restricted types，并且只为图片文件渲染 image preview。",
+        "pin-icon": "新增 NmorphIconPin 图标。",
         "card-header-slot-wrapper":
           "NmorphCard now renders the header wrapper only when the header slot is provided.",
         "card-combined-border-style":
@@ -1553,6 +1578,7 @@ export default {
           "定义下拉菜单覆盖层的 z-index。未传入时使用共享的自动 z-index 栈",
         placement: "定义下拉菜单相对于触发元素的位置，包括边缘对齐",
         "restore-focus": "定义关闭后是否将焦点返回到之前聚焦的元素",
+        "hide-shadow": "禁用下拉菜单面板的默认 neumorphic 阴影",
       },
       slot: {
         default: "自定义下拉菜单内部内容的插槽",
@@ -1582,6 +1608,7 @@ export default {
         disabled: "禁用上下文菜单触发",
         role: "设置上下文菜单面板的 aria role",
         "aria-label": "设置上下文菜单面板的 aria-label",
+        "hide-shadow": "禁用上下文菜单面板的默认 neumorphic 阴影",
       },
       slot: {
         default: "右键目标区域的插槽",
@@ -1947,7 +1974,7 @@ export default {
           "表示已选择的文件。传入 [] 会清空内部列表和原生 file input。",
         disabled: "布尔值，禁用文件上传组件",
         multiple: "布尔值，允许选择多个文件",
-        "allowed-types": "定义可以上传的文件类型",
+        "allowed-types": "定义可以上传的文件类型。留空时接受所有文件",
         "photo-with-preview": "显示上传图片的预览",
         fill: "允许上传按钮填充其容器",
       },

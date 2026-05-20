@@ -7,6 +7,7 @@ import {
   NmorphImageResolution,
   NmorphResolutionType,
   NmorphVideoResolution,
+  resolution,
   NmorphButton,
   NmorphIcon,
   NmorphImagePreview,
@@ -27,7 +28,7 @@ interface INmorphProps {
   modelValue?: INmorphCustomFileData[];
   disabled?: boolean;
   multiple?: boolean;
-  allowedTypes?: NmorphResolutionType[];
+  allowedTypes?: Array<NmorphResolutionType | string>;
   photoWithPreview?: boolean;
   buttonText?: string;
 }
@@ -36,7 +37,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   modelValue: () => [],
   disabled: false,
   multiple: false,
-  allowedTypes: () => ['jpg', 'jpeg', 'png'],
+  allowedTypes: () => [],
   photoWithPreview: true,
   buttonText: '',
 });
@@ -49,15 +50,94 @@ interface INmorphEmit {
 const emit = defineEmits<INmorphEmit>();
 const computedButtonText = computed(() => (props.buttonText ? props.buttonText : t('selectFile')));
 
-const getPlainType = (resolution: string) => resolution.split('/')[1];
+const knownResolutionEntries = Object.entries(resolution) as Array<[NmorphResolutionType, string]>;
+const extensionByResolution: Partial<Record<NmorphResolutionType, string>> = {
+  'svg-xml': 'svg',
+  'audio-ogg': 'ogg',
+  'wideo-ogg': 'ogg',
+};
 
-const typeFileIconMap = (resolution: string): Component => {
-  const plainResolutionName = getPlainType(resolution);
+const getPlainType = (mimeType: string) => mimeType.split('/')[1]?.toLowerCase() || '';
+
+const getFileExtension = (fileName: string) => {
+  const extension = fileName.split('.').pop()?.toLowerCase();
+  return extension && extension !== fileName.toLowerCase() ? extension : '';
+};
+
+const getKnownResolutionByMime = (mimeType: string) =>
+  knownResolutionEntries.find(([, knownMimeType]) => knownMimeType.toLowerCase() === mimeType.toLowerCase())?.[0] || '';
+
+const getFileTypeCandidates = (file: File) =>
+  Array.from(
+    new Set(
+      [
+        file.type.toLowerCase(),
+        getKnownResolutionByMime(file.type),
+        getFileExtension(file.name),
+        getPlainType(file.type),
+      ]
+        .filter(Boolean)
+        .map((type) => type.toLowerCase())
+    )
+  );
+
+const isKnownFileType = <T extends Record<string, string>>(fileType: string, fileTypeMap: T) =>
+  Object.prototype.hasOwnProperty.call(fileTypeMap, fileType);
+
+const isImageFile = (file: File) => {
+  const candidates = getFileTypeCandidates(file);
+  return (
+    file.type.toLowerCase().startsWith('image/') ||
+    candidates.some((type) => isKnownFileType(type, NmorphImageResolution))
+  );
+};
+
+const isFileAllowed = (file: File) => {
+  if (props.allowedTypes.length === 0) return true;
+
+  const candidates = getFileTypeCandidates(file);
+  return props.allowedTypes.some((allowedType) => candidates.includes(String(allowedType).toLowerCase()));
+};
+
+const inputAccept = computed(() => {
+  if (props.allowedTypes.length === 0) return undefined;
+
+  return Array.from(
+    new Set(
+      props.allowedTypes.flatMap((allowedType) => {
+        const normalizedType = String(allowedType).toLowerCase();
+        const knownMimeType = resolution[normalizedType as NmorphResolutionType];
+        const extension = extensionByResolution[normalizedType as NmorphResolutionType] || normalizedType;
+
+        if (normalizedType.includes('/')) return normalizedType;
+        return knownMimeType ? [`.${extension}`, knownMimeType] : `.${extension}`;
+      })
+    )
+  ).join(',');
+});
+
+const typeFileIconMap = (file: File): Component => {
+  const candidates = getFileTypeCandidates(file);
   let result: Component = NmorphIconDoc;
-  if (plainResolutionName in NmorphImageResolution) result = NmorphIconImage;
-  if (plainResolutionName in NmorphAudioResolution) result = NmorphIconAudio;
-  if (plainResolutionName in NmorphVideoResolution) result = NmorphIconVideo;
-  if (plainResolutionName in NmorphArchiveResolution) result = NmorphIconArchive;
+  if (
+    file.type.toLowerCase().startsWith('image/') ||
+    candidates.some((type) => isKnownFileType(type, NmorphImageResolution))
+  ) {
+    result = NmorphIconImage;
+  }
+  if (
+    file.type.toLowerCase().startsWith('audio/') ||
+    candidates.some((type) => isKnownFileType(type, NmorphAudioResolution))
+  ) {
+    result = NmorphIconAudio;
+  }
+  if (
+    file.type.toLowerCase().startsWith('video/') ||
+    candidates.some((type) => isKnownFileType(type, NmorphVideoResolution))
+  ) {
+    result = NmorphIconVideo;
+  }
+  if (candidates.some((type) => isKnownFileType(type, NmorphArchiveResolution))) result = NmorphIconArchive;
   return result;
 };
 
@@ -102,9 +182,8 @@ const handleFileUpload = (event: Event) => {
   const acceptedFiles: INmorphCustomFileData[] = [];
 
   selectedFiles.forEach((file) => {
-    const resolution = getPlainType(file.type) as NmorphResolutionType;
-    if (!props.allowedTypes.includes(resolution)) {
-      emit('on-unsupported-file-type-error', file.type);
+    if (!isFileAllowed(file)) {
+      emit('on-unsupported-file-type-error', file.type || getFileExtension(file.name) || file.name);
       return;
     }
 
@@ -163,6 +242,7 @@ const modifiers = computed(() =>
         type="file"
         :multiple="props.multiple"
         :disabled="props.disabled"
+        :accept="inputAccept"
         class="nmorph-native-input"
         @change="handleFileUpload"
       />
@@ -173,10 +253,10 @@ const modifiers = computed(() =>
     <div v-if="files.length > 0" class="nmorph-file-upload__list">
       <transition-group name="list" tag="div">
         <div v-for="{ data, previewUrl } in files" :key="data.name" class="nmorph-file-upload__file">
-          <NmorphImagePreview :src="previewUrl" />
+          <NmorphImagePreview v-if="props.photoWithPreview && isImageFile(data)" :src="previewUrl" />
           <div class="nmorph-file-upload__file-info">
             <NmorphIcon width="14px" height="17px">
-              <component :is="typeFileIconMap(data.type)" />
+              <component :is="typeFileIconMap(data)" />
             </NmorphIcon>
             <span class="nmorph-file-upload__file-name">{{ data.name }}</span>
           </div>

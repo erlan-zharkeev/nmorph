@@ -6,7 +6,7 @@ import Overview from "~/components/overview/Overview.vue";
 
 <template>
   <div class="docs-components-page nmorph-docs-content">
-    <MainContentPart>
+    <MainContentPart left-aside-scroll-key="components-list">
       <template #aside>
         <ComponentsList />
       </template>

@@ -194,7 +194,7 @@ watch(() => props.name, loadOverview, { immediate: true });
 
 <template>
   <div class="nmorph-docs-content">
-    <MainContentPart ref="scrollDOMRef">
+    <MainContentPart ref="scrollDOMRef" left-aside-scroll-key="components-list">
       <template #aside>
         <ComponentsList />
       </template>

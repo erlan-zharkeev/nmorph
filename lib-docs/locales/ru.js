@@ -230,14 +230,39 @@ export default {
           "NmorphLink now accepts iconName/icon-name to render a library icon before the link text, with docs and tests covering the new prop.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
+        "avatar-initials-text-color":
+          "Fallback initials в NmorphAvatar теперь используют дефолтный text color вместо accent color.",
         "badge-flat-ribbon-radius":
           "NmorphBadge flat corner ribbons now render without rounded outer edges while corner ribbons keep their visible inner radius.",
+        "empty-padding-token":
+          "У NmorphEmpty теперь есть валидный default padding token, текст остается внутри content area, а пример в docs переносится на узких экранах.",
+        "docs-collapse-title-scope":
+          "Примеры Collapse в документации снова показывают кликабельные заголовки пунктов, а accordion с source code по-прежнему скрывает свой внутренний title.",
+        "sandbox-table-border-color":
+          "Sandbox example для таблицы больше не применяет accent border override, поэтому визуально ближе к дефолтной Nmorph table surface.",
+        "docs-skeleton-loading-example":
+          "Docs example для Skeleton loading теперь корректно импортирует NmorphSkeletonItem, поэтому loading placeholder отображается при включенном loading.",
+        "docs-css-type-links":
+          "Docs API tables теперь ссылаются на MDN для CSS value types вроде Width, Height, Padding, Color, Background и Transition-duration.",
         "docs-api-type-links":
           "Docs API tables now auto-link known attribute, expose, and event types, and stale component links now point to the correct element anchors.",
         "docs-example-english-source":
           "Docs example source blocks now use plain English example text instead of copying runtime i18n expressions.",
         "nuxt-build-dir-isolation":
           "Docs and sandbox Nuxt production builds now write to .nuxt-build so build commands no longer overwrite active dev-server metadata.",
+        "dropdown-hide-shadow-prop":
+          "NmorphDropdown и NmorphContextMenu теперь принимают hide-shadow, чтобы рендерить панели меню без дефолтной neumorphic-тени.",
+        "backtop-teleport-styles":
+          "NmorphBacktop теперь держит позиционные CSS variables на телепортируемой кнопке, а docs example получил фиксированную scroll area, чтобы кнопка могла появиться.",
+        "docs-void-expose-types":
+          "Docs API tables теперь показывают expose-методы без аргументов и return value как void вместо () => void.",
+        "docs-left-aside-scroll":
+          "Docs component navigation теперь восстанавливает позицию скролла левого sidebar при переходах между component pages.",
+        "form-menu-option-height":
+          "Autocomplete, Select slot options и TimePicker menu options теперь выравнивают высоту пункта по height самого контрола.",
+        "file-upload-all-file-types":
+          "NmorphFileUpload теперь по умолчанию принимает любые файлы, сопоставляет restricted types по MIME или extension и рендерит image preview только для изображений.",
+        "pin-icon": "Добавлена иконка NmorphIconPin.",
         "card-header-slot-wrapper":
           "NmorphCard теперь рендерит обертку header только когда передан слот header.",
         "card-combined-border-style":
@@ -1676,6 +1701,8 @@ export default {
           "Задает положение dropdown относительно trigger-элемента, включая выравнивание по краю",
         "restore-focus":
           "Определяет, нужно ли возвращать фокус на предыдущий элемент после закрытия",
+        "hide-shadow":
+          "Отключает дефолтную neumorphic-тень у панели выпадающего списка",
       },
       slot: {
         default: "Слот для кастомизации содержимого внутри выпадающего списка",
@@ -1712,6 +1739,8 @@ export default {
         disabled: "Отключает trigger контекстного меню",
         role: "Задает aria role для панели контекстного меню",
         "aria-label": "Задает aria-label для панели контекстного меню",
+        "hide-shadow":
+          "Отключает дефолтную neumorphic-тень у панели контекстного меню",
       },
       slot: {
         default: "Слот для области, по которой открывается контекстное меню",
@@ -2110,7 +2139,8 @@ export default {
           "Представляет выбранные файлы. Передача [] очищает внутренний список и native file input.",
         disabled: "Булево значение, отключающее компонент загрузки файлов",
         multiple: "Булево значение, позволяющее выбрать несколько файлов",
-        "allowed-types": "Определяет типы файлов, которые можно загрузить",
+        "allowed-types":
+          "Определяет типы файлов, которые можно загрузить. Оставьте пустым, чтобы принимать любые файлы",
         "photo-with-preview":
           "Отображает предварительный просмотр загруженных изображений",
         fill: "Позволяет кнопке загрузки заполнить свой контейнер",

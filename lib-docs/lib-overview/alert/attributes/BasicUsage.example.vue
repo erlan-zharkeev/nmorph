@@ -56,11 +56,8 @@ const closeHandler = (id: string) => {
   .first-row {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 8px;
-  }
-
-  .nmorph-alert {
-    margin-right: 8px;
+    gap: 12px;
+    margin-bottom: 12px;
   }
 
   .second-row {

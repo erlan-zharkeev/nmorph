@@ -65,17 +65,17 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "width",
-    type: "String | Number",
+    type: "Width",
     default: "undefined",
   },
   {
     name: "height",
-    type: "String | Number",
+    type: "Height",
     default: "undefined",
   },
   {
     name: "navigation-button-margin",
-    type: "String | Number",
+    type: "Margin",
     default: "undefined",
   },
 ];

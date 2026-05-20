@@ -87,7 +87,7 @@ const exposes = [
   },
   {
     name: "blur",
-    type: "() => void",
+    type: "void",
   },
 ];
 </script>

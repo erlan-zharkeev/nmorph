@@ -41,7 +41,8 @@ import {
 <style lang="scss">
 .empty-basic-usage-overview {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
   gap: 16px;
+  width: 100%;
 }
 </style>

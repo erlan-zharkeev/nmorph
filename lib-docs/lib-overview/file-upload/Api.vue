@@ -5,7 +5,7 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { NmorphImageResolution } from "@nmorph/nmorph-ui-kit";
+import { resolution } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -28,13 +28,13 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "allowed-types",
-    type: enumToString(NmorphImageResolution),
-    default: "['jpg', 'jpeg', 'png']",
+    type: `${enumToString(resolution)} | String`,
+    default: "all files",
   },
   {
     name: "photo-with-preview",
     type: "Boolean",
-    default: "false",
+    default: "true",
   },
   {
     name: "fill",

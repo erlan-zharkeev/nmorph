@@ -20,17 +20,17 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "icon-size",
-    type: "string | number",
+    type: "Length",
     default: "56",
   },
   {
     name: "min-height",
-    type: "string | number",
+    type: "Min-height",
     default: "160",
   },
   {
     name: "padding",
-    type: "string | number",
+    type: "Padding",
     default: "var(--indentation-05)",
   },
   {

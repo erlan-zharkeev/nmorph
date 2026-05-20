@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphComponentHeight } from '@/types';
 import { useModifiers } from '@/utils';
-import { inject, computed } from 'vue';
+import { inject, computed, type Ref } from 'vue';
 import type { CSSProperties } from 'vue';
 import {
   INmorphSelectOption,
@@ -13,10 +13,13 @@ import {
 
 const selectSelectedValue = inject<NmorphSelectSelectedValueInjectionType>('select-selected-value');
 const selectChangeSelectedValue = inject<NmorphSelectChangeSelectedValue>('select-change-selected-value');
+const selectHeight = inject<Ref<keyof typeof NmorphComponentHeight | undefined> | undefined>(
+  'select-height',
+  undefined
+);
 
 const props = withDefaults(defineProps<INmorphSelectOption>(), {
   label: '',
-  height: 'basic',
   disabled: false,
   focused: false,
   hoverBackground: undefined,
@@ -44,9 +47,11 @@ const checked = computed(() => {
   return false;
 });
 
+const height = computed(() => props.height || selectHeight?.value || 'basic');
+
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height]],
+    nmorph: [NmorphComponentHeight[height.value]],
     'nmorph-select-option': [
       `${props.disabled && 'disabled'}`,
       `${props.label && 'with-label'}`,

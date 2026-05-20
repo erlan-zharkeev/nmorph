@@ -21,37 +21,37 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "color",
-    type: "String",
+    type: "Color",
     default: "undefined",
   },
   {
     name: "padding",
-    type: "Number | String",
+    type: "Padding",
     default: "var(--indentation-03) var(--indentation-04)",
   },
   {
     name: "border-radius",
-    type: "Number | String",
+    type: "Border-radius",
     default: "var(--default-border-radius)",
   },
   {
     name: "accent-width",
-    type: "Number | String",
+    type: "Width",
     default: "var(--indentation-02)",
   },
   {
     name: "title-gap",
-    type: "Number | String",
+    type: "Gap",
     default: "var(--indentation-03)",
   },
   {
     name: "title-font-size",
-    type: "Number | String",
+    type: "Font-size",
     default: "var(--font-size-medium)",
   },
   {
     name: "content-font-size",
-    type: "Number | String",
+    type: "Font-size",
     default: "var(--font-size-extra-small)",
   },
 ];

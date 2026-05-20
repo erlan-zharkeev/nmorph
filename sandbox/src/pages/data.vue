@@ -308,7 +308,6 @@ const progressColor = (value: number) => {
         bordered
         row-hover
         design="nmorph"
-        border-color="color-mix(in srgb, var(--nmorph-accent-color) 55%, transparent)"
         :cell-height="44"
         row-hover-background="color-mix(in srgb, var(--nmorph-accent-color) 10%, transparent)"
       >

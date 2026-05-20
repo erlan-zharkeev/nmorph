@@ -2,6 +2,7 @@
 import {
   NmorphImage,
   NmorphSkeleton,
+  NmorphSkeletonItem,
   NmorphSwitch,
 } from "@nmorph/nmorph-ui-kit";
 import { Winter } from "@/assets/images";

@@ -15,7 +15,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "card-padding",
-    type: "string | number",
+    type: "Padding",
     default: "undefined",
   },
   {
@@ -25,7 +25,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "combined-shadow-border-width",
-    type: "number",
+    type: "Border-width",
     default: "0",
   },
   {

@@ -177,6 +177,12 @@ const modifiers = computed(() =>
   })
 );
 
+const optionHeightModifiers = computed(() =>
+  useModifiers({
+    nmorph: [NmorphComponentHeight[props.height]],
+  })
+);
+
 const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const styles = computed<CSSProperties>(() => ({
   ...(props.width !== undefined && { '--width': getCssSize(props.width) }),
@@ -250,7 +256,10 @@ defineExpose({ inputDOMRef });
             :key="option.value"
             type="button"
             class="nmorph-time-picker__option"
-            :class="{ 'nmorph-time-picker__option--active': option.value === pickerValue.hour }"
+            :class="[
+              optionHeightModifiers,
+              { 'nmorph-time-picker__option--active': option.value === pickerValue.hour },
+            ]"
             :disabled="option.disabled"
             @click="selectUnit('hour', option.value)"
           >
@@ -264,7 +273,10 @@ defineExpose({ inputDOMRef });
             :key="option.value"
             type="button"
             class="nmorph-time-picker__option"
-            :class="{ 'nmorph-time-picker__option--active': option.value === pickerValue.minute }"
+            :class="[
+              optionHeightModifiers,
+              { 'nmorph-time-picker__option--active': option.value === pickerValue.minute },
+            ]"
             :disabled="option.disabled"
             @click="selectUnit('minute', option.value)"
           >
@@ -279,7 +291,10 @@ defineExpose({ inputDOMRef });
               :key="option.value"
               type="button"
               class="nmorph-time-picker__option"
-              :class="{ 'nmorph-time-picker__option--active': option.value === pickerValue.second }"
+              :class="[
+                optionHeightModifiers,
+                { 'nmorph-time-picker__option--active': option.value === pickerValue.second },
+              ]"
               :disabled="option.disabled"
               @click="selectUnit('second', option.value)"
             >
@@ -374,7 +389,6 @@ defineExpose({ inputDOMRef });
   }
 
   .nmorph-time-picker__option {
-    min-height: 28px;
     padding: 0 8px;
     color: var(--nmorph-text-color);
     background: transparent;

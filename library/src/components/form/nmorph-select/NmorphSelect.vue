@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
-import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick } from 'vue';
+import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick, toRef } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useVirtualList } from '@/hooks';
 import {
@@ -266,6 +266,7 @@ const tags = computed(() => {
 
 provide<NmorphSelectSelectedValueInjectionType>('select-selected-value', initialValue);
 provide<NmorphSelectChangeSelectedValue>('select-change-selected-value', changeHandler);
+provide('select-height', toRef(props, 'height'));
 
 const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
 const optionsMinWidth = computed(() =>

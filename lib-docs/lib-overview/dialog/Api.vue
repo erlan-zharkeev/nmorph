@@ -19,18 +19,12 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "width",
-    type: docsLink(
-      "Width",
-      "https://developer.mozilla.org/ru/docs/Web/CSS/width"
-    ),
+    type: "Width",
     default: "330px",
   },
   {
     name: "max-height",
-    type: docsLink(
-      "Max-height",
-      "https://developer.mozilla.org/ru/docs/Web/CSS/max-height"
-    ),
+    type: "Max-height",
     default: "calc(100dvh - 32px)",
   },
   {

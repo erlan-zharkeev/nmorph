@@ -168,6 +168,7 @@ export { default as NmorphIconPhoneFilled } from '@/assets/icons/phone-filled.sv
 export { default as NmorphIconPhone } from '@/assets/icons/phone.svg';
 export { default as NmorphIconPicture } from '@/assets/icons/picture.svg';
 export { default as NmorphIconPieChart } from '@/assets/icons/pie-chart.svg';
+export { default as NmorphIconPin } from '@/assets/icons/pin.svg';
 export { default as NmorphIconPlace } from '@/assets/icons/place.svg';
 export { default as NmorphIconPlatform } from '@/assets/icons/platform.svg';
 export { default as NmorphIconPlay } from '@/assets/icons/play.svg';

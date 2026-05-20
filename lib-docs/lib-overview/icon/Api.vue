@@ -15,23 +15,17 @@ const attributesData = [
   },
   {
     name: "width",
-    type: docsLink(
-      "Width",
-      "https://developer.mozilla.org/ru/docs/Web/CSS/width",
-    ),
+    type: "Width",
     default: "-",
   },
   {
     name: "height",
-    type: docsLink(
-      "Height",
-      "https://developer.mozilla.org/ru/docs/Web/CSS/height",
-    ),
+    type: "Height",
     default: "-",
   },
   {
     name: "color",
-    type: "String(css value/css variable)",
+    type: "Color",
     default: "-",
   },
 ];

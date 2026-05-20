@@ -38,6 +38,7 @@ interface INmorphProps {
   closeOnScroll?: boolean;
   role?: string;
   ariaLabel?: string;
+  hideShadow?: boolean;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -58,6 +59,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   closeOnScroll: true,
   role: 'menu',
   ariaLabel: '',
+  hideShadow: false,
 });
 
 interface INmorphEmit {
@@ -260,6 +262,7 @@ defineExpose({ close });
       :trap-focus="props.trapFocus"
       :role="props.role"
       :aria-label="props.ariaLabel"
+      :hide-shadow="props.hideShadow"
       content-class="nmorph-context-menu__dropdown"
       @on-outside-click="outsideClickHandler"
       @on-escape-keydown="escapeHandler"

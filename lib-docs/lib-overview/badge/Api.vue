@@ -44,7 +44,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "color",
-    type: "String",
+    type: "Color",
     default: "var(--nmorph-accent-color)",
   },
   {

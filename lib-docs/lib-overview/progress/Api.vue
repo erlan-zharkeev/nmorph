@@ -20,17 +20,17 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "color",
-    type: "String",
+    type: "Color",
     default: "var(--nmorph-accent-color)",
   },
   {
     name: "height",
-    type: "String | Number",
+    type: "Height",
     default: "undefined",
   },
   {
     name: "width-transition",
-    type: "String",
+    type: "Transition-duration",
     default: "undefined",
   },
   {
@@ -55,7 +55,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "circle-size",
-    type: "Number",
+    type: "Length",
     default: "120",
   },
 ];

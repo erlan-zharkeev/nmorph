@@ -71,11 +71,11 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "virtual-item-height",
     type: "Number",
-    default: "34",
+    default: "auto by height",
   },
   {
     name: "virtual-max-height",
-    type: "Number | String",
+    type: "Max-height",
     default: "240",
   },
   {
