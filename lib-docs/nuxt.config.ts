@@ -13,9 +13,15 @@ const componentPathByName = (name: string) =>
   `/elements/${pascalToKebab(name).substring(7).toLowerCase()}`;
 const elementRoutes = componentGroups.flatMap((group) =>
   group.components.flatMap((componentName) =>
-    localePrefixes.map((prefix) => `${prefix}${componentPathByName(componentName)}`),
+    localePrefixes.map(
+      (prefix) => `${prefix}${componentPathByName(componentName)}`,
+    ),
   ),
 );
+const nuxtCommand = process.argv
+  .map((arg) => arg.replace(/\\/g, "/").split("/").pop())
+  .find((arg) => arg === "build" || arg === "generate");
+const buildDir = nuxtCommand ? ".nuxt-build" : ".nuxt";
 const siteTitle = "Nmorph UI Kit";
 const siteDescription =
   "Vue 3 and Nuxt component library for building tactile product interfaces with neumorphic styling, forms, tables, overlays, theming, and typed component APIs.";
@@ -23,6 +29,7 @@ const siteUrl = "https://ketjo.gitlab.io/nmorph/";
 
 export default defineNuxtConfig({
   compatibilityDate: "2024-09-05",
+  buildDir,
   debug: false,
   ssr: true,
   telemetry: false,
@@ -98,7 +105,7 @@ export default defineNuxtConfig({
           additionalData: '@use "~/assets/style/global-mixins.scss" as *;',
         },
       },
-    }
+    },
   },
   devServer: {
     host: "127.0.0.1",

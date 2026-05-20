@@ -10,15 +10,11 @@ const thirdSwitch = ref(1);
   <div class="switch-model-value-overview">
     <ClientOnly>
       <div class="switch-el">
-        <p class="switch-value nmorph-title-3">
-          {{ $t("overview.value") }} {{ firstSwitch }}
-        </p>
+        <p class="switch-value nmorph-title-3">Value: {{ firstSwitch }}</p>
         <NmorphSwitch v-model="firstSwitch" />
       </div>
       <div class="switch-el">
-        <p class="switch-value nmorph-title-3">
-          {{ $t("overview.value") }} {{ secondSwitch }}
-        </p>
+        <p class="switch-value nmorph-title-3">Value: {{ secondSwitch }}</p>
         <NmorphSwitch
           v-model="secondSwitch"
           active-value="on"
@@ -26,9 +22,7 @@ const thirdSwitch = ref(1);
         />
       </div>
       <div class="switch-el">
-        <p class="switch-value nmorph-title-3">
-          {{ $t("overview.value") }} {{ thirdSwitch }}
-        </p>
+        <p class="switch-value nmorph-title-3">Value: {{ thirdSwitch }}</p>
         <NmorphSwitch
           v-model="thirdSwitch"
           :active-value="1"

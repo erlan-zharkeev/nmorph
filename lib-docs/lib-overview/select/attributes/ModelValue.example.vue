@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { NmorphSelect } from "@nmorph/nmorph-ui-kit";
-const { t } = useI18n();
 
 const value = ref("one");
 const options = ref([
-  { value: "one", label: t("overview.one") },
-  { value: "two", label: t("overview.two") },
-  { value: "three", label: t("overview.three") },
+  { value: "one", label: "One" },
+  { value: "two", label: "Two" },
+  { value: "three", label: "Three" },
 ]);
 const multipleValue = ref(["one", "two"]);
 </script>
@@ -21,7 +20,7 @@ const multipleValue = ref(["one", "two"]);
         <NmorphSelect
           v-model="multipleValue"
           :options="options"
-          :no-element-placeholder="$t('overview.select.model-value.multiple')"
+          no-element-placeholder="Multiple values"
         />
       </div>
     </ClientOnly>

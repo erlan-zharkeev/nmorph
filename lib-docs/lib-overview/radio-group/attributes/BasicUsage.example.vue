@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { NmorphRadioGroup } from "@nmorph/nmorph-ui-kit";
-const { t } = useI18n();
 
 const options = [
-  { value: "one", label: t("overview.one") },
-  { value: "two", label: t("overview.two"), disabled: true },
-  { value: "three", label: t("overview.three") },
+  { value: "one", label: "One" },
+  { value: "two", label: "Two", disabled: true },
+  { value: "three", label: "Three" },
 ];
 const value = ref("three");
 </script>

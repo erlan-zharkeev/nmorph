@@ -6,5 +6,10 @@ const time = ref("14:45:20");
 </script>
 
 <template>
-  <NmorphTimePicker v-model="time" show-seconds :minute-step="15" :second-step="10" />
+  <NmorphTimePicker
+    v-model="time"
+    show-seconds
+    :minute-step="15"
+    :second-step="10"
+  />
 </template>

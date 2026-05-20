@@ -80,14 +80,12 @@ const toggleHighlightRow = () => {
 };
 
 const highlightRowOnHoverText = computed(() => {
-  const translateKey = highlightRowOnHover.value
-    ? "disable-row-highlight"
-    : "enable-row-highlight";
-
-  return `overview.table.basic-usage.${translateKey}`;
+  return highlightRowOnHover.value
+    ? "Disable row highlight on hover"
+    : "Enable row highlight on hover";
 });
 
-const clickMeText = `overview.table.basic-usage.click-me-text`;
+const clickMeText = "Click me!";
 </script>
 
 <template>
@@ -99,12 +97,12 @@ const clickMeText = `overview.table.basic-usage.click-me-text`;
         </div>
         <div class="actions__element">
           <NmorphButton
-            :text="$t(highlightRowOnHoverText)"
+            :text="highlightRowOnHoverText"
             @click="toggleHighlightRow"
           />
         </div>
         <div class="actions__element">
-          <p>{{ $t("overview.sort-values") }} {{ sort }}</p>
+          <p>Sort values {{ sort }}</p>
         </div>
       </div>
       <NmorphTable
@@ -126,7 +124,7 @@ const clickMeText = `overview.table.basic-usage.click-me-text`;
           <template #default="{ scope }">
             <NmorphTableCell v-for="(cellData, idx) in scope.rows" :row="idx">
               <NmorphButton
-                :text="$t(clickMeText)"
+                :text="clickMeText"
                 fill
                 @click="clickHandler(cellData)"
                 style-type="transparent"

@@ -8,7 +8,7 @@ import { NmorphBacktop, NmorphScroll } from "@nmorph/nmorph-ui-kit";
       <NmorphScroll width="100%">
         <div class="content">
           <li v-for="(_, idx) in Array.from({ length: 200 })" :key="idx">
-            {{ $t("overview.backtop.basic-usage.scroll-down") }}
+            Scroll down
           </li>
         </div>
         <NmorphBacktop design="common" />

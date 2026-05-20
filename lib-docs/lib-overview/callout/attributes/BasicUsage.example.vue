@@ -4,27 +4,25 @@ import { NmorphCallout } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="callout-basic-usage-overview">
+    <NmorphCallout content="Useful content without a title." />
     <NmorphCallout
-      :content="$t('overview.callout.basic-usage.no-title-content')"
-    />
-    <NmorphCallout
-      :title="$t('overview.callout.basic-usage.info-title')"
-      :content="$t('overview.callout.basic-usage.info-content')"
+      title="Information"
+      content="Useful content for the reader."
     />
     <NmorphCallout
       type="warning"
-      :title="$t('overview.callout.basic-usage.warning-title')"
-      :content="$t('overview.callout.basic-usage.warning-content')"
+      title="Attention"
+      content="Important content for the reader."
     />
     <NmorphCallout
       type="success"
-      :title="$t('overview.callout.basic-usage.success-title')"
-      :content="$t('overview.callout.basic-usage.success-content')"
+      title="Success"
+      content="Successful content for the reader."
     />
     <NmorphCallout
       type="error"
-      :title="$t('overview.callout.basic-usage.error-title')"
-      :content="$t('overview.callout.basic-usage.error-content')"
+      title="Error"
+      content="Error content for the reader."
     />
     <NmorphCallout
       type="success"

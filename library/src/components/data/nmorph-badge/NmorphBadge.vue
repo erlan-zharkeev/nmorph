@@ -343,6 +343,7 @@ $nmorph-badge-dot-size-base: 4px;
       position: relative;
       top: auto;
       left: auto;
+      border-radius: 0;
       transform: none;
     }
   }

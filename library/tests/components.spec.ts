@@ -870,6 +870,26 @@ describe('components', () => {
     );
   });
 
+  it('renders link icon by icon name before text', async () => {
+    const wrapper = mount(NmorphLink, {
+      props: {
+        iconName: 'edit',
+        text: 'Edit',
+      },
+    });
+
+    await nextTick();
+
+    const link = wrapper.find('a').element as HTMLElement;
+    const icon = wrapper.find('.nmorph-link__icon');
+
+    expect(icon.exists()).toBe(true);
+    expect(icon.find('svg').exists()).toBe(true);
+    expect(link.firstElementChild).toBe(icon.element);
+
+    wrapper.unmount();
+  });
+
   it('renders ribbon badge in the selected corner', async () => {
     const wrapper = mount(NmorphBadge, {
       props: {
@@ -894,9 +914,7 @@ describe('components', () => {
     expect(wrapper.find('.nmorph-badge__ribbon-corner').classes()).toContain(
       'nmorph-badge__ribbon-corner--bottom-left'
     );
-    expect(wrapper.find('.nmorph-badge__container').classes()).toContain(
-      'nmorph-badge__container--ribbon-bottom-left'
-    );
+    expect(wrapper.find('.nmorph-badge__container').classes()).toContain('nmorph-badge__container--ribbon-bottom-left');
 
     wrapper.unmount();
   });
@@ -972,9 +990,9 @@ describe('components', () => {
     expect(tag.text()).not.toContain('Ignored');
 
     expect(legacyDot.find('.nmorph-badge__dot').exists()).toBe(true);
-    expect((legacyDot.find('.nmorph-badge').element as HTMLElement).style.getPropertyValue('--nmorph-badge-dot-size')).toBe(
-      ''
-    );
+    expect(
+      (legacyDot.find('.nmorph-badge').element as HTMLElement).style.getPropertyValue('--nmorph-badge-dot-size')
+    ).toBe('');
 
     ribbon.unmount();
     tag.unmount();
@@ -2006,6 +2024,21 @@ describe('components', () => {
     await nextTick();
 
     expect(wrapper.find('.nmorph-image-preview__trigger').exists()).toBe(false);
+    wrapper.unmount();
+  });
+
+  it('uses default text color for avatar loading icon', async () => {
+    const wrapper = mount(NmorphAvatar, {
+      props: { src: imageSrc },
+    });
+
+    await nextTick();
+
+    const icon = wrapper.find('.nmorph-image__loading .nmorph-icon').element as HTMLElement;
+
+    expect(icon.style.getPropertyValue('--nmorph-icon-color')).toBe('');
+    expect(icon.style.getPropertyValue('--color')).toBe('');
+
     wrapper.unmount();
   });
 

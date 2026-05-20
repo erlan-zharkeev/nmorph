@@ -5,7 +5,10 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { NmorphComponentDirection, NmorphSelectionControlHeight } from "@nmorph/nmorph-ui-kit";
+import {
+  NmorphComponentDirection,
+  NmorphSelectionControlHeight,
+} from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -28,7 +31,8 @@ const attributesData: IAttributesTableData[] = [
     name: "options",
     type: `Array<${docsLink(
       "INmorphCheckboxOption",
-      "/components/checkbox#content-attributes"
+      "/elements/checkbox#content-attributes",
+      "_self",
     )}>`,
     default: "[]",
   },
@@ -51,7 +55,13 @@ const events = [{ name: "update:model-value", type: "Array&lt;String&gt;" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphCheckboxGroup" name="checkbox-group" :attributes="attributesData" :slots="slotData"
-      :variables="variables" :events="events" />
+    <api-table
+      title="NmorphCheckboxGroup"
+      name="checkbox-group"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+      :events="events"
+    />
   </div>
 </template>

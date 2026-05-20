@@ -11,12 +11,8 @@ const value = ref("on");
   <div class="select-button-fill-overview">
     <ClientOnly>
       <NmorphSelectButton v-model="value" fill>
-        <NmorphSelectButtonItem value="off">{{
-          $t("overview.off")
-        }}</NmorphSelectButtonItem>
-        <NmorphSelectButtonItem value="on">{{
-          $t("overview.on")
-        }}</NmorphSelectButtonItem>
+        <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
+        <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
         <NmorphSelectButtonItem value="auto">Auto</NmorphSelectButtonItem>
       </NmorphSelectButton>
     </ClientOnly>

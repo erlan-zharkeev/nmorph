@@ -35,7 +35,7 @@ import { Summer } from "~/assets/images";
       </div>
       <div class="card-shadow-type-overview__element">
         <NmorphCard shadow-type="inset">
-          <template #header>{{ $t("overview.summer") }}</template>
+          <template #header>Summer</template>
           <template #default>
             <NmorphImage :src="Summer" />
           </template>

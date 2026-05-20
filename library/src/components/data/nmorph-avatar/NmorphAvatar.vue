@@ -121,7 +121,7 @@ const openPreview = () => {
       @error="onImageError"
     >
       <template #loading>
-        <NmorphIcon size="small" color="var(--nmorph-accent-color)">
+        <NmorphIcon size="small">
           <NmorphIconLoader />
         </NmorphIcon>
       </template>
@@ -157,7 +157,7 @@ const openPreview = () => {
       @update:model-value="previewOpen = $event"
     >
       <template #loading>
-        <NmorphIcon size="small" color="var(--nmorph-accent-color)">
+        <NmorphIcon size="small">
           <NmorphIconLoader />
         </NmorphIcon>
       </template>

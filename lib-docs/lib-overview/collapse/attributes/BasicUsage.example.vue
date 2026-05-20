@@ -10,7 +10,12 @@ const opened = ref(["availability"]);
     <NmorphCollapseItem name="availability" title="Availability" :block="false">
       <p>Multiple panels can stay opened.</p>
     </NmorphCollapseItem>
-    <NmorphCollapseItem name="disabled" title="Disabled" disabled :block="false">
+    <NmorphCollapseItem
+      name="disabled"
+      title="Disabled"
+      disabled
+      :block="false"
+    >
       <p>Disabled panel content.</p>
     </NmorphCollapseItem>
     <NmorphCollapseItem name="custom" :block="false" height="thin">

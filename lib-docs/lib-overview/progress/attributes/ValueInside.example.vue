@@ -14,7 +14,7 @@ const percentage = 33;
         color="pink"
       >
         <template #inner-text>
-          <span>{{ $t("overview.i-am-slot-prefix") }} {{ percentage }}%</span>
+          <span>I am slot prefix {{ percentage }}%</span>
         </template>
       </NmorphProgress>
     </ClientOnly>

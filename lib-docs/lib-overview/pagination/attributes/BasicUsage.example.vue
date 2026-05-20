@@ -72,7 +72,7 @@ getData(0);
     <ClientOnly>
       <div class="actions">
         <div class="actions__element">
-          <p>{{ $t("overview.selected-page") }} {{ currentPage }}</p>
+          <p>Selected page: {{ currentPage }}</p>
         </div>
         <div class="actions__element">
           <NmorphButton text="Toggle disabled" @click="toggleDisabled" />
@@ -87,7 +87,7 @@ getData(0);
       </div>
       <div class="cards">
         <div class="cards__loader nmorph-title-3" v-if="loading">
-          {{ $t("overview.loading") }}
+          Loading...
         </div>
         <div class="cards__container" v-else>
           <div class="cards__card" v-for="card in elements" :key="card.id">

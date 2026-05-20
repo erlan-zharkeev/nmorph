@@ -9,25 +9,24 @@ const date = ref(new Date());
 const dates = ref([date1, date2, date3]);
 const range = ref([date1, date3]);
 
-const { locale } = useI18n();
-const shortDate = (value: Date) => value.toLocaleDateString(locale.value);
+const shortDate = (value: Date) => value.toLocaleDateString("en-US");
 </script>
 
 <template>
   <div class="calendar-type-overview">
     <ClientOnly>
       <div class="calendar-type-overview__element">
-        <p>{{ $t("overview.date") }}</p>
+        <p>Date</p>
         <p>{{ shortDate(date) }}</p>
         <NmorphCalendar v-model="date" />
       </div>
       <div class="calendar-type-overview__element">
-        <p>{{ $t("overview.dates") }}</p>
+        <p>Dates</p>
         <p>{{ dates.map((date) => shortDate(date)).join("~") }}</p>
         <NmorphCalendar v-model="dates" type="dates" :initial-date="date1" />
       </div>
       <div class="calendar-type-overview__element">
-        <p>{{ $t("overview.date-range") }}</p>
+        <p>Date range</p>
         <p>{{ range.map((date) => shortDate(date)).join("~") }}</p>
         <NmorphCalendar
           v-model="range"

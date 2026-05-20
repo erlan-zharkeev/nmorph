@@ -8,7 +8,7 @@ const typePassword = ref(true);
   <div class="text-input-type-password-overview">
     <ClientOnly>
       <NmorphButton
-        :text="$t('overview.text-input.type-password.toggle')"
+        text="Toggle type"
         @click="typePassword = !typePassword"
         class="type-input-button"
       />

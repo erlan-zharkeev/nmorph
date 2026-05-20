@@ -135,8 +135,7 @@ export default {
   },
   "about-page": {
     eyebrow: "About the project",
-    lead:
-      "Nmorph UI Kit is a Vue 3 and Nuxt component library for building tactile interfaces with soft shadows, clear states, and consistent component APIs.",
+    lead: "Nmorph UI Kit is a Vue 3 and Nuxt component library for building tactile interfaces with soft shadows, clear states, and consistent component APIs.",
     meta: {
       vue: "Vue 3",
       nuxt: "Nuxt",
@@ -225,6 +224,18 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "link-icon-name-prop":
+          "NmorphLink now accepts iconName/icon-name to render a library icon before the link text, with docs and tests covering the new prop.",
+        "avatar-loader-text-color":
+          "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
+        "badge-flat-ribbon-radius":
+          "NmorphBadge flat corner ribbons now render without rounded outer edges while corner ribbons keep their visible inner radius.",
+        "docs-api-type-links":
+          "Docs API tables now auto-link known attribute, expose, and event types, and stale component links now point to the correct element anchors.",
+        "docs-example-english-source":
+          "Docs example source blocks now use plain English example text instead of copying runtime i18n expressions.",
+        "nuxt-build-dir-isolation":
+          "Docs and sandbox Nuxt production builds now write to .nuxt-build so build commands no longer overwrite active dev-server metadata.",
         "card-header-slot-wrapper":
           "NmorphCard now renders the header wrapper only when the header slot is provided.",
         "card-combined-border-style":
@@ -233,8 +244,7 @@ export default {
           "Added NmorphIconSend and NmorphIconSendFilled paper plane icons.",
         "message-action-icons":
           "Added NmorphIconReply, NmorphIconReplyFilled, NmorphIconForward, and NmorphIconForwardFilled for chat message actions.",
-        "smile-icon":
-          "Added NmorphIconSmile for emoji images and reactions.",
+        "smile-icon": "Added NmorphIconSmile for emoji images and reactions.",
         "scroll-gap-defaults":
           "NmorphScroll now defaults xGapInPx and yGapInPx to 0 so custom scrollbars sit flush by default.",
         "image-preview-click-through":
@@ -863,11 +873,13 @@ export default {
         "is-tag":
           "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
         hidden: "Hides the badge",
-        "hide-on-falsy-value": "Hides the badge indicator when value is falsy, including 0 and an empty string.",
+        "hide-on-falsy-value":
+          "Hides the badge indicator when value is falsy, including 0 and an empty string.",
         color: "Sets the background color of the badge",
         size: "Sets the badge text size: tiny, extra-small, or base",
         "z-index": "Defines the stacking order of the badge",
-        "offset-y": "Vertical offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-y. Ignored when type is tag",
+        "offset-y":
+          "Vertical offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-y. Ignored when type is tag",
         "offset-x":
           "Horizontal offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-x. Ignored when type is tag",
       },
@@ -881,9 +893,12 @@ export default {
         "nmorph-badge-dot-size": "Width and height of the dot",
         "nmorph-badge-ribbon-height": "Height of the ribbon badge strip",
         "nmorph-badge-ribbon-width": "Width of the ribbon badge strip",
-        "nmorph-badge-ribbon-corner-size": "Size of the corner zone used to position the ribbon strip",
-        "nmorph-badge-ribbon-offset-x": "Manual horizontal offset for the ribbon corner zone",
-        "nmorph-badge-ribbon-offset-y": "Manual vertical offset for the ribbon corner zone",
+        "nmorph-badge-ribbon-corner-size":
+          "Size of the corner zone used to position the ribbon strip",
+        "nmorph-badge-ribbon-offset-x":
+          "Manual horizontal offset for the ribbon corner zone",
+        "nmorph-badge-ribbon-offset-y":
+          "Manual vertical offset for the ribbon corner zone",
       },
     },
     card: {
@@ -891,24 +906,29 @@ export default {
         subtitle: "Defines the shadow type for the card.",
       },
       "card-padding": {
-        subtitle: "Sets the card padding through the same CSS value used by the `--card-padding` variable.",
+        subtitle:
+          "Sets the card padding through the same CSS value used by the `--card-padding` variable.",
       },
       fill: {
-        subtitle: "Controls whether the card stretches to the available width or fits its content.",
+        subtitle:
+          "Controls whether the card stretches to the available width or fits its content.",
       },
       tag: {
         subtitle: "Changes the HTML tag used for the card root element.",
       },
       api: {
         "shadow-type": "Defines the visibility of the card's shadow.",
-        "card-padding": "Overrides the card padding. Numbers are treated as pixel values.",
+        "card-padding":
+          "Overrides the card padding. Numbers are treated as pixel values.",
         "content-class": "Adds a custom class to the card content wrapper.",
-        "combined-shadow-border-width": "Border width used only when shadow-type is combined.",
+        "combined-shadow-border-width":
+          "Border width used only when shadow-type is combined.",
         fill: "When true, the card takes the available width. Set false to fit the content width.",
         tag: "HTML tag used for the card root element.",
       },
       slot: {
-        header: "Card header. The header wrapper renders only when this slot is provided.",
+        header:
+          "Card header. The header wrapper renders only when this slot is provided.",
         footer: "Card footer",
       },
       variables: {
@@ -924,11 +944,14 @@ export default {
         title: "Main empty state title.",
         description: "Secondary empty state message.",
         "icon-size": "Default icon size. Numbers are treated as pixel values.",
-        "min-height": "Minimum empty state height. Numbers are treated as pixel values.",
-        padding: "Inner empty state padding. Numbers are treated as pixel values.",
+        "min-height":
+          "Minimum empty state height. Numbers are treated as pixel values.",
+        padding:
+          "Inner empty state padding. Numbers are treated as pixel values.",
         design: "Visual design of the empty state surface.",
         "shadow-type": "Nmorph shadow used when design is nmorph.",
-        "hide-icon": "Hides the default icon. The icon slot still renders when provided.",
+        "hide-icon":
+          "Hides the default icon. The icon slot still renders when provided.",
         role: "ARIA role applied to the empty state container.",
         "aria-label": "Accessible label. Falls back to the title when omitted.",
       },
@@ -1141,9 +1164,12 @@ export default {
         type: "Specifies the type of progress indicator",
         color: "Sets the color of the progress indicator",
         percentage: "Sets the percentage of progress",
-        height: "Overrides the linear progress bar height. Numbers are treated as pixel values",
-        "width-transition": "Overrides the width transition used by the linear progress bar",
-        "indeterminate-animation": "Overrides the animation used by indeterminate progress",
+        height:
+          "Overrides the linear progress bar height. Numbers are treated as pixel values",
+        "width-transition":
+          "Overrides the width transition used by the linear progress bar",
+        "indeterminate-animation":
+          "Overrides the animation used by indeterminate progress",
         "value-inside": "Displays the progress text inside the bar",
         "value-right-side": "Shows or hides the percentage text on the right",
         indeterminate: "Enables the indeterminate progress animation",
@@ -1179,7 +1205,8 @@ export default {
         "initial-date": "Sets the initial date displayed in the calendar",
         "model-value": "Represents the selected date(s) in the calendar",
         type: "Defines the selection type in the calendar",
-        "cell-height": "Overrides the height of each date cell. Numbers are treated as pixel values",
+        "cell-height":
+          "Overrides the height of each date cell. Numbers are treated as pixel values",
         range:
           "Enables range selection mode in the calendar, allowing date range selection in the calendar. Not the selected range, but the displayed calendar range.",
       },
@@ -1241,8 +1268,10 @@ export default {
           "Defines whether gallery navigation buttons are rendered for image sets",
         "show-action-bar":
           "Defines whether the bottom rotate and zoom action bar is rendered",
-        width: "Overrides the preview trigger width. Numbers are treated as pixel values",
-        height: "Overrides the preview trigger height. Numbers are treated as pixel values",
+        width:
+          "Overrides the preview trigger width. Numbers are treated as pixel values",
+        height:
+          "Overrides the preview trigger height. Numbers are treated as pixel values",
         "navigation-button-margin":
           "Overrides the distance between gallery navigation buttons and the viewport edge",
       },
@@ -1305,14 +1334,17 @@ export default {
         sort: "Defines the sorting behavior for table columns",
         design: "Table display style",
         virtual: "Enables virtual rendering for large table datasets",
-        "virtual-height": "Sets the scroll viewport height for virtual table rows",
-        "virtual-row-height": "Sets the expected height of one virtual table row",
+        "virtual-height":
+          "Sets the scroll viewport height for virtual table rows",
+        "virtual-row-height":
+          "Sets the expected height of one virtual table row",
         "virtual-overscan":
           "Sets how many extra rows are rendered before and after the visible area",
         "virtual-dynamic-height":
           "Allows virtual table rows to measure their own height dynamically",
         "border-color": "Overrides the table border color",
-        "cell-height": "Overrides the data cell height. Numbers are treated as pixel values",
+        "cell-height":
+          "Overrides the data cell height. Numbers are treated as pixel values",
         "row-hover-background":
           "Overrides the background used for hovered and keyboard-active rows",
       },
@@ -1367,10 +1399,12 @@ export default {
           "Allows manual control over the tooltip's coordinates",
         "z-index":
           "Overrides the shared automatic z-index used while the tooltip is visible",
-        width: "Overrides the tooltip content width. Numbers are treated as pixel values",
+        width:
+          "Overrides the tooltip content width. Numbers are treated as pixel values",
         "max-width":
           "Overrides the tooltip content max width. Numbers are treated as pixel values",
-        height: "Overrides the tooltip content height. Numbers are treated as pixel values",
+        height:
+          "Overrides the tooltip content height. Numbers are treated as pixel values",
       },
       slot: {},
       variables: {
@@ -1411,8 +1445,7 @@ export default {
           "Boolean value that displays an icon based on the alert type",
         bordered: "Adds a border around the alert for emphasis",
         html: "Allows HTML content in the alert body. Use with caution to avoid XSS vulnerabilities",
-        "close-icon-position":
-          "Controls close icon alignment inside the alert",
+        "close-icon-position": "Controls close icon alignment inside the alert",
         "background-color": "Overrides the alert background color",
       },
       slot: {
@@ -1497,8 +1530,10 @@ export default {
       },
       variables: {
         width: "Defines the width of the dialog component.",
-        "nmorph-dialog-max-height": "Maximum dialog height before the content scrolls",
-        "nmorph-dialog-max-width": "Maximum dialog width used to keep the dialog inside the viewport",
+        "nmorph-dialog-max-height":
+          "Maximum dialog height before the content scrolls",
+        "nmorph-dialog-max-width":
+          "Maximum dialog width used to keep the dialog inside the viewport",
       },
     },
     divider: {
@@ -1548,8 +1583,7 @@ export default {
         subtitle: "Defines the position of the notifications on the screen.",
       },
       "z-index": {
-        subtitle:
-          "Overrides the shared z-index stack used for notifications.",
+        subtitle: "Overrides the shared z-index stack used for notifications.",
       },
       quantity: {
         subtitle:
@@ -1687,8 +1721,10 @@ export default {
           "Defines the scroll height at which the back-to-top button becomes visible. Accepts a number in pixels",
         design: "Defines the style of the button",
         "z-index": "Sets the z-index of the teleported back-to-top button",
-        "teleport-to": "CSS selector where the back-to-top button is teleported",
-        "teleport-disabled": "Disables teleporting and renders the button in place",
+        "teleport-to":
+          "CSS selector where the back-to-top button is teleported",
+        "teleport-disabled":
+          "Disables teleporting and renders the button in place",
       },
       slot: {
         default: "Slot for customizing the content of the back-to-top button",
@@ -1885,9 +1921,12 @@ export default {
         loading: "Boolean value that shows a loading indicator on the switch",
         "active-value": "Value when the switch is on",
         "inactive-value": "Value when the switch is off",
-        width: "Overrides the switch width. Numbers are treated as pixel values",
-        offset: "Overrides the thumb offset. Numbers are treated as pixel values",
-        "thumb-height": "Overrides the switch thumb size. Numbers are treated as pixel values",
+        width:
+          "Overrides the switch width. Numbers are treated as pixel values",
+        offset:
+          "Overrides the thumb offset. Numbers are treated as pixel values",
+        "thumb-height":
+          "Overrides the switch thumb size. Numbers are treated as pixel values",
       },
       slot: {
         "bg-on": "Slot for customizing the background when the switch is on",
@@ -2112,8 +2151,10 @@ export default {
         disabled: "Disables the component",
         fill: "Makes the component occupy the full width of its container",
         options: "List of options to render",
-        "track-padding": "Overrides the inner padding around items. Numbers are treated as pixel values",
-        "item-size": "Overrides each item size. Numbers are treated as pixel values",
+        "track-padding":
+          "Overrides the inner padding around items. Numbers are treated as pixel values",
+        "item-size":
+          "Overrides each item size. Numbers are treated as pixel values",
         "item-font-size": "Overrides each item font size",
       },
       slot: {
@@ -2168,10 +2209,12 @@ export default {
         open: "Boolean value to control the visibility of the list",
         "z-index":
           "Defines the select dropdown z-index. Uses the shared automatic z-index stack when omitted",
-        width: "Overrides the base select width. Numbers are treated as pixel values",
+        width:
+          "Overrides the base select width. Numbers are treated as pixel values",
         virtual: "Enables virtual rendering for large option lists",
         "virtual-item-height": "Sets the expected height of one virtual option",
-        "virtual-max-height": "Sets the maximum height of the virtual options list",
+        "virtual-max-height":
+          "Sets the maximum height of the virtual options list",
         "virtual-overscan":
           "Sets how many extra options are rendered before and after the visible area",
       },
@@ -2229,7 +2272,8 @@ export default {
         "show-tooltip":
           "Boolean value to control the visibility of the tooltip",
         "thumb-width": "Overrides the slider thumb width in pixels",
-        "slider-height": "Overrides the slider hit area height. Numbers are treated as pixel values",
+        "slider-height":
+          "Overrides the slider hit area height. Numbers are treated as pixel values",
         "value-fixed-container-height":
           "Overrides the visual track container height. Numbers are treated as pixel values",
       },
@@ -2264,7 +2308,8 @@ export default {
           "Text for separating the start and end dates in range selection mode",
         "z-index":
           "Defines the date picker dropdown z-index. Uses the shared automatic z-index stack when omitted",
-        width: "Overrides the date picker width. Numbers are treated as pixel values",
+        width:
+          "Overrides the date picker width. Numbers are treated as pixel values",
         "calendar-cell-height":
           "Overrides the calendar date cell height. Numbers are treated as pixel values",
       },
@@ -2307,7 +2352,8 @@ export default {
         "max-time": "Maximum selectable time",
         clearable: "Shows the clear action when a value is selected",
         "z-index": "Dropdown z-index",
-        width: "Overrides the time picker width. Numbers are treated as pixel values",
+        width:
+          "Overrides the time picker width. Numbers are treated as pixel values",
       },
       variables: {
         width: "Defines the width of the time picker",

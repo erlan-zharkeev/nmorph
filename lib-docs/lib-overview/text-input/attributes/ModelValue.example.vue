@@ -7,7 +7,7 @@ const text = ref("Lorem ipsum");
 <template>
   <div class="text-input-model-value-overview">
     <ClientOnly>
-      <p class="nmorph-title-3">{{ $t("overview.model-text") }} {{ text }}</p>
+      <p class="nmorph-title-3">Model text: {{ text }}</p>
       <NmorphTextInput v-model="text" />
     </ClientOnly>
   </div>

@@ -1,6 +1,7 @@
 CLAUDE.md
 node_modules
 .nuxt
+.nuxt-build
 .output
 nuxt-sandbox/.data
 nuxt-sandbox/.nitro

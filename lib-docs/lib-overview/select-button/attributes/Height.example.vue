@@ -4,7 +4,6 @@ import {
   NmorphSelectButtonItem,
   NmorphComponentHeight,
 } from "@nmorph/nmorph-ui-kit";
-const { t } = useI18n();
 
 const value = ref("on");
 const heights = Object.keys(NmorphComponentHeight) as Array<
@@ -21,12 +20,8 @@ const heights = Object.keys(NmorphComponentHeight) as Array<
         v-model="value"
         :height="height"
       >
-        <NmorphSelectButtonItem value="off">{{
-          $t("overview.off")
-        }}</NmorphSelectButtonItem>
-        <NmorphSelectButtonItem value="on">{{
-          $t("overview.on")
-        }}</NmorphSelectButtonItem>
+        <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
+        <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
       </NmorphSelectButton>
     </ClientOnly>
   </div>

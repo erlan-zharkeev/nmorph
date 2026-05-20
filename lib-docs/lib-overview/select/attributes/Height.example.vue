@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { NmorphSelect, NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
-const { t } = useI18n();
 
 const options = ref([
-  { value: "one", label: t("overview.one") },
-  { value: "two", label: t("overview.two") },
-  { value: "three", label: t("overview.three") },
+  { value: "one", label: "One" },
+  { value: "two", label: "Two" },
+  { value: "three", label: "Three" },
 ]);
 const heights = Object.keys(NmorphComponentHeight) as Array<
   keyof typeof NmorphComponentHeight

@@ -4,15 +4,11 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="button-type-overview">
-    <NmorphButton style-type="default">{{
-      $t("overview.default")
-    }}</NmorphButton>
-    <NmorphButton style-type="transparent">{{
-      $t("overview.transparent")
-    }}</NmorphButton>
-    <NmorphButton style-type="transparent" color="var(--nmorph-accent-color)">{{
-      $t("overview.edit")
-    }}</NmorphButton>
+    <NmorphButton style-type="default">Default</NmorphButton>
+    <NmorphButton style-type="transparent">Transparent</NmorphButton>
+    <NmorphButton style-type="transparent" color="var(--nmorph-accent-color)"
+      >Edit</NmorphButton
+    >
   </div>
 </template>
 

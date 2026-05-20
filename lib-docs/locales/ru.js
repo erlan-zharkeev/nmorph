@@ -137,8 +137,7 @@ export default {
   },
   "about-page": {
     eyebrow: "О проекте",
-    lead:
-      "Nmorph UI Kit — библиотека компонентов для Vue 3 и Nuxt, которая помогает собирать тактильные интерфейсы с мягкими тенями, понятными состояниями и единым API компонентов.",
+    lead: "Nmorph UI Kit — библиотека компонентов для Vue 3 и Nuxt, которая помогает собирать тактильные интерфейсы с мягкими тенями, понятными состояниями и единым API компонентов.",
     meta: {
       vue: "Vue 3",
       nuxt: "Nuxt",
@@ -227,6 +226,18 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "link-icon-name-prop":
+          "NmorphLink now accepts iconName/icon-name to render a library icon before the link text, with docs and tests covering the new prop.",
+        "avatar-loader-text-color":
+          "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
+        "badge-flat-ribbon-radius":
+          "NmorphBadge flat corner ribbons now render without rounded outer edges while corner ribbons keep their visible inner radius.",
+        "docs-api-type-links":
+          "Docs API tables now auto-link known attribute, expose, and event types, and stale component links now point to the correct element anchors.",
+        "docs-example-english-source":
+          "Docs example source blocks now use plain English example text instead of copying runtime i18n expressions.",
+        "nuxt-build-dir-isolation":
+          "Docs and sandbox Nuxt production builds now write to .nuxt-build so build commands no longer overwrite active dev-server metadata.",
         "card-header-slot-wrapper":
           "NmorphCard теперь рендерит обертку header только когда передан слот header.",
         "card-combined-border-style":
@@ -864,21 +875,25 @@ export default {
         max: "Максимальное допустимое отображаемое значение",
         type: "Задает тип отображения бейджа: default, dot, tag или ribbon",
         "ribbon-corner": "Задает угол ribbon-бейджа, когда type равен ribbon",
-        "ribbon-tilt": "Включает диагональный наклон ribbon-бейджа или оставляет его ровным в выбранном углу",
+        "ribbon-tilt":
+          "Включает диагональный наклон ribbon-бейджа или оставляет его ровным в выбранном углу",
         "is-dot": "Отображает бейдж в виде точки",
         "is-tag":
           "Переключает бейдж в standalone tag-режим без absolute-позиционирования и без default slot",
         hidden: "Скрывает бейдж",
-        "hide-on-falsy-value": "Скрывает индикатор бейджа, когда value falsy, включая 0 и пустую строку.",
+        "hide-on-falsy-value":
+          "Скрывает индикатор бейджа, когда value falsy, включая 0 и пустую строку.",
         color: "Устанавливает цвет фона бейджа",
         size: "Устанавливает размер текста бейджа: tiny, extra-small или base",
         "z-index": "Определяет порядок наложения бейджа",
-        "offset-y": "Вертикальное смещение бейджа. Для ribbon прокидывается в --nmorph-badge-ribbon-offset-y. Игнорируется при type tag",
-        "offset-x": "Горизонтальное смещение бейджа. Для ribbon прокидывается в --nmorph-badge-ribbon-offset-x. Игнорируется при type tag",
+        "offset-y":
+          "Вертикальное смещение бейджа. Для ribbon прокидывается в --nmorph-badge-ribbon-offset-y. Игнорируется при type tag",
+        "offset-x":
+          "Горизонтальное смещение бейджа. Для ribbon прокидывается в --nmorph-badge-ribbon-offset-x. Игнорируется при type tag",
       },
       slot: {
         default:
-          "Контент, поверх которого отображается бейдж. Не используется при `type=\"tag\"`.",
+          'Контент, поверх которого отображается бейдж. Не используется при `type="tag"`.',
         value:
           "Кастомное содержимое внутри бейджа вместо текстового `value`. Работает только в overlay-режиме.",
       },
@@ -886,9 +901,12 @@ export default {
         "nmorph-badge-dot-size": "Ширина и высота точки",
         "nmorph-badge-ribbon-height": "Высота ribbon-полосы бейджа",
         "nmorph-badge-ribbon-width": "Ширина ribbon-полосы бейджа",
-        "nmorph-badge-ribbon-corner-size": "Размер угловой зоны, по которой позиционируется ribbon-полоса",
-        "nmorph-badge-ribbon-offset-x": "Ручное горизонтальное смещение угловой зоны ribbon-полосы",
-        "nmorph-badge-ribbon-offset-y": "Ручное вертикальное смещение угловой зоны ribbon-полосы",
+        "nmorph-badge-ribbon-corner-size":
+          "Размер угловой зоны, по которой позиционируется ribbon-полоса",
+        "nmorph-badge-ribbon-offset-x":
+          "Ручное горизонтальное смещение угловой зоны ribbon-полосы",
+        "nmorph-badge-ribbon-offset-y":
+          "Ручное вертикальное смещение угловой зоны ribbon-полосы",
       },
     },
     card: {
@@ -896,24 +914,31 @@ export default {
         subtitle: "Определяет тип тени для карточки.",
       },
       "card-padding": {
-        subtitle: "Задает отступ карточки тем же CSS-значением, которое использует переменная `--card-padding`.",
+        subtitle:
+          "Задает отступ карточки тем же CSS-значением, которое использует переменная `--card-padding`.",
       },
       fill: {
-        subtitle: "Управляет тем, растягивается карточка на доступную ширину или занимает ширину контента.",
+        subtitle:
+          "Управляет тем, растягивается карточка на доступную ширину или занимает ширину контента.",
       },
       tag: {
-        subtitle: "Меняет HTML-тег, который используется для корневого элемента карточки.",
+        subtitle:
+          "Меняет HTML-тег, который используется для корневого элемента карточки.",
       },
       api: {
         "shadow-type": "Определяет видимость тени карточки.",
-        "card-padding": "Переопределяет отступ карточки. Числа считаются значениями в пикселях.",
-        "content-class": "Добавляет кастомный класс на обертку контента карточки.",
-        "combined-shadow-border-width": "Ширина border, которая используется только при shadow-type='combined'.",
+        "card-padding":
+          "Переопределяет отступ карточки. Числа считаются значениями в пикселях.",
+        "content-class":
+          "Добавляет кастомный класс на обертку контента карточки.",
+        "combined-shadow-border-width":
+          "Ширина border, которая используется только при shadow-type='combined'.",
         fill: "Если true, карточка занимает доступную ширину. Передайте false, чтобы ширина шла по контенту.",
         tag: "HTML-тег, который используется для корневого элемента карточки.",
       },
       slot: {
-        header: "Заголовок карточки. Обертка header рендерится только когда слот передан.",
+        header:
+          "Заголовок карточки. Обертка header рендерится только когда слот передан.",
         footer: "Нижний колонтитул карточки",
       },
       variables: {
@@ -928,14 +953,19 @@ export default {
       api: {
         title: "Основной заголовок пустого состояния.",
         description: "Дополнительное сообщение пустого состояния.",
-        "icon-size": "Размер дефолтной иконки. Числа считаются значениями в пикселях.",
-        "min-height": "Минимальная высота пустого состояния. Числа считаются значениями в пикселях.",
-        padding: "Внутренний отступ пустого состояния. Числа считаются значениями в пикселях.",
+        "icon-size":
+          "Размер дефолтной иконки. Числа считаются значениями в пикселях.",
+        "min-height":
+          "Минимальная высота пустого состояния. Числа считаются значениями в пикселях.",
+        padding:
+          "Внутренний отступ пустого состояния. Числа считаются значениями в пикселях.",
         design: "Визуальный дизайн поверхности пустого состояния.",
         "shadow-type": "Nmorph-тень, которая используется при design='nmorph'.",
-        "hide-icon": "Скрывает дефолтную иконку. Слот icon все равно отображается, если передан.",
+        "hide-icon":
+          "Скрывает дефолтную иконку. Слот icon все равно отображается, если передан.",
         role: "ARIA role контейнера пустого состояния.",
-        "aria-label": "Доступная подпись. Если не передана, используется title.",
+        "aria-label":
+          "Доступная подпись. Если не передана, используется title.",
       },
       slot: {
         icon: "Кастомное содержимое иконки.",
@@ -1150,9 +1180,12 @@ export default {
         type: "Указывает тип индикатора прогресса",
         color: "Задает цвет индикатора прогресса",
         percentage: "Устанавливает процентное значение прогресса",
-        height: "Overrides the linear progress bar height. Numbers are treated as pixel values",
-        "width-transition": "Overrides the width transition used by the linear progress bar",
-        "indeterminate-animation": "Overrides the animation used by indeterminate progress",
+        height:
+          "Overrides the linear progress bar height. Numbers are treated as pixel values",
+        "width-transition":
+          "Overrides the width transition used by the linear progress bar",
+        "indeterminate-animation":
+          "Overrides the animation used by indeterminate progress",
         "value-inside": "Отображает текст прогресса внутри полосы",
         "value-right-side": "Показывает или скрывает текст с процентом справа",
         indeterminate: "Включает анимацию неопределенного прогресса",
@@ -1189,7 +1222,8 @@ export default {
           "Устанавливает начальную дату, отображаемую в календаре",
         "model-value": "Представляет выбранную дату (даты) в календаре",
         type: "Определяет тип выбора в календаре",
-        "cell-height": "Overrides the height of each date cell. Numbers are treated as pixel values",
+        "cell-height":
+          "Overrides the height of each date cell. Numbers are treated as pixel values",
         range:
           "Включает режим выбора диапазона в календаре, позволяя выбирать диапазон дат календаря. Не выбранный диапозон, а диапозон отображемого календаря",
       },
@@ -1248,13 +1282,16 @@ export default {
           "Определяет максимальный уровень масштабирования для изображения",
         "z-index":
           "Задает z-index оверлея. Если не передан, используется общий автоматический стек z-index",
-        "show-trigger": "Определяет, рендерится ли стандартный trigger предпросмотра",
+        "show-trigger":
+          "Определяет, рендерится ли стандартный trigger предпросмотра",
         "show-navigation-buttons":
           "Определяет, рендерятся ли кнопки навигации галереи для набора изображений",
         "show-action-bar":
           "Определяет, рендерится ли нижний action bar с поворотом и масштабированием",
-        width: "Overrides the preview trigger width. Numbers are treated as pixel values",
-        height: "Overrides the preview trigger height. Numbers are treated as pixel values",
+        width:
+          "Overrides the preview trigger width. Numbers are treated as pixel values",
+        height:
+          "Overrides the preview trigger height. Numbers are treated as pixel values",
         "navigation-button-margin":
           "Overrides the distance between gallery navigation buttons and the viewport edge",
       },
@@ -1318,13 +1355,15 @@ export default {
         design: "Стиль отображения таблицы",
         virtual: "Включает виртуальный рендеринг для больших наборов данных",
         "virtual-height": "Задает высоту области прокрутки виртуальной таблицы",
-        "virtual-row-height": "Задает ожидаемую высоту одной виртуальной строки",
+        "virtual-row-height":
+          "Задает ожидаемую высоту одной виртуальной строки",
         "virtual-overscan":
           "Задает количество дополнительных строк до и после видимой области",
         "virtual-dynamic-height":
           "Allows virtual table rows to measure their own height dynamically",
         "border-color": "Overrides the table border color",
-        "cell-height": "Overrides the data cell height. Numbers are treated as pixel values",
+        "cell-height":
+          "Overrides the data cell height. Numbers are treated as pixel values",
         "row-hover-background":
           "Overrides the background used for hovered and keyboard-active rows",
       },
@@ -1380,10 +1419,12 @@ export default {
           "Позволяет вручную управлять координатами подсказки",
         "z-index":
           "Переопределяет общий автоматический z-index, пока подсказка видима",
-        width: "Overrides the tooltip content width. Numbers are treated as pixel values",
+        width:
+          "Overrides the tooltip content width. Numbers are treated as pixel values",
         "max-width":
           "Overrides the tooltip content max width. Numbers are treated as pixel values",
-        height: "Overrides the tooltip content height. Numbers are treated as pixel values",
+        height:
+          "Overrides the tooltip content height. Numbers are treated as pixel values",
       },
       slot: {},
       variables: {
@@ -1513,8 +1554,10 @@ export default {
       },
       variables: {
         width: "Определяет ширину компонента диалогового окна.",
-        "nmorph-dialog-max-height": "Максимальная высота диалога до прокрутки контента",
-        "nmorph-dialog-max-width": "Максимальная ширина диалога, удерживающая его внутри viewport",
+        "nmorph-dialog-max-height":
+          "Максимальная высота диалога до прокрутки контента",
+        "nmorph-dialog-max-width":
+          "Максимальная ширина диалога, удерживающая его внутри viewport",
       },
     },
     divider: {
@@ -1541,10 +1584,8 @@ export default {
           "Булево значение, которое делает фон компонента прозрачным, если включено",
         "z-index":
           "Задает z-index оверлея. Если не передан, используется общий автоматический стек z-index",
-        "teleport-to":
-          "Задает цель, куда будет телепортирован контент оверлея",
-        "disabled-teleport":
-          "Отключает Teleport и рендерит оверлей на месте",
+        "teleport-to": "Задает цель, куда будет телепортирован контент оверлея",
+        "disabled-teleport": "Отключает Teleport и рендерит оверлей на месте",
       },
       slot: {
         default:
@@ -1564,8 +1605,7 @@ export default {
         subtitle: "Определяет позицию уведомлений на экране.",
       },
       "z-index": {
-        subtitle:
-          "Переопределяет общий z-index stack для уведомлений.",
+        subtitle: "Переопределяет общий z-index stack для уведомлений.",
       },
       quantity: {
         subtitle:
@@ -1682,8 +1722,7 @@ export default {
         "update:model-value": "Событие при изменении открытого состояния",
         open: "Событие при открытии контекстного меню",
         close: "Событие при закрытии контекстного меню",
-        "on-outside-click":
-          "Событие при клике вне контекстного меню",
+        "on-outside-click": "Событие при клике вне контекстного меню",
         "on-escape-keydown":
           "Событие при нажатии Escape, когда контекстное меню открыто",
       },
@@ -1703,7 +1742,8 @@ export default {
           "Определяет высоту прокрутки, при которой кнопка возврата наверх становится видимой. Принимает число в пикселях",
         design: "Определяет стиль кнопки",
         "z-index": "Задает z-index телепортированной кнопки возврата наверх",
-        "teleport-to": "CSS selector, в который телепортируется кнопка возврата наверх",
+        "teleport-to":
+          "CSS selector, в который телепортируется кнопка возврата наверх",
         "teleport-disabled": "Отключает teleport и рендерит кнопку на месте",
       },
       slot: {
@@ -1906,9 +1946,12 @@ export default {
           "Булево значение, показывающее индикатор загрузки на переключателе",
         "active-value": "Значение, когда переключатель включен",
         "inactive-value": "Значение, когда переключатель выключен",
-        width: "Overrides the switch width. Numbers are treated as pixel values",
-        offset: "Overrides the thumb offset. Numbers are treated as pixel values",
-        "thumb-height": "Overrides the switch thumb size. Numbers are treated as pixel values",
+        width:
+          "Overrides the switch width. Numbers are treated as pixel values",
+        offset:
+          "Overrides the thumb offset. Numbers are treated as pixel values",
+        "thumb-height":
+          "Overrides the switch thumb size. Numbers are treated as pixel values",
       },
       slot: {
         "bg-on": "Слот для кастомизации фона, когда переключатель включен",
@@ -2140,8 +2183,10 @@ export default {
         disabled: "Отключает компонент",
         fill: "Растягивает компонент на всю ширину контейнера",
         options: "Список опций для отображения",
-        "track-padding": "Overrides the inner padding around items. Numbers are treated as pixel values",
-        "item-size": "Overrides each item size. Numbers are treated as pixel values",
+        "track-padding":
+          "Overrides the inner padding around items. Numbers are treated as pixel values",
+        "item-size":
+          "Overrides each item size. Numbers are treated as pixel values",
         "item-font-size": "Overrides each item font size",
       },
       slot: {
@@ -2197,7 +2242,8 @@ export default {
         open: "Булево значение для управления видимостью списка",
         "z-index":
           "Задает z-index выпадающего списка select. Если не передан, используется общий автоматический стек z-index",
-        width: "Overrides the base select width. Numbers are treated as pixel values",
+        width:
+          "Overrides the base select width. Numbers are treated as pixel values",
         virtual: "Включает виртуальный рендеринг для больших списков опций",
         "virtual-item-height":
           "Задает ожидаемую высоту одной виртуальной опции",
@@ -2261,7 +2307,8 @@ export default {
         "show-tooltip":
           "Булево значение для управления видимостью всплывающей подсказки",
         "thumb-width": "Overrides the slider thumb width in pixels",
-        "slider-height": "Overrides the slider hit area height. Numbers are treated as pixel values",
+        "slider-height":
+          "Overrides the slider hit area height. Numbers are treated as pixel values",
         "value-fixed-container-height":
           "Overrides the visual track container height. Numbers are treated as pixel values",
       },
@@ -2297,7 +2344,8 @@ export default {
           "Текст для разделения начальной и конечной дат в режиме выбора диапазона",
         "z-index":
           "Задает z-index выпадающего календаря. Если не передан, используется общий автоматический стек z-index",
-        width: "Overrides the date picker width. Numbers are treated as pixel values",
+        width:
+          "Overrides the date picker width. Numbers are treated as pixel values",
         "calendar-cell-height":
           "Overrides the calendar date cell height. Numbers are treated as pixel values",
       },
@@ -2335,12 +2383,14 @@ export default {
         "hour-step": "Шаг между доступными значениями часов",
         "minute-step": "Шаг между доступными значениями минут",
         "second-step": "Шаг между доступными значениями секунд",
-        "show-seconds": "Показывает колонку секунд и возвращает значения HH:mm:ss",
+        "show-seconds":
+          "Показывает колонку секунд и возвращает значения HH:mm:ss",
         "min-time": "Минимально доступное время",
         "max-time": "Максимально доступное время",
         clearable: "Показывает кнопку очистки, когда значение выбрано",
         "z-index": "Z-index выпадающего меню",
-        width: "Overrides the time picker width. Numbers are treated as pixel values",
+        width:
+          "Overrides the time picker width. Numbers are treated as pixel values",
       },
       variables: {
         width: "Defines the width of the time picker",

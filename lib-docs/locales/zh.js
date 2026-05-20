@@ -70,8 +70,7 @@ export default {
       '<p class="main-section__first-explained-content">适用于 Vue 3 和 Nuxt 的 UI 套件，用于创建独特的 3D 新拟态设计</p>',
     "quick-start": {
       installation: "安装",
-      "choose-package-manager":
-        "使用 <b>pnpm</b> 安装包并在 monorepo 中工作。",
+      "choose-package-manager": "使用 <b>pnpm</b> 安装包并在 monorepo 中工作。",
       plugin: "库集成",
       "alternative-plugin": "替代集成方法",
       nuxt: "Nuxt 集成",
@@ -125,8 +124,7 @@ export default {
   },
   "about-page": {
     eyebrow: "关于项目",
-    lead:
-      "Nmorph UI Kit 是一个适用于 Vue 3 和 Nuxt 的组件库，用于构建带有柔和阴影、清晰状态和一致组件 API 的触感界面。",
+    lead: "Nmorph UI Kit 是一个适用于 Vue 3 和 Nuxt 的组件库，用于构建带有柔和阴影、清晰状态和一致组件 API 的触感界面。",
     meta: {
       vue: "Vue 3",
       nuxt: "Nuxt",
@@ -215,6 +213,18 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "link-icon-name-prop":
+          "NmorphLink now accepts iconName/icon-name to render a library icon before the link text, with docs and tests covering the new prop.",
+        "avatar-loader-text-color":
+          "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
+        "badge-flat-ribbon-radius":
+          "NmorphBadge flat corner ribbons now render without rounded outer edges while corner ribbons keep their visible inner radius.",
+        "docs-api-type-links":
+          "Docs API tables now auto-link known attribute, expose, and event types, and stale component links now point to the correct element anchors.",
+        "docs-example-english-source":
+          "Docs example source blocks now use plain English example text instead of copying runtime i18n expressions.",
+        "nuxt-build-dir-isolation":
+          "Docs and sandbox Nuxt production builds now write to .nuxt-build so build commands no longer overwrite active dev-server metadata.",
         "card-header-slot-wrapper":
           "NmorphCard now renders the header wrapper only when the header slot is provided.",
         "card-combined-border-style":
@@ -223,8 +233,7 @@ export default {
           "新增 NmorphIconSend 和 NmorphIconSendFilled 纸飞机图标。",
         "message-action-icons":
           "新增用于聊天消息操作的 NmorphIconReply、NmorphIconReplyFilled、NmorphIconForward 和 NmorphIconForwardFilled。",
-        "smile-icon":
-          "新增 NmorphIconSmile，用于 emoji 图片和反应。",
+        "smile-icon": "新增 NmorphIconSmile，用于 emoji 图片和反应。",
         "scroll-gap-defaults":
           "NmorphScroll 现在默认将 xGapInPx 和 yGapInPx 设为 0，因此自定义滚动条默认贴边显示。",
         "image-preview-click-through":
@@ -803,8 +812,7 @@ export default {
         subtitle: "选择 diagonal ribbon badge 使用的角落。",
       },
       "ribbon-tilt": {
-        subtitle:
-          "控制 ribbon badge 是斜向显示，还是平放在选定角落。",
+        subtitle: "控制 ribbon badge 是斜向显示，还是平放在选定角落。",
       },
       "is-dot": {
         subtitle:
@@ -838,11 +846,13 @@ export default {
         "is-tag":
           "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
         hidden: "Hides the badge",
-        "hide-on-falsy-value": "Hides the badge indicator when value is falsy, including 0 and an empty string.",
+        "hide-on-falsy-value":
+          "Hides the badge indicator when value is falsy, including 0 and an empty string.",
         color: "Sets the background color of the badge",
         size: "Sets the badge text size: tiny, extra-small, or base",
         "z-index": "Defines the stacking order of the badge",
-        "offset-y": "Vertical offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-y. Ignored when type is tag",
+        "offset-y":
+          "Vertical offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-y. Ignored when type is tag",
         "offset-x":
           "Horizontal offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-x. Ignored when type is tag",
       },
@@ -866,24 +876,29 @@ export default {
         subtitle: "Defines the shadow type for the card.",
       },
       "card-padding": {
-        subtitle: "Sets the card padding through the same CSS value used by the `--card-padding` variable.",
+        subtitle:
+          "Sets the card padding through the same CSS value used by the `--card-padding` variable.",
       },
       fill: {
-        subtitle: "Controls whether the card stretches to the available width or fits its content.",
+        subtitle:
+          "Controls whether the card stretches to the available width or fits its content.",
       },
       tag: {
         subtitle: "Changes the HTML tag used for the card root element.",
       },
       api: {
         "shadow-type": "Defines the visibility of the card's shadow.",
-        "card-padding": "Overrides the card padding. Numbers are treated as pixel values.",
+        "card-padding":
+          "Overrides the card padding. Numbers are treated as pixel values.",
         "content-class": "Adds a custom class to the card content wrapper.",
-        "combined-shadow-border-width": "Border width used only when shadow-type is combined.",
+        "combined-shadow-border-width":
+          "Border width used only when shadow-type is combined.",
         fill: "When true, the card takes the available width. Set false to fit the content width.",
         tag: "HTML tag used for the card root element.",
       },
       slot: {
-        header: "Card header. The header wrapper renders only when this slot is provided.",
+        header:
+          "Card header. The header wrapper renders only when this slot is provided.",
         footer: "Card footer",
       },
       variables: {
@@ -899,11 +914,14 @@ export default {
         title: "Main empty state title.",
         description: "Secondary empty state message.",
         "icon-size": "Default icon size. Numbers are treated as pixel values.",
-        "min-height": "Minimum empty state height. Numbers are treated as pixel values.",
-        padding: "Inner empty state padding. Numbers are treated as pixel values.",
+        "min-height":
+          "Minimum empty state height. Numbers are treated as pixel values.",
+        padding:
+          "Inner empty state padding. Numbers are treated as pixel values.",
         design: "Visual design of the empty state surface.",
         "shadow-type": "Nmorph shadow used when design is nmorph.",
-        "hide-icon": "Hides the default icon. The icon slot still renders when provided.",
+        "hide-icon":
+          "Hides the default icon. The icon slot still renders when provided.",
         role: "ARIA role applied to the empty state container.",
         "aria-label": "Accessible label. Falls back to the title when omitted.",
       },
@@ -1104,9 +1122,12 @@ export default {
         type: "指定进度指示器的类型",
         color: "设置进度指示器的颜色",
         percentage: "设置进度的百分比",
-        height: "Overrides the linear progress bar height. Numbers are treated as pixel values",
-        "width-transition": "Overrides the width transition used by the linear progress bar",
-        "indeterminate-animation": "Overrides the animation used by indeterminate progress",
+        height:
+          "Overrides the linear progress bar height. Numbers are treated as pixel values",
+        "width-transition":
+          "Overrides the width transition used by the linear progress bar",
+        "indeterminate-animation":
+          "Overrides the animation used by indeterminate progress",
         "value-inside": "在进度条内显示进度文本",
         "value-right-side": "显示或隐藏右侧的百分比文本",
         indeterminate: "启用不确定进度动画",
@@ -1138,7 +1159,8 @@ export default {
         "initial-date": "设置日历中显示的初始日期",
         "model-value": "表示日历中选定的日期",
         type: "定义日历中的选择类型",
-        "cell-height": "Overrides the height of each date cell. Numbers are treated as pixel values",
+        "cell-height":
+          "Overrides the height of each date cell. Numbers are treated as pixel values",
         range:
           "启用日历中的范围选择模式，允许选择日历中的日期范围。不是选定的范围，而是显示的日历范围。",
       },
@@ -1191,12 +1213,12 @@ export default {
         "max-scale-level": "定义图像的最大缩放级别",
         "z-index": "定义覆盖层的 z-index。未传入时使用共享的自动 z-index 栈",
         "show-trigger": "定义是否渲染默认的预览触发器",
-        "show-navigation-buttons":
-          "定义图像组是否渲染图库导航按钮",
-        "show-action-bar":
-          "定义是否渲染底部旋转和缩放操作栏",
-        width: "Overrides the preview trigger width. Numbers are treated as pixel values",
-        height: "Overrides the preview trigger height. Numbers are treated as pixel values",
+        "show-navigation-buttons": "定义图像组是否渲染图库导航按钮",
+        "show-action-bar": "定义是否渲染底部旋转和缩放操作栏",
+        width:
+          "Overrides the preview trigger width. Numbers are treated as pixel values",
+        height:
+          "Overrides the preview trigger height. Numbers are treated as pixel values",
         "navigation-button-margin":
           "Overrides the distance between gallery navigation buttons and the viewport edge",
       },
@@ -1260,7 +1282,8 @@ export default {
         "virtual-dynamic-height":
           "Allows virtual table rows to measure their own height dynamically",
         "border-color": "Overrides the table border color",
-        "cell-height": "Overrides the data cell height. Numbers are treated as pixel values",
+        "cell-height":
+          "Overrides the data cell height. Numbers are treated as pixel values",
         "row-hover-background":
           "Overrides the background used for hovered and keyboard-active rows",
       },
@@ -1310,10 +1333,12 @@ export default {
         "force-show": "强制显示提示框的布尔值",
         "force-coordinate": "允许手动控制提示框的坐标",
         "z-index": "覆盖提示框可见时使用的共享自动 z-index",
-        width: "Overrides the tooltip content width. Numbers are treated as pixel values",
+        width:
+          "Overrides the tooltip content width. Numbers are treated as pixel values",
         "max-width":
           "Overrides the tooltip content max width. Numbers are treated as pixel values",
-        height: "Overrides the tooltip content height. Numbers are treated as pixel values",
+        height:
+          "Overrides the tooltip content height. Numbers are treated as pixel values",
       },
       slot: {},
       variables: {
@@ -1568,8 +1593,7 @@ export default {
         open: "上下文菜单打开时触发的事件",
         close: "上下文菜单关闭时触发的事件",
         "on-outside-click": "用户点击上下文菜单外部时触发的事件",
-        "on-escape-keydown":
-          "上下文菜单打开时用户按下 Escape 触发的事件",
+        "on-escape-keydown": "上下文菜单打开时用户按下 Escape 触发的事件",
       },
     },
     backtop: {
@@ -1772,9 +1796,12 @@ export default {
         loading: "布尔值，显示开关上的加载指示器",
         "active-value": "开关打开时的值",
         "inactive-value": "开关关闭时的值",
-        width: "Overrides the switch width. Numbers are treated as pixel values",
-        offset: "Overrides the thumb offset. Numbers are treated as pixel values",
-        "thumb-height": "Overrides the switch thumb size. Numbers are treated as pixel values",
+        width:
+          "Overrides the switch width. Numbers are treated as pixel values",
+        offset:
+          "Overrides the thumb offset. Numbers are treated as pixel values",
+        "thumb-height":
+          "Overrides the switch thumb size. Numbers are treated as pixel values",
       },
       slot: {
         "bg-on": "插槽，用于自定义开关打开时的背景",
@@ -1990,8 +2017,10 @@ export default {
         disabled: "禁用组件",
         fill: "使组件占满容器宽度",
         options: "渲染的选项列表",
-        "track-padding": "Overrides the inner padding around items. Numbers are treated as pixel values",
-        "item-size": "Overrides each item size. Numbers are treated as pixel values",
+        "track-padding":
+          "Overrides the inner padding around items. Numbers are treated as pixel values",
+        "item-size":
+          "Overrides each item size. Numbers are treated as pixel values",
         "item-font-size": "Overrides each item font size",
       },
       slot: {
@@ -2045,7 +2074,8 @@ export default {
         open: "控制列表可见性的布尔值",
         "z-index":
           "定义 select 下拉列表的 z-index。未传入时使用共享的自动 z-index 栈",
-        width: "Overrides the base select width. Numbers are treated as pixel values",
+        width:
+          "Overrides the base select width. Numbers are treated as pixel values",
         virtual: "为大量选项列表启用虚拟渲染",
         "virtual-item-height": "设置单个虚拟选项的预期高度",
         "virtual-max-height": "设置虚拟选项列表的最大高度",
@@ -2101,7 +2131,8 @@ export default {
         step: "用于增加或减少值的步长",
         "show-tooltip": "布尔值，控制提示框的可见性",
         "thumb-width": "Overrides the slider thumb width in pixels",
-        "slider-height": "Overrides the slider hit area height. Numbers are treated as pixel values",
+        "slider-height":
+          "Overrides the slider hit area height. Numbers are treated as pixel values",
         "value-fixed-container-height":
           "Overrides the visual track container height. Numbers are treated as pixel values",
       },
@@ -2135,7 +2166,8 @@ export default {
         "text-separator": "范围选择模式中用于分隔开始和结束日期的文本",
         "z-index":
           "定义日期选择下拉层的 z-index。未传入时使用共享的自动 z-index 栈",
-        width: "Overrides the date picker width. Numbers are treated as pixel values",
+        width:
+          "Overrides the date picker width. Numbers are treated as pixel values",
         "calendar-cell-height":
           "Overrides the calendar date cell height. Numbers are treated as pixel values",
       },
@@ -2177,7 +2209,8 @@ export default {
         "max-time": "最大可选时间",
         clearable: "选择值后显示清除按钮",
         "z-index": "下拉层级 z-index",
-        width: "Overrides the time picker width. Numbers are treated as pixel values",
+        width:
+          "Overrides the time picker width. Numbers are treated as pixel values",
       },
       variables: {
         width: "Defines the width of the time picker",

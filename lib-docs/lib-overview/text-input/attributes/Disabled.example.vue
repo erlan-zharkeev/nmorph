@@ -5,7 +5,7 @@ import { NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 <template>
   <div class="text-input-disabled-overview">
     <ClientOnly>
-      <NmorphTextInput :placeholder="$t('overview.i-am-disabled')" disabled />
+      <NmorphTextInput placeholder="I am disabled" disabled />
     </ClientOnly>
   </div>
 </template>

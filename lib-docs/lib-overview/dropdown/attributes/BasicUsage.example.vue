@@ -22,7 +22,7 @@ const closeHandler = () => {
           <div ref="firstMenu">
             <NmorphCheckbox
               v-model="firstMenuOpen"
-              :label="$t('overview.dropdown.basic-usage.first-menu')"
+              label="First menu"
               design="button"
             />
             <NmorphDropdown
@@ -52,7 +52,7 @@ const closeHandler = () => {
           <div ref="secondMenu">
             <NmorphCheckbox
               v-model="secondMenuOpen"
-              :label="$t('overview.dropdown.basic-usage.second-menu')"
+              label="Second menu"
               design="button"
             />
             <NmorphDropdown

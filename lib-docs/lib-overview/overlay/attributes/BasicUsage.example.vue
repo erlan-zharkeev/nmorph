@@ -10,10 +10,7 @@ const showTransparent = ref(false);
     <ClientOnly>
       <div class="overlay-content">
         <div class="overlay-element">
-          <NmorphButton
-            :text="$t('overview.overlay.basic-usage.show-default')"
-            @click="showDefault = true"
-          />
+          <NmorphButton text="Show default" @click="showDefault = true" />
           <NmorphOverlay
             :show="showDefault"
             @on-outside-click="showDefault = false"
@@ -36,7 +33,7 @@ const showTransparent = ref(false);
         </div>
         <div class="overlay-element">
           <NmorphButton
-            :text="$t('overview.overlay.basic-usage.show-transparent')"
+            text="Show transparent"
             @click="showTransparent = true"
           />
           <NmorphOverlay

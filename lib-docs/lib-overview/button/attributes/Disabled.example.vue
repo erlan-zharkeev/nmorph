@@ -4,10 +4,8 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="button-disabled-overview">
-    <NmorphButton disabled>{{ $t("overview.disabled") }}</NmorphButton>
-    <NmorphButton disabled height="thin">{{
-      $t("overview.disabled-thin")
-    }}</NmorphButton>
+    <NmorphButton disabled>Disabled</NmorphButton>
+    <NmorphButton disabled height="thin">Disabled</NmorphButton>
     <ClientOnly>
       <NmorphButton disabled loading />
     </ClientOnly>

@@ -13,7 +13,7 @@ const loading = ref(true);
   <div class="skeleton-loading-overview">
     <ClientOnly>
       <div class="switch">
-        <span>{{ $t("overview.loading-state") }}</span>
+        <span>Loading state</span>
         <NmorphSwitch v-model="loading" />
       </div>
       <NmorphSkeleton :loading="loading">

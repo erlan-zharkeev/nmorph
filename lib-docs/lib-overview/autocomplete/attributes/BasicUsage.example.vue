@@ -8,11 +8,7 @@ const list = ref([{ value: "First" }, { value: "Second" }, { value: "Third" }]);
 <template>
   <div class="autocomplete-basic-usage-overview">
     <ClientOnly>
-      <NmorphAutocomplete
-        v-model="text"
-        :list="list"
-        :placeholder="$t('overview.autocomplete.basic-usage.placeholder')"
-      />
+      <NmorphAutocomplete v-model="text" :list="list" placeholder="Text..." />
     </ClientOnly>
   </div>
 </template>

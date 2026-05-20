@@ -27,7 +27,7 @@ const actionCallback = async () => {
       <NmorphAutocomplete
         v-model="text"
         :list="list"
-        :placeholder="$t('overview.autocomplete.basic-usage.placeholder')"
+        placeholder="Text..."
         :action-callback="actionCallback"
       />
     </ClientOnly>

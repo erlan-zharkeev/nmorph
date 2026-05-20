@@ -8,22 +8,18 @@ const showTag2 = ref(true);
 
 <template>
   <div class="tag-removable-overview">
-    <NmorphTagItem
-      value="0"
-      :text="$t('overview.tag-zero')"
-      :removable="false"
-    />
+    <NmorphTagItem value="0" text="Tag zero" :removable="false" />
     <NmorphTagItem
       v-show="showTag1"
       value="1"
-      :text="$t('overview.tag-one')"
+      text="Tag one"
       removable
       @close="showTag1 = false"
     />
     <NmorphTagItem
       v-show="showTag2"
       value="2"
-      :text="$t('overview.tag-two')"
+      text="Tag two"
       removable
       @close="showTag2 = false"
     />

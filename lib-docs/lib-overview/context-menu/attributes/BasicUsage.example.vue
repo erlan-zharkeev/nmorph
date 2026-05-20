@@ -2,11 +2,7 @@
 import { NmorphButton, NmorphContextMenu } from "@nmorph/nmorph-ui-kit";
 import { ref } from "vue";
 
-const actions = [
-  "Open",
-  "Duplicate",
-  "Archive",
-];
+const actions = ["Open", "Duplicate", "Archive"];
 const contextMenuOpen = ref(false);
 </script>
 
@@ -20,7 +16,7 @@ const contextMenuOpen = ref(false);
       :z-index="3000"
       aria-label="Context actions"
     >
-      <NmorphButton :text="$t('overview.context-menu.basic-usage.target')" />
+      <NmorphButton text="Right-click this area" />
     </NmorphContextMenu>
   </div>
 </template>

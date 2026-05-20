@@ -4,8 +4,8 @@ import { NmorphLink } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="link-underline-overview">
-    <NmorphLink>{{ $t("overview.without-underline") }}</NmorphLink>
-    <NmorphLink underline>{{ $t("overview.underlined") }}</NmorphLink>
+    <NmorphLink>Without underline</NmorphLink>
+    <NmorphLink underline>Underlined</NmorphLink>
   </div>
 </template>
 

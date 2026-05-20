@@ -17,12 +17,12 @@ const imageKey = ref(0);
         :src="imageSrc"
         @error="errorHandler"
         :key="imageKey"
-        :loading-text="$t('overview.custom-loading-text')"
+        loading-text="Custom loading text"
       />
     </ClientOnly>
     <ClientOnly>
       <NmorphImage :src="imageSrc" @error="errorHandler" :key="imageKey">
-        <template #loading>{{ $t("overview.download-in-progress") }}</template>
+        <template #loading>Download in progress</template>
       </NmorphImage>
     </ClientOnly>
   </div>

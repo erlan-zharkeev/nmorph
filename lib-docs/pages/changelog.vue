@@ -11,10 +11,47 @@ const knownBugItems: string[] = [];
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v2.2.34</h3>
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.link-icon-name-prop") }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.avatar-loader-text-color")
+                }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.badge-flat-ribbon-radius")
+                }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.docs-api-type-links") }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.docs-example-english-source",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.nuxt-build-dir-isolation")
+                }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.2.33</h3>
             <ul>
               <li>
-                {{ $t("changelog-page.changelog.items.file-upload-controlled-reset") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.file-upload-controlled-reset",
+                  )
+                }}
               </li>
             </ul>
           </div>
@@ -22,7 +59,11 @@ const knownBugItems: string[] = [];
             <h3>v2.2.32</h3>
             <ul>
               <li>
-                {{ $t("changelog-page.changelog.items.badge-ribbon-inner-radius-tiny") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.badge-ribbon-inner-radius-tiny",
+                  )
+                }}
               </li>
             </ul>
           </div>
@@ -41,7 +82,9 @@ const knownBugItems: string[] = [];
             <h3>v2.2.30</h3>
             <ul>
               <li>
-                {{ $t("changelog-page.changelog.items.file-upload-truncate-grid") }}
+                {{
+                  $t("changelog-page.changelog.items.file-upload-truncate-grid")
+                }}
               </li>
             </ul>
           </div>
@@ -49,13 +92,23 @@ const knownBugItems: string[] = [];
             <h3>v2.2.29</h3>
             <ul>
               <li>
-                {{ $t("changelog-page.changelog.items.image-preview-closed-portal") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.image-preview-closed-portal",
+                  )
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.file-upload-preview-flex") }}
+                {{
+                  $t("changelog-page.changelog.items.file-upload-preview-flex")
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.dialog-indentation-03-padding") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.dialog-indentation-03-padding",
+                  )
+                }}
               </li>
             </ul>
           </div>
@@ -63,7 +116,9 @@ const knownBugItems: string[] = [];
             <h3>v2.2.28</h3>
             <ul>
               <li>
-                {{ $t("changelog-page.changelog.items.dialog-content-overflow-x") }}
+                {{
+                  $t("changelog-page.changelog.items.dialog-content-overflow-x")
+                }}
               </li>
             </ul>
           </div>
@@ -71,7 +126,9 @@ const knownBugItems: string[] = [];
             <h3>v2.2.27</h3>
             <ul>
               <li>
-                {{ $t("changelog-page.changelog.items.badge-hide-on-falsy-value") }}
+                {{
+                  $t("changelog-page.changelog.items.badge-hide-on-falsy-value")
+                }}
               </li>
             </ul>
           </div>
@@ -79,16 +136,28 @@ const knownBugItems: string[] = [];
             <h3>v2.2.26</h3>
             <ul>
               <li>
-                {{ $t("changelog-page.changelog.items.badge-dot-css-variable") }}
+                {{
+                  $t("changelog-page.changelog.items.badge-dot-css-variable")
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.card-content-class-prop") }}
+                {{
+                  $t("changelog-page.changelog.items.card-content-class-prop")
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.dialog-compact-section-padding") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.dialog-compact-section-padding",
+                  )
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.sandbox-component-examples") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.sandbox-component-examples",
+                  )
+                }}
               </li>
             </ul>
           </div>
@@ -96,7 +165,9 @@ const knownBugItems: string[] = [];
             <h3>v2.2.25</h3>
             <ul>
               <li>
-                {{ $t("changelog-page.changelog.items.badge-type-display-source") }}
+                {{
+                  $t("changelog-page.changelog.items.badge-type-display-source")
+                }}
               </li>
             </ul>
           </div>
@@ -107,13 +178,21 @@ const knownBugItems: string[] = [];
                 {{ $t("changelog-page.changelog.items.badge-ribbon-type") }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.notification-provider-z-index-stack") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.notification-provider-z-index-stack",
+                  )
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.dialog-viewport-scroll") }}
+                {{
+                  $t("changelog-page.changelog.items.dialog-viewport-scroll")
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.sandbox-source-aliases") }}
+                {{
+                  $t("changelog-page.changelog.items.sandbox-source-aliases")
+                }}
               </li>
             </ul>
           </div>
@@ -124,13 +203,21 @@ const knownBugItems: string[] = [];
                 {{ $t("changelog-page.changelog.items.scroll-gap-defaults") }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.image-preview-click-through") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.image-preview-click-through",
+                  )
+                }}
               </li>
               <li>
                 {{ $t("changelog-page.changelog.items.docs-localhost-open") }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.autocomplete-close-clear-spacing") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.autocomplete-close-clear-spacing",
+                  )
+                }}
               </li>
             </ul>
           </div>
@@ -155,7 +242,11 @@ const knownBugItems: string[] = [];
                 {{ $t("changelog-page.changelog.items.empty-border-box") }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.image-preview-control-visibility") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.image-preview-control-visibility",
+                  )
+                }}
               </li>
             </ul>
           </div>
@@ -163,10 +254,16 @@ const knownBugItems: string[] = [];
             <h3>v2.2.20</h3>
             <ul>
               <li>
-                {{ $t("changelog-page.changelog.items.card-header-slot-wrapper") }}
+                {{
+                  $t("changelog-page.changelog.items.card-header-slot-wrapper")
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.card-combined-border-style") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.card-combined-border-style",
+                  )
+                }}
               </li>
             </ul>
           </div>
@@ -186,36 +283,40 @@ const knownBugItems: string[] = [];
                 {{ $t("changelog-page.changelog.items.card-tag-prop") }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.css-variable-prop-overrides") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.css-variable-prop-overrides",
+                  )
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.context-menu-neutral-hover") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.context-menu-neutral-hover",
+                  )
+                }}
               </li>
               <li>
                 {{ $t("changelog-page.changelog.items.tooltip-z-index-stack") }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.notification-provider-first-animation") }}
-              </li>
-              <li>
                 {{
                   $t(
-                    "changelog-page.changelog.items.carousel-collapse-docs",
+                    "changelog-page.changelog.items.notification-provider-first-animation",
                   )
                 }}
               </li>
               <li>
                 {{
-                  $t(
-                    "changelog-page.changelog.items.time-picker-component",
-                  )
+                  $t("changelog-page.changelog.items.carousel-collapse-docs")
                 }}
               </li>
               <li>
+                {{ $t("changelog-page.changelog.items.time-picker-component") }}
+              </li>
+              <li>
                 {{
-                  $t(
-                    "changelog-page.changelog.items.image-preview-overlay-fit",
-                  )
+                  $t("changelog-page.changelog.items.image-preview-overlay-fit")
                 }}
               </li>
               <li>
@@ -226,11 +327,7 @@ const knownBugItems: string[] = [];
                 }}
               </li>
               <li>
-                {{
-                  $t(
-                    "changelog-page.changelog.items.dev-open-workflow",
-                  )
-                }}
+                {{ $t("changelog-page.changelog.items.dev-open-workflow") }}
               </li>
             </ul>
           </div>
@@ -238,13 +335,21 @@ const knownBugItems: string[] = [];
             <h3>v2.2.18</h3>
             <ul>
               <li>
-                {{ $t("changelog-page.changelog.items.context-menu-options-api") }}
+                {{
+                  $t("changelog-page.changelog.items.context-menu-options-api")
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.context-menu-scroll-position") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.context-menu-scroll-position",
+                  )
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.sandbox-nuxt-migration") }}
+                {{
+                  $t("changelog-page.changelog.items.sandbox-nuxt-migration")
+                }}
               </li>
             </ul>
           </div>
@@ -252,13 +357,21 @@ const knownBugItems: string[] = [];
             <h3>v2.2.17</h3>
             <ul>
               <li>
-                {{ $t("changelog-page.changelog.items.context-menu-trigger-modes") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.context-menu-trigger-modes",
+                  )
+                }}
               </li>
               <li>
                 {{ $t("changelog-page.changelog.items.badge-min-width") }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.nuxt-hydration-warning-cleanup") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.nuxt-hydration-warning-cleanup",
+                  )
+                }}
               </li>
             </ul>
           </div>
@@ -266,28 +379,48 @@ const knownBugItems: string[] = [];
             <h3>v2.2.16</h3>
             <ul>
               <li>
-                {{ $t("changelog-page.changelog.items.docs-route-lazy-overviews") }}
+                {{
+                  $t("changelog-page.changelog.items.docs-route-lazy-overviews")
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.library-entrypoints-tree-shaking") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.library-entrypoints-tree-shaking",
+                  )
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.context-menu-component") }}
+                {{
+                  $t("changelog-page.changelog.items.context-menu-component")
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.overlay-focus-management") }}
+                {{
+                  $t("changelog-page.changelog.items.overlay-focus-management")
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.virtualization-keyboard-dynamic-height") }}
+                {{
+                  $t(
+                    "changelog-page.changelog.items.virtualization-keyboard-dynamic-height",
+                  )
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.date-format-flexibility") }}
+                {{
+                  $t("changelog-page.changelog.items.date-format-flexibility")
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.button-custom-color-hover") }}
+                {{
+                  $t("changelog-page.changelog.items.button-custom-color-hover")
+                }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.css-shadow-token-cleanup") }}
+                {{
+                  $t("changelog-page.changelog.items.css-shadow-token-cleanup")
+                }}
               </li>
             </ul>
           </div>
@@ -303,17 +436,11 @@ const knownBugItems: string[] = [];
               </li>
               <li>
                 {{
-                  $t(
-                    "changelog-page.changelog.items.docs-example-source-files",
-                  )
+                  $t("changelog-page.changelog.items.docs-example-source-files")
                 }}
               </li>
               <li>
-                {{
-                  $t(
-                    "changelog-page.changelog.items.docs-code-copy-fix",
-                  )
-                }}
+                {{ $t("changelog-page.changelog.items.docs-code-copy-fix") }}
               </li>
               <li>
                 {{
@@ -324,9 +451,7 @@ const knownBugItems: string[] = [];
               </li>
               <li>
                 {{
-                  $t(
-                    "changelog-page.changelog.items.storybook-sass-modern-api",
-                  )
+                  $t("changelog-page.changelog.items.storybook-sass-modern-api")
                 }}
               </li>
               <li>
@@ -337,11 +462,7 @@ const knownBugItems: string[] = [];
                 }}
               </li>
               <li>
-                {{
-                  $t(
-                    "changelog-page.changelog.items.ci-pnpm-publish",
-                  )
-                }}
+                {{ $t("changelog-page.changelog.items.ci-pnpm-publish") }}
               </li>
             </ul>
           </div>
@@ -350,9 +471,7 @@ const knownBugItems: string[] = [];
             <ul>
               <li>
                 {{
-                  $t(
-                    "changelog-page.changelog.items.nuxt-theme-first-paint",
-                  )
+                  $t("changelog-page.changelog.items.nuxt-theme-first-paint")
                 }}
               </li>
               <li>
@@ -364,16 +483,12 @@ const knownBugItems: string[] = [];
               </li>
               <li>
                 {{
-                  $t(
-                    "changelog-page.changelog.items.ios-input-scrollbar-fixes",
-                  )
+                  $t("changelog-page.changelog.items.ios-input-scrollbar-fixes")
                 }}
               </li>
               <li>
                 {{
-                  $t(
-                    "changelog-page.changelog.items.pnpm-turbo-docs-refresh",
-                  )
+                  $t("changelog-page.changelog.items.pnpm-turbo-docs-refresh")
                 }}
               </li>
             </ul>
@@ -397,9 +512,7 @@ const knownBugItems: string[] = [];
               </li>
               <li>
                 {{
-                  $t(
-                    "changelog-page.changelog.items.nuxt-ssr-theme-runtime",
-                  )
+                  $t("changelog-page.changelog.items.nuxt-ssr-theme-runtime")
                 }}
               </li>
               <li>
@@ -416,9 +529,7 @@ const knownBugItems: string[] = [];
             <ul>
               <li>
                 {{
-                  $t(
-                    "changelog-page.changelog.items.pagination-basic-height",
-                  )
+                  $t("changelog-page.changelog.items.pagination-basic-height")
                 }}
               </li>
               <li>
@@ -436,11 +547,7 @@ const knownBugItems: string[] = [];
                 }}
               </li>
               <li>
-                {{
-                  $t(
-                    "changelog-page.changelog.items.nuxt-i18n-merge",
-                  )
-                }}
+                {{ $t("changelog-page.changelog.items.nuxt-i18n-merge") }}
               </li>
             </ul>
           </div>
@@ -449,17 +556,11 @@ const knownBugItems: string[] = [];
             <ul>
               <li>
                 {{
-                  $t(
-                    "changelog-page.changelog.items.avatar-preview-resolve",
-                  )
+                  $t("changelog-page.changelog.items.avatar-preview-resolve")
                 }}
               </li>
               <li>
-                {{
-                  $t(
-                    "changelog-page.changelog.items.backtop-contrast-icon",
-                  )
-                }}
+                {{ $t("changelog-page.changelog.items.backtop-contrast-icon") }}
               </li>
             </ul>
           </div>
@@ -468,9 +569,7 @@ const knownBugItems: string[] = [];
             <ul>
               <li>
                 {{
-                  $t(
-                    "changelog-page.changelog.items.component-css-splitting",
-                  )
+                  $t("changelog-page.changelog.items.component-css-splitting")
                 }}
               </li>
               <li>
@@ -487,9 +586,7 @@ const knownBugItems: string[] = [];
             <ul>
               <li>
                 {{
-                  $t(
-                    "changelog-page.changelog.items.remove-styled-components",
-                  )
+                  $t("changelog-page.changelog.items.remove-styled-components")
                 }}
               </li>
               <li>
@@ -508,9 +605,7 @@ const knownBugItems: string[] = [];
                 {{ $t("changelog-page.changelog.items.nuxt-module") }}
               </li>
               <li>
-                {{
-                  $t("changelog-page.changelog.items.image-preview-portal")
-                }}
+                {{ $t("changelog-page.changelog.items.image-preview-portal") }}
               </li>
               <li>
                 {{

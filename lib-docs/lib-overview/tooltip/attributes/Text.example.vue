@@ -5,8 +5,8 @@ import { NmorphTooltip, NmorphButton } from "@nmorph/nmorph-ui-kit";
 <template>
   <div class="tooltip-text-overview">
     <ClientOnly>
-      <NmorphTooltip :text="$t('overview.tooltip.text.i-am-tooltip')">
-        <NmorphButton :text="$t('overview.tooltip.text.hover-me')" />
+      <NmorphTooltip text="I am a tooltip">
+        <NmorphButton text="Hover over me" />
       </NmorphTooltip>
     </ClientOnly>
   </div>

@@ -8,31 +8,25 @@ import { NmorphTooltip, NmorphButton } from "@nmorph/nmorph-ui-kit";
       <div class="elements">
         <div class="elements__element">
           <NmorphTooltip force-show>
-            <NmorphButton :text="$t('overview.tooltip.text.button')" />
+            <NmorphButton text="Button" />
             <template #content>
-              <div class="content">
-                {{ $t("overview.tooltip.text.tooltip") }}
-              </div>
+              <div class="content">Tooltip</div>
             </template>
           </NmorphTooltip>
         </div>
         <div class="elements__element">
           <NmorphTooltip force-show position="bottom">
-            <NmorphButton :text="$t('overview.tooltip.text.button')" />
+            <NmorphButton text="Button" />
             <template #content>
-              <div class="content">
-                {{ $t("overview.tooltip.text.tooltip") }}
-              </div>
+              <div class="content">Tooltip</div>
             </template>
           </NmorphTooltip>
         </div>
         <div class="elements__element">
           <NmorphTooltip force-show position="right">
-            <NmorphButton :text="$t('overview.tooltip.text.button')" />
+            <NmorphButton text="Button" />
             <template #content>
-              <div class="content">
-                {{ $t("overview.tooltip.text.tooltip") }}
-              </div>
+              <div class="content">Tooltip</div>
             </template>
           </NmorphTooltip>
         </div>

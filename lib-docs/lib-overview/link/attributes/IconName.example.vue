@@ -4,7 +4,7 @@ import { NmorphLink } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="link-icon-name-overview">
-    <NmorphLink icon-name="edit">{{ $t("overview.edit") }}</NmorphLink>
+    <NmorphLink icon-name="edit">Edit</NmorphLink>
     <NmorphLink icon-name="eye" underline text="Lorem ipsum" />
   </div>
 </template>

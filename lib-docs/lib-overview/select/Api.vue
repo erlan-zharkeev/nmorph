@@ -47,7 +47,8 @@ const attributesData: IAttributesTableData[] = [
     name: "options",
     type: `Array<${docsLink(
       "INmorphSelectOption",
-      "/components/select#content-select-option-attributes",
+      "/elements/select#content-select-option-attributes",
+      "_self",
     )}>`,
     default: "[]",
   },
@@ -55,7 +56,8 @@ const attributesData: IAttributesTableData[] = [
     name: "options-map",
     type: `Array<${docsLink(
       "INmorphSelectOption",
-      "/components/select#content-select-option-attributes",
+      "/elements/select#content-select-option-attributes",
+      "_self",
     )}>`,
     default: "[]",
   },

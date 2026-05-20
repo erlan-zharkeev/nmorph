@@ -10,7 +10,7 @@ import { NmorphImage } from "@nmorph/nmorph-ui-kit";
       </ClientOnly>
       <ClientOnly>
         <NmorphImage src="./error.jpg">
-          <template #error>{{ $t("overview.load-error") }}</template>
+          <template #error>Load error</template>
         </NmorphImage>
       </ClientOnly>
     </ClientOnly>

@@ -21,17 +21,16 @@ import {
   type INmorphFromDataExpose,
   type NmorphFormValueType,
 } from "@nmorph/nmorph-ui-kit";
-const { t } = useI18n();
 
 const drinks = [
   {
     disabled: false,
-    label: t("overview.form.basic-usage.coffee"),
+    label: "Coffee",
     value: "coffee",
   },
   {
     disabled: false,
-    label: t("overview.form.basic-usage.tea"),
+    label: "Tea",
     value: "tea",
   },
   {
@@ -52,7 +51,7 @@ const browsers = [
     id: "unknown",
     disabled: true,
     modelValue: false,
-    label: t("overview.form.basic-usage.unknown"),
+    label: "Unknown",
   },
   {
     id: "firefox",
@@ -70,25 +69,23 @@ const browsers = [
 
 const food = [
   {
-    label: t("overview.form.basic-usage.pear"),
-    value: t("overview.form.basic-usage.pear"),
+    label: "Pear",
+    value: "Pear",
   },
   {
-    label: t("overview.form.basic-usage.apple"),
-    value: t("overview.form.basic-usage.apple"),
+    label: "Apple",
+    value: "Apple",
   },
   {
-    label: t("overview.form.basic-usage.orange"),
-    value: t("overview.form.basic-usage.orange"),
+    label: "Orange",
+    value: "Orange",
   },
 ];
 
 const form = reactive({
   username: {
     value: "",
-    rules: [
-      { pattern: /.{5,}/, error: t("overview.form.basic-usage.too-short") },
-    ],
+    rules: [{ pattern: /.{5,}/, error: "Too short" }],
   },
   years: {
     value: 18,
@@ -96,7 +93,7 @@ const form = reactive({
       {
         compareValue: 18,
         numberCompareType: "lt",
-        error: t("overview.form.basic-usage.wrong-age"),
+        error: "Incorrect age",
       },
     ],
   },
@@ -106,7 +103,7 @@ const form = reactive({
       {
         compareValue: "kombucha",
         booleanCompareType: "eq",
-        error: t("overview.form.basic-usage.we-dont-have-kombucha"),
+        error: "We don't have Kombucha(",
       },
     ],
   },
@@ -116,7 +113,7 @@ const form = reactive({
       {
         compareValue: ["ie"],
         arrayCompareType: "not-contains",
-        error: t("overview.form.basic-usage.ie-not-supported"),
+        error: "IE is not supported",
       },
     ],
   },
@@ -126,22 +123,22 @@ const form = reactive({
       {
         compareValue: 30,
         numberCompareType: "lt",
-        error: t("overview.form.basic-usage.value-must-greater-than-30"),
+        error: "Value must be greater than 30",
       },
       {
         compareValue: 80,
         numberCompareType: "gt",
-        error: t("overview.form.basic-usage.value-must-less-than-80"),
+        error: "Value must be less than 80",
       },
     ],
   },
   food: {
-    value: [t("overview.form.basic-usage.apple")],
+    value: ["Apple"],
     rules: [
       {
-        compareValue: [t("overview.form.basic-usage.pear")],
+        compareValue: ["Pear"],
         arrayCompareType: "not-contains",
-        error: t("overview.form.basic-usage.pear-is-not-available"),
+        error: "Pear is unavailable",
       },
     ],
   },
@@ -159,7 +156,7 @@ const form = reactive({
       {
         compareValue: false,
         booleanCompareType: "eq",
-        error: t("overview.form.basic-usage.you-must-set-agreement"),
+        error: "You must accept the agreement",
       },
     ],
   },
@@ -184,30 +181,21 @@ watch(
   <div class="form-basic-usage-overview">
     <ClientOnly>
       <div class="nmorph-title-3">
-        {{ $t("overview.form.basic-usage.is-valid") }}
+        Form is valid:
         {{ isFormValid }}
       </div>
       <NmorphForm :value="form" ref="formRef">
-        <NmorphFormItem
-          id="username"
-          :label="$t('overview.form.basic-usage.username')"
-        >
+        <NmorphFormItem id="username" label="Username">
           <NmorphTextInput
             v-model="form.username.value"
-            :placeholder="$t('overview.form.basic-usage.enter-username')"
+            placeholder="Enter username"
             clearable
           />
         </NmorphFormItem>
-        <NmorphFormItem
-          id="years"
-          :label="$t('overview.form.basic-usage.years-old')"
-        >
+        <NmorphFormItem id="years" label="Years old">
           <NmorphNumberInput v-model="form.years.value" :min="0" :max="150" />
         </NmorphFormItem>
-        <NmorphFormItem
-          id="drink"
-          :label="$t('overview.form.basic-usage.preferred-drink')"
-        >
+        <NmorphFormItem id="drink" label="Preferred drink">
           <NmorphRadioGroup v-model="form.drink.value">
             <NmorphRadio
               v-for="option in drinks"
@@ -218,10 +206,7 @@ watch(
             />
           </NmorphRadioGroup>
         </NmorphFormItem>
-        <NmorphFormItem
-          id="browsers"
-          :label="$t('overview.form.basic-usage.browsers')"
-        >
+        <NmorphFormItem id="browsers" label="Browsers">
           <NmorphCheckboxGroup v-model="form.browsers.value" direction="column">
             <NmorphCheckbox
               v-for="option in browsers"
@@ -233,10 +218,7 @@ watch(
             />
           </NmorphCheckboxGroup>
         </NmorphFormItem>
-        <NmorphFormItem
-          id="numberValue"
-          :label="$t('overview.form.basic-usage.number-value')"
-        >
+        <NmorphFormItem id="numberValue" label="Numeric value">
           <NmorphSlider
             v-model="form.numberValue.value"
             :step="1"
@@ -247,7 +229,7 @@ watch(
             form.numberValue.value
           }}</span>
         </NmorphFormItem>
-        <NmorphFormItem id="food" :label="$t('overview.form.basic-usage.food')">
+        <NmorphFormItem id="food" label="Food">
           <NmorphSelect
             v-model="form.food.value"
             value-required
@@ -262,22 +244,13 @@ watch(
             />
           </NmorphSelect>
         </NmorphFormItem>
-        <NmorphFormItem
-          id="date"
-          :label="$t('overview.form.basic-usage.choose-date')"
-        >
+        <NmorphFormItem id="date" label="Choose a date">
           <NmorphDatePicker v-model="form.date.value" />
         </NmorphFormItem>
-        <NmorphFormItem
-          id="photo"
-          :label="$t('overview.form.basic-usage.photo')"
-        >
+        <NmorphFormItem id="photo" label="Photo">
           <NmorphFileUpload v-model="form.photo.value" multiple />
         </NmorphFormItem>
-        <NmorphFormItem
-          id="agreement"
-          :label="$t('overview.form.basic-usage.agreement')"
-        >
+        <NmorphFormItem id="agreement" label="Agreement">
           <NmorphSwitch v-model="form.agreement.value">
             <template #thumb-on>
               <NmorphIcon width="10px" height="10px">
@@ -293,7 +266,7 @@ watch(
         </NmorphFormItem>
         <NmorphFormItem id="send">
           <NmorphButton
-            :text="$t('overview.form.basic-usage.send-form')"
+            text="Send form"
             :disabled="!isFormValid"
             width="100px"
             fill

@@ -28,7 +28,8 @@ const attributesData: IAttributesTableData[] = [
     name: "options",
     type: `Array<${docsLink(
       "INmorphRadioOption",
-      "/components/radio#content-attributes"
+      "/elements/radio#content-attributes",
+      "_self",
     )}>`,
     default: "[]",
   },
@@ -51,7 +52,13 @@ const events = [{ name: "update:model-value", type: "String" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphRadioGroup" name="radio-group" :attributes="attributesData" :slots="slotData"
-      :variables="variables" :events="events" />
+    <api-table
+      title="NmorphRadioGroup"
+      name="radio-group"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+      :events="events"
+    />
   </div>
 </template>

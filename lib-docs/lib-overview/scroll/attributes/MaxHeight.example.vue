@@ -9,10 +9,8 @@ const removeItem = () => (elements.value -= 1);
 <template>
   <div class="scroll-max-height-overview">
     <div class="actions">
-      <NmorphButton @click="addItem">{{ $t("overview.add") }}</NmorphButton>
-      <NmorphButton @click="removeItem">{{
-        $t("overview.remove")
-      }}</NmorphButton>
+      <NmorphButton @click="addItem">Add</NmorphButton>
+      <NmorphButton @click="removeItem">Remove</NmorphButton>
     </div>
     <NmorphScroll max-height="300px" class="docs-scroll__scroll">
       <div class="docs-scroll__box" v-for="i in elements" :key="i">

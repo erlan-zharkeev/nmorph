@@ -18,8 +18,8 @@ const tabsAttributesData: IAttributesTableData[] = [
     name: "panes",
     type: `Array<${docsLink(
       "INmorphTabPaneProps",
-      "/components/tabs#content-tab-pane-attributes",
-      "_self"
+      "/elements/tabs#content-tab-pane-attributes",
+      "_self",
     )}>`,
     default: "[]",
   },
@@ -53,12 +53,22 @@ const tabSlotData: ISlotsTableData[] = [{ name: "default" }, { name: "label" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphTabs" name="tabs" :attributes="tabsAttributesData" :slots="tabsSlotData"
-      :events="tabsEvents" />
+    <api-table
+      title="NmorphTabs"
+      name="tabs"
+      :attributes="tabsAttributesData"
+      :slots="tabsSlotData"
+      :events="tabsEvents"
+    />
     <NmorphDivider />
     <div class="docs-api-table">
-      <api-table title="NmorphTabPane" name="tab-pane" :attributes="tabAttributesData" additional-id="tab-pane"
-        :slots="tabSlotData" />
+      <api-table
+        title="NmorphTabPane"
+        name="tab-pane"
+        :attributes="tabAttributesData"
+        additional-id="tab-pane"
+        :slots="tabSlotData"
+      />
     </div>
   </div>
 </template>

@@ -5,17 +5,23 @@ import { NmorphCarousel, NmorphCarouselItem } from "@nmorph/nmorph-ui-kit";
 <template>
   <NmorphCarousel class="carousel-basic-usage-overview">
     <NmorphCarouselItem name="first">
-      <div class="carousel-basic-usage-overview__slide carousel-basic-usage-overview__slide--first">
+      <div
+        class="carousel-basic-usage-overview__slide carousel-basic-usage-overview__slide--first"
+      >
         First slide
       </div>
     </NmorphCarouselItem>
     <NmorphCarouselItem name="second">
-      <div class="carousel-basic-usage-overview__slide carousel-basic-usage-overview__slide--second">
+      <div
+        class="carousel-basic-usage-overview__slide carousel-basic-usage-overview__slide--second"
+      >
         Second slide
       </div>
     </NmorphCarouselItem>
     <NmorphCarouselItem name="third">
-      <div class="carousel-basic-usage-overview__slide carousel-basic-usage-overview__slide--third">
+      <div
+        class="carousel-basic-usage-overview__slide carousel-basic-usage-overview__slide--third"
+      >
         Third slide
       </div>
     </NmorphCarouselItem>

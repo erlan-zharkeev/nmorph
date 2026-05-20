@@ -5,15 +5,9 @@ import { NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 <template>
   <div class="text-input-height-overview">
     <ClientOnly>
-      <NmorphTextInput
-        height="thick"
-        :placeholder="$t('overview.enter-text')"
-      />
-      <NmorphTextInput
-        height="basic"
-        :placeholder="$t('overview.enter-text')"
-      />
-      <NmorphTextInput height="thin" :placeholder="$t('overview.enter-text')" />
+      <NmorphTextInput height="thick" placeholder="Enter text" />
+      <NmorphTextInput height="basic" placeholder="Enter text" />
+      <NmorphTextInput height="thin" placeholder="Enter text" />
     </ClientOnly>
   </div>
 </template>

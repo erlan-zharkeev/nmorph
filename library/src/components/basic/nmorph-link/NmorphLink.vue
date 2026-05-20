@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { computed, useSlots } from 'vue';
-import type { CSSProperties } from 'vue';
+import type { Component, CSSProperties } from 'vue';
 import { NmorphIcon, NmorphLinkTarget } from '@/components';
+import * as NmorphIcons from '@/components/basic/nmorph-icon/NmorphIcons';
 import { NmorphColor } from '@/types';
 
 interface INmorphProps {
@@ -13,6 +14,7 @@ interface INmorphProps {
   target?: keyof typeof NmorphLinkTarget;
   disabled?: boolean;
   color?: string;
+  iconName?: string;
 }
 
 const props = withDefaults(defineProps<INmorphProps>(), {
@@ -23,9 +25,24 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   target: 'self',
   disabled: false,
   color: undefined,
+  iconName: undefined,
 });
 
 const slots = useSlots();
+const iconMap = NmorphIcons as Record<string, Component>;
+
+const toPascalCase = (value: string) =>
+  value
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+    .join('');
+
+const resolvedIcon = computed(() => {
+  if (!props.iconName) return undefined;
+  if (props.iconName in iconMap) return iconMap[props.iconName];
+  return iconMap[`NmorphIcon${toPascalCase(props.iconName)}`];
+});
 
 const modifiers = computed(() =>
   useModifiers({
@@ -43,6 +60,9 @@ const styles = computed<CSSProperties>(() => ({
     <a :href="props.href" :target="props.target">
       <slot name="prepend" />
 
+      <NmorphIcon v-if="resolvedIcon" class="nmorph-link__icon" width="10px" height="10px">
+        <component :is="resolvedIcon" />
+      </NmorphIcon>
       {{ text }}
       <NmorphIcon v-if="slots['icon']" class="nmorph-link__icon" width="10px" height="10px">
         <slot name="icon" />

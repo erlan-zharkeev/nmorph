@@ -4,7 +4,7 @@ import { NmorphBreadcrumb, NmorphBreadcrumbItem } from "@nmorph/nmorph-ui-kit";
 const elements = [
   { name: "main", path: "/" },
   { name: "components", path: "/components" },
-  { name: "breadcrumb", path: "/components/breadcrumb" },
+  { name: "breadcrumb", path: "/elements/breadcrumb" },
 ];
 </script>
 

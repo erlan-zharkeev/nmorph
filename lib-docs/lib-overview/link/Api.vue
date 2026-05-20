@@ -33,6 +33,11 @@ const attributesData = [
     type: "String",
     default: "undefined",
   },
+  {
+    name: "icon-name",
+    type: "String",
+    default: "undefined",
+  },
 ];
 
 const slotData = [
@@ -41,6 +46,9 @@ const slotData = [
   },
   {
     name: "default",
+  },
+  {
+    name: "icon",
   },
 ];
 
@@ -54,6 +62,12 @@ const variables = [
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphLink" name="link" :attributes="attributesData" :slots="slotData" :variables="variables" />
+    <api-table
+      title="NmorphLink"
+      name="link"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+    />
   </div>
 </template>

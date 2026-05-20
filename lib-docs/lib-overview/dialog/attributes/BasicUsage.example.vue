@@ -11,10 +11,7 @@ const showModalHandler = () => {
 <template>
   <div class="dialog-basic-usage-overview">
     <ClientOnly>
-      <NmorphButton
-        @click="showModalHandler"
-        :text="$t('overview.dialog.basic-usage.show-modal')"
-      />
+      <NmorphButton @click="showModalHandler" text="Show modal window" />
       <NmorphDialog
         v-model="dialogVisibility"
         title="Lorem Ipsum"

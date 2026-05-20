@@ -9,9 +9,14 @@ const nmorphAliases = {
   "@nmorph/nmorph-ui-kit/styles": resolve(nmorphSrc, "styles.ts"),
   "@nmorph/nmorph-ui-kit": resolve(nmorphSrc, "main.ts"),
 };
+const nuxtCommand = process.argv
+  .map((arg) => arg.replace(/\\/g, "/").split("/").pop())
+  .find((arg) => arg === "build" || arg === "generate");
+const buildDir = nuxtCommand ? ".nuxt-build" : ".nuxt";
 
 export default defineNuxtConfig({
   compatibilityDate: "2024-09-05",
+  buildDir,
   debug: false,
   srcDir: "src",
   ssr: true,
@@ -36,7 +41,10 @@ export default defineNuxtConfig({
       alias: [
         { find: /^@\//, replacement: `${nmorphSrc}/` },
         { find: "@vue/devtools-api", replacement: "vue-devtools-stub" },
-        ...Object.entries(nmorphAliases).map(([find, replacement]) => ({ find, replacement })),
+        ...Object.entries(nmorphAliases).map(([find, replacement]) => ({
+          find,
+          replacement,
+        })),
       ],
       dedupe: [
         "vue",

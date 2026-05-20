@@ -30,8 +30,8 @@ const closeHandler = (id: string) => {
         <div v-for="(alert, idx) in alerts" :key="idx">
           <NmorphAlert
             v-if="!alert.closed"
-            :content="$t('overview.alert.basic-usage.content')"
-            :title="$t('overview.alert.basic-usage.title')"
+            content="Content for the alert"
+            title="Any title"
             v-bind="alert"
             @close="() => closeHandler(alert.id)"
           />

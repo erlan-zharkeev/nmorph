@@ -14,7 +14,7 @@ const animated = ref(true);
   <div class="skeleton-animated-overview">
     <ClientOnly>
       <div class="switch">
-        <span>{{ $t("overview.animated") }}</span>
+        <span>Animated</span>
         <NmorphSwitch v-model="animated" />
       </div>
       <NmorphSkeleton :loading="true" :animated="animated">

@@ -26,7 +26,11 @@ import {
       min-height="140px"
     >
       <template #icon>
-        <NmorphIcon width="40px" height="40px" color="var(--nmorph-accent-color)">
+        <NmorphIcon
+          width="40px"
+          height="40px"
+          color="var(--nmorph-accent-color)"
+        >
           <NmorphIconSearch />
         </NmorphIcon>
       </template>

@@ -5,7 +5,7 @@ import ApiTable from "~/components/api-table/ApiTable.vue";
 const attributesData = [
   {
     name: "icon",
-    type: docsLink("Icons", "/components/icon"),
+    type: docsLink("Icons", "/elements/icon#content-icon-list", "_self"),
     default: "-",
   },
   {
@@ -17,7 +17,7 @@ const attributesData = [
     name: "width",
     type: docsLink(
       "Width",
-      "https://developer.mozilla.org/ru/docs/Web/CSS/width"
+      "https://developer.mozilla.org/ru/docs/Web/CSS/width",
     ),
     default: "-",
   },
@@ -25,7 +25,7 @@ const attributesData = [
     name: "height",
     type: docsLink(
       "Height",
-      "https://developer.mozilla.org/ru/docs/Web/CSS/height"
+      "https://developer.mozilla.org/ru/docs/Web/CSS/height",
     ),
     default: "-",
   },
@@ -50,7 +50,12 @@ const variablesData = [
 </script>
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphIcon" name="icon" :variables="variablesData" :attributes="attributesData"
-      :slots="slotData" />
+    <api-table
+      title="NmorphIcon"
+      name="icon"
+      :variables="variablesData"
+      :attributes="attributesData"
+      :slots="slotData"
+    />
   </div>
 </template>

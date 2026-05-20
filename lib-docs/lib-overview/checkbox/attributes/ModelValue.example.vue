@@ -7,11 +7,7 @@ const value = ref(true);
 <template>
   <div class="checkbox-model-value-overview">
     <ClientOnly>
-      <NmorphCheckbox
-        id="1"
-        v-model="value"
-        :label="$t('overview.checkbox.model-value.label')"
-      />
+      <NmorphCheckbox id="1" v-model="value" label="Label" />
     </ClientOnly>
   </div>
 </template>

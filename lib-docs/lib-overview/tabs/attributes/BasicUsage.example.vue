@@ -28,13 +28,11 @@ const tabs = ref([
           <NmorphTabs v-model="customActiveTab" :stretch="true">
             <NmorphTabPane v-for="tab in tabs" :key="tab.name" v-bind="tab">
               <template #label="{ scope }">
-                <div v-if="scope.name === 'tab-2'">
-                  {{ $t("overview.custom-label") }}
-                </div>
+                <div v-if="scope.name === 'tab-2'">Custom label</div>
                 <div v-else>{{ scope.label }}</div>
               </template>
               <template #default="{ scope }">
-                {{ $t("overview.custom-content-for") }}
+                Custom content for
                 {{ scope.name }}</template
               >
             </NmorphTabPane>
