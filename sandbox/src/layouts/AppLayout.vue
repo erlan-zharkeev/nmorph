@@ -24,11 +24,12 @@ const languages = [
   { value: 'zh', label: 'ZH' },
 ]
 
-const isDarkTheme = computed(() => currentTheme.value === 'dark')
-
-const toggleTheme = (value: boolean | string | number) => {
-  theme.setTheme(value ? 'dark' : 'light')
-}
+const isDarkTheme = computed({
+  get: () => currentTheme.value === 'dark',
+  set: (value: boolean | string | number) => {
+    theme.setTheme(value ? 'dark' : 'light')
+  },
+})
 
 const setLocale = (value: string) => {
   locale.value = value
@@ -80,7 +81,7 @@ watch(
           </div>
           <div class="layout-top-bar__control">
             <span class="layout-top-bar__control-label">Light</span>
-            <NmorphSwitch :model-value="isDarkTheme" @update:model-value="toggleTheme" />
+            <NmorphSwitch v-model="isDarkTheme" />
             <span class="layout-top-bar__control-label">Dark</span>
           </div>
         </div>

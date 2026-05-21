@@ -5,6 +5,7 @@ import {
   NmorphButton,
   NmorphCallout,
   NmorphDialog,
+  NmorphDrawer,
   NmorphIcon,
   NmorphIconBell,
   NmorphIconCheck,
@@ -20,6 +21,8 @@ const notificationPlacements = Object.values(NmorphNotificationPlacement)
 const dialogOpen = ref(false)
 const customDialogOpen = ref(false)
 const tallDialogOpen = ref(false)
+const drawerOpen = ref(false)
+const leftDrawerOpen = ref(false)
 const closableAlertVisible = ref(true)
 const notificationProvider = useNmorphNotification()
 const tallDialogItems = Array.from({ length: 16 }, (_, index) => `Dynamic row ${index + 1}`)
@@ -134,6 +137,28 @@ const showStickyNotification = () => {
       </NmorphDialog>
     </SandboxSection>
 
+    <SandboxSection title="NmorphDrawer">
+      <div class="row">
+        <NmorphButton text="Right drawer" @click="drawerOpen = true" />
+        <NmorphButton text="Left drawer" style-type="transparent" @click="leftDrawerOpen = true" />
+      </div>
+      <NmorphDrawer v-model="drawerOpen" title="Drawer title" size="360px">
+        <div class="drawer-content">
+          <p>Drawer keeps the page context while showing a secondary flow.</p>
+          <NmorphButton text="Done" @click="drawerOpen = false" />
+        </div>
+        <template #footer>
+          <span class="hint">Footer slot</span>
+        </template>
+      </NmorphDrawer>
+      <NmorphDrawer v-model="leftDrawerOpen" title="Left drawer" placement="left" :size="300">
+        <div class="drawer-content">
+          <p>This one opens from the left side.</p>
+          <NmorphButton text="Close" height="thin" @click="leftDrawerOpen = false" />
+        </div>
+      </NmorphDrawer>
+    </SandboxSection>
+
     <SandboxSection title="NmorphTooltip">
       <div class="row tooltip-row">
         <NmorphTooltip text="Top tooltip" position="top">
@@ -219,6 +244,16 @@ const showStickyNotification = () => {
 .dialog-scroll-list {
   display: grid;
   gap: 8px;
+}
+
+.drawer-content {
+  display: grid;
+  gap: 12px;
+}
+
+.hint {
+  color: var(--nmorph-semi-contrast-text-color);
+  font-size: 13px;
 }
 
 p {

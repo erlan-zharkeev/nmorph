@@ -41,16 +41,44 @@ const styles = computed(() => ({
   '--nmorph-backtop-z-index': props.zIndex,
 }));
 
-const container = ref<NmorphDomElementType>(null);
+type NmorphBacktopScrollContainer = HTMLElement | Window;
+
+const isWindow = (value: NmorphBacktopScrollContainer): value is Window => value === window;
+
+const getScrollTop = (target: NmorphBacktopScrollContainer) => {
+  if (!isWindow(target)) return target.scrollTop;
+
+  return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+};
+
+const findScrollableAncestor = (element: HTMLElement | null): NmorphBacktopScrollContainer => {
+  let currentElement = element?.parentElement ?? null;
+
+  while (currentElement) {
+    const elementStyles = window.getComputedStyle(currentElement);
+    const overflowY = elementStyles.overflowY || elementStyles.overflow;
+    const canScroll = ['auto', 'scroll', 'overlay'].includes(overflowY);
+
+    if (canScroll && currentElement.scrollHeight > currentElement.clientHeight) return currentElement;
+    currentElement = currentElement.parentElement;
+  }
+
+  return window;
+};
+
+const container = ref<NmorphBacktopScrollContainer | null>(null);
 const placeholderDOMEl = ref<NmorphDomElementType>(null);
 const selfDOMEl = ref<NmorphDomElementType>(null);
 const showButton = ref(false);
 const isMounted = ref(false);
 
-const scrollHandler = (event: Event) => {
-  if (!event) return;
-  const target = event.target as HTMLElement;
-  showButton.value = target.scrollTop > props.visibilityHeight;
+const updateVisibility = () => {
+  if (!container.value) {
+    showButton.value = false;
+    return;
+  }
+
+  showButton.value = getScrollTop(container.value) > props.visibilityHeight;
 };
 
 const scrollToTopHandler = () => {
@@ -64,15 +92,15 @@ const scrollToTopHandler = () => {
 };
 
 onMounted(() => {
-  container.value = placeholderDOMEl.value?.parentElement ?? selfDOMEl.value?.parentElement?.parentElement ?? null;
-  container.value?.addEventListener('scroll', scrollHandler);
-  showButton.value = (container.value?.scrollTop ?? 0) > props.visibilityHeight;
+  container.value = findScrollableAncestor(placeholderDOMEl.value ?? selfDOMEl.value);
+  container.value.addEventListener('scroll', updateVisibility);
+  updateVisibility();
   isMounted.value = true;
 });
 
 onUnmounted(() => {
   if (!container.value) return;
-  container.value?.removeEventListener('scroll', scrollHandler);
+  container.value.removeEventListener('scroll', updateVisibility);
 });
 </script>
 

@@ -18,6 +18,7 @@ import {
   NmorphImagePreview,
   NmorphPagination,
   NmorphProgress,
+  NmorphQRCode,
   NmorphSkeleton,
   NmorphSkeletonItem,
   NmorphTable,
@@ -25,6 +26,7 @@ import {
   NmorphTableColumn,
   NmorphTagItem,
   NmorphTagList,
+  NmorphVirtualList,
 } from '@nmorph/nmorph-ui-kit'
 import type { NmorphSortOrderType } from '@nmorph/nmorph-ui-kit'
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
@@ -52,6 +54,7 @@ const brokenImage = 'data:image/png;base64,broken'
 
 const progressValue = ref(65)
 const circleProgress = ref(72)
+const qrValue = ref('https://nmorph-ui-kit.example/sandbox')
 const currentPage = ref(4)
 const activeCalendarDate = ref(new Date(2026, 4, 5))
 const selectedCalendarDates = ref([new Date(2026, 4, 7), new Date(2026, 4, 9)])
@@ -80,6 +83,16 @@ const tableSort = ref<Record<string, NmorphSortOrderType>>({
   name: 'ascending',
   count: 'descending',
 })
+
+const virtualItems = Array.from({ length: 1000 }, (_, index) => ({
+  id: index + 1,
+  title: `Virtual item ${index + 1}`,
+  description: index % 3 === 0 ? 'Dynamic row with a little more content.' : 'Compact row.',
+}))
+
+type VirtualItem = (typeof virtualItems)[number]
+
+const getVirtualItem = (item: unknown): VirtualItem => item as VirtualItem
 
 const progressColor = (value: number) => {
   if (value >= 80) return 'var(--nmorph-success-color)'
@@ -263,6 +276,17 @@ const progressColor = (value: number) => {
       <p class="hint">linear: {{ progressValue }}%, circle: {{ circleProgress }}%</p>
     </SandboxSection>
 
+    <SandboxSection title="NmorphQRCode">
+      <div class="qr-demo">
+        <NmorphQRCode :value="qrValue" :size="172" title="Sandbox QR code" />
+        <div class="stack">
+          <p class="hint">encoded value</p>
+          <code>{{ qrValue }}</code>
+          <NmorphButton text="Use docs URL" height="thin" @click="qrValue = 'https://nmorph-ui-kit.example/docs'" />
+        </div>
+      </div>
+    </SandboxSection>
+
     <SandboxSection title="NmorphSkeleton">
       <div class="cards">
         <NmorphSkeleton
@@ -321,6 +345,27 @@ const progressColor = (value: number) => {
         </NmorphTableColumn>
         <NmorphTableColumn prop="count" label="Count" width="120" alignment="right" />
       </NmorphTable>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphVirtualList">
+      <NmorphVirtualList
+        class="virtual-list-demo"
+        :items="virtualItems"
+        item-key="id"
+        :item-height="52"
+        :overscan="8"
+        height="260px"
+      >
+        <template #default="{ item }">
+          <div class="virtual-list-demo__item">
+            <strong>#{{ getVirtualItem(item).id }}</strong>
+            <div>
+              <span>{{ getVirtualItem(item).title }}</span>
+              <small>{{ getVirtualItem(item).description }}</small>
+            </div>
+          </div>
+        </template>
+      </NmorphVirtualList>
     </SandboxSection>
 
     <SandboxSection title="NmorphTagList">
@@ -412,6 +457,45 @@ const progressColor = (value: number) => {
 .cards p,
 .stack p {
   margin: 0;
+}
+
+.qr-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.qr-demo code {
+  max-width: 420px;
+  padding: 8px 10px;
+  overflow-wrap: anywhere;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--nmorph-text-color) 8%, transparent);
+}
+
+.virtual-list-demo {
+  max-width: 520px;
+}
+
+.virtual-list-demo__item {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 12px;
+  box-sizing: border-box;
+  min-height: 52px;
+  padding: 8px 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--nmorph-text-color) 12%, transparent);
+}
+
+.virtual-list-demo__item div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.virtual-list-demo__item small {
+  color: var(--nmorph-semi-contrast-text-color);
 }
 
 .badge-value {

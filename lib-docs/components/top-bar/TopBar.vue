@@ -41,9 +41,6 @@ const closeHandler = () => {
 };
 
 const mobileNavMenu = ref(false);
-const toggleMobileNavMenu = () => {
-  mobileNavMenu.value = !mobileNavMenu.value;
-};
 
 const isActive = (path: string) => {
   if (path.includes('components') && route.path.includes('elements')) return true
@@ -135,10 +132,9 @@ onUnmounted(() => {
       </nav>
       <theme-changer />
       <NmorphCheckbox
+        v-model="mobileNavMenu"
         class="docs-top-bar__nav-menu-btn"
-        :model-value="mobileNavMenu"
         :aria-label="$t('top-bar.nav')"
-        @update:model-value="toggleMobileNavMenu"
         design="button"
       >
         <template #label>

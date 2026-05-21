@@ -365,42 +365,70 @@ defineExpose({ inputDOMRef });
 
   .nmorph-time-picker__panel {
     display: grid;
-    grid-template-columns: minmax(48px, 1fr) auto minmax(48px, 1fr);
-    gap: 4px;
+    grid-template-columns: minmax(0, 1fr) 8px minmax(0, 1fr);
+    gap: 6px;
+    align-items: start;
     padding: 8px;
+    color: var(--nmorph-text-color);
   }
 
   .nmorph-time-picker__panel--with-seconds {
-    grid-template-columns: minmax(48px, 1fr) auto minmax(48px, 1fr) auto minmax(48px, 1fr);
+    grid-template-columns: minmax(0, 1fr) 8px minmax(0, 1fr) 8px minmax(0, 1fr);
   }
 
   .nmorph-time-picker__column {
     display: grid;
+    grid-auto-flow: row;
+    grid-auto-rows: var(--height);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    align-content: start;
     max-height: 220px;
-    overflow-y: auto;
+    padding: 2px;
+    overflow: hidden auto;
+    scrollbar-gutter: stable;
   }
 
   .nmorph-time-picker__separator {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    min-width: 8px;
+    padding-top: calc((var(--height) - 1em) / 2 + 2px);
     color: var(--nmorph-semi-contrast-text-color);
     font-weight: 700;
+    line-height: 1;
   }
 
   .nmorph-time-picker__option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    min-height: var(--height);
+    margin: 0;
     padding: 0 8px;
     color: var(--nmorph-text-color);
+    font: inherit;
+    line-height: 1;
     background: transparent;
     border: 0;
     border-radius: 4px;
+    box-shadow: none;
     cursor: pointer;
+    appearance: none;
   }
 
-  .nmorph-time-picker__option:hover,
+  .nmorph-time-picker__option:hover:not(:disabled),
   .nmorph-time-picker__option--active {
     color: var(--nmorph-focus-text-color);
     background: var(--nmorph-accent-color);
+  }
+
+  .nmorph-time-picker__option:focus-visible {
+    outline: 2px solid var(--nmorph-accent-color);
+    outline-offset: 1px;
   }
 
   .nmorph-time-picker__option:disabled {

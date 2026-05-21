@@ -10,7 +10,7 @@ import {
   NmorphTextInput,
   NmorphAutocompleteActionCallbackType,
   INmorphAutocompleteListItem,
-  NmorphIconLoader,
+  NmorphIconLoaderDots,
 } from '@/components';
 
 interface INmorphProps extends INmorphCommonInputProps {
@@ -65,6 +65,11 @@ const updateValueHandler = (value: string) => {
   currentIndex.value = 0;
   emit('update:model-value', initialValue.value);
 };
+
+const inputValue = computed({
+  get: () => initialValue.value,
+  set: updateValueHandler,
+});
 
 const open = ref(false);
 const nmorphAutocompleteDOMRef = ref<NmorphDomElementType>(null);
@@ -229,17 +234,16 @@ const optionHeightModifiers = computed(() =>
       <div ref="nmorphAutocompleteDOMRef" class="nmorph-autocomplete__input">
         <NmorphTextInput
           :id="props.id"
+          v-model="inputValue"
           :name="props.name"
           :autocomplete="props.autocomplete"
           :height="props.height"
           :disabled="props.disabled"
-          :model-value="initialValue"
           :placeholder="props.placeholder"
           :clearable="props.clearable"
           :input-attrs="inputAttrs"
           @focus="focusHandler"
           @keydown="keydownHandler"
-          @update:model-value="updateValueHandler"
         />
       </div>
     </div>
@@ -258,7 +262,7 @@ const optionHeightModifiers = computed(() =>
       <div v-if="loader" class="nmorph-autocomplete__loading">
         <slot name="loader">
           <NmorphIcon size="large">
-            <NmorphIconLoader />
+            <NmorphIconLoaderDots />
           </NmorphIcon>
         </slot>
       </div>

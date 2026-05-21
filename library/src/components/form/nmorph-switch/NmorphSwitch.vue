@@ -3,7 +3,7 @@ import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { NmorphIcon, NmorphIconLoader } from '@/components';
+import { NmorphIcon, NmorphIconLoaderDots } from '@/components';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 
 type NmorphSwitchModelType = boolean | string | number;
@@ -107,7 +107,7 @@ watch(
       </div>
       <div class="nmorph-switch-thumb">
         <NmorphIcon v-if="props.loading" width="14px" height="14px">
-          <NmorphIconLoader />
+          <NmorphIconLoaderDots />
         </NmorphIcon>
         <slot v-else-if="initialValue" name="thumb-on" />
         <slot v-else name="thumb-off" />

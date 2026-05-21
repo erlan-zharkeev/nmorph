@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { NmorphIcon, NmorphIconLoader } from "@nmorph/nmorph-ui-kit";
+import { NmorphIcon, NmorphIconLoaderDots } from "@nmorph/nmorph-ui-kit";
 </script>
 
 <template>
   <div class="icon-width-height-overview">
     <NmorphIcon width="33px" height="33px">
-      <NmorphIconLoader />
+      <NmorphIconLoaderDots />
     </NmorphIcon>
     <NmorphIcon width="23px" height="23px">
-      <NmorphIconLoader />
+      <NmorphIconLoaderDots />
     </NmorphIcon>
     <NmorphIcon width="12px" height="12px">
-      <NmorphIconLoader />
+      <NmorphIconLoaderDots />
     </NmorphIcon>
   </div>
 </template>

@@ -15,7 +15,7 @@ import {
 } from "@nmorph/nmorph-ui-kit";
 import { linkApiType } from "~/utils/api-type-links";
 
-const { t } = useI18n();
+const { t, te } = useI18n();
 
 interface IProps {
   title: string;
@@ -43,9 +43,10 @@ const getDescriptions = (
 ) => {
   if (!data) return null;
   return data.map((el) => {
+    const descriptionKey = `overview.${props.name}.${block}.${el.name}`;
     return {
       ...el,
-      description: t(`overview.${props.name}.${block}.${el.name}`),
+      description: te(descriptionKey) ? t(descriptionKey) : el.description || descriptionKey,
     };
   });
 };

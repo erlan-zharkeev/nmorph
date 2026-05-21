@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, type Component } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphImage, NmorphIcon, NmorphIconAvatar, NmorphIconLoader } from '@/components';
+import { NmorphImage, NmorphIcon, NmorphIconAvatar, NmorphIconLoaderDots } from '@/components';
 import { INmorphImage, AvatarShapeType } from '@/types';
 import NmorphImagePreview from '../nmorph-image-preview/NmorphImagePreview.vue';
 
@@ -122,7 +122,7 @@ const openPreview = () => {
     >
       <template #loading>
         <NmorphIcon size="small">
-          <NmorphIconLoader />
+          <NmorphIconLoaderDots />
         </NmorphIcon>
       </template>
       <template #error>
@@ -146,19 +146,18 @@ const openPreview = () => {
     </slot>
     <NmorphImagePreview
       v-if="previewAvailable"
+      v-model="previewOpen"
       :show-trigger="false"
-      :model-value="previewOpen"
       :src="imagePreviewSrc"
       :alt="props.alt"
       :initial-index="props.previewInitialIndex"
       :scale-step="props.previewScaleStep"
       :min-scale-level="props.previewMinScaleLevel"
       :max-scale-level="props.previewMaxScaleLevel"
-      @update:model-value="previewOpen = $event"
     >
       <template #loading>
         <NmorphIcon size="small">
-          <NmorphIconLoader />
+          <NmorphIconLoaderDots />
         </NmorphIcon>
       </template>
     </NmorphImagePreview>

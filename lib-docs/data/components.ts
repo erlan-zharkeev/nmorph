@@ -1,7 +1,14 @@
 export const componentGroups = [
   {
     name: "basic",
-    components: ["NmorphButton", "NmorphIcon", "NmorphLink", "NmorphScroll"],
+    components: [
+      "NmorphButton",
+      "NmorphIcon",
+      "NmorphLayout",
+      "NmorphLink",
+      "NmorphScroll",
+      "NmorphSpace",
+    ],
   },
   {
     name: "data",
@@ -17,15 +24,17 @@ export const componentGroups = [
       "NmorphCollapse",
       "NmorphSkeleton",
       "NmorphProgress",
+      "NmorphQRCode",
       "NmorphCalendar",
       "NmorphImagePreview",
       "NmorphPagination",
       "NmorphTable",
+      "NmorphVirtualList",
     ],
   },
   {
     name: "feedback",
-    components: ["NmorphTooltip", "NmorphAlert", "NmorphCallout", "NmorphDialog"],
+    components: ["NmorphTooltip", "NmorphAlert", "NmorphCallout", "NmorphDialog", "NmorphDrawer"],
   },
   {
     name: "others",
@@ -43,6 +52,7 @@ export const componentGroups = [
     name: "form",
     components: [
       "NmorphTextInput",
+      "NmorphTextarea",
       "NmorphOTPInput",
       "NmorphColorPicker",
       "NmorphSwitch",

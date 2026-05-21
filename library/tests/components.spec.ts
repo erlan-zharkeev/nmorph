@@ -747,6 +747,46 @@ describe('components', () => {
     portal.remove();
   });
 
+  it('uses the nearest scrollable ancestor for nested backtop usage', async () => {
+    const scrollContainer = document.createElement('div');
+    const content = document.createElement('div');
+    scrollContainer.style.overflowY = 'auto';
+    Object.defineProperty(scrollContainer, 'clientHeight', { configurable: true, value: 100 });
+    Object.defineProperty(scrollContainer, 'scrollHeight', { configurable: true, value: 400 });
+    Object.defineProperty(scrollContainer, 'scrollTo', { configurable: true, value: vi.fn() });
+    scrollContainer.append(content);
+    document.body.append(scrollContainer);
+
+    const wrapper = mount(NmorphBacktop, {
+      props: {
+        visibilityHeight: 10,
+        teleportDisabled: true,
+      },
+      attachTo: content,
+    });
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-backtop').classes()).not.toContain('nmorph-backtop--show');
+
+    scrollContainer.scrollTop = 40;
+    scrollContainer.dispatchEvent(new Event('scroll'));
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-backtop').classes()).toContain('nmorph-backtop--show');
+
+    await wrapper.find('.nmorph-backtop > div').trigger('click');
+
+    expect(scrollContainer.scrollTo).toHaveBeenCalledWith({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+
+    wrapper.unmount();
+    scrollContainer.remove();
+  });
+
   it('forwards CSS variable props on data and feedback components', async () => {
     const assertStyles = async (wrapper, selector, expected) => {
       await nextTick();

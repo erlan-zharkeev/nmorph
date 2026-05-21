@@ -64,6 +64,19 @@ const changeQuantityElementsOnPageHandler = (value: number) => {
   getData(currentPage.value);
 };
 
+const quantityElementsOnPageModel = computed({
+  get: () => quantityElementsOnPage.value,
+  set: changeQuantityElementsOnPageHandler,
+});
+
+const currentPageModel = computed({
+  get: () => currentPage.value,
+  set: (value: number) => {
+    currentPage.value = value;
+    getData(value - 1);
+  },
+});
+
 getData(0);
 </script>
 
@@ -79,8 +92,7 @@ getData(0);
         </div>
         <div class="actions__element">
           <NmorphNumberInput
-            :model-value="quantityElementsOnPage"
-            @update:model-value="changeQuantityElementsOnPageHandler"
+            v-model="quantityElementsOnPageModel"
             :fill="false"
           />
         </div>
@@ -97,10 +109,9 @@ getData(0);
       </div>
       <NmorphPagination
         :disabled="disabled"
+        v-model="currentPageModel"
         :elements-quantity-on-page="quantityElementsOnPage"
         :total-elements-quantity="total"
-        :model-value="currentPage"
-        @update:model-value="($e: number) => getData($e - 1)"
       />
     </ClientOnly>
   </div>

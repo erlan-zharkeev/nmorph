@@ -71,10 +71,6 @@ watch(selectedPage, (newValue) => {
   emit('update:model-value', Number(newValue));
 });
 
-const updateSelectedValue = (value: string) => {
-  selectedPage.value = value;
-};
-
 const blockPrevButton = computed(() => Number(selectedPage.value) === 1);
 const blockNextButton = computed(() => pages.value.length === Number(selectedPage.value));
 
@@ -123,11 +119,10 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
       </NmorphIcon>
     </NmorphButton>
     <NmorphRadioGroup
-      :model-value="selectedPage"
+      v-model="selectedPage"
       class="nmorph-pagination__page-group"
       :height="props.height"
       :disabled="props.disabled"
-      @update:model-value="updateSelectedValue"
     >
       <div v-for="page in visiblePages" :key="page.value" class="nmorph-pagination__page-btn-wrapper">
         <NmorphButton

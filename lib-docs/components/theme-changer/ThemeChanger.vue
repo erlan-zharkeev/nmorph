@@ -19,13 +19,16 @@ const props = withDefaults(defineProps<IProps>(), {
 const nmorph = useNmorph();
 const currentTheme = nmorph.theme.currentTheme;
 const changeTheme = (theme: string) => nmorph.theme.setTheme(theme);
+const currentThemeModel = computed({
+  get: () => currentTheme.value,
+  set: (value) => changeTheme(String(value)),
+});
 </script>
 <template>
   <ClientOnly>
     <NmorphSwitch
       v-if="props.switchType"
-      :model-value="currentTheme"
-      @update:model-value="$event => changeTheme($event as string)"
+      v-model="currentThemeModel"
       active-value="light"
       inactive-value="dark"
       class="theme-changer"
@@ -41,8 +44,7 @@ const changeTheme = (theme: string) => nmorph.theme.setTheme(theme);
     </NmorphSwitch>
     <NmorphRadioGroup
       v-else
-      :model-value="currentTheme"
-      @update:model-value="changeTheme"
+      v-model="currentThemeModel"
       :options="[
         { value: 'dark', label: 'Dark' },
         { value: 'light', label: 'Light' },

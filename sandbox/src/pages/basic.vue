@@ -9,8 +9,10 @@ import {
   NmorphIconPlus,
   NmorphIconSearch,
   NmorphIconStar,
+  NmorphLayout,
   NmorphLink,
   NmorphScroll,
+  NmorphSpace,
 } from '@nmorph/nmorph-ui-kit'
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
 
@@ -75,6 +77,39 @@ const moveScroll = () => {
       </div>
     </SandboxSection>
 
+    <SandboxSection title="NmorphLayout">
+      <NmorphLayout class="layout-demo" gap="12px" aside-width="150px">
+        <template #header>
+          <div class="layout-demo__block">Header</div>
+        </template>
+        <template #aside>
+          <div class="layout-demo__block layout-demo__block--aside">Aside</div>
+        </template>
+        <div class="layout-demo__block layout-demo__block--main">
+          <strong>Main</strong>
+          <span>Flexible content region</span>
+        </div>
+        <template #footer>
+          <div class="layout-demo__block">Footer</div>
+        </template>
+      </NmorphLayout>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphSpace">
+      <div class="stack">
+        <NmorphSpace wrap size="large" align="center">
+          <NmorphButton text="Save" />
+          <NmorphButton text="Cancel" style-type="transparent" />
+          <NmorphButton text="Disabled" disabled />
+        </NmorphSpace>
+        <NmorphSpace direction="column" size="small" fill>
+          <span class="space-line">Column item one</span>
+          <span class="space-line">Column item two</span>
+          <span class="space-line">Column item three</span>
+        </NmorphSpace>
+      </div>
+    </SandboxSection>
+
     <SandboxSection title="NmorphLink">
       <div class="row">
         <NmorphLink href="/basic" text="Accent" />
@@ -130,6 +165,38 @@ const moveScroll = () => {
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
+}
+
+.layout-demo {
+  max-width: 640px;
+}
+
+.layout-demo__block {
+  display: grid;
+  min-height: 48px;
+  place-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--nmorph-main-color);
+  box-shadow:
+    -2px -2px 4px var(--nmorph-light-shade-color),
+    2px 2px 4px var(--nmorph-dark-shade-color);
+}
+
+.layout-demo__block--aside,
+.layout-demo__block--main {
+  min-height: 120px;
+}
+
+.layout-demo__block--main {
+  gap: 4px;
+}
+
+.space-line {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--nmorph-accent-color) 8%, var(--nmorph-main-color));
 }
 
 .hint {

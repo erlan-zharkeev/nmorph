@@ -12,7 +12,7 @@ const showHandler = () => {
 <template>
   <div class="image-preview-model-value-overview">
     <ClientOnly>
-      <NmorphImagePreview :src="Winter" :model-value="show" />
+      <NmorphImagePreview v-model="show" :src="Winter" />
       <NmorphButton text="Show" @click="showHandler" />
     </ClientOnly>
   </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphCalendar, NmorphDateType, NmorphSelectedDateModelType } from '@/components';
+import { NmorphCalendar, NmorphSelectedDateModelType } from '@/components';
 import { NmorphSelectionDateType, NmorphInnerPickerType } from '@/types';
 import NmorphDatePickerHeader from './../nmorph-date-picker-header/NmorphDatePickerHeader.vue';
 import NmorphYearMonthPicker from './../nmorph-year-month-picker/NmorphYearMonthPicker.vue';
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 
 const emit = defineEmits<INmorphEmit>();
 interface INmorphEmit {
-  (e: 'update-selected-value', selectedValue: NmorphDateType): void;
+  (e: 'update-selected-value', selectedValue: NmorphSelectedDateModelType): void;
 }
 
 const modifiers = computed(() =>
@@ -69,9 +69,11 @@ const backToYearsHandler = () => {
   selectedPicker.value = 'year';
 };
 
-const updateSelectedDate = (value: NmorphDateType) => {
-  emit('update-selected-value', value);
-};
+const selectedValuesModel = computed<NmorphSelectedDateModelType>({
+  get: () => props.selectedValues,
+  set: (value) => emit('update-selected-value', value),
+});
+
 const updateInitialDate = (date) => {
   initialDate.value = date;
 };
@@ -81,10 +83,9 @@ const updateInitialDate = (date) => {
   <div :class="modifiers">
     <NmorphCalendar
       v-if="selectedPicker === 'calendar'"
+      v-model="selectedValuesModel"
       :type="props.type"
       :initial-date="initialDate"
-      :model-value="props.selectedValues"
-      @update:model-value="updateSelectedDate"
       @update-initial-date="updateInitialDate"
     >
       <template #header

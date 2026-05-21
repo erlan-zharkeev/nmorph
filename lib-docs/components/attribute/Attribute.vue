@@ -114,7 +114,7 @@ const infoData = `overview.${props.infoName}.info`;
           </template>
         </NmorphCheckbox>
       </div>
-      <NmorphCollapse :model-value="accordionOpen" class="docs-attribute__code-collapse">
+      <NmorphCollapse v-model="accordionOpen" class="docs-attribute__code-collapse">
         <NmorphCollapseItem id="1" name="1">
           <slot name="code" />
         </NmorphCollapseItem>

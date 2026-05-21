@@ -1,0 +1,12 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <title>sliders</title>
+  <path fill="none" stroke-linecap="round" stroke-width="2.4" d="M5,8 L12,8"></path>
+  <path fill="none" stroke-linecap="round" stroke-width="2.4" d="M20,8 L27,8"></path>
+  <path fill="none" stroke-linecap="round" stroke-width="2.4" d="M5,16 L18,16"></path>
+  <path fill="none" stroke-linecap="round" stroke-width="2.4" d="M26,16 L27,16"></path>
+  <path fill="none" stroke-linecap="round" stroke-width="2.4" d="M5,24 L10,24"></path>
+  <path fill="none" stroke-linecap="round" stroke-width="2.4" d="M18,24 L27,24"></path>
+  <path d="M16,4 C18.2,4 20,5.8 20,8 C20,10.2 18.2,12 16,12 C13.8,12 12,10.2 12,8 C12,5.8 13.8,4 16,4 Z"></path>
+  <path d="M22,12 C24.2,12 26,13.8 26,16 C26,18.2 24.2,20 22,20 C19.8,20 18,18.2 18,16 C18,13.8 19.8,12 22,12 Z"></path>
+  <path d="M14,20 C16.2,20 18,21.8 18,24 C18,26.2 16.2,28 14,28 C11.8,28 10,26.2 10,24 C10,21.8 11.8,20 14,20 Z"></path>
+</svg>

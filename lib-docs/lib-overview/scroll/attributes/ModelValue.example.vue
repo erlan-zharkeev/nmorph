@@ -12,18 +12,22 @@ const scroll = ref<INmorphScrollExpose | null>(null);
 const updateSliderHandler = (value: number) => {
   if (scroll.value) scroll.value.moveTo({ x: 0, y: value });
 };
+
+const scrollY = computed({
+  get: () => coords.value.y,
+  set: updateSliderHandler,
+});
 </script>
 
 <template>
   <div class="scroll-value-overview">
     <div class="slider">
       <NmorphSlider
+        v-model="scrollY"
         :show-tooltip="false"
-        :model-value="coords.y"
         :min="0"
         :max="570"
         :step="10"
-        @update:model-value="updateSliderHandler"
       />
       <div class="slider__value">{{ coords.y }}px</div>
     </div>

@@ -8,7 +8,7 @@ import {
   NmorphButtonType,
   NmorphIconSize,
   NmorphButtonShape,
-  NmorphIconLoading,
+  NmorphIconLoader,
 } from '@/components';
 
 interface INmorphProps extends INmorphCommonInputProps {
@@ -90,7 +90,7 @@ defineExpose({ buttonDOMElement });
       :tabindex="props.tabindex"
     >
       <NmorphIcon v-if="props.loading" :size="loadingButtonSize">
-        <NmorphIconLoading />
+        <NmorphIconLoader />
       </NmorphIcon>
       <NmorphIcon v-else-if="hasIconOnlySlot">
         <slot name="icon-only" />

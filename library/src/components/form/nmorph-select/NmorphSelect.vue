@@ -13,7 +13,7 @@ import {
   NmorphSelectChangeSelectedValue,
   NmorphSelectModelValueType,
   INmorphSelectOption,
-  NmorphIconLoader,
+  NmorphIconLoaderDots,
   NmorphIconChevronDown,
 } from '@/components';
 import { useI18n } from 'vue-i18n';
@@ -365,7 +365,7 @@ const endHandler = () => {
           />
         </div>
         <NmorphIcon class="nmorph-select__chevron">
-          <NmorphIconLoader v-if="props.loading" />
+          <NmorphIconLoaderDots v-if="props.loading" />
           <NmorphIconChevronDown v-else />
         </NmorphIcon>
       </div>

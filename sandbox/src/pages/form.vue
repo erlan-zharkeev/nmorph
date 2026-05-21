@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import {
   NmorphAutocomplete,
   NmorphCheckbox,
@@ -21,6 +21,7 @@ import {
   NmorphSlider,
   NmorphSwitch,
   NmorphTextInput,
+  NmorphTextarea,
   NmorphTimePicker,
   useNmorph,
 } from '@nmorph/nmorph-ui-kit'
@@ -29,6 +30,7 @@ import SandboxSection from '@sandbox/components/SandboxSection.vue'
 import preloadedUploadImageUrl from '../../../lib-docs/assets/images/cat.jpg?url'
 
 const textValue = ref('Nmorph')
+const textareaValue = ref('The textarea grows while you type.\nIt also keeps the same input focus styling.')
 const passwordValue = ref('secret-value')
 const selectValue = ref<NmorphSelectModelValueType>('draft')
 const multiSelectValue = ref<NmorphSelectModelValueType>(['design', 'build'])
@@ -123,6 +125,20 @@ const formValue = ref<NmorphFormValueType>({
   },
 })
 
+const emailValue = computed({
+  get: () => String(formValue.value.email.value),
+  set: (value: string) => {
+    formValue.value.email.value = value
+  },
+})
+
+const passwordFormValue = computed({
+  get: () => String(formValue.value.password.value),
+  set: (value: string) => {
+    formValue.value.password.value = value
+  },
+})
+
 watch(
   () => theme.currentTheme.value,
   (themeName) => {
@@ -154,6 +170,15 @@ watch(runtimeAccentColor, (accent) => {
         <NmorphTextInput model-value="Disabled value" disabled height="thin" />
       </div>
       <p class="hint">value: {{ textValue || 'empty' }}</p>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphTextarea">
+      <div class="grid">
+        <NmorphTextarea v-model="textareaValue" placeholder="Write a note" auto-size :min-rows="3" :max-rows="6" />
+        <NmorphTextarea model-value="Fixed height textarea" :rows="4" resize="none" />
+        <NmorphTextarea model-value="Disabled textarea" disabled />
+      </div>
+      <p class="hint">characters: {{ textareaValue.length }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphSelect">
@@ -351,19 +376,10 @@ watch(runtimeAccentColor, (accent) => {
     <SandboxSection title="NmorphForm">
       <NmorphForm :value="formValue" validate-immediately>
         <NmorphFormItem id="email" label="Email" autocomplete="email" static-error-box-space>
-          <NmorphTextInput
-            :model-value="String(formValue.email.value)"
-            placeholder="Enter email"
-            @update:model-value="formValue.email.value = $event"
-          />
+          <NmorphTextInput v-model="emailValue" placeholder="Enter email" />
         </NmorphFormItem>
         <NmorphFormItem id="password" label="Password" :show-validation-icon="false">
-          <NmorphTextInput
-            :model-value="String(formValue.password.value)"
-            type-password
-            placeholder="Enter password"
-            @update:model-value="formValue.password.value = $event"
-          />
+          <NmorphTextInput v-model="passwordFormValue" type-password placeholder="Enter password" />
         </NmorphFormItem>
       </NmorphForm>
     </SandboxSection>

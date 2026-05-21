@@ -1,0 +1,9 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <title>fingerprint</title>
+  <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M7,14 C7,9 11,5 16,5 C21,5 25,9 25,14"></path>
+  <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M10,14 C10,10.7 12.7,8 16,8 C19.3,8 22,10.7 22,14 C22,20 18,20 18,26"></path>
+  <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13,14 C13,12.3 14.3,11 16,11 C17.7,11 19,12.3 19,14 C19,18 16,18 16,26"></path>
+  <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M7,19 C8.2,21.8 10.4,23.8 13,25"></path>
+  <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M10,16 C10.1,19.7 11.9,22.6 15,26"></path>
+  <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M22,24 C23.8,21.8 25,19 25,15"></path>
+</svg>

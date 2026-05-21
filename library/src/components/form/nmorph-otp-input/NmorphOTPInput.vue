@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { INmorphCommonInputProps, NmorphComponentHeight } from '@/types';
-import { computed, nextTick, ref, watch } from 'vue';
+import { computed, nextTick, ref, watch, type WritableComputedRef } from 'vue';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 import NmorphTextInput from '../nmorph-text-input/NmorphTextInput.vue';
 
@@ -192,6 +192,21 @@ const inputHandler = (value: string, index: number) => {
   insertValue(value, index);
 };
 
+const fieldModels = new Map<number, WritableComputedRef<string>>();
+
+const getFieldModel = (index: number) => {
+  const existingModel = fieldModels.get(index);
+  if (existingModel) return existingModel;
+
+  const model = computed({
+    get: () => otpValue.value[index] || '',
+    set: (value: string) => inputHandler(value, index),
+  });
+
+  fieldModels.set(index, model);
+  return model;
+};
+
 const backspaceHandler = (index: number) => {
   if (otpValue.value[index]) {
     updateCharAt(index);
@@ -283,8 +298,8 @@ watch(
         :id="fieldIds[index]"
         :key="fieldIds[index]"
         :ref="(element) => setInputRef(element, index)"
+        v-model="getFieldModel(index).value"
         class="nmorph-otp-input__field"
-        :model-value="otpValue[index]"
         :height="props.height"
         :disabled="props.disabled"
         :autocomplete="resolvedAutocomplete"
@@ -300,7 +315,6 @@ watch(
           autofocus: props.autofocus && index === 0,
           'aria-label': `OTP ${index + 1}`,
         }"
-        @update:model-value="inputHandler($event, index)"
         @keydown="keydownHandler($event)"
         @keydown.delete.prevent="deleteKeyHandler($event, index)"
         @keydown.left.prevent="arrowLeftHandler(index)"

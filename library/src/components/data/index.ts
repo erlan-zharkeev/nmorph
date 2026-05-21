@@ -18,6 +18,8 @@ export * from './nmorph-image-preview/types';
 export { default as NmorphPagination } from './nmorph-pagination/NmorphPagination.vue';
 export { default as NmorphProgress } from './nmorph-progress/NmorphProgress.vue';
 export * from './nmorph-progress/types';
+export { default as NmorphQRCode } from './nmorph-qr-code/NmorphQRCode.vue';
+export * from './nmorph-qr-code/qr-code';
 export { default as NmorphSkeleton } from './nmorph-skeleton/NmorphSkeleton.vue';
 export * from './nmorph-skeleton/types';
 export { default as NmorphSkeletonItem } from './nmorph-skeleton/components/NmorphSkeletonItem.vue';
@@ -27,3 +29,5 @@ export { default as NmorphTableCell } from './nmorph-table/components/nmorph-tab
 export { default as NmorphTableColumn } from './nmorph-table/components/nmorph-table-column/NmorphTableColumn.vue';
 export { default as NmorphTagList } from './nmorph-tag-list/NmorphTagList.vue';
 export { default as NmorphTagItem } from './nmorph-tag-list/components/nmorph-tag-item/NmorphTagItem.vue';
+export { default as NmorphVirtualList } from './nmorph-virtual-list/NmorphVirtualList.vue';
+export * from './nmorph-virtual-list/types';

@@ -71,11 +71,15 @@ const modifiers = computed(() =>
   })
 );
 
-const updateModelValue = (value: string) => {
-  selectedValue.value = value;
-  if (props.type === 'month') emit('update-month', selectedValue.value);
-  else emit('update-year', selectedValue.value);
-};
+const selectedValueModel = computed({
+  get: () => selectedValue.value,
+  set: (value: string) => {
+    selectedValue.value = value;
+
+    if (props.type === 'month') emit('update-month', selectedValue.value);
+    else emit('update-year', selectedValue.value);
+  },
+});
 
 const updateYearValues = (operator: NmorphDatePickerControlsType) => {
   values.value = values.value.map((year) => {
@@ -131,7 +135,7 @@ const goToYearsHandler = () => {
     </div>
     <NmorphDivider />
     <div class="nmorph-year-month-picker__values">
-      <NmorphRadioGroup :model-value="selectedValue" :options="values" @update:model-value="updateModelValue" />
+      <NmorphRadioGroup v-model="selectedValueModel" :options="values" />
     </div>
   </div>
 </template>

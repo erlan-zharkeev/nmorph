@@ -10,10 +10,12 @@ const isVueComponent = (value: unknown): value is Component => {
   return "render" in value || "setup" in value;
 };
 
+const hiddenIconNames = new Set(["NmorphIconLoader1", "NmorphIconLoader2", "NmorphIconLoading"]);
+
 const isNmorphIconEntry = (entry: [string, unknown]): entry is [string, Component] => {
   const [name, value] = entry;
 
-  return name.startsWith("NmorphIcon") && name !== "NmorphIcon" && isVueComponent(value);
+  return name.startsWith("NmorphIcon") && name !== "NmorphIcon" && !hiddenIconNames.has(name) && isVueComponent(value);
 };
 
 const iconEntries = Object.entries(nmorphIcons).filter(isNmorphIconEntry) as NmorphIconEntry[];

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { useArgs } from 'storybook/preview-api';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import {
   NmorphAlert,
   NmorphAutocomplete,
@@ -146,8 +146,14 @@ const render = (components: Record<string, unknown>, template: string, extra: Re
     return {
       components,
       setup() {
+        const modelValue = computed({
+          get: () => args.modelValue,
+          set: (value) => updateArgs({ modelValue: value }),
+        });
+
         return {
           args,
+          modelValue,
           updateArgs,
           imageSrc,
           imageSrcSecond,
@@ -280,7 +286,7 @@ export const Scroll: Story = {
   },
   render: render(
     { NmorphScroll },
-    `<NmorphScroll v-bind="args" @update:model-value="updateArgs({ modelValue: $event })">
+    `<NmorphScroll v-bind="args" v-model="modelValue">
       <div style="${scrollContentStyle}">Scrollable Nmorph content</div>
     </NmorphScroll>`
   ),
@@ -376,7 +382,7 @@ export const Calendar: Story = {
   },
   render: render(
     { NmorphCalendar },
-    '<NmorphCalendar v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphCalendar v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -436,7 +442,7 @@ export const Collapse: Story = {
   },
   render: render(
     { NmorphCollapse, NmorphCollapseItem },
-    `<NmorphCollapse :model-value="args.modelValue" :accordion="args.accordion" @update:model-value="updateArgs({ modelValue: $event })">
+    `<NmorphCollapse v-model="modelValue" :accordion="args.accordion">
       <NmorphCollapseItem name="first" title="First item" :height="args.itemHeight" :disabled="args.firstDisabled" :block="args.itemBlock">First content</NmorphCollapseItem>
       <NmorphCollapseItem name="second" title="Second item" :height="args.itemHeight" :block="args.itemBlock">Second content</NmorphCollapseItem>
     </NmorphCollapse>`
@@ -492,7 +498,7 @@ export const ImagePreview: Story = {
   },
   render: render(
     { NmorphImagePreview },
-    '<NmorphImagePreview v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphImagePreview v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -517,7 +523,7 @@ export const Pagination: Story = {
   },
   render: render(
     { NmorphPagination },
-    '<NmorphPagination v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphPagination v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -605,7 +611,7 @@ export const TagList: Story = {
   },
   render: render(
     { NmorphTagList },
-    '<NmorphTagList v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphTagList v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -681,7 +687,7 @@ export const Dialog: Story = {
   },
   render: render(
     { NmorphDialog },
-    '<NmorphDialog v-bind="args" @update:model-value="updateArgs({ modelValue: $event })">Dialog content</NmorphDialog>'
+    '<NmorphDialog v-bind="args" v-model="modelValue">Dialog content</NmorphDialog>'
   ),
 };
 
@@ -730,7 +736,7 @@ export const Autocomplete: Story = {
   },
   render: render(
     { NmorphAutocomplete },
-    '<NmorphAutocomplete v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphAutocomplete v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -753,7 +759,7 @@ export const Checkbox: Story = {
   },
   render: render(
     { NmorphCheckbox },
-    '<NmorphCheckbox v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphCheckbox v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -779,7 +785,7 @@ export const CheckboxGroup: Story = {
   },
   render: render(
     { NmorphCheckboxGroup },
-    '<NmorphCheckboxGroup v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphCheckboxGroup v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -803,7 +809,7 @@ export const ColorPicker: Story = {
   },
   render: render(
     { NmorphColorPicker },
-    '<NmorphColorPicker v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphColorPicker v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -833,7 +839,7 @@ export const DatePicker: Story = {
   },
   render: render(
     { NmorphDatePicker },
-    '<NmorphDatePicker v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphDatePicker v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -856,7 +862,7 @@ export const FileUpload: Story = {
   },
   render: render(
     { NmorphFileUpload },
-    '<NmorphFileUpload v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphFileUpload v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -917,7 +923,7 @@ export const NumberInput: Story = {
   },
   render: render(
     { NmorphNumberInput },
-    '<NmorphNumberInput v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphNumberInput v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -945,7 +951,7 @@ export const OTPInput: Story = {
   },
   render: render(
     { NmorphOTPInput },
-    '<NmorphOTPInput v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphOTPInput v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -983,7 +989,7 @@ export const Select: Story = {
   },
   render: render(
     { NmorphSelect },
-    '<NmorphSelect v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphSelect v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -1014,7 +1020,7 @@ export const Slider: Story = {
   },
   render: render(
     { NmorphSlider },
-    '<div style="width: 360px;"><NmorphSlider v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" /></div>'
+    '<div style="width: 360px;"><NmorphSlider v-bind="args" v-model="modelValue" /></div>'
   ),
 };
 
@@ -1043,7 +1049,7 @@ export const Switch: Story = {
   },
   render: render(
     { NmorphSwitch },
-    '<NmorphSwitch v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphSwitch v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -1073,7 +1079,7 @@ export const TextInput: Story = {
   },
   render: render(
     { NmorphTextInput },
-    '<NmorphTextInput v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphTextInput v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -1121,7 +1127,7 @@ export const RadioGroup: Story = {
   },
   render: render(
     { NmorphRadioGroup },
-    '<NmorphRadioGroup v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphRadioGroup v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -1145,7 +1151,7 @@ export const SelectButton: Story = {
   },
   render: render(
     { NmorphSelectButton },
-    '<NmorphSelectButton v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" />'
+    '<NmorphSelectButton v-bind="args" v-model="modelValue" />'
   ),
 };
 
@@ -1237,7 +1243,7 @@ export const Tabs: Story = {
   },
   render: render(
     { NmorphTabs, NmorphTabPane },
-    `<NmorphTabs v-bind="args" @update:model-value="updateArgs({ modelValue: $event })" style="width: 360px;">
+    `<NmorphTabs v-bind="args" v-model="modelValue" style="width: 360px;">
       <NmorphTabPane name="first" label="First" content="First content" />
       <NmorphTabPane name="second" label="Second" content="Second content" />
     </NmorphTabs>`

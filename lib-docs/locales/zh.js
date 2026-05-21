@@ -213,6 +213,16 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "new-components-suite":
+          "Added NmorphTextarea, NmorphDrawer, NmorphLayout, NmorphSpace, NmorphQRCode, and NmorphVirtualList to the library exports.",
+        "new-components-docs-sandbox":
+          "Added documentation pages, API tables, overview examples, and sandbox demos for the new components.",
+        "expanded-icon-set":
+          "Added more NmorphIcon exports for chevrons, clipboard states, data/server, drag handles, filters, mail, shields, save, undo, and redo actions.",
+        "component-polish-round":
+          "Polished existing form, data, and navigation components, including option heights, pagination controls, avatar rendering, switch/button states, and Backtop behavior.",
+        "docs-api-inline-descriptions":
+          "Docs API tables can now use inline descriptions when an i18n key is not available, avoiding missing-translation noise for new component pages.",
         "link-icon-name-prop":
           "NmorphLink now accepts iconName/icon-name to render a library icon before the link text, with docs and tests covering the new prop.",
         "avatar-loader-text-color":
