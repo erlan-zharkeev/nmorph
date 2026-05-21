@@ -2,6 +2,25 @@ export const capitalizeFirstChar = (str: string) => str.charAt(0).toUpperCase() 
 
 export const deepClone = <T>(obj: T): T => JSON.parse(JSON.stringify(obj));
 
+export const toCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
+
+type NmorphOptionHeightType = 'basic' | 'thick' | 'thin';
+
+const nmorphOptionHeightMap: Record<NmorphOptionHeightType, number> = {
+  basic: 30,
+  thick: 38,
+  thin: 22,
+};
+
+export const getNmorphOptionHeight = (height: NmorphOptionHeightType = 'basic') => {
+  return nmorphOptionHeightMap[height];
+};
+
+export const resolveDomElement = (element: unknown): Element | null => {
+  if (typeof Element !== 'undefined' && element instanceof Element) return element;
+  return (element as { $el?: Element } | null)?.$el || null;
+};
+
 export const generateUUID = () => {
   const s4 = () =>
     Math.floor((1 + Math.random()) * 0x10000)

@@ -15,7 +15,7 @@ const showModalHandler = () => {
       <NmorphDialog
         v-model="dialogVisibility"
         title="Lorem Ipsum"
-        :close-on-click-modal="false"
+        :close-on-overlay="false"
         width="320px"
       >
         Lorem Ipsum is simply dummy text of the printing and typesetting

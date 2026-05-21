@@ -48,8 +48,8 @@ const focused = ref(false);
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], `${focused.value && 'focused'}`],
-    'nmorph-textarea': [`${props.disabled && 'disabled'}`, `${props.autoSize && 'auto-size'}`],
+    nmorph: [NmorphComponentHeight[props.height], focused.value && 'focused'],
+    'nmorph-textarea': [props.disabled && 'disabled', props.autoSize && 'auto-size'],
   })
 );
 

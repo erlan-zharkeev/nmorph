@@ -3,7 +3,7 @@ import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } 
 import { computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 import { NmorphDropdown, NmorphIcon, NmorphIconCircleClose, NmorphIconClock } from '@/components';
 import { useFormItemInput } from '../nmorph-form/use-form-item-input';
 import { INmorphTimePickerUnit, NmorphTimePickerModelValueType } from './types';
@@ -169,10 +169,10 @@ const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
     'nmorph-time-picker': [
-      `${props.disabled && 'disabled'}`,
-      `${open.value && 'open'}`,
-      `${focused.value && 'focus'}`,
-      `${!props.modelValue && 'placeholder'}`,
+      props.disabled && 'disabled',
+      open.value && 'open',
+      focused.value && 'focus',
+      !props.modelValue && 'placeholder',
     ],
   })
 );
@@ -183,9 +183,8 @@ const optionHeightModifiers = computed(() =>
   })
 );
 
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const styles = computed<CSSProperties>(() => ({
-  ...(props.width !== undefined && { '--width': getCssSize(props.width) }),
+  ...(props.width !== undefined && { '--width': toCssSize(props.width) }),
 }));
 
 defineExpose({ inputDOMRef });

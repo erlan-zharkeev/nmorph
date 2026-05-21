@@ -1,4 +1,4 @@
-import { Ref } from 'vue';
+import { CSSProperties, Ref } from 'vue';
 import { I18n } from 'vue-i18n';
 
 import { NmorphFormValidationDataType } from '@/components';
@@ -198,6 +198,8 @@ export interface INmorphDimensions {
   width: number;
   height: number;
 }
+
+export type NmorphCSSProperties = CSSProperties & Record<`--${string}`, string | number | undefined>;
 
 export interface INmorphImage {
   src?: string;

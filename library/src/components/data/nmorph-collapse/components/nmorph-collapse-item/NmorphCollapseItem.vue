@@ -32,11 +32,7 @@ const isOpen = ref(false);
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-collapse-item': [
-      `${props.disabled && 'disabled'}`,
-      `${props.block && 'block'}`,
-      `${isOpen.value && 'is-open'}`,
-    ],
+    'nmorph-collapse-item': [props.disabled && 'disabled', props.block && 'block', isOpen.value && 'is-open'],
   })
 );
 

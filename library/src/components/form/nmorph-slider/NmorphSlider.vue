@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphDomElementType } from '@/types';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphTooltip } from '@/components';
@@ -25,7 +25,7 @@ const { id, name, tabindex } = useFormItemInput(props);
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [],
-    'nmorph-slider': [`${props.disabled && 'disabled'}`],
+    'nmorph-slider': [props.disabled && 'disabled'],
   })
 );
 
@@ -156,12 +156,11 @@ const nativeInputHandler = (event: Event): void => {
 };
 
 const transitionEnabled = ref(true);
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const styles = computed<CSSProperties>(() => ({
   '--nmorph-slider-thumb-width': thumbWidthCss.value,
-  ...(props.sliderHeight !== undefined && { '--slider-height': getCssSize(props.sliderHeight) }),
+  ...(props.sliderHeight !== undefined && { '--slider-height': toCssSize(props.sliderHeight) }),
   ...(props.valueFixedContainerHeight !== undefined && {
-    '--value-fixed-container-height': getCssSize(props.valueFixedContainerHeight),
+    '--value-fixed-container-height': toCssSize(props.valueFixedContainerHeight),
   }),
 }));
 </script>

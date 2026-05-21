@@ -18,11 +18,9 @@ interface INmorphProps extends INmorphCommonInputProps {
 
 const props = withDefaults(defineProps<INmorphProps>(), {
   placeholder: '',
-  label: '',
   typePassword: false,
   disabled: false,
   modelValue: '',
-  rules: () => [],
   height: 'basic',
   clearable: false,
   indentation: '',
@@ -33,11 +31,8 @@ const { id, name, autocomplete, tabindex } = useFormItemInput(props);
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], `${focused.value && 'focused'}`],
-    'nmorph-text-input': [
-      `${props.typePassword && 'password'}`,
-      `${(props.typePassword || props.clearable) && 'with-action'}`,
-    ],
+    nmorph: [NmorphComponentHeight[props.height], focused.value && 'focused'],
+    'nmorph-text-input': [props.typePassword && 'password', (props.typePassword || props.clearable) && 'with-action'],
   })
 );
 
@@ -147,3 +142,137 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.nmorph-text-input {
+  --prepend-icon-indent: 8px;
+  --prepend-icon-size: 14px;
+
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.nmorph-text-input__input-side {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.nmorph-text-input__prepend-icon {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--prepend-icon-size);
+  min-width: var(--prepend-icon-size);
+  height: var(--prepend-icon-size);
+  min-height: var(--prepend-icon-size);
+  margin-left: var(--prepend-icon-indent);
+  pointer-events: none;
+}
+
+.nmorph-text-input__prepend-icon svg,
+.nmorph-text-input__prepend-icon .nmorph-icon,
+.nmorph-text-input__prepend-icon .nmorph-icon__content {
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  min-height: 100%;
+}
+
+.nmorph-text-input__prepend-icon svg {
+  fill: var(--nmorph-text-color);
+  stroke-width: 0;
+}
+
+.nmorph-text-input__prepend-icon path {
+  stroke: var(--nmorph-text-color);
+}
+
+.nmorph-text-input input {
+  width: 100%;
+  height: var(--height);
+  text-indent: var(--nmorph-text-input-indentation);
+  border: none;
+  border-radius: var(--default-border-radius);
+  box-shadow: var(--nmorph-shadow-inset);
+}
+
+.nmorph-text-input--with-action input {
+  padding-right: calc(var(--height) + var(--indentation-03));
+}
+
+.nmorph-text-input input:focus {
+  background: var(--nmorph-accent-color);
+  outline: none;
+  box-shadow: var(--nmorph-shadow-outset);
+}
+
+.nmorph-text-input.nmorph--focused .nmorph-text-input__prepend-icon svg {
+  fill: var(--nmorph-focus-text-color);
+}
+
+.nmorph-text-input.nmorph--focused .nmorph-text-input__prepend-icon path {
+  stroke: var(--nmorph-focus-text-color);
+}
+
+.nmorph-text-input input:-webkit-autofill,
+.nmorph-text-input input:-webkit-autofill:hover,
+.nmorph-text-input input:-webkit-autofill:active {
+  caret-color: var(--nmorph-text-color);
+  box-shadow:
+    var(--nmorph-shadow-inset),
+    inset 0 0 0 1000px var(--nmorph-main-color);
+  -webkit-text-fill-color: var(--nmorph-text-color);
+}
+
+.nmorph-text-input input:-webkit-autofill:focus {
+  caret-color: var(--nmorph-focus-text-color);
+  outline: none;
+  box-shadow:
+    var(--nmorph-shadow-outset),
+    inset 0 0 0 1000px var(--nmorph-accent-color);
+  -webkit-text-fill-color: var(--nmorph-focus-text-color);
+}
+
+.nmorph-text-input input:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.nmorph-text-input__password-btn {
+  position: absolute;
+  right: 0;
+  height: 100%;
+}
+
+.nmorph-text-input__password-btn .nmorph-button__content {
+  padding: var(--indentation-03);
+}
+
+.nmorph-text-input.nmorph-button.nmorph--thin-component .nmorph-text-input__password-btn {
+  margin-top: var(--indentation-00);
+}
+
+.nmorph-text-input.nmorph-button.nmorph--thin-component .nmorph-text-input__password-btn .nmorph-button {
+  --height: var(--thin-component);
+}
+
+.nmorph-text-input.nmorph-button.nmorph--focused .nmorph-text-input__password-btn .nmorph-icon {
+  --color: var(--nmorph-white-color);
+}
+
+.nmorph-text-input.nmorph-button.nmorph--focused
+  .nmorph-text-input__password-btn
+  .nmorph-button:not(:disabled, [loading='true']):hover
+  .nmorph-icon {
+  --color: var(--nmorph-white-color);
+}
+</style>

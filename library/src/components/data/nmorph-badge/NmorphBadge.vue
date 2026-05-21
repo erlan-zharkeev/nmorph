@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, nextTick, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 import { NmorphDomElementType } from '@/types';
 
 type NmorphBadgeSize = 'tiny' | 'extra-small' | 'base';
@@ -73,10 +73,10 @@ const isRibbon = computed(() => resolvedType.value === 'ribbon');
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-badge': [
-      `${props.hidden && 'hidden'}`,
-      `${isTagType.value && 'tag'}`,
-      `${isRibbon.value && 'ribbon'}`,
-      `${isRibbon.value && `ribbon-${props.ribbonCorner}`}`,
+      props.hidden && 'hidden',
+      isTagType.value && 'tag',
+      isRibbon.value && 'ribbon',
+      isRibbon.value && `ribbon-${props.ribbonCorner}`,
       props.size,
     ],
   })
@@ -85,17 +85,17 @@ const modifiers = computed(() =>
 const containerModifiers = computed(() =>
   useModifiers({
     'nmorph-badge__container': [
-      `${props.hidden && 'hidden'}`,
-      `${isTagType.value && 'tag'}`,
-      `${isRibbon.value && 'ribbon'}`,
-      `${isRibbon.value && `ribbon-${props.ribbonCorner}`}`,
+      props.hidden && 'hidden',
+      isTagType.value && 'tag',
+      isRibbon.value && 'ribbon',
+      isRibbon.value && `ribbon-${props.ribbonCorner}`,
     ],
   })
 );
 
 const ribbonCornerModifiers = computed(() =>
   useModifiers({
-    'nmorph-badge__ribbon-corner': [`${props.ribbonCorner}`, `${!props.ribbonTilt && 'flat'}`],
+    'nmorph-badge__ribbon-corner': [props.ribbonCorner, !props.ribbonTilt && 'flat'],
   })
 );
 
@@ -129,8 +129,6 @@ const containerStyle = computed(() => {
   };
 });
 
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
-
 const badge = ref<NmorphDomElementType>(null);
 
 const badgeWidth = ref(0);
@@ -138,8 +136,8 @@ const badgeHeight = ref(0);
 
 const styles = computed<CSSProperties>(() => ({
   '--nmorph-badge-color': props.color,
-  ...(props.offsetX !== 0 && { '--nmorph-badge-ribbon-offset-x': getCssSize(props.offsetX) }),
-  ...(props.offsetY !== 0 && { '--nmorph-badge-ribbon-offset-y': getCssSize(props.offsetY) }),
+  ...(props.offsetX !== 0 && { '--nmorph-badge-ribbon-offset-x': toCssSize(props.offsetX) }),
+  ...(props.offsetY !== 0 && { '--nmorph-badge-ribbon-offset-y': toCssSize(props.offsetY) }),
 }));
 
 const updateBadgeSize = async () => {

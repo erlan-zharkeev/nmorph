@@ -43,6 +43,11 @@ const attributesData: IAttributesTableData[] = [
     default: "true",
   },
   {
+    name: "close-on-overlay",
+    type: "Boolean",
+    default: "true",
+  },
+  {
     name: "show-close",
     type: "Boolean",
     default: "true",

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 import {
   NmorphTable,
   NmorphTableColumn,
@@ -208,9 +208,8 @@ const modifiers = computed(() =>
     'nmorph-calendar': [],
   })
 );
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const styles = computed<CSSProperties>(() => ({
-  ...(props.cellHeight !== undefined && { '--table-data-cell-height': getCssSize(props.cellHeight) }),
+  ...(props.cellHeight !== undefined && { '--table-data-cell-height': toCssSize(props.cellHeight) }),
 }));
 const dateData = (data: unknown) => data as INmorphCalendarDate;
 

@@ -2,7 +2,7 @@
 import { computed, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphIcon, NmorphIconCross, NmorphOverlay } from '@/components';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 
 type NmorphDrawerPlacementType = 'left' | 'right' | 'top' | 'bottom';
 
@@ -44,13 +44,12 @@ const slots = useSlots();
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-drawer': [props.placement, `${props.modelValue && 'open'}`],
+    'nmorph-drawer': [props.placement, props.modelValue && 'open'],
   })
 );
 
-const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const drawerStyle = computed<CSSProperties>(() => ({
-  '--nmorph-drawer-size': getCssSize(props.size),
+  '--nmorph-drawer-size': toCssSize(props.size),
 }));
 
 const closeHandler = () => {

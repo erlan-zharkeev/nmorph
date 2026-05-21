@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 
 type NmorphSpaceDirectionType = 'row' | 'column';
 type NmorphSpaceAlignType = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
@@ -38,18 +38,12 @@ const sizeMap = {
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-space': [
-      props.direction,
-      `${props.wrap && 'wrap'}`,
-      `${props.inline && 'inline'}`,
-      `${props.fill && 'fill'}`,
-    ],
+    'nmorph-space': [props.direction, props.wrap && 'wrap', props.inline && 'inline', props.fill && 'fill'],
   })
 );
 
-const getCssSize = (value: NmorphSpaceSizeType) => {
-  if (typeof value === 'number') return `${value}px`;
-  return sizeMap[value as keyof typeof sizeMap] || value;
+const resolveSpaceSize = (value: NmorphSpaceSizeType) => {
+  return toCssSize(sizeMap[value as keyof typeof sizeMap] || value);
 };
 
 const alignItems = computed(() =>
@@ -60,7 +54,7 @@ const justifyContent = computed(() =>
 );
 
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-space-gap': getCssSize(props.size),
+  '--nmorph-space-gap': resolveSpaceSize(props.size),
   '--nmorph-space-align': alignItems.value,
   '--nmorph-space-justify': justifyContent.value,
 }));

@@ -226,6 +226,14 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "style-utils-unification":
+          "Unified modifier normalization and CSS size helpers across components so boolean modifiers and numeric CSS values follow one code path.",
+        "virtual-list-style-helpers":
+          "Select, Autocomplete, Table, and VirtualList now share option-height and virtual-list style helpers for more consistent scrolling surfaces.",
+        "dialog-overlay-close-api":
+          "NmorphDialog now documents close-on-overlay, keeps close-on-click-modal as a compatibility alias, and uses an accessible close button in the header.",
+        "component-local-style-split":
+          "Moved Avatar, Image, TextInput, and Scroll layout styles from common injected CSS into their component files for clearer component ownership.",
         "new-components-suite":
           "Добавлены NmorphTextarea, NmorphDrawer, NmorphLayout, NmorphSpace, NmorphQRCode и NmorphVirtualList в экспорты библиотеки.",
         "new-components-docs-sandbox":

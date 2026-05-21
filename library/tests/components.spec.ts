@@ -2017,16 +2017,23 @@ describe('components', () => {
     await nextTick();
     await nextTick();
 
+    const closeButton = document.body.querySelector('.nmorph-dialog__close-icon') as HTMLButtonElement;
     const firstAction = document.body.querySelector('.first-action') as HTMLButtonElement;
     const lastAction = document.body.querySelector('.last-action') as HTMLButtonElement;
 
-    expect(document.activeElement).toBe(firstAction);
+    expect(document.activeElement).toBe(closeButton);
 
     lastAction.focus();
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
     await nextTick();
 
-    expect(document.activeElement).toBe(firstAction);
+    expect(document.activeElement).toBe(closeButton);
+
+    closeButton.focus();
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true }));
+    await nextTick();
+
+    expect(document.activeElement).toBe(lastAction);
 
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await nextTick();
@@ -2204,8 +2211,18 @@ describe('components', () => {
     wrapper.unmount();
   });
 
-  it('uses default text color for avatar initials', () => {
-    expect(getCommonStyles()).toContain('.nmorph-avatar__initials {\n      color: var(--nmorph-text-color);');
+  it('renders avatar initials without inline color override', () => {
+    const wrapper = mount(NmorphAvatar, {
+      props: { name: 'Jane Doe' },
+    });
+
+    const initials = wrapper.find('.nmorph-avatar__initials');
+
+    expect(initials.exists()).toBe(true);
+    expect(initials.text()).toBe('JD');
+    expect((initials.element as HTMLElement).style.color).toBe('');
+
+    wrapper.unmount();
   });
 
   it('opens image preview from the trigger', async () => {

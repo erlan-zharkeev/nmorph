@@ -23,7 +23,7 @@ const currentError = computed(() => {
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
-    'nmorph-error-box': [`${props.staticHeight && 'static-height'}`, `${currentError.value.length === 0 && 'empty'}`],
+    'nmorph-error-box': [props.staticHeight && 'static-height', currentError.value.length === 0 && 'empty'],
   })
 );
 </script>

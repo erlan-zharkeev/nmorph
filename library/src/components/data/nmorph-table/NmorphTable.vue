@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, provide, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { generateUUID, useModifiers } from '@/utils';
+import { generateUUID, resolveDomElement, toCssSize, useModifiers } from '@/utils';
 import { NmorphDomElementType, NmorphSortOrderType } from '@/types';
 import { useVirtualList } from '@/hooks';
 import {
@@ -47,7 +47,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-table': [`${props.design}`],
+    'nmorph-table': [props.design],
   })
 );
 
@@ -139,11 +139,10 @@ const tableData = (data: unknown) => (typeof data === 'object' ? '' : data);
 const tableIdentifier = generateUUID();
 provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
 
-const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
-const virtualHeight = computed(() => getCssSize(props.virtualHeight));
+const virtualHeight = computed(() => toCssSize(props.virtualHeight));
 const tableStyle = computed<CSSProperties>(() => ({
   ...(props.borderColor !== undefined && { '--border-color': props.borderColor }),
-  ...(props.cellHeight !== undefined && { '--table-cell-height': getCssSize(props.cellHeight) }),
+  ...(props.cellHeight !== undefined && { '--table-cell-height': toCssSize(props.cellHeight) }),
   ...(props.rowHoverBackground !== undefined && { '--table-background-row-hover': props.rowHoverBackground }),
 }));
 const tableBodyStyle = computed<Record<string, string | undefined>>(() => ({
@@ -151,15 +150,10 @@ const tableBodyStyle = computed<Record<string, string | undefined>>(() => ({
   height: virtualEnabled.value ? virtualHeight.value : undefined,
   overflowY: virtualEnabled.value ? 'auto' : undefined,
 }));
-const virtualSpacerStyle = computed(() => ({
-  height: `${virtualList.totalHeight.value}px`,
-}));
-const virtualContentStyle = computed(() => ({
-  transform: `translateY(${virtualList.offsetTop.value}px)`,
-}));
-
+const virtualSpacerStyle = virtualList.spacerStyle;
+const virtualContentStyle = virtualList.contentStyle;
 const setVirtualRowRef = (element: unknown, index: number) => {
-  virtualList.measureElement(index, element as Element | null);
+  virtualList.measureElement(index, resolveDomElement(element));
 };
 
 const scrollHandler = () => {

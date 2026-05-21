@@ -53,10 +53,10 @@ const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[height.value]],
     'nmorph-select-option': [
-      `${props.disabled && 'disabled'}`,
-      `${props.label && 'with-label'}`,
-      `${checked.value && 'checked'}`,
-      `${props.focused && 'focused'}`,
+      props.disabled && 'disabled',
+      props.label && 'with-label',
+      checked.value && 'checked',
+      props.focused && 'focused',
     ],
   })
 );

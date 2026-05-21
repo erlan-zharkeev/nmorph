@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, toRef, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 import { usePlacement } from '@/hooks';
 import { NmorphDomElementType, NmorphPlacementType } from '@/types';
 import { NmorphOverlay } from '@/components';
@@ -63,20 +63,18 @@ const { placementCoords, placementReady, adjustPlacement } = usePlacement({
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-dropdown': [`${!props.open && 'closed'}`, `${props.hideShadow && 'hide-shadow'}`],
+    'nmorph-dropdown': [!props.open && 'closed', props.hideShadow && 'hide-shadow'],
   })
 );
 
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
-
 const width = computed(() =>
-  props.fillWidth && props.relativeElement ? `${props.relativeElement.clientWidth}px` : getCssSize(props.width)
+  props.fillWidth && props.relativeElement ? `${props.relativeElement.clientWidth}px` : toCssSize(props.width)
 );
 
 const dropdownStyle = computed<CSSProperties>(() => ({
   '--nmorph-dropdown-width': width.value,
-  '--nmorph-dropdown-min-width': getCssSize(props.minWidth) || 'auto',
-  '--nmorph-dropdown-max-width': getCssSize(props.maxWidth) || 'none',
+  '--nmorph-dropdown-min-width': toCssSize(props.minWidth) || 'auto',
+  '--nmorph-dropdown-max-width': toCssSize(props.maxWidth) || 'none',
   left: placementCoords.value.x,
   top: placementCoords.value.y,
   visibility: props.open && placementReady.value ? 'visible' : 'hidden',

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps } from '@/types';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 import { computed, ref, watch, provide } from 'vue';
 import type { CSSProperties } from 'vue';
 import {
@@ -45,14 +45,13 @@ watch(
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-select-button': [`${props.disabled && 'disabled'}`, `${props.fill && 'fill'}`, props.height],
+    'nmorph-select-button': [props.disabled && 'disabled', props.fill && 'fill', props.height],
   })
 );
 
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const styles = computed<CSSProperties>(() => ({
-  ...(props.trackPadding !== undefined && { '--track-padding': getCssSize(props.trackPadding) }),
-  ...(props.itemSize !== undefined && { '--item-size': getCssSize(props.itemSize) }),
+  ...(props.trackPadding !== undefined && { '--track-padding': toCssSize(props.trackPadding) }),
+  ...(props.itemSize !== undefined && { '--item-size': toCssSize(props.itemSize) }),
   ...(props.itemFontSize !== undefined && { '--item-font-size': props.itemFontSize }),
 }));
 

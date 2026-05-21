@@ -3,7 +3,7 @@ import { computed, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphIcon, NmorphIconFolderOpened } from '@/components';
 import { NmorphShadowType, type INmorphA11yProps, type NmorphElementDesignType } from '@/types';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 
 interface INmorphProps extends INmorphA11yProps {
   title?: string;
@@ -31,7 +31,6 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 });
 
 const slots = useSlots();
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const hasIcon = computed(() => !props.hideIcon || Boolean(slots.icon));
 const hasDescription = computed(() => Boolean(props.description || slots.description));
 const label = computed(() => props.ariaLabel || props.title);
@@ -44,9 +43,9 @@ const modifiers = computed(() =>
 );
 
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-empty-icon-size': getCssSize(props.iconSize),
-  '--nmorph-empty-min-height': getCssSize(props.minHeight),
-  '--nmorph-empty-padding': getCssSize(props.padding),
+  '--nmorph-empty-icon-size': toCssSize(props.iconSize),
+  '--nmorph-empty-min-height': toCssSize(props.minHeight),
+  '--nmorph-empty-padding': toCssSize(props.padding),
 }));
 </script>
 
@@ -54,7 +53,7 @@ const styles = computed<CSSProperties>(() => ({
   <div :class="modifiers" :style="styles" :role="props.role" :aria-label="label">
     <div v-if="hasIcon" class="nmorph-empty__icon" aria-hidden="true">
       <slot name="icon">
-        <NmorphIcon :width="getCssSize(props.iconSize)" :height="getCssSize(props.iconSize)">
+        <NmorphIcon :width="toCssSize(props.iconSize)" :height="toCssSize(props.iconSize)">
           <NmorphIconFolderOpened />
         </NmorphIcon>
       </slot>

@@ -46,7 +46,7 @@ const height = computed(() => props.height || groupHeight?.value || 'thin');
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphSelectionControlHeight[height.value]],
-    'nmorph-radio': [`${props.disabled && 'disabled'}`, `${checked.value && 'checked'}`, props.styleType],
+    'nmorph-radio': [props.disabled && 'disabled', checked.value && 'checked', props.styleType],
   })
 );
 

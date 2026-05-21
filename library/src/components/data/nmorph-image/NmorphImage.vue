@@ -49,8 +49,8 @@ const loadingFailed = computed(() => imageLoadFinished.value && imageLoadError.v
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [`${props.frameBorder > 0 && 'shadow-combined'}`],
-    'nmorph-image': [`${(loadingFailed.value || !imageLoadFinished.value) && 'hide'}`],
+    nmorph: [props.frameBorder > 0 && 'shadow-combined'],
+    'nmorph-image': [(loadingFailed.value || !imageLoadFinished.value) && 'hide'],
   })
 );
 
@@ -75,3 +75,37 @@ const styles = computed(() => ({
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.nmorph-image {
+  --width: auto;
+  --height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--width);
+  height: var(--height);
+}
+
+.nmorph-image.nmorph--shadow-combined {
+  border: var(--nmorph-image-frame-border) solid var(--nmorph-main-color);
+}
+
+.nmorph-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: var(--nmorph-image-fit);
+}
+
+.nmorph-image__loading,
+.nmorph-image__load-failed {
+  padding: 1rem;
+}
+
+.nmorph-image--hide img {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+</style>

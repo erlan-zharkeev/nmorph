@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 import { NmorphProgressColorType, NmorphProgressType } from '@/components';
 
 interface INmorphProps {
@@ -59,13 +59,12 @@ onMounted(() => {
 
 const circleContainerSize = computed(() => `${props.circleSize}px`);
 const displayPercentage = computed(() => `${props.percentage}%`);
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const styles = computed<CSSProperties>(() => ({
   '--nmorph-progress-percentage': displayPercentage.value,
   '--nmorph-progress-color': color.value,
   '--nmorph-progress-animation': animation.value,
   '--nmorph-progress-circle-size': circleContainerSize.value,
-  ...(props.height !== undefined && { '--height': getCssSize(props.height) }),
+  ...(props.height !== undefined && { '--height': toCssSize(props.height) }),
   ...(props.widthTransition !== undefined && { '--width-transition': props.widthTransition }),
   ...(props.indeterminateAnimation !== undefined && { '--animation': props.indeterminateAnimation }),
 }));

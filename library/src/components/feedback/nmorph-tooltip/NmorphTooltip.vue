@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { usePlacement, useZIndex } from '@/hooks';
 import { INmorphCoords, NmorphDomElementType, NmorphPlacementType } from '@/types';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 import type { CSSProperties } from 'vue';
 
@@ -41,7 +41,7 @@ const modifiers = computed(() =>
   useModifiers({
     'nmorph-tooltip': [
       placement.value,
-      `${Boolean(props.forceCoordinate?.x) && Boolean(props.forceCoordinate?.y) && 'force-coords'}`,
+      Boolean(props.forceCoordinate?.x) && Boolean(props.forceCoordinate?.y) && 'force-coords',
     ],
   })
 );
@@ -55,7 +55,6 @@ const handleMouseLeave = () => {
   showTooltip.value = false;
 };
 
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const rootWidth = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
 const zIndex = useZIndex(
   () => showTooltip.value,
@@ -64,9 +63,9 @@ const zIndex = useZIndex(
 const styles = computed<CSSProperties>(() => ({
   '--nmorph-tooltip-width': rootWidth.value,
   '--nmorph-tooltip-z-index': zIndex.value,
-  ...(props.width !== undefined && { '--width': getCssSize(props.width) }),
-  ...(props.maxWidth !== undefined && { '--max-width': getCssSize(props.maxWidth) }),
-  ...(props.height !== undefined && { '--height': getCssSize(props.height) }),
+  ...(props.width !== undefined && { '--width': toCssSize(props.width) }),
+  ...(props.maxWidth !== undefined && { '--max-width': toCssSize(props.maxWidth) }),
+  ...(props.height !== undefined && { '--height': toCssSize(props.height) }),
 }));
 const tooltipBody = ref<NmorphDomElementType>(null);
 defineExpose({ tooltipBody });

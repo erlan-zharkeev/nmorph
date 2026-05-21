@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType, NmorphSelectionDateType } from '@/types';
 import {
   NmorphDropdown,
@@ -76,15 +76,14 @@ const blurHandler = () => {
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
-    'nmorph-date-picker': [`${props.disabled && 'disabled'}`, props.type, `${focus.value && 'focus'}`],
+    'nmorph-date-picker': [props.disabled && 'disabled', props.type, focus.value && 'focus'],
   })
 );
 
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const styles = computed<CSSProperties>(() => ({
-  ...(props.width !== undefined && { '--width': getCssSize(props.width) }),
+  ...(props.width !== undefined && { '--width': toCssSize(props.width) }),
   ...(props.calendarCellHeight !== undefined && {
-    '--date-picker-calendar-cell-height': getCssSize(props.calendarCellHeight),
+    '--date-picker-calendar-cell-height': toCssSize(props.calendarCellHeight),
   }),
 }));
 

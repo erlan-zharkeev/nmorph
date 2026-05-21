@@ -118,8 +118,8 @@ defineExpose({ inputDOMRef });
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], `${focused.value && 'focused'}`],
-    'nmorph-color-picker': [`${props.disabled && 'disabled'}`, props.displayFormat],
+    nmorph: [NmorphComponentHeight[props.height], focused.value && 'focused'],
+    'nmorph-color-picker': [props.disabled && 'disabled', props.displayFormat],
   })
 );
 

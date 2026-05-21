@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-skeleton': [`${props.animated && props.loading && 'loading'}`],
+    'nmorph-skeleton': [props.animated && props.loading && 'loading'],
   })
 );
 

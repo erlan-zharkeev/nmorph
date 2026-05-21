@@ -32,7 +32,7 @@ const checked = computed(() => selectedValue?.value === props.value);
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-select-button-item': [`${checked.value && 'checked'}`, `${props.disabled && 'disabled'}`],
+    'nmorph-select-button-item': [checked.value && 'checked', props.disabled && 'disabled'],
   })
 );
 

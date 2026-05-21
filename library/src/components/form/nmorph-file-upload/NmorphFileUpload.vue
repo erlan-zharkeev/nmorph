@@ -229,7 +229,7 @@ defineExpose({ inputDOMRef });
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-file-upload': [`${props.disabled && 'disabled'}`],
+    'nmorph-file-upload': [props.disabled && 'disabled'],
   })
 );
 </script>

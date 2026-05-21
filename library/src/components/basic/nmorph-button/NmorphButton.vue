@@ -45,15 +45,15 @@ const hasIconOnlySlot = computed(() => Boolean(slots['icon-only']));
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], `${props.fill && 'fill'}`],
+    nmorph: [NmorphComponentHeight[props.height], props.fill && 'fill'],
     'nmorph-button': [
       props.styleType,
       props.shape,
-      `${props.disabled && 'disabled'}`,
-      `${props.accentBgOnHover && 'accent-bg-on-hover'}`,
-      `${props.ripple && 'ripple'}`,
-      `${hasIconOnlySlot.value && 'icon-only'}`,
-      `${props.color && 'custom-color'}`,
+      props.disabled && 'disabled',
+      props.accentBgOnHover && 'accent-bg-on-hover',
+      props.ripple && 'ripple',
+      hasIconOnlySlot.value && 'icon-only',
+      props.color && 'custom-color',
     ],
   })
 );

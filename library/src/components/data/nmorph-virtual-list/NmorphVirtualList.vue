@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useVirtualList } from '@/hooks';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 
 type NmorphVirtualListKeyGetter = (item: unknown, index: number) => string | number;
 
@@ -52,14 +52,13 @@ const containerRef = virtualList.containerRef;
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-virtual-list': [`${props.disabled && 'disabled'}`, `${props.dynamic && 'dynamic'}`],
+    'nmorph-virtual-list': [props.disabled && 'disabled', props.dynamic && 'dynamic'],
   })
 );
 
-const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-virtual-list-height': getCssSize(props.height),
-  '--nmorph-virtual-list-max-height': getCssSize(props.maxHeight),
+  '--nmorph-virtual-list-height': toCssSize(props.height),
+  '--nmorph-virtual-list-max-height': toCssSize(props.maxHeight),
   '--nmorph-virtual-list-item-height': `${props.itemHeight}px`,
 }));
 

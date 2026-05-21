@@ -2,7 +2,7 @@
 import { NmorphShadowType } from '@/types';
 import { computed, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 
 interface INmorphProps {
   shadowType?: keyof typeof NmorphShadowType;
@@ -31,13 +31,11 @@ const modifiers = computed(() =>
   })
 );
 
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
-
 const styles = computed<CSSProperties>(() => ({
   ...(props.shadowType === 'combined' && {
     '--nmorph-card-combined-border-width': `${props.combinedShadowBorderWidth}px`,
   }),
-  ...(props.cardPadding !== undefined && { '--card-padding': getCssSize(props.cardPadding) }),
+  ...(props.cardPadding !== undefined && { '--card-padding': toCssSize(props.cardPadding) }),
 }));
 </script>
 

@@ -20,9 +20,9 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-icon': [
-      `${!props.width && !props.height && props.size}`,
-      `${props.width && 'custom-width'}`,
-      `${props.height && 'custom-height'}`,
+      !props.width && !props.height && props.size,
+      props.width && 'custom-width',
+      props.height && 'custom-height',
     ],
   })
 );

@@ -33,7 +33,7 @@ const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-pagination': [`${props.disabled && 'disabled'}`],
+    'nmorph-pagination': [props.disabled && 'disabled'],
   })
 );
 

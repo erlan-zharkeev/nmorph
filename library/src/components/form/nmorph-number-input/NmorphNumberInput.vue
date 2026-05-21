@@ -28,10 +28,7 @@ const { id, name, autocomplete, tabindex } = useFormItemInput(props);
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
-    'nmorph-number-input': [
-      `${props.disabled && 'disabled'}`,
-      `${props.actionBtnPositionRight && 'action-btn-position-right'}`,
-    ],
+    'nmorph-number-input': [props.disabled && 'disabled', props.actionBtnPositionRight && 'action-btn-position-right'],
   })
 );
 

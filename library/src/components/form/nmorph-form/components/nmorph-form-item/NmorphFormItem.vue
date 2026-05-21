@@ -44,8 +44,8 @@ provide<NmorphFormItemInputDataType>(nmorphFormItemInputDataKey, {
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-form-item': [
-      `${props.label && 'labeled'}`,
-      `${ableToAddValidationModifiers.value && (validationData.value?.valid ? 'valid' : 'invalid')}`,
+      props.label && 'labeled',
+      ableToAddValidationModifiers.value && (validationData.value?.valid ? 'valid' : 'invalid'),
     ],
   })
 );

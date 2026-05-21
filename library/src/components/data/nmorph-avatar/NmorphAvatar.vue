@@ -76,8 +76,8 @@ const imagePreviewSrc = computed<string | string[]>(() => {
 const previewAvailable = computed(() => props.preview && hasPreviewSource.value);
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [`${props.frameBorder > 0 && 'shadow-combined'}`],
-    'nmorph-avatar': [props.shape, `${previewAvailable.value && 'preview'}`],
+    nmorph: [props.frameBorder > 0 && 'shadow-combined'],
+    'nmorph-avatar': [props.shape, previewAvailable.value && 'preview'],
   })
 );
 const stubIconSize = computed(() => `${(props.size / 100) * 60}px`);
@@ -165,7 +165,52 @@ const openPreview = () => {
 </template>
 
 <style lang="scss">
-.nmorph-avatar--preview:hover > .nmorph-image {
-  filter: brightness(0.8);
+.nmorph-avatar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.nmorph-avatar--circle {
+  border-radius: var(--border-radius-circular);
+}
+
+.nmorph-avatar--square {
+  border-radius: var(--default-border-radius);
+}
+
+.nmorph-avatar > .nmorph-image {
+  --width: var(--nmorph-avatar-size);
+  --height: var(--nmorph-avatar-size);
+
+  position: absolute;
+  padding: var(--nmorph-avatar-image-padding);
+  border-radius: var(--nmorph-avatar-radius);
+}
+
+.nmorph-avatar.nmorph--shadow-combined {
+  background: var(--nmorph-main-color);
+  border: var(--nmorph-avatar-frame-border) solid var(--nmorph-main-color);
+  box-shadow: var(--nmorph-shadow-combined-dark);
+}
+
+.nmorph-avatar > .nmorph-image > img {
+  border-radius: var(--nmorph-avatar-image-radius);
+}
+
+.nmorph-avatar__initials {
+  color: var(--nmorph-text-color);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.nmorph-avatar--preview {
+  cursor: pointer;
+
+  &:hover > .nmorph-image {
+    filter: brightness(0.8);
+  }
 }
 </style>

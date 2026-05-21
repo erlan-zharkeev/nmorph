@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { CSSProperties } from 'vue';
+import { toCssSize } from '@/utils';
 import type { NmorphCalloutType } from './types';
 
 interface INmorphProps {
@@ -28,15 +29,13 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   contentFontSize: 'var(--font-size-extra-small)',
 });
 
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
-
 const styles = computed<CSSProperties>(() => ({
-  '--callout-padding': getCssSize(props.padding),
-  '--callout-border-radius': getCssSize(props.borderRadius),
-  '--callout-accent-width': getCssSize(props.accentWidth),
-  '--callout-title-gap': getCssSize(props.titleGap),
-  '--callout-title-font-size': getCssSize(props.titleFontSize),
-  '--callout-content-font-size': getCssSize(props.contentFontSize),
+  '--callout-padding': toCssSize(props.padding),
+  '--callout-border-radius': toCssSize(props.borderRadius),
+  '--callout-accent-width': toCssSize(props.accentWidth),
+  '--callout-title-gap': toCssSize(props.titleGap),
+  '--callout-title-font-size': toCssSize(props.titleFontSize),
+  '--callout-content-font-size': toCssSize(props.contentFontSize),
   ...(props.color !== undefined && { '--callout-color': props.color }),
 }));
 </script>

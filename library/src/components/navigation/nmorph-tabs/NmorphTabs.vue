@@ -30,7 +30,7 @@ const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-tabs': [`${props.stretch && 'stretch'}`],
+    'nmorph-tabs': [props.stretch && 'stretch'],
   })
 );
 

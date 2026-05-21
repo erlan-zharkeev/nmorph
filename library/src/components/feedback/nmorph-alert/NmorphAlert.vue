@@ -36,7 +36,7 @@ const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-alert': [props.type, `${props.bordered && 'bordered'}`, `${props.fill && 'fill'}`],
+    'nmorph-alert': [props.type, props.bordered && 'bordered', props.fill && 'fill'],
   })
 );
 

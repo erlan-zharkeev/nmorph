@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { useModifiers } from '@/utils';
+import { getNmorphOptionHeight, resolveDomElement, toCssSize, useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick, toRef } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useVirtualList } from '@/hooks';
@@ -110,21 +110,20 @@ const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
     'nmorph-select': [
-      `${props.disabled && 'disabled'}`,
-      `${props.modelValue ? 'on' : 'off'}`,
-      `${props.loading && 'loading'}`,
-      `${open.value && !disabledInput.value && 'open'}`,
-      `${props.fill && 'fill'}`,
-      `${autoOptionsWidth.value && 'options-auto-width'}`,
-      `${selectedLineOutset.value ? 'selected-line-outset' : 'selected-line-inset'}`,
-      `${focus.value && 'focus'}`,
+      props.disabled && 'disabled',
+      props.modelValue ? 'on' : 'off',
+      props.loading && 'loading',
+      open.value && !disabledInput.value && 'open',
+      props.fill && 'fill',
+      autoOptionsWidth.value && 'options-auto-width',
+      selectedLineOutset.value ? 'selected-line-outset' : 'selected-line-inset',
+      focus.value && 'focus',
     ],
   })
 );
 
-const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const styles = computed<CSSProperties>(() => ({
-  ...(props.width !== undefined && { '--base-width': getCssSize(props.width) }),
+  ...(props.width !== undefined && { '--base-width': toCssSize(props.width) }),
 }));
 
 const clickHandler = () => {
@@ -156,15 +155,7 @@ const optionsDOMRef = ref<NmorphDomElementType>(null);
 const slotDomOptions = ref<string[]>([]);
 const renderedOptions = computed(() => props.options);
 const virtualEnabled = computed(() => props.virtual && renderedOptions.value.length > 0);
-const defaultOptionHeight = computed(() => {
-  const heightMap = {
-    basic: 30,
-    thick: 38,
-    thin: 22,
-  };
-  return heightMap[props.height || 'basic'];
-});
-const virtualItemHeight = computed(() => props.virtualItemHeight || defaultOptionHeight.value);
+const virtualItemHeight = computed(() => props.virtualItemHeight || getNmorphOptionHeight(props.height));
 const virtualOverscan = computed(() => props.virtualOverscan);
 const virtualDynamicHeight = computed(() => props.virtualDynamicHeight);
 const virtualList = useVirtualList(renderedOptions, {
@@ -174,13 +165,9 @@ const virtualList = useVirtualList(renderedOptions, {
   dynamic: virtualDynamicHeight,
 });
 const virtualOptions = computed(() => virtualList.virtualItems.value);
-const virtualSpacerStyle = computed(() => ({
-  height: `${virtualList.totalHeight.value}px`,
-}));
-const virtualContentStyle = computed(() => ({
-  transform: `translateY(${virtualList.offsetTop.value}px)`,
-}));
-const virtualMaxHeight = computed(() => getCssSize(props.virtualMaxHeight));
+const virtualSpacerStyle = virtualList.spacerStyle;
+const virtualContentStyle = virtualList.contentStyle;
+const virtualMaxHeight = computed(() => toCssSize(props.virtualMaxHeight));
 const refreshDomOptions = () => {
   if (optionsMap.value.length > 0 || !optionsDOMRef.value) return;
   slotDomOptions.value = Array.from(optionsDOMRef.value.querySelectorAll('.nmorph-select-option'))
@@ -299,8 +286,7 @@ const enterHandler = () => {
 };
 
 const setVirtualOptionRef = (element: unknown, index: number) => {
-  const target = element instanceof Element ? element : (element as { $el?: Element } | null)?.$el;
-  virtualList.measureElement(index, target);
+  virtualList.measureElement(index, resolveDomElement(element));
 };
 
 const escapeHandler = () => {

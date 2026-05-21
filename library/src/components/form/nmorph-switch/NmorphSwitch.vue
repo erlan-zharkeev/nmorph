@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphIcon, NmorphIconLoaderDots } from '@/components';
@@ -46,10 +46,10 @@ const blurHandler = () => {
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-switch': [
-      `${props.disabled && 'disabled'}`,
-      `${initialValue.value ? 'on' : 'off'}`,
-      `${props.loading && 'loading'}`,
-      `${focus.value && 'focus'}`,
+      props.disabled && 'disabled',
+      initialValue.value ? 'on' : 'off',
+      props.loading && 'loading',
+      focus.value && 'focus',
     ],
   })
 );
@@ -69,12 +69,11 @@ interface INmorphEmit {
 const inputDOMRef = ref<NmorphDomElementType>(null);
 defineExpose({ inputDOMRef });
 
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const styles = computed<CSSProperties>(() => ({
-  ...(props.width !== undefined && { '--width': getCssSize(props.width) }),
-  ...(props.height !== undefined && { '--height': getCssSize(props.height) }),
-  ...(props.offset !== undefined && { '--offset': getCssSize(props.offset) }),
-  ...(props.thumbHeight !== undefined && { '--thumb-height': getCssSize(props.thumbHeight) }),
+  ...(props.width !== undefined && { '--width': toCssSize(props.width) }),
+  ...(props.height !== undefined && { '--height': toCssSize(props.height) }),
+  ...(props.offset !== undefined && { '--offset': toCssSize(props.offset) }),
+  ...(props.thumbHeight !== undefined && { '--thumb-height': toCssSize(props.thumbHeight) }),
 }));
 
 watch(

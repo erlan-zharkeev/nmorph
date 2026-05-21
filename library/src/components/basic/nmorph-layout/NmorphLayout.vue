@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 
 type NmorphLayoutAsidePositionType = 'left' | 'right';
 
@@ -25,14 +25,13 @@ const slots = useSlots();
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-layout': [`aside-${props.asidePosition}`, `${props.fullHeight && 'full-height'}`],
+    'nmorph-layout': [`aside-${props.asidePosition}`, props.fullHeight && 'full-height'],
   })
 );
 
-const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-layout-gap': getCssSize(props.gap),
-  '--nmorph-layout-aside-width': getCssSize(props.asideWidth),
+  '--nmorph-layout-gap': toCssSize(props.gap),
+  '--nmorph-layout-aside-width': toCssSize(props.asideWidth),
 }));
 </script>
 

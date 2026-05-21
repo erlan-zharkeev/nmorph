@@ -31,7 +31,7 @@ const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-backtop': [`${showButton.value && 'show'}`, props.design],
+    'nmorph-backtop': [showButton.value && 'show', props.design],
   })
 );
 

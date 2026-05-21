@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 import { createNmorphQRCode, type NmorphQRCodeErrorCorrectionLevel } from './qr-code';
 
 interface INmorphProps {
@@ -60,16 +60,15 @@ const path = computed(() => {
     .join('');
 });
 
-const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-qr-code-size': getCssSize(props.size),
+  '--nmorph-qr-code-size': toCssSize(props.size),
   '--nmorph-qr-code-color': props.color,
   '--nmorph-qr-code-background': props.background,
 }));
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-qr-code': [`${errorMessage.value && 'error'}`],
+    'nmorph-qr-code': [errorMessage.value && 'error'],
   })
 );
 </script>

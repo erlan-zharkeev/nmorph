@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { getNmorphOptionHeight, resolveDomElement, toCssSize, useModifiers } from '@/utils';
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useVirtualList, useZIndex } from '@/hooks';
 import {
@@ -53,7 +53,7 @@ const emit = defineEmits<INmorphEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-autocomplete': [`${open.value && 'open'}`],
+    'nmorph-autocomplete': [open.value && 'open'],
   })
 );
 
@@ -87,15 +87,7 @@ const filteredList = computed(() => {
 });
 
 const virtualEnabled = computed(() => props.virtual && filteredList.value.length > 0);
-const defaultOptionHeight = computed(() => {
-  const heightMap = {
-    basic: 30,
-    thick: 38,
-    thin: 22,
-  };
-  return heightMap[props.height || 'basic'];
-});
-const virtualItemHeight = computed(() => props.virtualItemHeight || defaultOptionHeight.value);
+const virtualItemHeight = computed(() => props.virtualItemHeight || getNmorphOptionHeight(props.height));
 const virtualOverscan = computed(() => props.virtualOverscan);
 const virtualDynamicHeight = computed(() => props.virtualDynamicHeight);
 const virtualList = useVirtualList(filteredList, {
@@ -105,14 +97,9 @@ const virtualList = useVirtualList(filteredList, {
   dynamic: virtualDynamicHeight,
 });
 const virtualItems = computed(() => virtualList.virtualItems.value);
-const virtualSpacerStyle = computed(() => ({
-  height: `${virtualList.totalHeight.value}px`,
-}));
-const virtualContentStyle = computed(() => ({
-  transform: `translateY(${virtualList.offsetTop.value}px)`,
-}));
-const getCssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
-const virtualMaxHeight = computed(() => getCssSize(props.virtualMaxHeight));
+const virtualSpacerStyle = virtualList.spacerStyle;
+const virtualContentStyle = virtualList.contentStyle;
+const virtualMaxHeight = computed(() => toCssSize(props.virtualMaxHeight));
 const currentIndex = ref(0);
 const activeItem = computed(() => filteredList.value[currentIndex.value]);
 const listboxId = computed(() => `${props.id || props.name || 'nmorph-autocomplete'}-listbox`);
@@ -213,8 +200,7 @@ const inputAttrs = computed(() => ({
 }));
 
 const setVirtualItemRef = (element: unknown, index: number) => {
-  const target = element instanceof Element ? element : (element as { $el?: Element } | null)?.$el;
-  virtualList.measureElement(index, target);
+  virtualList.measureElement(index, resolveDomElement(element));
 };
 
 const dropdownZIndex = useZIndex(open, () => props.zIndex);

@@ -65,9 +65,9 @@ const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphSelectionControlHeight[height.value]],
     'nmorph-checkbox': [
-      `${checked.value && 'checked'}`,
-      `${props.disabled && 'disabled'}`,
-      `${props.design === 'button' && 'button'}`,
+      checked.value && 'checked',
+      props.disabled && 'disabled',
+      props.design === 'button' && 'button',
     ],
   })
 );

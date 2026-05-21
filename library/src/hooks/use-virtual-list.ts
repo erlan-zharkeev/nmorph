@@ -94,6 +94,14 @@ export const useVirtualList = <T>(items: Readonly<Ref<T[]>>, options: INmorphVir
     }));
   });
 
+  const spacerStyle = computed(() => ({
+    height: `${totalHeight.value}px`,
+  }));
+
+  const contentStyle = computed(() => ({
+    transform: `translateY(${offsetTop.value}px)`,
+  }));
+
   const scrollToIndex = (index: number) => {
     const element = containerRef.value;
     if (!element || !enabled.value) return;
@@ -139,12 +147,14 @@ export const useVirtualList = <T>(items: Readonly<Ref<T[]>>, options: INmorphVir
 
   return {
     containerRef,
+    contentStyle,
     endIndex,
     offsetTop,
     refresh,
     measureElement,
     scrollHandler,
     scrollToIndex,
+    spacerStyle,
     startIndex,
     totalHeight,
     viewportHeight,

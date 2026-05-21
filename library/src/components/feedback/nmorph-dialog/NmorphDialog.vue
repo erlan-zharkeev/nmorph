@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref, useSlots, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphOverlay, NmorphIcon, NmorphIconCross } from '@/components';
@@ -11,6 +11,9 @@ interface INmorphProps {
   maxHeight?: string;
   openDelay?: number;
   closeDelay?: number;
+  /**
+   * @deprecated Use `closeOnOverlay` instead.
+   */
   closeOnClickModal?: boolean;
   showClose?: boolean;
   zIndex?: number;
@@ -36,6 +39,7 @@ interface INmorphEmit {
   (e: 'update:model-value', value: boolean): void;
 }
 const emit = defineEmits<INmorphEmit>();
+const slots = useSlots();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -47,6 +51,8 @@ const dialogStyle = computed<CSSProperties>(() => ({
   '--nmorph-dialog-width': props.width,
   ...(props.maxHeight && { '--nmorph-dialog-max-height': props.maxHeight }),
 }));
+const hasHeader = computed(() => Boolean(slots.header || props.title || props.showClose));
+const shouldCloseOnOverlay = computed(() => props.closeOnOverlay && props.closeOnClickModal);
 
 const isVisible = ref(props.modelValue);
 
@@ -85,8 +91,8 @@ const closeHandler = () => {
   }
 };
 
-const clickOnOverlay = () => {
-  if (!props.closeOnOverlay) return;
+const overlayClickHandler = () => {
+  if (!shouldCloseOnOverlay.value) return;
   closeHandler();
 };
 </script>
@@ -97,18 +103,24 @@ const clickOnOverlay = () => {
     :z-index="props.zIndex"
     :close-on-escape="props.closeOnEscape"
     trap-focus
-    @on-outside-click="clickOnOverlay"
+    @on-outside-click="overlayClickHandler"
     @on-escape-keydown="closeHandler"
   >
     <div :class="modifiers" :style="dialogStyle" role="dialog" aria-modal="true" :aria-label="props.title || undefined">
-      <div class="nmorph-dialog__header">
+      <div v-if="hasHeader" class="nmorph-dialog__header">
         <slot name="header">
           <div class="nmorph-dialog__title">{{ props.title }}</div>
-          <div v-if="props.showClose" class="nmorph-dialog__close-icon" @click="closeHandler">
+          <button
+            v-if="props.showClose"
+            class="nmorph-dialog__close-icon"
+            type="button"
+            :aria-label="props.title ? `Close ${props.title}` : 'Close dialog'"
+            @click="closeHandler"
+          >
             <NmorphIcon>
               <NmorphIconCross />
             </NmorphIcon>
-          </div>
+          </button>
         </slot>
       </div>
       <div class="nmorph-dialog__content">
@@ -154,7 +166,16 @@ const clickOnOverlay = () => {
   }
 
   .nmorph-dialog__close-icon {
+    display: inline-flex;
     flex: 0 0 auto;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
     cursor: pointer;
   }
 

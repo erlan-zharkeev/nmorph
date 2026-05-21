@@ -46,7 +46,7 @@ const resolvedIcon = computed(() => {
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-link': [props.type, `${props.underline && 'underline'}`, `${props.disabled && 'disabled'}`],
+    'nmorph-link': [props.type, props.underline && 'underline', props.disabled && 'disabled'],
   })
 );
 

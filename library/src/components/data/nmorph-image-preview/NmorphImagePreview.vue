@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useModifiers } from '@/utils';
+import { toCssSize, useModifiers } from '@/utils';
 import { ComputedRef, computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import {
@@ -59,7 +59,7 @@ watch(
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-image-preview': [`${open.value && 'opened'}`],
+    'nmorph-image-preview': [open.value && 'opened'],
   })
 );
 
@@ -169,14 +169,13 @@ const emit = defineEmits<INmorphEmit>();
 
 const multipleSources = computed(() => Array.isArray(props.src) && props.src.length > 0);
 const showNavigation = computed(() => props.showNavigationButtons && multipleSources.value);
-const getCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const triggerStyle = computed<CSSProperties>(() => ({
-  ...(props.width !== undefined && { '--width': getCssSize(props.width) }),
-  ...(props.height !== undefined && { '--height': getCssSize(props.height) }),
+  ...(props.width !== undefined && { '--width': toCssSize(props.width) }),
+  ...(props.height !== undefined && { '--height': toCssSize(props.height) }),
 }));
 const portalStyle = computed<CSSProperties>(() => ({
   ...(props.navigationButtonMargin !== undefined && {
-    '--nmorph-image-preview-btn-margin': getCssSize(props.navigationButtonMargin),
+    '--nmorph-image-preview-btn-margin': toCssSize(props.navigationButtonMargin),
   }),
 }));
 </script>

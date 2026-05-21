@@ -97,8 +97,8 @@ watch(
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], `${focused.value && 'focused'}`],
-    'nmorph-otp-input': [`${props.disabled && 'disabled'}`],
+    nmorph: [NmorphComponentHeight[props.height], focused.value && 'focused'],
+    'nmorph-otp-input': [props.disabled && 'disabled'],
   })
 );
 

@@ -31,7 +31,7 @@ const zIndex = useZIndex(
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-overlay': [`${props.show && 'show'}`, `${props.transparent && 'transparent'}`],
+    'nmorph-overlay': [props.show && 'show', props.transparent && 'transparent'],
   })
 );
 const renderInline = computed(() => props.disabledTeleport || !props.show || typeof document === 'undefined');
