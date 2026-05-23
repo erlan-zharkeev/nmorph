@@ -20,6 +20,7 @@ const apps = {
 
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
+const shouldOpenBrowser = args.includes("--open");
 const selectedKeys = args.filter((arg) => !arg.startsWith("--"));
 const selectedApps = (selectedKeys.length ? selectedKeys : ["docs", "sandbox"]).map(
   (key) => {
@@ -143,6 +144,7 @@ const turboArgs = [
 if (dryRun) {
   if (defaultBrowserHost) console.log(`default browser host: ${defaultBrowserHost}`);
   console.log(`turbo ${turboArgs.join(" ")}`);
+  console.log(`open browser: ${shouldOpenBrowser ? "yes" : "no"}`);
   for (const app of urls) console.log(`${app.label}: ${app.url}`);
   process.exit(0);
 }
@@ -155,8 +157,9 @@ const turbo = spawn("turbo", turboArgs, {
 for (const app of urls) {
   waitForPort(app.port)
     .then(() => {
-      console.log(`Opening ${app.label}: ${app.url}`);
-      openUrl(app.url);
+      console.log(`${app.label} ready: ${app.url}`);
+
+      if (shouldOpenBrowser) openUrl(app.url);
     })
     .catch((error) => {
       console.error(error.message);

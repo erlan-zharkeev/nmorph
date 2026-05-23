@@ -3,6 +3,7 @@ import { createSSRApp, defineComponent, h, nextTick, reactive, ref } from 'vue';
 import { renderToString } from '@vue/server-renderer';
 import { describe, expect, it, vi } from 'vitest';
 import { NmorphLibrary } from '../src/main';
+import { useFieldValidation } from '../src/hooks';
 import { getCommonStyles } from '../src/hooks/use-common-styles';
 import {
   NmorphAlert,
@@ -555,7 +556,7 @@ describe('components', () => {
     await mountCase(renderCase);
   });
 
-  it('passes card padding prop to the card CSS variable', () => {
+  it('passes card padding prop to the card padding styles', () => {
     const wrapper = mount(NmorphCard, {
       props: {
         cardPadding: 24,
@@ -568,6 +569,7 @@ describe('components', () => {
     const card = wrapper.find('.nmorph-card').element as HTMLElement;
 
     expect(card.style.getPropertyValue('--card-padding')).toBe('24px');
+    expect(card.style.padding).toBe('24px');
 
     wrapper.unmount();
   });
@@ -1282,6 +1284,303 @@ describe('components', () => {
       expect(wrapper.find('.nmorph-file-upload__file-name').text()).toBe('report.pdf');
       expect(wrapper.find('.nmorph-image-preview').exists()).toBe(false);
       expect(wrapper.find('.nmorph-file-upload__file-info .nmorph-icon').exists()).toBe(true);
+    } finally {
+      wrapper.unmount();
+      objectUrls.restore();
+    }
+  });
+
+  it('validates file values with file-specific form rules', () => {
+    const pngFile = createTestFile('avatar.png', 'image/png');
+    const pdfFile = createTestFile('report.pdf', 'application/pdf');
+    const largeFile = new File(['12345'], 'large.png', { type: 'image/png' });
+
+    const maxSizeValidation = useFieldValidation({
+      inputValue: [largeFile],
+      rules: [{ fileMaxSize: 3, error: 'File is too large' }],
+    });
+    maxSizeValidation.validate();
+
+    expect(maxSizeValidation.valid.value).toBe(false);
+    expect(maxSizeValidation.errors.value).toEqual(['File is too large']);
+
+    const allowedTypesValidation = useFieldValidation({
+      inputValue: [{ data: pdfFile, previewUrl: 'blob:pdf' }],
+      rules: [{ fileAllowedTypes: ['png'], error: 'Unsupported file type' }],
+    });
+    allowedTypesValidation.validate();
+
+    expect(allowedTypesValidation.valid.value).toBe(false);
+    expect(allowedTypesValidation.errors.value).toEqual(['Unsupported file type']);
+
+    const maxCountValidation = useFieldValidation({
+      inputValue: [pngFile, pdfFile],
+      rules: [{ fileMaxCount: 1, error: 'Too many files' }],
+    });
+    maxCountValidation.validate();
+
+    expect(maxCountValidation.valid.value).toBe(false);
+    expect(maxCountValidation.errors.value).toEqual(['Too many files']);
+  });
+
+  it('rejects file upload through NmorphFormItem rules before accepting a file', async () => {
+    const objectUrls = mockObjectUrlApi(['blob:valid']);
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphFileUpload, NmorphForm, NmorphFormItem },
+        setup() {
+          const formRef = ref(null);
+          const formValue = reactive({
+            avatar: {
+              value: [] as FileUploadValue[],
+              rules: [{ fileMaxSize: 3, error: 'File is too large' }],
+            },
+          });
+
+          return { formRef, formValue };
+        },
+        template: `
+          <NmorphForm ref="formRef" :value="formValue">
+            <NmorphFormItem id="avatar">
+              <NmorphFileUpload v-model="formValue.avatar.value" />
+            </NmorphFormItem>
+          </NmorphForm>
+        `,
+      })
+    );
+
+    try {
+      const inputWrapper = wrapper.find('input[type="file"]');
+      const input = inputWrapper.element as HTMLInputElement;
+
+      setFileInputState(input, [new File(['12345'], 'large.png', { type: 'image/png' })]);
+      await inputWrapper.trigger('change');
+      await nextTick();
+
+      const upload = wrapper.findComponent(NmorphFileUpload);
+      const getAvatarErrors = () => {
+        const errors = wrapper.vm.formRef.formData.fields.avatar.errors;
+        return Array.isArray(errors) ? errors : errors.value;
+      };
+      const getIsAnyTouched = () => {
+        const touched = wrapper.vm.formRef.formData.isAnyTouched;
+        return typeof touched === 'boolean' ? touched : touched.value;
+      };
+
+      expect(upload.emitted('update:model-value')).toBeUndefined();
+      expect(upload.emitted('on-file-validation-error')?.at(-1)?.[0]).toMatchObject({
+        errors: ['File is too large'],
+      });
+      expect(wrapper.vm.formValue.avatar.value).toHaveLength(0);
+      expect(getAvatarErrors()).toEqual(['File is too large']);
+      expect(getIsAnyTouched()).toBe(true);
+      expect(wrapper.text()).toContain('File is too large');
+      expect(objectUrls.createObjectURL).not.toHaveBeenCalled();
+
+      setFileInputState(input, [new File(['ok'], 'avatar.png', { type: 'image/png' })]);
+      await inputWrapper.trigger('change');
+      await nextTick();
+      await nextTick();
+
+      expect(wrapper.vm.formValue.avatar.value).toHaveLength(1);
+      expect(wrapper.vm.formValue.avatar.value[0].previewUrl).toBe('blob:valid');
+      expect(getAvatarErrors()).toEqual([]);
+      expect(objectUrls.createObjectURL).toHaveBeenCalledTimes(1);
+    } finally {
+      wrapper.unmount();
+      objectUrls.restore();
+    }
+  });
+
+  it('replaces single file uploads and revokes the previous generated preview URL', async () => {
+    const objectUrls = mockObjectUrlApi(['blob:first', 'blob:second']);
+    const wrapper = mount(NmorphFileUpload, {
+      props: {
+        modelValue: [],
+      },
+    });
+
+    try {
+      const inputWrapper = wrapper.find('input[type="file"]');
+      const input = inputWrapper.element as HTMLInputElement;
+
+      setFileInputState(input, [createTestFile('first.png')]);
+      await inputWrapper.trigger('change');
+      await nextTick();
+
+      const firstPayload = wrapper.emitted('update:model-value')?.at(-1)?.[0] as FileUploadValue[];
+      await wrapper.setProps({ modelValue: firstPayload });
+
+      setFileInputState(input, [createTestFile('second.png')]);
+      await inputWrapper.trigger('change');
+      await nextTick();
+
+      const secondPayload = wrapper.emitted('update:model-value')?.at(-1)?.[0] as FileUploadValue[];
+
+      expect(secondPayload).toHaveLength(1);
+      expect(secondPayload[0].data.name).toBe('second.png');
+      expect(secondPayload[0].previewUrl).toBe('blob:second');
+      expect(objectUrls.revokeObjectURL).toHaveBeenCalledWith('blob:first');
+    } finally {
+      wrapper.unmount();
+      objectUrls.restore();
+    }
+  });
+
+  it('binds a nested text input to the NmorphFormItem field when modelValue is omitted', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphForm, NmorphFormItem, NmorphTextInput },
+        setup() {
+          const formRef = ref(null);
+          const formValue = reactive({
+            chatName: {
+              value: '',
+              rules: [{ pattern: /.{3,}/, error: 'Too short' }],
+            },
+          });
+
+          return { formRef, formValue };
+        },
+        template: `
+          <NmorphForm ref="formRef" :value="formValue">
+            <NmorphFormItem id="chatName">
+              <NmorphTextInput />
+            </NmorphFormItem>
+          </NmorphForm>
+        `,
+      })
+    );
+
+    const input = wrapper.find('input');
+    await input.setValue('ab');
+    await nextTick();
+
+    expect(wrapper.vm.formValue.chatName.value).toBe('ab');
+    expect(wrapper.text()).toContain('Too short');
+    expect(wrapper.findComponent(NmorphTextInput).emitted('update:model-value')?.at(-1)).toEqual(['ab']);
+
+    await input.setValue('abcd');
+    await nextTick();
+
+    const field = wrapper.vm.formRef.formData.fields.chatName;
+    expect(wrapper.vm.formValue.chatName.value).toBe('abcd');
+    expect((Array.isArray(field.errors) ? field.errors : field.errors.value)).toEqual([]);
+    expect((typeof field.valid === 'boolean' ? field.valid : field.valid.value)).toBe(true);
+
+    wrapper.unmount();
+  });
+
+  it('keeps explicit text input v-model controlled inside NmorphFormItem', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphForm, NmorphFormItem, NmorphTextInput },
+        setup() {
+          const localValue = ref('');
+          const formValue = reactive({
+            chatName: {
+              value: '',
+              rules: [{ pattern: /.{3,}/, error: 'Too short' }],
+            },
+          });
+
+          return { formValue, localValue };
+        },
+        template: `
+          <NmorphForm :value="formValue">
+            <NmorphFormItem id="chatName">
+              <NmorphTextInput v-model="localValue" />
+            </NmorphFormItem>
+          </NmorphForm>
+        `,
+      })
+    );
+
+    await wrapper.find('input').setValue('local');
+    await nextTick();
+
+    expect(wrapper.vm.localValue).toBe('local');
+    expect(wrapper.vm.formValue.chatName.value).toBe('');
+
+    wrapper.unmount();
+  });
+
+  it('binds checkbox group selections to the NmorphFormItem field when modelValue is omitted', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphCheckboxGroup, NmorphForm, NmorphFormItem },
+        setup() {
+          const formValue = reactive({
+            browsers: {
+              value: [] as string[],
+              rules: [{ arrayCompareType: 'contains-one', compareValue: ['chrome'], error: 'Chrome is required' }],
+            },
+          });
+
+          return { checkboxOptions, formValue };
+        },
+        template: `
+          <NmorphForm :value="formValue">
+            <NmorphFormItem id="browsers">
+              <NmorphCheckboxGroup :options="checkboxOptions" />
+            </NmorphFormItem>
+          </NmorphForm>
+        `,
+      })
+    );
+
+    await wrapper.findAll('input[type="checkbox"]')[0].trigger('change');
+    await nextTick();
+
+    expect(wrapper.vm.formValue.browsers.value).toEqual(['first']);
+
+    wrapper.unmount();
+  });
+
+  it('binds file upload value to the NmorphFormItem field when modelValue is omitted', async () => {
+    const objectUrls = mockObjectUrlApi(['blob:avatar']);
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphFileUpload, NmorphForm, NmorphFormItem },
+        setup() {
+          const formValue = reactive({
+            avatar: {
+              value: [] as FileUploadValue[],
+              rules: [{ fileMaxSize: 3, error: 'File is too large' }],
+            },
+          });
+
+          return { formValue };
+        },
+        template: `
+          <NmorphForm :value="formValue">
+            <NmorphFormItem id="avatar">
+              <NmorphFileUpload />
+            </NmorphFormItem>
+          </NmorphForm>
+        `,
+      })
+    );
+
+    try {
+      const inputWrapper = wrapper.find('input[type="file"]');
+      const input = inputWrapper.element as HTMLInputElement;
+
+      setFileInputState(input, [new File(['12345'], 'large.png', { type: 'image/png' })]);
+      await inputWrapper.trigger('change');
+      await nextTick();
+
+      expect(wrapper.vm.formValue.avatar.value).toHaveLength(0);
+      expect(objectUrls.createObjectURL).not.toHaveBeenCalled();
+      expect(wrapper.text()).toContain('File is too large');
+
+      setFileInputState(input, [new File(['ok'], 'avatar.png', { type: 'image/png' })]);
+      await inputWrapper.trigger('change');
+      await nextTick();
+
+      expect(wrapper.vm.formValue.avatar.value).toHaveLength(1);
+      expect(wrapper.vm.formValue.avatar.value[0].previewUrl).toBe('blob:avatar');
+      expect(wrapper.findComponent(NmorphFileUpload).emitted('update:model-value')?.at(-1)?.[0]).toHaveLength(1);
     } finally {
       wrapper.unmount();
       objectUrls.restore();

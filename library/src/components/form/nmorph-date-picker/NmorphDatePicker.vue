@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { toCssSize, useModifiers } from '@/utils';
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType, NmorphSelectionDateType } from '@/types';
@@ -14,11 +14,11 @@ import {
 import NmorphClearButton from './inner-components/nmorph-clear-button/NmorphClearButton.vue';
 import NmorphDatePickerContent from './inner-components/nmorph-date-picker-content/NmorphDatePickerContent.vue';
 import { useI18n } from 'vue-i18n';
-import { useFormItemInput } from '../nmorph-form/use-form-item-input';
+import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 interface INmorphProps extends INmorphCommonInputProps {
   placeholder?: string;
-  modelValue: NmorphSelectedDateModelType;
+  modelValue?: NmorphSelectedDateModelType;
   type?: keyof typeof NmorphSelectionDateType;
   textSeparator?: string;
   initialDate?: Date;
@@ -58,12 +58,16 @@ const { id, name, autocomplete } = useFormItemInput(props);
 
 const placeholderText = computed(() => (props.placeholder ? props.placeholder : t('pickADate')));
 
-const selectedDate = ref<NmorphSelectedDateModelType>(props.modelValue);
-
 const emit = defineEmits<INmorphEmit>();
 interface INmorphEmit {
   (e: 'update:model-value', modelValue: NmorphSelectedDateModelType): void;
 }
+const { modelValue, updateModelValue } = useFormItemModel<NmorphSelectedDateModelType>(
+  props,
+  (value) => emit('update:model-value', value),
+  null
+);
+const selectedDate = ref<NmorphSelectedDateModelType>(modelValue.value);
 
 const focus = ref(false);
 const focusHandler = () => {
@@ -119,13 +123,21 @@ const displayValue = computed(() => {
 const clearHandler = () => {
   const result = Array.isArray(selectedDate.value) ? [] : null;
   selectedDate.value = result;
-  emit('update:model-value', selectedDate.value);
+  updateModelValue(selectedDate.value);
 };
 
 const updateSelectedDateHandler = (value: NmorphSelectedDateModelType) => {
   selectedDate.value = value;
-  emit('update:model-value', selectedDate.value);
+  updateModelValue(selectedDate.value);
 };
+
+watch(
+  modelValue,
+  (newValue) => {
+    selectedDate.value = newValue;
+  },
+  { deep: true }
+);
 
 const showClearButton = computed(() => {
   if (Array.isArray(selectedDate.value)) {

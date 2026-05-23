@@ -5,7 +5,7 @@ import type { CSSProperties } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { toCssSize, useModifiers } from '@/utils';
 import { NmorphDropdown, NmorphIcon, NmorphIconCircleClose, NmorphIconClock } from '@/components';
-import { useFormItemInput } from '../nmorph-form/use-form-item-input';
+import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 import { INmorphTimePickerUnit, NmorphTimePickerModelValueType } from './types';
 
 interface INmorphTimeParts {
@@ -52,6 +52,11 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 const { id, name, autocomplete, tabindex } = useFormItemInput(props);
+const { modelValue, updateModelValue } = useFormItemModel<NmorphTimePickerModelValueType>(
+  props,
+  (value) => emit('update:model-value', value),
+  null
+);
 const open = ref(false);
 const focused = ref(false);
 const inputDOMRef = ref<NmorphDomElementType>(null);
@@ -78,17 +83,14 @@ const formatTime = (parts: INmorphTimeParts) => {
 const timeToSeconds = (parts: INmorphTimeParts) => parts.hour * 3600 + parts.minute * 60 + parts.second;
 const minTimeParts = computed(() => parseTime(props.minTime));
 const maxTimeParts = computed(() => parseTime(props.maxTime));
-const modelTimeParts = computed(() => parseTime(props.modelValue));
+const modelTimeParts = computed(() => parseTime(modelValue.value));
 const pickerValue = ref<INmorphTimeParts>(modelTimeParts.value || { hour: 0, minute: 0, second: 0 });
 const placeholderText = computed(() => props.placeholder || t('pickATime'));
 
-watch(
-  () => props.modelValue,
-  (value) => {
-    const parsedValue = parseTime(value);
-    if (parsedValue) pickerValue.value = parsedValue;
-  }
-);
+watch(modelValue, (value) => {
+  const parsedValue = parseTime(value);
+  if (parsedValue) pickerValue.value = parsedValue;
+});
 
 const isOutsideRange = (parts: INmorphTimeParts) => {
   const seconds = timeToSeconds(parts);
@@ -124,11 +126,11 @@ const selectUnit = (unit: keyof INmorphTimeParts, value: number) => {
   const nextValue = { ...pickerValue.value, [unit]: value };
   if (isOutsideRange(nextValue)) return;
   pickerValue.value = nextValue;
-  emit('update:model-value', formatTime(nextValue));
+  updateModelValue(formatTime(nextValue));
 };
 
 const clearHandler = () => {
-  emit('update:model-value', null);
+  updateModelValue(null);
   open.value = false;
 };
 
@@ -156,14 +158,14 @@ const nativeInputHandler = (event: Event) => {
   const parsedValue = parseTime(target.value);
   if (!parsedValue || isOutsideRange(parsedValue)) return;
   pickerValue.value = parsedValue;
-  emit('update:model-value', formatTime(parsedValue));
+  updateModelValue(formatTime(parsedValue));
 };
 
-const displayValue = computed(() => props.modelValue || placeholderText.value);
+const displayValue = computed(() => modelValue.value || placeholderText.value);
 const inputStep = computed(() =>
   props.showSeconds ? normalizeStep(props.secondStep) : normalizeStep(props.minuteStep) * 60
 );
-const showClearButton = computed(() => props.clearable && Boolean(props.modelValue) && !props.disabled);
+const showClearButton = computed(() => props.clearable && Boolean(modelValue.value) && !props.disabled);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -172,7 +174,7 @@ const modifiers = computed(() =>
       props.disabled && 'disabled',
       open.value && 'open',
       focused.value && 'focus',
-      !props.modelValue && 'placeholder',
+      !modelValue.value && 'placeholder',
     ],
   })
 );
@@ -213,7 +215,7 @@ defineExpose({ inputDOMRef });
         :autocomplete="autocomplete"
         type="time"
         :step="inputStep"
-        :value="props.modelValue || ''"
+        :value="modelValue || ''"
         :disabled="props.disabled"
         @input="nativeInputHandler"
       />

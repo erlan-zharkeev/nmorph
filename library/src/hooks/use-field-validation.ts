@@ -1,4 +1,9 @@
-import { NmorphAvailableFormValueType } from '@/components/form/nmorph-form/types';
+import type { NmorphAvailableFormValueType } from '@/components/form/nmorph-form/types';
+import {
+  type INmorphCustomFileData,
+  type NmorphResolutionType,
+  resolution,
+} from '@/components/form/nmorph-file-upload/types';
 import { ref } from 'vue';
 
 export const enum NmorphArrayValidationOperator {
@@ -26,6 +31,12 @@ export interface INmorphRule {
   booleanCompareType?: keyof typeof NmorphBooleanCompareOperator;
   arrayCompareType?: keyof typeof NmorphArrayValidationOperator;
   compareValue?: boolean | number | string | string[];
+  maxFileSize?: number;
+  fileMaxSize?: number;
+  allowedTypes?: Array<NmorphResolutionType | string>;
+  fileAllowedTypes?: Array<NmorphResolutionType | string>;
+  maxFiles?: number;
+  fileMaxCount?: number;
   error: string;
 }
 
@@ -57,6 +68,63 @@ export interface INmorphCheckboxGroupValidationRule extends INmorphRule {
   compareValue: string[];
 }
 
+export interface INmorphFileValidationRule extends INmorphRule {
+  maxFileSize?: number;
+  fileMaxSize?: number;
+  allowedTypes?: Array<NmorphResolutionType | string>;
+  fileAllowedTypes?: Array<NmorphResolutionType | string>;
+  maxFiles?: number;
+  fileMaxCount?: number;
+}
+
+const knownResolutionEntries = Object.entries(resolution) as Array<[NmorphResolutionType, string]>;
+
+const getPlainType = (mimeType: string) => mimeType.split('/')[1]?.toLowerCase() || '';
+
+const getFileExtension = (fileName: string) => {
+  const extension = fileName.split('.').pop()?.toLowerCase();
+  return extension && extension !== fileName.toLowerCase() ? extension : '';
+};
+
+const getKnownResolutionByMime = (mimeType: string) =>
+  knownResolutionEntries.find(([, knownMimeType]) => knownMimeType.toLowerCase() === mimeType.toLowerCase())?.[0] || '';
+
+const getFileTypeCandidates = (file: File) =>
+  Array.from(
+    new Set(
+      [
+        file.type.toLowerCase(),
+        getKnownResolutionByMime(file.type),
+        getFileExtension(file.name),
+        getPlainType(file.type),
+      ]
+        .filter(Boolean)
+        .map((type) => type.toLowerCase())
+    )
+  );
+
+const isNativeFile = (value: unknown): value is File => typeof File !== 'undefined' && value instanceof File;
+
+const isCustomFileData = (value: unknown): value is INmorphCustomFileData =>
+  Boolean(value) && typeof value === 'object' && 'data' in value && isNativeFile((value as INmorphCustomFileData).data);
+
+const getFilesFromValue = (value: NmorphValidationInputValueType): File[] | null => {
+  if (isNativeFile(value)) return [value];
+  if (!Array.isArray(value)) return null;
+  const fileValue = value as unknown[];
+  if (fileValue.length === 0) return [];
+  if (fileValue.every(isNativeFile)) return fileValue;
+  if (fileValue.every(isCustomFileData)) return fileValue.map((fileData) => fileData.data);
+  return null;
+};
+
+const isFileAllowedByTypes = (file: File, allowedTypes: Array<NmorphResolutionType | string>) => {
+  if (allowedTypes.length === 0) return true;
+
+  const candidates = getFileTypeCandidates(file);
+  return allowedTypes.some((allowedType) => candidates.includes(String(allowedType).toLowerCase()));
+};
+
 export const useFieldValidation = (data: INmorphUseValidationPayload) => {
   const { inputValue, rules } = data;
 
@@ -67,6 +135,7 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
 
   const validate = (): void => {
     const rulesExist = Boolean(rules?.length > 0);
+    errors.value = [];
 
     if (!rulesExist) {
       valid.value = true;
@@ -76,7 +145,7 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
     if (inputValue === null) return;
     const value = inputValue;
 
-    const hasRuleKey = (key: string) => rulesExist && key in rules[0];
+    const hasRuleKey = (key: string) => rulesExist && rules.some((rule) => key in rule);
 
     const textValidation = typeof value === 'string' && hasRuleKey('pattern');
     const numberValidation = typeof value === 'number' && hasRuleKey('numberCompareType');
@@ -85,8 +154,17 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
       (typeof value === 'string' || typeof value === 'boolean') && hasRuleKey('booleanCompareType');
 
     const arrayValidation = Array.isArray(value) && hasRuleKey('arrayCompareType');
+    const hasFileRules =
+      hasRuleKey('fileMaxSize') ||
+      hasRuleKey('maxFileSize') ||
+      hasRuleKey('fileAllowedTypes') ||
+      hasRuleKey('allowedTypes') ||
+      hasRuleKey('fileMaxCount') ||
+      hasRuleKey('maxFiles');
+    const filesValue = hasFileRules ? getFilesFromValue(value) : null;
+    const fileValidation = hasFileRules && filesValue !== null;
 
-    const wrongType = !numberValidation && !textValidation && !booleanValidation && !arrayValidation;
+    const wrongType = !numberValidation && !textValidation && !booleanValidation && !arrayValidation && !fileValidation;
 
     if (wrongType) {
       console.warn('The input value and the provided rules do not match');
@@ -178,6 +256,31 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
           rule.arrayCompareType
         );
         if (!match) acc.push(rule.error);
+        return acc;
+      }, [] as string[]);
+    }
+
+    if (fileValidation) {
+      const typeInferredRules = rules as INmorphFileValidationRule[];
+      const files = filesValue || [];
+
+      errors.value = typeInferredRules.reduce((acc, rule) => {
+        const maxFileSize = rule.fileMaxSize ?? rule.maxFileSize;
+        const allowedTypes = rule.fileAllowedTypes ?? rule.allowedTypes;
+        const maxFiles = rule.fileMaxCount ?? rule.maxFiles;
+
+        if (typeof maxFileSize === 'number' && files.some((file) => file.size > maxFileSize)) {
+          acc.push(rule.error);
+        }
+
+        if (allowedTypes && files.some((file) => !isFileAllowedByTypes(file, allowedTypes))) {
+          acc.push(rule.error);
+        }
+
+        if (typeof maxFiles === 'number' && files.length > maxFiles) {
+          acc.push(rule.error);
+        }
+
         return acc;
       }, [] as string[]);
     }

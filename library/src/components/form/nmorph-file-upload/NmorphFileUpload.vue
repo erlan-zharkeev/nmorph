@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, watch, type Component } from 'vue';
+import { computed, inject, onBeforeUnmount, ref, watch, type Component } from 'vue';
 import {
   INmorphCustomFileData,
+  INmorphFileUploadValidationError,
   NmorphArchiveResolution,
   NmorphAudioResolution,
   NmorphImageResolution,
@@ -19,12 +20,14 @@ import {
   NmorphIconCross,
 } from '@/components';
 import { useModifiers } from '@/utils';
-import { NmorphDomElementType } from '@/types';
+import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
 import { useI18n } from 'vue-i18n';
+import { NmorphFormValidationDataType } from '../nmorph-form/types';
+import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 const { t } = useI18n();
 
-interface INmorphProps {
+interface INmorphProps extends Pick<INmorphCommonInputProps, 'id' | 'name' | 'autocomplete' | 'tabindex'> {
   modelValue?: INmorphCustomFileData[];
   disabled?: boolean;
   multiple?: boolean;
@@ -45,10 +48,18 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 interface INmorphEmit {
   (e: 'update:model-value', val: INmorphCustomFileData[]): void;
   (e: 'on-unsupported-file-type-error', val: string): void;
+  (e: 'on-file-validation-error', val: INmorphFileUploadValidationError): void;
 }
 
 const emit = defineEmits<INmorphEmit>();
 const computedButtonText = computed(() => (props.buttonText ? props.buttonText : t('selectFile')));
+const { id, name, autocomplete, tabindex } = useFormItemInput(props);
+const { modelValue, updateModelValue } = useFormItemModel<INmorphCustomFileData[]>(
+  props,
+  (value) => emit('update:model-value', value),
+  []
+);
+const formData = inject<NmorphFormValidationDataType | undefined>('form-data', undefined);
 
 const knownResolutionEntries = Object.entries(resolution) as Array<[NmorphResolutionType, string]>;
 const extensionByResolution: Partial<Record<NmorphResolutionType, string>> = {
@@ -142,7 +153,7 @@ const typeFileIconMap = (file: File): Component => {
 };
 
 const inputDOMRef = ref<NmorphDomElementType>(null);
-const files = ref<INmorphCustomFileData[]>([...props.modelValue]);
+const files = ref<INmorphCustomFileData[]>([...modelValue.value]);
 const createdPreviewUrls = new Set<string>();
 
 const resetInputValue = () => {
@@ -167,7 +178,16 @@ const revokeRemovedPreviewUrls = (nextFiles: INmorphCustomFileData[]) => {
 const filesChanged = (nextFiles: INmorphCustomFileData[]) => {
   const nextValue = [...nextFiles];
   files.value = nextValue;
-  emit('update:model-value', nextValue);
+  updateModelValue(nextValue);
+};
+
+const getFormValidationResult = (candidateFiles: File[]) => {
+  const fieldValidation = formData?.validateField(id.value, candidateFiles);
+
+  return {
+    valid: fieldValidation?.valid.value ?? true,
+    errors: fieldValidation?.errors.value ?? [],
+  };
 };
 
 const openFileSelector = () => {
@@ -179,23 +199,41 @@ const handleFileUpload = (event: Event) => {
   if (props.disabled) return;
   const target = event.target as HTMLInputElement;
   const selectedFiles = Array.from(target.files || []);
-  const acceptedFiles: INmorphCustomFileData[] = [];
+  const filesToProcess = props.multiple ? selectedFiles : selectedFiles.slice(0, 1);
+  const acceptedRawFiles: File[] = [];
 
-  selectedFiles.forEach((file) => {
+  filesToProcess.forEach((file) => {
     if (!isFileAllowed(file)) {
       emit('on-unsupported-file-type-error', file.type || getFileExtension(file.name) || file.name);
       return;
     }
 
-    const previewUrl = URL.createObjectURL(file);
-    createdPreviewUrls.add(previewUrl);
-    acceptedFiles.push({ data: file, previewUrl });
+    const candidateFiles = props.multiple
+      ? [...files.value.map((uploadedFile) => uploadedFile.data), ...acceptedRawFiles, file]
+      : [file];
+    const validationResult = getFormValidationResult(candidateFiles);
+
+    if (!validationResult.valid) {
+      emit('on-file-validation-error', { file, errors: validationResult.errors });
+      return;
+    }
+
+    acceptedRawFiles.push(file);
   });
 
   resetInputValue();
 
-  if (acceptedFiles.length > 0) {
-    filesChanged([...files.value, ...acceptedFiles]);
+  if (acceptedRawFiles.length > 0) {
+    const acceptedFiles = acceptedRawFiles.map((file) => {
+      const previewUrl = URL.createObjectURL(file);
+      createdPreviewUrls.add(previewUrl);
+      return { data: file, previewUrl };
+    });
+    const nextFiles = props.multiple ? [...files.value, ...acceptedFiles] : acceptedFiles;
+
+    revokeRemovedPreviewUrls(nextFiles);
+    filesChanged(nextFiles);
+    formData?.validateField(id.value, nextFiles);
   }
 };
 
@@ -206,12 +244,14 @@ const removeFile = (fileName: string) => {
     const removedFile = files.value[index];
     revokePreviewUrl(removedFile.previewUrl);
     resetInputValue();
-    filesChanged(files.value.filter((_, fileIndex) => fileIndex !== index));
+    const nextFiles = files.value.filter((_, fileIndex) => fileIndex !== index);
+    filesChanged(nextFiles);
+    formData?.validateField(id.value, nextFiles);
   }
 };
 
 watch(
-  () => props.modelValue,
+  modelValue,
   (nextFiles) => {
     const nextValue = [...nextFiles];
     revokeRemovedPreviewUrls(nextValue);
@@ -238,7 +278,11 @@ const modifiers = computed(() =>
   <div :class="modifiers">
     <div class="nmorph-file-upload__trigger">
       <input
+        :id="id"
         ref="inputDOMRef"
+        :name="name"
+        :autocomplete="autocomplete"
+        :tabindex="tabindex"
         type="file"
         :multiple="props.multiple"
         :disabled="props.disabled"

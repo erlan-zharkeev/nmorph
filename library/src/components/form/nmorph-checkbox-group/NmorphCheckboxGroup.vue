@@ -11,9 +11,10 @@ import {
   NmorphComponentDirection,
   NmorphSelectionControlHeightType,
 } from '@/types';
+import { useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
-  modelValue: string[];
+  modelValue?: string[];
   options?: INmorphCheckboxOption[];
   design?: NmorphCheckboxDesignType;
   direction?: keyof typeof NmorphComponentDirection;
@@ -33,23 +34,27 @@ interface INmorphEmit {
   (e: 'update:model-value', val: string[]): void;
 }
 
-const initialValue = ref([...props.modelValue]);
+const emit = defineEmits<INmorphEmit>();
+const { modelValue, updateModelValue } = useFormItemModel<string[]>(
+  props,
+  (value) => emit('update:model-value', value),
+  []
+);
+const initialValue = ref([...modelValue.value]);
 
 watch(
-  () => props.modelValue,
+  modelValue,
   (value) => {
     initialValue.value = [...value];
   },
   { deep: true }
 );
 
-const emit = defineEmits<INmorphEmit>();
-
 const changeHandler = (id: string) => {
   initialValue.value = initialValue.value.includes(id)
     ? initialValue.value.filter((checkboxId) => checkboxId !== id)
     : [...initialValue.value, id];
-  emit('update:model-value', initialValue.value);
+  updateModelValue(initialValue.value);
 };
 
 const modifiers = computed(() =>

@@ -101,16 +101,25 @@ defineExpose({ inputDOMRef });
 <style lang="scss">
 .nmorph-radio {
   --size: var(--height);
+  --nmorph-selection-control-font-size: var(--font-size-small);
+  --nmorph-selection-control-line-height: var(--line-height-regular);
+  --nmorph-selection-control-inline-padding: var(--indentation-03);
 
   display: inline-flex;
   align-items: center;
   cursor: pointer;
+
+  &.nmorph {
+    height: auto;
+    min-height: var(--size);
+  }
 
   .nmorph-radio__content {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: var(--size);
   }
 
   span {
@@ -156,8 +165,8 @@ defineExpose({ inputDOMRef });
   .nmorph-radio__fake span,
   .nmorph-radio__label {
     font-weight: 400;
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-regular);
+    font-size: var(--nmorph-selection-control-font-size);
+    line-height: var(--nmorph-selection-control-line-height);
   }
 
   .nmorph-radio__fake-checked {
@@ -182,7 +191,7 @@ defineExpose({ inputDOMRef });
       justify-content: center;
       align-items: center;
       height: var(--size);
-      padding: var(--indentation-03);
+      padding: var(--nmorph-selection-control-inline-padding);
       white-space: nowrap;
       background: var(--nmorph-main-color);
       border-radius: var(--default-border-radius);
@@ -194,17 +203,21 @@ defineExpose({ inputDOMRef });
   }
 
   &.nmorph--extra-thin-component {
-    .nmorph-radio__fake span,
-    .nmorph-radio__label {
-      font-size: var(--font-size-tiny);
-      line-height: var(--line-height-line);
-    }
+    --nmorph-selection-control-font-size: var(--font-size-tiny);
+    --nmorph-selection-control-line-height: var(--line-height-line);
+    --nmorph-selection-control-inline-padding: var(--indentation-02);
+  }
 
-    &.nmorph-radio--button {
-      .nmorph-radio__fake {
-        padding: var(--indentation-02);
-      }
-    }
+  &.nmorph--thin-component {
+    --nmorph-selection-control-font-size: var(--font-size-extra-small);
+  }
+
+  &.nmorph--basic-component {
+    --nmorph-selection-control-font-size: var(--font-size-small);
+  }
+
+  &.nmorph--thick-component {
+    --nmorph-selection-control-font-size: var(--font-size-base);
   }
 
   &.nmorph-radio--checked {

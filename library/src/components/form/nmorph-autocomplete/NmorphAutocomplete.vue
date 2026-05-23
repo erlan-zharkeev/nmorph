@@ -12,6 +12,7 @@ import {
   INmorphAutocompleteListItem,
   NmorphIconLoaderDots,
 } from '@/components';
+import { useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: string;
@@ -43,13 +44,17 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   virtualDynamicHeight: false,
 });
 
-const initialValue = ref(props.modelValue);
-
 interface INmorphEmit {
   (e: 'update:model-value', value: string): void;
   (e: 'select', value: unknown): void;
 }
 const emit = defineEmits<INmorphEmit>();
+const { modelValue, updateModelValue } = useFormItemModel<string>(
+  props,
+  (value) => emit('update:model-value', value),
+  ''
+);
+const initialValue = ref(modelValue.value);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -63,7 +68,7 @@ const updateValueHandler = (value: string) => {
   initialValue.value = value;
   open.value = !userClosed.value && filteredList.value.length > 0;
   currentIndex.value = 0;
-  emit('update:model-value', initialValue.value);
+  updateModelValue(initialValue.value);
 };
 
 const inputValue = computed({
@@ -105,13 +110,10 @@ const activeItem = computed(() => filteredList.value[currentIndex.value]);
 const listboxId = computed(() => `${props.id || props.name || 'nmorph-autocomplete'}-listbox`);
 const getOptionId = (index: number) => `${listboxId.value}-option-${index}`;
 
-watch(
-  () => props.modelValue,
-  (newValue) => {
-    if (newValue === initialValue.value) return;
-    initialValue.value = newValue;
-  }
-);
+watch(modelValue, (newValue) => {
+  if (newValue === initialValue.value) return;
+  initialValue.value = newValue;
+});
 
 watch(filteredList, async (newValue) => {
   open.value = !userClosed.value && initialValue.value !== '' && newValue.length > 0;
@@ -124,7 +126,7 @@ watch(filteredList, async (newValue) => {
 const selectItem = (listEl: INmorphAutocompleteListItem) => {
   emit('select', listEl);
   initialValue.value = listEl.value;
-  emit('update:model-value', initialValue.value);
+  updateModelValue(initialValue.value);
   setTimeout(() => {
     userClosed.value = true;
     open.value = false;

@@ -11,11 +11,12 @@ import {
 import { useModifiers } from '@/utils';
 import { ref, computed, provide, watch } from 'vue';
 import { NmorphRadio } from '@/components';
+import { useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 type NmorphListRadioOptionElementType = Omit<INmorphRadioOption, 'checked'>;
 
 interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
-  modelValue: string;
+  modelValue?: string;
   options?: NmorphListRadioOptionElementType[];
   styleType?: keyof typeof NmorphRadioStyleType;
   direction?: keyof typeof NmorphComponentDirection;
@@ -36,19 +37,21 @@ interface INmorphEmit {
   (e: 'update:model-value', val: string): void;
 }
 
-const initialValue = ref(props.modelValue);
-
-watch(
-  () => props.modelValue,
-  (newValue) => {
-    initialValue.value = newValue;
-  }
-);
-
 const emit = defineEmits<INmorphEmit>();
+const { modelValue, updateModelValue } = useFormItemModel<string>(
+  props,
+  (value) => emit('update:model-value', value),
+  ''
+);
+const initialValue = ref(modelValue.value);
+
+watch(modelValue, (newValue) => {
+  initialValue.value = newValue;
+});
+
 const changeHandler = (value: string) => {
   initialValue.value = value;
-  emit('update:model-value', initialValue.value);
+  updateModelValue(initialValue.value);
 };
 
 const modifiers = computed(() => useModifiers({ 'nmorph-radio-group': [props.styleType, props.direction] }));

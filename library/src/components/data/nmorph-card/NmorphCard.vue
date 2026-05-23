@@ -31,12 +31,16 @@ const modifiers = computed(() =>
   })
 );
 
-const styles = computed<CSSProperties>(() => ({
-  ...(props.shadowType === 'combined' && {
-    '--nmorph-card-combined-border-width': `${props.combinedShadowBorderWidth}px`,
-  }),
-  ...(props.cardPadding !== undefined && { '--card-padding': toCssSize(props.cardPadding) }),
-}));
+const styles = computed<CSSProperties>(() => {
+  const cardPadding = props.cardPadding !== undefined ? toCssSize(props.cardPadding) : undefined;
+
+  return {
+    ...(props.shadowType === 'combined' && {
+      '--nmorph-card-combined-border-width': `${props.combinedShadowBorderWidth}px`,
+    }),
+    ...(cardPadding !== undefined && { '--card-padding': cardPadding, padding: cardPadding }),
+  };
+});
 </script>
 
 <template>

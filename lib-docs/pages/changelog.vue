@@ -11,6 +11,33 @@ const knownBugItems: string[] = [];
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v2.2.38</h3>
+            <ul>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.form-item-model-binding")
+                }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.file-upload-form-rules")
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.form-controls-visual-polish",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.dev-open-opt-in-browser")
+                }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.2.37</h3>
             <ul>
               <li>

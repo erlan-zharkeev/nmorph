@@ -4,7 +4,7 @@ import { toCssSize, useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphIcon, NmorphIconLoaderDots } from '@/components';
-import { useFormItemInput } from '../nmorph-form/use-form-item-input';
+import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 type NmorphSwitchModelType = boolean | string | number;
 
@@ -34,6 +34,11 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 const { id, name, tabindex } = useFormItemInput(props);
 
 const emit = defineEmits<INmorphEmit>();
+const { modelValue, updateModelValue } = useFormItemModel<NmorphSwitchModelType>(
+  props,
+  (value) => emit('update:model-value', value),
+  false
+);
 
 const focus = ref(false);
 const focusHandler = () => {
@@ -54,13 +59,13 @@ const modifiers = computed(() =>
   })
 );
 
-const initialValue = ref<boolean>(props.modelValue === props.activeValue);
+const initialValue = ref<boolean>(modelValue.value === props.activeValue);
 
 const changeHandler = () => {
   if (props.disabled) return;
   initialValue.value = !initialValue.value;
   const value = initialValue.value ? props.activeValue : props.inactiveValue;
-  emit('update:model-value', value);
+  updateModelValue(value);
 };
 
 interface INmorphEmit {
@@ -76,12 +81,9 @@ const styles = computed<CSSProperties>(() => ({
   ...(props.thumbHeight !== undefined && { '--thumb-height': toCssSize(props.thumbHeight) }),
 }));
 
-watch(
-  () => props.modelValue,
-  (newValue) => {
-    initialValue.value = newValue === props.activeValue;
-  }
-);
+watch(modelValue, (newValue) => {
+  initialValue.value = newValue === props.activeValue;
+});
 </script>
 
 <template>

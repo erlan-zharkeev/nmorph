@@ -226,6 +226,14 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "form-item-model-binding":
+          "NmorphFormItem now provides field context so nested form controls can bind to a field by id when modelValue is omitted, while explicit v-model remains controlled.",
+        "file-upload-form-rules":
+          "NmorphFileUpload now participates in NmorphForm rules, rejects invalid files before accepting them, updates form field errors, and cleans up managed preview URLs.",
+        "form-controls-visual-polish":
+          "Polished form control sizing and surfaces, including checkbox and radio content height, select radius, text input backgrounds, autofill styling, and card padding propagation.",
+        "dev-open-opt-in-browser":
+          "Workspace dev scripts no longer open browser tabs by default; pass --open when the docs or sandbox should launch automatically.",
         "style-utils-unification":
           "Unified modifier normalization and CSS size helpers across components so boolean modifiers and numeric CSS values follow one code path.",
         "virtual-list-style-helpers":

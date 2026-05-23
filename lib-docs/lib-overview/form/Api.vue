@@ -10,8 +10,23 @@ import {
 const { t } = useI18n();
 
 const attributesDataValue = `
-  type NmorphAvailableFormValueType = string | string[] | number | number[] | boolean | boolean[] | Date | Date[]
-  type NmorphFormValueType = Record<string, { value: NmorphAvailableFormValueType; rules: NmorphRulesType }>;
+  type NmorphFileFormValueType = File | File[] | INmorphCustomFileData[];
+  type NmorphAvailableFormValueType<TCustomValue = never> =
+    | string
+    | string[]
+    | number
+    | number[]
+    | boolean
+    | boolean[]
+    | Date
+    | Date[]
+    | null
+    | NmorphFileFormValueType
+    | TCustomValue;
+  type NmorphFormValueType<TValue = NmorphAvailableFormValueType> = Record<
+    string,
+    { value: TValue; rules: NmorphRulesType }
+  >;
   type NmorphRulesType = INmorphRule[];
   interface INmorphRule {
     pattern?: RegExp;
@@ -19,6 +34,12 @@ const attributesDataValue = `
     booleanCompareType?: keyof typeof NmorphBooleanCompareOperator;
     arrayCompareType?: keyof typeof NmorphArrayValidationOperator;
     compareValue?: boolean | number | string | string[];
+    fileMaxSize?: number;
+    maxFileSize?: number;
+    fileAllowedTypes?: string[];
+    allowedTypes?: string[];
+    fileMaxCount?: number;
+    maxFiles?: number;
     error: string;
   }
   enum NmorphArrayValidationOperator {
@@ -37,9 +58,14 @@ const attributesDataValue = `
     'eq' = 'eq',
     'not-eq' = 'not-eq',
   }
+  // File rule aliases:
+  // fileMaxSize / maxFileSize - maximum file size in bytes.
+  // fileAllowedTypes / allowedTypes - MIME, extension, or Nmorph resolution key.
+  // fileMaxCount / maxFiles - maximum number of accepted files.
 `;
 
 const exposesFormData = `
+formValue: NmorphFormValueType;
 fields: Record<
   string,
   {
@@ -49,6 +75,14 @@ fields: Record<
     validate: () => void;
   }
 >;
+updateFieldValue: (
+  fieldName: string,
+  value: NmorphAvailableFormValueType | null
+) => void;
+validateField: (
+  fieldName: string,
+  inputValue?: NmorphAvailableFormValueType | null
+) => FieldValidation | undefined;
 isFormValid: Ref<boolean>;
 isAnyTouched: Ref<boolean>;
 `;

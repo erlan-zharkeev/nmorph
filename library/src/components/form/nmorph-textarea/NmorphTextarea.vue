@@ -3,7 +3,7 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
-import { useFormItemInput } from '../nmorph-form/use-form-item-input';
+import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 type NmorphTextareaResizeType = 'none' | 'both' | 'horizontal' | 'vertical';
 
@@ -43,6 +43,11 @@ interface INmorphEmit {
 
 const emit = defineEmits<INmorphEmit>();
 const { id, name, autocomplete, tabindex } = useFormItemInput(props);
+const { modelValue, updateModelValue } = useFormItemModel<string>(
+  props,
+  (value) => emit('update:model-value', value),
+  ''
+);
 const textareaDOMRef = ref<NmorphDomElementType>(null);
 const focused = ref(false);
 
@@ -76,7 +81,7 @@ const resizeToContent = async () => {
 
 const handleInput = (event: Event): void => {
   const target = event.target as HTMLTextAreaElement;
-  emit('update:model-value', target.value);
+  updateModelValue(target.value);
   resizeToContent();
 };
 
@@ -102,7 +107,7 @@ const select = () => {
   (textareaDOMRef.value as HTMLTextAreaElement | null)?.select();
 };
 
-watch(() => props.modelValue, resizeToContent);
+watch(modelValue, resizeToContent);
 onMounted(resizeToContent);
 
 defineExpose({ textareaDOMRef, focus, blur, select, resizeToContent });
@@ -126,7 +131,7 @@ const styles = computed<CSSProperties>(() => ({
       class="nmorph-native-input"
       :placeholder="props.placeholder"
       :disabled="props.disabled"
-      :value="props.modelValue"
+      :value="modelValue"
       :rows="rows"
       v-bind="props.textareaAttrs"
       @input="handleInput"

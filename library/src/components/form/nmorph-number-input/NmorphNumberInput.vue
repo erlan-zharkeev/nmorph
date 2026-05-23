@@ -3,7 +3,7 @@ import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } 
 import { useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import { NmorphButton, NmorphIcon, NmorphIconMinusThin, NmorphIconPlusThin } from '@/components';
-import { useFormItemInput } from '../nmorph-form/use-form-item-input';
+import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: number;
@@ -32,19 +32,6 @@ const modifiers = computed(() =>
   })
 );
 
-const initialValue = ref(props.modelValue);
-
-const increaseHandler = () => {
-  initialValue.value += props.step;
-};
-
-const decreaseHandler = () => {
-  initialValue.value -= props.step;
-};
-const minBtnDisabled = computed(() => initialValue.value <= props.min);
-const maxBtnDisabled = computed(() => initialValue.value >= props.max);
-
-const rightActionBtnHeight = computed(() => (props.height === 'thick' ? '16px' : '12px'));
 const iconSizeMap = {
   thick: {
     default: '12px',
@@ -69,6 +56,24 @@ interface INmorphEmit {
 }
 
 const emit = defineEmits<INmorphEmit>();
+const { modelValue, updateModelValue } = useFormItemModel<number>(
+  props,
+  (value) => emit('update:model-value', value),
+  0
+);
+const initialValue = ref(modelValue.value);
+
+const increaseHandler = () => {
+  initialValue.value += props.step;
+};
+
+const decreaseHandler = () => {
+  initialValue.value -= props.step;
+};
+const minBtnDisabled = computed(() => initialValue.value <= props.min);
+const maxBtnDisabled = computed(() => initialValue.value >= props.max);
+
+const rightActionBtnHeight = computed(() => (props.height === 'thick' ? '16px' : '12px'));
 
 const inputHandler = (event: Event) => {
   const target = event.target as HTMLInputElement;
@@ -89,7 +94,11 @@ watch(initialValue, (updatedValue) => {
     inputDOMRef.value?.blur();
   }
 
-  emit('update:model-value', updatedValue);
+  updateModelValue(updatedValue);
+});
+
+watch(modelValue, (updatedValue) => {
+  initialValue.value = updatedValue;
 });
 
 const inputDOMRef = ref<NmorphDomElementType>(null);

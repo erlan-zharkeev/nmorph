@@ -224,6 +224,14 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "form-item-model-binding":
+          "NmorphFormItem now provides field context so nested form controls can bind to a field by id when modelValue is omitted, while explicit v-model remains controlled.",
+        "file-upload-form-rules":
+          "NmorphFileUpload now participates in NmorphForm rules, rejects invalid files before accepting them, updates form field errors, and cleans up managed preview URLs.",
+        "form-controls-visual-polish":
+          "Polished form control sizing and surfaces, including checkbox and radio content height, select radius, text input backgrounds, autofill styling, and card padding propagation.",
+        "dev-open-opt-in-browser":
+          "Workspace dev scripts no longer open browser tabs by default; pass --open when the docs or sandbox should launch automatically.",
         "style-utils-unification":
           "Unified modifier normalization and CSS size helpers across components so boolean modifiers and numeric CSS values follow one code path.",
         "virtual-list-style-helpers":
@@ -2514,6 +2522,8 @@ export default {
         <div class="container">
           <p>
             <strong>Field metadata:</strong> <code>NmorphFormItem</code> passes its <code>id</code> and optional <code>name</code> to nested form controls automatically. Child components can still override these values via their own props.
+            <br />
+            <strong>Field binding:</strong> If a nested control does not receive <code>modelValue</code>, it uses the matching <code>NmorphForm</code> field value from <code>NmorphFormItem id</code>, writes changes back to that field, and validates it. Explicit <code>v-model</code> remains fully controlled by the parent.
             <br />
             <strong>Autocomplete:</strong> If a control supports <code>autocomplete</code>, <code>NmorphFormItem</code> can provide it too.
           </p>

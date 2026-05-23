@@ -144,7 +144,14 @@ const form = reactive({
   },
   photo: {
     value: [],
-    rules: [],
+    rules: [
+      {
+        fileMaxSize: 1024 * 1024,
+        fileAllowedTypes: ["jpeg", "png", "webp"],
+        fileMaxCount: 3,
+        error: "Upload up to 3 images, 1 MB each",
+      },
+    ],
   },
   date: {
     value: new Date(),
@@ -187,16 +194,15 @@ watch(
       <NmorphForm :value="form" ref="formRef">
         <NmorphFormItem id="username" label="Username">
           <NmorphTextInput
-            v-model="form.username.value"
             placeholder="Enter username"
             clearable
           />
         </NmorphFormItem>
         <NmorphFormItem id="years" label="Years old">
-          <NmorphNumberInput v-model="form.years.value" :min="0" :max="150" />
+          <NmorphNumberInput :min="0" :max="150" />
         </NmorphFormItem>
         <NmorphFormItem id="drink" label="Preferred drink">
-          <NmorphRadioGroup v-model="form.drink.value">
+          <NmorphRadioGroup>
             <NmorphRadio
               v-for="option in drinks"
               :key="option.value"
@@ -207,7 +213,7 @@ watch(
           </NmorphRadioGroup>
         </NmorphFormItem>
         <NmorphFormItem id="browsers" label="Browsers">
-          <NmorphCheckboxGroup v-model="form.browsers.value" direction="column">
+          <NmorphCheckboxGroup direction="column">
             <NmorphCheckbox
               v-for="option in browsers"
               :id="option.id"
@@ -220,7 +226,6 @@ watch(
         </NmorphFormItem>
         <NmorphFormItem id="numberValue" label="Numeric value">
           <NmorphSlider
-            v-model="form.numberValue.value"
             :step="1"
             :min="0"
             :max="100"
@@ -231,7 +236,6 @@ watch(
         </NmorphFormItem>
         <NmorphFormItem id="food" label="Food">
           <NmorphSelect
-            v-model="form.food.value"
             value-required
             :options-map="food"
             fill
@@ -245,13 +249,13 @@ watch(
           </NmorphSelect>
         </NmorphFormItem>
         <NmorphFormItem id="date" label="Choose a date">
-          <NmorphDatePicker v-model="form.date.value" />
+          <NmorphDatePicker />
         </NmorphFormItem>
         <NmorphFormItem id="photo" label="Photo">
-          <NmorphFileUpload v-model="form.photo.value" multiple />
+          <NmorphFileUpload multiple />
         </NmorphFormItem>
         <NmorphFormItem id="agreement" label="Agreement">
-          <NmorphSwitch v-model="form.agreement.value">
+          <NmorphSwitch>
             <template #thumb-on>
               <NmorphIcon width="10px" height="10px">
                 <NmorphIconEye />

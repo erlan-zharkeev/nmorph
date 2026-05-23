@@ -9,6 +9,7 @@ import {
   NmorphSelectionControlHeight,
   NmorphSelectionControlHeightType,
 } from '@/types';
+import { useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 const groupSelectedValue = inject<NmorphCheckboxGroupSelectedValueInjectionType>(
   'checkbox-group-selected-value',
@@ -33,29 +34,31 @@ interface INmorphEmit {
   (e: 'update:model-value', val: boolean): void;
 }
 
-watch(
-  () => props.modelValue,
-  (updatedValue) => {
-    initialValue.value = updatedValue;
-  }
+const emit = defineEmits<INmorphEmit>();
+const { modelValue, updateModelValue } = useFormItemModel<boolean>(
+  props,
+  (value) => emit('update:model-value', value),
+  false
 );
+
+watch(modelValue, (updatedValue) => {
+  initialValue.value = updatedValue;
+});
 
 const inputDOMRef = ref<NmorphDomElementType>(null);
 defineExpose({ inputDOMRef });
 
 const hasGroup = groupSelectedValue !== undefined;
-const initialValue = hasGroup ? ref(groupSelectedValue.value) : ref(props.modelValue);
+const initialValue = hasGroup ? ref(groupSelectedValue.value) : ref(modelValue.value);
 
-const checked = computed(() => (hasGroup ? groupSelectedValue.value.includes(props.id) : props.modelValue));
+const checked = computed(() => (hasGroup ? groupSelectedValue.value.includes(props.id) : modelValue.value));
 const height = computed(() => props.height || groupHeight?.value || 'thin');
-
-const emit = defineEmits<INmorphEmit>();
 
 const handleChange = () => {
   if (props.disabled) return;
   if (!hasGroup) {
     initialValue.value = !initialValue.value;
-    emit('update:model-value', initialValue.value);
+    updateModelValue(initialValue.value);
     return;
   }
   if (changeValue && Array.isArray(initialValue.value)) changeValue(props.id, initialValue.value);
@@ -112,17 +115,26 @@ const modifiers = computed(() =>
 <style lang="scss">
 .nmorph-checkbox {
   --size: var(--height);
+  --nmorph-selection-control-font-size: var(--font-size-small);
+  --nmorph-selection-control-line-height: var(--line-height-regular);
+  --nmorph-selection-control-inline-padding: var(--indentation-03);
 
   display: inline-flex;
   align-items: center;
   vertical-align: middle;
   cursor: pointer;
 
+  &.nmorph {
+    height: auto;
+    min-height: var(--size);
+  }
+
   .nmorph-checkbox__content {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: var(--size);
   }
 
   .nmorph-checkbox__input-wrapper {
@@ -163,8 +175,8 @@ const modifiers = computed(() =>
   .nmorph-checkbox__label,
   .nmorph-checkbox__fake span {
     font-weight: 400;
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-regular);
+    font-size: var(--nmorph-selection-control-font-size);
+    line-height: var(--nmorph-selection-control-line-height);
   }
 
   .nmorph-checkbox__fake-checked {
@@ -196,7 +208,7 @@ const modifiers = computed(() =>
       width: auto;
       min-width: var(--size);
       height: var(--size);
-      padding: var(--indentation-03);
+      padding: var(--nmorph-selection-control-inline-padding);
       background: var(--nmorph-main-color);
       border-radius: var(--default-border-radius);
       box-shadow:
@@ -207,17 +219,21 @@ const modifiers = computed(() =>
   }
 
   &.nmorph--extra-thin-component {
-    .nmorph-checkbox__label,
-    .nmorph-checkbox__fake span {
-      font-size: var(--font-size-tiny);
-      line-height: var(--line-height-line);
-    }
+    --nmorph-selection-control-font-size: var(--font-size-tiny);
+    --nmorph-selection-control-line-height: var(--line-height-line);
+    --nmorph-selection-control-inline-padding: var(--indentation-02);
+  }
 
-    &.nmorph-checkbox--button {
-      .nmorph-checkbox__fake {
-        padding: var(--indentation-02);
-      }
-    }
+  &.nmorph--thin-component {
+    --nmorph-selection-control-font-size: var(--font-size-extra-small);
+  }
+
+  &.nmorph--basic-component {
+    --nmorph-selection-control-font-size: var(--font-size-small);
+  }
+
+  &.nmorph--thick-component {
+    --nmorph-selection-control-font-size: var(--font-size-base);
   }
 
   &.nmorph-checkbox--checked {

@@ -17,6 +17,33 @@ const attributesData: IAttributesTableData[] = [
     default: "",
   },
   {
+    name: "id",
+    type: "String",
+    default: "NmorphFormItem id or generated id",
+    description:
+      "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
+  },
+  {
+    name: "name",
+    type: "String",
+    default: "id",
+    description:
+      "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
+  },
+  {
+    name: "autocomplete",
+    type: "String",
+    default: "-",
+    description:
+      "Autocomplete value passed to the native file input. Can also be inherited from NmorphFormItem",
+  },
+  {
+    name: "tabindex",
+    type: "Number | String",
+    default: "0",
+    description: "Sets tabindex for the native file input",
+  },
+  {
     name: "disabled",
     type: "Boolean",
     default: "false",
@@ -56,6 +83,15 @@ const exposes = [
 ];
 const events = [
   { name: "on-unsupported-file-type-error", type: "String" },
+  {
+    name: "on-file-validation-error",
+    type: `{ file: ${docsLink(
+      "File",
+      "https://developer.mozilla.org/ru/docs/Web/API/File"
+    )}; errors: String[] }`,
+    description:
+      "Event triggered when NmorphForm rules reject a selected file before it is accepted",
+  },
   {
     name: "update:model-value",
     type: `Array<{ data: ${docsLink(

@@ -2,7 +2,7 @@
 import { useModifiers } from '@/utils';
 import { INmorphCommonInputProps, NmorphComponentHeight } from '@/types';
 import { computed, nextTick, ref, watch, type WritableComputedRef } from 'vue';
-import { useFormItemInput } from '../nmorph-form/use-form-item-input';
+import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 import NmorphTextInput from '../nmorph-text-input/NmorphTextInput.vue';
 
 type NmorphOtpInputMode = 'numeric' | 'text' | 'alphanumeric';
@@ -42,6 +42,11 @@ interface INmorphTextInputExpose {
 const emit = defineEmits<INmorphEmit>();
 
 const { id, name, autocomplete, tabindex } = useFormItemInput(props);
+const { modelValue, updateModelValue } = useFormItemModel<string>(
+  props,
+  (value) => emit('update:model-value', value),
+  ''
+);
 
 const inputRefs = ref<Array<INmorphTextInputExpose | null>>([]);
 const inputDOMRefs = ref<Array<HTMLInputElement | null>>([]);
@@ -64,7 +69,7 @@ const sanitizeValue = (value = '') => {
   return Array.from(source);
 };
 
-const normalizeOtpValue = (value = props.modelValue) => {
+const normalizeOtpValue = (value = modelValue.value) => {
   const sanitizedValue = sanitizeValue(value).slice(0, normalizedLength.value);
 
   return Array.from({ length: normalizedLength.value }, (_, index) => sanitizedValue[index] || '');
@@ -76,7 +81,7 @@ const syncOtpValue = (value: string[], emitEvents = false) => {
   if (!emitEvents) return;
 
   const joinedValue = otpValue.value.join('');
-  emit('update:model-value', joinedValue);
+  updateModelValue(joinedValue);
 
   if (!otpValue.value.includes('')) {
     emit('complete', joinedValue);
@@ -84,9 +89,9 @@ const syncOtpValue = (value: string[], emitEvents = false) => {
 };
 
 watch(
-  [() => props.modelValue, () => props.mode, normalizedLength],
+  [modelValue, () => props.mode, normalizedLength],
   () => {
-    const nextValue = normalizeOtpValue(props.modelValue);
+    const nextValue = normalizeOtpValue(modelValue.value);
 
     if (nextValue.join('') !== otpValue.value.join('') || nextValue.length !== otpValue.value.length) {
       syncOtpValue(nextValue);

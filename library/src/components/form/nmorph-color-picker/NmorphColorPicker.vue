@@ -2,7 +2,7 @@
 import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, onMounted, ref, watch } from 'vue';
-import { useFormItemInput } from '../nmorph-form/use-form-item-input';
+import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: string;
@@ -25,6 +25,11 @@ const emit = defineEmits<{
 }>();
 
 const { id, name, tabindex } = useFormItemInput(props);
+const { modelValue, updateModelValue } = useFormItemModel<string>(
+  props,
+  (value) => emit('update:model-value', value),
+  ''
+);
 
 const normalizeColor = (value?: string, fallback = '#000000') => {
   const currentValue = value?.trim() || '';
@@ -54,22 +59,19 @@ const resolveAccentColor = () => {
   return normalizeColor(accentColor, '#006cb6');
 };
 
-const currentValue = ref(normalizeColor(props.modelValue));
+const currentValue = ref(normalizeColor(modelValue.value));
 const focused = ref(false);
 
-watch(
-  () => props.modelValue,
-  (newValue) => {
-    currentValue.value = newValue ? normalizeColor(newValue) : resolveAccentColor();
-  }
-);
+watch(modelValue, (newValue) => {
+  currentValue.value = newValue ? normalizeColor(newValue) : resolveAccentColor();
+});
 
 const handleInput = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const nextValue = normalizeColor(target.value);
 
   currentValue.value = nextValue;
-  emit('update:model-value', nextValue);
+  updateModelValue(nextValue);
 };
 
 const hexToRgb = (hex: string) => [
@@ -109,7 +111,7 @@ const formatHsl = (hex: string) => {
 };
 
 onMounted(() => {
-  if (!props.modelValue) {
+  if (!modelValue.value) {
     currentValue.value = resolveAccentColor();
   }
 });

@@ -3,7 +3,7 @@ import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } 
 import { useModifiers } from '@/utils';
 import { computed, ref, useSlots } from 'vue';
 import { NmorphIcon, NmorphButton, NmorphIconError, NmorphIconEye, NmorphIconEyeBlocked } from '@/components';
-import { useFormItemInput } from '../nmorph-form/use-form-item-input';
+import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 const slots = useSlots();
 
@@ -27,7 +27,21 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   inputAttrs: () => ({}),
 });
 
+interface INmorphEmit {
+  (e: 'update:model-value', val: string): void;
+  (e: 'focus'): void;
+  (e: 'blur'): void;
+  (e: 'on-enter'): void;
+  (e: 'keydown', event: KeyboardEvent): void;
+}
+
+const emit = defineEmits<INmorphEmit>();
 const { id, name, autocomplete, tabindex } = useFormItemInput(props);
+const { modelValue, updateModelValue } = useFormItemModel<string>(
+  props,
+  (value) => emit('update:model-value', value),
+  ''
+);
 
 const modifiers = computed(() =>
   useModifiers({
@@ -38,14 +52,14 @@ const modifiers = computed(() =>
 
 const handleInput = (event: Event): void => {
   const target = event.target as HTMLInputElement;
-  emit('update:model-value', target.value);
+  updateModelValue(target.value);
 };
 
 const showPassword = ref(false);
 
 const actionButtonClickHandler = () => {
   if (props.clearable) {
-    emit('update:model-value', '');
+    updateModelValue('');
   } else {
     showPassword.value = !showPassword.value;
   }
@@ -80,17 +94,7 @@ const select = () => {
   (inputDOMRef.value as HTMLInputElement | null)?.select();
 };
 
-interface INmorphEmit {
-  (e: 'update:model-value', val: string): void;
-  (e: 'focus'): void;
-  (e: 'blur'): void;
-  (e: 'on-enter'): void;
-  (e: 'keydown', event: KeyboardEvent): void;
-}
-
 defineExpose({ inputDOMRef, focus, blur, select });
-
-const emit = defineEmits<INmorphEmit>();
 
 const actionIcon = computed(() => {
   if (props.clearable) return NmorphIconError;
@@ -117,7 +121,7 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
         :type="type"
         :placeholder="props.placeholder"
         :disabled="props.disabled"
-        :value="props.modelValue"
+        :value="modelValue"
         v-bind="props.inputAttrs"
         @input="handleInput"
         @focus="handleFocus"
@@ -200,6 +204,7 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
   width: 100%;
   height: var(--height);
   text-indent: var(--nmorph-text-input-indentation);
+  background: var(--nmorph-main-color);
   border: none;
   border-radius: var(--default-border-radius);
   box-shadow: var(--nmorph-shadow-inset);

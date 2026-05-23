@@ -49,3 +49,8 @@ export interface INmorphCustomFileData {
   data: File;
   previewUrl: string;
 }
+
+export interface INmorphFileUploadValidationError {
+  file: File;
+  errors: string[];
+}

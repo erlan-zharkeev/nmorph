@@ -4,7 +4,7 @@ import { toCssSize, useModifiers } from '@/utils';
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphTooltip } from '@/components';
-import { useFormItemInput } from '../nmorph-form/use-form-item-input';
+import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 import type { INmorphSliderProps } from './types';
 
 const props = withDefaults(defineProps<INmorphSliderProps>(), {
@@ -35,21 +35,23 @@ const tooltipVisible = ref(props.showTooltip);
 const emit = defineEmits<{
   (e: 'update:model-value', val: number): void;
 }>();
+const { modelValue, updateModelValue } = useFormItemModel<number>(
+  props,
+  (value) => emit('update:model-value', value),
+  0
+);
 
-const thumbValue = ref(props.modelValue);
+const thumbValue = ref(modelValue.value);
 
 const sliderContainer = ref<NmorphDomElementType>(null);
 
 watch(thumbValue, () => {
-  emit('update:model-value', thumbValue.value);
+  updateModelValue(thumbValue.value);
 });
 
-watch(
-  () => props.modelValue,
-  (updatedValue) => {
-    thumbValue.value = updatedValue;
-  }
-);
+watch(modelValue, (updatedValue) => {
+  thumbValue.value = updatedValue;
+});
 
 const tooltipRootRef = ref<InstanceType<typeof NmorphTooltip> | null>(null);
 

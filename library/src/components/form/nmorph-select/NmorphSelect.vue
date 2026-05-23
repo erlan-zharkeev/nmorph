@@ -17,7 +17,7 @@ import {
   NmorphIconChevronDown,
 } from '@/components';
 import { useI18n } from 'vue-i18n';
-import { useFormItemInput } from '../nmorph-form/use-form-item-input';
+import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 const { t } = useI18n();
 
@@ -69,7 +69,12 @@ const emit = defineEmits<{
   (e: 'update:model-value', val: NmorphSelectModelValueType): void;
 }>();
 
-const initialValue = ref<NmorphSelectModelValueType>(props.modelValue);
+const { modelValue, updateModelValue } = useFormItemModel<NmorphSelectModelValueType>(
+  props,
+  (value) => emit('update:model-value', value),
+  ''
+);
+const initialValue = ref<NmorphSelectModelValueType>(modelValue.value);
 const open = ref(props.open);
 const disabledInput = computed(() => props.disabled || props.loading);
 const autoOptionsWidth = computed(() => props.optionsWidth === 'auto');
@@ -83,7 +88,7 @@ const changeHandler = (value: string) => {
   if (typeof initialValue.value === 'string') {
     if (!props.valueRequired && initialValue.value === value) initialValue.value = '';
     else initialValue.value = value;
-    emit('update:model-value', initialValue.value);
+    updateModelValue(initialValue.value);
   }
   if (Array.isArray(initialValue.value)) {
     const hasValue = initialValue.value.includes(value);
@@ -95,7 +100,7 @@ const changeHandler = (value: string) => {
       initialValue.value = initialValue.value.filter((currentValue) => currentValue !== value);
     }
   }
-  emit('update:model-value', initialValue.value);
+  updateModelValue(initialValue.value);
 };
 
 const focus = ref(false);
@@ -111,7 +116,7 @@ const modifiers = computed(() =>
     nmorph: [NmorphComponentHeight[props.height]],
     'nmorph-select': [
       props.disabled && 'disabled',
-      props.modelValue ? 'on' : 'off',
+      modelValue.value ? 'on' : 'off',
       props.loading && 'loading',
       open.value && !disabledInput.value && 'open',
       props.fill && 'fill',
@@ -148,6 +153,14 @@ watch(
   (isLoading) => {
     if (isLoading) open.value = false;
   }
+);
+
+watch(
+  modelValue,
+  (newValue) => {
+    initialValue.value = newValue;
+  },
+  { deep: true }
 );
 
 const optionsMap = computed(() => (props.options.length > 0 ? props.options : props.optionsMap));
@@ -416,12 +429,14 @@ const endHandler = () => {
 
   width: var(--base-width);
   height: var(--height);
+  border-radius: var(--default-border-radius);
   cursor: pointer;
 
   .nmorph-select__content {
     position: relative;
     height: 100%;
     background: var(--nmorph-main-color);
+    border-radius: inherit;
     box-shadow: var(--nmorph-shadow-outset);
   }
 
@@ -431,7 +446,7 @@ const endHandler = () => {
     align-items: center;
     height: 100%;
     padding: var(--indentation-00) var(--default-indentation-input);
-    border-radius: var(--default-border-radius);
+    border-radius: inherit;
   }
 
   .nmorph-select__selected-value {

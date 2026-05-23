@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
-import { computed, inject, provide, toRef } from 'vue';
+import { computed, inject, provide, toRef, unref } from 'vue';
 import { NmorphComponentHeight } from '@/types';
 import { NmorphValidationIcon, NmorphErrorBox } from './inner-components';
-import { NmorphFormValidationDataType } from '@/components';
+import type { NmorphAvailableFormValueType, NmorphFormValidationDataType } from '@/components';
 import { nmorphFormItemInputDataKey } from '../../use-form-item-input';
-import { NmorphFormItemInputDataType } from '../../types';
+import type { NmorphFormItemInputDataType } from '../../types';
 
 interface INmorphProps {
   id: string;
@@ -28,6 +28,12 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 
 const formData = inject<NmorphFormValidationDataType>('form-data');
 const validationData = computed(() => formData?.fields[props.id]);
+const fieldData = computed(() => formData?.formValue[props.id]);
+const fieldValue = computed(() => fieldData.value?.value);
+const fieldRules = computed(() => fieldData.value?.rules || []);
+const fieldErrors = computed(() => unref(validationData.value?.errors) || []);
+const fieldValid = computed(() => unref(validationData.value?.valid) ?? true);
+const fieldTouched = computed(() => unref(validationData.value?.touched) ?? false);
 
 const ableToShowValidation = computed(() => validationData.value);
 const showStatusIcon = computed(
@@ -39,6 +45,15 @@ provide<NmorphFormItemInputDataType>(nmorphFormItemInputDataKey, {
   id: toRef(props, 'id'),
   name: computed(() => props.name || props.id),
   autocomplete: computed(() => props.autocomplete || undefined),
+  value: fieldValue,
+  rules: fieldRules,
+  errors: fieldErrors,
+  valid: fieldValid,
+  touched: fieldTouched,
+  updateValue: (value: NmorphAvailableFormValueType) => formData?.updateFieldValue(props.id, value),
+  validate: (value?: NmorphAvailableFormValueType) => {
+    formData?.validateField(props.id, value);
+  },
 });
 
 const modifiers = computed(() =>

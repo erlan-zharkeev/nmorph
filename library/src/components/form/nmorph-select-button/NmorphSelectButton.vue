@@ -9,6 +9,7 @@ import {
   INmorphSelectButtonOption,
   NmorphSelectButtonItem,
 } from '@/components';
+import { useFormItemModel } from '../nmorph-form/use-form-item-input';
 
 interface INmorphProps extends INmorphCommonInputProps {
   modelValue?: string;
@@ -34,14 +35,16 @@ const emit = defineEmits<{
   (e: 'update:model-value', val: string): void;
 }>();
 
-const initialValue = ref(props.modelValue);
-
-watch(
-  () => props.modelValue,
-  (newValue) => {
-    initialValue.value = newValue;
-  }
+const { modelValue, updateModelValue } = useFormItemModel<string>(
+  props,
+  (value) => emit('update:model-value', value),
+  ''
 );
+const initialValue = ref(modelValue.value);
+
+watch(modelValue, (newValue) => {
+  initialValue.value = newValue;
+});
 
 const modifiers = computed(() =>
   useModifiers({
@@ -58,7 +61,7 @@ const styles = computed<CSSProperties>(() => ({
 const changeHandler = (value: string) => {
   if (props.disabled) return;
   initialValue.value = value;
-  emit('update:model-value', value);
+  updateModelValue(value);
 };
 
 provide<NmorphSelectButtonSelectedValueInjectionType>('select-button-selected-value', initialValue);
