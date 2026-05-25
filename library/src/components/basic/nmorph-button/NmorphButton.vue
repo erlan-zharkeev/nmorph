@@ -1,30 +1,11 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref, useSlots } from 'vue';
-import {
-  NmorphIcon,
-  NmorphButtonStyle,
-  NmorphButtonType,
-  NmorphIconSize,
-  NmorphButtonShape,
-  NmorphIconLoader,
-} from '@/components';
+import { NmorphIcon, NmorphIconSize, NmorphIconLoader } from '@/components';
+import type { INmorphButtonProps } from './types';
 
-interface INmorphProps extends INmorphCommonInputProps {
-  styleType?: keyof typeof NmorphButtonStyle;
-  color?: string;
-  loading?: boolean;
-  ripple?: boolean;
-  type?: keyof typeof NmorphButtonType;
-  text?: string | number;
-  accentBgOnHover?: boolean;
-  shape?: keyof typeof NmorphButtonShape;
-  fill?: boolean;
-  tabindex?: number;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphButtonProps>(), {
   type: 'button',
   fill: false,
   text: undefined,

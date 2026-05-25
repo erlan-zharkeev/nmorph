@@ -1,6 +1,9 @@
 import { App, Plugin } from 'vue';
-import { useCommonStyles, useNmorphTranslation } from './hooks';
-import { useNmorphBrowser, useNmorphTheme, useNmorphZIndex } from './outside-hooks/index.ts';
+import { useCommonStyles } from './hooks/use-common-styles';
+import { useNmorphTranslation } from './hooks/use-nmorph-translation';
+import { useNmorphBrowser } from './outside-hooks/use-nmorph-browser';
+import { useNmorphTheme } from './outside-hooks/use-nmorph-theme';
+import { useNmorphZIndex } from './outside-hooks/use-nmorph-z-index';
 import { INmorphOptions } from './types/index.ts';
 
 type VueI18nApp = App & {
@@ -51,7 +54,10 @@ export { default as zh } from './locales/zh.js';
 export { default as en } from './locales/en.js';
 
 export { nmorphLog } from './outside-utils';
-export { useNmorphTheme, useNmorphBrowser, useNmorphNotification, useNmorph } from './outside-hooks';
+export { useNmorphBrowser } from './outside-hooks/use-nmorph-browser';
+export { useNmorph } from './outside-hooks/use-nmorph';
+export { useNmorphNotification } from './outside-hooks/use-nmorph-notification';
+export { useNmorphTheme } from './outside-hooks/use-nmorph-theme';
 export { getNmorphThemeStyles } from './outside-hooks/use-nmorph-theme';
 export { getCommonStyles } from './hooks/use-common-styles';
 export * from './types/index.ts';

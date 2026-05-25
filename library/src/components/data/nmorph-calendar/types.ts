@@ -1,3 +1,4 @@
+import type { NmorphSelectionDateType } from '@/types';
 export type NmorphCalendarDateType = 'current' | 'previous' | 'next';
 export interface INmorphCalendarDate {
   monthType: NmorphCalendarDateType;
@@ -16,4 +17,18 @@ export interface INmorphDateFormatOptions {
   options?: Intl.DateTimeFormatOptions;
   format?: string;
   formatter?: NmorphDateFormatterType;
+}
+
+export interface INmorphCalendarProps {
+  markToday?: boolean;
+  initialDate?: Date;
+  range?: NmorphCalendarRangeType;
+  type?: keyof typeof NmorphSelectionDateType;
+  modelValue?: NmorphSelectedDateModelType;
+  cellHeight?: number | string;
+}
+
+export interface INmorphCalendarEmit {
+  (e: 'update:model-value', date: NmorphSelectedDateModelType): void;
+  (e: 'update-initial-date', date: Date): void;
 }

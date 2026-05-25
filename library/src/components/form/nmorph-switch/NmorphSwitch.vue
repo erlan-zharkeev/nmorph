@@ -1,25 +1,13 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
-import { toCssSize, useModifiers } from '@/utils';
+import { NmorphDomElementType } from '@/types';
+import { createCssSizeVariables, useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphIcon, NmorphIconLoaderDots } from '@/components';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
+import type { INmorphSwitchEmit, INmorphSwitchProps, NmorphSwitchModelType } from './types';
 
-type NmorphSwitchModelType = boolean | string | number;
-
-interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
-  modelValue?: NmorphSwitchModelType;
-  loading?: boolean;
-  activeValue?: NmorphSwitchModelType;
-  inactiveValue?: NmorphSwitchModelType;
-  width?: number | string;
-  height?: number | string;
-  offset?: number | string;
-  thumbHeight?: number | string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphSwitchProps>(), {
   modelValue: false,
   loading: false,
   disabled: false,
@@ -33,7 +21,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 
 const { id, name, tabindex } = useFormItemInput(props);
 
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphSwitchEmit>();
 const { modelValue, updateModelValue } = useFormItemModel<NmorphSwitchModelType>(
   props,
   (value) => emit('update:model-value', value),
@@ -68,18 +56,17 @@ const changeHandler = () => {
   updateModelValue(value);
 };
 
-interface INmorphEmit {
-  (e: 'update:model-value', val: boolean | string | number): void;
-}
 const inputDOMRef = ref<NmorphDomElementType>(null);
 defineExpose({ inputDOMRef });
 
-const styles = computed<CSSProperties>(() => ({
-  ...(props.width !== undefined && { '--width': toCssSize(props.width) }),
-  ...(props.height !== undefined && { '--height': toCssSize(props.height) }),
-  ...(props.offset !== undefined && { '--offset': toCssSize(props.offset) }),
-  ...(props.thumbHeight !== undefined && { '--thumb-height': toCssSize(props.thumbHeight) }),
-}));
+const styles = computed<CSSProperties>(() =>
+  createCssSizeVariables({
+    '--width': props.width,
+    '--height': props.height,
+    '--offset': props.offset,
+    '--thumb-height': props.thumbHeight,
+  })
+);
 
 watch(modelValue, (newValue) => {
   initialValue.value = newValue === props.activeValue;

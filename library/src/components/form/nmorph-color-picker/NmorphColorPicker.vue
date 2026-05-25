@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { NmorphComponentHeight } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, onMounted, ref, watch } from 'vue';
+import { useFocusableInput } from '@/hooks/use-focusable-input';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
+import type { INmorphColorPickerEmit, INmorphColorPickerProps } from './types';
 
-interface INmorphProps extends INmorphCommonInputProps {
-  modelValue?: string;
-  showValue?: boolean;
-  displayFormat?: 'hex' | 'rgb' | 'hsl';
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphColorPickerProps>(), {
   modelValue: '',
   disabled: false,
   height: 'basic',
@@ -18,11 +14,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   displayFormat: 'hex',
 });
 
-const emit = defineEmits<{
-  (e: 'update:model-value', val: string): void;
-  (e: 'focus'): void;
-  (e: 'blur'): void;
-}>();
+const emit = defineEmits<INmorphColorPickerEmit>();
 
 const { id, name, tabindex } = useFormItemInput(props);
 const { modelValue, updateModelValue } = useFormItemModel<string>(
@@ -50,7 +42,15 @@ const normalizeColor = (value?: string, fallback = '#000000') => {
   return fallback;
 };
 
-const inputDOMRef = ref<NmorphDomElementType>(null);
+const {
+  elementRef: inputDOMRef,
+  focused,
+  handleFocus,
+  handleBlur,
+} = useFocusableInput<HTMLInputElement>({
+  onFocus: () => emit('focus'),
+  onBlur: () => emit('blur'),
+});
 const resolveAccentColor = () => {
   if (typeof document === 'undefined') return '#006cb6';
 
@@ -60,7 +60,6 @@ const resolveAccentColor = () => {
 };
 
 const currentValue = ref(normalizeColor(modelValue.value));
-const focused = ref(false);
 
 watch(modelValue, (newValue) => {
   currentValue.value = newValue ? normalizeColor(newValue) : resolveAccentColor();
@@ -145,14 +144,8 @@ const displayValue = computed(() => {
         :value="currentValue"
         :disabled="props.disabled"
         @input="handleInput"
-        @focus="
-          focused = true;
-          emit('focus');
-        "
-        @blur="
-          focused = false;
-          emit('blur');
-        "
+        @focus="handleFocus"
+        @blur="handleBlur"
       />
       <div class="nmorph-color-picker__swatch" :style="{ background: currentValue }" />
       <span v-if="props.showValue" class="nmorph-color-picker__value">{{ displayValue }}</span>

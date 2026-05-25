@@ -2,23 +2,11 @@
 import { computed } from 'vue';
 import { NmorphButton, getMonthName, NmorphIcon, NmorphIconArrowLeft, NmorphIconArrowRight } from '@/components';
 import { useModifiers } from '@/utils';
+import type { INmorphCalendarHeaderEmit, INmorphCalendarHeaderProps } from './types';
 
-interface INmorphProps {
-  year: number;
-  month: number;
-  showPreviousMonthButton: boolean;
-  showNextMonthButton: boolean;
-  showTodayButton: boolean;
-}
+const props = withDefaults(defineProps<INmorphCalendarHeaderProps>(), {});
 
-const props = withDefaults(defineProps<INmorphProps>(), {});
-
-const emit = defineEmits<INmorphEmit>();
-interface INmorphEmit {
-  (e: 'click-previous-month'): void;
-  (e: 'click-today'): void;
-  (e: 'click-next-month'): void;
-}
+const emit = defineEmits<INmorphCalendarHeaderEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

@@ -8,23 +8,11 @@ import {
   NmorphIconChevronDown,
   getMonthName,
 } from '@/components';
+import type { INmorphDatePickerHeaderEmit, INmorphDatePickerHeaderProps } from './types';
 
-interface INmorphProps {
-  year: number;
-  month: number;
-}
-const props = withDefaults(defineProps<INmorphProps>(), {});
+const props = withDefaults(defineProps<INmorphDatePickerHeaderProps>(), {});
 
-interface INmorphEmit {
-  (e: 'prev-month'): void;
-  (e: 'next-month'): void;
-  (e: 'prev-year'): void;
-  (e: 'next-year'): void;
-  (e: 'change-year'): void;
-  (e: 'change-month'): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphDatePickerHeaderEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

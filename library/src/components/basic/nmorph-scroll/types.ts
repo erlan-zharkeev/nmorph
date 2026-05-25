@@ -39,3 +39,9 @@ export interface INmorphScrollExpose {
   scrollDOMContainer: NmorphDomElementType;
   moveTo: (coords: NmorphCoordsType) => void;
 }
+
+export interface INmorphScrollEmit {
+  (e: 'on-scroll', event: Event): void;
+  (e: 'update:model-value', coords: NmorphCoordsType): void;
+  (e: 'on-scroll-end'): void;
+}

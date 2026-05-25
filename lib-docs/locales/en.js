@@ -232,6 +232,14 @@ export default {
           "Polished form control sizing and surfaces, including checkbox and radio content height, select radius, text input backgrounds, autofill styling, and card padding propagation.",
         "dev-open-opt-in-browser":
           "Workspace dev scripts no longer open browser tabs by default; pass --open when the docs or sandbox should launch automatically.",
+        "component-types-split":
+          "Component prop, emit, slot, and shared library typings now live in focused type modules, keeping generated declarations easier to consume.",
+        "file-upload-type-helpers":
+          "NmorphFileUpload and form validation now share file type matching helpers, so MIME, extension, accept, and image-preview checks stay consistent.",
+        "image-preview-lazy-portal":
+          "NmorphImagePreview now mounts its preview portal only while open, so pages with many previews do not accumulate hidden portals in body.",
+        "badge-larger-sizes":
+          "NmorphBadge size now includes medium, large, and extra-large variants for larger tags, dots, and ribbons.",
         "style-utils-unification":
           "Unified modifier normalization and CSS size helpers across components so boolean modifiers and numeric CSS values follow one code path.",
         "virtual-list-style-helpers":
@@ -927,7 +935,8 @@ export default {
         "hide-on-falsy-value":
           "Hides the badge indicator when value is falsy, including 0 and an empty string.",
         color: "Sets the background color of the badge",
-        size: "Sets the badge text size: tiny, extra-small, or base",
+        size:
+          "Sets the badge text size: tiny, extra-small, base, medium, large, or extra-large",
         "z-index": "Defines the stacking order of the badge",
         "offset-y":
           "Vertical offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-y. Ignored when type is tag",

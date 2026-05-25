@@ -1,21 +1,12 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
-import { INmorphCommonInputProps, NmorphComponentHeight } from '@/types';
+import { NmorphComponentHeight } from '@/types';
 import { computed, nextTick, ref, watch, type WritableComputedRef } from 'vue';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 import NmorphTextInput from '../nmorph-text-input/NmorphTextInput.vue';
+import type { INmorphOTPInputEmit, INmorphOTPInputProps, INmorphTextInputExpose } from './types';
 
-type NmorphOtpInputMode = 'numeric' | 'text' | 'alphanumeric';
-
-interface INmorphProps extends INmorphCommonInputProps {
-  modelValue?: string;
-  length?: number;
-  mode?: NmorphOtpInputMode;
-  autofocus?: boolean;
-  autocapitalize?: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphOTPInputProps>(), {
   modelValue: '',
   length: 6,
   mode: 'numeric',
@@ -25,21 +16,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
 });
 
-interface INmorphEmit {
-  (e: 'update:model-value', val: string): void;
-  (e: 'focus'): void;
-  (e: 'blur'): void;
-  (e: 'complete', val: string): void;
-}
-
-interface INmorphTextInputExpose {
-  inputDOMRef?: HTMLInputElement | null;
-  focus?: () => void;
-  blur?: () => void;
-  select?: () => void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphOTPInputEmit>();
 
 const { id, name, autocomplete, tabindex } = useFormItemInput(props);
 const { modelValue, updateModelValue } = useFormItemModel<string>(

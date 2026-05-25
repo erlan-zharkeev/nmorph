@@ -15,3 +15,7 @@ export interface NmorphBreadcrumbInjection {
   breadcrumbs: NmorphBreadcrumbsType;
   breadcrumbId: string;
 }
+
+export interface INmorphBreadcrumbProps {
+  separator?: string;
+}

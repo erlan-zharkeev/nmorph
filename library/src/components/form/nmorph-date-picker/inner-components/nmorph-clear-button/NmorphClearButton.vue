@@ -2,12 +2,9 @@
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphIcon, NmorphIconError } from '@/components';
+import type { INmorphClearButtonEmit } from './types';
 
-interface INmorphEmit {
-  (e: 'clear'): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphClearButtonEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

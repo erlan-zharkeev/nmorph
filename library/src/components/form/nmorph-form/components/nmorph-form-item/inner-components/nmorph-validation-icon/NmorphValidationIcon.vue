@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
-import { ComputedRef, computed } from 'vue';
+import { computed } from 'vue';
 import { NmorphIcon, NmorphIconSuccess, NmorphIconError } from '@/components';
+import type { INmorphValidationIconProps } from './types';
 
-interface INmorphProps {
-  valid: boolean | ComputedRef<boolean>;
-  show?: boolean | ComputedRef<boolean>;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphValidationIconProps>(), {
   show: true,
 });
 

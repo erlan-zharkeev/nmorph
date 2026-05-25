@@ -3,6 +3,7 @@ import { INmorphInstance, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, inject, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { type INmorphScrollProps, type NmorphCoordsType } from './types';
+import type { INmorphScrollEmit } from './types';
 
 const props = withDefaults(defineProps<INmorphScrollProps>(), {
   height: '100%',
@@ -60,13 +61,7 @@ const barHeight = computed(() => `${props.xBarWidthInPx}px`);
 const nmorph = inject('nmorph') as INmorphInstance;
 let scrollEndTimeout: ReturnType<typeof setTimeout> | undefined;
 
-interface INmorphEmit {
-  (e: 'on-scroll', event: Event): void;
-  (e: 'update:model-value', coords: NmorphCoordsType): void;
-  (e: 'on-scroll-end'): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphScrollEmit>();
 
 const updateValue = () => {
   const element = scrollDOMContainer.value;

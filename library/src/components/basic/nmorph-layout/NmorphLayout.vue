@@ -1,19 +1,10 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
-import { toCssSize, useModifiers } from '@/utils';
+import { createCssSizeVariables, useModifiers } from '@/utils';
+import type { INmorphLayoutProps } from './types';
 
-type NmorphLayoutAsidePositionType = 'left' | 'right';
-
-interface INmorphProps {
-  tag?: string;
-  gap?: number | string;
-  asideWidth?: number | string;
-  asidePosition?: NmorphLayoutAsidePositionType;
-  fullHeight?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphLayoutProps>(), {
   tag: 'section',
   gap: 0,
   asideWidth: '240px',
@@ -29,10 +20,12 @@ const modifiers = computed(() =>
   })
 );
 
-const styles = computed<CSSProperties>(() => ({
-  '--nmorph-layout-gap': toCssSize(props.gap),
-  '--nmorph-layout-aside-width': toCssSize(props.asideWidth),
-}));
+const styles = computed<CSSProperties>(() =>
+  createCssSizeVariables({
+    '--nmorph-layout-gap': props.gap,
+    '--nmorph-layout-aside-width': props.asideWidth,
+  })
+);
 </script>
 
 <template>

@@ -2,20 +2,15 @@
 import { generateUUID, useModifiers } from '@/utils';
 import { computed, provide, ref, watch } from 'vue';
 import { NmorphIcon, INmorphCarouselInjection, NmorphIconChevronDown } from '@/components';
+import type { INmorphCarouselEmit, INmorphCarouselProps } from './types';
 
 const currentSlide = ref(0);
 
-interface INmorphProps {
-  loop?: boolean;
-}
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphCarouselProps>(), {
   loop: true,
 });
 
-interface INmorphEmit {
-  (e: 'change', value: number): void;
-}
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphCarouselEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

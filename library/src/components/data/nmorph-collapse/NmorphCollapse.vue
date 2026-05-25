@@ -1,18 +1,10 @@
 <script setup lang="ts">
 import { computed, provide, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
-import {
-  NmorphCollapseDataInjectionType,
-  NmorphCollapseModelType,
-  NmorphCollapseUpdateModelInjectionType,
-} from './types';
+import { NmorphCollapseDataInjectionType, NmorphCollapseUpdateModelInjectionType } from './types';
+import type { INmorphCollapseEmit, INmorphCollapseProps } from './types';
 
-interface INmorphProps {
-  modelValue: NmorphCollapseModelType;
-  accordion?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphCollapseProps>(), {
   accordion: false,
 });
 
@@ -40,10 +32,7 @@ const updateValue = (id: string, value: boolean) => {
 provide<NmorphCollapseDataInjectionType>('collapse-data', initialValue);
 provide<NmorphCollapseUpdateModelInjectionType>('update-model', updateValue);
 
-const emit = defineEmits<INmorphEmit>();
-interface INmorphEmit {
-  (e: 'update:model-value', value: NmorphCollapseModelType): void;
-}
+const emit = defineEmits<INmorphCollapseEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

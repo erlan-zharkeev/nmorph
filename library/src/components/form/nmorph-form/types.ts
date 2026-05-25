@@ -1,4 +1,5 @@
-import type { INmorphUseFormValidation, NmorphRulesType } from '@/hooks';
+import type { NmorphRulesType } from '@/hooks/use-field-validation';
+import type { INmorphUseFormValidation } from '@/hooks/use-form-validation';
 import type { INmorphCustomFileData } from '../nmorph-file-upload/types';
 import type { ComputedRef, Ref } from 'vue';
 
@@ -33,4 +34,9 @@ export interface NmorphFormItemInputDataType {
   touched: ComputedRef<boolean>;
   updateValue: (value: NmorphAvailableFormValueType) => void;
   validate: (value?: NmorphAvailableFormValueType) => void;
+}
+
+export interface INmorphFormProps {
+  value: NmorphFormValueType;
+  validateImmediately?: boolean;
 }

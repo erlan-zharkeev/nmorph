@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toCssSize, useModifiers } from '@/utils';
+import { createCssSizeVariables, useModifiers } from '@/utils';
 import { ComputedRef, computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import {
@@ -16,25 +16,9 @@ import {
   NmorphIconZoomOut,
   NmorphIconChevronDown,
 } from '@/components';
+import type { INmorphImagePreviewEmit, INmorphImagePreviewProps } from './types';
 
-interface INmorphProps {
-  modelValue?: boolean;
-  alt?: string;
-  initialIndex?: number;
-  src: string | string[];
-  scaleStep?: number;
-  minScaleLevel?: number;
-  maxScaleLevel?: number;
-  zIndex?: number;
-  showTrigger?: boolean;
-  showNavigationButtons?: boolean;
-  showActionBar?: boolean;
-  width?: number | string;
-  height?: number | string;
-  navigationButtonMargin?: number | string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphImagePreviewProps>(), {
   alt: '',
   modelValue: false,
   initialIndex: 0,
@@ -77,10 +61,6 @@ const closeHandler = () => {
   open.value = false;
   emit('update:model-value', open.value);
 };
-
-interface INmorphEmit {
-  (e: 'update:model-value', value: boolean): void;
-}
 
 const rotateRight = () => {
   rotateLevel.value = rotateLevel.value + 90;
@@ -165,19 +145,21 @@ const actions: INmorphAction[] = [
   },
 ];
 
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphImagePreviewEmit>();
 
 const multipleSources = computed(() => Array.isArray(props.src) && props.src.length > 0);
 const showNavigation = computed(() => props.showNavigationButtons && multipleSources.value);
-const triggerStyle = computed<CSSProperties>(() => ({
-  ...(props.width !== undefined && { '--width': toCssSize(props.width) }),
-  ...(props.height !== undefined && { '--height': toCssSize(props.height) }),
-}));
-const portalStyle = computed<CSSProperties>(() => ({
-  ...(props.navigationButtonMargin !== undefined && {
-    '--nmorph-image-preview-btn-margin': toCssSize(props.navigationButtonMargin),
-  }),
-}));
+const triggerStyle = computed<CSSProperties>(() =>
+  createCssSizeVariables({
+    '--width': props.width,
+    '--height': props.height,
+  })
+);
+const portalStyle = computed<CSSProperties>(() =>
+  createCssSizeVariables({
+    '--nmorph-image-preview-btn-margin': props.navigationButtonMargin,
+  })
+);
 </script>
 
 <template>
@@ -193,8 +175,8 @@ const portalStyle = computed<CSSProperties>(() => ({
       </NmorphImage>
     </div>
   </div>
-  <Teleport to="body">
-    <div v-show="open" class="nmorph-image-preview__portal" :class="modifiers" :style="portalStyle">
+  <Teleport v-if="open" to="body">
+    <div class="nmorph-image-preview__portal" :class="modifiers" :style="portalStyle">
       <NmorphOverlay
         :show="open"
         :z-index="props.zIndex"

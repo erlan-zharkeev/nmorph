@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, ref, inject, onMounted } from 'vue';
 import { useModifiers } from '@/utils';
-import { INmorphTabPaneProps, INmorphTabsDataProvider, getTabContentId, getTabLabelId } from '@/components';
+import { getTabContentId, getTabLabelId } from '@/components';
+import type { INmorphTabPaneProps, INmorphTabsDataProvider } from '../../types';
+import type { INmorphTabPaneComponentProps } from './types';
 
-interface INmorphProps extends INmorphTabPaneProps {}
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphTabPaneComponentProps>(), {
   label: '',
   disabled: false,
   content: '',

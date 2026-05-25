@@ -1,41 +1,18 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { toCssSize, useModifiers } from '@/utils';
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType, NmorphSelectionDateType } from '@/types';
-import {
-  NmorphDropdown,
-  NmorphIcon,
-  formatDate,
-  NmorphDateFormatterType,
-  NmorphSelectedDateModelType,
-  NmorphIconCalendar,
-} from '@/components';
+import { createCssSizeVariables, useModifiers } from '@/utils';
+import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { NmorphDropdown, NmorphIcon, formatDate, NmorphSelectedDateModelType, NmorphIconCalendar } from '@/components';
 import NmorphClearButton from './inner-components/nmorph-clear-button/NmorphClearButton.vue';
 import NmorphDatePickerContent from './inner-components/nmorph-date-picker-content/NmorphDatePickerContent.vue';
 import { useI18n } from 'vue-i18n';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
-
-interface INmorphProps extends INmorphCommonInputProps {
-  placeholder?: string;
-  modelValue?: NmorphSelectedDateModelType;
-  type?: keyof typeof NmorphSelectionDateType;
-  textSeparator?: string;
-  initialDate?: Date;
-  zIndex?: number;
-  dateLocale?: string | string[];
-  dateFormatOptions?: Intl.DateTimeFormatOptions;
-  dateFormat?: string;
-  dateFormatter?: NmorphDateFormatterType;
-  valueSeparator?: string;
-  rangeSeparator?: string;
-  width?: number | string;
-  calendarCellHeight?: number | string;
-}
+import type { INmorphDatePickerEmit, INmorphDatePickerProps } from './types';
 
 const { t } = useI18n();
 
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphDatePickerProps>(), {
   disabled: false,
   height: 'basic',
   placeholder: '',
@@ -58,10 +35,8 @@ const { id, name, autocomplete } = useFormItemInput(props);
 
 const placeholderText = computed(() => (props.placeholder ? props.placeholder : t('pickADate')));
 
-const emit = defineEmits<INmorphEmit>();
-interface INmorphEmit {
-  (e: 'update:model-value', modelValue: NmorphSelectedDateModelType): void;
-}
+const emit = defineEmits<INmorphDatePickerEmit>();
+
 const { modelValue, updateModelValue } = useFormItemModel<NmorphSelectedDateModelType>(
   props,
   (value) => emit('update:model-value', value),
@@ -84,12 +59,12 @@ const modifiers = computed(() =>
   })
 );
 
-const styles = computed<CSSProperties>(() => ({
-  ...(props.width !== undefined && { '--width': toCssSize(props.width) }),
-  ...(props.calendarCellHeight !== undefined && {
-    '--date-picker-calendar-cell-height': toCssSize(props.calendarCellHeight),
-  }),
-}));
+const styles = computed<CSSProperties>(() =>
+  createCssSizeVariables({
+    '--width': props.width,
+    '--date-picker-calendar-cell-height': props.calendarCellHeight,
+  })
+);
 
 const open = ref(false);
 const nmorphInputDOMRef = ref<NmorphDomElementType>(null);

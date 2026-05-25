@@ -2,20 +2,9 @@
 import { computed, ref, watch } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphRadioGroup, NmorphButton, NmorphIcon, NmorphRadio, NmorphIconChevronDown } from '@/components';
-import { NmorphComponentHeight } from '@/types';
+import type { INmorphPaginationEmit, INmorphPaginationProps } from './types';
 
-interface INmorphProps {
-  totalElementsQuantity: number;
-  modelValue?: number;
-  elementsQuantityOnPage?: number;
-  disabled?: boolean;
-  hideOnSinglePage?: boolean;
-  maxVisiblePages?: number;
-  fastForwardStep?: number;
-  height?: keyof typeof NmorphComponentHeight;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphPaginationProps>(), {
   modelValue: 1,
   elementsQuantityOnPage: 2,
   disabled: false,
@@ -25,11 +14,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'basic',
 });
 
-interface INmorphEmit {
-  (e: 'update:model-value', currentPage: number): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphPaginationEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

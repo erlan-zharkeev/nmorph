@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { toCssSize, useModifiers } from '@/utils';
+import { createCssSizeVariables, useModifiers } from '@/utils';
 import {
   NmorphTable,
   NmorphTableColumn,
@@ -11,26 +11,16 @@ import {
   hasAnyRangeDateInNextMonth,
   isTodayInMonthRange,
   INmorphCalendarDate,
-  NmorphCalendarRangeType,
   NmorphDateType,
   NmorphSelectedDateModelType,
   NmorphTableDataType,
   resetTimeToZero,
 } from '@/components';
 import NmorphCalendarHeader from './inner-components/nmorph-calendar-header/NmorphCalendarHeader.vue';
-import { useCalendarTexts } from './hooks';
-import { NmorphSelectionDateType } from '@/types';
+import { useCalendarTexts } from './hooks/use-calendar-texts';
+import type { INmorphCalendarEmit, INmorphCalendarProps } from './types';
 
-interface INmorphProps {
-  markToday?: boolean;
-  initialDate?: Date;
-  range?: NmorphCalendarRangeType;
-  type?: keyof typeof NmorphSelectionDateType;
-  modelValue?: NmorphSelectedDateModelType;
-  cellHeight?: number | string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphCalendarProps>(), {
   markToday: true,
   initialDate: () => new Date(),
   range: undefined,
@@ -39,11 +29,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   cellHeight: undefined,
 });
 
-const emit = defineEmits<INmorphEmit>();
-interface INmorphEmit {
-  (e: 'update:model-value', date: NmorphSelectedDateModelType): void;
-  (e: 'update-initial-date', date: Date): void;
-}
+const emit = defineEmits<INmorphCalendarEmit>();
 
 const { days } = useCalendarTexts();
 
@@ -208,9 +194,11 @@ const modifiers = computed(() =>
     'nmorph-calendar': [],
   })
 );
-const styles = computed<CSSProperties>(() => ({
-  ...(props.cellHeight !== undefined && { '--table-data-cell-height': toCssSize(props.cellHeight) }),
-}));
+const styles = computed<CSSProperties>(() =>
+  createCssSizeVariables({
+    '--table-data-cell-height': props.cellHeight,
+  })
+);
 const dateData = (data: unknown) => data as INmorphCalendarDate;
 
 updateCalendar();

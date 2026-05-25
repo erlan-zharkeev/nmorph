@@ -1,24 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useVirtualList } from '@/hooks';
-import { toCssSize, useModifiers } from '@/utils';
+import { useVirtualList } from '@/hooks/use-virtual-list';
+import { createCssSizeVariables, useModifiers } from '@/utils';
+import type { INmorphVirtualListEmit, INmorphVirtualListProps } from './types';
 
-type NmorphVirtualListKeyGetter = (item: unknown, index: number) => string | number;
-
-interface INmorphProps {
-  items?: unknown[];
-  height?: number | string;
-  maxHeight?: number | string;
-  itemHeight?: number;
-  overscan?: number;
-  dynamic?: boolean;
-  disabled?: boolean;
-  itemKey?: string | NmorphVirtualListKeyGetter;
-  itemTag?: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphVirtualListProps>(), {
   items: () => [],
   height: '320px',
   maxHeight: 'none',
@@ -30,11 +17,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   itemTag: 'div',
 });
 
-interface INmorphEmit {
-  (e: 'on-scroll', event: Event): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphVirtualListEmit>();
 
 const items = computed(() => props.items);
 const enabled = computed(() => !props.disabled);
@@ -57,8 +40,10 @@ const modifiers = computed(() =>
 );
 
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-virtual-list-height': toCssSize(props.height),
-  '--nmorph-virtual-list-max-height': toCssSize(props.maxHeight),
+  ...createCssSizeVariables({
+    '--nmorph-virtual-list-height': props.height,
+    '--nmorph-virtual-list-max-height': props.maxHeight,
+  }),
   '--nmorph-virtual-list-item-height': `${props.itemHeight}px`,
 }));
 

@@ -1,21 +1,19 @@
 <script setup lang="ts">
 import { computed, type Component, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { createCssVariables, useModifiers } from '@/utils';
 import {
   NmorphIcon,
   NmorphAlertType,
-  INmorphAlertProps,
   NmorphIconSuccessFilled,
   NmorphIconWarnTriangleFilled,
   NmorphIconInfoFilled,
   NmorphIconCircleCloseFilled,
   NmorphIconCross,
 } from '@/components';
+import type { INmorphAlertComponentProps, INmorphAlertEmit } from './types';
 
-interface INmorphProps extends INmorphAlertProps {}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphAlertComponentProps>(), {
   id: undefined,
   type: 'info',
   closable: false,
@@ -29,10 +27,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   backgroundColor: undefined,
 });
 
-interface INmorphEmit {
-  (e: 'close'): void;
-}
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphAlertEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -42,7 +37,9 @@ const modifiers = computed(() =>
 
 const styles = computed<CSSProperties>(() => ({
   '--nmorph-alert-close-align': props.closeIconPosition,
-  ...(props.backgroundColor !== undefined && { '--background-color': props.backgroundColor }),
+  ...createCssVariables({
+    '--background-color': props.backgroundColor,
+  }),
 }));
 
 const closeHandler = () => {

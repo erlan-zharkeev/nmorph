@@ -2,33 +2,20 @@
 import { computed, nextTick, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { getNmorphOptionHeight, resolveDomElement, toCssSize, useModifiers } from '@/utils';
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { useVirtualList, useZIndex } from '@/hooks';
+import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { useZIndex } from '@/hooks/use-z-index';
+import { useVirtualList } from '@/hooks/use-virtual-list';
 import {
   NmorphIcon,
   NmorphDropdown,
   NmorphTextInput,
-  NmorphAutocompleteActionCallbackType,
   INmorphAutocompleteListItem,
   NmorphIconLoaderDots,
 } from '@/components';
 import { useFormItemModel } from '../nmorph-form/use-form-item-input';
+import type { INmorphAutocompleteEmit, INmorphAutocompleteProps } from './types';
 
-interface INmorphProps extends INmorphCommonInputProps {
-  modelValue?: string;
-  placeholder?: string;
-  clearable?: boolean;
-  list: INmorphAutocompleteListItem[];
-  actionCallback?: NmorphAutocompleteActionCallbackType;
-  zIndex?: number;
-  virtual?: boolean;
-  virtualItemHeight?: number;
-  virtualMaxHeight?: number | string;
-  virtualOverscan?: number;
-  virtualDynamicHeight?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphAutocompleteProps>(), {
   modelValue: '',
   placeholder: '',
   height: 'basic',
@@ -44,11 +31,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   virtualDynamicHeight: false,
 });
 
-interface INmorphEmit {
-  (e: 'update:model-value', value: string): void;
-  (e: 'select', value: unknown): void;
-}
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphAutocompleteEmit>();
 const { modelValue, updateModelValue } = useFormItemModel<string>(
   props,
   (value) => emit('update:model-value', value),

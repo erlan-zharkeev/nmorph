@@ -3,11 +3,9 @@ import { computed, ref } from 'vue';
 import { generateUUID, useModifiers } from '@/utils';
 import { provide } from 'vue';
 import { NmorphBreadcrumbInjection, NmorphBreadcrumbsType } from './types';
+import type { INmorphBreadcrumbProps } from './types';
 
-interface INmorphProps {
-  separator?: string;
-}
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphBreadcrumbProps>(), {
   separator: '/',
 });
 

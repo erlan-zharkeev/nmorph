@@ -1,20 +1,10 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue';
-import { useZIndex } from '@/hooks';
+import { useZIndex } from '@/hooks/use-z-index';
+import type { INmorphOverlayEmit, INmorphOverlayProps } from './types';
 
-interface INmorphProps {
-  show: boolean;
-  transparent?: boolean;
-  zIndex?: number;
-  teleportTo?: string | HTMLElement;
-  disabledTeleport?: boolean;
-  closeOnEscape?: boolean;
-  trapFocus?: boolean;
-  restoreFocus?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphOverlayProps>(), {
   transparent: false,
   zIndex: undefined,
   teleportTo: 'body',
@@ -40,12 +30,7 @@ const clickHandler = () => {
   emit('on-outside-click');
 };
 
-interface INmorphEmit {
-  (e: 'on-outside-click'): void;
-  (e: 'on-escape-keydown'): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphOverlayEmit>();
 
 const contentRef = ref<HTMLElement | null>(null);
 let previousActiveElement: HTMLElement | null = null;

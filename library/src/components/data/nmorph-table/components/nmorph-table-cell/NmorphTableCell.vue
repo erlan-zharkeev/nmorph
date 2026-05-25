@@ -3,14 +3,12 @@ import { computed, onMounted, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { inject, nextTick } from 'vue';
 import { NmorphTableColumnPropertyInjectionType, NmorphTableIdInjectionType } from '@/components';
+import type { INmorphTableCellProps } from './types';
 
 const columnProperty = inject<NmorphTableColumnPropertyInjectionType>('column-property');
 const tableIdentifier = inject<NmorphTableIdInjectionType>('table-identifier');
 
-interface INmorphProps {
-  row: number;
-}
-const props = withDefaults(defineProps<INmorphProps>(), {});
+const props = withDefaults(defineProps<INmorphTableCellProps>(), {});
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-table-cell': [],

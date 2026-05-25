@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { NmorphDomElementType } from '@/types';
-import { toCssSize, useModifiers } from '@/utils';
+import { createCssSizeVariables, useModifiers } from '@/utils';
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphTooltip } from '@/components';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
-import type { INmorphSliderProps } from './types';
+import type { INmorphSliderEmit, INmorphSliderProps } from './types';
 
 const props = withDefaults(defineProps<INmorphSliderProps>(), {
   modelValue: 0,
@@ -32,9 +32,7 @@ const modifiers = computed(() =>
 const thumbWidthCss = computed(() => `${props.thumbWidth}px`);
 const tooltipVisible = ref(props.showTooltip);
 
-const emit = defineEmits<{
-  (e: 'update:model-value', val: number): void;
-}>();
+const emit = defineEmits<INmorphSliderEmit>();
 const { modelValue, updateModelValue } = useFormItemModel<number>(
   props,
   (value) => emit('update:model-value', value),
@@ -160,9 +158,9 @@ const nativeInputHandler = (event: Event): void => {
 const transitionEnabled = ref(true);
 const styles = computed<CSSProperties>(() => ({
   '--nmorph-slider-thumb-width': thumbWidthCss.value,
-  ...(props.sliderHeight !== undefined && { '--slider-height': toCssSize(props.sliderHeight) }),
-  ...(props.valueFixedContainerHeight !== undefined && {
-    '--value-fixed-container-height': toCssSize(props.valueFixedContainerHeight),
+  ...createCssSizeVariables({
+    '--slider-height': props.sliderHeight,
+    '--value-fixed-container-height': props.valueFixedContainerHeight,
   }),
 }));
 </script>

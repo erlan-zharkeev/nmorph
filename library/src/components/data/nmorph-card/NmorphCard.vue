@@ -3,17 +3,9 @@ import { NmorphShadowType } from '@/types';
 import { computed, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
 import { toCssSize, useModifiers } from '@/utils';
+import type { INmorphCardProps } from './types';
 
-interface INmorphProps {
-  shadowType?: keyof typeof NmorphShadowType;
-  combinedShadowBorderWidth?: number;
-  cardPadding?: number | string;
-  contentClass?: string;
-  fill?: boolean;
-  tag?: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphCardProps>(), {
   shadowType: 'outset',
   combinedShadowBorderWidth: 0,
   cardPadding: undefined,

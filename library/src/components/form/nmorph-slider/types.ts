@@ -11,3 +11,7 @@ export interface INmorphSliderProps extends Omit<INmorphCommonInputProps, 'heigh
   sliderHeight?: number | string;
   valueFixedContainerHeight?: number | string;
 }
+
+export interface INmorphSliderEmit {
+  (e: 'update:model-value', val: number): void;
+}

@@ -6,6 +6,6 @@ export { default as NmorphContextMenu } from './nmorph-context-menu/NmorphContex
 export * from './nmorph-context-menu/types';
 export { default as NmorphDropdown } from './nmorph-dropdown/NmorphDropdown.vue';
 export { default as NmorphTabs } from './nmorph-tabs/NmorphTabs.vue';
-export * from './nmorph-tabs/type';
+export * from './nmorph-tabs/types';
 export * from './nmorph-tabs/utils';
 export { default as NmorphTabPane } from './nmorph-tabs/components/nmorph-tab-pane/NmorphTabPane.vue';

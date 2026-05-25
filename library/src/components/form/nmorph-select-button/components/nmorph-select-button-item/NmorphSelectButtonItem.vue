@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
+import { NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, inject, ref } from 'vue';
 import {
   NmorphSelectButtonChangeHandlerInjectionType,
   NmorphSelectButtonSelectedValueInjectionType,
 } from '@/components';
+import type { INmorphSelectButtonItemProps } from './types';
 
 const selectedValue = inject<NmorphSelectButtonSelectedValueInjectionType | undefined>(
   'select-button-selected-value',
@@ -16,11 +17,7 @@ const changeHandler = inject<NmorphSelectButtonChangeHandlerInjectionType | unde
   undefined
 );
 
-interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
-  value: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphSelectButtonItemProps>(), {
   disabled: false,
   tabindex: 0,
 });

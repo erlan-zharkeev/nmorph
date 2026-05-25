@@ -1,17 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { createCssVariables, useModifiers } from '@/utils';
 import { NmorphSkeletonItem } from '@/components';
+import type { INmorphSkeletonProps } from './types';
 
-interface INmorphProps {
-  animated?: boolean;
-  loading?: boolean;
-  rows?: number;
-  loadingGradient?: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphSkeletonProps>(), {
   animated: true,
   loading: true,
   rows: 0,
@@ -24,9 +18,11 @@ const modifiers = computed(() =>
   })
 );
 
-const styles = computed<CSSProperties>(() => ({
-  ...(props.loadingGradient !== undefined && { '--loading-gradient': props.loadingGradient }),
-}));
+const styles = computed<CSSProperties>(() =>
+  createCssVariables({
+    '--loading-gradient': props.loadingGradient,
+  })
+);
 </script>
 
 <template>

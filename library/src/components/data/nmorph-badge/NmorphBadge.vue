@@ -1,43 +1,11 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, nextTick, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { toCssSize, useModifiers } from '@/utils';
+import { createCssSizeVariables, createCssVariables, useModifiers } from '@/utils';
 import { NmorphDomElementType } from '@/types';
+import type { INmorphBadgeProps, INmorphBadgeSlots, NmorphBadgeType } from './types';
 
-type NmorphBadgeSize = 'tiny' | 'extra-small' | 'base';
-type NmorphBadgeType = 'default' | 'dot' | 'tag' | 'ribbon';
-type NmorphBadgeRibbonCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-
-interface INmorphProps {
-  value?: number | string;
-  max?: number;
-  type?: NmorphBadgeType;
-  ribbonCorner?: NmorphBadgeRibbonCorner;
-  ribbonTilt?: boolean;
-  /**
-   * @deprecated Use `type="dot"` instead.
-   */
-  isDot?: boolean;
-  /**
-   * @deprecated Use `type="tag"` instead.
-   */
-  isTag?: boolean;
-  hidden?: boolean;
-  hideOnFalsyValue?: boolean;
-  color?: string;
-  size?: NmorphBadgeSize;
-  offsetY?: number;
-  offsetX?: number;
-  zIndex?: number;
-  disabled?: boolean;
-}
-
-type NmorphBadgeValueSlotProps = {
-  value: INmorphProps['value'];
-  displayValue: string | number | undefined;
-};
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphBadgeProps>(), {
   value: undefined,
   max: 99,
   type: 'default',
@@ -55,10 +23,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
 });
 
-defineSlots<{
-  default?: (props: Record<string, never>) => unknown;
-  value?: (props: NmorphBadgeValueSlotProps) => unknown;
-}>();
+defineSlots<INmorphBadgeSlots>();
 
 const resolvedType = computed<NmorphBadgeType>(() => {
   if (props.type !== 'default') return props.type;
@@ -135,9 +100,13 @@ const badgeWidth = ref(0);
 const badgeHeight = ref(0);
 
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-badge-color': props.color,
-  ...(props.offsetX !== 0 && { '--nmorph-badge-ribbon-offset-x': toCssSize(props.offsetX) }),
-  ...(props.offsetY !== 0 && { '--nmorph-badge-ribbon-offset-y': toCssSize(props.offsetY) }),
+  ...createCssVariables({
+    '--nmorph-badge-color': props.color,
+  }),
+  ...createCssSizeVariables({
+    '--nmorph-badge-ribbon-offset-x': props.offsetX !== 0 && props.offsetX,
+    '--nmorph-badge-ribbon-offset-y': props.offsetY !== 0 && props.offsetY,
+  }),
 }));
 
 const updateBadgeSize = async () => {
@@ -196,6 +165,9 @@ watch(
 $nmorph-badge-dot-size-tiny: 3px;
 $nmorph-badge-dot-size-extra-small: 4px;
 $nmorph-badge-dot-size-base: 4px;
+$nmorph-badge-dot-size-medium: 5px;
+$nmorph-badge-dot-size-large: 6px;
+$nmorph-badge-dot-size-extra-large: 8px;
 
 .nmorph-badge {
   position: relative;
@@ -247,6 +219,18 @@ $nmorph-badge-dot-size-base: 4px;
 
   &.nmorph-badge--extra-small .nmorph-badge__content {
     font-size: var(--font-size-extra-small);
+  }
+
+  &.nmorph-badge--medium .nmorph-badge__content {
+    font-size: var(--font-size-medium);
+  }
+
+  &.nmorph-badge--large .nmorph-badge__content {
+    font-size: var(--font-size-large);
+  }
+
+  &.nmorph-badge--extra-large .nmorph-badge__content {
+    font-size: var(--font-size-extra-large);
   }
 
   .nmorph-badge__container--hidden {
@@ -351,6 +335,18 @@ $nmorph-badge-dot-size-base: 4px;
     font-size: var(--font-size-tiny);
   }
 
+  &.nmorph-badge--medium .nmorph-badge__container--ribbon .nmorph-badge__content {
+    font-size: var(--font-size-medium);
+  }
+
+  &.nmorph-badge--large .nmorph-badge__container--ribbon .nmorph-badge__content {
+    font-size: var(--font-size-large);
+  }
+
+  &.nmorph-badge--extra-large .nmorph-badge__container--ribbon .nmorph-badge__content {
+    font-size: var(--font-size-extra-large);
+  }
+
   .nmorph-badge__dot {
     width: var(--nmorph-badge-dot-size);
     height: var(--nmorph-badge-dot-size);
@@ -369,6 +365,27 @@ $nmorph-badge-dot-size-base: 4px;
     --nmorph-badge-ribbon-height: 20px;
     --nmorph-badge-ribbon-corner-size: 56px;
     --nmorph-badge-ribbon-width: 104px;
+  }
+
+  &.nmorph-badge--medium {
+    --nmorph-badge-dot-size: #{$nmorph-badge-dot-size-medium};
+    --nmorph-badge-ribbon-height: 28px;
+    --nmorph-badge-ribbon-corner-size: 68px;
+    --nmorph-badge-ribbon-width: 128px;
+  }
+
+  &.nmorph-badge--large {
+    --nmorph-badge-dot-size: #{$nmorph-badge-dot-size-large};
+    --nmorph-badge-ribbon-height: 32px;
+    --nmorph-badge-ribbon-corner-size: 76px;
+    --nmorph-badge-ribbon-width: 144px;
+  }
+
+  &.nmorph-badge--extra-large {
+    --nmorph-badge-dot-size: #{$nmorph-badge-dot-size-extra-large};
+    --nmorph-badge-ribbon-height: 36px;
+    --nmorph-badge-ribbon-corner-size: 84px;
+    --nmorph-badge-ribbon-width: 160px;
   }
 }
 </style>

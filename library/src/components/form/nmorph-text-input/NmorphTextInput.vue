@@ -1,22 +1,15 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { NmorphComponentHeight } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref, useSlots } from 'vue';
 import { NmorphIcon, NmorphButton, NmorphIconError, NmorphIconEye, NmorphIconEyeBlocked } from '@/components';
+import { useFocusableInput } from '@/hooks/use-focusable-input';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
+import type { INmorphTextInputEmit, INmorphTextInputProps } from './types';
 
 const slots = useSlots();
 
-interface INmorphProps extends INmorphCommonInputProps {
-  placeholder?: string;
-  typePassword?: boolean;
-  modelValue?: string;
-  clearable?: boolean;
-  indentation?: string;
-  inputAttrs?: Record<string, string | number | boolean | undefined>;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphTextInputProps>(), {
   placeholder: '',
   typePassword: false,
   disabled: false,
@@ -27,15 +20,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   inputAttrs: () => ({}),
 });
 
-interface INmorphEmit {
-  (e: 'update:model-value', val: string): void;
-  (e: 'focus'): void;
-  (e: 'blur'): void;
-  (e: 'on-enter'): void;
-  (e: 'keydown', event: KeyboardEvent): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphTextInputEmit>();
 const { id, name, autocomplete, tabindex } = useFormItemInput(props);
 const { modelValue, updateModelValue } = useFormItemModel<string>(
   props,
@@ -69,30 +54,18 @@ const type = computed(() => {
   return props.typePassword && !showPassword.value && !props.clearable ? 'password' : 'text';
 });
 
-const focused = ref(false);
-
-const handleFocus = () => {
-  emit('focus');
-  focused.value = true;
-};
-const handleBlur = () => {
-  emit('blur');
-  focused.value = false;
-};
-
-const inputDOMRef = ref<NmorphDomElementType>(null);
-
-const focus = () => {
-  inputDOMRef.value?.focus();
-};
-
-const blur = () => {
-  inputDOMRef.value?.blur();
-};
-
-const select = () => {
-  (inputDOMRef.value as HTMLInputElement | null)?.select();
-};
+const {
+  elementRef: inputDOMRef,
+  focused,
+  handleFocus,
+  handleBlur,
+  focus,
+  blur,
+  select,
+} = useFocusableInput<HTMLInputElement>({
+  onFocus: () => emit('focus'),
+  onBlur: () => emit('blur'),
+});
 
 defineExpose({ inputDOMRef, focus, blur, select });
 

@@ -1,15 +1,10 @@
 <script setup lang="ts">
 import { NmorphComponentHeight } from '@/types';
 import { useModifiers } from '@/utils';
-import { Ref, computed } from 'vue';
+import { computed } from 'vue';
+import type { INmorphErrorBoxProps } from './types';
 
-interface INmorphProps {
-  height?: keyof typeof NmorphComponentHeight;
-  errors?: string[] | Ref<string[]>;
-  staticHeight?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphErrorBoxProps>(), {
   height: 'basic',
   errors: () => [],
   staticHeight: false,

@@ -1,35 +1,21 @@
 <script setup lang="ts">
 import { computed, nextTick, provide, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { generateUUID, resolveDomElement, toCssSize, useModifiers } from '@/utils';
-import { NmorphDomElementType, NmorphSortOrderType } from '@/types';
-import { useVirtualList } from '@/hooks';
 import {
-  NmorphTableDataType,
-  NmorphTableSortType,
-  INmorphTableColumnProps,
-  INmorphTableDataInjection,
-  NmorphTableIdInjectionType,
-} from '@/components';
+  createCssSizeVariables,
+  createCssVariables,
+  generateUUID,
+  resolveDomElement,
+  toCssSize,
+  useModifiers,
+} from '@/utils';
+import { NmorphDomElementType, NmorphSortOrderType } from '@/types';
+import { useVirtualList } from '@/hooks/use-virtual-list';
+import { INmorphTableColumnProps, INmorphTableDataInjection, NmorphTableIdInjectionType } from '@/components';
 import NmorphSortButton from './inner-components/nmorph-sort-button/NmorphSortButton.vue';
+import type { INmorphTableProps } from './types';
 
-interface INmorphProps {
-  data?: NmorphTableDataType;
-  rowHover?: boolean;
-  bordered?: boolean;
-  sort?: NmorphTableSortType;
-  design?: 'nmorph' | 'common';
-  virtual?: boolean;
-  virtualHeight?: number | string;
-  virtualOverscan?: number;
-  virtualRowHeight?: number;
-  virtualDynamicHeight?: boolean;
-  borderColor?: string;
-  cellHeight?: number | string;
-  rowHoverBackground?: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphTableProps>(), {
   data: () => [],
   bordered: false,
   sort: undefined,
@@ -141,9 +127,13 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
 
 const virtualHeight = computed(() => toCssSize(props.virtualHeight));
 const tableStyle = computed<CSSProperties>(() => ({
-  ...(props.borderColor !== undefined && { '--border-color': props.borderColor }),
-  ...(props.cellHeight !== undefined && { '--table-cell-height': toCssSize(props.cellHeight) }),
-  ...(props.rowHoverBackground !== undefined && { '--table-background-row-hover': props.rowHoverBackground }),
+  ...createCssVariables({
+    '--border-color': props.borderColor,
+    '--table-background-row-hover': props.rowHoverBackground,
+  }),
+  ...createCssSizeVariables({
+    '--table-cell-height': props.cellHeight,
+  }),
 }));
 const tableBodyStyle = computed<Record<string, string | undefined>>(() => ({
   '--table-virtual-row-height': `${props.virtualRowHeight}px`,

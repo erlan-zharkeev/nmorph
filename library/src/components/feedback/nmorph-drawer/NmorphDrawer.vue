@@ -2,25 +2,10 @@
 import { computed, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphIcon, NmorphIconCross, NmorphOverlay } from '@/components';
-import { toCssSize, useModifiers } from '@/utils';
+import { createCssSizeVariables, useModifiers } from '@/utils';
+import type { INmorphDrawerEmit, INmorphDrawerProps } from './types';
 
-type NmorphDrawerPlacementType = 'left' | 'right' | 'top' | 'bottom';
-
-interface INmorphProps {
-  modelValue?: boolean;
-  title?: string;
-  placement?: NmorphDrawerPlacementType;
-  size?: number | string;
-  showClose?: boolean;
-  closeOnOverlay?: boolean;
-  closeOnEscape?: boolean;
-  zIndex?: number;
-  teleportTo?: string | HTMLElement;
-  disabledTeleport?: boolean;
-  contentClass?: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphDrawerProps>(), {
   modelValue: false,
   title: '',
   placement: 'right',
@@ -34,12 +19,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   contentClass: '',
 });
 
-interface INmorphEmit {
-  (e: 'on-close'): void;
-  (e: 'update:model-value', value: boolean): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphDrawerEmit>();
 const slots = useSlots();
 
 const modifiers = computed(() =>
@@ -48,9 +28,11 @@ const modifiers = computed(() =>
   })
 );
 
-const drawerStyle = computed<CSSProperties>(() => ({
-  '--nmorph-drawer-size': toCssSize(props.size),
-}));
+const drawerStyle = computed<CSSProperties>(() =>
+  createCssSizeVariables({
+    '--nmorph-drawer-size': props.size,
+  })
+);
 
 const closeHandler = () => {
   emit('on-close');

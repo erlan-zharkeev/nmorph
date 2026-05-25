@@ -1,47 +1,16 @@
 <script setup lang="ts">
 import { computed, markRaw, onBeforeUnmount, ref, toRaw, watch } from 'vue';
-import type { CSSProperties, Component } from 'vue';
+import type { CSSProperties } from 'vue';
 import NmorphDropdown from '../nmorph-dropdown/NmorphDropdown.vue';
-import type { NmorphDomElementType, NmorphPlacementType } from '@/types';
-import type { NmorphContextMenuOption } from './types';
+import type { NmorphDomElementType } from '@/types';
+import type {
+  INmorphContextMenuEmit,
+  INmorphContextMenuProps,
+  INmorphNormalizedContextMenuOption,
+  NmorphContextMenuAnchorType,
+} from './types';
 
-type NmorphContextMenuTrigger = 'contextmenu' | 'click' | 'both';
-type NmorphContextMenuAnchorType = 'point' | 'element';
-
-interface INmorphNormalizedContextMenuOption {
-  key: string;
-  label?: string | number;
-  value: unknown;
-  component?: Component;
-  componentProps?: Record<string, unknown>;
-  disabled: boolean;
-  color?: string;
-  closeOnClick: boolean;
-  raw: NmorphContextMenuOption;
-}
-
-interface INmorphProps {
-  modelValue?: boolean | null;
-  options?: NmorphContextMenuOption[];
-  trigger?: NmorphContextMenuTrigger;
-  placement?: NmorphPlacementType;
-  width?: number | string;
-  minWidth?: number | string;
-  maxWidth?: number | string;
-  xOffset?: number;
-  yOffset?: number;
-  fillWidth?: boolean;
-  zIndex?: number;
-  closeOnEscape?: boolean;
-  trapFocus?: boolean;
-  disabled?: boolean;
-  closeOnScroll?: boolean;
-  role?: string;
-  ariaLabel?: string;
-  hideShadow?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphContextMenuProps>(), {
   modelValue: null,
   options: () => [],
   trigger: 'contextmenu',
@@ -62,16 +31,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   hideShadow: false,
 });
 
-interface INmorphEmit {
-  (e: 'update:model-value', value: boolean): void;
-  (e: 'open', event: MouseEvent | KeyboardEvent): void;
-  (e: 'close'): void;
-  (e: 'select', option: NmorphContextMenuOption, index: number): void;
-  (e: 'on-outside-click'): void;
-  (e: 'on-escape-keydown'): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphContextMenuEmit>();
 
 const triggerDOMRef = ref<HTMLElement | null>(null);
 const relativeElement = ref<NmorphDomElementType>(null);

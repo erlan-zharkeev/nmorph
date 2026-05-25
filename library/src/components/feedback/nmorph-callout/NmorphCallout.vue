@@ -1,23 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { CSSProperties } from 'vue';
-import { toCssSize } from '@/utils';
-import type { NmorphCalloutType } from './types';
+import { createCssSizeVariables, createCssVariables } from '@/utils';
+import type { INmorphCalloutProps } from './types';
 
-interface INmorphProps {
-  type?: NmorphCalloutType;
-  title?: string;
-  content: string;
-  color?: string;
-  padding?: number | string;
-  borderRadius?: number | string;
-  accentWidth?: number | string;
-  titleGap?: number | string;
-  titleFontSize?: number | string;
-  contentFontSize?: number | string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphCalloutProps>(), {
   type: 'info',
   title: '',
   color: undefined,
@@ -30,13 +17,17 @@ const props = withDefaults(defineProps<INmorphProps>(), {
 });
 
 const styles = computed<CSSProperties>(() => ({
-  '--callout-padding': toCssSize(props.padding),
-  '--callout-border-radius': toCssSize(props.borderRadius),
-  '--callout-accent-width': toCssSize(props.accentWidth),
-  '--callout-title-gap': toCssSize(props.titleGap),
-  '--callout-title-font-size': toCssSize(props.titleFontSize),
-  '--callout-content-font-size': toCssSize(props.contentFontSize),
-  ...(props.color !== undefined && { '--callout-color': props.color }),
+  ...createCssSizeVariables({
+    '--callout-padding': props.padding,
+    '--callout-border-radius': props.borderRadius,
+    '--callout-accent-width': props.accentWidth,
+    '--callout-title-gap': props.titleGap,
+    '--callout-title-font-size': props.titleFontSize,
+    '--callout-content-font-size': props.contentFontSize,
+  }),
+  ...createCssVariables({
+    '--callout-color': props.color,
+  }),
 }));
 </script>
 

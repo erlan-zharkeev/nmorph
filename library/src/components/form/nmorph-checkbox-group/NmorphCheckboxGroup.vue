@@ -3,25 +3,13 @@ import { computed, provide, ref, watch } from 'vue';
 import { NmorphCheckbox } from '@/components';
 import { useModifiers } from '@/utils';
 import {
-  INmorphCheckboxOption,
-  INmorphCommonInputProps,
-  NmorphCheckboxDesignType,
   NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType,
   NmorphCheckboxGroupSelectedValueInjectionType,
-  NmorphComponentDirection,
-  NmorphSelectionControlHeightType,
 } from '@/types';
 import { useFormItemModel } from '../nmorph-form/use-form-item-input';
+import type { INmorphCheckboxGroupEmit, INmorphCheckboxGroupProps } from './types';
 
-interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
-  modelValue?: string[];
-  options?: INmorphCheckboxOption[];
-  design?: NmorphCheckboxDesignType;
-  direction?: keyof typeof NmorphComponentDirection;
-  height?: NmorphSelectionControlHeightType;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphCheckboxGroupProps>(), {
   modelValue: () => [],
   options: () => [],
   design: 'button',
@@ -30,11 +18,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   disabled: false,
 });
 
-interface INmorphEmit {
-  (e: 'update:model-value', val: string[]): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphCheckboxGroupEmit>();
 const { modelValue, updateModelValue } = useFormItemModel<string[]>(
   props,
   (value) => emit('update:model-value', value),

@@ -1,23 +1,14 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { computed, inject, provide, toRef, unref } from 'vue';
-import { NmorphComponentHeight } from '@/types';
+
 import { NmorphValidationIcon, NmorphErrorBox } from './inner-components';
 import type { NmorphAvailableFormValueType, NmorphFormValidationDataType } from '@/components';
 import { nmorphFormItemInputDataKey } from '../../use-form-item-input';
 import type { NmorphFormItemInputDataType } from '../../types';
+import type { INmorphFormItemProps } from './types';
 
-interface INmorphProps {
-  id: string;
-  name?: string;
-  autocomplete?: string;
-  height?: keyof typeof NmorphComponentHeight;
-  label?: string;
-  showValidationIcon?: boolean;
-  staticErrorBoxSpace?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphFormItemProps>(), {
   name: '',
   autocomplete: '',
   label: '',
@@ -83,6 +74,8 @@ const modifiers = computed(() =>
 
 <style lang="scss">
 .nmorph-form-item {
+  min-width: 0;
+  max-width: 100%;
   margin: var(--indentation-04) var(--indentation-00);
 
   label {
@@ -96,6 +89,8 @@ const modifiers = computed(() =>
     display: flex;
     align-items: center;
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
   }
 
   &.nmorph-form-item--labeled {

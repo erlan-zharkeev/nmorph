@@ -1,34 +1,21 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { NmorphComponentHeight } from '@/types';
 import { computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { toCssSize, useModifiers } from '@/utils';
+import { createCssSizeVariables, useModifiers } from '@/utils';
 import { NmorphDropdown, NmorphIcon, NmorphIconCircleClose, NmorphIconClock } from '@/components';
+import { useFocusableInput } from '@/hooks/use-focusable-input';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
-import { INmorphTimePickerUnit, NmorphTimePickerModelValueType } from './types';
+import type {
+  INmorphTimeParts,
+  INmorphTimePickerEmit,
+  INmorphTimePickerProps,
+  INmorphTimePickerUnit,
+  NmorphTimePickerModelValueType,
+} from './types';
 
-interface INmorphTimeParts {
-  hour: number;
-  minute: number;
-  second: number;
-}
-
-interface INmorphProps extends INmorphCommonInputProps {
-  modelValue?: NmorphTimePickerModelValueType;
-  placeholder?: string;
-  hourStep?: number;
-  minuteStep?: number;
-  secondStep?: number;
-  showSeconds?: boolean;
-  minTime?: string;
-  maxTime?: string;
-  clearable?: boolean;
-  zIndex?: number;
-  width?: number | string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphTimePickerProps>(), {
   modelValue: null,
   placeholder: '',
   height: 'basic',
@@ -44,11 +31,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   width: undefined,
 });
 
-const emit = defineEmits<{
-  (e: 'update:model-value', val: NmorphTimePickerModelValueType): void;
-  (e: 'focus'): void;
-  (e: 'blur'): void;
-}>();
+const emit = defineEmits<INmorphTimePickerEmit>();
 
 const { t } = useI18n();
 const { id, name, autocomplete, tabindex } = useFormItemInput(props);
@@ -58,8 +41,15 @@ const { modelValue, updateModelValue } = useFormItemModel<NmorphTimePickerModelV
   null
 );
 const open = ref(false);
-const focused = ref(false);
-const inputDOMRef = ref<NmorphDomElementType>(null);
+const {
+  elementRef: inputDOMRef,
+  focused,
+  handleFocus: focusHandler,
+  handleBlur: blurHandler,
+} = useFocusableInput<HTMLDivElement>({
+  onFocus: () => emit('focus'),
+  onBlur: () => emit('blur'),
+});
 
 const pad = (value: number) => String(value).padStart(2, '0');
 const normalizeStep = (value: number) => Math.max(1, Math.floor(Number.isFinite(value) ? value : 1));
@@ -143,16 +133,6 @@ const toggleOpen = () => {
   open.value = !open.value;
 };
 
-const focusHandler = () => {
-  focused.value = true;
-  emit('focus');
-};
-
-const blurHandler = () => {
-  focused.value = false;
-  emit('blur');
-};
-
 const nativeInputHandler = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const parsedValue = parseTime(target.value);
@@ -185,9 +165,11 @@ const optionHeightModifiers = computed(() =>
   })
 );
 
-const styles = computed<CSSProperties>(() => ({
-  ...(props.width !== undefined && { '--width': toCssSize(props.width) }),
-}));
+const styles = computed<CSSProperties>(() =>
+  createCssSizeVariables({
+    '--width': props.width,
+  })
+);
 
 defineExpose({ inputDOMRef });
 </script>

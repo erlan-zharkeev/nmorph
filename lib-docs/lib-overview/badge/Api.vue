@@ -49,7 +49,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "size",
-    type: "'tiny' | 'extra-small' | 'base'",
+    type: "'tiny' | 'extra-small' | 'base' | 'medium' | 'large' | 'extra-large'",
     default: "base",
   },
   {

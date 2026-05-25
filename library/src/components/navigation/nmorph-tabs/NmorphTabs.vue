@@ -2,31 +2,16 @@
 import { computed, ref, useSlots } from 'vue';
 import { generateUUID, useModifiers } from '@/utils';
 import { provide } from 'vue';
-import {
-  INmorphTabPaneProps,
-  NmorphTableModelType,
-  INmorphTabsDataProvider,
-  getTabLabelId,
-  getTabContentId,
-} from '@/components';
+import { getTabLabelId, getTabContentId } from '@/components';
+import type { INmorphTabPaneProps, INmorphTabsDataProvider, INmorphTabsEmit, INmorphTabsProps } from './types';
 
-interface INmorphProps {
-  modelValue?: NmorphTableModelType;
-  stretch?: boolean;
-  panes?: Array<INmorphTabPaneProps>;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphTabsProps>(), {
   modelValue: 0,
   stretch: false,
   panes: () => [],
 });
 
-interface INmorphEmit {
-  (e: 'update:model-value', value: NmorphTableModelType): void;
-  (e: 'tab-change', value: NmorphTableModelType): void;
-}
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphTabsEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

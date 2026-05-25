@@ -3,3 +3,10 @@ export enum NmorphSkeletonItemPropsType {
   circle = 'circle',
   rect = 'rect',
 }
+
+export interface INmorphSkeletonProps {
+  animated?: boolean;
+  loading?: boolean;
+  rows?: number;
+  loadingGradient?: string;
+}

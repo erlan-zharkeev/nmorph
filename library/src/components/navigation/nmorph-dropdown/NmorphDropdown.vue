@@ -1,32 +1,13 @@
 <script setup lang="ts">
 import { computed, ref, toRef, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { toCssSize, useModifiers } from '@/utils';
-import { usePlacement } from '@/hooks';
-import { NmorphDomElementType, NmorphPlacementType } from '@/types';
+import { createCssSizeVariables, toCssSize, useModifiers } from '@/utils';
+import { usePlacement } from '@/hooks/use-placement';
+import { NmorphDomElementType } from '@/types';
 import { NmorphOverlay } from '@/components';
+import type { INmorphDropdownEmit, INmorphDropdownProps } from './types';
 
-interface INmorphProps {
-  open: boolean;
-  relativeElement: NmorphDomElementType;
-  placement?: NmorphPlacementType;
-  width?: number | string;
-  minWidth?: number | string;
-  maxWidth?: number | string;
-  xOffset?: number;
-  yOffset?: number;
-  fillWidth?: boolean;
-  zIndex?: number;
-  closeOnEscape?: boolean;
-  trapFocus?: boolean;
-  restoreFocus?: boolean;
-  role?: string;
-  ariaLabel?: string;
-  contentClass?: string;
-  hideShadow?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphDropdownProps>(), {
   placement: 'bottom',
   width: 160,
   minWidth: undefined,
@@ -44,11 +25,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   hideShadow: false,
 });
 
-interface INmorphEmit {
-  (e: 'on-outside-click'): void;
-  (e: 'on-escape-keydown'): void;
-}
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphDropdownEmit>();
 
 const dropdownDOMRef = ref<NmorphDomElementType>(null);
 
@@ -73,8 +50,10 @@ const width = computed(() =>
 
 const dropdownStyle = computed<CSSProperties>(() => ({
   '--nmorph-dropdown-width': width.value,
-  '--nmorph-dropdown-min-width': toCssSize(props.minWidth) || 'auto',
-  '--nmorph-dropdown-max-width': toCssSize(props.maxWidth) || 'none',
+  ...createCssSizeVariables({
+    '--nmorph-dropdown-min-width': props.minWidth === undefined ? 'auto' : props.minWidth,
+    '--nmorph-dropdown-max-width': props.maxWidth === undefined ? 'none' : props.maxWidth,
+  }),
   left: placementCoords.value.x,
   top: placementCoords.value.y,
   visibility: props.open && placementReady.value ? 'visible' : 'hidden',

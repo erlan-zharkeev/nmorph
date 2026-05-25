@@ -1,21 +1,13 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
-import { INmorphTagItemProps } from './types';
+
 import { NmorphTagItem } from '@/components';
+import type { INmorphTagListEmit, INmorphTagListProps } from './types';
 
-interface INmorphProps {
-  modelValue: INmorphTagItemProps[];
-}
+const props = withDefaults(defineProps<INmorphTagListProps>(), {});
 
-const props = withDefaults(defineProps<INmorphProps>(), {});
-
-interface INmorphEmit {
-  (e: 'close', val: string): void;
-  (e: 'update:model-value', val: INmorphTagItemProps[]): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphTagListEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

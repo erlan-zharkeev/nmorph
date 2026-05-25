@@ -1,4 +1,4 @@
-import { NmorphTableModelType } from './type';
+import type { NmorphTableModelType } from './types';
 
 export const getTabLabelId = (tabsIdentifier: string | undefined, name: NmorphTableModelType) => {
   if (!tabsIdentifier) return;

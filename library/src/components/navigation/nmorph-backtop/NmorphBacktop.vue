@@ -2,19 +2,10 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphButton, NmorphIcon, NmorphIconChevronDown } from '@/components';
-import { NmorphDomElementType, NmorphElementDesignType } from '@/types';
+import { NmorphDomElementType } from '@/types';
+import type { INmorphBacktopEmit, INmorphBacktopProps, NmorphBacktopScrollContainer } from './types';
 
-interface INmorphProps {
-  right?: number;
-  bottom?: number;
-  visibilityHeight?: number;
-  design?: NmorphElementDesignType;
-  zIndex?: number;
-  teleportTo?: string;
-  teleportDisabled?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphBacktopProps>(), {
   right: 40,
   bottom: 40,
   visibilityHeight: 200,
@@ -24,10 +15,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   teleportDisabled: false,
 });
 
-interface INmorphEmit {
-  (e: 'click'): void;
-}
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphBacktopEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -40,8 +28,6 @@ const styles = computed(() => ({
   '--nmorph-backtop-bottom': `${props.bottom}px`,
   '--nmorph-backtop-z-index': props.zIndex,
 }));
-
-type NmorphBacktopScrollContainer = HTMLElement | Window;
 
 const isWindow = (value: NmorphBacktopScrollContainer): value is Window => value === window;
 

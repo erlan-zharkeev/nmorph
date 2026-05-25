@@ -1,16 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphIconSize } from '@/components';
+import type { INmorphIconProps } from './types';
 
-interface INmorphProps {
-  size?: keyof typeof NmorphIconSize;
-  width?: string;
-  height?: string;
-  color?: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphIconProps>(), {
   size: 'small',
   width: undefined,
   height: undefined,

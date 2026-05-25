@@ -28,3 +28,19 @@ export interface INmorphTableDataInjection {
 export type NmorphTableColumnPropertyInjectionType = string;
 
 export type NmorphTableIdInjectionType = string;
+
+export interface INmorphTableProps {
+  data?: NmorphTableDataType;
+  rowHover?: boolean;
+  bordered?: boolean;
+  sort?: NmorphTableSortType;
+  design?: 'nmorph' | 'common';
+  virtual?: boolean;
+  virtualHeight?: number | string;
+  virtualOverscan?: number;
+  virtualRowHeight?: number;
+  virtualDynamicHeight?: boolean;
+  borderColor?: string;
+  cellHeight?: number | string;
+  rowHoverBackground?: string;
+}

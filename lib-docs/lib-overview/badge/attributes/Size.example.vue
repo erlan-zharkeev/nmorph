@@ -8,6 +8,9 @@ import { NmorphBadge } from "@nmorph/nmorph-ui-kit";
       <NmorphBadge type="tag" value="tiny" size="tiny" />
       <NmorphBadge type="tag" value="extra-small" size="extra-small" />
       <NmorphBadge type="tag" value="base" size="base" />
+      <NmorphBadge type="tag" value="medium" size="medium" />
+      <NmorphBadge type="tag" value="large" size="large" />
+      <NmorphBadge type="tag" value="extra-large" size="extra-large" />
     </ClientOnly>
   </div>
 </template>

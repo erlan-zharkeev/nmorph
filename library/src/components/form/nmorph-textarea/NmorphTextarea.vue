@@ -1,25 +1,13 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { NmorphComponentHeight } from '@/types';
 import { useModifiers } from '@/utils';
+import { useFocusableInput } from '@/hooks/use-focusable-input';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
+import type { INmorphTextareaEmit, INmorphTextareaProps } from './types';
 
-type NmorphTextareaResizeType = 'none' | 'both' | 'horizontal' | 'vertical';
-
-interface INmorphProps extends INmorphCommonInputProps {
-  placeholder?: string;
-  modelValue?: string;
-  rows?: number;
-  minRows?: number;
-  maxRows?: number;
-  resize?: NmorphTextareaResizeType;
-  autoSize?: boolean;
-  indentation?: string;
-  textareaAttrs?: Record<string, string | number | boolean | undefined>;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphTextareaProps>(), {
   placeholder: '',
   modelValue: '',
   rows: 3,
@@ -33,23 +21,25 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   textareaAttrs: () => ({}),
 });
 
-interface INmorphEmit {
-  (e: 'update:model-value', val: string): void;
-  (e: 'focus'): void;
-  (e: 'blur'): void;
-  (e: 'on-enter'): void;
-  (e: 'keydown', event: KeyboardEvent): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphTextareaEmit>();
 const { id, name, autocomplete, tabindex } = useFormItemInput(props);
 const { modelValue, updateModelValue } = useFormItemModel<string>(
   props,
   (value) => emit('update:model-value', value),
   ''
 );
-const textareaDOMRef = ref<NmorphDomElementType>(null);
-const focused = ref(false);
+const {
+  elementRef: textareaDOMRef,
+  focused,
+  handleFocus,
+  handleBlur,
+  focus,
+  blur,
+  select,
+} = useFocusableInput<HTMLTextAreaElement>({
+  onFocus: () => emit('focus'),
+  onBlur: () => emit('blur'),
+});
 
 const modifiers = computed(() =>
   useModifiers({
@@ -83,28 +73,6 @@ const handleInput = (event: Event): void => {
   const target = event.target as HTMLTextAreaElement;
   updateModelValue(target.value);
   resizeToContent();
-};
-
-const handleFocus = () => {
-  emit('focus');
-  focused.value = true;
-};
-
-const handleBlur = () => {
-  emit('blur');
-  focused.value = false;
-};
-
-const focus = () => {
-  textareaDOMRef.value?.focus();
-};
-
-const blur = () => {
-  textareaDOMRef.value?.blur();
-};
-
-const select = () => {
-  (textareaDOMRef.value as HTMLTextAreaElement | null)?.select();
 };
 
 watch(modelValue, resizeToContent);

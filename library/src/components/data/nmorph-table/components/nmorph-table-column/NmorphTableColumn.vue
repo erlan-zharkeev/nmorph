@@ -5,17 +5,15 @@ import { onMounted, provide } from 'vue';
 import { NmorphDomElementType } from '@/types';
 import {
   INmorphTableDataInjection,
-  INmorphTableColumnProps,
   NmorphTableIdInjectionType,
   NmorphTableColumnPropertyInjectionType,
 } from '@/components';
+import type { INmorphTableColumnComponentProps } from './types';
 
 const data = inject<INmorphTableDataInjection>('table-data');
 const tableIdentifier = inject<NmorphTableIdInjectionType>('table-identifier');
 
-interface INmorphProps extends INmorphTableColumnProps {}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphTableColumnComponentProps>(), {
   label: '',
   width: '',
   alignment: 'center',

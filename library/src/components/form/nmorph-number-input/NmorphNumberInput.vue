@@ -1,19 +1,12 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import { NmorphButton, NmorphIcon, NmorphIconMinusThin, NmorphIconPlusThin } from '@/components';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
+import type { INmorphNumberInputEmit, INmorphNumberInputProps } from './types';
 
-interface INmorphProps extends INmorphCommonInputProps {
-  modelValue?: number;
-  max?: number;
-  min?: number;
-  step?: number;
-  actionBtnPositionRight?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphNumberInputProps>(), {
   height: 'basic',
   modelValue: 0,
   max: Infinity,
@@ -51,11 +44,7 @@ const actionBtnIconSize = computed(() => {
   return iconSizeMap[props.height][positionKey];
 });
 
-interface INmorphEmit {
-  (e: 'update:model-value', val: number): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphNumberInputEmit>();
 const { modelValue, updateModelValue } = useFormItemModel<number>(
   props,
   (value) => emit('update:model-value', value),

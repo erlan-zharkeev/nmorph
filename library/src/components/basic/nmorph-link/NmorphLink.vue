@@ -1,23 +1,14 @@
 <script setup lang="ts">
-import { useModifiers } from '@/utils';
+import { createCssVariables, useModifiers } from '@/utils';
 import { computed, useSlots } from 'vue';
 import type { Component, CSSProperties } from 'vue';
-import { NmorphIcon, NmorphLinkTarget } from '@/components';
+import { NmorphIcon } from '@/components';
 import * as NmorphIcons from '@/components/basic/nmorph-icon/NmorphIcons';
+
 import { NmorphColor } from '@/types';
+import type { INmorphLinkProps } from './types';
 
-interface INmorphProps {
-  type?: keyof typeof NmorphColor;
-  underline?: boolean;
-  href?: string;
-  text?: string;
-  target?: keyof typeof NmorphLinkTarget;
-  disabled?: boolean;
-  color?: string;
-  iconName?: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphLinkProps>(), {
   type: NmorphColor.accent,
   href: '',
   underline: false,
@@ -50,9 +41,11 @@ const modifiers = computed(() =>
   })
 );
 
-const styles = computed<CSSProperties>(() => ({
-  ...(props.color !== undefined && { '--link-color': props.color }),
-}));
+const styles = computed<CSSProperties>(() =>
+  createCssVariables({
+    '--link-color': props.color,
+  })
+);
 </script>
 
 <template>

@@ -1,16 +1,12 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
 import { computed, provide } from 'vue';
-import { useFormValidation } from '@/hooks';
-import { NmorphFormValueType, NmorphFormValidationDataType } from './types';
+import { useFormValidation } from '@/hooks/use-form-validation';
+import { NmorphFormValidationDataType } from './types';
 import { INmorphFromDataExpose } from '@/types';
+import type { INmorphFormProps } from './types';
 
-interface INmorphProps {
-  value: NmorphFormValueType;
-  validateImmediately?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphFormProps>(), {
   validateImmediately: false,
 });
 

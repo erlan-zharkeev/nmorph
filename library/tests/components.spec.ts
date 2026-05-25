@@ -3,7 +3,7 @@ import { createSSRApp, defineComponent, h, nextTick, reactive, ref } from 'vue';
 import { renderToString } from '@vue/server-renderer';
 import { describe, expect, it, vi } from 'vitest';
 import { NmorphLibrary } from '../src/main';
-import { useFieldValidation } from '../src/hooks';
+import { useFieldValidation } from '../src/hooks/use-field-validation';
 import { getCommonStyles } from '../src/hooks/use-common-styles';
 import {
   NmorphAlert,
@@ -28,6 +28,7 @@ import {
   NmorphDatePicker,
   NmorphDialog,
   NmorphDivider,
+  NmorphDrawer,
   NmorphDropdown,
   NmorphEmpty,
   NmorphFileUpload,
@@ -38,6 +39,7 @@ import {
   NmorphIconSearch,
   NmorphImage,
   NmorphImagePreview,
+  NmorphLayout,
   NmorphLink,
   NmorphNotificationProvider,
   NmorphNumberInput,
@@ -45,6 +47,7 @@ import {
   NmorphOverlay,
   NmorphPagination,
   NmorphProgress,
+  NmorphQRCode,
   NmorphRadio,
   NmorphRadioGroup,
   NmorphScroll,
@@ -55,6 +58,7 @@ import {
   NmorphSkeleton,
   NmorphSkeletonItem,
   NmorphSlider,
+  NmorphSpace,
   NmorphSwitch,
   NmorphTimePicker,
   NmorphTabPane,
@@ -64,8 +68,10 @@ import {
   NmorphTabs,
   NmorphTagItem,
   NmorphTagList,
+  NmorphTextarea,
   NmorphTextInput,
   NmorphTooltip,
+  NmorphVirtualList,
 } from '../src/components';
 
 const imageSrc =
@@ -82,6 +88,10 @@ const checkboxOptions = [
 ];
 
 const tableData = [{ name: 'Button', status: 'Ready' }];
+const virtualItems = Array.from({ length: 40 }, (_, index) => ({
+  id: index + 1,
+  title: `Virtual item ${index + 1}`,
+}));
 const rect = (x: number, y: number, width: number, height: number) =>
   ({
     x,
@@ -183,10 +193,24 @@ const renderCases = [
     props: { href: '#', text: 'Link' },
   },
   {
+    name: 'NmorphLayout',
+    component: defineComponent({
+      components: { NmorphLayout },
+      template:
+        '<NmorphLayout gap="8px" aside-width="120px"><template #header>Header</template><template #aside>Aside</template>Main<template #footer>Footer</template></NmorphLayout>',
+    }),
+  },
+  {
     name: 'NmorphScroll',
     component: NmorphScroll,
     props: { height: '120px' },
     slots: { default: '<div style="height: 240px;">Scroll content</div>' },
+  },
+  {
+    name: 'NmorphSpace',
+    component: NmorphSpace,
+    props: { size: 'large', wrap: true },
+    slots: { default: '<button>One</button><button>Two</button>' },
   },
   {
     name: 'NmorphAvatar',
@@ -267,6 +291,11 @@ const renderCases = [
     props: { percentage: 60 },
   },
   {
+    name: 'NmorphQRCode',
+    component: NmorphQRCode,
+    props: { value: 'nmorph', title: 'Nmorph QR code' },
+  },
+  {
     name: 'NmorphSkeleton',
     component: defineComponent({
       components: { NmorphSkeleton, NmorphSkeletonItem },
@@ -331,6 +360,12 @@ const renderCases = [
     component: NmorphDialog,
     props: { modelValue: true, title: 'Dialog' },
     slots: { default: 'Dialog content' },
+  },
+  {
+    name: 'NmorphDrawer',
+    component: NmorphDrawer,
+    props: { modelValue: true, title: 'Drawer', disabledTeleport: true },
+    slots: { default: 'Drawer content' },
   },
   {
     name: 'NmorphTooltip',
@@ -454,6 +489,11 @@ const renderCases = [
     props: { modelValue: '', placeholder: 'Text', clearable: true },
   },
   {
+    name: 'NmorphTextarea',
+    component: NmorphTextarea,
+    props: { modelValue: 'Text', placeholder: 'Textarea' },
+  },
+  {
     name: 'NmorphTimePicker',
     component: NmorphTimePicker,
     props: { modelValue: '09:30', placeholder: 'Time' },
@@ -522,6 +562,15 @@ const renderCases = [
     slots: { default: 'Overlay content' },
   },
   {
+    name: 'NmorphVirtualList',
+    component: defineComponent({
+      components: { NmorphVirtualList },
+      setup: () => ({ virtualItems }),
+      template:
+        '<NmorphVirtualList :items="virtualItems" item-key="id" :item-height="20" height="60px"><template #default="{ item }">{{ item.title }}</template></NmorphVirtualList>',
+    }),
+  },
+  {
     name: 'NmorphNotificationProvider',
     component: NmorphNotificationProvider,
     props: {
@@ -554,6 +603,246 @@ const mountCase = async (renderCase) => {
 describe('components', () => {
   it.each(renderCases)('renders $name', async (renderCase) => {
     await mountCase(renderCase);
+  });
+
+  it('places layout slots around the body and forwards sizing variables', () => {
+    const wrapper = mount(NmorphLayout, {
+      props: {
+        tag: 'article',
+        gap: 12,
+        asideWidth: '88px',
+        asidePosition: 'right',
+        fullHeight: true,
+      },
+      slots: {
+        header: 'Header',
+        aside: 'Aside',
+        default: 'Main',
+        footer: 'Footer',
+      },
+    });
+
+    const layout = wrapper.find('.nmorph-layout');
+    const element = layout.element as HTMLElement;
+    const bodyChildren = wrapper.find('.nmorph-layout__body').element.children;
+
+    expect(element.tagName).toBe('ARTICLE');
+    expect(layout.classes()).toContain('nmorph-layout--aside-right');
+    expect(layout.classes()).toContain('nmorph-layout--full-height');
+    expect(element.style.getPropertyValue('--nmorph-layout-gap')).toBe('12px');
+    expect(element.style.getPropertyValue('--nmorph-layout-aside-width')).toBe('88px');
+    expect(bodyChildren[0].classList.contains('nmorph-layout__main')).toBe(true);
+    expect(bodyChildren[1].classList.contains('nmorph-layout__aside')).toBe(true);
+    expect(wrapper.find('.nmorph-layout__header').text()).toBe('Header');
+    expect(wrapper.find('.nmorph-layout__footer').text()).toBe('Footer');
+
+    wrapper.unmount();
+  });
+
+  it('forwards space layout variables and custom root tag', () => {
+    const wrapper = mount(NmorphSpace, {
+      props: {
+        tag: 'nav',
+        direction: 'column',
+        size: 'large',
+        align: 'end',
+        justify: 'space-between',
+        wrap: true,
+        inline: true,
+        fill: true,
+      },
+      slots: {
+        default: '<button>One</button><button>Two</button>',
+      },
+    });
+
+    const space = wrapper.find('.nmorph-space');
+    const element = space.element as HTMLElement;
+
+    expect(element.tagName).toBe('NAV');
+    expect(space.classes()).toEqual(
+      expect.arrayContaining([
+        'nmorph-space--column',
+        'nmorph-space--wrap',
+        'nmorph-space--inline',
+        'nmorph-space--fill',
+      ])
+    );
+    expect(element.style.getPropertyValue('--nmorph-space-gap')).toBe('16px');
+    expect(element.style.getPropertyValue('--nmorph-space-align')).toBe('flex-end');
+    expect(element.style.getPropertyValue('--nmorph-space-justify')).toBe('space-between');
+
+    wrapper.unmount();
+  });
+
+  it('renders QR code svg and exposes scoped error content', () => {
+    const wrapper = mount(NmorphQRCode, {
+      props: {
+        value: 'nmorph',
+        size: 128,
+        margin: 2,
+        color: '#111111',
+        background: '#ffffff',
+        title: 'Nmorph QR',
+      },
+    });
+    const qrCode = wrapper.find('.nmorph-qr-code').element as HTMLElement;
+
+    expect(qrCode.style.getPropertyValue('--nmorph-qr-code-size')).toBe('128px');
+    expect(qrCode.style.getPropertyValue('--nmorph-qr-code-color')).toBe('#111111');
+    expect(wrapper.find('.nmorph-qr-code__svg').exists()).toBe(true);
+    expect(wrapper.find('title').text()).toBe('Nmorph QR');
+    expect(wrapper.find('path').attributes('d')).toContain('M');
+
+    const error = mount(NmorphQRCode, {
+      props: {
+        value: 'x'.repeat(1000),
+        maxVersion: 1,
+      },
+      slots: {
+        error: ({ message }) => h('span', { class: 'qr-error' }, message),
+      },
+    });
+
+    expect(error.find('.nmorph-qr-code').classes()).toContain('nmorph-qr-code--error');
+    expect(error.find('.qr-error').text()).toContain('too large');
+
+    wrapper.unmount();
+    error.unmount();
+  });
+
+  it('updates textarea value, forwards attrs, and resizes to content', async () => {
+    const wrapper = mount(NmorphTextarea, {
+      props: {
+        modelValue: 'Initial',
+        autoSize: true,
+        textareaAttrs: {
+          'aria-label': 'Message',
+        },
+      },
+    });
+
+    const textarea = wrapper.find('textarea');
+    const element = textarea.element as HTMLTextAreaElement;
+
+    expect(textarea.attributes('aria-label')).toBe('Message');
+
+    await textarea.setValue('Updated');
+    await textarea.trigger('focus');
+    await textarea.trigger('keydown', { key: 'A' });
+    await textarea.trigger('keyup.enter');
+    await textarea.trigger('blur');
+
+    expect(wrapper.emitted('update:model-value')?.at(-1)).toEqual(['Updated']);
+    expect(wrapper.emitted('focus')).toHaveLength(1);
+    expect(wrapper.emitted('blur')).toHaveLength(1);
+    expect(wrapper.emitted('keydown')).toHaveLength(1);
+    expect(wrapper.emitted('on-enter')).toHaveLength(1);
+
+    Object.defineProperty(element, 'scrollHeight', {
+      configurable: true,
+      value: 96,
+    });
+    await (wrapper.vm as unknown as { resizeToContent: () => Promise<void> }).resizeToContent();
+
+    expect(element.style.height).toBe('96px');
+    expect(element.style.overflowY).toBe('hidden');
+
+    wrapper.unmount();
+  });
+
+  it('virtualizes long lists and exposes scroll helpers', async () => {
+    const wrapper = mount(NmorphVirtualList, {
+      props: {
+        items: virtualItems,
+        itemKey: 'id',
+        itemHeight: 20,
+        overscan: 1,
+        height: '60px',
+      },
+      slots: {
+        default: '<template #default="{ item, index }"><div class="virtual-row">{{ index }}: {{ item.title }}</div></template>',
+      },
+    });
+
+    const container = wrapper.find('.nmorph-virtual-list').element as HTMLElement;
+    Object.defineProperty(container, 'clientHeight', {
+      configurable: true,
+      value: 60,
+    });
+
+    (wrapper.vm as unknown as { refresh: () => void }).refresh();
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-virtual-list__spacer').attributes('style')).toContain('height: 800px');
+    expect(wrapper.findAll('.virtual-row')).toHaveLength(4);
+    expect(wrapper.findAll('.virtual-row')[0].text()).toContain('Virtual item 1');
+
+    (wrapper.vm as unknown as { scrollToIndex: (index: number) => void }).scrollToIndex(10);
+    await nextTick();
+
+    expect(wrapper.findAll('.virtual-row')[0].text()).toContain('Virtual item 10');
+
+    container.scrollTop = 120;
+    await wrapper.trigger('scroll');
+
+    expect(wrapper.emitted('on-scroll')).toHaveLength(1);
+
+    wrapper.unmount();
+  });
+
+  it('closes drawer from close button and honors overlay close configuration', async () => {
+    const wrapper = mount(NmorphDrawer, {
+      props: {
+        modelValue: true,
+        title: 'Settings',
+        placement: 'left',
+        size: 280,
+        disabledTeleport: true,
+        contentClass: 'custom-drawer-content',
+      },
+      slots: {
+        default: 'Drawer content',
+        footer: 'Footer',
+      },
+    });
+
+    const drawer = wrapper.find('.nmorph-drawer');
+    const drawerElement = drawer.element as HTMLElement;
+
+    expect(drawer.classes()).toEqual(
+      expect.arrayContaining(['nmorph-drawer--left', 'nmorph-drawer--open'])
+    );
+    expect(drawerElement.style.getPropertyValue('--nmorph-drawer-size')).toBe('280px');
+    expect(drawer.attributes('aria-label')).toBe('Settings');
+    expect(wrapper.find('.custom-drawer-content').text()).toBe('Drawer content');
+    expect(wrapper.find('.nmorph-drawer__footer').text()).toBe('Footer');
+
+    await wrapper.find('.nmorph-drawer__close').trigger('click');
+
+    expect(wrapper.emitted('on-close')).toHaveLength(1);
+    expect(wrapper.emitted('update:model-value')?.at(-1)).toEqual([false]);
+
+    const overlayLocked = mount(NmorphDrawer, {
+      props: {
+        modelValue: true,
+        closeOnOverlay: false,
+        disabledTeleport: true,
+      },
+      slots: {
+        default: 'Drawer content',
+      },
+    });
+
+    await overlayLocked.find('.nmorph-overlay').trigger('click');
+    expect(overlayLocked.emitted('update:model-value')).toBeUndefined();
+
+    await overlayLocked.setProps({ closeOnOverlay: true });
+    await overlayLocked.find('.nmorph-overlay').trigger('click');
+    expect(overlayLocked.emitted('update:model-value')?.at(-1)).toEqual([false]);
+
+    wrapper.unmount();
+    overlayLocked.unmount();
   });
 
   it('passes card padding prop to the card padding styles', () => {
@@ -1087,6 +1376,23 @@ describe('components', () => {
     ribbon.unmount();
     tag.unmount();
     legacyDot.unmount();
+  });
+
+  it('applies extended badge size modifiers', async () => {
+    const sizes = ['medium', 'large', 'extra-large'] as const;
+
+    for (const size of sizes) {
+      const wrapper = mount(NmorphBadge, {
+        props: {
+          value: 'Size',
+          size,
+        },
+      });
+
+      expect(wrapper.find('.nmorph-badge').classes()).toContain(`nmorph-badge--${size}`);
+
+      wrapper.unmount();
+    }
   });
 
   it('can hide the badge when value is falsy', async () => {
@@ -2537,37 +2843,50 @@ describe('components', () => {
     wrapper.unmount();
   });
 
-  it('hides closed image preview portal from hit testing', async () => {
+  it('mounts image preview portal only while preview is open', async () => {
     const target = document.createElement('div');
     document.body.appendChild(target);
 
-    const wrapper = mount(NmorphImagePreview, {
-      props: { src: imageSrc, alt: 'Preview' },
-      attachTo: target,
-      global: {
-        stubs: {
-          Teleport: false,
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphImagePreview },
+        setup: () => ({ imageSrc }),
+        template: `
+          <div>
+            <NmorphImagePreview :src="imageSrc" alt="Preview 1" />
+            <NmorphImagePreview :src="imageSrc" alt="Preview 2" />
+            <NmorphImagePreview :src="imageSrc" alt="Preview 3" />
+          </div>
+        `,
+      }),
+      {
+        attachTo: target,
+        global: {
+          stubs: {
+            Teleport: false,
+          },
         },
-      },
-    });
+      }
+    );
 
     await nextTick();
     await nextTick();
 
-    const portal = Array.from(document.body.querySelectorAll<HTMLElement>('.nmorph-image-preview__portal')).at(-1);
+    const getPortals = () =>
+      Array.from(document.body.querySelectorAll<HTMLElement>('.nmorph-image-preview__portal'));
 
-    expect(portal?.style.display).toBe('none');
+    expect(getPortals()).toHaveLength(0);
 
-    await wrapper.find('.nmorph-image-preview__trigger').trigger('click');
+    await wrapper.findAll('.nmorph-image-preview__trigger')[1].trigger('click');
     await nextTick();
 
-    expect(portal?.style.display).not.toBe('none');
+    expect(getPortals()).toHaveLength(1);
 
-    const overlay = Array.from(document.body.querySelectorAll<HTMLElement>('.nmorph-overlay')).at(-1);
+    const overlay = getPortals()[0].querySelector<HTMLElement>('.nmorph-overlay');
     overlay?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     await nextTick();
 
-    expect(portal?.style.display).toBe('none');
+    expect(getPortals()).toHaveLength(0);
 
     wrapper.unmount();
     target.remove();

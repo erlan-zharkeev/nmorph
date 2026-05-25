@@ -3,12 +3,9 @@ import { computed, inject, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { INmorphCarouselInjection } from '@/components';
 import { onBeforeUnmount, onMounted } from 'vue';
+import type { INmorphCarouselItemProps } from './types';
 
-interface INmorphProps {
-  name: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {});
+const props = withDefaults(defineProps<INmorphCarouselItemProps>(), {});
 
 const modifiers = computed(() =>
   useModifiers({

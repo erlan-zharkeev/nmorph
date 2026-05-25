@@ -2,14 +2,13 @@
 import { computed, inject, ref, type Ref } from 'vue';
 import { useModifiers } from '@/utils';
 import {
-  INmorphRadioOption,
   NmorphDomElementType,
   NmorphRadioChangeRadioButtonValueHandlerInjectionType,
   NmorphRadioGroupSelectedValueInjectionType,
-  NmorphRadioStyleType,
   NmorphSelectionControlHeight,
   NmorphSelectionControlHeightType,
 } from '@/types';
+import type { INmorphRadioProps } from './types';
 
 const groupSelectedValue = inject<NmorphRadioGroupSelectedValueInjectionType | undefined>(
   'radio-group-selected-value',
@@ -21,13 +20,7 @@ const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType
 );
 const groupHeight = inject<Ref<NmorphSelectionControlHeightType> | undefined>('radio-group-height', undefined);
 
-interface INmorphProps extends Omit<INmorphRadioOption, 'value'> {
-  value?: string;
-  styleType?: keyof typeof NmorphRadioStyleType;
-  checked?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphRadioProps>(), {
   disabled: false,
   label: '',
   styleType: 'button',

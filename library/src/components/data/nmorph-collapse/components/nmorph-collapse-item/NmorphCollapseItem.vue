@@ -1,21 +1,12 @@
 <script setup lang="ts">
 import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
-import {
-  INmorphCollapseItemProps,
-  NmorphCollapseDataInjectionType,
-  NmorphCollapseUpdateModelInjectionType,
-} from '@/components';
+import { createCssVariables, useModifiers } from '@/utils';
+import { NmorphCollapseDataInjectionType, NmorphCollapseUpdateModelInjectionType } from '@/components';
 import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import type { INmorphCollapseItemComponentProps, INmorphCollapseItemEmit } from './types';
 
-interface INmorphProps extends INmorphCollapseItemProps {
-  height?: keyof typeof NmorphComponentHeight;
-  block?: boolean;
-  transitionSpeed?: number | string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphCollapseItemComponentProps>(), {
   height: 'basic',
   title: '',
   disabled: false,
@@ -23,10 +14,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   transitionSpeed: undefined,
 });
 
-interface INmorphEmit {
-  (e: 'click-item', data: { id: string; isOpen: boolean }): void;
-}
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphCollapseItemEmit>();
 
 const isOpen = ref(false);
 
@@ -42,9 +30,11 @@ const titleModifiers = computed(() =>
   })
 );
 const getCssDuration = (value?: number | string) => (typeof value === 'number' ? `${value}ms` : value);
-const styles = computed<CSSProperties>(() => ({
-  ...(props.transitionSpeed !== undefined && { '--transition-speed': getCssDuration(props.transitionSpeed) }),
-}));
+const styles = computed<CSSProperties>(() =>
+  createCssVariables({
+    '--transition-speed': getCssDuration(props.transitionSpeed),
+  })
+);
 
 const collapseData = inject<NmorphCollapseDataInjectionType>('collapse-data');
 const updateModel = inject<NmorphCollapseUpdateModelInjectionType>('update-model');

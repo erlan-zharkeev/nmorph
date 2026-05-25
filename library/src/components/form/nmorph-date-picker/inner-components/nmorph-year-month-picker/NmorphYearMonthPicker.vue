@@ -11,11 +11,7 @@ import {
   NmorphIconChevronDown,
 } from '@/components';
 import { INmorphRadioOption, NmorphDatePickerControlsType } from '@/types';
-
-interface INmorphProps {
-  currentDate: Date;
-  type?: 'year' | 'month';
-}
+import type { INmorphYearMonthPickerEmit, INmorphYearMonthPickerProps } from './types';
 
 const { months } = useCalendarTexts();
 
@@ -28,7 +24,7 @@ const initialMonthData: INmorphRadioOption[] = months.map((monthName, idx) => {
   };
 });
 
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphYearMonthPickerProps>(), {
   type: 'month',
 });
 
@@ -58,12 +54,7 @@ watch(
   }
 );
 
-const emit = defineEmits<INmorphEmit>();
-interface INmorphEmit {
-  (e: 'update-year', val: string): void;
-  (e: 'update-month', val: string): void;
-  (e: 'back-to-years'): void;
-}
+const emit = defineEmits<INmorphYearMonthPickerEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

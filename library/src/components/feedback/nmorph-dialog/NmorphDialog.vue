@@ -3,24 +3,9 @@ import { computed, ref, useSlots, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphOverlay, NmorphIcon, NmorphIconCross } from '@/components';
+import type { INmorphDialogEmit, INmorphDialogProps } from './types';
 
-interface INmorphProps {
-  modelValue?: boolean;
-  title?: string;
-  width?: string;
-  maxHeight?: string;
-  openDelay?: number;
-  closeDelay?: number;
-  /**
-   * @deprecated Use `closeOnOverlay` instead.
-   */
-  closeOnClickModal?: boolean;
-  showClose?: boolean;
-  zIndex?: number;
-  closeOnOverlay?: boolean;
-  closeOnEscape?: boolean;
-}
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphDialogProps>(), {
   modelValue: false,
   title: '',
   width: '330px',
@@ -34,11 +19,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   closeOnEscape: true,
 });
 
-interface INmorphEmit {
-  (e: 'on-close'): void;
-  (e: 'update:model-value', value: boolean): void;
-}
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphDialogEmit>();
 const slots = useSlots();
 
 const modifiers = computed(() =>

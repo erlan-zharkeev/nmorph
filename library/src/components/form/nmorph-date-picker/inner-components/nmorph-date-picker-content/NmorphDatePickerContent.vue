@@ -2,25 +2,17 @@
 import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphCalendar, NmorphSelectedDateModelType } from '@/components';
-import { NmorphSelectionDateType, NmorphInnerPickerType } from '@/types';
+import { NmorphInnerPickerType } from '@/types';
 import NmorphDatePickerHeader from './../nmorph-date-picker-header/NmorphDatePickerHeader.vue';
 import NmorphYearMonthPicker from './../nmorph-year-month-picker/NmorphYearMonthPicker.vue';
+import type { INmorphDatePickerContentEmit, INmorphDatePickerContentProps } from './types';
 
-interface INmorphProps {
-  initialDate?: Date;
-  selectedValues: NmorphSelectedDateModelType;
-  type?: keyof typeof NmorphSelectionDateType;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphDatePickerContentProps>(), {
   initialDate: () => new Date(),
   type: 'date',
 });
 
-const emit = defineEmits<INmorphEmit>();
-interface INmorphEmit {
-  (e: 'update-selected-value', selectedValue: NmorphSelectedDateModelType): void;
-}
+const emit = defineEmits<INmorphDatePickerContentEmit>();
 
 const modifiers = computed(() =>
   useModifiers({

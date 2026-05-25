@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NmorphComponentHeight } from '@/types';
-import { useModifiers } from '@/utils';
+import { createCssVariables, useModifiers } from '@/utils';
 import { inject, computed, type Ref } from 'vue';
 import type { CSSProperties } from 'vue';
 import {
@@ -10,6 +10,7 @@ import {
   NmorphSelectChangeSelectedValue,
   NmorphSelectSelectedValueInjectionType,
 } from '@/components';
+import type { INmorphSelectOptionEmit } from './types';
 
 const selectSelectedValue = inject<NmorphSelectSelectedValueInjectionType>('select-selected-value');
 const selectChangeSelectedValue = inject<NmorphSelectChangeSelectedValue>('select-change-selected-value');
@@ -26,9 +27,7 @@ const props = withDefaults(defineProps<INmorphSelectOption>(), {
   hoverColor: undefined,
 });
 
-const emit = defineEmits<{
-  (e: 'change-value', val: string): void;
-}>();
+const emit = defineEmits<INmorphSelectOptionEmit>();
 
 const clickHandler = () => {
   if (props.disabled) return;
@@ -61,10 +60,12 @@ const modifiers = computed(() =>
   })
 );
 
-const styles = computed<CSSProperties>(() => ({
-  ...(props.hoverBackground !== undefined && { '--hover-bg': props.hoverBackground }),
-  ...(props.hoverColor !== undefined && { '--hover-color': props.hoverColor }),
-}));
+const styles = computed<CSSProperties>(() =>
+  createCssVariables({
+    '--hover-bg': props.hoverBackground,
+    '--hover-color': props.hoverColor,
+  })
+);
 </script>
 
 <template>

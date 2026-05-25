@@ -1,29 +1,15 @@
 <script setup lang="ts">
 import {
-  INmorphCommonInputProps,
-  INmorphRadioOption,
-  NmorphComponentDirection,
   NmorphRadioChangeRadioButtonValueHandlerInjectionType,
   NmorphRadioGroupSelectedValueInjectionType,
-  NmorphRadioStyleType,
-  NmorphSelectionControlHeightType,
 } from '@/types';
 import { useModifiers } from '@/utils';
 import { ref, computed, provide, watch } from 'vue';
 import { NmorphRadio } from '@/components';
 import { useFormItemModel } from '../nmorph-form/use-form-item-input';
+import type { INmorphRadioGroupEmit, INmorphRadioGroupProps } from './types';
 
-type NmorphListRadioOptionElementType = Omit<INmorphRadioOption, 'checked'>;
-
-interface INmorphProps extends Omit<INmorphCommonInputProps, 'height'> {
-  modelValue?: string;
-  options?: NmorphListRadioOptionElementType[];
-  styleType?: keyof typeof NmorphRadioStyleType;
-  direction?: keyof typeof NmorphComponentDirection;
-  height?: NmorphSelectionControlHeightType;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphRadioGroupProps>(), {
   modelValue: '',
   styleType: 'button',
   options: () => [],
@@ -33,11 +19,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   height: 'thin',
 });
 
-interface INmorphEmit {
-  (e: 'update:model-value', val: string): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphRadioGroupEmit>();
 const { modelValue, updateModelValue } = useFormItemModel<string>(
   props,
   (value) => emit('update:model-value', value),

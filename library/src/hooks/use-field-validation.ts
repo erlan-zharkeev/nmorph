@@ -1,9 +1,6 @@
 import type { NmorphAvailableFormValueType } from '@/components/form/nmorph-form/types';
-import {
-  type INmorphCustomFileData,
-  type NmorphResolutionType,
-  resolution,
-} from '@/components/form/nmorph-file-upload/types';
+import { type INmorphCustomFileData, type NmorphResolutionType } from '@/components/form/nmorph-file-upload/types';
+import { isFileAllowedByTypes } from '@/utils/file-types';
 import { ref } from 'vue';
 
 export const enum NmorphArrayValidationOperator {
@@ -77,32 +74,6 @@ export interface INmorphFileValidationRule extends INmorphRule {
   fileMaxCount?: number;
 }
 
-const knownResolutionEntries = Object.entries(resolution) as Array<[NmorphResolutionType, string]>;
-
-const getPlainType = (mimeType: string) => mimeType.split('/')[1]?.toLowerCase() || '';
-
-const getFileExtension = (fileName: string) => {
-  const extension = fileName.split('.').pop()?.toLowerCase();
-  return extension && extension !== fileName.toLowerCase() ? extension : '';
-};
-
-const getKnownResolutionByMime = (mimeType: string) =>
-  knownResolutionEntries.find(([, knownMimeType]) => knownMimeType.toLowerCase() === mimeType.toLowerCase())?.[0] || '';
-
-const getFileTypeCandidates = (file: File) =>
-  Array.from(
-    new Set(
-      [
-        file.type.toLowerCase(),
-        getKnownResolutionByMime(file.type),
-        getFileExtension(file.name),
-        getPlainType(file.type),
-      ]
-        .filter(Boolean)
-        .map((type) => type.toLowerCase())
-    )
-  );
-
 const isNativeFile = (value: unknown): value is File => typeof File !== 'undefined' && value instanceof File;
 
 const isCustomFileData = (value: unknown): value is INmorphCustomFileData =>
@@ -116,13 +87,6 @@ const getFilesFromValue = (value: NmorphValidationInputValueType): File[] | null
   if (fileValue.every(isNativeFile)) return fileValue;
   if (fileValue.every(isCustomFileData)) return fileValue.map((fileData) => fileData.data);
   return null;
-};
-
-const isFileAllowedByTypes = (file: File, allowedTypes: Array<NmorphResolutionType | string>) => {
-  if (allowedTypes.length === 0) return true;
-
-  const candidates = getFileTypeCandidates(file);
-  return allowedTypes.some((allowedType) => candidates.includes(String(allowedType).toLowerCase()));
 };
 
 export const useFieldValidation = (data: INmorphUseValidationPayload) => {

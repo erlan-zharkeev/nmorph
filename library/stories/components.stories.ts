@@ -20,10 +20,13 @@ import {
   NmorphCollapse,
   NmorphCollapseItem,
   NmorphColorPicker,
+  NmorphContextMenu,
   NmorphDatePicker,
   NmorphDialog,
   NmorphDivider,
+  NmorphDrawer,
   NmorphDropdown,
+  NmorphEmpty,
   NmorphFileUpload,
   NmorphForm,
   NmorphFormItem,
@@ -31,6 +34,7 @@ import {
   NmorphIconSearch,
   NmorphImage,
   NmorphImagePreview,
+  NmorphLayout,
   NmorphLink,
   NmorphNotificationProvider,
   NmorphNumberInput,
@@ -38,22 +42,31 @@ import {
   NmorphOverlay,
   NmorphPagination,
   NmorphProgress,
+  NmorphQRCode,
   NmorphRadio,
   NmorphRadioGroup,
   NmorphScroll,
   NmorphSelect,
   NmorphSelectButton,
+  NmorphSelectButtonItem,
+  NmorphSelectOption,
   NmorphSkeleton,
   NmorphSkeletonItem,
   NmorphSlider,
+  NmorphSpace,
   NmorphSwitch,
   NmorphTabPane,
   NmorphTable,
+  NmorphTableCell,
   NmorphTableColumn,
   NmorphTabs,
+  NmorphTagItem,
   NmorphTagList,
+  NmorphTextarea,
   NmorphTextInput,
+  NmorphTimePicker,
   NmorphTooltip,
+  NmorphVirtualList,
 } from '@/components';
 
 const meta: Meta = {
@@ -90,6 +103,10 @@ const tagList = [
   { value: 'basic', text: 'Basic', removable: true, height: 'thin', design: 'nmorph' },
   { value: 'form', text: 'Form', removable: true, height: 'thin', design: 'nmorph' },
 ];
+const virtualItems = Array.from({ length: 120 }, (_, index) => ({
+  id: index + 1,
+  title: `Virtual item ${index + 1}`,
+}));
 const notifications = [
   { id: 'storybook-notification', title: 'Notification', content: 'Storybook preview', type: 'info', closable: true },
 ];
@@ -353,7 +370,7 @@ export const Badge: Story = {
     ribbonCorner: select(['top-left', 'top-right', 'bottom-left', 'bottom-right']),
     hidden: boolean,
     color: color,
-    size: select(['tiny', 'extra-small', 'base']),
+    size: select(['tiny', 'extra-small', 'base', 'medium', 'large', 'extra-large']),
     offsetY: number,
     offsetX: number,
     zIndex: number,
@@ -1280,6 +1297,504 @@ export const Overlay: Story = {
   render: render(
     { NmorphOverlay },
     '<NmorphOverlay v-bind="args"><div style="padding: 24px; background: var(--nmorph-main-color);">Overlay content</div></NmorphOverlay>'
+  ),
+};
+
+export const BreadcrumbItem: Story = {
+  args: {
+    to: '#',
+    replace: false,
+  },
+  argTypes: {
+    to: text,
+    replace: boolean,
+  },
+  render: render(
+    { NmorphBreadcrumb, NmorphBreadcrumbItem },
+    `<NmorphBreadcrumb>
+      <NmorphBreadcrumbItem to="/">Home</NmorphBreadcrumbItem>
+      <NmorphBreadcrumbItem v-bind="args">Current item</NmorphBreadcrumbItem>
+    </NmorphBreadcrumb>`
+  ),
+};
+
+export const CarouselItem: Story = {
+  args: {
+    name: 'story-slide',
+  },
+  argTypes: {
+    name: text,
+  },
+  render: render(
+    { NmorphCarousel, NmorphCarouselItem },
+    `<NmorphCarousel style="width: 360px; height: 180px;">
+      <NmorphCarouselItem v-bind="args">
+        <div style="height: 160px; display: grid; place-items: center; background: rgba(87,139,214,.2);">Carousel item</div>
+      </NmorphCarouselItem>
+    </NmorphCarousel>`
+  ),
+};
+
+export const CollapseItem: Story = {
+  args: {
+    name: 'item',
+    title: 'Collapse item',
+    disabled: false,
+    height: 'basic',
+    block: false,
+    transitionSpeed: 220,
+  },
+  argTypes: {
+    name: text,
+    title: text,
+    disabled: boolean,
+    height,
+    block: boolean,
+    transitionSpeed: number,
+  },
+  render: render(
+    { NmorphCollapse, NmorphCollapseItem },
+    `<NmorphCollapse model-value="item">
+      <NmorphCollapseItem v-bind="args">Collapse item content</NmorphCollapseItem>
+    </NmorphCollapse>`
+  ),
+};
+
+export const ContextMenu: Story = {
+  args: {
+    modelValue: false,
+    options: ['Open', 'Rename', { label: 'Delete', color: 'var(--nmorph-error-text-color)' }],
+    trigger: 'both',
+    placement: 'bottom-start',
+    width: 180,
+    yOffset: 6,
+  },
+  argTypes: {
+    modelValue: boolean,
+    options: object,
+    trigger: select(['contextmenu', 'click', 'both']),
+    placement,
+    width: object,
+    yOffset: number,
+  },
+  render: render(
+    { NmorphContextMenu, NmorphButton },
+    '<NmorphContextMenu v-bind="args" v-model="modelValue"><NmorphButton text="Open menu" /></NmorphContextMenu>'
+  ),
+};
+
+export const Drawer: Story = {
+  args: {
+    modelValue: true,
+    title: 'Drawer',
+    placement: 'right',
+    size: '320px',
+    showClose: true,
+    closeOnOverlay: true,
+    closeOnEscape: true,
+    zIndex: 43183,
+  },
+  argTypes: {
+    modelValue: boolean,
+    title: text,
+    placement: select(['left', 'right', 'top', 'bottom']),
+    size: object,
+    showClose: boolean,
+    closeOnOverlay: boolean,
+    closeOnEscape: boolean,
+    zIndex: number,
+  },
+  parameters: {
+    layout: 'fullscreen',
+  },
+  render: render(
+    { NmorphDrawer, NmorphButton },
+    `<NmorphDrawer v-bind="args" v-model="modelValue">
+      <div style="display: grid; gap: 12px;">
+        <p>Drawer content</p>
+        <NmorphButton text="Close" @click="modelValue = false" />
+      </div>
+    </NmorphDrawer>`
+  ),
+};
+
+export const Empty: Story = {
+  args: {
+    title: 'No data',
+    description: 'There is nothing to display yet.',
+    iconSize: 44,
+    minHeight: 160,
+    design: 'nmorph',
+    shadowType: 'outset',
+    hideIcon: false,
+  },
+  argTypes: {
+    title: text,
+    description: text,
+    iconSize: object,
+    minHeight: object,
+    design,
+    shadowType: select(['inset', 'outset', 'combined', 'not-defined']),
+    hideIcon: boolean,
+  },
+  render: render(
+    { NmorphEmpty, NmorphButton },
+    '<NmorphEmpty v-bind="args"><template #action><NmorphButton text="Create" height="thin" /></template></NmorphEmpty>'
+  ),
+};
+
+export const FormItem: Story = {
+  args: {
+    value: formValue,
+    id: 'email',
+    label: 'Email',
+    name: 'email',
+    autocomplete: 'email',
+    height: 'basic',
+    showValidationIcon: true,
+    staticErrorBoxSpace: true,
+  },
+  argTypes: {
+    value: object,
+    id: text,
+    label: text,
+    name: text,
+    autocomplete: text,
+    height,
+    showValidationIcon: boolean,
+    staticErrorBoxSpace: boolean,
+  },
+  render: render(
+    { NmorphForm, NmorphFormItem, NmorphTextInput },
+    `<NmorphForm :value="args.value" validate-immediately style="${wideStyle}">
+      <NmorphFormItem :id="args.id" :label="args.label" :name="args.name" :autocomplete="args.autocomplete" :height="args.height" :show-validation-icon="args.showValidationIcon" :static-error-box-space="args.staticErrorBoxSpace">
+        <NmorphTextInput placeholder="name@mail.com" />
+      </NmorphFormItem>
+    </NmorphForm>`
+  ),
+};
+
+export const Layout: Story = {
+  args: {
+    gap: '12px',
+    asideWidth: '120px',
+    asidePosition: 'left',
+    fullHeight: false,
+    tag: 'div',
+  },
+  argTypes: {
+    gap: object,
+    asideWidth: object,
+    asidePosition: select(['left', 'right']),
+    fullHeight: boolean,
+    tag: text,
+  },
+  render: render(
+    { NmorphLayout },
+    `<NmorphLayout v-bind="args" style="width: 520px;">
+      <template #header><div style="padding: 12px; background: rgba(87,139,214,.16);">Header</div></template>
+      <template #aside><div style="min-height: 110px; padding: 12px; background: rgba(87,139,214,.12);">Aside</div></template>
+      <div style="min-height: 110px; padding: 12px; background: rgba(87,139,214,.08);">Main</div>
+      <template #footer><div style="padding: 12px; background: rgba(87,139,214,.16);">Footer</div></template>
+    </NmorphLayout>`
+  ),
+};
+
+export const QRCode: Story = {
+  args: {
+    value: 'https://nmorph-ui-kit.example',
+    size: 180,
+    margin: 4,
+    color: '#1f2937',
+    background: '#ffffff',
+    level: 'M',
+    title: 'Nmorph QR code',
+  },
+  argTypes: {
+    value: text,
+    size: object,
+    margin: number,
+    color,
+    background: color,
+    level: select(['L', 'M', 'Q', 'H']),
+    title: text,
+  },
+  render: render({ NmorphQRCode }, '<NmorphQRCode v-bind="args" />'),
+};
+
+export const SelectButtonItem: Story = {
+  args: {
+    value: 'middle',
+    disabled: false,
+    tabindex: 0,
+  },
+  argTypes: {
+    value: text,
+    disabled: boolean,
+    tabindex: number,
+  },
+  render: render(
+    { NmorphSelectButton, NmorphSelectButtonItem },
+    `<NmorphSelectButton model-value="middle">
+      <NmorphSelectButtonItem value="left">Left</NmorphSelectButtonItem>
+      <NmorphSelectButtonItem v-bind="args">Story item</NmorphSelectButtonItem>
+      <NmorphSelectButtonItem value="right">Right</NmorphSelectButtonItem>
+    </NmorphSelectButton>`
+  ),
+};
+
+export const SelectOption: Story = {
+  args: {
+    value: 'story',
+    label: 'Story option',
+    disabled: false,
+    focused: false,
+    hoverBackground: 'rgba(87,139,214,.16)',
+    hoverColor: '#578bd6',
+  },
+  argTypes: {
+    value: text,
+    label: text,
+    disabled: boolean,
+    focused: boolean,
+    hoverBackground: color,
+    hoverColor: color,
+  },
+  render: render(
+    { NmorphSelect, NmorphSelectOption },
+    `<NmorphSelect model-value="story" style="width: 260px;">
+      <NmorphSelectOption value="before" label="Before" />
+      <NmorphSelectOption v-bind="args" />
+      <NmorphSelectOption value="after" label="After" />
+    </NmorphSelect>`
+  ),
+};
+
+export const SkeletonItem: Story = {
+  args: {
+    variant: 'rect',
+    width: '220px',
+    height: '72px',
+    design: 'nmorph',
+  },
+  argTypes: {
+    variant: select(['rect', 'circle', 'image']),
+    width: text,
+    height: text,
+    design,
+  },
+  render: render({ NmorphSkeletonItem }, '<NmorphSkeletonItem v-bind="args" />'),
+};
+
+export const Space: Story = {
+  args: {
+    direction: 'row',
+    size: 'medium',
+    align: 'center',
+    justify: 'start',
+    wrap: true,
+    inline: false,
+    fill: false,
+  },
+  argTypes: {
+    direction: select(['row', 'column']),
+    size: select(['small', 'medium', 'large']),
+    align: select(['start', 'center', 'end', 'stretch', 'baseline']),
+    justify: select(['start', 'center', 'end', 'space-between', 'space-around', 'space-evenly']),
+    wrap: boolean,
+    inline: boolean,
+    fill: boolean,
+  },
+  render: render(
+    { NmorphSpace, NmorphButton },
+    '<NmorphSpace v-bind="args"><NmorphButton text="One" /><NmorphButton text="Two" /><NmorphButton text="Three" /></NmorphSpace>'
+  ),
+};
+
+export const TableCell: Story = {
+  args: {
+    row: 0,
+  },
+  argTypes: {
+    row: number,
+  },
+  render: render(
+    { NmorphTable, NmorphTableColumn, NmorphTableCell },
+    `<NmorphTable :data="tableData" style="min-width: 360px;">
+      <NmorphTableColumn prop="name" label="Name" width="180" />
+      <NmorphTableColumn prop="status" label="Status" width="160">
+        <template #default="{ scope }">
+          <NmorphTableCell v-bind="args">{{ scope.rows[args.row]?.status }}</NmorphTableCell>
+        </template>
+      </NmorphTableColumn>
+    </NmorphTable>`
+  ),
+};
+
+export const TableColumn: Story = {
+  args: {
+    prop: 'name',
+    label: 'Name',
+    width: '180',
+    alignment: 'left',
+  },
+  argTypes: {
+    prop: text,
+    label: text,
+    width: text,
+    alignment: select(['left', 'center', 'right']),
+  },
+  render: render(
+    { NmorphTable, NmorphTableColumn },
+    `<NmorphTable :data="tableData" style="min-width: 360px;">
+      <NmorphTableColumn v-bind="args" />
+      <NmorphTableColumn prop="status" label="Status" width="160" />
+    </NmorphTable>`
+  ),
+};
+
+export const TabPane: Story = {
+  args: {
+    name: 'story',
+    label: 'Story tab',
+    content: 'Story tab content',
+    disabled: false,
+  },
+  argTypes: {
+    name: text,
+    label: text,
+    content: text,
+    disabled: boolean,
+  },
+  render: render(
+    { NmorphTabs, NmorphTabPane },
+    `<NmorphTabs model-value="story" style="width: 360px;">
+      <NmorphTabPane v-bind="args" />
+      <NmorphTabPane name="other" label="Other" content="Other content" />
+    </NmorphTabs>`
+  ),
+};
+
+export const TagItem: Story = {
+  args: {
+    value: 'story',
+    text: 'Story tag',
+    removable: true,
+    height: 'basic',
+    design: 'nmorph',
+  },
+  argTypes: {
+    value: text,
+    text: text,
+    removable: boolean,
+    height,
+    design,
+  },
+  render: render({ NmorphTagItem }, '<NmorphTagItem v-bind="args" />'),
+};
+
+export const Textarea: Story = {
+  args: {
+    id: 'textarea',
+    name: 'textarea',
+    autocomplete: '',
+    height: 'basic',
+    disabled: false,
+    tabindex: 0,
+    modelValue: 'Textarea content',
+    placeholder: 'Textarea',
+    rows: 3,
+    minRows: 2,
+    maxRows: 6,
+    resize: 'vertical',
+    autoSize: false,
+  },
+  argTypes: {
+    ...commonInputArgTypes,
+    modelValue: text,
+    placeholder: text,
+    rows: number,
+    minRows: number,
+    maxRows: number,
+    resize: select(['none', 'both', 'horizontal', 'vertical']),
+    autoSize: boolean,
+  },
+  render: render(
+    { NmorphTextarea },
+    '<NmorphTextarea v-bind="args" v-model="modelValue" style="width: 360px;" />'
+  ),
+};
+
+export const TimePicker: Story = {
+  args: {
+    id: 'time-picker',
+    name: 'time-picker',
+    autocomplete: '',
+    height: 'basic',
+    disabled: false,
+    tabindex: 0,
+    modelValue: '09:30',
+    placeholder: 'Time',
+    hourStep: 1,
+    minuteStep: 5,
+    secondStep: 10,
+    showSeconds: false,
+    minTime: '',
+    maxTime: '',
+    clearable: true,
+    width: 180,
+    zIndex: 43183,
+  },
+  argTypes: {
+    ...commonInputArgTypes,
+    modelValue: text,
+    placeholder: text,
+    hourStep: number,
+    minuteStep: number,
+    secondStep: number,
+    showSeconds: boolean,
+    minTime: text,
+    maxTime: text,
+    clearable: boolean,
+    width: object,
+    zIndex: number,
+  },
+  render: render(
+    { NmorphTimePicker },
+    '<NmorphTimePicker v-bind="args" v-model="modelValue" />'
+  ),
+};
+
+export const VirtualList: Story = {
+  args: {
+    items: virtualItems,
+    height: '260px',
+    maxHeight: '260px',
+    itemHeight: 44,
+    overscan: 6,
+    dynamic: false,
+    disabled: false,
+    itemKey: 'id',
+  },
+  argTypes: {
+    items: object,
+    height: object,
+    maxHeight: object,
+    itemHeight: number,
+    overscan: number,
+    dynamic: boolean,
+    disabled: boolean,
+    itemKey: text,
+  },
+  render: render(
+    { NmorphVirtualList },
+    `<NmorphVirtualList v-bind="args" style="width: 360px;">
+      <template #default="{ item }">
+        <div style="box-sizing: border-box; min-height: 44px; padding: 8px 12px; border-bottom: 1px solid rgba(127,127,127,.24);">
+          {{ item.title }}
+        </div>
+      </template>
+    </NmorphVirtualList>`
   ),
 };
 

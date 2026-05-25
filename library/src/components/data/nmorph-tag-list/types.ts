@@ -7,3 +7,12 @@ export interface INmorphTagItemProps {
   height?: keyof typeof NmorphComponentHeight;
   design?: NmorphElementDesignType;
 }
+
+export interface INmorphTagListProps {
+  modelValue: INmorphTagItemProps[];
+}
+
+export interface INmorphTagListEmit {
+  (e: 'close', val: string): void;
+  (e: 'update:model-value', val: INmorphTagItemProps[]): void;
+}

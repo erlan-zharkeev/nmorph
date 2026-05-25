@@ -1,22 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { CSSProperties } from 'vue';
-import { toCssSize, useModifiers } from '@/utils';
-import { createNmorphQRCode, type NmorphQRCodeErrorCorrectionLevel } from './qr-code';
+import { createCssSizeVariables, createCssVariables, useModifiers } from '@/utils';
+import { createNmorphQRCode } from './qr-code';
+import type { INmorphQRCodeProps } from './types';
 
-interface INmorphProps {
-  value?: string | number;
-  size?: number | string;
-  margin?: number;
-  color?: string;
-  background?: string;
-  level?: NmorphQRCodeErrorCorrectionLevel;
-  minVersion?: number;
-  maxVersion?: number;
-  title?: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphQRCodeProps>(), {
   value: '',
   size: 160,
   margin: 4,
@@ -61,9 +50,13 @@ const path = computed(() => {
 });
 
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-qr-code-size': toCssSize(props.size),
-  '--nmorph-qr-code-color': props.color,
-  '--nmorph-qr-code-background': props.background,
+  ...createCssSizeVariables({
+    '--nmorph-qr-code-size': props.size,
+  }),
+  ...createCssVariables({
+    '--nmorph-qr-code-color': props.color,
+    '--nmorph-qr-code-background': props.background,
+  }),
 }));
 
 const modifiers = computed(() =>

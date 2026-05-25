@@ -1,18 +1,12 @@
 <script setup lang="ts">
-import { INmorphImage } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import type { INmorphImageEmit, INmorphImageProps } from './types';
 
 const { t } = useI18n();
 
-interface INmorphProps extends INmorphImage {
-  loadingText?: string;
-  loadFailedText?: string;
-  frameBorder?: number;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphImageProps>(), {
   fit: 'cover',
   alt: '',
   loadingText: '',
@@ -27,11 +21,7 @@ const computedLoadFailedText = computed(() => (props.loadFailedText ? props.load
 const imageLoadFinished = ref(false);
 const imageLoadError = ref(false);
 
-interface INmorphEmit {
-  (e: 'error', event: Event): void;
-  (e: 'load', event: Event): void;
-}
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphImageEmit>();
 
 const onImageLoad = (e: Event) => {
   imageLoadFinished.value = true;

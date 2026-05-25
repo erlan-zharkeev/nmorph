@@ -1,17 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
-import { NmorphIcon, NmorphIconImage, NmorphSkeletonItemPropsType } from '@/components';
-import { NmorphElementDesignType } from '@/types';
+import { NmorphIcon, NmorphIconImage } from '@/components';
+import type { INmorphSkeletonItemProps } from './types';
 
-interface INmorphProps {
-  variant: keyof typeof NmorphSkeletonItemPropsType;
-  width: string;
-  height: string;
-  design?: NmorphElementDesignType;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphSkeletonItemProps>(), {
   variant: 'rect',
   width: 'auto',
   height: 'auto',

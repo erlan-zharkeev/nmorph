@@ -2,16 +2,11 @@
 import { computed } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphButton, NmorphIcon, NmorphIconTriangleDown } from '@/components';
-import { NmorphSortOrderType } from '@/types';
+import type { INmorphSortButtonEmit, INmorphSortButtonProps } from './types';
 
-interface INmorphProps {
-  value: NmorphSortOrderType;
-}
-const props = withDefaults(defineProps<INmorphProps>(), {});
-interface INmorphEmit {
-  (e: 'sort', val: NmorphSortOrderType): void;
-}
-const emit = defineEmits<INmorphEmit>();
+const props = withDefaults(defineProps<INmorphSortButtonProps>(), {});
+
+const emit = defineEmits<INmorphSortButtonEmit>();
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-sort-button': [`${props.value}`],

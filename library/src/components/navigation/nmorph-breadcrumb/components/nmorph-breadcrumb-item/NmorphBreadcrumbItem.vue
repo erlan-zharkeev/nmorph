@@ -2,10 +2,10 @@
 import { computed, inject, ref } from 'vue';
 import { generateUUID, useModifiers } from '@/utils';
 import { onMounted } from 'vue';
-import { NmorphBreadcrumbInjection, INmorphBreadcrumbItemProps } from '@/components';
+import { NmorphBreadcrumbInjection } from '@/components';
+import type { INmorphBreadcrumbItemComponentProps } from './types';
 
-interface INmorphProps extends INmorphBreadcrumbItemProps {}
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphBreadcrumbItemComponentProps>(), {
   to: '',
   replace: false,
 });

@@ -1,22 +1,13 @@
 <script setup lang="ts">
-import { usePlacement, useZIndex } from '@/hooks';
-import { INmorphCoords, NmorphDomElementType, NmorphPlacementType } from '@/types';
-import { toCssSize, useModifiers } from '@/utils';
+import { usePlacement } from '@/hooks/use-placement';
+import { useZIndex } from '@/hooks/use-z-index';
+import { NmorphDomElementType } from '@/types';
+import { createCssSizeVariables, useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 import type { CSSProperties } from 'vue';
+import type { INmorphTooltipProps } from './types';
 
-interface INmorphProps {
-  text?: string;
-  position?: NmorphPlacementType;
-  forceShow?: boolean;
-  forceCoordinate?: Partial<INmorphCoords<string>> | null;
-  zIndex?: number;
-  width?: number | string;
-  maxWidth?: number | string;
-  height?: number | string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphTooltipProps>(), {
   text: '',
   position: 'top',
   forceShow: false,
@@ -63,9 +54,11 @@ const zIndex = useZIndex(
 const styles = computed<CSSProperties>(() => ({
   '--nmorph-tooltip-width': rootWidth.value,
   '--nmorph-tooltip-z-index': zIndex.value,
-  ...(props.width !== undefined && { '--width': toCssSize(props.width) }),
-  ...(props.maxWidth !== undefined && { '--max-width': toCssSize(props.maxWidth) }),
-  ...(props.height !== undefined && { '--height': toCssSize(props.height) }),
+  ...createCssSizeVariables({
+    '--width': props.width,
+    '--max-width': props.maxWidth,
+    '--height': props.height,
+  }),
 }));
 const tooltipBody = ref<NmorphDomElementType>(null);
 defineExpose({ tooltipBody });

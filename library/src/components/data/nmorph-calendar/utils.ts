@@ -4,7 +4,7 @@ import {
   NmorphCalendarRangeType,
   NmorphSelectedDateModelType,
 } from './types';
-import { useCalendarTexts } from './hooks';
+import { useCalendarTexts } from './hooks/use-calendar-texts';
 import { Ref } from 'vue';
 
 export const getDecadeYears = (year: number) => {

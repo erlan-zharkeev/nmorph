@@ -1,26 +1,16 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps } from '@/types';
-import { toCssSize, useModifiers } from '@/utils';
+import { createCssSizeVariables, createCssVariables, useModifiers } from '@/utils';
 import { computed, ref, watch, provide } from 'vue';
 import type { CSSProperties } from 'vue';
 import {
   NmorphSelectButtonChangeHandlerInjectionType,
   NmorphSelectButtonSelectedValueInjectionType,
-  INmorphSelectButtonOption,
   NmorphSelectButtonItem,
 } from '@/components';
 import { useFormItemModel } from '../nmorph-form/use-form-item-input';
+import type { INmorphSelectButtonEmit, INmorphSelectButtonProps } from './types';
 
-interface INmorphProps extends INmorphCommonInputProps {
-  modelValue?: string;
-  options?: INmorphSelectButtonOption[];
-  fill?: boolean;
-  trackPadding?: number | string;
-  itemSize?: number | string;
-  itemFontSize?: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphSelectButtonProps>(), {
   modelValue: '',
   height: 'basic',
   disabled: false,
@@ -31,9 +21,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   itemFontSize: undefined,
 });
 
-const emit = defineEmits<{
-  (e: 'update:model-value', val: string): void;
-}>();
+const emit = defineEmits<INmorphSelectButtonEmit>();
 
 const { modelValue, updateModelValue } = useFormItemModel<string>(
   props,
@@ -53,9 +41,13 @@ const modifiers = computed(() =>
 );
 
 const styles = computed<CSSProperties>(() => ({
-  ...(props.trackPadding !== undefined && { '--track-padding': toCssSize(props.trackPadding) }),
-  ...(props.itemSize !== undefined && { '--item-size': toCssSize(props.itemSize) }),
-  ...(props.itemFontSize !== undefined && { '--item-font-size': props.itemFontSize }),
+  ...createCssSizeVariables({
+    '--track-padding': props.trackPadding,
+    '--item-size': props.itemSize,
+  }),
+  ...createCssVariables({
+    '--item-font-size': props.itemFontSize,
+  }),
 }));
 
 const changeHandler = (value: string) => {

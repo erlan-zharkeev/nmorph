@@ -18,3 +18,9 @@ export interface INmorphAlertProps {
   closeIconPosition?: string;
   backgroundColor?: string;
 }
+
+export interface INmorphAlertComponentProps extends INmorphAlertProps {}
+
+export interface INmorphAlertEmit {
+  (e: 'close'): void;
+}

@@ -234,6 +234,14 @@ export default {
           "Polished form control sizing and surfaces, including checkbox and radio content height, select radius, text input backgrounds, autofill styling, and card padding propagation.",
         "dev-open-opt-in-browser":
           "Workspace dev scripts no longer open browser tabs by default; pass --open when the docs or sandbox should launch automatically.",
+        "component-types-split":
+          "Типы props, emit, slots и общие типы библиотеки теперь разнесены по отдельным type modules, чтобы generated declarations было проще использовать.",
+        "file-upload-type-helpers":
+          "NmorphFileUpload и form validation теперь используют общие helpers для file type matching, поэтому MIME, extension, accept и image-preview проверки остаются согласованными.",
+        "image-preview-lazy-portal":
+          "NmorphImagePreview теперь монтирует preview portal только пока preview открыт, поэтому страницы с большим количеством preview не копят скрытые portals в body.",
+        "badge-larger-sizes":
+          "NmorphBadge size теперь включает medium, large и extra-large для более крупных tag, dot и ribbon вариантов.",
         "style-utils-unification":
           "Unified modifier normalization and CSS size helpers across components so boolean modifiers and numeric CSS values follow one code path.",
         "virtual-list-style-helpers":
@@ -935,7 +943,8 @@ export default {
         "hide-on-falsy-value":
           "Скрывает индикатор бейджа, когда value falsy, включая 0 и пустую строку.",
         color: "Устанавливает цвет фона бейджа",
-        size: "Устанавливает размер текста бейджа: tiny, extra-small или base",
+        size:
+          "Устанавливает размер текста бейджа: tiny, extra-small, base, medium, large или extra-large",
         "z-index": "Определяет порядок наложения бейджа",
         "offset-y":
           "Вертикальное смещение бейджа. Для ribbon прокидывается в --nmorph-badge-ribbon-offset-y. Игнорируется при type tag",

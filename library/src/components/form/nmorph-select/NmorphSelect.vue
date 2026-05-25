@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { INmorphCommonInputProps, NmorphComponentHeight, NmorphDomElementType } from '@/types';
-import { getNmorphOptionHeight, resolveDomElement, toCssSize, useModifiers } from '@/utils';
+import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { createCssSizeVariables, getNmorphOptionHeight, resolveDomElement, toCssSize, useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick, toRef } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useVirtualList } from '@/hooks';
+import { useVirtualList } from '@/hooks/use-virtual-list';
 import {
   NmorphTagItem,
   NmorphIcon,
@@ -12,35 +12,16 @@ import {
   NmorphSelectSelectedValueInjectionType,
   NmorphSelectChangeSelectedValue,
   NmorphSelectModelValueType,
-  INmorphSelectOption,
   NmorphIconLoaderDots,
   NmorphIconChevronDown,
 } from '@/components';
 import { useI18n } from 'vue-i18n';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
+import type { INmorphSelectEmit, INmorphSelectProps } from './types';
 
 const { t } = useI18n();
 
-interface INmorphProps extends INmorphCommonInputProps {
-  noElementPlaceholder?: string;
-  valueRequired?: boolean;
-  options?: INmorphSelectOption[];
-  optionsMap?: INmorphSelectOption[];
-  modelValue?: NmorphSelectModelValueType;
-  loading?: boolean;
-  open?: boolean;
-  fill?: boolean;
-  optionsWidth?: 'truncate' | 'auto';
-  zIndex?: number;
-  virtual?: boolean;
-  virtualItemHeight?: number;
-  virtualMaxHeight?: number | string;
-  virtualOverscan?: number;
-  virtualDynamicHeight?: boolean;
-  width?: number | string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphSelectProps>(), {
   noElementPlaceholder: '',
   valueRequired: false,
   options: () => [],
@@ -65,9 +46,7 @@ const computedNoElementPlaceholder = computed(() =>
   props.noElementPlaceholder ? props.noElementPlaceholder : t('noElementPlaceholder')
 );
 
-const emit = defineEmits<{
-  (e: 'update:model-value', val: NmorphSelectModelValueType): void;
-}>();
+const emit = defineEmits<INmorphSelectEmit>();
 
 const { modelValue, updateModelValue } = useFormItemModel<NmorphSelectModelValueType>(
   props,
@@ -127,9 +106,11 @@ const modifiers = computed(() =>
   })
 );
 
-const styles = computed<CSSProperties>(() => ({
-  ...(props.width !== undefined && { '--base-width': toCssSize(props.width) }),
-}));
+const styles = computed<CSSProperties>(() =>
+  createCssSizeVariables({
+    '--base-width': props.width,
+  })
+);
 
 const clickHandler = () => {
   if (disabledInput.value) return;

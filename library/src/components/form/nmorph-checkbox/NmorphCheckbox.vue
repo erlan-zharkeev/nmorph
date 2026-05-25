@@ -10,6 +10,7 @@ import {
   NmorphSelectionControlHeightType,
 } from '@/types';
 import { useFormItemModel } from '../nmorph-form/use-form-item-input';
+import type { INmorphCheckboxEmit } from './types';
 
 const groupSelectedValue = inject<NmorphCheckboxGroupSelectedValueInjectionType>(
   'checkbox-group-selected-value',
@@ -30,11 +31,7 @@ const props = withDefaults(defineProps<INmorphCheckboxOption>(), {
   design: 'button',
 });
 
-interface INmorphEmit {
-  (e: 'update:model-value', val: boolean): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphCheckboxEmit>();
 const { modelValue, updateModelValue } = useFormItemModel<boolean>(
   props,
   (value) => emit('update:model-value', value),

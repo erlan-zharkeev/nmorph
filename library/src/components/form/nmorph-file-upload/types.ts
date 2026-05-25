@@ -54,3 +54,22 @@ export interface INmorphFileUploadValidationError {
   file: File;
   errors: string[];
 }
+
+export interface INmorphFileUploadProps {
+  id?: string;
+  name?: string;
+  autocomplete?: string;
+  tabindex?: number;
+  modelValue?: INmorphCustomFileData[];
+  disabled?: boolean;
+  multiple?: boolean;
+  allowedTypes?: Array<NmorphResolutionType | string>;
+  photoWithPreview?: boolean;
+  buttonText?: string;
+}
+
+export interface INmorphFileUploadEmit {
+  (e: 'update:model-value', val: INmorphCustomFileData[]): void;
+  (e: 'on-unsupported-file-type-error', val: string): void;
+  (e: 'on-file-validation-error', val: INmorphFileUploadValidationError): void;
+}

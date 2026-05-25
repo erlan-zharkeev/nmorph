@@ -2,21 +2,11 @@
 import { computed, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphIcon, NmorphIconFolderOpened } from '@/components';
-import { NmorphShadowType, type INmorphA11yProps, type NmorphElementDesignType } from '@/types';
-import { toCssSize, useModifiers } from '@/utils';
+import { NmorphShadowType } from '@/types';
+import { createCssSizeVariables, toCssSize, useModifiers } from '@/utils';
+import type { INmorphEmptyProps } from './types';
 
-interface INmorphProps extends INmorphA11yProps {
-  title?: string;
-  description?: string;
-  iconSize?: number | string;
-  minHeight?: number | string;
-  padding?: number | string;
-  design?: NmorphElementDesignType;
-  shadowType?: keyof typeof NmorphShadowType;
-  hideIcon?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphEmptyProps>(), {
   title: 'No data',
   description: '',
   iconSize: 56,
@@ -42,11 +32,13 @@ const modifiers = computed(() =>
   })
 );
 
-const styles = computed<CSSProperties>(() => ({
-  '--nmorph-empty-icon-size': toCssSize(props.iconSize),
-  '--nmorph-empty-min-height': toCssSize(props.minHeight),
-  '--nmorph-empty-padding': toCssSize(props.padding),
-}));
+const styles = computed<CSSProperties>(() =>
+  createCssSizeVariables({
+    '--nmorph-empty-icon-size': props.iconSize,
+    '--nmorph-empty-min-height': props.minHeight,
+    '--nmorph-empty-padding': props.padding,
+  })
+);
 </script>
 
 <template>

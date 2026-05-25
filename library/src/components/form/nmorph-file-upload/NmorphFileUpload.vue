@@ -2,13 +2,10 @@
 import { computed, inject, onBeforeUnmount, ref, watch, type Component } from 'vue';
 import {
   INmorphCustomFileData,
-  INmorphFileUploadValidationError,
   NmorphArchiveResolution,
   NmorphAudioResolution,
   NmorphImageResolution,
-  NmorphResolutionType,
   NmorphVideoResolution,
-  resolution,
   NmorphButton,
   NmorphIcon,
   NmorphImagePreview,
@@ -19,24 +16,23 @@ import {
   NmorphIconArchive,
   NmorphIconCross,
 } from '@/components';
-import { useModifiers } from '@/utils';
-import { INmorphCommonInputProps, NmorphDomElementType } from '@/types';
+import {
+  getFileAcceptValue,
+  getFileExtension,
+  getFileTypeCandidates,
+  isFileAllowedByTypes,
+  isKnownFileType,
+  useModifiers,
+} from '@/utils';
+import { NmorphDomElementType } from '@/types';
 import { useI18n } from 'vue-i18n';
 import { NmorphFormValidationDataType } from '../nmorph-form/types';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
+import type { INmorphFileUploadEmit, INmorphFileUploadProps } from './types';
 
 const { t } = useI18n();
 
-interface INmorphProps extends Pick<INmorphCommonInputProps, 'id' | 'name' | 'autocomplete' | 'tabindex'> {
-  modelValue?: INmorphCustomFileData[];
-  disabled?: boolean;
-  multiple?: boolean;
-  allowedTypes?: Array<NmorphResolutionType | string>;
-  photoWithPreview?: boolean;
-  buttonText?: string;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphFileUploadProps>(), {
   modelValue: () => [],
   disabled: false,
   multiple: false,
@@ -45,13 +41,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   buttonText: '',
 });
 
-interface INmorphEmit {
-  (e: 'update:model-value', val: INmorphCustomFileData[]): void;
-  (e: 'on-unsupported-file-type-error', val: string): void;
-  (e: 'on-file-validation-error', val: INmorphFileUploadValidationError): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphFileUploadEmit>();
 const computedButtonText = computed(() => (props.buttonText ? props.buttonText : t('selectFile')));
 const { id, name, autocomplete, tabindex } = useFormItemInput(props);
 const { modelValue, updateModelValue } = useFormItemModel<INmorphCustomFileData[]>(
@@ -61,40 +51,6 @@ const { modelValue, updateModelValue } = useFormItemModel<INmorphCustomFileData[
 );
 const formData = inject<NmorphFormValidationDataType | undefined>('form-data', undefined);
 
-const knownResolutionEntries = Object.entries(resolution) as Array<[NmorphResolutionType, string]>;
-const extensionByResolution: Partial<Record<NmorphResolutionType, string>> = {
-  'svg-xml': 'svg',
-  'audio-ogg': 'ogg',
-  'wideo-ogg': 'ogg',
-};
-
-const getPlainType = (mimeType: string) => mimeType.split('/')[1]?.toLowerCase() || '';
-
-const getFileExtension = (fileName: string) => {
-  const extension = fileName.split('.').pop()?.toLowerCase();
-  return extension && extension !== fileName.toLowerCase() ? extension : '';
-};
-
-const getKnownResolutionByMime = (mimeType: string) =>
-  knownResolutionEntries.find(([, knownMimeType]) => knownMimeType.toLowerCase() === mimeType.toLowerCase())?.[0] || '';
-
-const getFileTypeCandidates = (file: File) =>
-  Array.from(
-    new Set(
-      [
-        file.type.toLowerCase(),
-        getKnownResolutionByMime(file.type),
-        getFileExtension(file.name),
-        getPlainType(file.type),
-      ]
-        .filter(Boolean)
-        .map((type) => type.toLowerCase())
-    )
-  );
-
-const isKnownFileType = <T extends Record<string, string>>(fileType: string, fileTypeMap: T) =>
-  Object.prototype.hasOwnProperty.call(fileTypeMap, fileType);
-
 const isImageFile = (file: File) => {
   const candidates = getFileTypeCandidates(file);
   return (
@@ -103,29 +59,7 @@ const isImageFile = (file: File) => {
   );
 };
 
-const isFileAllowed = (file: File) => {
-  if (props.allowedTypes.length === 0) return true;
-
-  const candidates = getFileTypeCandidates(file);
-  return props.allowedTypes.some((allowedType) => candidates.includes(String(allowedType).toLowerCase()));
-};
-
-const inputAccept = computed(() => {
-  if (props.allowedTypes.length === 0) return undefined;
-
-  return Array.from(
-    new Set(
-      props.allowedTypes.flatMap((allowedType) => {
-        const normalizedType = String(allowedType).toLowerCase();
-        const knownMimeType = resolution[normalizedType as NmorphResolutionType];
-        const extension = extensionByResolution[normalizedType as NmorphResolutionType] || normalizedType;
-
-        if (normalizedType.includes('/')) return normalizedType;
-        return knownMimeType ? [`.${extension}`, knownMimeType] : `.${extension}`;
-      })
-    )
-  ).join(',');
-});
+const inputAccept = computed(() => getFileAcceptValue(props.allowedTypes));
 
 const typeFileIconMap = (file: File): Component => {
   const candidates = getFileTypeCandidates(file);
@@ -203,7 +137,7 @@ const handleFileUpload = (event: Event) => {
   const acceptedRawFiles: File[] = [];
 
   filesToProcess.forEach((file) => {
-    if (!isFileAllowed(file)) {
+    if (!isFileAllowedByTypes(file, props.allowedTypes)) {
       emit('on-unsupported-file-type-error', file.type || getFileExtension(file.name) || file.name);
       return;
     }
@@ -325,6 +259,8 @@ const modifiers = computed(() =>
 
   .nmorph-file-upload__trigger {
     position: relative;
+    width: 100%;
+    min-width: 0;
   }
 
   input {
@@ -353,6 +289,7 @@ const modifiers = computed(() =>
     max-width: 100%;
     margin-bottom: var(--indentation-02);
     padding: var(--indentation-02) var(--indentation-03);
+    overflow: hidden;
     background: var(--nmorph-main-color);
     border-radius: var(--default-border-radius);
     box-shadow:
@@ -367,10 +304,11 @@ const modifiers = computed(() =>
 
   .nmorph-file-upload__file-info {
     display: flex;
-    flex: 1 1 auto;
+    flex: 1 1 0;
     gap: var(--indentation-02);
     align-items: center;
     min-width: 0;
+    max-width: 100%;
     overflow: hidden;
   }
 
@@ -380,7 +318,7 @@ const modifiers = computed(() =>
 
   .nmorph-file-upload__file-name {
     display: block;
-    flex: 1 1 auto;
+    flex: 1 1 0;
     min-width: 0;
     max-width: 100%;
     overflow: hidden;

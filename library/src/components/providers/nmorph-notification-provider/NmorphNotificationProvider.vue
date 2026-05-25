@@ -4,12 +4,9 @@ import type { INmorphNotification, TNmorphNotificationPlacement } from '@/compon
 import { NmorphAlert } from '@/components';
 import { computed, inject, ref, watch } from 'vue';
 import type { INmorphInstance } from '@/types';
+import type { INmorphNotificationProviderProps, TNmorphNotificationItem } from './types';
 
 const ANIMATION_DURATION = 500;
-
-type TNmorphNotificationItem = INmorphNotification & {
-  id: string;
-};
 
 const hasNotificationId = (notification: INmorphNotification): notification is TNmorphNotificationItem =>
   typeof notification.id === 'string' && notification.id.length > 0;
@@ -38,14 +35,7 @@ const closeHandler = (id: string, trackRemoval = true) => {
   setTimeout(() => removeRenderedNotification(id), ANIMATION_DURATION);
 };
 
-interface INmorphProps {
-  notifications: INmorphNotification[];
-  placement?: TNmorphNotificationPlacement;
-  zIndex?: number;
-  quantity?: number;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphNotificationProviderProps>(), {
   placement: 'top-right',
   zIndex: undefined,
   quantity: 100,

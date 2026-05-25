@@ -17,3 +17,14 @@ export enum NmorphNotificationPlacement {
 }
 
 export type TNmorphNotificationPlacement = keyof typeof NmorphNotificationPlacement;
+
+export type TNmorphNotificationItem = INmorphNotification & {
+  id: string;
+};
+
+export interface INmorphNotificationProviderProps {
+  notifications: INmorphNotification[];
+  placement?: TNmorphNotificationPlacement;
+  zIndex?: number;
+  quantity?: number;
+}

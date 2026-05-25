@@ -3,11 +3,9 @@ import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 import { NmorphIcon, NmorphIconError } from '@/components';
 import { NmorphComponentHeight } from '@/types';
-import { INmorphTagItemProps } from './../../types';
+import type { INmorphTagItemComponentProps, INmorphTagItemEmit } from './types';
 
-interface INmorphProps extends INmorphTagItemProps {}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphTagItemComponentProps>(), {
   height: 'basic',
   removable: true,
   design: 'nmorph',
@@ -20,11 +18,7 @@ const modifiers = computed(() =>
   })
 );
 
-interface INmorphEmit {
-  (e: 'close', val: string): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphTagItemEmit>();
 
 const closeHandler = () => {
   emit('close', props.value);

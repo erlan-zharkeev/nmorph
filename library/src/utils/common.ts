@@ -4,6 +4,32 @@ export const deepClone = <T>(obj: T): T => JSON.parse(JSON.stringify(obj));
 
 export const toCssSize = (value?: number | string) => (typeof value === 'number' ? `${value}px` : value);
 
+export type NmorphCssVariableValue = string | number | null | undefined | false;
+
+export const createCssVariables = (variables: Record<`--${string}`, NmorphCssVariableValue>) => {
+  return Object.entries(variables).reduce(
+    (acc, [name, value]) => {
+      if (value !== undefined && value !== null && value !== false) acc[name] = value;
+      return acc;
+    },
+    {} as Record<string, string | number>
+  );
+};
+
+export const createCssSizeVariables = (
+  variables: Record<`--${string}`, number | string | null | undefined | false>
+) => {
+  return createCssVariables(
+    Object.entries(variables).reduce(
+      (acc, [name, value]) => {
+        acc[name as `--${string}`] = value === false || value === null ? value : toCssSize(value);
+        return acc;
+      },
+      {} as Record<`--${string}`, NmorphCssVariableValue>
+    )
+  );
+};
+
 type NmorphOptionHeightType = 'basic' | 'thick' | 'thin';
 
 const nmorphOptionHeightMap: Record<NmorphOptionHeightType, number> = {

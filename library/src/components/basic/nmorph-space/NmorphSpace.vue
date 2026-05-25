@@ -2,24 +2,9 @@
 import { computed } from 'vue';
 import type { CSSProperties } from 'vue';
 import { toCssSize, useModifiers } from '@/utils';
+import type { INmorphSpaceProps, NmorphSpaceSizeType } from './types';
 
-type NmorphSpaceDirectionType = 'row' | 'column';
-type NmorphSpaceAlignType = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
-type NmorphSpaceJustifyType = 'start' | 'center' | 'end' | 'space-between' | 'space-around' | 'space-evenly';
-type NmorphSpaceSizeType = 'small' | 'medium' | 'large' | number | string;
-
-interface INmorphProps {
-  tag?: string;
-  direction?: NmorphSpaceDirectionType;
-  size?: NmorphSpaceSizeType;
-  align?: NmorphSpaceAlignType;
-  justify?: NmorphSpaceJustifyType;
-  wrap?: boolean;
-  inline?: boolean;
-  fill?: boolean;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphSpaceProps>(), {
   tag: 'div',
   direction: 'row',
   size: 'medium',

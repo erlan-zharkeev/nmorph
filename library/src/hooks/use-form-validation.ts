@@ -1,5 +1,5 @@
 import { reactive, readonly, Ref, ref, watch } from 'vue';
-import { useFieldValidation } from '.';
+import { useFieldValidation } from './use-field-validation';
 import type { NmorphFormValueType } from '@/components/form/nmorph-form/types';
 import type { NmorphValidationInputValueType } from './use-field-validation';
 

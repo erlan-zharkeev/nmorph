@@ -1,27 +1,12 @@
 <script setup lang="ts">
-import { computed, ref, type Component } from 'vue';
+import { computed, ref } from 'vue';
 import { useModifiers } from '@/utils';
 import { NmorphImage, NmorphIcon, NmorphIconAvatar, NmorphIconLoaderDots } from '@/components';
-import { INmorphImage, AvatarShapeType } from '@/types';
+
 import NmorphImagePreview from '../nmorph-image-preview/NmorphImagePreview.vue';
+import type { INmorphAvatarEmit, INmorphAvatarProps } from './types';
 
-interface INmorphProps extends Omit<INmorphImage, 'src'> {
-  src?: string | string[];
-  size?: number;
-  shape?: keyof typeof AvatarShapeType;
-  frameBorder?: number;
-  imagePadding?: number;
-  name?: string;
-  fallback?: Component;
-  preview?: boolean;
-  previewSrc?: string | string[];
-  previewInitialIndex?: number;
-  previewScaleStep?: number;
-  previewMinScaleLevel?: number;
-  previewMaxScaleLevel?: number;
-}
-
-const props = withDefaults(defineProps<INmorphProps>(), {
+const props = withDefaults(defineProps<INmorphAvatarProps>(), {
   src: undefined,
   size: 48,
   shape: 'circle',
@@ -37,12 +22,7 @@ const props = withDefaults(defineProps<INmorphProps>(), {
   previewMaxScaleLevel: 4,
 });
 
-interface INmorphEmit {
-  (e: 'error', event: Event): void;
-  (e: 'load', event: Event): void;
-}
-
-const emit = defineEmits<INmorphEmit>();
+const emit = defineEmits<INmorphAvatarEmit>();
 
 const onImageError = (e: Event) => {
   emit('error', e);
