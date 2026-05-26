@@ -5,6 +5,8 @@ export interface INmorphAction {
   handler: () => void;
 }
 
+export type NmorphImagePreviewTriggerView = 'single' | 'gallery';
+
 export interface INmorphImagePreviewProps {
   modelValue?: boolean;
   alt?: string;
@@ -20,6 +22,9 @@ export interface INmorphImagePreviewProps {
   width?: number | string;
   height?: number | string;
   navigationButtonMargin?: number | string;
+  triggerView?: NmorphImagePreviewTriggerView;
+  triggerLimit?: number;
+  triggerGap?: number | string;
 }
 
 export interface INmorphImagePreviewEmit {

@@ -64,6 +64,21 @@ const attributesData: IAttributesTableData[] = [
     default: "true",
   },
   {
+    name: "trigger-view",
+    type: "'single' | 'gallery'",
+    default: "single",
+  },
+  {
+    name: "trigger-limit",
+    type: "Number",
+    default: "undefined",
+  },
+  {
+    name: "trigger-gap",
+    type: "Gap",
+    default: "8",
+  },
+  {
     name: "width",
     type: "Width",
     default: "undefined",
@@ -89,6 +104,7 @@ const variables: IVariablesTableData[] = [
   { name: "width" },
   { name: "height" },
   { name: "nmorph-image-preview-btn-margin" },
+  { name: "nmorph-image-preview-trigger-gap" },
 ];
 
 const events = [

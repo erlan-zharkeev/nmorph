@@ -227,6 +227,14 @@ export default {
           "NmorphFileUpload and form validation now share file type matching helpers, so MIME, extension, accept, and image-preview checks stay consistent.",
         "image-preview-lazy-portal":
           "NmorphImagePreview now mounts its preview portal only while open, so pages with many previews do not accumulate hidden portals in body.",
+        "image-preview-gallery-trigger":
+          "NmorphImagePreview now supports a gallery trigger that renders multiple thumbnails before opening the overlay.",
+        "button-multiline-height":
+          "NmorphButton now uses its height prop as a minimum for regular buttons, allowing multi-line content to expand without clipping while icon buttons stay fixed.",
+        "context-menu-open-controls":
+          "NmorphContextMenu now supports click, both, longpress, and manual triggers, exposes openAt/openAtElement/close, and keeps pointer menus inside the viewport.",
+        "tag-list-common-design":
+          "NmorphTagList now accepts design=\"common\" to render plain token-backed tags with contrast text and icons instead of the neumorphic inset surface.",
         "badge-larger-sizes":
           "NmorphBadge size now includes medium, large, and extra-large variants for larger tags, dots, and ribbons.",
         "style-utils-unification":
@@ -1044,6 +1052,7 @@ export default {
     "tag-list": {
       api: {
         "model-value": "标签列表",
+        design: "定义列表中标签的默认视觉样式",
       },
       events: {
         "update:model-value": "拦截双向绑定的事件",
@@ -1066,7 +1075,8 @@ export default {
         subtitle: "定义组件的高度。",
       },
       design: {
-        subtitle: "如果设置为 *common*，组件将显示带有边框。",
+        subtitle:
+          "如果设置为 *common*，组件将使用普通 token 背景，并使用高对比度文本和图标。",
       },
       api: {
         value: "定义组件的标识符值",
@@ -1275,6 +1285,12 @@ export default {
         "show-trigger": "定义是否渲染默认的预览触发器",
         "show-navigation-buttons": "定义图像组是否渲染图库导航按钮",
         "show-action-bar": "定义是否渲染底部旋转和缩放操作栏",
+        "trigger-view":
+          "Defines whether the preview trigger renders one image or a thumbnail gallery",
+        "trigger-limit":
+          "Limits how many thumbnails are rendered by the gallery trigger",
+        "trigger-gap":
+          "Defines the gap between thumbnails in the gallery trigger",
         width:
           "Overrides the preview trigger width. Numbers are treated as pixel values",
         height:
@@ -1291,6 +1307,8 @@ export default {
         height: "定义图像预览的高度。",
         "nmorph-image-preview-btn-margin":
           "Distance between gallery navigation buttons and the viewport edge",
+        "nmorph-image-preview-trigger-gap":
+          "Gap between thumbnails in the gallery trigger",
       },
       events: {
         "update:model-value": "拦截双向绑定的事件",
@@ -1629,6 +1647,10 @@ export default {
       },
       api: {
         "model-value": "控制上下文菜单的打开状态",
+        trigger:
+          "Defines how the menu opens: right click, left click, both, touch long press, or manual exposed calls",
+        options:
+          "Menu options rendered as text, object options, or custom components",
         placement: "定义上下文菜单相对于指针位置的放置方式",
         width: "设置上下文菜单的宽度",
         "min-width": "设置上下文菜单的最小宽度",
@@ -1656,6 +1678,11 @@ export default {
         close: "上下文菜单关闭时触发的事件",
         "on-outside-click": "用户点击上下文菜单外部时触发的事件",
         "on-escape-keydown": "上下文菜单打开时用户按下 Escape 触发的事件",
+      },
+      exposes: {
+        openAt: "Opens the context menu at viewport coordinates",
+        openAtElement: "Opens the context menu anchored to an HTMLElement",
+        close: "Closes the context menu",
       },
     },
     backtop: {

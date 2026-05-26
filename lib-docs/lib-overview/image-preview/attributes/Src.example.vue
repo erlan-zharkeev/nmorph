@@ -8,6 +8,13 @@ import { Spring, Summer, Autumn, Winter } from "@/assets/images";
     <ClientOnly>
       <NmorphImagePreview :src="Spring" />
       <NmorphImagePreview :src="[Summer, Spring, Winter, Autumn]" />
+      <NmorphImagePreview
+        :src="[Summer, Spring, Winter, Autumn]"
+        trigger-view="gallery"
+        :trigger-limit="3"
+        :width="96"
+        :height="96"
+      />
     </ClientOnly>
   </div>
 </template>

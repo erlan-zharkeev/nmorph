@@ -100,8 +100,8 @@ const tableData = [
   { name: 'Dialog', group: 'Feedback', status: 'Ready' },
 ];
 const tagList = [
-  { value: 'basic', text: 'Basic', removable: true, height: 'thin', design: 'nmorph' },
-  { value: 'form', text: 'Form', removable: true, height: 'thin', design: 'nmorph' },
+  { value: 'basic', text: 'Basic', removable: true, height: 'thin' },
+  { value: 'form', text: 'Form', removable: true, height: 'thin' },
 ];
 const virtualItems = Array.from({ length: 120 }, (_, index) => ({
   id: index + 1,
@@ -500,6 +500,11 @@ export const ImagePreview: Story = {
     zIndex: 43183,
     showNavigationButtons: true,
     showActionBar: true,
+    width: 80,
+    height: 80,
+    triggerView: 'gallery',
+    triggerLimit: 2,
+    triggerGap: 8,
   },
   argTypes: {
     modelValue: boolean,
@@ -512,6 +517,11 @@ export const ImagePreview: Story = {
     zIndex: number,
     showNavigationButtons: boolean,
     showActionBar: boolean,
+    width: number,
+    height: number,
+    triggerView: select(['single', 'gallery']),
+    triggerLimit: number,
+    triggerGap: number,
   },
   render: render(
     { NmorphImagePreview },
@@ -622,9 +632,11 @@ export const Table: Story = {
 export const TagList: Story = {
   args: {
     modelValue: tagList,
+    design: 'common',
   },
   argTypes: {
     modelValue: object,
+    design: design,
   },
   render: render(
     { NmorphTagList },
@@ -1372,7 +1384,7 @@ export const ContextMenu: Story = {
   argTypes: {
     modelValue: boolean,
     options: object,
-    trigger: select(['contextmenu', 'click', 'both']),
+    trigger: select(['contextmenu', 'click', 'both', 'longpress', 'manual']),
     placement,
     width: object,
     yOffset: number,

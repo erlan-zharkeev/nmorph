@@ -2,6 +2,7 @@
 import {
   type IAttributesTableData,
   type IEventsTableData,
+  type IExposesTableData,
   type ISlotsTableData,
   type IVariablesTableData,
 } from "~/types";
@@ -15,7 +16,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "trigger",
-    type: `"contextmenu" | "click" | "both"`,
+    type: `"contextmenu" | "click" | "both" | "longpress" | "manual"`,
     default: "contextmenu",
   },
   {
@@ -102,9 +103,17 @@ const attributesData: IAttributesTableData[] = [
 
 const slotData: ISlotsTableData[] = [{ name: "default" }, { name: "menu" }];
 const variables: IVariablesTableData[] = [];
+const exposes: IExposesTableData[] = [
+  { name: "openAt", type: "(x: Number, y: Number, event?: Event) => void" },
+  {
+    name: "openAtElement",
+    type: "(element: HTMLElement, event?: Event) => void",
+  },
+  { name: "close", type: "void" },
+];
 const eventsData: IEventsTableData[] = [
   { name: "update:model-value", type: "Boolean" },
-  { name: "open", type: "MouseEvent | KeyboardEvent" },
+  { name: "open", type: "Event | undefined" },
   { name: "close", type: "void" },
   { name: "select", type: "NmorphContextMenuOption, Number" },
   { name: "on-outside-click", type: "void" },
@@ -120,6 +129,7 @@ const eventsData: IEventsTableData[] = [
       :attributes="attributesData"
       :slots="slotData"
       :variables="variables"
+      :exposes="exposes"
       :events="eventsData"
     />
   </div>

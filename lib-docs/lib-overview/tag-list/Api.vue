@@ -9,6 +9,11 @@ const attributesData: IAttributesTableData[] = [
     default: "-",
     required: true,
   },
+  {
+    name: "design",
+    type: "nmorph, common",
+    default: "nmorph",
+  },
 ];
 
 const events: IEventsTableData[] = [

@@ -5,10 +5,15 @@ import NmorphDropdown from '../nmorph-dropdown/NmorphDropdown.vue';
 import type { NmorphDomElementType } from '@/types';
 import type {
   INmorphContextMenuEmit,
+  INmorphContextMenuExpose,
   INmorphContextMenuProps,
   INmorphNormalizedContextMenuOption,
   NmorphContextMenuAnchorType,
+  NmorphContextMenuOpenEvent,
 } from './types';
+
+const LONG_PRESS_DELAY_IN_MS = 600;
+const LONG_PRESS_MOVE_TOLERANCE_IN_PX = 8;
 
 const props = withDefaults(defineProps<INmorphContextMenuProps>(), {
   modelValue: null,
@@ -37,9 +42,16 @@ const triggerDOMRef = ref<HTMLElement | null>(null);
 const relativeElement = ref<NmorphDomElementType>(null);
 const anchorType = ref<NmorphContextMenuAnchorType>('point');
 const openState = ref(Boolean(props.modelValue));
+const longPressTimer = ref<ReturnType<typeof setTimeout> | null>(null);
+const longPressPointerId = ref<number | null>(null);
+const longPressStartPoint = ref<{ x: number; y: number } | null>(null);
+const suppressNextClick = ref(false);
+const suppressNextClickTimer = ref<ReturnType<typeof setTimeout> | null>(null);
 
 const isOpen = computed(() => (typeof props.modelValue === 'boolean' ? props.modelValue : openState.value));
 const hasOptions = computed(() => props.options.length > 0);
+const isLongPressTrigger = computed(() => props.trigger === 'longpress');
+const isContextMenuTrigger = computed(() => props.trigger === 'contextmenu' || props.trigger === 'both');
 
 const normalizedOptions = computed<INmorphNormalizedContextMenuOption[]>(() =>
   props.options.map((option, index) => {
@@ -105,14 +117,18 @@ const close = () => {
   setOpen(false);
 };
 
-const openAt = (x: number, y: number, event: MouseEvent | KeyboardEvent) => {
+const openAt = (x: number, y: number, event?: NmorphContextMenuOpenEvent) => {
+  if (props.disabled) return;
+
   anchorType.value = 'point';
   relativeElement.value = createPointElement(x, y);
   setOpen(true);
   emit('open', event);
 };
 
-const openAtElement = (element: HTMLElement, event: MouseEvent | KeyboardEvent) => {
+const openAtElement = (element: HTMLElement, event?: NmorphContextMenuOpenEvent) => {
+  if (props.disabled) return;
+
   anchorType.value = 'element';
   relativeElement.value = element;
   setOpen(true);
@@ -120,13 +136,34 @@ const openAtElement = (element: HTMLElement, event: MouseEvent | KeyboardEvent) 
 };
 
 const contextMenuHandler = (event: MouseEvent) => {
-  if (props.disabled || (props.trigger !== 'contextmenu' && props.trigger !== 'both')) return;
+  if (props.disabled) return;
+
+  if (props.trigger === 'longpress') {
+    event.preventDefault();
+    return;
+  }
+
+  if (!isContextMenuTrigger.value) return;
 
   event.preventDefault();
   openAt(event.clientX, event.clientY, event);
 };
 
+const documentContextMenuHandler = (event: MouseEvent) => {
+  if (!isOpen.value || props.disabled || !isContextMenuTrigger.value) return;
+
+  event.preventDefault();
+  event.stopPropagation();
+  openAt(event.clientX, event.clientY, event);
+};
+
 const clickHandler = (event: MouseEvent) => {
+  if (suppressNextClick.value) {
+    clearClickSuppression();
+    event.preventDefault();
+    return;
+  }
+
   if (props.disabled || (props.trigger !== 'click' && props.trigger !== 'both') || event.button !== 0) return;
 
   const eventTarget = event.currentTarget instanceof HTMLElement ? event.currentTarget : triggerDOMRef.value;
@@ -137,7 +174,12 @@ const clickHandler = (event: MouseEvent) => {
 };
 
 const keydownHandler = (event: KeyboardEvent) => {
-  if (props.disabled || (event.key !== 'ContextMenu' && !(event.shiftKey && event.key === 'F10'))) return;
+  if (
+    props.disabled ||
+    props.trigger === 'manual' ||
+    (event.key !== 'ContextMenu' && !(event.shiftKey && event.key === 'F10'))
+  )
+    return;
 
   const eventTarget = event.target instanceof HTMLElement ? event.target : triggerDOMRef.value;
 
@@ -171,6 +213,60 @@ const optionKeydownHandler = (event: KeyboardEvent, option: INmorphNormalizedCon
   optionClickHandler(option, index);
 };
 
+const clearLongPressTimer = () => {
+  if (longPressTimer.value) clearTimeout(longPressTimer.value);
+
+  longPressTimer.value = null;
+  longPressPointerId.value = null;
+  longPressStartPoint.value = null;
+};
+
+const clearClickSuppression = () => {
+  if (suppressNextClickTimer.value) clearTimeout(suppressNextClickTimer.value);
+
+  suppressNextClick.value = false;
+  suppressNextClickTimer.value = null;
+};
+
+const suppressNextClickTemporarily = () => {
+  clearClickSuppression();
+
+  suppressNextClick.value = true;
+  suppressNextClickTimer.value = setTimeout(clearClickSuppression, 700);
+};
+
+const pointerDownHandler = (event: PointerEvent) => {
+  if (props.disabled || !isLongPressTrigger.value || (event.pointerType !== 'touch' && event.pointerType !== 'pen'))
+    return;
+
+  clearLongPressTimer();
+
+  longPressPointerId.value = event.pointerId;
+  longPressStartPoint.value = { x: event.clientX, y: event.clientY };
+  longPressTimer.value = setTimeout(() => {
+    suppressNextClickTemporarily();
+    clearLongPressTimer();
+    openAt(event.clientX, event.clientY, event);
+  }, LONG_PRESS_DELAY_IN_MS);
+};
+
+const pointerMoveHandler = (event: PointerEvent) => {
+  if (!longPressTimer.value || longPressPointerId.value !== event.pointerId || !longPressStartPoint.value) return;
+
+  const xDistance = Math.abs(event.clientX - longPressStartPoint.value.x);
+  const yDistance = Math.abs(event.clientY - longPressStartPoint.value.y);
+
+  if (xDistance > LONG_PRESS_MOVE_TOLERANCE_IN_PX || yDistance > LONG_PRESS_MOVE_TOLERANCE_IN_PX) {
+    clearLongPressTimer();
+  }
+};
+
+const pointerEndHandler = (event: PointerEvent) => {
+  if (longPressPointerId.value !== event.pointerId) return;
+
+  clearLongPressTimer();
+};
+
 const getOptionStyle = (option: INmorphNormalizedContextMenuOption) =>
   ({
     '--nmorph-context-menu-item-color': option.color,
@@ -184,17 +280,25 @@ watch(
   isOpen,
   (open) => {
     if (typeof window === 'undefined') return;
-    if (open) window.addEventListener('scroll', scrollHandler, { passive: true, capture: true });
-    else window.removeEventListener('scroll', scrollHandler, true);
+    if (open) {
+      window.addEventListener('scroll', scrollHandler, { passive: true, capture: true });
+      document.addEventListener('contextmenu', documentContextMenuHandler, true);
+    } else {
+      window.removeEventListener('scroll', scrollHandler, true);
+      document.removeEventListener('contextmenu', documentContextMenuHandler, true);
+    }
   },
   { immediate: true }
 );
 
 onBeforeUnmount(() => {
   if (typeof window !== 'undefined') window.removeEventListener('scroll', scrollHandler, true);
+  if (typeof document !== 'undefined') document.removeEventListener('contextmenu', documentContextMenuHandler, true);
+  clearLongPressTimer();
+  clearClickSuppression();
 });
 
-defineExpose({ close });
+defineExpose<INmorphContextMenuExpose>({ close, openAt, openAtElement });
 </script>
 
 <template>
@@ -204,6 +308,11 @@ defineExpose({ close });
     @click="clickHandler"
     @contextmenu="contextMenuHandler"
     @keydown="keydownHandler"
+    @pointerdown="pointerDownHandler"
+    @pointermove="pointerMoveHandler"
+    @pointerup="pointerEndHandler"
+    @pointercancel="pointerEndHandler"
+    @pointerleave="pointerEndHandler"
   >
     <slot />
     <NmorphDropdown

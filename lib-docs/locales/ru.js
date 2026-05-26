@@ -240,6 +240,14 @@ export default {
           "NmorphFileUpload и form validation теперь используют общие helpers для file type matching, поэтому MIME, extension, accept и image-preview проверки остаются согласованными.",
         "image-preview-lazy-portal":
           "NmorphImagePreview теперь монтирует preview portal только пока preview открыт, поэтому страницы с большим количеством preview не копят скрытые portals в body.",
+        "image-preview-gallery-trigger":
+          "NmorphImagePreview теперь поддерживает gallery trigger, который рендерит несколько thumbnails до открытия overlay.",
+        "button-multiline-height":
+          "NmorphButton теперь использует height как минимальную высоту для обычных кнопок, поэтому многострочный контент расширяет кнопку без обрезания, а icon-кнопки остаются фиксированными.",
+        "context-menu-open-controls":
+          "NmorphContextMenu теперь поддерживает trigger click, both, longpress и manual, exposes openAt/openAtElement/close и удерживает pointer-меню внутри viewport.",
+        "tag-list-common-design":
+          "NmorphTagList теперь принимает design=\"common\", чтобы отображать простые теги на фоне из токенов с контрастными текстом и иконками вместо nmorph inset-поверхности.",
         "badge-larger-sizes":
           "NmorphBadge size теперь включает medium, large и extra-large для более крупных tag, dot и ribbon вариантов.",
         "style-utils-unification":
@@ -1091,6 +1099,7 @@ export default {
     "tag-list": {
       api: {
         "model-value": "Список тэгов",
+        design: "Определяет визуальный стиль тегов в списке по умолчанию",
       },
       events: {
         "update:model-value": "Событие для перехвата двусторонней привязки",
@@ -1115,7 +1124,7 @@ export default {
       },
       design: {
         subtitle:
-          "Если установлено в *common*, компонент будет отображен с границей.",
+          "Если установлено в *common*, компонент использует простой фон из токенов с контрастными текстом и иконками.",
       },
       api: {
         value: "Определяет значение-идентификатор для компонента",
@@ -1348,6 +1357,12 @@ export default {
           "Определяет, рендерятся ли кнопки навигации галереи для набора изображений",
         "show-action-bar":
           "Определяет, рендерится ли нижний action bar с поворотом и масштабированием",
+        "trigger-view":
+          "Определяет, рендерит trigger одну картинку или thumbnail-галерею",
+        "trigger-limit":
+          "Ограничивает количество thumbnails, которые рендерит gallery trigger",
+        "trigger-gap":
+          "Задает расстояние между thumbnails в gallery trigger",
         width:
           "Overrides the preview trigger width. Numbers are treated as pixel values",
         height:
@@ -1364,6 +1379,8 @@ export default {
         height: "Определяет высоту предпросмотра изображения.",
         "nmorph-image-preview-btn-margin":
           "Distance between gallery navigation buttons and the viewport edge",
+        "nmorph-image-preview-trigger-gap":
+          "Расстояние между thumbnails в gallery trigger",
       },
       events: {
         "update:model-value": "Событие для перехвата двусторонней привязки",
@@ -1754,6 +1771,10 @@ export default {
       },
       api: {
         "model-value": "Управляет открытым состоянием контекстного меню",
+        trigger:
+          "Определяет, как открывается меню: правый клик, левый клик, оба режима, long press на touch или ручные expose-вызовы",
+        options:
+          "Пункты меню, заданные текстом, объектами или кастомными компонентами",
         placement:
           "Задает положение контекстного меню относительно позиции указателя",
         width: "Указывает ширину контекстного меню",
@@ -1789,6 +1810,11 @@ export default {
         "on-outside-click": "Событие при клике вне контекстного меню",
         "on-escape-keydown":
           "Событие при нажатии Escape, когда контекстное меню открыто",
+      },
+      exposes: {
+        openAt: "Открывает контекстное меню в координатах viewport",
+        openAtElement: "Открывает контекстное меню относительно HTMLElement",
+        close: "Закрывает контекстное меню",
       },
     },
     backtop: {

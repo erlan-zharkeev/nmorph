@@ -10,6 +10,7 @@ export interface INmorphTagItemProps {
 
 export interface INmorphTagListProps {
   modelValue: INmorphTagItemProps[];
+  design?: NmorphElementDesignType;
 }
 
 export interface INmorphTagListEmit {

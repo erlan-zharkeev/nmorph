@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { NmorphTagList } from "@nmorph/nmorph-ui-kit";
+import { NmorphSpace, NmorphTagList } from "@nmorph/nmorph-ui-kit";
 
-const tags = ref([
+const nmorphTags = ref([
+  { value: "status", text: "Status" },
+  { value: "priority", text: "Priority" },
+  { value: "locked", text: "Locked", removable: false },
+]);
+
+const commonTags = ref([
   { value: "status", text: "Status" },
   { value: "priority", text: "Priority" },
   { value: "locked", text: "Locked", removable: false },
@@ -10,5 +16,8 @@ const tags = ref([
 </script>
 
 <template>
-  <NmorphTagList v-model="tags" />
+  <NmorphSpace direction="column" align="start">
+    <NmorphTagList v-model="nmorphTags" />
+    <NmorphTagList v-model="commonTags" design="common" />
+  </NmorphSpace>
 </template>

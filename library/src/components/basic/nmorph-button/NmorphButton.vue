@@ -81,7 +81,7 @@ defineExpose({ buttonDOMElement });
           <slot name="icon" />
         </NmorphIcon>
         <slot />
-        <span v-if="props.text !== undefined">{{ props.text }}</span>
+        <span v-if="props.text !== undefined" class="nmorph-button__label">{{ props.text }}</span>
         <slot name="append" />
       </template>
     </button>
@@ -92,6 +92,14 @@ defineExpose({ buttonDOMElement });
 .nmorph-button {
   display: inline-block;
   width: auto;
+  height: auto;
+  min-height: var(--height);
+
+  &.nmorph--basic-component,
+  &.nmorph--thin-component,
+  &.nmorph--thick-component {
+    height: auto;
+  }
 
   &.nmorph--fill {
     width: 100%;
@@ -104,10 +112,11 @@ defineExpose({ buttonDOMElement });
     align-items: center;
     box-sizing: border-box;
     width: 100%;
-    height: var(--height);
+    height: auto;
+    min-height: var(--height);
     padding: var(--indentation-00) var(--indentation-04);
     color: var(--nmorph-button-color, var(--nmorph-text-color));
-    line-height: 0;
+    line-height: var(--line-height-regular);
     background: var(--nmorph-main-color);
     border: none;
     border-radius: var(--default-border-radius);
@@ -122,6 +131,13 @@ defineExpose({ buttonDOMElement });
 
       --color: var(--nmorph-button-color, var(--nmorph-text-color));
     }
+  }
+
+  .nmorph-button__label {
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+    overflow-wrap: anywhere;
   }
 
   .nmorph-button__content > .nmorph-icon {
@@ -192,8 +208,12 @@ defineExpose({ buttonDOMElement });
 
   &.nmorph-button--circle {
     width: var(--height);
+    height: var(--height);
+    min-height: var(--height);
 
     .nmorph-button__content {
+      height: var(--height);
+      min-height: var(--height);
       border-radius: var(--border-radius-circular);
     }
   }
@@ -249,14 +269,24 @@ defineExpose({ buttonDOMElement });
   &.nmorph-button--square {
     width: var(--height);
     height: var(--height);
+    min-height: var(--height);
+
+    .nmorph-button__content {
+      height: var(--height);
+      min-height: var(--height);
+    }
   }
 
   &.nmorph-button--icon-only {
     width: var(--height);
     height: var(--height);
+    min-height: var(--height);
 
     .nmorph-button__content {
+      height: var(--height);
+      min-height: var(--height);
       padding: 0;
+      line-height: 0;
     }
   }
 

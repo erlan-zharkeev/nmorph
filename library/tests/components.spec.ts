@@ -605,6 +605,25 @@ describe('components', () => {
     await mountCase(renderCase);
   });
 
+  it('applies tag list design to tags while preserving explicit tag overrides', () => {
+    const wrapper = mount(NmorphTagList, {
+      props: {
+        design: 'common',
+        modelValue: [
+          { value: 'status', text: 'Status' },
+          { value: 'locked', text: 'Locked', design: 'nmorph' },
+        ],
+      },
+    });
+
+    const tags = wrapper.findAll('.nmorph-tag-item');
+
+    expect(tags[0].classes()).toContain('nmorph-tag-item--common');
+    expect(tags[1].classes()).toContain('nmorph-tag-item--nmorph');
+
+    wrapper.unmount();
+  });
+
   it('places layout slots around the body and forwards sizing variables', () => {
     const wrapper = mount(NmorphLayout, {
       props: {
@@ -2417,6 +2436,103 @@ describe('components', () => {
     target.remove();
   });
 
+  it('repositions an open context menu from repeated right click', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphContextMenu, {
+      attachTo: target,
+      slots: {
+        default: '<button class="context-target">Target</button>',
+        menu: '<button class="context-action">Action</button>',
+      },
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await wrapper.find('.context-target').trigger('contextmenu', { clientX: 100, clientY: 80 });
+    await nextTick();
+    await nextTick();
+
+    const dropdown = document.body.querySelector('.nmorph-dropdown') as HTMLElement;
+
+    expect(dropdown).toBeTruthy();
+
+    vi.spyOn(dropdown, 'getBoundingClientRect').mockReturnValue(rect(0, 0, 120, 60));
+    window.dispatchEvent(new Event('resize'));
+    await nextTick();
+    await nextTick();
+
+    expect(dropdown.style.left).toBe('100px');
+    expect(dropdown.style.top).toBe('80px');
+
+    const repeatedContextMenuEvent = new MouseEvent('contextmenu', {
+      bubbles: true,
+      cancelable: true,
+      clientX: 180,
+      clientY: 130,
+      button: 2,
+    });
+
+    document.dispatchEvent(repeatedContextMenuEvent);
+    await nextTick();
+    await nextTick();
+    await nextTick();
+
+    expect(repeatedContextMenuEvent.defaultPrevented).toBe(true);
+    expect(dropdown.style.left).toBe('180px');
+    expect(dropdown.style.top).toBe('130px');
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  it('keeps context menu inside viewport edges', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphContextMenu, {
+      attachTo: target,
+      slots: {
+        default: '<button class="context-target">Target</button>',
+        menu: '<button class="context-action">Action</button>',
+      },
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    const dropdownWidth = 120;
+    const dropdownHeight = 60;
+    const viewportMargin = 4;
+    const clickX = window.innerWidth - 10;
+    const clickY = window.innerHeight - 10;
+
+    await wrapper.find('.context-target').trigger('contextmenu', { clientX: clickX, clientY: clickY });
+    await nextTick();
+    await nextTick();
+
+    const dropdown = document.body.querySelector('.nmorph-dropdown') as HTMLElement;
+
+    expect(dropdown).toBeTruthy();
+
+    vi.spyOn(dropdown, 'getBoundingClientRect').mockReturnValue(rect(0, 0, dropdownWidth, dropdownHeight));
+    window.dispatchEvent(new Event('resize'));
+    await nextTick();
+    await nextTick();
+
+    expect(dropdown.style.left).toBe(`${window.innerWidth - dropdownWidth - viewportMargin}px`);
+    expect(dropdown.style.top).toBe(`${clickY - dropdownHeight}px`);
+
+    wrapper.unmount();
+    target.remove();
+  });
+
   it('opens context menu without v-model', async () => {
     const target = document.createElement('div');
     document.body.appendChild(target);
@@ -2497,6 +2613,173 @@ describe('components', () => {
 
     wrapper.unmount();
     target.remove();
+  });
+
+  it('opens context menu through exposed manual helpers', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphContextMenu, {
+      attachTo: target,
+      props: {
+        trigger: 'manual',
+      },
+      slots: {
+        default: '<button class="context-target">Target</button>',
+        menu: '<button class="context-action">Action</button>',
+      },
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    const exposed = wrapper.vm as unknown as {
+      openAt: (x: number, y: number, event?: Event) => void;
+      openAtElement: (element: HTMLElement, event?: Event) => void;
+      close: () => void;
+    };
+
+    await wrapper.find('.context-target').trigger('click', { button: 0 });
+    await wrapper.find('.context-target').trigger('contextmenu', { clientX: 100, clientY: 80 });
+    await nextTick();
+    await nextTick();
+
+    expect(document.body.querySelector('.nmorph-dropdown')).toBeFalsy();
+
+    exposed.openAt(160, 110);
+    await nextTick();
+    await nextTick();
+
+    let dropdown = document.body.querySelector('.nmorph-dropdown') as HTMLElement;
+    expect(dropdown).toBeTruthy();
+
+    vi.spyOn(dropdown, 'getBoundingClientRect').mockReturnValue(rect(0, 0, 120, 60));
+    window.dispatchEvent(new Event('resize'));
+    await nextTick();
+    await nextTick();
+
+    expect(dropdown.style.left).toBe('160px');
+    expect(dropdown.style.top).toBe('110px');
+
+    exposed.close();
+    await nextTick();
+
+    expect(document.body.querySelector('.nmorph-dropdown')).toBeFalsy();
+
+    const root = wrapper.find('.nmorph-context-menu').element as HTMLElement;
+    vi.spyOn(root, 'getBoundingClientRect').mockReturnValue(rect(40, 50, 100, 32));
+
+    exposed.openAtElement(root, new Event('manual-open'));
+    await nextTick();
+    await nextTick();
+
+    dropdown = document.body.querySelector('.nmorph-dropdown') as HTMLElement;
+    expect(dropdown).toBeTruthy();
+
+    vi.spyOn(dropdown, 'getBoundingClientRect').mockReturnValue(rect(0, 0, 120, 60));
+    window.dispatchEvent(new Event('resize'));
+    await nextTick();
+    await nextTick();
+
+    expect(dropdown.style.left).toBe('40px');
+    expect(dropdown.style.top).toBe('82px');
+    expect(wrapper.emitted('open')?.at(-1)).toEqual([expect.any(Event)]);
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  it('opens context menu from touch long press', async () => {
+    vi.useFakeTimers();
+
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+    const createPointerEvent = (type: string, init: Partial<PointerEvent>) => {
+      const event = new Event(type, { bubbles: true, cancelable: true });
+
+      Object.entries(init).forEach(([key, value]) => {
+        Object.defineProperty(event, key, {
+          configurable: true,
+          value,
+        });
+      });
+
+      return event as PointerEvent;
+    };
+
+    const wrapper = mount(NmorphContextMenu, {
+      attachTo: target,
+      props: {
+        trigger: 'longpress',
+      },
+      slots: {
+        default: '<button class="context-target">Target</button>',
+        menu: '<button class="context-action">Action</button>',
+      },
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    const trigger = wrapper.find('.context-target').element as HTMLElement;
+
+    trigger.dispatchEvent(
+      createPointerEvent('pointerdown', {
+        clientX: 150,
+        clientY: 95,
+        pointerId: 1,
+        pointerType: 'touch',
+      })
+    );
+    trigger.dispatchEvent(
+      createPointerEvent('pointermove', {
+        clientX: 170,
+        clientY: 95,
+        pointerId: 1,
+        pointerType: 'touch',
+      })
+    );
+    vi.advanceTimersByTime(600);
+    await nextTick();
+
+    expect(document.body.querySelector('.nmorph-dropdown')).toBeFalsy();
+
+    trigger.dispatchEvent(
+      createPointerEvent('pointerdown', {
+        clientX: 150,
+        clientY: 95,
+        pointerId: 2,
+        pointerType: 'touch',
+      })
+    );
+    vi.advanceTimersByTime(599);
+    await nextTick();
+
+    expect(document.body.querySelector('.nmorph-dropdown')).toBeFalsy();
+
+    vi.advanceTimersByTime(1);
+    await nextTick();
+    await nextTick();
+
+    const dropdown = document.body.querySelector('.nmorph-dropdown') as HTMLElement;
+    expect(dropdown).toBeTruthy();
+
+    vi.spyOn(dropdown, 'getBoundingClientRect').mockReturnValue(rect(0, 0, 120, 60));
+    window.dispatchEvent(new Event('resize'));
+    await nextTick();
+    await nextTick();
+
+    expect(dropdown.style.left).toBe('150px');
+    expect(dropdown.style.top).toBe('95px');
+    expect(wrapper.emitted('open')?.at(-1)?.[0]).toBeTruthy();
+
+    wrapper.unmount();
+    target.remove();
+    vi.useRealTimers();
   });
 
   it('closes pointer context menu on scroll', async () => {
@@ -2843,6 +3126,48 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('renders image preview gallery trigger and opens the clicked image', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+    const gallerySources = ['preview-one.png', 'preview-two.png', 'preview-three.png'];
+
+    const wrapper = mount(NmorphImagePreview, {
+      props: {
+        src: gallerySources,
+        alt: 'Gallery preview',
+        triggerView: 'gallery',
+        triggerLimit: 2,
+        width: 40,
+        height: 32,
+      },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+
+    const thumbnails = wrapper.findAll('.nmorph-image-preview__trigger-item');
+
+    expect(wrapper.find('.nmorph-image-preview').classes()).toContain('nmorph-image-preview--gallery-trigger');
+    expect(thumbnails).toHaveLength(2);
+    expect(wrapper.find('.nmorph-image-preview__trigger-more').text()).toBe('+1');
+
+    await thumbnails[1].trigger('click');
+    await nextTick();
+
+    const previewImage = document.body.querySelector('.nmorph-image-preview__content img');
+
+    expect(wrapper.emitted('update:model-value')?.at(-1)).toEqual([true]);
+    expect(previewImage?.getAttribute('src')).toBe(gallerySources[1]);
+
+    wrapper.unmount();
+    target.remove();
+  });
+
   it('mounts image preview portal only while preview is open', async () => {
     const target = document.createElement('div');
     document.body.appendChild(target);
@@ -2966,6 +3291,37 @@ describe('components', () => {
 
     wrapper.unmount();
     target.remove();
+  });
+
+  it('does not force focus to image preview controls when opened', async () => {
+    const target = document.createElement('div');
+    const focusedBeforeOpen = document.createElement('button');
+    document.body.appendChild(focusedBeforeOpen);
+    document.body.appendChild(target);
+    focusedBeforeOpen.focus();
+
+    const wrapper = mount(NmorphImagePreview, {
+      props: { modelValue: true, src: imageSrc, alt: 'Preview' },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const firstActionButton = document.body.querySelector('.nmorph-image-preview__actions button');
+
+    expect(firstActionButton).toBeTruthy();
+    expect(document.activeElement).toBe(focusedBeforeOpen);
+    expect(document.activeElement).not.toBe(firstActionButton);
+
+    wrapper.unmount();
+    target.remove();
+    focusedBeforeOpen.remove();
   });
 
   it('closes image preview from backdrop and Escape key', async () => {

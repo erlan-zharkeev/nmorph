@@ -3,6 +3,8 @@ import { Ref, ref, nextTick, onMounted, inject, watch, onUnmounted, unref } from
 
 type TNmorphMaybeRef<T> = T | Ref<T>;
 
+const VIEWPORT_MARGIN_IN_PX = 4;
+
 interface INmorphUsePlacementPayload {
   initialPlacement: TNmorphMaybeRef<NmorphPlacementType>;
   contentDOMElement: Ref<NmorphDomElementType>;
@@ -76,6 +78,13 @@ export const usePlacement = (data: INmorphUsePlacementPayload) => {
     (hasAlign ? `${side}-${align}` : side) as NmorphPlacementType;
 
   const getRelativeElement = () => unref(relativeElement);
+
+  const clampToViewport = (value: number, size: number, viewportSize: number) => {
+    const min = VIEWPORT_MARGIN_IN_PX;
+    const max = Math.max(viewportSize - size - VIEWPORT_MARGIN_IN_PX, min);
+
+    return Math.min(Math.max(value, min), max);
+  };
 
   const getResolvedSide = (
     side: string,
@@ -174,8 +183,13 @@ export const usePlacement = (data: INmorphUsePlacementPayload) => {
         nextY = alignMap[parsedPlacement.align as keyof typeof alignMap] ?? alignMap.start;
       }
 
+      const nextXWithOffset = nextX + xOffsetValue;
+      const nextYWithOffset = nextY + yOffsetValue;
+      const resolvedX = clampToViewport(nextXWithOffset, dropdownElWidth, window.innerWidth);
+      const resolvedY = clampToViewport(nextYWithOffset, dropdownElHeight, window.innerHeight);
+
       placement.value = getPlacementName(side, parsedPlacement.align, parsedPlacement.hasAlign);
-      placementCoords.value = { x: `${nextX + xOffsetValue}px`, y: `${nextY + yOffsetValue}px` };
+      placementCoords.value = { x: `${resolvedX}px`, y: `${resolvedY}px` };
       placementReady.value = true;
 
       if (typeof requestAnimationFrame !== 'function') return;

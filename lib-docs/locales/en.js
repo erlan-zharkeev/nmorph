@@ -238,6 +238,14 @@ export default {
           "NmorphFileUpload and form validation now share file type matching helpers, so MIME, extension, accept, and image-preview checks stay consistent.",
         "image-preview-lazy-portal":
           "NmorphImagePreview now mounts its preview portal only while open, so pages with many previews do not accumulate hidden portals in body.",
+        "image-preview-gallery-trigger":
+          "NmorphImagePreview now supports a gallery trigger that renders multiple thumbnails before opening the overlay.",
+        "button-multiline-height":
+          "NmorphButton now uses its height prop as a minimum for regular buttons, allowing multi-line content to expand without clipping while icon buttons stay fixed.",
+        "context-menu-open-controls":
+          "NmorphContextMenu now supports click, both, longpress, and manual triggers, exposes openAt/openAtElement/close, and keeps pointer menus inside the viewport.",
+        "tag-list-common-design":
+          "NmorphTagList now accepts design=\"common\" to render plain token-backed tags with contrast text and icons instead of the neumorphic inset surface.",
         "badge-larger-sizes":
           "NmorphBadge size now includes medium, large, and extra-large variants for larger tags, dots, and ribbons.",
         "style-utils-unification":
@@ -1076,6 +1084,7 @@ export default {
     "tag-list": {
       api: {
         "model-value": "List of tags",
+        design: "Defines the default visual style for tags in the list",
       },
       events: {
         "update:model-value": "Event for intercepting two-way binding",
@@ -1100,7 +1109,7 @@ export default {
       },
       design: {
         subtitle:
-          "If set to *common*, the component will be displayed with a border.",
+          "If set to *common*, the component uses a plain token-backed background with contrast text and icons.",
       },
       api: {
         value: "Defines the identifier value for the component",
@@ -1328,6 +1337,12 @@ export default {
           "Defines whether gallery navigation buttons are rendered for image sets",
         "show-action-bar":
           "Defines whether the bottom rotate and zoom action bar is rendered",
+        "trigger-view":
+          "Defines whether the preview trigger renders one image or a thumbnail gallery",
+        "trigger-limit":
+          "Limits how many thumbnails are rendered by the gallery trigger",
+        "trigger-gap":
+          "Defines the gap between thumbnails in the gallery trigger",
         width:
           "Overrides the preview trigger width. Numbers are treated as pixel values",
         height:
@@ -1344,6 +1359,8 @@ export default {
         height: "Defines the height of the image preview.",
         "nmorph-image-preview-btn-margin":
           "Distance between gallery navigation buttons and the viewport edge",
+        "nmorph-image-preview-trigger-gap":
+          "Gap between thumbnails in the gallery trigger",
       },
       events: {
         "update:model-value": "Event for intercepting two-way binding",
@@ -1732,6 +1749,10 @@ export default {
       },
       api: {
         "model-value": "Controls the open state of the context menu",
+        trigger:
+          "Defines how the menu opens: right click, left click, both, touch long press, or manual exposed calls",
+        options:
+          "Menu options rendered as text, object options, or custom components",
         placement:
           "Defines context menu placement relative to the pointer position",
         width: "Sets the width of the context menu",
@@ -1768,6 +1789,11 @@ export default {
           "Event triggered when the user clicks outside the context menu",
         "on-escape-keydown":
           "Event triggered when the user presses Escape while the context menu is open",
+      },
+      exposes: {
+        openAt: "Opens the context menu at viewport coordinates",
+        openAtElement: "Opens the context menu anchored to an HTMLElement",
+        close: "Closes the context menu",
       },
     },
     backtop: {

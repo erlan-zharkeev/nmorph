@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<INmorphTagItemComponentProps>(), {
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentHeight[props.height]],
-    'nmorph-tag-item': [`${props.design === 'nmorph' ? 'nmorph-design' : ''}`],
+    'nmorph-tag-item': [props.design],
   })
 );
 
@@ -41,7 +41,7 @@ const closeHandler = () => {
   display: inline-flex;
   margin-right: var(--indentation-02);
   padding: var(--indentation-00) var(--indentation-03);
-  border: solid 2px var(--nmorph-text-color);
+  color: var(--nmorph-tag-item-content-color, var(--nmorph-tag-item-color, var(--nmorph-text-color)));
   border-radius: var(--default-border-radius);
   cursor: default;
 
@@ -51,18 +51,32 @@ const closeHandler = () => {
     height: 100%;
   }
 
+  span {
+    color: inherit;
+  }
+
   .nmorph-tag-item__close-icon {
     margin-left: 4px;
     cursor: pointer;
+
+    --color: var(--nmorph-tag-item-content-color, var(--nmorph-tag-item-color, var(--nmorph-text-color)));
   }
 
-  &.nmorph-tag-item--nmorph-design {
+  &.nmorph-tag-item--nmorph {
     background: var(--nmorph-main-color);
     border: none;
     box-shadow:
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
+  }
+
+  &.nmorph-tag-item--common {
+    --nmorph-tag-item-content-color: var(--nmorph-tag-item-color, var(--nmorph-contrast-text-color));
+
+    background: var(--nmorph-tag-item-background, var(--nmorph-gray-color));
+    border: none;
+    box-shadow: none;
   }
 
   &.nmorph-tag-item--thin {
