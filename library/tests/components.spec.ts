@@ -605,13 +605,15 @@ describe('components', () => {
     await mountCase(renderCase);
   });
 
-  it('applies tag list design to tags while preserving explicit tag overrides', () => {
+  it('applies tag list design to tags while preserving explicit tag overrides', async () => {
     const wrapper = mount(NmorphTagList, {
       props: {
         design: 'common',
+        color: 'var(--nmorph-success-color)',
         modelValue: [
           { value: 'status', text: 'Status' },
           { value: 'locked', text: 'Locked', design: 'nmorph' },
+          { value: 'preview', text: 'Preview', color: 'var(--nmorph-warn-color)' },
         ],
       },
     });
@@ -620,8 +622,79 @@ describe('components', () => {
 
     expect(tags[0].classes()).toContain('nmorph-tag-item--common');
     expect(tags[1].classes()).toContain('nmorph-tag-item--nmorph');
+    expect(tags[2].classes()).toContain('nmorph-tag-item--common');
+    expect(wrapper.find('.nmorph-list').classes()).toContain('nmorph-list--common');
+    expect(tags[0].element.style.getPropertyValue('--tag-item-background-color')).toBe('var(--nmorph-success-color)');
+    expect(tags[2].element.style.getPropertyValue('--tag-item-background-color')).toBe('var(--nmorph-warn-color)');
+
+    await tags[0].trigger('click');
+    await tags[0].find('.nmorph-tag-item__close-icon').trigger('click');
+
+    expect(wrapper.emitted('click')?.[0]).toEqual(['status']);
+    expect(wrapper.emitted('close')?.[0]).toEqual(['status']);
+    expect(wrapper.emitted('update:selected-value')?.[0]).toEqual(['status']);
+    expect(wrapper.emitted('click')).toHaveLength(1);
 
     wrapper.unmount();
+  });
+
+  it('supports v-model:selected-value for clicked tags', async () => {
+    const wrapper = mount({
+      components: { NmorphTagList },
+      setup() {
+        const tags = ref([
+          { value: 'status', text: 'Status' },
+          { value: 'preview', text: 'Preview' },
+        ]);
+        const selectedValue = ref<string | null>(null);
+
+        return { selectedValue, tags };
+      },
+      template: `
+        <div>
+          <NmorphTagList v-model="tags" v-model:selected-value="selectedValue" />
+          <span class="selected-value">{{ selectedValue }}</span>
+        </div>
+      `,
+    });
+
+    await wrapper.findAll('.nmorph-tag-item')[1].trigger('click');
+    await nextTick();
+
+    expect(wrapper.find('.selected-value').text()).toBe('preview');
+
+    wrapper.unmount();
+  });
+
+  it('uses readable content colors for common tag backgrounds', async () => {
+    document.documentElement.style.setProperty('--nmorph-gray-color', '#c9d2de');
+    document.documentElement.style.setProperty('--nmorph-main-color', '#1c1f21');
+
+    const wrapper = mount({
+      components: { NmorphTagItem },
+      template: `
+        <div>
+          <NmorphTagItem value="light" text="Light" design="common" />
+          <NmorphTagItem value="dark" text="Dark" design="common" color="var(--nmorph-main-color)" />
+        </div>
+      `,
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const [lightTag, darkTag] = wrapper.findAll('.nmorph-tag-item');
+
+    expect(lightTag.element.style.getPropertyValue('--tag-item-background-color')).toBe('var(--nmorph-gray-color)');
+    expect(lightTag.element.style.getPropertyValue('--tag-item-content-color')).toBe('var(--nmorph-black-color)');
+    expect(darkTag.element.style.getPropertyValue('--tag-item-background-color')).toBe('var(--nmorph-main-color)');
+    expect(darkTag.element.style.getPropertyValue('--tag-item-content-color')).toBe('var(--nmorph-white-color)');
+    expect(lightTag.attributes('style')).not.toContain('--nmorph-tag-item-color');
+    expect(lightTag.attributes('style')).not.toContain('--nmorph-tag-item-background');
+
+    wrapper.unmount();
+    document.documentElement.style.removeProperty('--nmorph-gray-color');
+    document.documentElement.style.removeProperty('--nmorph-main-color');
   });
 
   it('places layout slots around the body and forwards sizing variables', () => {
@@ -2469,6 +2542,10 @@ describe('components', () => {
     expect(dropdown.style.left).toBe('100px');
     expect(dropdown.style.top).toBe('80px');
 
+    vi.spyOn(wrapper.find('.nmorph-context-menu').element, 'getBoundingClientRect').mockReturnValue(
+      rect(80, 70, 180, 90)
+    );
+
     const repeatedContextMenuEvent = new MouseEvent('contextmenu', {
       bubbles: true,
       cancelable: true,
@@ -2485,6 +2562,59 @@ describe('components', () => {
     expect(repeatedContextMenuEvent.defaultPrevented).toBe(true);
     expect(dropdown.style.left).toBe('180px');
     expect(dropdown.style.top).toBe('130px');
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  it('does not reposition an open context menu from right click outside the trigger', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphContextMenu, {
+      attachTo: target,
+      slots: {
+        default: '<button class="context-target">Target</button>',
+        menu: '<button class="context-action">Action</button>',
+      },
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await wrapper.find('.context-target').trigger('contextmenu', { clientX: 100, clientY: 80 });
+    await nextTick();
+    await nextTick();
+
+    const dropdown = document.body.querySelector('.nmorph-dropdown') as HTMLElement;
+
+    expect(dropdown).toBeTruthy();
+
+    vi.spyOn(dropdown, 'getBoundingClientRect').mockReturnValue(rect(0, 0, 120, 60));
+    vi.spyOn(wrapper.find('.nmorph-context-menu').element, 'getBoundingClientRect').mockReturnValue(
+      rect(80, 70, 180, 90)
+    );
+    window.dispatchEvent(new Event('resize'));
+    await nextTick();
+    await nextTick();
+
+    const outsideContextMenuEvent = new MouseEvent('contextmenu', {
+      bubbles: true,
+      cancelable: true,
+      clientX: 320,
+      clientY: 180,
+      button: 2,
+    });
+
+    document.dispatchEvent(outsideContextMenuEvent);
+    await nextTick();
+    await nextTick();
+
+    expect(outsideContextMenuEvent.defaultPrevented).toBe(false);
+    expect(dropdown.style.left).toBe('100px');
+    expect(dropdown.style.top).toBe('80px');
 
     wrapper.unmount();
     target.remove();

@@ -149,8 +149,26 @@ const contextMenuHandler = (event: MouseEvent) => {
   openAt(event.clientX, event.clientY, event);
 };
 
+const isEventInsideTrigger = (event: MouseEvent) => {
+  const triggerElement = triggerDOMRef.value;
+
+  if (!triggerElement) return false;
+
+  if (event.target instanceof Node && triggerElement.contains(event.target)) return true;
+
+  const triggerRect = triggerElement.getBoundingClientRect();
+
+  return (
+    event.clientX >= triggerRect.left &&
+    event.clientX <= triggerRect.right &&
+    event.clientY >= triggerRect.top &&
+    event.clientY <= triggerRect.bottom
+  );
+};
+
 const documentContextMenuHandler = (event: MouseEvent) => {
   if (!isOpen.value || props.disabled || !isContextMenuTrigger.value) return;
+  if (!isEventInsideTrigger(event)) return;
 
   event.preventDefault();
   event.stopPropagation();

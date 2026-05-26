@@ -13,7 +13,7 @@ const emit = defineEmits<INmorphTagListEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-list': [],
+    'nmorph-list': [props.design],
   })
 );
 
@@ -22,6 +22,7 @@ const resolvedTagList = computed(() =>
   tagList.value.map((tagData) => ({
     ...tagData,
     design: tagData.design ?? props.design,
+    color: tagData.color ?? props.color,
   }))
 );
 
@@ -30,10 +31,30 @@ const closeTagHandler = (value: string) => {
   emit('close', value);
   emit('update:model-value', tagList.value);
 };
+
+const clickTagHandler = (value: string) => {
+  emit('click', value);
+  emit('update:selected-value', value);
+  emit('update:selectedValue', value);
+};
 </script>
 
 <template>
   <div :class="modifiers">
-    <NmorphTagItem v-for="tagData in resolvedTagList" :key="tagData.value" v-bind="tagData" @close="closeTagHandler" />
+    <NmorphTagItem
+      v-for="tagData in resolvedTagList"
+      :key="tagData.value"
+      v-bind="tagData"
+      @click="clickTagHandler"
+      @close="closeTagHandler"
+    />
   </div>
 </template>
+
+<style lang="scss">
+.nmorph-list--common {
+  .nmorph-tag-item--common {
+    border: none;
+  }
+}
+</style>

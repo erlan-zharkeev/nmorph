@@ -107,6 +107,7 @@ const panes = [
         <NmorphContextMenu
           v-model="contextMenuOpen"
           :options="contextMenuOptions"
+          :placement="'top-start'"
           trigger="both"
           :y-offset="6"
           aria-label="Context actions"

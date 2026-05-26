@@ -11,13 +11,25 @@ const nmorphTags = ref([
 const commonTags = ref([
   { value: "status", text: "Status" },
   { value: "priority", text: "Priority" },
-  { value: "locked", text: "Locked", removable: false },
+  {
+    value: "locked",
+    text: "Locked",
+    removable: false,
+    color: "var(--nmorph-warn-color)",
+  },
 ]);
+
+const selectedTag = ref<string | null>(null);
 </script>
 
 <template>
   <NmorphSpace direction="column" align="start">
     <NmorphTagList v-model="nmorphTags" />
-    <NmorphTagList v-model="commonTags" design="common" />
+    <NmorphTagList
+      v-model="commonTags"
+      v-model:selected-value="selectedTag"
+      design="common"
+      color="var(--nmorph-success-color)"
+    />
   </NmorphSpace>
 </template>

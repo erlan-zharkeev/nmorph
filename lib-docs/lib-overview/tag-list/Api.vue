@@ -10,13 +10,31 @@ const attributesData: IAttributesTableData[] = [
     required: true,
   },
   {
+    name: "selected-value",
+    type: "String | null",
+    default: "null",
+    description:
+      "Selected tag value for v-model:selected-value. Updated when a tag is clicked.",
+  },
+  {
     name: "design",
     type: "nmorph, common",
     default: "nmorph",
   },
+  {
+    name: "color",
+    type: "String",
+    default: "var(--nmorph-gray-color)",
+    description:
+      "Background color for common design tags. Individual tag items can override it with their own color.",
+  },
 ];
 
 const events: IEventsTableData[] = [
+  {
+    name: "click",
+    type: "String",
+  },
   {
     name: "close",
     type: "String",
@@ -24,6 +42,10 @@ const events: IEventsTableData[] = [
   {
     name: "update:model-value",
     type: "Array&lt;NmorphTagItem&gt;",
+  },
+  {
+    name: "update:selected-value",
+    type: "String",
   },
 ];
 </script>

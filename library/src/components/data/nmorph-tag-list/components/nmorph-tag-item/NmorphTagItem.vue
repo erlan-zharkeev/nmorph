@@ -1,15 +1,25 @@
 <script setup lang="ts">
-import { useModifiers } from '@/utils';
-import { computed } from 'vue';
+import { createCssVariables, useModifiers } from '@/utils';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { NmorphIcon, NmorphIconError } from '@/components';
-import { NmorphComponentHeight } from '@/types';
+import { NmorphComponentHeight, type NmorphCSSProperties } from '@/types';
 import type { INmorphTagItemComponentProps, INmorphTagItemEmit } from './types';
+
+const DEFAULT_COMMON_BACKGROUND_COLOR = 'var(--nmorph-gray-color)';
+const DARK_CONTRAST_COLOR = 'var(--nmorph-black-color)';
+const LIGHT_CONTRAST_COLOR = 'var(--nmorph-white-color)';
+const DEFAULT_RGB_COLOR = { r: 201, g: 210, b: 222 };
 
 const props = withDefaults(defineProps<INmorphTagItemComponentProps>(), {
   height: 'basic',
   removable: true,
   design: 'nmorph',
+  color: DEFAULT_COMMON_BACKGROUND_COLOR,
 });
+
+const tagRef = ref<HTMLElement | null>(null);
+const commonContentColor = ref(DARK_CONTRAST_COLOR);
+let themeObserver: MutationObserver | null = null;
 
 const modifiers = computed(() =>
   useModifiers({
@@ -18,15 +28,139 @@ const modifiers = computed(() =>
   })
 );
 
+const isCommonDesign = computed(() => props.design === 'common');
+
+const styles = computed<NmorphCSSProperties>(() => {
+  if (!isCommonDesign.value) return {};
+
+  return createCssVariables({
+    '--tag-item-background-color': props.color,
+    '--tag-item-content-color': commonContentColor.value,
+  });
+});
+
 const emit = defineEmits<INmorphTagItemEmit>();
 
 const closeHandler = () => {
   emit('close', props.value);
 };
+
+const clickHandler = () => {
+  emit('click', props.value);
+};
+
+const parseHexColor = (value: string) => {
+  const raw = value.trim().replace('#', '');
+
+  if (![3, 4, 6, 8].includes(raw.length)) return null;
+
+  const normalized =
+    raw.length <= 4
+      ? raw
+          .split('')
+          .map((char) => `${char}${char}`)
+          .join('')
+      : raw;
+
+  return {
+    r: parseInt(normalized.slice(0, 2), 16),
+    g: parseInt(normalized.slice(2, 4), 16),
+    b: parseInt(normalized.slice(4, 6), 16),
+  };
+};
+
+const parseRgbColor = (value: string) => {
+  const match = value.match(/^rgba?\((.+)\)$/);
+
+  if (!match) return null;
+
+  const channelPart = match[1].split('/')[0];
+  const channels = channelPart.includes(',') ? channelPart.split(',') : channelPart.trim().split(/\s+/);
+  const [r, g, b] = channels.map((channel) => Number.parseFloat(channel));
+
+  if ([r, g, b].some((channel) => Number.isNaN(channel))) return null;
+
+  return { r, g, b };
+};
+
+const resolveCssVariable = (value: string, element: HTMLElement) => {
+  const variableMatch = value.trim().match(/^var\(\s*(--[A-Za-z0-9-_]+)(?:\s*,\s*(.+))?\)$/);
+
+  if (!variableMatch) return value;
+
+  const [, variableName, fallback] = variableMatch;
+  const ownerDocument = element.ownerDocument;
+  const elementValue = getComputedStyle(element).getPropertyValue(variableName).trim();
+  const rootValue = getComputedStyle(ownerDocument.documentElement).getPropertyValue(variableName).trim();
+
+  return elementValue || rootValue || fallback || value;
+};
+
+const resolveColor = (value: string, element: HTMLElement) => {
+  let resolvedValue = value;
+
+  for (let i = 0; i < 4; i += 1) {
+    const nextValue = resolveCssVariable(resolvedValue, element);
+
+    if (nextValue === resolvedValue) break;
+    resolvedValue = nextValue;
+  }
+
+  return parseHexColor(resolvedValue) || parseRgbColor(resolvedValue) || DEFAULT_RGB_COLOR;
+};
+
+const getLuminance = ({ r, g, b }: typeof DEFAULT_RGB_COLOR) => {
+  const [red, green, blue] = [r, g, b].map((channel) => {
+    const normalizedChannel = channel / 255;
+
+    return normalizedChannel <= 0.03928 ? normalizedChannel / 12.92 : ((normalizedChannel + 0.055) / 1.055) ** 2.4;
+  });
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+};
+
+const getContrastRatio = (firstLuminance: number, secondLuminance: number) => {
+  const [lighter, darker] = [firstLuminance, secondLuminance].sort((a, b) => b - a);
+
+  return (lighter + 0.05) / (darker + 0.05);
+};
+
+const getReadableContentColor = (backgroundColor: typeof DEFAULT_RGB_COLOR) => {
+  const backgroundLuminance = getLuminance(backgroundColor);
+  const whiteContrast = getContrastRatio(backgroundLuminance, 1);
+  const blackContrast = getContrastRatio(backgroundLuminance, 0);
+
+  return whiteContrast > blackContrast ? LIGHT_CONTRAST_COLOR : DARK_CONTRAST_COLOR;
+};
+
+const updateCommonContentColor = async () => {
+  await nextTick();
+  if (!isCommonDesign.value || !tagRef.value) return;
+
+  commonContentColor.value = getReadableContentColor(resolveColor(props.color, tagRef.value));
+};
+
+onMounted(() => {
+  updateCommonContentColor();
+
+  if (typeof MutationObserver === 'undefined' || !tagRef.value) return;
+
+  themeObserver = new MutationObserver(() => updateCommonContentColor());
+  themeObserver.observe(tagRef.value.ownerDocument.documentElement, {
+    attributes: true,
+    attributeFilter: ['nmorph-data-theme', 'class', 'style'],
+  });
+});
+
+onBeforeUnmount(() => {
+  themeObserver?.disconnect();
+});
+
+watch(() => [props.color, props.design], updateCommonContentColor, { flush: 'post' });
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div ref="tagRef" :class="modifiers" :style="styles" @click="clickHandler">
     <div class="nmorph-tag-item__content">
       <span>{{ text }}</span>
       <NmorphIcon v-if="props.removable" class="nmorph-tag-item__close-icon" @click.stop="closeHandler">
@@ -41,7 +175,7 @@ const closeHandler = () => {
   display: inline-flex;
   margin-right: var(--indentation-02);
   padding: var(--indentation-00) var(--indentation-03);
-  color: var(--nmorph-tag-item-content-color, var(--nmorph-tag-item-color, var(--nmorph-text-color)));
+  color: var(--nmorph-text-color);
   border-radius: var(--default-border-radius);
   cursor: default;
 
@@ -59,7 +193,7 @@ const closeHandler = () => {
     margin-left: 4px;
     cursor: pointer;
 
-    --color: var(--nmorph-tag-item-content-color, var(--nmorph-tag-item-color, var(--nmorph-text-color)));
+    --color: currentColor;
   }
 
   &.nmorph-tag-item--nmorph {
@@ -72,9 +206,8 @@ const closeHandler = () => {
   }
 
   &.nmorph-tag-item--common {
-    --nmorph-tag-item-content-color: var(--nmorph-tag-item-color, var(--nmorph-contrast-text-color));
-
-    background: var(--nmorph-tag-item-background, var(--nmorph-gray-color));
+    color: var(--tag-item-content-color);
+    background: var(--tag-item-background-color);
     border: none;
     box-shadow: none;
   }

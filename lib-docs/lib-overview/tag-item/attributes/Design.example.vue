@@ -5,6 +5,6 @@ import { NmorphTagItem } from "@nmorph/nmorph-ui-kit";
 <template>
   <div class="tag-design-overview">
     <NmorphTagItem value="1" text="Tag one" design="nmorph" />
-    <NmorphTagItem value="2" text="Tag two" design="common" />
+    <NmorphTagItem value="2" text="Tag two" design="common" color="var(--nmorph-success-color)" />
   </div>
 </template>

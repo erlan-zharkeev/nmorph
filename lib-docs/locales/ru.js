@@ -226,6 +226,12 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "tag-list-common-color-api":
+          "NmorphTagList and NmorphTagItem now expose a color prop for common design backgrounds, support v-model:selected-value and click events for clicked tag values, automatically choose readable text and close icon colors, and remove borders from common tags.",
+        "context-menu-repeat-right-click":
+          "NmorphContextMenu now only repositions an already open context menu from a repeated right-click inside the trigger, so outside right-clicks no longer move the menu.",
+        "text-input-prepend-placeholder-color":
+          "NmorphTextInput prepend icons now match the placeholder color by default and switch to the focus text color together with the input.",
         "form-item-model-binding":
           "NmorphFormItem now provides field context so nested form controls can bind to a field by id when modelValue is omitted, while explicit v-model remains controlled.",
         "file-upload-form-rules":

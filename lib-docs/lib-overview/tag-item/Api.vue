@@ -31,9 +31,19 @@ const attributesData: IAttributesTableData[] = [
     type: "nmorph, common",
     default: "nmorph",
   },
+  {
+    name: "color",
+    type: "String",
+    default: "var(--nmorph-gray-color)",
+    description:
+      "Background color for common design. Use token values such as var(--nmorph-success-color).",
+  },
 ];
 
-const events: IEventsTableData[] = [{ name: "close", type: "String" }];
+const events: IEventsTableData[] = [
+  { name: "click", type: "String" },
+  { name: "close", type: "String" },
+];
 </script>
 
 <template>

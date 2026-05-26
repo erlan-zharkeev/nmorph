@@ -124,6 +124,7 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
 .nmorph-text-input {
   --prepend-icon-indent: 8px;
   --prepend-icon-size: 14px;
+  --nmorph-text-input-prepend-icon-color: var(--nmorph-placeholder-text-color);
 
   display: flex;
   flex: 1 1 auto;
@@ -152,7 +153,12 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
   height: var(--prepend-icon-size);
   min-height: var(--prepend-icon-size);
   margin-left: var(--prepend-icon-indent);
+  color: var(--nmorph-text-input-prepend-icon-color);
   pointer-events: none;
+
+  .nmorph-icon {
+    --color: var(--nmorph-text-input-prepend-icon-color);
+  }
 }
 
 .nmorph-text-input__prepend-icon svg,
@@ -165,12 +171,12 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
 }
 
 .nmorph-text-input__prepend-icon svg {
-  fill: var(--nmorph-text-color);
+  fill: var(--nmorph-text-input-prepend-icon-color);
   stroke-width: 0;
 }
 
 .nmorph-text-input__prepend-icon path {
-  stroke: var(--nmorph-text-color);
+  stroke: var(--nmorph-text-input-prepend-icon-color);
 }
 
 .nmorph-text-input input {
@@ -193,12 +199,8 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
   box-shadow: var(--nmorph-shadow-outset);
 }
 
-.nmorph-text-input.nmorph--focused .nmorph-text-input__prepend-icon svg {
-  fill: var(--nmorph-focus-text-color);
-}
-
-.nmorph-text-input.nmorph--focused .nmorph-text-input__prepend-icon path {
-  stroke: var(--nmorph-focus-text-color);
+.nmorph-text-input.nmorph--focused {
+  --nmorph-text-input-prepend-icon-color: var(--nmorph-focus-text-color);
 }
 
 .nmorph-text-input input:-webkit-autofill,

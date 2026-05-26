@@ -65,6 +65,11 @@ const tags = ref([
   { text: 'Stable', value: 'stable', removable: false },
   { text: 'Preview', value: 'preview', design: 'common' as const },
 ])
+const commonTags = ref([
+  { text: 'New', value: 'new', height: 'thin' as const },
+  { text: 'Stable', value: 'stable', removable: false },
+  { text: 'Preview', value: 'preview', color: 'var(--nmorph-gray-color)' },
+])
 
 const flatRibbonExamples = [
   { corner: 'top-left', value: 'Flat TL', label: 'Top left', offsetX: 0, offsetY: 0 },
@@ -371,10 +376,11 @@ const progressColor = (value: number) => {
     <SandboxSection title="NmorphTagList">
       <div class="stack">
         <NmorphTagList v-model="tags" />
+        <NmorphTagList v-model="commonTags" design="common" color="var(--nmorph-accent-color)" />
         <div class="row">
           <NmorphTagItem text="Thin" value="thin" height="thin" />
           <NmorphTagItem text="Default" value="default" removable />
-          <NmorphTagItem text="Thick" value="thick" height="thick" design="common" />
+          <NmorphTagItem text="Thick" value="thick" height="thick" design="common" color="var(--nmorph-warn-color)" />
         </div>
       </div>
     </SandboxSection>
