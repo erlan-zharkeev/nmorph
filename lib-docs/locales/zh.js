@@ -215,6 +215,10 @@ export default {
       items: {
         "tag-list-common-color-api":
           "NmorphTagList and NmorphTagItem now expose a color prop for common design backgrounds, support v-model:selected-value and click events for clicked tag values, automatically choose readable text and close icon colors, and remove borders from common tags.",
+        "tag-list-custom-content":
+          "NmorphTagItem now supports a default slot for custom content, and NmorphTagList can forward an item scoped slot while preserving existing text, click, close, and v-model behavior.",
+        "realtime-ui-components-api":
+          "Added touch-friendly tooltip triggers, call-oriented media and audio meter components, toggle button state, public styling props, typed select modes, richer context menu items, and backward-compatible typo aliases.",
         "context-menu-repeat-right-click":
           "NmorphContextMenu now only repositions an already open context menu from a repeated right-click inside the trigger, so outside right-clicks no longer move the menu.",
         "text-input-prepend-placeholder-color":

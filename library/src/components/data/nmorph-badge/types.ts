@@ -22,6 +22,8 @@ export interface INmorphBadgeProps {
   hideOnFalsyValue?: boolean;
   color?: string;
   size?: NmorphBadgeSize;
+  ribbonSize?: number | string;
+  ribbonRadius?: number | string;
   offsetY?: number;
   offsetX?: number;
   zIndex?: number;

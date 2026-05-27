@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { type IAttributesTableData, type IEventsTableData } from "~/types";
+import {
+  type IAttributesTableData,
+  type IEventsTableData,
+  type ISlotsTableData,
+} from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
 import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
 
@@ -13,8 +17,8 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "text",
     type: "String",
-    default: "-",
-    required: true,
+    default: '""',
+    description: "Fallback text rendered when the default slot is not provided.",
   },
   {
     name: "removable",
@@ -44,6 +48,13 @@ const events: IEventsTableData[] = [
   { name: "click", type: "String" },
   { name: "close", type: "String" },
 ];
+
+const slots: ISlotsTableData[] = [
+  {
+    name: "default",
+    description: "Custom tag content. When provided, it replaces the text prop.",
+  },
+];
 </script>
 
 <template>
@@ -52,6 +63,7 @@ const events: IEventsTableData[] = [
       title="NmorphTagItem"
       name="tag-item"
       :attributes="attributesData"
+      :slots="slots"
       :events="events"
     />
   </div>

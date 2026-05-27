@@ -3,7 +3,7 @@ import { createCssVariables, useModifiers } from '@/utils';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { NmorphIcon, NmorphIconError } from '@/components';
 import { NmorphComponentHeight, type NmorphCSSProperties } from '@/types';
-import type { INmorphTagItemComponentProps, INmorphTagItemEmit } from './types';
+import type { INmorphTagItemComponentProps, INmorphTagItemEmit, INmorphTagItemSlots } from './types';
 
 const DEFAULT_COMMON_BACKGROUND_COLOR = 'var(--nmorph-gray-color)';
 const DARK_CONTRAST_COLOR = 'var(--nmorph-black-color)';
@@ -11,11 +11,14 @@ const LIGHT_CONTRAST_COLOR = 'var(--nmorph-white-color)';
 const DEFAULT_RGB_COLOR = { r: 201, g: 210, b: 222 };
 
 const props = withDefaults(defineProps<INmorphTagItemComponentProps>(), {
+  text: '',
   height: 'basic',
   removable: true,
   design: 'nmorph',
   color: DEFAULT_COMMON_BACKGROUND_COLOR,
 });
+
+defineSlots<INmorphTagItemSlots>();
 
 const tagRef = ref<HTMLElement | null>(null);
 const commonContentColor = ref(DARK_CONTRAST_COLOR);
@@ -162,7 +165,8 @@ watch(() => [props.color, props.design], updateCommonContentColor, { flush: 'pos
 <template>
   <div ref="tagRef" :class="modifiers" :style="styles" @click="clickHandler">
     <div class="nmorph-tag-item__content">
-      <span>{{ text }}</span>
+      <slot v-if="$slots.default" />
+      <span v-else>{{ text }}</span>
       <NmorphIcon v-if="props.removable" class="nmorph-tag-item__close-icon" @click.stop="closeHandler">
         <NmorphIconError />
       </NmorphIcon>
@@ -181,8 +185,10 @@ watch(() => [props.color, props.design], updateCommonContentColor, { flush: 'pos
 
   .nmorph-tag-item__content {
     display: flex;
+    gap: 4px;
     align-items: center;
     height: 100%;
+    color: inherit;
   }
 
   span {
@@ -190,7 +196,6 @@ watch(() => [props.color, props.design], updateCommonContentColor, { flush: 'pos
   }
 
   .nmorph-tag-item__close-icon {
-    margin-left: 4px;
     cursor: pointer;
 
     --color: currentColor;

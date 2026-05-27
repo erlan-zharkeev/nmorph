@@ -79,6 +79,11 @@ const attributesData: IAttributesTableData[] = [
     default: "8",
   },
   {
+    name: "fit",
+    type: "'cover' | 'contain'",
+    default: "cover",
+  },
+  {
     name: "width",
     type: "Width",
     default: "undefined",
@@ -86,6 +91,11 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "height",
     type: "Height",
+    default: "undefined",
+  },
+  {
+    name: "radius",
+    type: "Border-radius",
     default: "undefined",
   },
   {
@@ -103,6 +113,7 @@ const slotData: ISlotsTableData[] = [
 const variables: IVariablesTableData[] = [
   { name: "width" },
   { name: "height" },
+  { name: "nmorph-image-preview-radius" },
   { name: "nmorph-image-preview-btn-margin" },
   { name: "nmorph-image-preview-trigger-gap" },
 ];

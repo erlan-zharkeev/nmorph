@@ -21,7 +21,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "options",
-    type: "Array<String | Number | Object>",
+    type: "Array<String | Number | { type, label, value, icon, shortcut, description, component, disabled }>",
     default: "[]",
   },
   {
@@ -99,9 +99,21 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "false",
   },
+  {
+    name: "mobile-mode",
+    type: "'dropdown' | 'bottom-sheet'",
+    default: "dropdown",
+  },
 ];
 
-const slotData: ISlotsTableData[] = [{ name: "default" }, { name: "menu" }];
+const slotData: ISlotsTableData[] = [
+  { name: "default" },
+  { name: "menu" },
+  {
+    name: "item",
+    description: "Scoped slot for item options. Receives { option, active, disabled }.",
+  },
+];
 const variables: IVariablesTableData[] = [];
 const exposes: IExposesTableData[] = [
   { name: "openAt", type: "(x: Number, y: Number, event?: Event) => void" },

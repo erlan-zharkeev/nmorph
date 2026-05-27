@@ -28,6 +28,31 @@ const attributesData: IAttributesTableData[] = [
     default: "null",
   },
   {
+    name: "disabled",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "trigger",
+    type: "'hover' | 'click' | 'manual'",
+    default: "hover",
+  },
+  {
+    name: "touch",
+    type: "'disable' | 'click' | 'longpress'",
+    default: "click",
+  },
+  {
+    name: "open-delay",
+    type: "Number",
+    default: "0",
+  },
+  {
+    name: "close-delay",
+    type: "Number",
+    default: "0",
+  },
+  {
     name: "z-index",
     type: "Number",
     default: "-",
@@ -49,7 +74,7 @@ const attributesData: IAttributesTableData[] = [
   },
 ];
 
-const slotData: ISlotsTableData[] = [];
+const slotData: ISlotsTableData[] = [{ name: "default" }, { name: "content" }];
 const variables: IVariablesTableData[] = [
   { name: "max-width" },
   { name: "width" },
@@ -63,6 +88,9 @@ const exposes = [
       "https://developer.mozilla.org/ru/docs/Web/API/HTMLElement"
     )} | null`,
   },
+  { name: "open", type: "() => void" },
+  { name: "close", type: "() => void" },
+  { name: "toggle", type: "() => void" },
 ];
 </script>
 

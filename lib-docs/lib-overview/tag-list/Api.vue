@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { type IAttributesTableData, type IEventsTableData } from "~/types";
+import {
+  type IAttributesTableData,
+  type IEventsTableData,
+  type ISlotsTableData,
+} from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
 
 const attributesData: IAttributesTableData[] = [
@@ -48,6 +52,14 @@ const events: IEventsTableData[] = [
     type: "String",
   },
 ];
+
+const slots: ISlotsTableData[] = [
+  {
+    name: "item",
+    description:
+      "Scoped slot for custom tag content. Receives { item } with the source tag item plus resolved design and color.",
+  },
+];
 </script>
 
 <template>
@@ -56,6 +68,7 @@ const events: IEventsTableData[] = [
       title="NmorphTagList"
       name="tag-list"
       :attributes="attributesData"
+      :slots="slots"
       :events="events"
     />
   </div>

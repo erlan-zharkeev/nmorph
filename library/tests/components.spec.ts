@@ -8,6 +8,7 @@ import { getCommonStyles } from '../src/hooks/use-common-styles';
 import {
   NmorphAlert,
   NmorphAutocomplete,
+  NmorphAudioMeter,
   NmorphAvatar,
   NmorphBacktop,
   NmorphBadge,
@@ -41,6 +42,7 @@ import {
   NmorphImagePreview,
   NmorphLayout,
   NmorphLink,
+  NmorphMediaTile,
   NmorphNotificationProvider,
   NmorphNumberInput,
   NmorphOTPInput,
@@ -218,6 +220,11 @@ const renderCases = [
     props: { name: 'Nmorph', size: 48 },
   },
   {
+    name: 'NmorphAudioMeter',
+    component: NmorphAudioMeter,
+    props: { value: 0.5 },
+  },
+  {
     name: 'NmorphBadge',
     component: NmorphBadge,
     props: { value: 3 },
@@ -279,6 +286,11 @@ const renderCases = [
     name: 'NmorphImagePreview',
     component: NmorphImagePreview,
     props: { modelValue: true, src: [imageSrc], alt: 'Preview' },
+  },
+  {
+    name: 'NmorphMediaTile',
+    component: NmorphMediaTile,
+    props: { name: 'Ada Lovelace', videoOff: true },
   },
   {
     name: 'NmorphPagination',
@@ -666,6 +678,80 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('renders custom tag item slot content instead of text', async () => {
+    const wrapper = mount(NmorphTagItem, {
+      props: {
+        value: 'custom',
+        text: 'Fallback',
+        design: 'common',
+      },
+      slots: {
+        default: '<span class="custom-tag-content">Custom</span>',
+      },
+    });
+
+    expect(wrapper.find('.custom-tag-content').exists()).toBe(true);
+    expect(wrapper.text()).toContain('Custom');
+    expect(wrapper.text()).not.toContain('Fallback');
+
+    await wrapper.find('.nmorph-tag-item').trigger('click');
+    await wrapper.find('.nmorph-tag-item__close-icon').trigger('click');
+
+    expect(wrapper.emitted('click')?.[0]).toEqual(['custom']);
+    expect(wrapper.emitted('close')?.[0]).toEqual(['custom']);
+
+    wrapper.unmount();
+  });
+
+  it('passes scoped item slots through tag list without breaking tag events', async () => {
+    const wrapper = mount({
+      components: { NmorphTagList },
+      setup() {
+        const tags = ref([
+          { value: 'eyes', glyphKey: 'eyes', count: 2, visibleUsers: ['Ada', 'Lin'] },
+          { value: 'thumb', glyphKey: 'thumb', count: 1, visibleUsers: ['Kai'], removable: false },
+        ]);
+        const selectedValue = ref<string | null>(null);
+
+        return { selectedValue, tags };
+      },
+      template: `
+        <div>
+          <NmorphTagList v-model="tags" v-model:selected-value="selectedValue" design="common">
+            <template #item="{ item }">
+              <span class="reaction-glyph">{{ item.glyphKey }}</span>
+              <span v-if="item.count > 1" class="reaction-count">{{ item.count }}</span>
+              <span class="reaction-users">{{ item.visibleUsers.length }}</span>
+            </template>
+          </NmorphTagList>
+          <span class="selected-value">{{ selectedValue }}</span>
+          <span class="tag-count">{{ tags.length }}</span>
+        </div>
+      `,
+    });
+
+    const firstTag = wrapper.findAll('.nmorph-tag-item')[0];
+
+    expect(firstTag.text()).toContain('eyes');
+    expect(firstTag.text()).toContain('2');
+    expect(firstTag.text()).not.toContain('undefined');
+    expect(firstTag.attributes()).not.toHaveProperty('count');
+    expect(firstTag.attributes()).not.toHaveProperty('visibleusers');
+
+    await firstTag.trigger('click');
+    await nextTick();
+
+    expect(wrapper.find('.selected-value').text()).toBe('eyes');
+
+    await firstTag.find('.nmorph-tag-item__close-icon').trigger('click');
+    await nextTick();
+
+    expect(wrapper.find('.tag-count').text()).toBe('1');
+    expect(wrapper.findAll('.nmorph-tag-item')).toHaveLength(1);
+
+    wrapper.unmount();
+  });
+
   it('uses readable content colors for common tag backgrounds', async () => {
     document.documentElement.style.setProperty('--nmorph-gray-color', '#c9d2de');
     document.documentElement.style.setProperty('--nmorph-main-color', '#1c1f21');
@@ -937,10 +1023,13 @@ describe('components', () => {
     overlayLocked.unmount();
   });
 
-  it('passes card padding prop to the card padding styles', () => {
+  it('passes card spacing and radius props to card styles', () => {
     const wrapper = mount(NmorphCard, {
       props: {
         cardPadding: 24,
+        padding: 18,
+        radius: 12,
+        contentPadding: 8,
       },
       slots: {
         default: 'Content',
@@ -949,8 +1038,10 @@ describe('components', () => {
 
     const card = wrapper.find('.nmorph-card').element as HTMLElement;
 
-    expect(card.style.getPropertyValue('--card-padding')).toBe('24px');
-    expect(card.style.padding).toBe('24px');
+    expect(card.style.getPropertyValue('--card-padding')).toBe('18px');
+    expect(card.style.getPropertyValue('--nmorph-card-radius')).toBe('12px');
+    expect(card.style.getPropertyValue('--nmorph-card-content-padding')).toBe('8px');
+    expect(card.style.padding).toBe('18px');
 
     wrapper.unmount();
   });
@@ -1183,9 +1274,15 @@ describe('components', () => {
       wrapper.unmount();
     };
 
-    await assertStyles(mount(NmorphBadge, { props: { color: '#123456' } }), '.nmorph-badge', {
-      '--nmorph-badge-color': '#123456',
-    });
+    await assertStyles(
+      mount(NmorphBadge, { props: { color: '#123456', ribbonSize: 30, ribbonRadius: 6 } }),
+      '.nmorph-badge',
+      {
+        '--nmorph-badge-color': '#123456',
+        '--nmorph-badge-ribbon-height': '30px',
+        '--nmorph-badge-ribbon-radius': '6px',
+      }
+    );
 
     await assertStyles(
       mount(NmorphProgress, {
@@ -1253,12 +1350,15 @@ describe('components', () => {
           src: imageSrc,
           width: 222,
           height: '130px',
+          radius: 10,
+          fit: 'contain',
         },
       }),
       '.nmorph-image-preview',
       {
         '--width': '222px',
         '--height': '130px',
+        '--nmorph-image-preview-radius': '10px',
       }
     );
 
@@ -1513,6 +1613,86 @@ describe('components', () => {
 
     visibleZero.unmount();
     hiddenZero.unmount();
+  });
+
+  it('renders audio meter variants with meter semantics and threshold state', () => {
+    const wrapper = mount(NmorphAudioMeter, {
+      props: {
+        value: 0.75,
+        variant: 'line',
+        label: 'Mic level',
+      },
+    });
+
+    const meter = wrapper.find('.nmorph-audio-meter');
+
+    expect(meter.attributes('role')).toBe('meter');
+    expect(meter.attributes('aria-label')).toBe('Mic level');
+    expect(meter.attributes('aria-valuenow')).toBe('75');
+    expect(meter.classes()).toEqual(
+      expect.arrayContaining(['nmorph-audio-meter--line', 'nmorph-audio-meter--warn'])
+    );
+    expect((meter.element as HTMLElement).style.getPropertyValue('--nmorph-audio-meter-percent')).toBe('75%');
+
+    wrapper.unmount();
+  });
+
+  it('renders media tile fallback, state overlays and assigns srcObject to video', async () => {
+    const descriptor = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'srcObject');
+    let assignedSrcObject: unknown = null;
+
+    Object.defineProperty(HTMLMediaElement.prototype, 'srcObject', {
+      configurable: true,
+      get() {
+        return assignedSrcObject;
+      },
+      set(value) {
+        assignedSrcObject = value;
+      },
+    });
+
+    try {
+      const stream = { id: 'stream' } as MediaStream;
+      const wrapper = mount(NmorphMediaTile, {
+        props: {
+          srcObject: stream,
+          name: 'Ada Lovelace',
+          fit: 'contain',
+          mirrored: true,
+          micMuted: true,
+          screenSharing: true,
+          selected: true,
+          speaking: true,
+        },
+      });
+
+      await nextTick();
+
+      const tile = wrapper.find('.nmorph-media-tile');
+
+      expect(tile.classes()).toEqual(
+        expect.arrayContaining([
+          'nmorph-media-tile--contain',
+          'nmorph-media-tile--mirrored',
+          'nmorph-media-tile--selected',
+          'nmorph-media-tile--speaking',
+          'nmorph-media-tile--screen-sharing',
+        ])
+      );
+      expect(wrapper.find('video').exists()).toBe(true);
+      expect(assignedSrcObject).toStrictEqual(stream);
+      expect(wrapper.findAll('.nmorph-media-tile__status-item')).toHaveLength(2);
+
+      await wrapper.setProps({ videoOff: true });
+      await nextTick();
+
+      expect(wrapper.find('.nmorph-media-tile__fallback').text()).toContain('Ada Lovelace');
+
+      wrapper.unmount();
+    } finally {
+      if (descriptor) Object.defineProperty(HTMLMediaElement.prototype, 'srcObject', descriptor);
+      else delete (HTMLMediaElement.prototype as HTMLMediaElement & { srcObject?: unknown }).srcObject;
+    }
   });
 
   it('syncs file upload list when model value is cleared from outside', async () => {
@@ -2071,6 +2251,21 @@ describe('components', () => {
       }
     );
 
+    const fileUpload = mount(NmorphFileUpload, {
+      props: {
+        compact: true,
+        layout: 'inline',
+        fileNameWidth: 180,
+      },
+    });
+    const fileUploadElement = fileUpload.find('.nmorph-file-upload').element as HTMLElement;
+
+    expect(fileUpload.find('.nmorph-file-upload').classes()).toEqual(
+      expect.arrayContaining(['nmorph-file-upload--compact', 'nmorph-file-upload--layout-inline'])
+    );
+    expect(fileUploadElement.style.getPropertyValue('--nmorph-file-upload-name-width')).toBe('180px');
+    fileUpload.unmount();
+
     await assertStyles(
       mount(NmorphSlider, {
         props: {
@@ -2220,6 +2415,38 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('supports toggle button state with aria-pressed and danger styling', async () => {
+    const wrapper = mount(NmorphButton, {
+      props: {
+        toggle: true,
+        modelValue: false,
+        danger: true,
+        shape: 'circle',
+      },
+      slots: {
+        'icon-only': '<span>Mic</span>',
+      },
+    });
+
+    const button = wrapper.find('.nmorph-button__content');
+
+    expect(button.attributes('aria-pressed')).toBe('false');
+    expect(wrapper.find('.nmorph-button').classes()).toEqual(
+      expect.arrayContaining(['nmorph-button--danger', 'nmorph-button--circle'])
+    );
+
+    await button.trigger('click');
+
+    expect(wrapper.emitted('update:model-value')?.at(-1)).toEqual([true]);
+
+    await wrapper.setProps({ modelValue: true });
+
+    expect(button.attributes('aria-pressed')).toBe('true');
+    expect(wrapper.find('.nmorph-button').classes()).toContain('nmorph-button--active');
+
+    wrapper.unmount();
+  });
+
   it('keeps tooltip content above adjacent controls through z-index', async () => {
     const wrapper = mount(NmorphTooltip, {
       props: {
@@ -2239,6 +2466,115 @@ describe('components', () => {
 
     expect(tooltip.style.getPropertyValue('--nmorph-tooltip-z-index')).toBe('1234');
     expect(content).toBeTruthy();
+
+    wrapper.unmount();
+  });
+
+  it('keeps tooltip trigger and popup as direct positioning children', async () => {
+    const wrapper = mount(NmorphTooltip, {
+      props: {
+        forceShow: true,
+        text: 'Tooltip',
+      },
+      slots: {
+        default: '<span class="tooltip-target">Target</span>',
+      },
+    });
+
+    await nextTick();
+
+    const content = wrapper.find('.nmorph-tooltip__content');
+    const trigger = wrapper.find('.nmorph-tooltip__trigger');
+    const popup = wrapper.find('.nmorph-tooltip__info-content');
+
+    expect(trigger.exists()).toBe(true);
+    expect(trigger.find('.tooltip-target').exists()).toBe(true);
+    expect(trigger.element.parentElement).toBe(content.element);
+    expect(popup.element.parentElement).toBe(content.element);
+
+    wrapper.unmount();
+  });
+
+  it('supports tooltip content slot, click trigger, manual trigger and disabled state', async () => {
+    const wrapper = mount(NmorphTooltip, {
+      props: {
+        trigger: 'click',
+      },
+      slots: {
+        default: '<button class="tooltip-target">Target</button>',
+        content: '<strong class="tooltip-content">Nickname</strong>',
+      },
+    });
+
+    expect(wrapper.find('.tooltip-content').exists()).toBe(false);
+
+    await wrapper.find('.tooltip-target').trigger('click', { button: 0 });
+    await nextTick();
+
+    expect(wrapper.find('.tooltip-content').text()).toBe('Nickname');
+
+    await wrapper.setProps({ disabled: true });
+    await nextTick();
+
+    expect(wrapper.find('.tooltip-content').exists()).toBe(false);
+
+    wrapper.unmount();
+
+    const manual = mount(NmorphTooltip, {
+      props: {
+        trigger: 'manual',
+      },
+      slots: {
+        default: '<button class="tooltip-target">Target</button>',
+        content: '<span class="manual-content">Manual content</span>',
+      },
+    });
+
+    await manual.find('.tooltip-target').trigger('click', { button: 0 });
+    await nextTick();
+
+    expect(manual.find('.manual-content').exists()).toBe(false);
+
+    (manual.vm as unknown as { open: () => void }).open();
+    await nextTick();
+
+    expect(manual.find('.manual-content').text()).toBe('Manual content');
+
+    manual.unmount();
+  });
+
+  it('can disable touch click activation for tooltips', async () => {
+    const createPointerEvent = (type: string, init: Partial<PointerEvent>) => {
+      const event = new Event(type, { bubbles: true, cancelable: true });
+
+      Object.entries(init).forEach(([key, value]) => {
+        Object.defineProperty(event, key, {
+          configurable: true,
+          value,
+        });
+      });
+
+      return event as PointerEvent;
+    };
+
+    const wrapper = mount(NmorphTooltip, {
+      props: {
+        trigger: 'click',
+        touch: 'disable',
+      },
+      slots: {
+        default: '<button class="tooltip-target">Target</button>',
+        content: '<span class="touch-content">Touch content</span>',
+      },
+    });
+
+    const target = wrapper.find('.tooltip-target').element as HTMLElement;
+
+    target.dispatchEvent(createPointerEvent('pointerdown', { pointerType: 'touch' }));
+    target.click();
+    await nextTick();
+
+    expect(wrapper.find('.touch-content').exists()).toBe(false);
 
     wrapper.unmount();
   });
@@ -2964,7 +3300,17 @@ describe('components', () => {
       attachTo: target,
       props: {
         trigger: 'click',
-        options: ['Open', { label: 'Delete', color: 'var(--nmorph-error-text-color)' }, componentOption],
+        options: [
+          'Open',
+          {
+            label: 'Delete',
+            color: 'var(--nmorph-error-text-color)',
+            icon: NmorphIconSearch,
+            shortcut: 'Del',
+            description: 'Remove item',
+          },
+          componentOption,
+        ],
       },
       slots: {
         default: '<button class="context-target">Target</button>',
@@ -2989,6 +3335,9 @@ describe('components', () => {
     expect(items).toHaveLength(3);
     expect(items[0].textContent).toContain('Open');
     expect(items[1].style.getPropertyValue('--nmorph-context-menu-item-color')).toBe('var(--nmorph-error-text-color)');
+    expect(items[1].querySelector('.nmorph-context-menu__item-icon')).toBeTruthy();
+    expect(items[1].querySelector('.nmorph-context-menu__item-shortcut')?.textContent).toBe('Del');
+    expect(items[1].querySelector('.nmorph-context-menu__item-description')?.textContent).toContain('Remove item');
     expect(document.body.querySelector('.custom-option')?.textContent).toBe('Custom option');
 
     items[2].click();
@@ -3002,6 +3351,68 @@ describe('components', () => {
 
     expect(wrapper.emitted('select')?.[1]).toEqual(['Open', 0]);
     expect(document.body.querySelector('.nmorph-dropdown')).toBeFalsy();
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  it('renders context menu scoped item slot, sections, dividers and bottom sheet mode', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphContextMenu },
+        setup() {
+          const extendedOptions = [
+            { type: 'section', label: 'Actions' },
+            { label: 'Rename', value: 'rename', shortcut: 'R', description: 'Change name' },
+            { type: 'divider' },
+            { label: 'Delete', value: 'delete', disabled: true },
+          ];
+
+          return { extendedOptions };
+        },
+        template: `
+          <NmorphContextMenu trigger="click" :options="extendedOptions" mobile-mode="bottom-sheet">
+            <button class="context-target">Target</button>
+            <template #item="{ option, disabled }">
+              <span class="custom-context-item" :data-disabled="disabled">
+                {{ option.label }} {{ option.shortcut }} {{ option.description }}
+              </span>
+            </template>
+          </NmorphContextMenu>
+        `,
+      }),
+      {
+        attachTo: target,
+        global: {
+          stubs: {
+            Teleport: false,
+          },
+        },
+      }
+    );
+
+    vi.spyOn(wrapper.find('.nmorph-context-menu').element, 'getBoundingClientRect').mockReturnValue(
+      rect(20, 30, 80, 32)
+    );
+
+    await wrapper.find('.context-target').trigger('click', { button: 0 });
+    await nextTick();
+    await nextTick();
+
+    const dropdown = document.body.querySelector('.nmorph-context-menu__dropdown') as HTMLElement;
+    const customItems = Array.from(document.body.querySelectorAll<HTMLElement>('.custom-context-item'));
+
+    expect(dropdown.classList.contains('nmorph-context-menu__dropdown--bottom-sheet')).toBe(true);
+    expect(document.body.querySelector('.nmorph-context-menu__section')?.textContent).toContain('Actions');
+    expect(document.body.querySelector('.nmorph-context-menu__divider')).toBeTruthy();
+    expect(customItems).toHaveLength(2);
+    expect(customItems[0].textContent).toContain('Rename');
+    expect(customItems[0].textContent).toContain('R');
+    expect(customItems[0].textContent).toContain('Change name');
+    expect(customItems[1].dataset.disabled).toBe('true');
 
     wrapper.unmount();
     target.remove();
@@ -3101,6 +3512,71 @@ describe('components', () => {
 
     expect(wrapper.emitted('update:model-value')?.at(-1)?.[0]).toBe('second');
     wrapper.unmount();
+  });
+
+  it('normalizes select emitted values for nullable single and multiple modes', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const single = mount(NmorphSelect, {
+      props: {
+        modelValue: 'first',
+        nullable: true,
+        open: true,
+        options,
+      },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const firstOption = Array.from(document.body.querySelectorAll<HTMLElement>('.nmorph-select-option')).find(
+      (option) => option.textContent?.includes('First')
+    );
+
+    firstOption?.click();
+    await nextTick();
+
+    expect(single.emitted('update:model-value')?.at(-1)).toEqual([null]);
+
+    single.unmount();
+    await nextTick();
+
+    const multiple = mount(NmorphSelect, {
+      props: {
+        modelValue: [],
+        multiple: true,
+        open: true,
+        options,
+      },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const secondOption = Array.from(document.body.querySelectorAll<HTMLElement>('.nmorph-select-option')).find(
+      (option) => option.textContent?.includes('Second')
+    );
+
+    secondOption?.click();
+    await nextTick();
+
+    expect(multiple.emitted('update:model-value')?.at(-1)).toEqual([['second']]);
+
+    multiple.unmount();
+    target.remove();
   });
 
   it('formats date picker display values with custom tokens', async () => {
@@ -3253,6 +3729,20 @@ describe('components', () => {
     await nextTick();
 
     expect(wrapper.emitted('update:model-value')?.at(-1)).toEqual([true]);
+    wrapper.unmount();
+  });
+
+  it('passes fit prop to the image preview trigger image', async () => {
+    const wrapper = mount(NmorphImagePreview, {
+      props: { src: imageSrc, alt: 'Preview', fit: 'contain' },
+    });
+
+    await nextTick();
+
+    const image = wrapper.find('.nmorph-image').element as HTMLElement;
+
+    expect(image.style.getPropertyValue('--nmorph-image-fit')).toBe('contain');
+
     wrapper.unmount();
   });
 

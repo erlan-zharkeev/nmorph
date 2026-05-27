@@ -17,6 +17,7 @@ import {
   NmorphIconCross,
 } from '@/components';
 import {
+  createCssSizeVariables,
   getFileAcceptValue,
   getFileExtension,
   getFileTypeCandidates,
@@ -39,6 +40,9 @@ const props = withDefaults(defineProps<INmorphFileUploadProps>(), {
   allowedTypes: () => [],
   photoWithPreview: true,
   buttonText: '',
+  compact: false,
+  layout: 'list',
+  fileNameWidth: undefined,
 });
 
 const emit = defineEmits<INmorphFileUploadEmit>();
@@ -203,13 +207,18 @@ defineExpose({ inputDOMRef });
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-file-upload': [props.disabled && 'disabled'],
+    'nmorph-file-upload': [props.disabled && 'disabled', props.compact && 'compact', `layout-${props.layout}`],
+  })
+);
+const styles = computed(() =>
+  createCssSizeVariables({
+    '--nmorph-file-upload-name-width': props.fileNameWidth,
   })
 );
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="styles">
     <div class="nmorph-file-upload__trigger">
       <input
         :id="id"
@@ -298,6 +307,31 @@ const modifiers = computed(() =>
         var(--nmorph-light-shade-color);
   }
 
+  &.nmorph-file-upload--compact .nmorph-file-upload__file {
+    padding: var(--indentation-01) var(--indentation-02);
+  }
+
+  &.nmorph-file-upload--layout-grid .nmorph-file-upload__list > div {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--indentation-02);
+  }
+
+  &.nmorph-file-upload--layout-grid .nmorph-file-upload__file {
+    margin-bottom: 0;
+  }
+
+  &.nmorph-file-upload--layout-inline .nmorph-file-upload__list > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--indentation-02);
+  }
+
+  &.nmorph-file-upload--layout-inline .nmorph-file-upload__file {
+    width: auto;
+    margin-bottom: 0;
+  }
+
   .nmorph-file-upload__file > .nmorph-image-preview {
     flex: 0 0 auto;
   }
@@ -319,6 +353,7 @@ const modifiers = computed(() =>
   .nmorph-file-upload__file-name {
     display: block;
     flex: 1 1 0;
+    width: var(--nmorph-file-upload-name-width, auto);
     min-width: 0;
     max-width: 100%;
     overflow: hidden;

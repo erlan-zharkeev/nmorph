@@ -27,6 +27,8 @@ const props = withDefaults(defineProps<INmorphSelectProps>(), {
   options: () => [],
   optionsMap: () => [],
   modelValue: '',
+  multiple: undefined,
+  nullable: false,
   loading: false,
   height: 'basic',
   disabled: false,
@@ -53,7 +55,18 @@ const { modelValue, updateModelValue } = useFormItemModel<NmorphSelectModelValue
   (value) => emit('update:model-value', value),
   ''
 );
-const initialValue = ref<NmorphSelectModelValueType>(modelValue.value);
+const getEmptySingleValue = () => (props.nullable ? null : '');
+const isMultiple = computed(() => props.multiple ?? Array.isArray(modelValue.value));
+const normalizeModelValue = (value: NmorphSelectModelValueType): NmorphSelectModelValueType => {
+  if (isMultiple.value) {
+    if (Array.isArray(value)) return value;
+    return value ? [value] : [];
+  }
+
+  if (Array.isArray(value)) return value[0] ?? getEmptySingleValue();
+  return value ?? getEmptySingleValue();
+};
+const initialValue = ref<NmorphSelectModelValueType>(normalizeModelValue(modelValue.value));
 const open = ref(props.open);
 const disabledInput = computed(() => props.disabled || props.loading);
 const autoOptionsWidth = computed(() => props.optionsWidth === 'auto');
@@ -64,20 +77,21 @@ const { id, name, autocomplete, tabindex } = useFormItemInput(props);
 const changeHandler = (value: string) => {
   if (disabledInput.value) return;
   open.value = false;
-  if (typeof initialValue.value === 'string') {
-    if (!props.valueRequired && initialValue.value === value) initialValue.value = '';
+  if (!isMultiple.value) {
+    if (!props.valueRequired && initialValue.value === value) initialValue.value = getEmptySingleValue();
     else initialValue.value = value;
     updateModelValue(initialValue.value);
+    return;
   }
-  if (Array.isArray(initialValue.value)) {
-    const hasValue = initialValue.value.includes(value);
-    const currentValueIsLast = initialValue.value.length === 1 && hasValue;
-    if (props.valueRequired && currentValueIsLast) return;
-    if (!hasValue) {
-      initialValue.value = [...initialValue.value, value];
-    } else {
-      initialValue.value = initialValue.value.filter((currentValue) => currentValue !== value);
-    }
+
+  const currentValue = Array.isArray(initialValue.value) ? initialValue.value : [];
+  const hasValue = currentValue.includes(value);
+  const currentValueIsLast = currentValue.length === 1 && hasValue;
+  if (props.valueRequired && currentValueIsLast) return;
+  if (!hasValue) {
+    initialValue.value = [...currentValue, value];
+  } else {
+    initialValue.value = currentValue.filter((currentValueItem) => currentValueItem !== value);
   }
   updateModelValue(initialValue.value);
 };
@@ -139,7 +153,7 @@ watch(
 watch(
   modelValue,
   (newValue) => {
-    initialValue.value = newValue;
+    initialValue.value = normalizeModelValue(newValue);
   },
   { deep: true }
 );
@@ -202,7 +216,7 @@ watch(open, async (isOpen) => {
   if (!isOpen) return;
   await nextTick();
   refreshDomOptions();
-  if (typeof initialValue.value === 'string') {
+  if (!Array.isArray(initialValue.value) && initialValue.value) {
     const selectedIndex = domOptions.value.indexOf(initialValue.value);
     if (selectedIndex !== -1) currentIndex.value = selectedIndex;
   }
@@ -221,18 +235,18 @@ onUnmounted(() => {
 });
 
 const selectedValueTitle = computed(() => {
-  if (typeof initialValue.value === 'string') {
-    if (initialValue.value === '') return computedNoElementPlaceholder.value;
+  if (!Array.isArray(initialValue.value)) {
+    if (!initialValue.value) return computedNoElementPlaceholder.value;
     return optionsMap.value.find((option) => option.value === initialValue.value)?.label;
   }
-  return optionsMap.value.find((option) => option.value === initialValue.value)?.label;
+  return computedNoElementPlaceholder.value;
 });
 
 const tags = computed(() => {
   const haveMap = optionsMap.value.length > 0;
   if (haveMap) {
     return optionsMap.value
-      .filter((option) => initialValue.value.includes(option.value))
+      .filter((option) => Array.isArray(initialValue.value) && initialValue.value.includes(option.value))
       .map((option) => {
         return { text: option.label, value: option.value };
       });
@@ -242,6 +256,7 @@ const tags = computed(() => {
       return { text: option, value: option };
     });
   }
+  if (!initialValue.value) return [];
   return [{ text: initialValue.value, value: initialValue.value }];
 });
 
@@ -327,7 +342,7 @@ const endHandler = () => {
         aria-hidden="true"
         @click.stop="clickHandler"
       >
-        <div v-if="typeof initialValue === 'string'" class="nmorph-select__selected-value">
+        <div v-if="!Array.isArray(initialValue)" class="nmorph-select__selected-value">
           {{ selectedValueTitle }}
         </div>
         <div v-else-if="initialValue.length === 0" class="nmorph-select__selected-value">

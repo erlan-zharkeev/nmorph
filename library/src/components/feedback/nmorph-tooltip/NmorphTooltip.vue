@@ -3,24 +3,41 @@ import { usePlacement } from '@/hooks/use-placement';
 import { useZIndex } from '@/hooks/use-z-index';
 import { NmorphDomElementType } from '@/types';
 import { createCssSizeVariables, useModifiers } from '@/utils';
-import { computed, ref } from 'vue';
+import { computed, onBeforeUnmount, ref, useSlots, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import type { INmorphTooltipProps } from './types';
+import type { INmorphTooltipProps, INmorphTooltipSlots } from './types';
+
+const LONG_PRESS_DELAY_IN_MS = 600;
 
 const props = withDefaults(defineProps<INmorphTooltipProps>(), {
   text: '',
   position: 'top',
   forceShow: false,
   forceCoordinate: null,
+  disabled: false,
+  trigger: 'hover',
+  touch: 'click',
+  openDelay: 0,
+  closeDelay: 0,
   zIndex: undefined,
   width: undefined,
   maxWidth: undefined,
   height: undefined,
 });
 
+defineSlots<INmorphTooltipSlots>();
+
 const showTooltip = ref(props.forceShow);
 const tooltipDOMRef = ref<NmorphDomElementType>(null);
 const slotDOMRef = ref<NmorphDomElementType>(null);
+const slots = useSlots();
+const openTimer = ref<ReturnType<typeof setTimeout> | null>(null);
+const closeTimer = ref<ReturnType<typeof setTimeout> | null>(null);
+const longPressTimer = ref<ReturnType<typeof setTimeout> | null>(null);
+const lastPointerType = ref<string>('mouse');
+const suppressNextClick = ref(false);
+const hasTooltipContent = computed(() => Boolean(props.text || slots.content));
+const shouldRenderTooltip = computed(() => showTooltip.value && hasTooltipContent.value && !props.disabled);
 
 const { placement } = usePlacement({
   initialPlacement: props.position,
@@ -32,18 +49,115 @@ const modifiers = computed(() =>
   useModifiers({
     'nmorph-tooltip': [
       placement.value,
+      props.disabled && 'disabled',
       Boolean(props.forceCoordinate?.x) && Boolean(props.forceCoordinate?.y) && 'force-coords',
     ],
   })
 );
 
+const clearOpenTimer = () => {
+  if (openTimer.value) clearTimeout(openTimer.value);
+  openTimer.value = null;
+};
+
+const clearCloseTimer = () => {
+  if (closeTimer.value) clearTimeout(closeTimer.value);
+  closeTimer.value = null;
+};
+
+const clearLongPressTimer = () => {
+  if (longPressTimer.value) clearTimeout(longPressTimer.value);
+  longPressTimer.value = null;
+};
+
+const setTooltipOpen = (value: boolean) => {
+  clearOpenTimer();
+  clearCloseTimer();
+
+  if (props.disabled || !hasTooltipContent.value) {
+    showTooltip.value = false;
+    return;
+  }
+
+  showTooltip.value = value;
+};
+
+const open = () => {
+  clearCloseTimer();
+  if (props.disabled || !hasTooltipContent.value) return;
+
+  if (props.openDelay <= 0) {
+    setTooltipOpen(true);
+    return;
+  }
+
+  clearOpenTimer();
+  openTimer.value = setTimeout(() => setTooltipOpen(true), props.openDelay);
+};
+
+const close = () => {
+  if (props.forceShow) return;
+  clearOpenTimer();
+
+  if (props.closeDelay <= 0) {
+    setTooltipOpen(false);
+    return;
+  }
+
+  clearCloseTimer();
+  closeTimer.value = setTimeout(() => setTooltipOpen(false), props.closeDelay);
+};
+
+const toggle = () => {
+  if (showTooltip.value) close();
+  else open();
+};
+
 const handleMouseEnter = () => {
-  showTooltip.value = true;
+  if (props.trigger !== 'hover' || lastPointerType.value !== 'mouse') return;
+  open();
 };
 
 const handleMouseLeave = () => {
-  if (props.forceShow) return;
-  showTooltip.value = false;
+  if (props.trigger !== 'hover' || lastPointerType.value !== 'mouse') return;
+  close();
+};
+
+const handleClick = (event: MouseEvent) => {
+  if (suppressNextClick.value) {
+    suppressNextClick.value = false;
+    event.preventDefault();
+    return;
+  }
+
+  if (props.disabled || props.trigger === 'manual') return;
+
+  const isTouchPointer = lastPointerType.value === 'touch' || lastPointerType.value === 'pen';
+
+  if (isTouchPointer) {
+    if (props.touch !== 'click') return;
+    toggle();
+    return;
+  }
+
+  if (props.trigger === 'click') toggle();
+};
+
+const handlePointerDown = (event: PointerEvent) => {
+  lastPointerType.value = event.pointerType || 'mouse';
+
+  if (props.disabled || props.touch !== 'longpress') return;
+  if (event.pointerType !== 'touch' && event.pointerType !== 'pen') return;
+
+  clearLongPressTimer();
+  longPressTimer.value = setTimeout(() => {
+    suppressNextClick.value = true;
+    open();
+  }, LONG_PRESS_DELAY_IN_MS);
+};
+
+const handlePointerEnd = () => {
+  clearLongPressTimer();
 };
 
 const rootWidth = computed(() => (props.forceCoordinate ? '100%' : 'auto'));
@@ -61,7 +175,30 @@ const styles = computed<CSSProperties>(() => ({
   }),
 }));
 const tooltipBody = ref<NmorphDomElementType>(null);
-defineExpose({ tooltipBody });
+
+watch(
+  () => [props.forceShow, props.disabled],
+  ([forceShow, disabled], previousValue) => {
+    const previousForceShow = previousValue?.[0] ?? false;
+
+    if (disabled) {
+      setTooltipOpen(false);
+      return;
+    }
+
+    if (forceShow) setTooltipOpen(true);
+    else if (previousForceShow) setTooltipOpen(false);
+  },
+  { immediate: true }
+);
+
+onBeforeUnmount(() => {
+  clearOpenTimer();
+  clearCloseTimer();
+  clearLongPressTimer();
+});
+
+defineExpose({ tooltipBody, open, close, toggle });
 </script>
 
 <template>
@@ -69,34 +206,42 @@ defineExpose({ tooltipBody });
     <div
       ref="tooltipDOMRef"
       class="nmorph-tooltip__content"
+      @click="handleClick"
       @mouseenter="handleMouseEnter"
       @mouseleave="handleMouseLeave"
+      @pointerdown="handlePointerDown"
+      @pointerup="handlePointerEnd"
+      @pointercancel="handlePointerEnd"
+      @pointerleave="handlePointerEnd"
     >
-      <div ref="slotDOMRef">
+      <div ref="slotDOMRef" class="nmorph-tooltip__trigger">
         <slot />
       </div>
-      <transition-group v-if="props.forceCoordinate" name="opacity" tag="div">
-        <div
-          v-if="showTooltip && props.text"
-          ref="tooltipBody"
-          class="nmorph-tooltip__info-content"
-          :style="{ left: forceCoordinate?.x, bottom: forceCoordinate?.y }"
-        >
-          <div class="nmorph-tooltip__shadow-content">
-            <div v-if="!props.forceCoordinate" class="nmorph-tooltip__triangle" />
-            <span>{{ text }}</span>
+      <template v-if="!props.disabled">
+        <Transition v-if="props.forceCoordinate" name="opacity">
+          <div
+            v-if="shouldRenderTooltip"
+            ref="tooltipBody"
+            class="nmorph-tooltip__info-content"
+            :style="{ left: forceCoordinate?.x, bottom: forceCoordinate?.y }"
+          >
+            <div class="nmorph-tooltip__shadow-content">
+              <div v-if="!props.forceCoordinate" class="nmorph-tooltip__triangle" />
+              <span v-if="props.text">{{ text }}</span>
+              <slot v-else name="content" />
+            </div>
           </div>
-        </div>
-      </transition-group>
-      <transition-group v-else name="opacity" tag="div">
-        <div v-if="showTooltip" class="nmorph-tooltip__info-content">
-          <div class="nmorph-tooltip__shadow-content">
-            <div class="nmorph-tooltip__triangle" />
-            <span v-if="props.text">{{ text }}</span>
-            <slot v-else name="content" />
+        </Transition>
+        <Transition v-else name="opacity">
+          <div v-if="shouldRenderTooltip" ref="tooltipBody" class="nmorph-tooltip__info-content">
+            <div class="nmorph-tooltip__shadow-content">
+              <div class="nmorph-tooltip__triangle" />
+              <span v-if="props.text">{{ text }}</span>
+              <slot v-else name="content" />
+            </div>
           </div>
-        </div>
-      </transition-group>
+        </Transition>
+      </template>
     </div>
   </div>
 </template>
@@ -112,6 +257,14 @@ defineExpose({ tooltipBody });
 
   .nmorph-tooltip__content {
     position: relative;
+    display: inline-flex;
+  }
+
+  .nmorph-tooltip__trigger {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    vertical-align: middle;
   }
 
   .nmorph-tooltip__info-content {

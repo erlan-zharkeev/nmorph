@@ -2,10 +2,17 @@ import type { NmorphPlacementType } from '@/types';
 import type { Component } from 'vue';
 
 export type NmorphContextMenuOptionPrimitive = string | number;
+export type NmorphContextMenuOptionType = 'item' | 'divider' | 'section';
+export type NmorphContextMenuMobileMode = 'dropdown' | 'bottom-sheet';
 
 export interface INmorphContextMenuOption {
+  type?: NmorphContextMenuOptionType;
   label?: string | number;
   value?: unknown;
+  icon?: Component;
+  iconProps?: Record<string, unknown>;
+  shortcut?: string;
+  description?: string;
   component?: Component;
   componentProps?: Record<string, unknown>;
   disabled?: boolean;
@@ -23,8 +30,13 @@ export type NmorphContextMenuOpenEvent = MouseEvent | KeyboardEvent | PointerEve
 
 export interface INmorphNormalizedContextMenuOption {
   key: string;
+  type: NmorphContextMenuOptionType;
   label?: string | number;
   value: unknown;
+  icon?: Component;
+  iconProps?: Record<string, unknown>;
+  shortcut?: string;
+  description?: string;
   component?: Component;
   componentProps?: Record<string, unknown>;
   disabled: boolean;
@@ -52,6 +64,7 @@ export interface INmorphContextMenuProps {
   role?: string;
   ariaLabel?: string;
   hideShadow?: boolean;
+  mobileMode?: NmorphContextMenuMobileMode;
 }
 
 export interface INmorphContextMenuEmit {
@@ -67,4 +80,10 @@ export interface INmorphContextMenuExpose {
   openAt: (x: number, y: number, event?: NmorphContextMenuOpenEvent) => void;
   openAtElement: (element: HTMLElement, event?: NmorphContextMenuOpenEvent) => void;
   close: () => void;
+}
+
+export interface INmorphContextMenuSlots {
+  default?: (props: Record<string, never>) => unknown;
+  menu?: (props: { close: () => void }) => unknown;
+  item?: (props: { option: INmorphNormalizedContextMenuOption; active: boolean; disabled: boolean }) => unknown;
 }

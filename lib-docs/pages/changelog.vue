@@ -11,11 +11,21 @@ const knownBugItems: string[] = [];
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.41</h3>
+            <h3>v2.2.42</h3>
             <ul>
               <li>
                 {{
                   $t("changelog-page.changelog.items.tag-list-common-color-api")
+                }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.tag-list-custom-content")
+                }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.realtime-ui-components-api")
                 }}
               </li>
               <li>

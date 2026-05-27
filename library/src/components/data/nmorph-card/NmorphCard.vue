@@ -9,6 +9,9 @@ const props = withDefaults(defineProps<INmorphCardProps>(), {
   shadowType: 'outset',
   combinedShadowBorderWidth: 0,
   cardPadding: undefined,
+  padding: undefined,
+  radius: undefined,
+  contentPadding: undefined,
   contentClass: '',
   fill: true,
   tag: 'div',
@@ -24,13 +27,17 @@ const modifiers = computed(() =>
 );
 
 const styles = computed<CSSProperties>(() => {
-  const cardPadding = props.cardPadding !== undefined ? toCssSize(props.cardPadding) : undefined;
+  const cardPadding = props.padding !== undefined ? toCssSize(props.padding) : toCssSize(props.cardPadding);
+  const cardRadius = toCssSize(props.radius);
+  const contentPadding = toCssSize(props.contentPadding);
 
   return {
     ...(props.shadowType === 'combined' && {
       '--nmorph-card-combined-border-width': `${props.combinedShadowBorderWidth}px`,
     }),
     ...(cardPadding !== undefined && { '--card-padding': cardPadding, padding: cardPadding }),
+    ...(cardRadius !== undefined && { '--nmorph-card-radius': cardRadius }),
+    ...(contentPadding !== undefined && { '--nmorph-card-content-padding': contentPadding }),
   };
 });
 </script>
@@ -58,7 +65,7 @@ const styles = computed<CSSProperties>(() => {
   width: fit-content;
   max-width: 100%;
   padding: var(--card-padding);
-  border-radius: var(--default-border-radius);
+  border-radius: var(--nmorph-card-radius, var(--default-border-radius));
 
   &.nmorph-card--fill {
     width: 100%;
@@ -66,6 +73,7 @@ const styles = computed<CSSProperties>(() => {
 
   .nmorph-card__content {
     height: 100%;
+    padding: var(--nmorph-card-content-padding, 0);
   }
 
   .nmorph-card__header {

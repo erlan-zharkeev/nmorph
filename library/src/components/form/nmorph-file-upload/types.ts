@@ -7,11 +7,15 @@ export enum NmorphImageResolution {
   webp = 'image/webp',
 }
 
-export enum NmorphVideoResolution {
-  mp4 = 'video/mp4',
-  webm = 'video/webm',
-  'wideo-ogg' = 'video/ogg',
-}
+export const NmorphVideoResolution = {
+  mp4: 'video/mp4',
+  webm: 'video/webm',
+  'video-ogg': 'video/ogg',
+  /**
+   * @deprecated Use `video-ogg` instead.
+   */
+  'wideo-ogg': 'video/ogg',
+} as const;
 
 export enum NmorphAudioResolution {
   mpeg = 'audio/mpeg',
@@ -66,6 +70,9 @@ export interface INmorphFileUploadProps {
   allowedTypes?: Array<NmorphResolutionType | string>;
   photoWithPreview?: boolean;
   buttonText?: string;
+  compact?: boolean;
+  layout?: 'list' | 'grid' | 'inline';
+  fileNameWidth?: number | string;
 }
 
 export interface INmorphFileUploadEmit {

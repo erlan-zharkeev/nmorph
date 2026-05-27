@@ -1,7 +1,14 @@
 import { INmorphCommonInputProps } from '@/types';
 import { Ref } from 'vue';
 
-export type NmorphSelectModelValueType = string | string[];
+export type NmorphSelectSingleModelValueType = string;
+export type NmorphSelectMultipleModelValueType = string[];
+export type NmorphSelectEmptyValueType = '' | null;
+export type NmorphSelectModelValueType<TMultiple extends boolean = boolean> = TMultiple extends true
+  ? NmorphSelectMultipleModelValueType
+  : TMultiple extends false
+    ? NmorphSelectSingleModelValueType | NmorphSelectEmptyValueType
+    : NmorphSelectSingleModelValueType | NmorphSelectMultipleModelValueType | NmorphSelectEmptyValueType;
 
 export type NmorphSelectSelectedValueInjectionType = Ref<NmorphSelectModelValueType>;
 export type NmorphSelectChangeSelectedValue = (value: string) => void;
@@ -14,12 +21,14 @@ export interface INmorphSelectOption extends INmorphCommonInputProps {
   hoverColor?: string;
 }
 
-export interface INmorphSelectProps extends INmorphCommonInputProps {
+export interface INmorphSelectProps<TMultiple extends boolean = boolean> extends INmorphCommonInputProps {
   noElementPlaceholder?: string;
   valueRequired?: boolean;
   options?: INmorphSelectOption[];
   optionsMap?: INmorphSelectOption[];
-  modelValue?: NmorphSelectModelValueType;
+  modelValue?: NmorphSelectModelValueType<TMultiple>;
+  multiple?: TMultiple;
+  nullable?: boolean;
   loading?: boolean;
   open?: boolean;
   fill?: boolean;
@@ -33,6 +42,6 @@ export interface INmorphSelectProps extends INmorphCommonInputProps {
   width?: number | string;
 }
 
-export interface INmorphSelectEmit {
-  (e: 'update:model-value', val: NmorphSelectModelValueType): void;
+export interface INmorphSelectEmit<TMultiple extends boolean = boolean> {
+  (e: 'update:model-value', val: NmorphSelectModelValueType<TMultiple>): void;
 }

@@ -3,7 +3,7 @@ import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref, useSlots } from 'vue';
 import { NmorphIcon, NmorphIconSize, NmorphIconLoader } from '@/components';
-import type { INmorphButtonProps } from './types';
+import type { INmorphButtonEmit, INmorphButtonProps } from './types';
 
 const props = withDefaults(defineProps<INmorphButtonProps>(), {
   type: 'button',
@@ -18,11 +18,17 @@ const props = withDefaults(defineProps<INmorphButtonProps>(), {
   ripple: true,
   shape: 'default',
   tabindex: 0,
+  toggle: false,
+  modelValue: undefined,
+  active: false,
+  danger: false,
 });
 
+const emit = defineEmits<INmorphButtonEmit>();
 const slots = useSlots();
 const hasIconSlot = computed(() => Boolean(slots['icon']));
 const hasIconOnlySlot = computed(() => Boolean(slots['icon-only']));
+const active = computed(() => props.active || Boolean(props.modelValue));
 
 const modifiers = computed(() =>
   useModifiers({
@@ -35,6 +41,8 @@ const modifiers = computed(() =>
       props.ripple && 'ripple',
       hasIconOnlySlot.value && 'icon-only',
       props.color && 'custom-color',
+      active.value && 'active',
+      props.danger && 'danger',
     ],
   })
 );
@@ -57,6 +65,11 @@ const buttonColorStyles = computed(() => {
   };
 });
 
+const toggleClickHandler = () => {
+  if (!props.toggle || props.disabled || props.loading) return;
+  emit('update:model-value', !Boolean(props.modelValue));
+};
+
 defineExpose({ buttonDOMElement });
 </script>
 
@@ -69,6 +82,8 @@ defineExpose({ buttonDOMElement });
       :loading="props.loading"
       :type="props.type"
       :tabindex="props.tabindex"
+      :aria-pressed="props.toggle ? active : undefined"
+      @click="toggleClickHandler"
     >
       <NmorphIcon v-if="props.loading" :size="loadingButtonSize">
         <NmorphIconLoader />
@@ -197,6 +212,29 @@ defineExpose({ buttonDOMElement });
 
     .nmorph-button__content:not(:disabled, [loading='true']):hover span {
       color: var(--nmorph-white-color);
+    }
+  }
+
+  &.nmorph-button--active {
+    .nmorph-button__content {
+      color: var(--nmorph-focus-text-color);
+      background: var(--nmorph-accent-color);
+      box-shadow: var(--nmorph-shadow-inset);
+    }
+
+    .nmorph-button__content span,
+    .nmorph-button__content .nmorph-icon {
+      color: var(--nmorph-focus-text-color);
+
+      --color: var(--nmorph-focus-text-color);
+    }
+  }
+
+  &.nmorph-button--danger {
+    .nmorph-button__content {
+      color: var(--nmorph-error-text-color);
+
+      --nmorph-button-color: var(--nmorph-error-text-color);
     }
   }
 

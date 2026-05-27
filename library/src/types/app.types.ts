@@ -11,9 +11,14 @@ export interface INmorphInstance {
   zIndex: ReturnType<typeof useNmorphZIndex>;
 }
 
-export interface INmorphFromDataExpose {
+export interface INmorphFormDataExpose {
   formData: NmorphFormValidationDataType;
 }
+
+/**
+ * @deprecated Use `INmorphFormDataExpose` instead.
+ */
+export interface INmorphFromDataExpose extends INmorphFormDataExpose {}
 
 export interface INmorphOptions {
   theme?: INmorphThemeOptions;

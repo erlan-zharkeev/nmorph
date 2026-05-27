@@ -31,6 +31,8 @@ const props = withDefaults(defineProps<INmorphImagePreviewProps>(), {
   showActionBar: true,
   width: undefined,
   height: undefined,
+  radius: undefined,
+  fit: 'cover',
   navigationButtonMargin: undefined,
   triggerView: 'single',
   triggerLimit: undefined,
@@ -198,6 +200,7 @@ const triggerStyle = computed<CSSProperties>(() =>
   createCssSizeVariables({
     '--width': props.width,
     '--height': props.height,
+    '--nmorph-image-preview-radius': props.radius,
     '--nmorph-image-preview-trigger-gap': props.triggerGap,
   })
 );
@@ -221,7 +224,7 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
           :aria-label="getTriggerLabel(source.index)"
           @click.stop="openPreviewAt(source.index)"
         >
-          <NmorphImage :src="source.src" :alt="getTriggerLabel(source.index)" fit="cover" :frame-border="0">
+          <NmorphImage :src="source.src" :alt="getTriggerLabel(source.index)" :fit="props.fit" :frame-border="0">
             <template v-if="$slots.loading" #loading>
               <slot name="loading" />
             </template>
@@ -237,7 +240,7 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
           </span>
         </button>
       </template>
-      <NmorphImage v-else :src="triggerSource" :alt="props.alt" fit="cover" :frame-border="0">
+      <NmorphImage v-else :src="triggerSource" :alt="props.alt" :fit="props.fit" :frame-border="0">
         <template v-if="$slots.loading" #loading>
           <slot name="loading" />
         </template>
@@ -311,10 +314,12 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
 .nmorph-image-preview {
   --width: 50px;
   --height: 50px;
+  --nmorph-image-preview-radius: var(--default-border-radius);
 
   width: var(--width);
   height: var(--height);
   overflow: hidden;
+  border-radius: var(--nmorph-image-preview-radius);
 
   .nmorph-image-preview__trigger {
     position: relative;
@@ -360,7 +365,7 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
       font: inherit;
       background: transparent;
       border: 0;
-      border-radius: var(--default-border-radius);
+      border-radius: var(--nmorph-image-preview-radius);
       cursor: pointer;
 
       &:hover {

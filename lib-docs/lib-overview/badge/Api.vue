@@ -53,6 +53,16 @@ const attributesData: IAttributesTableData[] = [
     default: "base",
   },
   {
+    name: "ribbon-size",
+    type: "Height",
+    default: "undefined",
+  },
+  {
+    name: "ribbon-radius",
+    type: "Border-radius",
+    default: "undefined",
+  },
+  {
     name: "z-index",
     type: "Number",
     default: "1",
@@ -74,6 +84,7 @@ const slotData: ISlotsTableData[] = [{ name: "default" }, { name: "value" }];
 const variables: IVariablesTableData[] = [
   { name: "nmorph-badge-dot-size" },
   { name: "nmorph-badge-ribbon-height" },
+  { name: "nmorph-badge-ribbon-radius" },
   { name: "nmorph-badge-ribbon-width" },
   { name: "nmorph-badge-ribbon-corner-size" },
   { name: "nmorph-badge-ribbon-offset-x" },

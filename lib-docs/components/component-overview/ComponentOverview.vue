@@ -11,9 +11,11 @@ import scrollOverview from "~/lib-overview/scroll";
 import spaceOverview from "~/lib-overview/space";
 import avatarOverview from "~/lib-overview/avatar";
 import badgeOverview from "~/lib-overview/badge";
+import audioMeterOverview from "~/lib-overview/audio-meter";
 import cardOverview from "~/lib-overview/card";
 import emptyOverview from "~/lib-overview/empty";
 import imageOverview from "~/lib-overview/image";
+import mediaTileOverview from "~/lib-overview/media-tile";
 import tagListOverview from "~/lib-overview/tag-list";
 import tagItemOverview from "~/lib-overview/tag-item";
 import carouselOverview from "~/lib-overview/carousel";
@@ -72,9 +74,11 @@ const overviewComponentsByName: Record<string, unknown[]> = {
   space: spaceOverview,
   avatar: avatarOverview,
   badge: badgeOverview,
+  "audio-meter": audioMeterOverview,
   card: cardOverview,
   empty: emptyOverview,
   image: imageOverview,
+  "media-tile": mediaTileOverview,
   "tag-list": tagListOverview,
   "tag-item": tagItemOverview,
   carousel: carouselOverview,

@@ -25,6 +25,26 @@ const attributesData = [
     default: "false",
   },
   {
+    name: "toggle",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "model-value",
+    type: "Boolean",
+    default: "-",
+  },
+  {
+    name: "active",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "danger",
+    type: "Boolean",
+    default: "false",
+  },
+  {
     name: "style-type",
     type: enumToString(NmorphButtonStyle),
     default: "default",
@@ -97,11 +117,13 @@ const exposes = [
     )} | null`,
   },
 ];
+
+const events = [{ name: "update:model-value", type: "Boolean" }];
 </script>
 
 <template>
   <div class="docs-api-table">
     <api-table title="NmorphButton" name="button" :attributes="attributesData" :slots="slotData" :variables="variables"
-      :exposes="exposes" />
+      :exposes="exposes" :events="events" />
   </div>
 </template>

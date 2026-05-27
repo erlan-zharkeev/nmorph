@@ -64,6 +64,21 @@ const attributesData: IAttributesTableData[] = [
     default: "true",
   },
   {
+    name: "compact",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "layout",
+    type: "'list' | 'grid' | 'inline'",
+    default: "list",
+  },
+  {
+    name: "file-name-width",
+    type: "Width",
+    default: "undefined",
+  },
+  {
     name: "fill",
     type: "Boolean",
     default: "true",
@@ -71,7 +86,7 @@ const attributesData: IAttributesTableData[] = [
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "trigger" }];
-const variables: IVariablesTableData[] = [];
+const variables: IVariablesTableData[] = [{ name: "nmorph-file-upload-name-width" }];
 const exposes = [
   {
     name: "inputDOMRef",

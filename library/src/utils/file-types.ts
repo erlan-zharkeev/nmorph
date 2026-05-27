@@ -5,6 +5,7 @@ const knownResolutionEntries = Object.entries(resolution) as Array<[NmorphResolu
 const extensionByResolution: Partial<Record<NmorphResolutionType, string>> = {
   'svg-xml': 'svg',
   'audio-ogg': 'ogg',
+  'video-ogg': 'ogg',
   'wideo-ogg': 'ogg',
 };
 

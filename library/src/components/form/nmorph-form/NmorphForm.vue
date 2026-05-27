@@ -3,7 +3,7 @@ import { useModifiers } from '@/utils';
 import { computed, provide } from 'vue';
 import { useFormValidation } from '@/hooks/use-form-validation';
 import { NmorphFormValidationDataType } from './types';
-import { INmorphFromDataExpose } from '@/types';
+import { INmorphFormDataExpose } from '@/types';
 import type { INmorphFormProps } from './types';
 
 const props = withDefaults(defineProps<INmorphFormProps>(), {
@@ -18,7 +18,7 @@ const modifiers = computed(() =>
 
 const formValidationData = useFormValidation(props.value, props.validateImmediately);
 
-defineExpose<INmorphFromDataExpose>({ formData: formValidationData });
+defineExpose<INmorphFormDataExpose>({ formData: formValidationData });
 provide<NmorphFormValidationDataType>('form-data', formValidationData);
 </script>
 

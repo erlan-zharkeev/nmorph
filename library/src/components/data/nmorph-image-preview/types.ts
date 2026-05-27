@@ -6,6 +6,7 @@ export interface INmorphAction {
 }
 
 export type NmorphImagePreviewTriggerView = 'single' | 'gallery';
+export type NmorphImagePreviewFit = 'cover' | 'contain';
 
 export interface INmorphImagePreviewProps {
   modelValue?: boolean;
@@ -21,6 +22,8 @@ export interface INmorphImagePreviewProps {
   showActionBar?: boolean;
   width?: number | string;
   height?: number | string;
+  radius?: number | string;
+  fit?: NmorphImagePreviewFit;
   navigationButtonMargin?: number | string;
   triggerView?: NmorphImagePreviewTriggerView;
   triggerLimit?: number;

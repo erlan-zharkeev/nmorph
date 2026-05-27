@@ -1,4 +1,6 @@
 export { default as NmorphAvatar } from './nmorph-avatar/NmorphAvatar.vue';
+export { default as NmorphAudioMeter } from './nmorph-audio-meter/NmorphAudioMeter.vue';
+export * from './nmorph-audio-meter/types';
 export { default as NmorphBadge } from './nmorph-badge/NmorphBadge.vue';
 export { default as NmorphCalendar } from './nmorph-calendar/NmorphCalendar.vue';
 export * from './nmorph-calendar/types';
@@ -15,6 +17,8 @@ export { default as NmorphEmpty } from './nmorph-empty/NmorphEmpty.vue';
 export { default as NmorphImage } from './nmorph-image/NmorphImage.vue';
 export { default as NmorphImagePreview } from './nmorph-image-preview/NmorphImagePreview.vue';
 export * from './nmorph-image-preview/types';
+export { default as NmorphMediaTile } from './nmorph-media-tile/NmorphMediaTile.vue';
+export * from './nmorph-media-tile/types';
 export { default as NmorphPagination } from './nmorph-pagination/NmorphPagination.vue';
 export { default as NmorphProgress } from './nmorph-progress/NmorphProgress.vue';
 export * from './nmorph-progress/types';
@@ -29,5 +33,6 @@ export { default as NmorphTableCell } from './nmorph-table/components/nmorph-tab
 export { default as NmorphTableColumn } from './nmorph-table/components/nmorph-table-column/NmorphTableColumn.vue';
 export { default as NmorphTagList } from './nmorph-tag-list/NmorphTagList.vue';
 export { default as NmorphTagItem } from './nmorph-tag-list/components/nmorph-tag-item/NmorphTagItem.vue';
+export * from './nmorph-tag-list/types';
 export { default as NmorphVirtualList } from './nmorph-virtual-list/NmorphVirtualList.vue';
 export * from './nmorph-virtual-list/types';

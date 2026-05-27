@@ -17,6 +17,8 @@ const props = withDefaults(defineProps<INmorphBadgeProps>(), {
   hideOnFalsyValue: false,
   color: 'var(--nmorph-accent-color)',
   size: 'base',
+  ribbonSize: undefined,
+  ribbonRadius: undefined,
   offsetX: 0,
   offsetY: 0,
   zIndex: 1,
@@ -106,6 +108,8 @@ const styles = computed<CSSProperties>(() => ({
   ...createCssSizeVariables({
     '--nmorph-badge-ribbon-offset-x': props.offsetX !== 0 && props.offsetX,
     '--nmorph-badge-ribbon-offset-y': props.offsetY !== 0 && props.offsetY,
+    '--nmorph-badge-ribbon-height': props.ribbonSize,
+    '--nmorph-badge-ribbon-radius': props.ribbonRadius,
   }),
 }));
 
@@ -178,6 +182,7 @@ $nmorph-badge-dot-size-extra-large: 8px;
   --nmorph-badge-ribbon-height: 24px;
   --nmorph-badge-ribbon-corner-size: 62px;
   --nmorph-badge-ribbon-width: 116px;
+  --nmorph-badge-ribbon-radius: var(--border-radius-40);
   --nmorph-badge-ribbon-offset-x: 0px;
   --nmorph-badge-ribbon-offset-y: 0px;
 
@@ -278,8 +283,8 @@ $nmorph-badge-dot-size-extra-large: 8px;
     left: var(--nmorph-badge-ribbon-offset-x);
 
     .nmorph-badge__container--ribbon {
-      border-bottom-right-radius: var(--border-radius-40);
-      border-bottom-left-radius: var(--border-radius-40);
+      border-bottom-right-radius: var(--nmorph-badge-ribbon-radius);
+      border-bottom-left-radius: var(--nmorph-badge-ribbon-radius);
       transform: translate(-50%, -50%) rotate(-45deg);
     }
   }
@@ -289,8 +294,8 @@ $nmorph-badge-dot-size-extra-large: 8px;
     right: var(--nmorph-badge-ribbon-offset-x);
 
     .nmorph-badge__container--ribbon {
-      border-bottom-right-radius: var(--border-radius-40);
-      border-bottom-left-radius: var(--border-radius-40);
+      border-bottom-right-radius: var(--nmorph-badge-ribbon-radius);
+      border-bottom-left-radius: var(--nmorph-badge-ribbon-radius);
       transform: translate(-50%, -50%) rotate(45deg);
     }
   }
@@ -300,8 +305,8 @@ $nmorph-badge-dot-size-extra-large: 8px;
     left: var(--nmorph-badge-ribbon-offset-x);
 
     .nmorph-badge__container--ribbon {
-      border-top-left-radius: var(--border-radius-40);
-      border-top-right-radius: var(--border-radius-40);
+      border-top-left-radius: var(--nmorph-badge-ribbon-radius);
+      border-top-right-radius: var(--nmorph-badge-ribbon-radius);
       transform: translate(-50%, -50%) rotate(45deg);
     }
   }
@@ -311,8 +316,8 @@ $nmorph-badge-dot-size-extra-large: 8px;
     bottom: var(--nmorph-badge-ribbon-offset-y);
 
     .nmorph-badge__container--ribbon {
-      border-top-left-radius: var(--border-radius-40);
-      border-top-right-radius: var(--border-radius-40);
+      border-top-left-radius: var(--nmorph-badge-ribbon-radius);
+      border-top-right-radius: var(--nmorph-badge-ribbon-radius);
       transform: translate(-50%, -50%) rotate(-45deg);
     }
   }

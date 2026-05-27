@@ -1,15 +1,22 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="TTagItem extends INmorphTagItemProps = INmorphTagItemProps">
 import { useModifiers } from '@/utils';
-import { computed, ref } from 'vue';
+import { computed, shallowRef, watch } from 'vue';
 
 import { NmorphTagItem } from '@/components';
-import type { INmorphTagListEmit, INmorphTagListProps } from './types';
+import type {
+  INmorphTagItemProps,
+  INmorphTagListEmit,
+  INmorphTagListProps,
+  INmorphTagListSlots,
+  NmorphTagListSlotItem,
+} from './types';
 
-const props = withDefaults(defineProps<INmorphTagListProps>(), {
+const props = withDefaults(defineProps<INmorphTagListProps<TTagItem>>(), {
   design: 'nmorph',
 });
 
-const emit = defineEmits<INmorphTagListEmit>();
+const emit = defineEmits<INmorphTagListEmit<TTagItem>>();
+defineSlots<INmorphTagListSlots<TTagItem>>();
 
 const modifiers = computed(() =>
   useModifiers({
@@ -17,13 +24,37 @@ const modifiers = computed(() =>
   })
 );
 
-let tagList = ref(props.modelValue);
+const tagList = shallowRef<TTagItem[]>(props.modelValue);
+
+const getResolvedTagItem = (tagData: TTagItem): NmorphTagListSlotItem<TTagItem> => ({
+  ...tagData,
+  design: tagData.design ?? props.design,
+  color: tagData.color ?? props.color,
+});
+
 const resolvedTagList = computed(() =>
-  tagList.value.map((tagData) => ({
-    ...tagData,
-    design: tagData.design ?? props.design,
-    color: tagData.color ?? props.color,
-  }))
+  tagList.value.map((tagData) => {
+    const item = getResolvedTagItem(tagData);
+
+    return {
+      item,
+      tagItemProps: {
+        value: tagData.value,
+        text: tagData.text,
+        removable: tagData.removable,
+        height: tagData.height,
+        design: item.design,
+        color: item.color,
+      },
+    };
+  })
+);
+
+watch(
+  () => props.modelValue,
+  (modelValue) => {
+    tagList.value = modelValue;
+  }
 );
 
 const closeTagHandler = (value: string) => {
@@ -41,13 +72,12 @@ const clickTagHandler = (value: string) => {
 
 <template>
   <div :class="modifiers">
-    <NmorphTagItem
-      v-for="tagData in resolvedTagList"
-      :key="tagData.value"
-      v-bind="tagData"
-      @click="clickTagHandler"
-      @close="closeTagHandler"
-    />
+    <template v-for="tagData in resolvedTagList" :key="tagData.item.value">
+      <NmorphTagItem v-if="$slots.item" v-bind="tagData.tagItemProps" @click="clickTagHandler" @close="closeTagHandler">
+        <slot name="item" :item="tagData.item" />
+      </NmorphTagItem>
+      <NmorphTagItem v-else v-bind="tagData.tagItemProps" @click="clickTagHandler" @close="closeTagHandler" />
+    </template>
   </div>
 </template>
 

@@ -19,6 +19,21 @@ const attributesData: IAttributesTableData[] = [
     default: "undefined",
   },
   {
+    name: "padding",
+    type: "Padding",
+    default: "undefined",
+  },
+  {
+    name: "radius",
+    type: "Border-radius",
+    default: "undefined",
+  },
+  {
+    name: "content-padding",
+    type: "Padding",
+    default: "undefined",
+  },
+  {
     name: "content-class",
     type: "string",
     default: "-",
@@ -42,7 +57,11 @@ const attributesData: IAttributesTableData[] = [
 
 const slotData: ISlotsTableData[] = [{ name: "header" }, { name: "footer" }];
 
-const variables: IVariablesTableData[] = [{ name: "card-padding" }];
+const variables: IVariablesTableData[] = [
+  { name: "card-padding" },
+  { name: "nmorph-card-radius" },
+  { name: "nmorph-card-content-padding" },
+];
 </script>
 
 <template>

@@ -28,4 +28,12 @@ export interface INmorphButtonProps extends INmorphCommonInputProps {
   shape?: keyof typeof NmorphButtonShape;
   fill?: boolean;
   tabindex?: number;
+  toggle?: boolean;
+  modelValue?: boolean;
+  active?: boolean;
+  danger?: boolean;
+}
+
+export interface INmorphButtonEmit {
+  (e: 'update:model-value', val: boolean): void;
 }

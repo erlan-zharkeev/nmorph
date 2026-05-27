@@ -15,9 +15,11 @@ export const componentGroups = [
     components: [
       "NmorphAvatar",
       "NmorphBadge",
+      "NmorphAudioMeter",
       "NmorphCard",
       "NmorphEmpty",
       "NmorphImage",
+      "NmorphMediaTile",
       "NmorphTagList",
       "NmorphTagItem",
       "NmorphCarousel",

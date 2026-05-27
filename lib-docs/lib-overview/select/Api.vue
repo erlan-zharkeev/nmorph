@@ -63,8 +63,18 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "model-value",
-    type: "String | Array&lt;String&gt;",
+    type: "String | Array&lt;String&gt; | null",
     default: "-",
+  },
+  {
+    name: "multiple",
+    type: "Boolean",
+    default: "auto by model-value",
+  },
+  {
+    name: "nullable",
+    type: "Boolean",
+    default: "false",
   },
   {
     name: "loading",
@@ -126,7 +136,7 @@ const attributesData: IAttributesTableData[] = [
 const slotData: ISlotsTableData[] = [{ name: "default" }];
 const variables: IVariablesTableData[] = [{ name: "base-width" }];
 const events = [
-  { name: "update:model-value", type: "String | Array&lt;String&gt;" },
+  { name: "update:model-value", type: "String | Array&lt;String&gt; | null" },
 ];
 
 const selectOptionAttr = [

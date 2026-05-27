@@ -2,11 +2,13 @@
 import { computed, markRaw, onBeforeUnmount, ref, toRaw, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import NmorphDropdown from '../nmorph-dropdown/NmorphDropdown.vue';
+import { NmorphIcon } from '@/components';
 import type { NmorphDomElementType } from '@/types';
 import type {
   INmorphContextMenuEmit,
   INmorphContextMenuExpose,
   INmorphContextMenuProps,
+  INmorphContextMenuSlots,
   INmorphNormalizedContextMenuOption,
   NmorphContextMenuAnchorType,
   NmorphContextMenuOpenEvent,
@@ -34,9 +36,11 @@ const props = withDefaults(defineProps<INmorphContextMenuProps>(), {
   role: 'menu',
   ariaLabel: '',
   hideShadow: false,
+  mobileMode: 'dropdown',
 });
 
 const emit = defineEmits<INmorphContextMenuEmit>();
+defineSlots<INmorphContextMenuSlots>();
 
 const triggerDOMRef = ref<HTMLElement | null>(null);
 const relativeElement = ref<NmorphDomElementType>(null);
@@ -58,6 +62,7 @@ const normalizedOptions = computed<INmorphNormalizedContextMenuOption[]>(() =>
     if (typeof option === 'string' || typeof option === 'number') {
       return {
         key: `${option}-${index}`,
+        type: 'item',
         label: option,
         value: option,
         disabled: false,
@@ -68,8 +73,13 @@ const normalizedOptions = computed<INmorphNormalizedContextMenuOption[]>(() =>
 
     return {
       key: `${String(option.value ?? option.label ?? index)}-${index}`,
+      type: option.type ?? 'item',
       label: option.label,
       value: option.value ?? option.label ?? index,
+      icon: option.icon ? markRaw(toRaw(option.icon)) : undefined,
+      iconProps: option.iconProps,
+      shortcut: option.shortcut,
+      description: option.description,
       component: option.component ? markRaw(toRaw(option.component)) : undefined,
       componentProps: option.componentProps,
       disabled: Boolean(option.disabled),
@@ -78,6 +88,15 @@ const normalizedOptions = computed<INmorphNormalizedContextMenuOption[]>(() =>
       raw: option,
     };
   })
+);
+
+const dropdownContentClass = computed(() =>
+  [
+    'nmorph-context-menu__dropdown',
+    props.mobileMode === 'bottom-sheet' && 'nmorph-context-menu__dropdown--bottom-sheet',
+  ]
+    .filter(Boolean)
+    .join(' ')
 );
 
 watch(
@@ -350,14 +369,14 @@ defineExpose<INmorphContextMenuExpose>({ close, openAt, openAtElement });
       :role="props.role"
       :aria-label="props.ariaLabel"
       :hide-shadow="props.hideShadow"
-      content-class="nmorph-context-menu__dropdown"
+      :content-class="dropdownContentClass"
       @on-outside-click="outsideClickHandler"
       @on-escape-keydown="escapeHandler"
     >
       <div v-if="hasOptions" class="nmorph-context-menu__options">
         <template v-for="(option, index) in normalizedOptions" :key="option.key">
           <button
-            v-if="!option.component"
+            v-if="option.type === 'item' && !option.component"
             type="button"
             class="nmorph-context-menu__item"
             role="menuitem"
@@ -365,10 +384,21 @@ defineExpose<INmorphContextMenuExpose>({ close, openAt, openAtElement });
             :style="getOptionStyle(option)"
             @click="optionClickHandler(option, index)"
           >
-            <span class="nmorph-context-menu__item-label">{{ option.label }}</span>
+            <slot name="item" :option="option" :active="false" :disabled="option.disabled">
+              <NmorphIcon v-if="option.icon" class="nmorph-context-menu__item-icon">
+                <component :is="option.icon" v-bind="option.iconProps" />
+              </NmorphIcon>
+              <span class="nmorph-context-menu__item-copy">
+                <span class="nmorph-context-menu__item-label">{{ option.label }}</span>
+                <span v-if="option.description" class="nmorph-context-menu__item-description">
+                  {{ option.description }}
+                </span>
+              </span>
+              <span v-if="option.shortcut" class="nmorph-context-menu__item-shortcut">{{ option.shortcut }}</span>
+            </slot>
           </button>
           <div
-            v-else
+            v-else-if="option.type === 'item'"
             class="nmorph-context-menu__item"
             :class="{ 'nmorph-context-menu__item--disabled': option.disabled }"
             role="menuitem"
@@ -378,8 +408,12 @@ defineExpose<INmorphContextMenuExpose>({ close, openAt, openAtElement });
             @click="optionClickHandler(option, index)"
             @keydown="optionKeydownHandler($event, option, index)"
           >
-            <component :is="option.component" v-bind="option.componentProps" />
+            <slot name="item" :option="option" :active="false" :disabled="option.disabled">
+              <component :is="option.component" v-bind="option.componentProps" />
+            </slot>
           </div>
+          <div v-else-if="option.type === 'divider'" class="nmorph-context-menu__divider" role="separator" />
+          <div v-else class="nmorph-context-menu__section" role="presentation">{{ option.label }}</div>
         </template>
       </div>
       <slot v-else name="menu" :close="close" />
@@ -395,6 +429,14 @@ defineExpose<INmorphContextMenuExpose>({ close, openAt, openAtElement });
 
 .nmorph-context-menu__dropdown {
   text-align: left;
+}
+
+.nmorph-context-menu__dropdown--bottom-sheet {
+  position: fixed !important;
+  inset: auto var(--indentation-03) var(--indentation-03) var(--indentation-03) !important;
+  width: auto !important;
+  max-width: none !important;
+  border-radius: var(--default-border-radius) var(--default-border-radius) 0 0;
 }
 
 .nmorph-context-menu__options {
@@ -422,9 +464,42 @@ defineExpose<INmorphContextMenuExpose>({ close, openAt, openAtElement });
   cursor: pointer;
 }
 
+.nmorph-context-menu__item-icon,
+.nmorph-context-menu__item-shortcut {
+  flex: 0 0 auto;
+}
+
+.nmorph-context-menu__item-copy {
+  display: grid;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .nmorph-context-menu__item-label {
   color: var(--nmorph-context-menu-item-color, var(--nmorph-text-color));
   text-align: left;
+}
+
+.nmorph-context-menu__item-description,
+.nmorph-context-menu__item-shortcut {
+  color: var(--nmorph-semi-contrast-text-color);
+  font-size: var(--font-size-extra-small);
+  line-height: var(--line-height-regular);
+}
+
+.nmorph-context-menu__divider {
+  height: 1px;
+  margin: 2px var(--indentation-02);
+  background: color-mix(in srgb, var(--nmorph-text-color) 16%, transparent);
+}
+
+.nmorph-context-menu__section {
+  padding: var(--indentation-02) var(--indentation-04) var(--indentation-01);
+  color: var(--nmorph-semi-contrast-text-color);
+  font-weight: 600;
+  font-size: var(--font-size-extra-small);
+  line-height: var(--line-height-regular);
+  text-transform: uppercase;
 }
 
 .nmorph-context-menu__item:not(:disabled, .nmorph-context-menu__item--disabled):hover {
