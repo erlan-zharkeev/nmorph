@@ -43,6 +43,7 @@ const customStyles = computed(() => {
 <style lang="scss">
 .nmorph-icon {
   display: flex;
+  justify-content: center;
   align-items: center;
   width: var(--width);
   min-width: var(--width);

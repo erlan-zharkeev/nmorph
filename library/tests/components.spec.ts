@@ -1185,6 +1185,14 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('keeps NmorphScroll skin in common styles for plugin-only usage', () => {
+    const styles = getCommonStyles();
+
+    expect(styles).toContain('.nmorph-scroll::-webkit-scrollbar-track');
+    expect(styles).toContain('box-shadow: var(--nmorph-shadow-inset);');
+    expect(styles).toContain('.nmorph-scroll::-webkit-scrollbar-button');
+  });
+
   it('keeps backtop position variables on the teleported element', async () => {
     const target = document.createElement('div');
     const portal = document.createElement('div');
@@ -3908,6 +3916,54 @@ describe('components', () => {
     expect(document.body.querySelector('.nmorph-image-preview__left')).toBeFalsy();
     expect(document.body.querySelector('.nmorph-image-preview__right')).toBeFalsy();
     expect(document.body.querySelector('.nmorph-image-preview__actions')).toBeTruthy();
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  it('navigates image preview with keyboard arrows', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+    const gallerySources = ['preview-one.png', 'preview-two.png', 'preview-three.png'];
+
+    const wrapper = mount(NmorphImagePreview, {
+      props: {
+        modelValue: true,
+        src: gallerySources,
+        initialIndex: 1,
+        alt: 'Preview',
+        showNavigationButtons: false,
+      },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const getPreviewImage = () => document.body.querySelector('.nmorph-image-preview__content img');
+
+    expect(getPreviewImage()?.getAttribute('src')).toBe(gallerySources[1]);
+    expect(document.body.querySelector('.nmorph-image-preview__left')).toBeFalsy();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    await nextTick();
+
+    expect(getPreviewImage()?.getAttribute('src')).toBe(gallerySources[2]);
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    await nextTick();
+
+    expect(getPreviewImage()?.getAttribute('src')).toBe(gallerySources[0]);
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    await nextTick();
+
+    expect(getPreviewImage()?.getAttribute('src')).toBe(gallerySources[2]);
 
     wrapper.unmount();
     target.remove();

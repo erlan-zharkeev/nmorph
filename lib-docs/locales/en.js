@@ -224,6 +224,12 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "image-preview-keyboard-navigation":
+          "NmorphImagePreview now supports ArrowLeft and ArrowRight keyboard navigation while the preview is open, including wrap-around for image sets.",
+        "icon-wrapper-centering":
+          "NmorphIcon now centers its inner icon content when external classes resize the icon wrapper.",
+        "scroll-runtime-skin":
+          "NmorphScroll runtime common styles again include the inset track skin and hidden native scrollbar buttons for plugin-only usage.",
         "tag-list-common-color-api":
           "NmorphTagList and NmorphTagItem now expose a color prop for common design backgrounds, support v-model:selected-value and click events for clicked tag values, automatically choose readable text and close icon colors, and remove borders from common tags.",
         "tag-list-custom-content":

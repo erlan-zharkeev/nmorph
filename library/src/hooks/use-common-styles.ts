@@ -274,6 +274,57 @@ export const getCommonStyles = () => {
       --nmorph-scroll-color-scheme: dark;
     }
 
+    .nmorph-scroll {
+      --thumb-color: var(--nmorph-scroll-thumb-color, var(--nmorph-text-color));
+
+      color-scheme: var(--nmorph-scroll-color-scheme, light);
+      scrollbar-color: var(--thumb-color) transparent;
+      scrollbar-width: thin;
+    }
+
+    .nmorph-scroll::-webkit-scrollbar {
+      width: var(--bar-width);
+      height: var(--bar-height);
+      background-color: transparent;
+      cursor: pointer;
+      transition: width ease-in-out 0.2s;
+    }
+
+    .nmorph-scroll::-webkit-scrollbar-button,
+    .nmorph-scroll::-webkit-scrollbar-button:single-button,
+    .nmorph-scroll::-webkit-scrollbar-button:double-button,
+    .nmorph-scroll::-webkit-scrollbar-button:vertical:start:decrement,
+    .nmorph-scroll::-webkit-scrollbar-button:vertical:end:increment,
+    .nmorph-scroll::-webkit-scrollbar-button:horizontal:start:decrement,
+    .nmorph-scroll::-webkit-scrollbar-button:horizontal:end:increment {
+      display: none !important;
+      width: 0 !important;
+      min-width: 0 !important;
+      max-width: 0 !important;
+      height: 0 !important;
+      min-height: 0 !important;
+      max-height: 0 !important;
+      border: 0 !important;
+      background: transparent !important;
+      background-image: none !important;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .nmorph-scroll::-webkit-scrollbar-track {
+      border-radius: var(--border-radius-40);
+      ${nmorphInset()}
+    }
+
+    .nmorph-scroll::-webkit-scrollbar-thumb {
+      background-color: var(--thumb-color);
+      border-radius: var(--border-radius-40);
+    }
+
+    .nmorph-scroll::-webkit-scrollbar-corner {
+      background-color: transparent;
+    }
+
     .nmorph--basic-component {
       --height: var(--default-thickness-component);
 

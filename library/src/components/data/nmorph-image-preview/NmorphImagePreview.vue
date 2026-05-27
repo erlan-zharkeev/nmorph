@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { createCssSizeVariables, useModifiers } from '@/utils';
-import { ComputedRef, computed, ref, watch } from 'vue';
+import { ComputedRef, computed, onBeforeUnmount, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import {
   NmorphImage,
@@ -158,6 +158,47 @@ const nextHandler = () => {
   const value = resolvedCurrentIndex.value + 1;
   currentIndex.value = value > length - 1 ? 0 : value;
 };
+
+const keyboardNavigationHandler = (event: KeyboardEvent) => {
+  if (!open.value || sourceList.value.length < 2) return;
+  if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+
+  if (event.key === 'ArrowLeft') {
+    event.preventDefault();
+    previousHandler();
+  }
+
+  if (event.key === 'ArrowRight') {
+    event.preventDefault();
+    nextHandler();
+  }
+};
+
+const addKeyboardNavigationListener = () => {
+  if (typeof document === 'undefined') return;
+
+  document.addEventListener('keydown', keyboardNavigationHandler);
+};
+
+const removeKeyboardNavigationListener = () => {
+  if (typeof document === 'undefined') return;
+
+  document.removeEventListener('keydown', keyboardNavigationHandler);
+};
+
+watch(
+  open,
+  (show) => {
+    if (show) {
+      addKeyboardNavigationListener();
+    } else {
+      removeKeyboardNavigationListener();
+    }
+  },
+  { immediate: true }
+);
+
+onBeforeUnmount(removeKeyboardNavigationListener);
 
 const enlargeShrinkActionData: ComputedRef<INmorphAction> = computed(() => {
   let result: INmorphAction = {
