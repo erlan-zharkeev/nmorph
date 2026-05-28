@@ -11,6 +11,7 @@ import {
   NmorphAudioMeter,
   NmorphAvatar,
   NmorphBacktop,
+  NmorphAudioPreview,
   NmorphBadge,
   NmorphBreadcrumb,
   NmorphBreadcrumbItem,
@@ -32,6 +33,7 @@ import {
   NmorphDrawer,
   NmorphDropdown,
   NmorphEmpty,
+  NmorphFileCard,
   NmorphFileUpload,
   NmorphForm,
   NmorphFormItem,
@@ -74,6 +76,7 @@ import {
   NmorphTextInput,
   NmorphTooltip,
   NmorphVirtualList,
+  NmorphVideoPreview,
 } from '../src/components';
 
 const imageSrc =
@@ -225,6 +228,11 @@ const renderCases = [
     props: { value: 0.5 },
   },
   {
+    name: 'NmorphAudioPreview',
+    component: NmorphAudioPreview,
+    props: { src: 'blob:audio', name: 'audio.mp3', durationMs: 62000 },
+  },
+  {
     name: 'NmorphBadge',
     component: NmorphBadge,
     props: { value: 3 },
@@ -276,6 +284,11 @@ const renderCases = [
     name: 'NmorphEmpty',
     component: NmorphEmpty,
     props: { title: 'Nothing here', description: 'Create the first item to get started.' },
+  },
+  {
+    name: 'NmorphFileCard',
+    component: NmorphFileCard,
+    props: { name: 'report.pdf', mimeType: 'application/pdf', size: 2048, previewSrc: 'blob:report' },
   },
   {
     name: 'NmorphImage',
@@ -581,6 +594,11 @@ const renderCases = [
       template:
         '<NmorphVirtualList :items="virtualItems" item-key="id" :item-height="20" height="60px"><template #default="{ item }">{{ item.title }}</template></NmorphVirtualList>',
     }),
+  },
+  {
+    name: 'NmorphVideoPreview',
+    component: NmorphVideoPreview,
+    props: { src: 'blob:video', name: 'video.mp4', durationMs: 90000 },
   },
   {
     name: 'NmorphNotificationProvider',
@@ -1867,9 +1885,38 @@ describe('components', () => {
       expect(payload).toHaveLength(1);
       expect(payload[0].data.name).toBe('report.pdf');
       expect(wrapper.emitted('on-unsupported-file-type-error')).toBeUndefined();
-      expect(wrapper.find('.nmorph-file-upload__file-name').text()).toBe('report.pdf');
       expect(wrapper.find('.nmorph-image-preview').exists()).toBe(false);
-      expect(wrapper.find('.nmorph-file-upload__file-info .nmorph-icon').exists()).toBe(true);
+      expect(wrapper.find('.nmorph-file-card').exists()).toBe(true);
+      expect(wrapper.find('.nmorph-file-card__name').text()).toBe('report.pdf');
+    } finally {
+      wrapper.unmount();
+      objectUrls.restore();
+    }
+  });
+
+  it('renders video and audio previews for uploaded media files', async () => {
+    const objectUrls = mockObjectUrlApi(['blob:video', 'blob:audio']);
+    const wrapper = mount(NmorphFileUpload, {
+      props: {
+        modelValue: [],
+        multiple: true,
+      },
+    });
+
+    try {
+      const inputWrapper = wrapper.find('input[type="file"]');
+      const input = inputWrapper.element as HTMLInputElement;
+
+      setFileInputState(input, [
+        createTestFile('clip.mp4', 'video/mp4'),
+        createTestFile('voice.mp3', 'audio/mpeg'),
+      ]);
+      await inputWrapper.trigger('change');
+      await nextTick();
+
+      expect(wrapper.find('.nmorph-video-preview').exists()).toBe(true);
+      expect(wrapper.find('.nmorph-audio-preview').exists()).toBe(true);
+      expect(wrapper.findAll('.nmorph-file-upload__file')).toHaveLength(2);
     } finally {
       wrapper.unmount();
       objectUrls.restore();

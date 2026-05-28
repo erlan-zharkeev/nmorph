@@ -1,9 +1,19 @@
-import { resolution, type NmorphResolutionType } from '@/components/form/nmorph-file-upload/types';
+import {
+  NmorphArchiveResolution,
+  NmorphAudioResolution,
+  NmorphDocResolution,
+  NmorphImageResolution,
+  NmorphVideoResolution,
+  resolution,
+  type NmorphResolutionType,
+} from '@/components/form/nmorph-file-upload/types';
 
 const knownResolutionEntries = Object.entries(resolution) as Array<[NmorphResolutionType, string]>;
 
 const extensionByResolution: Partial<Record<NmorphResolutionType, string>> = {
   'svg-xml': 'svg',
+  msword: 'doc',
+  mpeg: 'mp3',
   'audio-ogg': 'ogg',
   'video-ogg': 'ogg',
   'wideo-ogg': 'ogg',
@@ -19,22 +29,43 @@ export const getFileExtension = (fileName: string) => {
 export const getKnownResolutionByMime = (mimeType: string) =>
   knownResolutionEntries.find(([, knownMimeType]) => knownMimeType.toLowerCase() === mimeType.toLowerCase())?.[0] || '';
 
-export const getFileTypeCandidates = (file: File) =>
+export const getTypeCandidates = (mimeType: string, fileName = '') =>
   Array.from(
     new Set(
       [
-        file.type.toLowerCase(),
-        getKnownResolutionByMime(file.type),
-        getFileExtension(file.name),
-        getPlainFileType(file.type),
+        mimeType.toLowerCase(),
+        getKnownResolutionByMime(mimeType),
+        getFileExtension(fileName),
+        getPlainFileType(mimeType),
       ]
         .filter(Boolean)
         .map((type) => type.toLowerCase())
     )
   );
 
+export const getFileTypeCandidates = (file: File) => getTypeCandidates(file.type, file.name);
+
 export const isKnownFileType = <T extends Record<string, string>>(fileType: string, fileTypeMap: T) =>
   Object.prototype.hasOwnProperty.call(fileTypeMap, fileType);
+
+export const fileMatchesKnownTypes = <T extends Record<string, string>>(file: File, fileTypeMap: T) => {
+  const candidates = getFileTypeCandidates(file);
+
+  return candidates.some((type) => isKnownFileType(type, fileTypeMap));
+};
+
+export const isImageFile = (file: File) =>
+  file.type.toLowerCase().startsWith('image/') || fileMatchesKnownTypes(file, NmorphImageResolution);
+
+export const isAudioFile = (file: File) =>
+  file.type.toLowerCase().startsWith('audio/') || fileMatchesKnownTypes(file, NmorphAudioResolution);
+
+export const isVideoFile = (file: File) =>
+  file.type.toLowerCase().startsWith('video/') || fileMatchesKnownTypes(file, NmorphVideoResolution);
+
+export const isArchiveFile = (file: File) => fileMatchesKnownTypes(file, NmorphArchiveResolution);
+
+export const isDocumentFile = (file: File) => fileMatchesKnownTypes(file, NmorphDocResolution);
 
 export const isFileAllowedByTypes = (file: File, allowedTypes: Array<NmorphResolutionType | string>) => {
   if (allowedTypes.length === 0) return true;

@@ -12,10 +12,13 @@ import spaceOverview from "~/lib-overview/space";
 import avatarOverview from "~/lib-overview/avatar";
 import badgeOverview from "~/lib-overview/badge";
 import audioMeterOverview from "~/lib-overview/audio-meter";
+import audioPreviewOverview from "~/lib-overview/audio-preview";
 import cardOverview from "~/lib-overview/card";
 import emptyOverview from "~/lib-overview/empty";
+import fileCardOverview from "~/lib-overview/file-card";
 import imageOverview from "~/lib-overview/image";
 import mediaTileOverview from "~/lib-overview/media-tile";
+import videoPreviewOverview from "~/lib-overview/video-preview";
 import tagListOverview from "~/lib-overview/tag-list";
 import tagItemOverview from "~/lib-overview/tag-item";
 import carouselOverview from "~/lib-overview/carousel";
@@ -75,10 +78,13 @@ const overviewComponentsByName: Record<string, unknown[]> = {
   avatar: avatarOverview,
   badge: badgeOverview,
   "audio-meter": audioMeterOverview,
+  "audio-preview": audioPreviewOverview,
   card: cardOverview,
   empty: emptyOverview,
+  "file-card": fileCardOverview,
   image: imageOverview,
   "media-tile": mediaTileOverview,
+  "video-preview": videoPreviewOverview,
   "tag-list": tagListOverview,
   "tag-item": tagItemOverview,
   carousel: carouselOverview,

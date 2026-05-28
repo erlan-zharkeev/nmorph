@@ -25,16 +25,16 @@ import {
   NmorphTimePicker,
   useNmorph,
 } from '@nmorph/nmorph-ui-kit'
-import type { INmorphCustomFileData, NmorphFormValueType, NmorphSelectModelValueType } from '@nmorph/nmorph-ui-kit'
+import type { INmorphCustomFileData, NmorphFormValueType } from '@nmorph/nmorph-ui-kit'
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
 import preloadedUploadImageUrl from '../../../lib-docs/assets/images/cat.jpg?url'
 
 const textValue = ref('Nmorph')
 const textareaValue = ref('The textarea grows while you type.\nIt also keeps the same input focus styling.')
 const passwordValue = ref('secret-value')
-const selectValue = ref<NmorphSelectModelValueType>('draft')
-const multiSelectValue = ref<NmorphSelectModelValueType>(['design', 'build'])
-const optionSelectValue = ref<NmorphSelectModelValueType>('large')
+const selectValue = ref('draft')
+const multiSelectValue = ref(['design', 'build'])
+const optionSelectValue = ref('large')
 const autocompleteValue = ref('')
 const numberValue = ref(4)
 const rightNumberValue = ref(10)
@@ -364,13 +364,12 @@ watch(runtimeAccentColor, (accent) => {
         <NmorphFileUpload
           v-model="uploadedFiles"
           multiple
-          button-text="Upload images"
-          :allowed-types="['jpg', 'jpeg', 'png', 'gif']"
+          button-text="Upload attachments"
           @on-unsupported-file-type-error="unsupportedType = $event"
         />
         <NmorphFileUpload disabled button-text="Disabled upload" />
       </div>
-      <p class="hint">files: {{ uploadedFiles.length }} / unsupported: {{ unsupportedType || 'none' }}</p>
+      <p class="hint">attachments: {{ uploadedFiles.length }} / unsupported: {{ unsupportedType || 'none' }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphForm">

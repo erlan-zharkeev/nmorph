@@ -1,28 +1,24 @@
 <script setup lang="ts">
-import { computed, inject, onBeforeUnmount, ref, watch, type Component } from 'vue';
+import { computed, inject, onBeforeUnmount, ref, watch } from 'vue';
 import {
   INmorphCustomFileData,
-  NmorphArchiveResolution,
-  NmorphAudioResolution,
-  NmorphImageResolution,
-  NmorphVideoResolution,
+  NmorphAudioPreview,
   NmorphButton,
-  NmorphIcon,
-  NmorphImagePreview,
-  NmorphIconDoc,
-  NmorphIconImage,
-  NmorphIconAudio,
-  NmorphIconVideo,
-  NmorphIconArchive,
   NmorphIconCross,
+  NmorphIcon,
+  NmorphFileCard,
+  NmorphIconImage,
+  NmorphImagePreview,
+  NmorphVideoPreview,
 } from '@/components';
 import {
   createCssSizeVariables,
   getFileAcceptValue,
   getFileExtension,
-  getFileTypeCandidates,
+  isAudioFile,
   isFileAllowedByTypes,
-  isKnownFileType,
+  isImageFile,
+  isVideoFile,
   useModifiers,
 } from '@/utils';
 import { NmorphDomElementType } from '@/types';
@@ -55,40 +51,8 @@ const { modelValue, updateModelValue } = useFormItemModel<INmorphCustomFileData[
 );
 const formData = inject<NmorphFormValidationDataType | undefined>('form-data', undefined);
 
-const isImageFile = (file: File) => {
-  const candidates = getFileTypeCandidates(file);
-  return (
-    file.type.toLowerCase().startsWith('image/') ||
-    candidates.some((type) => isKnownFileType(type, NmorphImageResolution))
-  );
-};
-
 const inputAccept = computed(() => getFileAcceptValue(props.allowedTypes));
-
-const typeFileIconMap = (file: File): Component => {
-  const candidates = getFileTypeCandidates(file);
-  let result: Component = NmorphIconDoc;
-  if (
-    file.type.toLowerCase().startsWith('image/') ||
-    candidates.some((type) => isKnownFileType(type, NmorphImageResolution))
-  ) {
-    result = NmorphIconImage;
-  }
-  if (
-    file.type.toLowerCase().startsWith('audio/') ||
-    candidates.some((type) => isKnownFileType(type, NmorphAudioResolution))
-  ) {
-    result = NmorphIconAudio;
-  }
-  if (
-    file.type.toLowerCase().startsWith('video/') ||
-    candidates.some((type) => isKnownFileType(type, NmorphVideoResolution))
-  ) {
-    result = NmorphIconVideo;
-  }
-  if (candidates.some((type) => isKnownFileType(type, NmorphArchiveResolution))) result = NmorphIconArchive;
-  return result;
-};
+const showImagePreview = (file: File) => props.photoWithPreview && isImageFile(file);
 
 const inputDOMRef = ref<NmorphDomElementType>(null);
 const files = ref<INmorphCustomFileData[]>([...modelValue.value]);
@@ -240,13 +204,48 @@ const styles = computed(() =>
     <div v-if="files.length > 0" class="nmorph-file-upload__list">
       <transition-group name="list" tag="div">
         <div v-for="{ data, previewUrl } in files" :key="data.name" class="nmorph-file-upload__file">
-          <NmorphImagePreview v-if="props.photoWithPreview && isImageFile(data)" :src="previewUrl" />
-          <div class="nmorph-file-upload__file-info">
-            <NmorphIcon width="14px" height="17px">
-              <component :is="typeFileIconMap(data)" />
-            </NmorphIcon>
-            <span class="nmorph-file-upload__file-name">{{ data.name }}</span>
-          </div>
+          <template v-if="showImagePreview(data)">
+            <NmorphImagePreview :src="previewUrl" />
+            <div class="nmorph-file-upload__file-info">
+              <NmorphIcon width="14px" height="17px">
+                <NmorphIconImage />
+              </NmorphIcon>
+              <span class="nmorph-file-upload__file-name">{{ data.name }}</span>
+            </div>
+          </template>
+          <template v-else-if="isImageFile(data)">
+            <div class="nmorph-file-upload__file-info">
+              <NmorphIcon width="14px" height="17px">
+                <NmorphIconImage />
+              </NmorphIcon>
+              <span class="nmorph-file-upload__file-name">{{ data.name }}</span>
+            </div>
+          </template>
+          <NmorphVideoPreview
+            v-else-if="isVideoFile(data)"
+            :src="previewUrl"
+            :name="data.name"
+            :download-href="previewUrl"
+            compact
+            controls
+          />
+          <NmorphAudioPreview
+            v-else-if="isAudioFile(data)"
+            :src="previewUrl"
+            :name="data.name"
+            :download-href="previewUrl"
+            compact
+          />
+          <NmorphFileCard
+            v-else
+            :name="data.name"
+            :mime-type="data.type"
+            :size="data.size"
+            :extension="getFileExtension(data.name)"
+            :preview-src="previewUrl"
+            :download-href="previewUrl"
+            compact
+          />
           <div class="nmorph-file-upload__remove-file">
             <NmorphButton height="thin" style-type="transparent" @click="removeFile(data.name)">
               <template #icon-only>
@@ -334,6 +333,13 @@ const styles = computed(() =>
 
   .nmorph-file-upload__file > .nmorph-image-preview {
     flex: 0 0 auto;
+  }
+
+  .nmorph-file-upload__file > .nmorph-video-preview,
+  .nmorph-file-upload__file > .nmorph-audio-preview,
+  .nmorph-file-upload__file > .nmorph-file-card {
+    flex: 1 1 0;
+    min-width: 0;
   }
 
   .nmorph-file-upload__file-info {

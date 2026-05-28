@@ -213,6 +213,12 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "attachment-preview-primitives":
+          "Added NmorphVideoPreview, NmorphAudioPreview, and NmorphFileCard as reusable attachment UI primitives for video, audio, documents, and unknown files.",
+        "file-upload-attachment-previews":
+          "NmorphFileUpload now renders typed previews for uploaded video and audio files, document/file cards for PDF, Office, and unknown files, and keeps image previews for images.",
+        "attachment-rendering-notes":
+          "Documented the K-Room attachment rendering approach, including app-level attachment routers, Nmorph UI primitives, message attachment data shape, and compatibility with existing images.",
         "image-preview-keyboard-navigation":
           "NmorphImagePreview now supports ArrowLeft and ArrowRight keyboard navigation while the preview is open, including wrap-around for image sets.",
         "icon-wrapper-centering":
