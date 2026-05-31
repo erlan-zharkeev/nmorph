@@ -24,6 +24,8 @@ import NmorphAudioPreview from '../nmorph-audio-preview/NmorphAudioPreview.vue';
 import NmorphVideoPreview from '../nmorph-video-preview/NmorphVideoPreview.vue';
 import type { INmorphFileCardEmit, INmorphFileCardProps } from './types';
 
+const CONTRAST_ICON_COLOR = 'var(--nmorph-contrast-text-color)';
+
 const props = withDefaults(defineProps<INmorphFileCardProps>(), {
   extension: '',
   mimeType: '',
@@ -104,7 +106,9 @@ const hasActions = computed(
   () =>
     Boolean(slots.actions) ||
     (props.showDefaultActions &&
-      ((props.previewSrc && !mediaPreviewAvailable.value && !previewOnIcon.value) || props.downloadHref))
+      (props.loading ||
+        (props.previewSrc && !mediaPreviewAvailable.value && !previewOnIcon.value) ||
+        props.downloadHref))
 );
 const modifiers = computed(() =>
   useModifiers({
@@ -130,10 +134,7 @@ const errorHandler = () => emit('error');
 <template>
   <div :class="modifiers">
     <div class="nmorph-file-card__icon">
-      <NmorphIcon v-if="props.loading" size="medium">
-        <NmorphIconLoader />
-      </NmorphIcon>
-      <NmorphIcon v-else size="medium">
+      <NmorphIcon size="medium">
         <component :is="icon" />
       </NmorphIcon>
       <a
@@ -145,7 +146,7 @@ const errorHandler = () => emit('error');
         :aria-label="`Preview ${props.name}`"
         @click="openHandler"
       >
-        <NmorphIcon size="small">
+        <NmorphIcon size="small" :color="CONTRAST_ICON_COLOR">
           <NmorphIconEye />
         </NmorphIcon>
       </a>
@@ -187,8 +188,18 @@ const errorHandler = () => emit('error');
     <span v-if="props.showExtensionBadge && extension" class="nmorph-file-card__badge">{{ extension }}</span>
     <div v-if="hasActions" class="nmorph-file-card__actions">
       <slot name="actions">
+        <span
+          v-if="props.loading"
+          class="nmorph-file-card__action-loader"
+          role="status"
+          :aria-label="`Uploading ${props.name}`"
+        >
+          <NmorphIcon size="small">
+            <NmorphIconLoader />
+          </NmorphIcon>
+        </span>
         <a
-          v-if="props.previewSrc && !mediaPreviewAvailable && !previewOnIcon"
+          v-else-if="props.previewSrc && !mediaPreviewAvailable && !previewOnIcon"
           :href="props.previewSrc"
           target="_blank"
           rel="noopener noreferrer"
@@ -201,7 +212,7 @@ const errorHandler = () => emit('error');
           </NmorphIcon>
         </a>
         <a
-          v-if="props.downloadHref"
+          v-if="!props.loading && props.downloadHref"
           :href="props.downloadHref"
           :download="props.name"
           class="nmorph-file-card__action-link"
@@ -241,8 +252,8 @@ const errorHandler = () => emit('error');
     align-items: center;
     width: 36px;
     height: 36px;
-    color: var(--nmorph-accent-color);
-    background: color-mix(in srgb, var(--nmorph-accent-color) 12%, transparent);
+    color: var(--nmorph-text-color);
+    background: color-mix(in srgb, var(--nmorph-text-color) 10%, transparent);
     border-radius: var(--default-border-radius);
 
     --color: currentColor;
@@ -257,19 +268,19 @@ const errorHandler = () => emit('error');
     align-items: center;
     width: 18px;
     height: 18px;
-    color: var(--nmorph-accent-color);
+    color: var(--nmorph-contrast-text-color);
     text-decoration: none;
-    background: var(--nmorph-main-color);
+    background: color-mix(in srgb, var(--nmorph-black-color) 36%, transparent);
     border-radius: var(--border-radius-circular);
     box-shadow: var(--nmorph-shadow-outset);
 
     &:hover {
-      color: var(--nmorph-focus-text-color);
-      background: var(--nmorph-accent-color);
+      background: color-mix(in srgb, var(--nmorph-black-color) 48%, transparent);
     }
 
     .nmorph-icon {
-      --color: currentColor;
+      --nmorph-icon-color: var(--nmorph-contrast-text-color);
+      --color: var(--nmorph-contrast-text-color);
     }
   }
 
@@ -347,7 +358,8 @@ const errorHandler = () => emit('error');
     align-items: center;
   }
 
-  .nmorph-file-card__action-link {
+  .nmorph-file-card__action-link,
+  .nmorph-file-card__action-loader {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -356,11 +368,21 @@ const errorHandler = () => emit('error');
     color: inherit;
     text-decoration: none;
     border-radius: var(--default-border-radius);
+  }
 
+  .nmorph-file-card__action-link {
     &:hover {
       color: var(--nmorph-accent-color);
       background: color-mix(in srgb, var(--nmorph-accent-color) 10%, transparent);
     }
+
+    .nmorph-icon {
+      --color: currentColor;
+    }
+  }
+
+  .nmorph-file-card__action-loader {
+    color: var(--nmorph-semi-contrast-text-color);
 
     .nmorph-icon {
       --color: currentColor;
@@ -388,6 +410,10 @@ const errorHandler = () => emit('error');
     }
   }
 
+  &.nmorph-file-card--media-video.nmorph-file-card--compact {
+    padding-block: var(--indentation-03);
+  }
+
   &.nmorph-file-card--error {
     outline: 1px solid var(--nmorph-error-color);
   }
@@ -395,11 +421,19 @@ const errorHandler = () => emit('error');
   &.nmorph-file-card--soft {
     background: color-mix(in srgb, var(--nmorph-accent-color) 6%, transparent);
     box-shadow: none;
+
+    .nmorph-file-card__icon-action {
+      box-shadow: none;
+    }
   }
 
   &.nmorph-file-card--plain {
     background: transparent;
     box-shadow: none;
+
+    .nmorph-file-card__icon-action {
+      box-shadow: none;
+    }
   }
 
   &.nmorph-file-card--icon-plain {

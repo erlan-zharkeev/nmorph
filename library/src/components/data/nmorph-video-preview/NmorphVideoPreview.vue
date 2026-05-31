@@ -1,17 +1,26 @@
 <script setup lang="ts">
-import { computed, ref, useSlots } from 'vue';
+import { computed, ref, useAttrs, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
 import {
   NmorphIcon,
   NmorphIconDownload,
+  NmorphIconEye,
+  NmorphIconFullScreen,
   NmorphIconLoader,
   NmorphIconOpen,
+  NmorphOverlay,
   NmorphIconPause,
   NmorphIconPlay,
   NmorphIconVideo,
 } from '@/components';
 import { createCssSizeVariables, useModifiers } from '@/utils';
 import type { INmorphVideoPreviewEmit, INmorphVideoPreviewProps } from './types';
+
+const CONTRAST_ICON_COLOR = 'var(--nmorph-contrast-text-color)';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = withDefaults(defineProps<INmorphVideoPreviewProps>(), {
   poster: '',
@@ -33,11 +42,15 @@ const props = withDefaults(defineProps<INmorphVideoPreviewProps>(), {
   error: false,
   errorText: '',
   showDefaultActions: true,
+  showPreviewAction: true,
+  showFullscreenAction: true,
 });
 
 const emit = defineEmits<INmorphVideoPreviewEmit>();
+const attrs = useAttrs();
 const slots = useSlots();
 const videoRef = ref<HTMLVideoElement | null>(null);
+const previewOpen = ref(false);
 const playing = ref(false);
 
 const formatDuration = (durationMs?: number) => {
@@ -51,9 +64,10 @@ const formatDuration = (durationMs?: number) => {
 };
 
 const duration = computed(() => formatDuration(props.durationMs));
-const hasActions = computed(
-  () => Boolean(slots.actions) || (props.showDefaultActions && (props.src || props.downloadHref))
-);
+const mediaReady = computed(() => Boolean(props.src) && !props.loading && !props.error);
+const hasPreviewActions = computed(() => mediaReady.value && (props.showPreviewAction || props.showFullscreenAction));
+const hasDefaultActions = computed(() => props.showDefaultActions && (props.src || props.downloadHref));
+const hasActions = computed(() => Boolean(slots.actions) || hasPreviewActions.value || hasDefaultActions.value);
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-video-preview': [
@@ -75,9 +89,46 @@ const styles = computed<CSSProperties>(() =>
     '--nmorph-video-preview-height': props.height,
   })
 );
+const rootAttrs = computed(() => {
+  return Object.fromEntries(Object.entries(attrs).filter(([key]) => key !== 'class' && key !== 'style'));
+});
+const rootClass = computed(() => [modifiers.value, attrs.class]);
+const rootStyle = computed(() => [styles.value, attrs.style]);
 
 const openHandler = () => emit('open');
 const downloadHandler = () => emit('download');
+const previewHandler = () => {
+  previewOpen.value = true;
+  emit('preview');
+};
+const closePreviewHandler = () => {
+  previewOpen.value = false;
+};
+
+type FullscreenVideoElement = HTMLVideoElement & {
+  webkitEnterFullscreen?: () => void;
+  webkitRequestFullscreen?: () => Promise<void> | void;
+};
+
+const fullscreenHandler = async () => {
+  const videoElement = videoRef.value as FullscreenVideoElement | null;
+  if (!videoElement) return;
+
+  emit('fullscreen');
+
+  try {
+    const request = videoElement.requestFullscreen?.() || videoElement.webkitRequestFullscreen?.();
+
+    if (request) {
+      await request;
+      return;
+    }
+
+    videoElement.webkitEnterFullscreen?.();
+  } catch {
+    // Browser fullscreen APIs can reject outside trusted user gestures.
+  }
+};
 
 const togglePlayback = async () => {
   if (!videoRef.value || props.loading || props.error) return;
@@ -116,7 +167,7 @@ defineExpose({ videoRef });
 </script>
 
 <template>
-  <div :class="modifiers" :style="styles">
+  <div v-bind="rootAttrs" :class="rootClass" :style="rootStyle">
     <video
       v-if="!props.loading && !props.error"
       ref="videoRef"
@@ -139,7 +190,7 @@ defineExpose({ videoRef });
       :aria-label="playing ? `Pause ${props.name || 'video'}` : `Play ${props.name || 'video'}`"
       @click="togglePlayback"
     >
-      <NmorphIcon size="medium">
+      <NmorphIcon size="medium" :color="CONTRAST_ICON_COLOR">
         <NmorphIconPause v-if="playing" />
         <NmorphIconPlay v-else />
       </NmorphIcon>
@@ -159,7 +210,30 @@ defineExpose({ videoRef });
     </div>
     <div v-if="hasActions" class="nmorph-video-preview__actions">
       <slot name="actions">
+        <button
+          v-if="props.showPreviewAction && mediaReady"
+          type="button"
+          class="nmorph-video-preview__action-button nmorph-video-preview__action-button--preview"
+          :aria-label="`Preview ${props.name || 'video'}`"
+          @click="previewHandler"
+        >
+          <NmorphIcon size="small" :color="CONTRAST_ICON_COLOR">
+            <NmorphIconEye />
+          </NmorphIcon>
+        </button>
+        <button
+          v-if="props.showFullscreenAction && mediaReady"
+          type="button"
+          class="nmorph-video-preview__action-button nmorph-video-preview__action-button--fullscreen"
+          :aria-label="`Fullscreen ${props.name || 'video'}`"
+          @click="fullscreenHandler"
+        >
+          <NmorphIcon size="small" :color="CONTRAST_ICON_COLOR">
+            <NmorphIconFullScreen />
+          </NmorphIcon>
+        </button>
         <a
+          v-if="props.showDefaultActions && props.src"
           :href="props.src"
           target="_blank"
           rel="noopener noreferrer"
@@ -186,6 +260,29 @@ defineExpose({ videoRef });
       </slot>
     </div>
   </div>
+  <Teleport v-if="previewOpen" to="body">
+    <div class="nmorph-video-preview__portal">
+      <NmorphOverlay
+        :show="previewOpen"
+        disabled-teleport
+        @on-outside-click="closePreviewHandler"
+        @on-escape-keydown="closePreviewHandler"
+      >
+        <div class="nmorph-video-preview__portal-content">
+          <video
+            class="nmorph-video-preview__portal-media"
+            :src="props.src"
+            :poster="props.poster || undefined"
+            controls
+            autoplay
+            :muted="props.muted"
+            :playsinline="props.playsinline"
+            :preload="props.preload"
+          />
+        </div>
+      </NmorphOverlay>
+    </div>
+  </Teleport>
 </template>
 
 <style lang="scss">
@@ -266,8 +363,8 @@ defineExpose({ videoRef });
     width: 42px;
     height: 42px;
     padding: 0;
-    color: var(--nmorph-text-color);
-    background: color-mix(in srgb, var(--nmorph-main-color) 86%, transparent);
+    color: var(--nmorph-contrast-text-color);
+    background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
     border: 0;
     border-radius: var(--border-radius-circular);
     box-shadow: var(--nmorph-shadow-outset);
@@ -275,11 +372,12 @@ defineExpose({ videoRef });
     cursor: pointer;
 
     .nmorph-icon {
-      --color: currentColor;
+      --nmorph-icon-color: var(--nmorph-contrast-text-color);
+      --color: var(--nmorph-contrast-text-color);
     }
 
     &:hover {
-      color: var(--nmorph-accent-color);
+      background: color-mix(in srgb, var(--nmorph-black-color) 72%, transparent);
     }
   }
 
@@ -324,28 +422,33 @@ defineExpose({ videoRef });
     right: var(--indentation-02);
     display: flex;
     gap: var(--indentation-01);
-    padding: 2px;
-    background: color-mix(in srgb, var(--nmorph-main-color) 86%, transparent);
-    border-radius: var(--default-border-radius);
+    padding: 0;
+    background: transparent;
   }
 
+  .nmorph-video-preview__action-button,
   .nmorph-video-preview__action-link {
     display: inline-flex;
     justify-content: center;
     align-items: center;
     width: 22px;
     height: 22px;
-    color: var(--nmorph-text-color);
+    padding: 0;
+    color: var(--nmorph-contrast-text-color);
+    font: inherit;
     text-decoration: none;
+    background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
+    border: 0;
     border-radius: var(--default-border-radius);
+    cursor: pointer;
 
     &:hover {
-      color: var(--nmorph-accent-color);
-      background: color-mix(in srgb, var(--nmorph-accent-color) 10%, transparent);
+      background: color-mix(in srgb, var(--nmorph-black-color) 72%, transparent);
     }
 
     .nmorph-icon {
-      --color: currentColor;
+      --nmorph-icon-color: var(--nmorph-contrast-text-color);
+      --color: var(--nmorph-contrast-text-color);
     }
   }
 
@@ -366,6 +469,36 @@ defineExpose({ videoRef });
 
   &.nmorph-video-preview--error {
     outline: 1px solid var(--nmorph-error-color);
+  }
+}
+
+.nmorph-video-preview__portal {
+  display: contents;
+
+  .nmorph-video-preview__portal-content {
+    --nmorph-video-preview-portal-width: min(calc(100vw - 96px), 1080px);
+    --nmorph-video-preview-portal-height: min(calc(100vh - 180px), 720px);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--nmorph-video-preview-portal-width);
+    height: var(--nmorph-video-preview-portal-height);
+    transform: translate(-50%, -50%);
+  }
+
+  .nmorph-video-preview__portal-media {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    background: var(--nmorph-black-color);
+    border-radius: var(--default-border-radius);
   }
 }
 </style>

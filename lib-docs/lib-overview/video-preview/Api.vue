@@ -108,6 +108,16 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "true",
   },
+  {
+    name: "show-preview-action",
+    type: "Boolean",
+    default: "true",
+  },
+  {
+    name: "show-fullscreen-action",
+    type: "Boolean",
+    default: "true",
+  },
 ];
 
 const slots: ISlotsTableData[] = [{ name: "actions" }];
@@ -115,6 +125,8 @@ const events: IEventsTableData[] = [
   { name: "play", type: "Event" },
   { name: "pause", type: "Event" },
   { name: "open", type: "void" },
+  { name: "preview", type: "void" },
+  { name: "fullscreen", type: "void" },
   { name: "download", type: "void" },
   { name: "error", type: "Event" },
 ];

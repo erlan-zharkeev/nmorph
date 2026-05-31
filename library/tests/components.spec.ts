@@ -791,6 +791,24 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('uses contrast text color for nmorph tag close icons', async () => {
+    const wrapper = mount(NmorphTagItem, {
+      props: {
+        value: 'new',
+        text: 'New',
+      },
+    });
+
+    await nextTick();
+
+    const closeIcon = wrapper.find('.nmorph-tag-item__close-icon').element as HTMLElement;
+
+    expect(closeIcon.style.getPropertyValue('--nmorph-icon-color')).toBe('var(--nmorph-contrast-text-color)');
+    expect(closeIcon.style.getPropertyValue('--color')).toBe('var(--nmorph-contrast-text-color)');
+
+    wrapper.unmount();
+  });
+
   it('uses readable content colors for common tag backgrounds', async () => {
     document.documentElement.style.setProperty('--nmorph-gray-color', '#c9d2de');
     document.documentElement.style.setProperty('--nmorph-main-color', '#1c1f21');
@@ -814,6 +832,12 @@ describe('components', () => {
     expect(lightTag.element.style.getPropertyValue('--tag-item-content-color')).toBe('var(--nmorph-black-color)');
     expect(darkTag.element.style.getPropertyValue('--tag-item-background-color')).toBe('var(--nmorph-main-color)');
     expect(darkTag.element.style.getPropertyValue('--tag-item-content-color')).toBe('var(--nmorph-white-color)');
+    expect(lightTag.find('.nmorph-tag-item__close-icon').element.style.getPropertyValue('--nmorph-icon-color')).toBe(
+      'var(--nmorph-black-color)'
+    );
+    expect(darkTag.find('.nmorph-tag-item__close-icon').element.style.getPropertyValue('--nmorph-icon-color')).toBe(
+      'var(--nmorph-white-color)'
+    );
     expect(lightTag.attributes('style')).not.toContain('--nmorph-tag-item-color');
     expect(lightTag.attributes('style')).not.toContain('--nmorph-tag-item-background');
 
@@ -1618,6 +1642,11 @@ describe('components', () => {
     expect(card.classes()).not.toContain('nmorph-file-card--card');
     expect(wrapper.find('.nmorph-file-card__badge').exists()).toBe(false);
     expect(wrapper.find('.nmorph-file-card__icon').exists()).toBe(true);
+    expect(
+      (wrapper.find('.nmorph-file-card__icon > .nmorph-icon').element as HTMLElement).style.getPropertyValue(
+        '--nmorph-icon-color'
+      )
+    ).toBe('');
     expect(wrapper.find('.nmorph-file-card__name').text()).toBe(
       'very-long-file-name-that-should-still-use-the-standard-ellipsis-layout.pdf'
     );
@@ -1638,6 +1667,34 @@ describe('components', () => {
     expect(wrapper.find('.nmorph-file-card').classes()).toContain('nmorph-file-card--card');
     expect(wrapper.find('.nmorph-file-card').classes()).not.toContain('nmorph-file-card--icon-plain');
     expect(wrapper.find('.nmorph-file-card__badge').text()).toBe('pdf');
+
+    wrapper.unmount();
+  });
+
+  it('shows a file card action loader while loading and removes it when no actions remain', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'voice-note.ogg',
+        mimeType: 'audio/ogg',
+        previewSrc: 'blob:voice',
+        downloadHref: 'blob:voice',
+        loading: true,
+      },
+    });
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-file-card__actions').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-file-card__action-loader').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-file-card__action-loader').attributes('role')).toBe('status');
+    expect(wrapper.find('.nmorph-file-card__action-loader').html()).toContain('animateTransform');
+    expect(wrapper.find('.nmorph-file-card__icon').html()).not.toContain('animateTransform');
+    expect(wrapper.findAll('.nmorph-file-card__actions .nmorph-file-card__action-link')).toHaveLength(0);
+
+    await wrapper.setProps({ loading: false, previewSrc: '', downloadHref: '' });
+
+    expect(wrapper.find('.nmorph-file-card__actions').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__action-loader').exists()).toBe(false);
 
     wrapper.unmount();
   });
@@ -1692,6 +1749,16 @@ describe('components', () => {
     expect(wrapper.find('button.nmorph-audio-preview__play-button').attributes('aria-label')).toBe(
       'Play voice-message.mp3'
     );
+    expect(
+      (
+        wrapper.find('button.nmorph-audio-preview__play-button .nmorph-icon').element as HTMLElement
+      ).style.getPropertyValue('--nmorph-icon-color')
+    ).toBe('var(--nmorph-contrast-text-color)');
+    expect(
+      (
+        wrapper.find('button.nmorph-audio-preview__play-button .nmorph-icon').element as HTMLElement
+      ).style.getPropertyValue('--color')
+    ).toBe('var(--nmorph-contrast-text-color)');
     expect(wrapper.find('.nmorph-audio-preview__range').exists()).toBe(true);
     expect(wrapper.find('.nmorph-audio-preview__actions').exists()).toBe(false);
     expect(wrapper.find('.nmorph-audio-preview__icon').exists()).toBe(false);
@@ -1742,15 +1809,33 @@ describe('components', () => {
         'nmorph-video-preview--embedded',
         'nmorph-video-preview--compact',
         'nmorph-video-preview--no-meta',
-        'nmorph-video-preview--no-actions',
       ])
     );
+    expect(videoPreview.classes()).not.toContain('nmorph-video-preview--no-actions');
     expect(video.exists()).toBe(true);
     expect(video.attributes('src')).toBe('blob:clip');
     expect(video.attributes('controls')).toBeUndefined();
     expect(wrapper.find('.nmorph-video-preview__meta').exists()).toBe(false);
     expect(wrapper.find('button.nmorph-video-preview__play').attributes('aria-label')).toBe('Play clip.mp4');
-    expect(wrapper.find('.nmorph-video-preview__actions').exists()).toBe(false);
+    expect(
+      (wrapper.find('button.nmorph-video-preview__play .nmorph-icon').element as HTMLElement).style.getPropertyValue(
+        '--nmorph-icon-color'
+      )
+    ).toBe('var(--nmorph-contrast-text-color)');
+    expect(
+      (wrapper.find('button.nmorph-video-preview__play .nmorph-icon').element as HTMLElement).style.getPropertyValue(
+        '--color'
+      )
+    ).toBe('var(--nmorph-contrast-text-color)');
+    expect(wrapper.find('.nmorph-video-preview__actions').exists()).toBe(true);
+    expect(wrapper.findAll('.nmorph-video-preview__action-button')).toHaveLength(2);
+    expect(wrapper.find('.nmorph-video-preview__action-button--preview').attributes('aria-label')).toBe(
+      'Preview clip.mp4'
+    );
+    expect(wrapper.find('.nmorph-video-preview__action-button--fullscreen').attributes('aria-label')).toBe(
+      'Fullscreen clip.mp4'
+    );
+    expect(wrapper.find('.nmorph-video-preview__action-link').exists()).toBe(false);
     expect(actionLinks).toHaveLength(1);
     expect(actionLinks[0].attributes('href')).toBe('blob:clip');
     expect(actionLinks[0].attributes('download')).toBe('clip.mp4');
@@ -1822,6 +1907,21 @@ describe('components', () => {
     expect(iconButton.attributes('aria-label')).toBe('Play 32.mp3');
     expect(wrapper.find('.nmorph-audio-preview__play-indicator').exists()).toBe(true);
     expect(wrapper.find('.nmorph-audio-preview__play').exists()).toBe(false);
+    expect(
+      (wrapper.find('.nmorph-audio-preview__icon > .nmorph-icon').element as HTMLElement).style.getPropertyValue(
+        '--nmorph-icon-color'
+      )
+    ).toBe('');
+    expect(
+      (
+        wrapper.find('.nmorph-audio-preview__play-indicator .nmorph-icon').element as HTMLElement
+      ).style.getPropertyValue('--nmorph-icon-color')
+    ).toBe('var(--nmorph-contrast-text-color)');
+    expect(
+      (
+        wrapper.find('.nmorph-audio-preview__play-indicator .nmorph-icon').element as HTMLElement
+      ).style.getPropertyValue('--color')
+    ).toBe('var(--nmorph-contrast-text-color)');
 
     wrapper.unmount();
   });
@@ -1845,7 +1945,16 @@ describe('components', () => {
   });
 
   it('renders embedded video preview surfaces with playback control over the media', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
     const wrapper = mount(NmorphVideoPreview, {
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
       props: {
         src: 'blob:video',
         name: 'clip.mp4',
@@ -1860,6 +1969,8 @@ describe('components', () => {
 
     const preview = wrapper.find('.nmorph-video-preview');
     const playButton = wrapper.find('button.nmorph-video-preview__play');
+    const fullscreenButton = wrapper.find('.nmorph-video-preview__action-button--fullscreen');
+    const previewButton = wrapper.find('.nmorph-video-preview__action-button--preview');
 
     expect(preview.classes()).toEqual(
       expect.arrayContaining([
@@ -1871,13 +1982,47 @@ describe('components', () => {
     expect(wrapper.find('.nmorph-video-preview__meta').exists()).toBe(false);
     expect(playButton.exists()).toBe(true);
     expect(playButton.attributes('aria-label')).toBe('Play clip.mp4');
+    expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-icon-color')).toBe(
+      'var(--nmorph-contrast-text-color)'
+    );
+    expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--color')).toBe(
+      'var(--nmorph-contrast-text-color)'
+    );
+    expect(fullscreenButton.exists()).toBe(true);
+    expect(previewButton.exists()).toBe(true);
+    expect(
+      (fullscreenButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-icon-color')
+    ).toBe('var(--nmorph-contrast-text-color)');
 
     await wrapper.find('video').trigger('play');
 
     expect(preview.classes()).toEqual(expect.arrayContaining(['nmorph-video-preview--playing']));
     expect(playButton.attributes('aria-label')).toBe('Pause clip.mp4');
 
+    const requestFullscreen = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(wrapper.find('video').element, 'requestFullscreen', {
+      configurable: true,
+      value: requestFullscreen,
+    });
+
+    await fullscreenButton.trigger('click');
+
+    expect(requestFullscreen).toHaveBeenCalledTimes(1);
+    expect(wrapper.emitted('fullscreen')).toHaveLength(1);
+
+    await previewButton.trigger('click');
+    await nextTick();
+
+    const portal = document.body.querySelector('.nmorph-video-preview__portal');
+    const portalVideo = portal?.querySelector('video');
+
+    expect(portal).toBeTruthy();
+    expect(portalVideo?.getAttribute('src')).toBe('blob:video');
+    expect(portalVideo?.hasAttribute('controls')).toBe(true);
+    expect(wrapper.emitted('preview')).toHaveLength(1);
+
     wrapper.unmount();
+    target.remove();
   });
 
   it('renders pdf file preview action on the file icon', async () => {
@@ -1886,7 +2031,7 @@ describe('components', () => {
         name: 'report.pdf',
         mimeType: 'application/pdf',
         previewSrc: 'blob:report',
-        downloadHref: 'blob:report',
+        downloadHref: 'blob:download-report',
       },
     });
 
@@ -1899,7 +2044,19 @@ describe('components', () => {
     expect(iconAction.attributes('href')).toBe('blob:report');
     expect(iconAction.attributes('target')).toBe('_blank');
     expect(iconAction.attributes('rel')).toBe('noopener noreferrer');
+    expect(
+      (wrapper.find('.nmorph-file-card__icon > .nmorph-icon').element as HTMLElement).style.getPropertyValue(
+        '--nmorph-icon-color'
+      )
+    ).toBe('');
+    expect((iconAction.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-icon-color')).toBe(
+      'var(--nmorph-contrast-text-color)'
+    );
+    expect((iconAction.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--color')).toBe(
+      'var(--nmorph-contrast-text-color)'
+    );
     expect(defaultActions).toHaveLength(1);
+    expect(defaultActions[0].attributes('href')).toBe('blob:download-report');
     expect(defaultActions[0].attributes('download')).toBe('report.pdf');
 
     iconAction.element.addEventListener('click', (event) => event.preventDefault());

@@ -32,6 +32,9 @@ const modifiers = computed(() =>
 );
 
 const isCommonDesign = computed(() => props.design === 'common');
+const closeIconColor = computed(() =>
+  isCommonDesign.value ? commonContentColor.value : 'var(--nmorph-contrast-text-color)'
+);
 
 const styles = computed<NmorphCSSProperties>(() => {
   if (!isCommonDesign.value) return {};
@@ -167,7 +170,12 @@ watch(() => [props.color, props.design], updateCommonContentColor, { flush: 'pos
     <div class="nmorph-tag-item__content">
       <slot v-if="$slots.default" />
       <span v-else>{{ text }}</span>
-      <NmorphIcon v-if="props.removable" class="nmorph-tag-item__close-icon" @click.stop="closeHandler">
+      <NmorphIcon
+        v-if="props.removable"
+        class="nmorph-tag-item__close-icon"
+        :color="closeIconColor"
+        @click.stop="closeHandler"
+      >
         <NmorphIconError />
       </NmorphIcon>
     </div>

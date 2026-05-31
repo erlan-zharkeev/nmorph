@@ -306,6 +306,12 @@ export default {
           "NmorphFileCard теперь умеет рендерить встроенные audio и video previews из previewSrc через media-preview, сохраняя общий file-card заголовок, metadata с типом/размером, surface и download action.",
         "notification-duration-value-toggle":
           "NmorphNotificationProvider теперь поддерживает showDurationValue: false для countdown-индикатора только с progress bar.",
+        "video-preview-overlay-actions":
+          "NmorphVideoPreview now exposes preview and fullscreen overlay actions with showPreviewAction/showFullscreenAction props and preview/fullscreen events.",
+        "attachment-actions-polish":
+          "Attachment previews now keep file icons muted while play/pause and PDF eye controls use contrast color, show a single upload action loader, and balance compact video FileCard vertical padding.",
+        "file-card-sandbox-all-types":
+          "The sandbox data page now includes NmorphFileCard examples for documents, images, audio, video, archives, loading, error, and long filenames.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":

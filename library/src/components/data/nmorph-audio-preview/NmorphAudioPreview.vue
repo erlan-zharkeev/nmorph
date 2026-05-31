@@ -12,6 +12,8 @@ import {
 import { createCssSizeVariables, useModifiers } from '@/utils';
 import type { INmorphAudioPreviewEmit, INmorphAudioPreviewProps } from './types';
 
+const CONTRAST_ICON_COLOR = 'var(--nmorph-contrast-text-color)';
+
 const props = withDefaults(defineProps<INmorphAudioPreviewProps>(), {
   name: '',
   durationMs: undefined,
@@ -166,7 +168,7 @@ defineExpose({ audioRef });
         <NmorphIconAudio />
       </NmorphIcon>
       <span v-if="!props.loading && !props.error" class="nmorph-audio-preview__play-indicator">
-        <NmorphIcon size="small">
+        <NmorphIcon size="small" :color="CONTRAST_ICON_COLOR">
           <NmorphIconPause v-if="playing" />
           <NmorphIconPlay v-else />
         </NmorphIcon>
@@ -179,7 +181,7 @@ defineExpose({ audioRef });
       :aria-label="playing ? `Pause ${props.name || 'audio'}` : `Play ${props.name || 'audio'}`"
       @click="togglePlayback"
     >
-      <NmorphIcon size="small">
+      <NmorphIcon size="small" :color="CONTRAST_ICON_COLOR">
         <NmorphIconPause v-if="playing" />
         <NmorphIconPlay v-else />
       </NmorphIcon>
@@ -267,8 +269,8 @@ defineExpose({ audioRef });
     width: 36px;
     height: 36px;
     padding: 0;
-    color: var(--nmorph-accent-color);
-    background: color-mix(in srgb, var(--nmorph-accent-color) 12%, transparent);
+    color: var(--nmorph-text-color);
+    background: color-mix(in srgb, var(--nmorph-text-color) 10%, transparent);
     border: 0;
     border-radius: var(--default-border-radius);
     cursor: pointer;
@@ -288,19 +290,19 @@ defineExpose({ audioRef });
     width: 20px;
     height: 20px;
     padding: 0;
-    color: var(--nmorph-accent-color);
-    background: color-mix(in srgb, var(--nmorph-accent-color) 10%, transparent);
+    color: var(--nmorph-contrast-text-color);
+    background: color-mix(in srgb, var(--nmorph-black-color) 36%, transparent);
     border: 0;
     border-radius: var(--border-radius-circular);
     cursor: pointer;
 
     &:hover {
-      color: var(--nmorph-focus-text-color);
-      background: var(--nmorph-accent-color);
+      background: color-mix(in srgb, var(--nmorph-black-color) 48%, transparent);
     }
 
     .nmorph-icon {
-      --color: currentColor;
+      --nmorph-icon-color: var(--nmorph-contrast-text-color);
+      --color: var(--nmorph-contrast-text-color);
     }
   }
 
@@ -313,13 +315,14 @@ defineExpose({ audioRef });
     align-items: center;
     width: 18px;
     height: 18px;
-    color: var(--nmorph-accent-color);
-    background: var(--nmorph-main-color);
+    color: var(--nmorph-contrast-text-color);
+    background: color-mix(in srgb, var(--nmorph-black-color) 36%, transparent);
     border-radius: var(--border-radius-circular);
     box-shadow: var(--nmorph-shadow-outset);
 
     .nmorph-icon {
-      --color: currentColor;
+      --nmorph-icon-color: var(--nmorph-contrast-text-color);
+      --color: var(--nmorph-contrast-text-color);
     }
   }
 

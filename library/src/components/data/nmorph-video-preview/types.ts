@@ -22,12 +22,16 @@ export interface INmorphVideoPreviewProps {
   error?: boolean;
   errorText?: string;
   showDefaultActions?: boolean;
+  showPreviewAction?: boolean;
+  showFullscreenAction?: boolean;
 }
 
 export interface INmorphVideoPreviewEmit {
   (e: 'play', val: Event): void;
   (e: 'pause', val: Event): void;
   (e: 'open'): void;
+  (e: 'preview'): void;
+  (e: 'fullscreen'): void;
   (e: 'download'): void;
   (e: 'error', val: Event): void;
 }

@@ -12,6 +12,7 @@ import {
   NmorphCollapseItem,
   NmorphEmpty,
   NmorphEmojiPicker,
+  NmorphFileCard,
   NmorphIcon,
   NmorphIconImage,
   NmorphIconUsers,
@@ -29,9 +30,14 @@ import {
   NmorphTagList,
   NmorphVirtualList,
 } from '@nmorph/nmorph-ui-kit'
-import type { INmorphEmojiPickerI18n, NmorphEmojiPickerDataSource, NmorphSortOrderType } from '@nmorph/nmorph-ui-kit'
-import { loadNmorphEmojiLocale, nmorphEmojiLanguageOptions } from '@nmorph/nmorph-ui-kit/emoji'
-import type { NmorphEmojiLanguage, NmorphEmojiLocale } from '@nmorph/nmorph-ui-kit/emoji'
+import type {
+  INmorphEmojiPickerI18n,
+  INmorphFileCardProps,
+  NmorphEmojiPickerDataSource,
+  NmorphSortOrderType,
+} from '@nmorph/nmorph-ui-kit'
+import { loadNmorphEmojiLocale, nmorphEmojiLanguageOptions } from '../../../library/src/emoji'
+import type { NmorphEmojiLanguage, NmorphEmojiLocale } from '../../../library/src/emoji'
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
 
 const createImage = (startColor: string, endColor: string, label: string) =>
@@ -54,6 +60,149 @@ const imageOne = createImage('#2563eb', '#22c55e', 'Cover')
 const imageTwo = createImage('#7c3aed', '#f97316', 'Preview')
 const imageThree = createImage('#0f766e', '#eab308', 'Gallery')
 const brokenImage = 'data:image/png;base64,broken'
+const pdfPreviewSrc = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+const audioPreviewSrc = 'https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3'
+const videoPreviewSrc = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
+const createDownloadHref = (name: string) =>
+  `data:text/plain;charset=utf-8,${encodeURIComponent(`Sandbox file placeholder: ${name}`)}`
+const createWavPreviewSrc = () => {
+  const sampleRate = 8_000
+  const durationSeconds = 2
+  const dataLength = sampleRate * durationSeconds
+  const bytes = new Uint8Array(44 + dataLength)
+  const view = new DataView(bytes.buffer)
+  const writeString = (offset: number, value: string) => {
+    for (let index = 0; index < value.length; index += 1) {
+      bytes[offset + index] = value.charCodeAt(index)
+    }
+  }
+
+  writeString(0, 'RIFF')
+  view.setUint32(4, 36 + dataLength, true)
+  writeString(8, 'WAVE')
+  writeString(12, 'fmt ')
+  view.setUint32(16, 16, true)
+  view.setUint16(20, 1, true)
+  view.setUint16(22, 1, true)
+  view.setUint32(24, sampleRate, true)
+  view.setUint32(28, sampleRate, true)
+  view.setUint16(32, 1, true)
+  view.setUint16(34, 8, true)
+  writeString(36, 'data')
+  view.setUint32(40, dataLength, true)
+
+  for (let index = 0; index < dataLength; index += 1) {
+    const envelope = Math.max(0, 1 - index / dataLength)
+    bytes[44 + index] = 128 + Math.round(Math.sin((index / sampleRate) * Math.PI * 2 * 440) * 38 * envelope)
+  }
+
+  let binary = ''
+  const chunkSize = 1024
+
+  for (let index = 0; index < bytes.length; index += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(index, index + chunkSize))
+  }
+
+  return `data:audio/wav;base64,${btoa(binary)}`
+}
+const wavPreviewSrc = createWavPreviewSrc()
+
+type FileCardExample = {
+  label: string
+  props: INmorphFileCardProps
+}
+
+const createFileCard = (
+  label: string,
+  name: string,
+  mimeType: string,
+  size: number,
+  overrides: Partial<INmorphFileCardProps> = {}
+): FileCardExample => ({
+  label,
+  props: {
+    name,
+    mimeType,
+    size,
+    downloadHref: createDownloadHref(name),
+    ...overrides,
+  },
+})
+
+const fileCardExamples: FileCardExample[] = [
+  createFileCard('PDF preview', 'morph_specification.pdf', 'application/pdf', 435_200, {
+    previewSrc: pdfPreviewSrc,
+    surface: 'soft',
+    showExtensionBadge: false,
+    iconSurface: false,
+    compact: true,
+  }),
+  createFileCard('DOC', 'contract_draft.doc', 'application/msword', 86_016),
+  createFileCard('DOCX', 'product_requirements.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 132_096),
+  createFileCard('XLS', 'legacy_budget.xls', 'application/vnd.ms-excel', 98_304),
+  createFileCard('XLSX', 'quarterly_metrics.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 176_128),
+  createFileCard('PPT', 'roadshow_deck.ppt', 'application/vnd.ms-powerpoint', 348_160),
+  createFileCard('PPTX', 'launch_presentation.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 512_000),
+  createFileCard('JSON', 'link_preview.json', 'application/json', 4_096),
+  createFileCard('XML', 'feed_export.xml', 'application/xml', 6_144),
+  createFileCard('JPEG image', 'cover-photo.jpeg', 'image/jpeg', 245_760, { previewSrc: imageOne, downloadHref: imageOne }),
+  createFileCard('JPG image', 'profile-shot.jpg', 'image/jpg', 188_416, { previewSrc: imageTwo, downloadHref: imageTwo }),
+  createFileCard('PNG image', 'dashboard-preview.png', 'image/png', 211_968, { previewSrc: imageThree, downloadHref: imageThree }),
+  createFileCard('GIF image', 'reaction-loop.gif', 'image/gif', 94_208),
+  createFileCard('SVG image', 'brand-mark.svg', 'image/svg+xml', 12_288, { previewSrc: imageOne, downloadHref: imageOne }),
+  createFileCard('WEBP image', 'optimized-cover.webp', 'image/webp', 76_800),
+  createFileCard('MP3 audio preview', '32.mp3', 'audio/mpeg', 3_407_872, {
+    previewSrc: audioPreviewSrc,
+    downloadHref: audioPreviewSrc,
+    mediaPreview: 'audio',
+    surface: 'soft',
+    showExtensionBadge: false,
+    iconSurface: false,
+    compact: true,
+  }),
+  createFileCard('OGG audio', 'voice-note.ogg', 'audio/ogg', 688_128),
+  createFileCard('WAV audio preview', 'studio-take.wav', 'audio/wav', 5_734_400, {
+    previewSrc: wavPreviewSrc,
+    downloadHref: wavPreviewSrc,
+    mediaPreview: 'audio',
+    surface: 'soft',
+    showExtensionBadge: false,
+    iconSurface: false,
+    compact: true,
+  }),
+  createFileCard('MP4 video preview', 'clip-preview.mp4', 'video/mp4', 7_340_032, {
+    previewSrc: videoPreviewSrc,
+    downloadHref: videoPreviewSrc,
+    mediaPreview: 'video',
+    surface: 'soft',
+    showExtensionBadge: false,
+    iconSurface: false,
+    compact: true,
+  }),
+  createFileCard('WEBM video', 'screen-recording.webm', 'video/webm', 2_949_120),
+  createFileCard('OGG video', 'camera-export.ogv', 'video/ogg', 3_211_264),
+  createFileCard('ZIP archive', 'assets_bundle.zip', 'application/zip', 9_175_040),
+  createFileCard('RAR archive', 'archive_part.rar', 'application/x-rar-compressed', 4_259_840),
+  createFileCard('7Z archive', 'cold_storage.7z', 'application/x-7z-compressed', 11_534_336),
+  createFileCard(
+    'Long name',
+    'quarterly-export-with-a-very-long-file-name-that-should-stay-inside-the-card.json',
+    'application/json',
+    12_288,
+    { surface: 'plain', showExtensionBadge: false, iconSurface: false, compact: true }
+  ),
+  createFileCard('Loading', 'uploading-video.mp4', 'video/mp4', 0, {
+    loading: true,
+    mediaPreview: 'video',
+    previewSrc: videoPreviewSrc,
+  }),
+  createFileCard('Error', 'broken-voice-note.mp3', 'audio/mpeg', 0, {
+    error: true,
+    errorText: 'Preview failed',
+    mediaPreview: 'audio',
+    previewSrc: audioPreviewSrc,
+  }),
+]
 
 const progressValue = ref(65)
 const circleProgress = ref(72)
@@ -302,6 +451,15 @@ const progressColor = (value: number) => {
           :show-navigation-buttons="false"
           :show-action-bar="false"
         />
+      </div>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphFileCard">
+      <div class="file-card-grid">
+        <div v-for="file in fileCardExamples" :key="file.props.name" class="file-card-demo">
+          <span class="file-card-demo__label">{{ file.label }}</span>
+          <NmorphFileCard v-bind="file.props" />
+        </div>
       </div>
     </SandboxSection>
 
@@ -632,6 +790,28 @@ const progressColor = (value: number) => {
 .image-demo {
   --width: 180px;
   --height: 120px;
+}
+
+.file-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.file-card-demo {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.file-card-demo__label {
+  overflow: hidden;
+  color: var(--nmorph-semi-contrast-text-color);
+  font-size: 12px;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .skeleton-template {

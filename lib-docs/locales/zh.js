@@ -293,6 +293,12 @@ export default {
           "NmorphFileCard 现在可以通过 media-preview 从 previewSrc 渲染嵌入式音频和视频预览，同时保留统一的 file-card 标题、类型/大小 metadata、surface 和下载操作。",
         "notification-duration-value-toggle":
           "NmorphNotificationProvider 的 duration indicator 现在支持 showDurationValue: false，仅显示进度条倒计时。",
+        "video-preview-overlay-actions":
+          "NmorphVideoPreview now exposes preview and fullscreen overlay actions with showPreviewAction/showFullscreenAction props and preview/fullscreen events.",
+        "attachment-actions-polish":
+          "Attachment previews now keep file icons muted while play/pause and PDF eye controls use contrast color, show a single upload action loader, and balance compact video FileCard vertical padding.",
+        "file-card-sandbox-all-types":
+          "The sandbox data page now includes NmorphFileCard examples for documents, images, audio, video, archives, loading, error, and long filenames.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":
