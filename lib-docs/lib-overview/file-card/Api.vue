@@ -40,7 +40,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "media-preview",
-    type: "'none' | 'audio' | 'video'",
+    type: "'none' | 'audio' | 'video' | 'image'",
     default: "none",
   },
   {

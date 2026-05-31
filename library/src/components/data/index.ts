@@ -23,6 +23,8 @@ export * from './nmorph-file-card/types';
 export { default as NmorphImage } from './nmorph-image/NmorphImage.vue';
 export { default as NmorphImagePreview } from './nmorph-image-preview/NmorphImagePreview.vue';
 export * from './nmorph-image-preview/types';
+export { default as NmorphMediaGallery } from './nmorph-media-gallery/NmorphMediaGallery.vue';
+export * from './nmorph-media-gallery/types';
 export { default as NmorphMediaTile } from './nmorph-media-tile/NmorphMediaTile.vue';
 export * from './nmorph-media-tile/types';
 export { default as NmorphPagination } from './nmorph-pagination/NmorphPagination.vue';

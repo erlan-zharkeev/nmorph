@@ -6,6 +6,7 @@ import { NmorphLibrary } from '../src/main';
 import { loadNmorphEmojiLocale, nmorphEmojiQuickList } from '../src/emoji';
 import { useFieldValidation } from '../src/hooks/use-field-validation';
 import { getCommonStyles } from '../src/hooks/use-common-styles';
+import { getNmorphThemeStyles } from '../src/outside-hooks/use-nmorph-theme';
 import {
   NmorphAlert,
   NmorphAutocomplete,
@@ -46,6 +47,7 @@ import {
   NmorphImagePreview,
   NmorphLayout,
   NmorphLink,
+  NmorphMediaGallery,
   NmorphMediaTile,
   NmorphNotificationProvider,
   NmorphNumberInput,
@@ -311,6 +313,11 @@ const renderCases = [
     name: 'NmorphImagePreview',
     component: NmorphImagePreview,
     props: { modelValue: true, src: [imageSrc], alt: 'Preview' },
+  },
+  {
+    name: 'NmorphMediaGallery',
+    component: NmorphMediaGallery,
+    props: { modelValue: true, items: [{ kind: 'image', src: imageSrc, name: 'Preview' }] },
   },
   {
     name: 'NmorphMediaTile',
@@ -1363,6 +1370,13 @@ describe('components', () => {
     expect(styles).toContain('.nmorph-scroll::-webkit-scrollbar-button');
   });
 
+  it('keeps default placeholder colors cool-toned', () => {
+    const styles = getNmorphThemeStyles();
+
+    expect(styles).toContain('--nmorph-placeholder-text-color: #9aa8b3;');
+    expect(styles).toContain('--nmorph-placeholder-text-color: #68747b;');
+  });
+
   it('keeps backtop position variables on the teleported element', async () => {
     const target = document.createElement('div');
     const portal = document.createElement('div');
@@ -1798,10 +1812,13 @@ describe('components', () => {
         'nmorph-file-card--compact',
         'nmorph-file-card--media',
         'nmorph-file-card--media-video',
+        'nmorph-file-card--media-visual',
       ])
     );
     expect(wrapper.find('.nmorph-file-card__name').text()).toBe('clip.mp4');
-    expect(wrapper.find('.nmorph-file-card__meta').text()).toBe('mp4 · 1 MB');
+    expect(wrapper.find('.nmorph-file-card__meta').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__visual-size').text()).toBe('1 MB');
+    expect(wrapper.find('.nmorph-file-card__icon').exists()).toBe(false);
     expect(wrapper.find('.nmorph-file-card__badge').exists()).toBe(false);
     expect(videoPreview.classes()).toEqual(
       expect.arrayContaining([
@@ -1840,6 +1857,64 @@ describe('components', () => {
     expect(actionLinks[0].attributes('href')).toBe('blob:clip');
     expect(actionLinks[0].attributes('download')).toBe('clip.mp4');
     expect(wrapper.find('.nmorph-file-card__icon-action').exists()).toBe(false);
+
+    await wrapper.find('.nmorph-video-preview__action-button--preview').trigger('click');
+
+    expect(wrapper.emitted('open')).toHaveLength(1);
+
+    wrapper.unmount();
+  });
+
+  it('renders image media preview inside the file card shell with shared title and metadata', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'photo.jpg',
+        mimeType: 'image/jpeg',
+        size: 12345,
+        previewSrc: 'blob:photo',
+        downloadHref: 'blob:photo-download',
+        mediaPreview: 'image',
+        surface: 'soft',
+        showExtensionBadge: false,
+        iconSurface: false,
+        compact: true,
+      },
+    });
+
+    await nextTick();
+
+    const card = wrapper.find('.nmorph-file-card');
+    const imagePreviewFrame = wrapper.find('.nmorph-file-card__image-preview');
+    const image = imagePreviewFrame.find('img');
+    const actionLinks = wrapper.findAll('.nmorph-file-card__actions .nmorph-file-card__action-link');
+
+    expect(card.classes()).toEqual(
+      expect.arrayContaining([
+        'nmorph-file-card--soft',
+        'nmorph-file-card--compact',
+        'nmorph-file-card--media',
+        'nmorph-file-card--media-image',
+        'nmorph-file-card--media-visual',
+        'nmorph-file-card--icon-plain',
+      ])
+    );
+    expect(wrapper.find('.nmorph-file-card__name').text()).toBe('photo.jpg');
+    expect(wrapper.find('.nmorph-file-card__meta').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__visual-size').text()).toBe('12 KB');
+    expect(wrapper.find('.nmorph-file-card__icon').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__badge').exists()).toBe(false);
+    expect(imagePreviewFrame.attributes('title')).toBe('photo.jpg');
+    expect(imagePreviewFrame.attributes('type')).toBe('button');
+    expect(imagePreviewFrame.attributes('aria-label')).toBe('Preview photo.jpg');
+    expect(image.attributes('src')).toBe('blob:photo');
+    expect(image.attributes('alt')).toBe('photo.jpg');
+    expect(actionLinks).toHaveLength(1);
+    expect(actionLinks[0].attributes('href')).toBe('blob:photo-download');
+    expect(actionLinks[0].attributes('download')).toBe('photo.jpg');
+
+    await imagePreviewFrame.trigger('click');
+
+    expect(wrapper.emitted('open')).toHaveLength(1);
 
     wrapper.unmount();
   });
@@ -1882,6 +1957,51 @@ describe('components', () => {
     expect(wrapper.find('.nmorph-file-card__video-preview').exists()).toBe(false);
     expect(wrapper.find('.nmorph-file-card__actions').exists()).toBe(false);
     expect(wrapper.find('.nmorph-file-card__badge').text()).toBe('mp4');
+
+    wrapper.unmount();
+  });
+
+  it('falls back to regular file card when image media preview has no preview source', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'photo.jpg',
+        mimeType: 'image/jpeg',
+        mediaPreview: 'image',
+      },
+    });
+
+    await nextTick();
+
+    const card = wrapper.find('.nmorph-file-card');
+
+    expect(card.classes()).not.toContain('nmorph-file-card--media-image');
+    expect(wrapper.find('.nmorph-file-card__image-preview').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__actions').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__badge').text()).toBe('jpg');
+
+    wrapper.unmount();
+  });
+
+  it('lets the actions slot override default actions in image media preview mode', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'photo.jpg',
+        mimeType: 'image/jpeg',
+        previewSrc: 'blob:photo',
+        downloadHref: 'blob:photo-download',
+        mediaPreview: 'image',
+        showDefaultActions: false,
+      },
+      slots: {
+        actions: '<button class="custom-file-action" type="button">Remove</button>',
+      },
+    });
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-file-card__image-preview').exists()).toBe(true);
+    expect(wrapper.find('.custom-file-action').text()).toBe('Remove');
+    expect(wrapper.findAll('.nmorph-file-card__actions .nmorph-file-card__action-link')).toHaveLength(0);
 
     wrapper.unmount();
   });
@@ -2020,6 +2140,35 @@ describe('components', () => {
     expect(portalVideo?.getAttribute('src')).toBe('blob:video');
     expect(portalVideo?.hasAttribute('controls')).toBe(true);
     expect(wrapper.emitted('preview')).toHaveLength(1);
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  it('can emit video preview without opening its internal overlay', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphVideoPreview, {
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+      props: {
+        src: 'blob:video',
+        name: 'clip.mp4',
+        previewMode: 'emit',
+      },
+    });
+
+    await nextTick();
+    await wrapper.find('.nmorph-video-preview__action-button--preview').trigger('click');
+    await nextTick();
+
+    expect(wrapper.emitted('preview')).toHaveLength(1);
+    expect(document.body.querySelector('.nmorph-video-preview__portal')).toBeFalsy();
 
     wrapper.unmount();
     target.remove();
@@ -4879,6 +5028,159 @@ describe('components', () => {
 
     expect(wrapper.emitted('update:model-value')?.at(-1)).toEqual([false]);
     wrapper.unmount();
+  });
+
+  it('renders mixed media gallery and navigates between image and video', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+    const items = [
+      { kind: 'image' as const, src: imageSrc, name: 'photo.jpg', alt: 'Photo' },
+      {
+        kind: 'video' as const,
+        src: 'blob:clip',
+        name: 'clip.mp4',
+        poster: 'blob:poster',
+        muted: true,
+      },
+    ];
+
+    const wrapper = mount(NmorphMediaGallery, {
+      props: {
+        modelValue: true,
+        items,
+        initialIndex: 0,
+      },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+
+    const gallery = document.body.querySelector('.nmorph-media-gallery') as HTMLElement;
+    const image = gallery.querySelector('.nmorph-image img') as HTMLImageElement;
+
+    expect(gallery).toBeTruthy();
+    expect(gallery.querySelector('.nmorph-media-gallery__left .nmorph-button')).toBeTruthy();
+    expect(gallery.querySelector('.nmorph-media-gallery__right .nmorph-button')).toBeTruthy();
+    expect(gallery.querySelector('.nmorph-media-gallery__actions .nmorph-button')).toBeTruthy();
+    expect(image.getAttribute('src')).toBe(imageSrc);
+    expect(image.getAttribute('alt')).toBe('Photo');
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+    await nextTick();
+
+    const video = document.body.querySelector('.nmorph-media-gallery__video') as HTMLVideoElement;
+    const playButton = document.body.querySelector('button.nmorph-media-gallery__play') as HTMLButtonElement;
+
+    expect(video.getAttribute('src')).toBe('blob:clip');
+    expect(video.getAttribute('poster')).toBe('blob:poster');
+    expect(video.hasAttribute('controls')).toBe(true);
+    expect(video.hasAttribute('muted')).toBe(true);
+    expect(playButton).toBeTruthy();
+    expect(playButton.getAttribute('aria-label')).toBe('Play clip.mp4');
+    expect(wrapper.emitted('update:active-index')?.[0]).toEqual([1]);
+    expect(wrapper.emitted('change')?.[0]).toEqual([items[1], 1]);
+
+    video.dispatchEvent(new Event('play'));
+    await nextTick();
+
+    expect(playButton.getAttribute('aria-label')).toBe('Pause clip.mp4');
+
+    video.dispatchEvent(new Event('pause'));
+    await nextTick();
+
+    expect(playButton.getAttribute('aria-label')).toBe('Play clip.mp4');
+
+    wrapper.unmount();
+    target.remove();
+  });
+
+  it('closes media gallery from backdrop and Escape key', async () => {
+    const wrapper = mount(NmorphMediaGallery, {
+      props: {
+        modelValue: true,
+        items: [{ kind: 'image' as const, src: imageSrc, name: 'photo.jpg' }],
+      },
+    });
+
+    await nextTick();
+
+    await wrapper.find('.nmorph-overlay').trigger('click');
+
+    expect(wrapper.emitted('update:model-value')?.at(-1)).toEqual([false]);
+
+    await wrapper.setProps({ modelValue: true });
+    await nextTick();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await nextTick();
+
+    expect(wrapper.emitted('update:model-value')?.at(-1)).toEqual([false]);
+    wrapper.unmount();
+  });
+
+  it('pauses media gallery video when changing media and closing gallery', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+    const items = [
+      { kind: 'image' as const, src: imageSrc, name: 'photo.jpg' },
+      { kind: 'video' as const, src: 'blob:clip', name: 'clip.mp4' },
+    ];
+
+    const wrapper = mount(NmorphMediaGallery, {
+      props: {
+        modelValue: true,
+        items,
+        initialIndex: 1,
+      },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+
+    const firstVideo = document.body.querySelector('.nmorph-media-gallery__video') as HTMLVideoElement;
+    const pauseOnChange = vi.fn();
+
+    Object.defineProperty(firstVideo, 'pause', {
+      configurable: true,
+      value: pauseOnChange,
+    });
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+    await nextTick();
+
+    expect(pauseOnChange).toHaveBeenCalledTimes(1);
+    expect(document.body.querySelector('.nmorph-media-gallery .nmorph-image img')).toBeTruthy();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+    await nextTick();
+
+    const secondVideo = document.body.querySelector('.nmorph-media-gallery__video') as HTMLVideoElement;
+    const pauseOnClose = vi.fn();
+
+    Object.defineProperty(secondVideo, 'pause', {
+      configurable: true,
+      value: pauseOnClose,
+    });
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    await nextTick();
+
+    expect(pauseOnClose).toHaveBeenCalledTimes(1);
+    expect(wrapper.emitted('update:model-value')).toEqual([[false]]);
+    expect(wrapper.emitted('close')).toHaveLength(1);
+
+    wrapper.unmount();
+    target.remove();
   });
 
   it('uses basic height for pagination page controls by default', async () => {

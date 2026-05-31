@@ -1,5 +1,5 @@
 export type NmorphFileCardSurface = 'card' | 'soft' | 'plain';
-export type NmorphFileCardMediaPreview = 'none' | 'audio' | 'video';
+export type NmorphFileCardMediaPreview = 'none' | 'audio' | 'video' | 'image';
 
 export interface INmorphFileCardProps {
   name: string;

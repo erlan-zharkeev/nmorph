@@ -18,6 +18,7 @@ import {
   NmorphIconUsers,
   NmorphImage,
   NmorphImagePreview,
+  NmorphMediaGallery,
   NmorphPagination,
   NmorphProgress,
   NmorphQRCode,
@@ -33,6 +34,7 @@ import {
 import type {
   INmorphEmojiPickerI18n,
   INmorphFileCardProps,
+  NmorphMediaGalleryItem,
   NmorphEmojiPickerDataSource,
   NmorphSortOrderType,
 } from '@nmorph/nmorph-ui-kit'
@@ -65,47 +67,6 @@ const audioPreviewSrc = 'https://interactive-examples.mdn.mozilla.net/media/cc0-
 const videoPreviewSrc = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
 const createDownloadHref = (name: string) =>
   `data:text/plain;charset=utf-8,${encodeURIComponent(`Sandbox file placeholder: ${name}`)}`
-const createWavPreviewSrc = () => {
-  const sampleRate = 8_000
-  const durationSeconds = 2
-  const dataLength = sampleRate * durationSeconds
-  const bytes = new Uint8Array(44 + dataLength)
-  const view = new DataView(bytes.buffer)
-  const writeString = (offset: number, value: string) => {
-    for (let index = 0; index < value.length; index += 1) {
-      bytes[offset + index] = value.charCodeAt(index)
-    }
-  }
-
-  writeString(0, 'RIFF')
-  view.setUint32(4, 36 + dataLength, true)
-  writeString(8, 'WAVE')
-  writeString(12, 'fmt ')
-  view.setUint32(16, 16, true)
-  view.setUint16(20, 1, true)
-  view.setUint16(22, 1, true)
-  view.setUint32(24, sampleRate, true)
-  view.setUint32(28, sampleRate, true)
-  view.setUint16(32, 1, true)
-  view.setUint16(34, 8, true)
-  writeString(36, 'data')
-  view.setUint32(40, dataLength, true)
-
-  for (let index = 0; index < dataLength; index += 1) {
-    const envelope = Math.max(0, 1 - index / dataLength)
-    bytes[44 + index] = 128 + Math.round(Math.sin((index / sampleRate) * Math.PI * 2 * 440) * 38 * envelope)
-  }
-
-  let binary = ''
-  const chunkSize = 1024
-
-  for (let index = 0; index < bytes.length; index += chunkSize) {
-    binary += String.fromCharCode(...bytes.subarray(index, index + chunkSize))
-  }
-
-  return `data:audio/wav;base64,${btoa(binary)}`
-}
-const wavPreviewSrc = createWavPreviewSrc()
 
 type FileCardExample = {
   label: string
@@ -137,40 +98,22 @@ const fileCardExamples: FileCardExample[] = [
     iconSurface: false,
     compact: true,
   }),
-  createFileCard('DOC', 'contract_draft.doc', 'application/msword', 86_016),
-  createFileCard('DOCX', 'product_requirements.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 132_096),
-  createFileCard('XLS', 'legacy_budget.xls', 'application/vnd.ms-excel', 98_304),
-  createFileCard('XLSX', 'quarterly_metrics.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 176_128),
-  createFileCard('PPT', 'roadshow_deck.ppt', 'application/vnd.ms-powerpoint', 348_160),
-  createFileCard('PPTX', 'launch_presentation.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 512_000),
-  createFileCard('JSON', 'link_preview.json', 'application/json', 4_096),
-  createFileCard('XML', 'feed_export.xml', 'application/xml', 6_144),
-  createFileCard('JPEG image', 'cover-photo.jpeg', 'image/jpeg', 245_760, { previewSrc: imageOne, downloadHref: imageOne }),
-  createFileCard('JPG image', 'profile-shot.jpg', 'image/jpg', 188_416, { previewSrc: imageTwo, downloadHref: imageTwo }),
-  createFileCard('PNG image', 'dashboard-preview.png', 'image/png', 211_968, { previewSrc: imageThree, downloadHref: imageThree }),
-  createFileCard('GIF image', 'reaction-loop.gif', 'image/gif', 94_208),
-  createFileCard('SVG image', 'brand-mark.svg', 'image/svg+xml', 12_288, { previewSrc: imageOne, downloadHref: imageOne }),
-  createFileCard('WEBP image', 'optimized-cover.webp', 'image/webp', 76_800),
-  createFileCard('MP3 audio preview', '32.mp3', 'audio/mpeg', 3_407_872, {
-    previewSrc: audioPreviewSrc,
-    downloadHref: audioPreviewSrc,
-    mediaPreview: 'audio',
+  createFileCard('Image preview', 'cover-photo.jpeg', 'image/jpeg', 245_760, {
+    previewSrc: imageOne,
+    downloadHref: imageOne,
+    mediaPreview: 'image',
     surface: 'soft',
     showExtensionBadge: false,
     iconSurface: false,
     compact: true,
   }),
-  createFileCard('OGG audio', 'voice-note.ogg', 'audio/ogg', 688_128),
-  createFileCard('WAV audio preview', 'studio-take.wav', 'audio/wav', 5_734_400, {
-    previewSrc: wavPreviewSrc,
-    downloadHref: wavPreviewSrc,
-    mediaPreview: 'audio',
+  createFileCard('ZIP archive', 'assets_bundle.zip', 'application/zip', 9_175_040, {
     surface: 'soft',
     showExtensionBadge: false,
     iconSurface: false,
     compact: true,
   }),
-  createFileCard('MP4 video preview', 'clip-preview.mp4', 'video/mp4', 7_340_032, {
+  createFileCard('Video preview', 'clip-preview.mp4', 'video/mp4', 7_340_032, {
     previewSrc: videoPreviewSrc,
     downloadHref: videoPreviewSrc,
     mediaPreview: 'video',
@@ -179,30 +122,53 @@ const fileCardExamples: FileCardExample[] = [
     iconSurface: false,
     compact: true,
   }),
-  createFileCard('WEBM video', 'screen-recording.webm', 'video/webm', 2_949_120),
-  createFileCard('OGG video', 'camera-export.ogv', 'video/ogg', 3_211_264),
-  createFileCard('ZIP archive', 'assets_bundle.zip', 'application/zip', 9_175_040),
-  createFileCard('RAR archive', 'archive_part.rar', 'application/x-rar-compressed', 4_259_840),
-  createFileCard('7Z archive', 'cold_storage.7z', 'application/x-7z-compressed', 11_534_336),
-  createFileCard(
-    'Long name',
-    'quarterly-export-with-a-very-long-file-name-that-should-stay-inside-the-card.json',
-    'application/json',
-    12_288,
-    { surface: 'plain', showExtensionBadge: false, iconSurface: false, compact: true }
-  ),
-  createFileCard('Loading', 'uploading-video.mp4', 'video/mp4', 0, {
-    loading: true,
-    mediaPreview: 'video',
-    previewSrc: videoPreviewSrc,
-  }),
-  createFileCard('Error', 'broken-voice-note.mp3', 'audio/mpeg', 0, {
-    error: true,
-    errorText: 'Preview failed',
-    mediaPreview: 'audio',
+  createFileCard('Audio preview', '32.mp3', 'audio/mpeg', 3_407_872, {
     previewSrc: audioPreviewSrc,
+    downloadHref: audioPreviewSrc,
+    mediaPreview: 'audio',
+    surface: 'soft',
+    showExtensionBadge: false,
+    iconSurface: false,
+    compact: true,
   }),
 ]
+
+const mediaGalleryOpen = ref(false)
+const mediaGalleryIndex = ref(0)
+const mediaGalleryItems: NmorphMediaGalleryItem[] = [
+  {
+    kind: 'image',
+    src: imageOne,
+    name: 'cover-photo.jpeg',
+    alt: 'cover-photo.jpeg',
+  },
+  {
+    kind: 'video',
+    src: videoPreviewSrc,
+    name: 'clip-preview.mp4',
+    poster: imageTwo,
+    controls: true,
+  },
+  {
+    kind: 'image',
+    src: imageThree,
+    name: 'gallery-photo.png',
+    alt: 'gallery-photo.png',
+  },
+]
+
+const openMediaGalleryDemo = (index: number) => {
+  mediaGalleryIndex.value = index
+  mediaGalleryOpen.value = true
+}
+
+const openFileCardMedia = (name: string) => {
+  const index = mediaGalleryItems.findIndex((item) => item.name === name)
+
+  if (index < 0) return
+
+  openMediaGalleryDemo(index)
+}
 
 const progressValue = ref(65)
 const circleProgress = ref(72)
@@ -454,11 +420,40 @@ const progressColor = (value: number) => {
       </div>
     </SandboxSection>
 
+    <SandboxSection title="NmorphMediaGallery">
+      <div class="media-gallery-demo">
+        <button
+          v-for="(item, index) in mediaGalleryItems"
+          :key="`${item.kind}-${item.name}`"
+          class="media-gallery-demo__item"
+          type="button"
+          :aria-label="`Open ${item.name}`"
+          @click="openMediaGalleryDemo(index)"
+        >
+          <NmorphImage v-if="item.kind === 'image'" :src="item.src" :alt="item.alt || item.name || ''" :frame-border="0" />
+          <video
+            v-else
+            :src="item.src"
+            :poster="item.poster"
+            muted
+            playsinline
+            preload="metadata"
+          />
+        </button>
+      </div>
+      <NmorphMediaGallery
+        v-model="mediaGalleryOpen"
+        :items="mediaGalleryItems"
+        :active-index="mediaGalleryIndex"
+        @update:active-index="mediaGalleryIndex = $event"
+      />
+    </SandboxSection>
+
     <SandboxSection title="NmorphFileCard">
       <div class="file-card-grid">
         <div v-for="file in fileCardExamples" :key="file.props.name" class="file-card-demo">
           <span class="file-card-demo__label">{{ file.label }}</span>
-          <NmorphFileCard v-bind="file.props" />
+          <NmorphFileCard v-bind="file.props" @open="openFileCardMedia(file.props.name)" />
         </div>
       </div>
     </SandboxSection>
@@ -790,6 +785,37 @@ const progressColor = (value: number) => {
 .image-demo {
   --width: 180px;
   --height: 120px;
+}
+
+.media-gallery-demo {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  gap: 12px;
+  max-width: 680px;
+}
+
+.media-gallery-demo__item {
+  display: block;
+  aspect-ratio: 16 / 9;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: var(--default-border-radius);
+  cursor: pointer;
+}
+
+.media-gallery-demo__item .nmorph-image,
+.media-gallery-demo__item video {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.media-gallery-demo__item video {
+  object-fit: cover;
 }
 
 .file-card-grid {

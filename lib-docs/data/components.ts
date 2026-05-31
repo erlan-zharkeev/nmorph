@@ -22,6 +22,7 @@ export const componentGroups = [
       "NmorphEmojiPicker",
       "NmorphFileCard",
       "NmorphImage",
+      "NmorphMediaGallery",
       "NmorphMediaTile",
       "NmorphVideoPreview",
       "NmorphTagList",

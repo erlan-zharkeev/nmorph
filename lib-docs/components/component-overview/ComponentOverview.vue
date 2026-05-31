@@ -18,6 +18,7 @@ import emptyOverview from "~/lib-overview/empty";
 import emojiPickerOverview from "~/lib-overview/emoji-picker";
 import fileCardOverview from "~/lib-overview/file-card";
 import imageOverview from "~/lib-overview/image";
+import mediaGalleryOverview from "~/lib-overview/media-gallery";
 import mediaTileOverview from "~/lib-overview/media-tile";
 import videoPreviewOverview from "~/lib-overview/video-preview";
 import tagListOverview from "~/lib-overview/tag-list";
@@ -85,6 +86,7 @@ const overviewComponentsByName: Record<string, unknown[]> = {
   "emoji-picker": emojiPickerOverview,
   "file-card": fileCardOverview,
   image: imageOverview,
+  "media-gallery": mediaGalleryOverview,
   "media-tile": mediaTileOverview,
   "video-preview": videoPreviewOverview,
   "tag-list": tagListOverview,

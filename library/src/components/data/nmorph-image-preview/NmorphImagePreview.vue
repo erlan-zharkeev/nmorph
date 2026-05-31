@@ -6,7 +6,6 @@ import {
   NmorphImage,
   NmorphButton,
   NmorphIcon,
-  NmorphOverlay,
   INmorphAction,
   NmorphIconShrink,
   NmorphIconEnlarge,
@@ -14,9 +13,9 @@ import {
   NmorphIconRotateRight,
   NmorphIconZoomIn,
   NmorphIconZoomOut,
-  NmorphIconChevronDown,
 } from '@/components';
 import type { INmorphImagePreviewEmit, INmorphImagePreviewProps } from './types';
+import NmorphPreviewPortal from '../nmorph-preview-portal/NmorphPreviewPortal.vue';
 
 const props = withDefaults(defineProps<INmorphImagePreviewProps>(), {
   alt: '',
@@ -245,11 +244,6 @@ const triggerStyle = computed<CSSProperties>(() =>
     '--nmorph-image-preview-trigger-gap': props.triggerGap,
   })
 );
-const portalStyle = computed<CSSProperties>(() =>
-  createCssSizeVariables({
-    '--nmorph-image-preview-btn-margin': props.navigationButtonMargin,
-  })
-);
 const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 1}` : `Image ${index + 1}`);
 </script>
 
@@ -291,64 +285,54 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
       </NmorphImage>
     </div>
   </div>
-  <Teleport v-if="open" to="body">
-    <div class="nmorph-image-preview__portal" :class="modifiers" :style="portalStyle">
-      <NmorphOverlay
-        :show="open"
-        :z-index="props.zIndex"
-        disabled-teleport
-        @on-outside-click="closeHandler"
-        @on-escape-keydown="closeHandler"
-      >
-        <div class="nmorph-image-preview__content">
-          <NmorphImage
-            :src="triggerSource"
-            :alt="props.alt"
-            fit="contain"
-            :frame-border="0"
-            :style="{ transform: `rotate(${rotateLevel}deg) scale(${scaleLevel})` }"
-          >
-            <template v-if="$slots.loading" #loading>
-              <slot name="loading" />
-            </template>
-            <template v-if="$slots.error" #error>
-              <slot name="error" />
-            </template>
-          </NmorphImage>
-        </div>
-        <div v-if="showNavigation" class="nmorph-image-preview__left">
-          <NmorphButton @click="previousHandler">
-            <NmorphIcon>
-              <NmorphIconChevronDown />
-            </NmorphIcon>
-          </NmorphButton>
-        </div>
-        <div v-if="showNavigation" class="nmorph-image-preview__right">
-          <NmorphButton @click="nextHandler">
-            <NmorphIcon>
-              <NmorphIconChevronDown />
-            </NmorphIcon>
-          </NmorphButton>
-        </div>
-        <div v-if="props.showActionBar" class="nmorph-image-preview__actions">
-          <div v-for="(action, idx) in actions" :key="idx" class="nmorph-image-preview__action-element">
-            <NmorphButton @click="action.handler">
-              <NmorphIcon>
-                <component :is="action.icon" />
-              </NmorphIcon>
-            </NmorphButton>
-          </div>
-          <div class="nmorph-image-preview__action-element">
-            <NmorphButton :disabled="scaleLevel === 1" @click="enlargeShrinkActionData.handler">
-              <NmorphIcon>
-                <component :is="enlargeShrinkActionData.icon" />
-              </NmorphIcon>
-            </NmorphButton>
-          </div>
-        </div>
-      </NmorphOverlay>
-    </div>
-  </Teleport>
+  <NmorphPreviewPortal
+    v-if="open"
+    :show="open"
+    :z-index="props.zIndex"
+    root-class="nmorph-image-preview__portal"
+    :state-class="modifiers"
+    content-class="nmorph-image-preview__content"
+    left-class="nmorph-image-preview__left"
+    right-class="nmorph-image-preview__right"
+    actions-class="nmorph-image-preview__actions"
+    :navigation-button-margin="props.navigationButtonMargin"
+    :show-navigation="showNavigation"
+    :show-action-bar="props.showActionBar"
+    @close="closeHandler"
+    @previous="previousHandler"
+    @next="nextHandler"
+  >
+    <NmorphImage
+      :src="triggerSource"
+      :alt="props.alt"
+      fit="contain"
+      :frame-border="0"
+      :style="{ transform: `rotate(${rotateLevel}deg) scale(${scaleLevel})` }"
+    >
+      <template v-if="$slots.loading" #loading>
+        <slot name="loading" />
+      </template>
+      <template v-if="$slots.error" #error>
+        <slot name="error" />
+      </template>
+    </NmorphImage>
+    <template #actions>
+      <div v-for="(action, idx) in actions" :key="idx" class="nmorph-image-preview__action-element">
+        <NmorphButton @click="action.handler">
+          <NmorphIcon>
+            <component :is="action.icon" />
+          </NmorphIcon>
+        </NmorphButton>
+      </div>
+      <div class="nmorph-image-preview__action-element">
+        <NmorphButton :disabled="scaleLevel === 1" @click="enlargeShrinkActionData.handler">
+          <NmorphIcon>
+            <component :is="enlargeShrinkActionData.icon" />
+          </NmorphIcon>
+        </NmorphButton>
+      </div>
+    </template>
+  </NmorphPreviewPortal>
 </template>
 
 <style lang="scss">
@@ -438,21 +422,6 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
   display: contents;
 
   .nmorph-image-preview__content {
-    --nmorph-image-preview-content-width: min(calc(100vw - 96px), 960px);
-    --nmorph-image-preview-content-height: min(calc(100vh - 180px), 720px);
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: var(--nmorph-image-preview-content-width);
-    height: var(--nmorph-image-preview-content-height);
-    transform: translate(-50%, -50%);
-    transition: var(--transition-04) opacity ease-in-out;
-    pointer-events: none;
-
     .nmorph-image {
       width: 100%;
       height: 100%;
@@ -470,60 +439,8 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
     }
   }
 
-  .nmorph-image-preview__actions {
-    position: absolute;
-    bottom: -50px;
-    left: 50%;
-    z-index: 2;
-    display: flex;
-    height: 0;
-    transform: translateX(-50%);
-    transition: ease-in-out bottom var(--transition-03);
-  }
-
   .nmorph-image-preview__action-element {
     margin-right: var(--indentation-03);
-  }
-
-  .nmorph-button__content {
-    box-shadow: none;
-  }
-
-  .nmorph-image-preview__left,
-  .nmorph-image-preview__right {
-    z-index: 2;
-  }
-
-  .nmorph-image-preview__left {
-    position: absolute;
-    top: 50%;
-    left: -100%;
-    transform: rotate(90deg) translateX(-50%);
-    transition: ease-in-out left var(--transition-03);
-  }
-
-  .nmorph-image-preview__right {
-    position: absolute;
-    top: 50%;
-    right: -100%;
-    transform: rotate(270deg) translateX(50%);
-    transition: ease-in-out right var(--transition-03);
-  }
-
-  &.nmorph-image-preview--opened {
-    .nmorph-image-preview__actions {
-      bottom: 50px;
-    }
-
-    --nmorph-image-preview-btn-margin: 20px;
-
-    .nmorph-image-preview__left {
-      left: var(--nmorph-image-preview-btn-margin);
-    }
-
-    .nmorph-image-preview__right {
-      right: var(--nmorph-image-preview-btn-margin);
-    }
   }
 }
 </style>

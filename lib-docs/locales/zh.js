@@ -299,6 +299,12 @@ export default {
           "Attachment previews now keep file icons muted while play/pause and PDF eye controls use contrast color, show a single upload action loader, and balance compact video FileCard vertical padding.",
         "file-card-sandbox-all-types":
           "The sandbox data page now includes NmorphFileCard examples for documents, images, audio, video, archives, loading, error, and long filenames.",
+        "file-card-image-media-preview":
+          "NmorphFileCard now supports media-preview=\"image\" from previewSrc, with compact visual thumbnails, shared soft/plain surfaces, file title overlays, size badges, and consistent download actions.",
+        "media-gallery-mixed-preview":
+          "Added NmorphMediaGallery for fullscreen mixed image and video galleries with typed items, active index control, keyboard navigation, video pause-on-change/close behavior, and sandbox examples.",
+        "preview-portal-shared-flow":
+          "NmorphImagePreview and NmorphMediaGallery now share the same preview portal flow, so backdrop clicks, Escape closing, navigation arrows, image action bar controls, and synced video play/pause overlays behave consistently.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":

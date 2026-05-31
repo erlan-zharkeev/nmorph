@@ -1,5 +1,6 @@
 export type NmorphVideoPreviewFit = 'cover' | 'contain';
 export type NmorphVideoPreviewSurface = 'card' | 'soft' | 'plain';
+export type NmorphVideoPreviewPreviewMode = 'internal' | 'emit';
 
 export interface INmorphVideoPreviewProps {
   src: string;
@@ -24,6 +25,7 @@ export interface INmorphVideoPreviewProps {
   showDefaultActions?: boolean;
   showPreviewAction?: boolean;
   showFullscreenAction?: boolean;
+  previewMode?: NmorphVideoPreviewPreviewMode;
 }
 
 export interface INmorphVideoPreviewEmit {

@@ -118,6 +118,11 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "true",
   },
+  {
+    name: "preview-mode",
+    type: "'internal' | 'emit'",
+    default: "internal",
+  },
 ];
 
 const slots: ISlotsTableData[] = [{ name: "actions" }];

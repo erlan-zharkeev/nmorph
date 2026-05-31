@@ -36,7 +36,7 @@ const DEFAULT_LIGHT_THEME_COLORS = {
   scrollThumb: '#687b9e',
   accent: '#4a90e2',
   focusText: '#ffffff',
-  placeholderText: '#c1c9cf',
+  placeholderText: '#9aa8b3',
   semiContrastText: '#8a9dc0',
   contrastText: '#b4c4de',
 };
@@ -49,7 +49,7 @@ const DEFAULT_DARK_THEME_COLORS = {
   scrollThumb: '#778288',
   accent: '#006cb6',
   focusText: '#ffffff',
-  placeholderText: '#575757',
+  placeholderText: '#68747b',
   semiContrastText: '#9caab0',
   contrastText: '#c3cdd1',
 };

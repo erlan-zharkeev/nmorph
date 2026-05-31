@@ -95,7 +95,13 @@ const audioPreviewAvailable = computed(() => {
 const videoPreviewAvailable = computed(() => {
   return props.mediaPreview === 'video' && Boolean(props.previewSrc) && !props.loading && !props.error;
 });
-const mediaPreviewAvailable = computed(() => audioPreviewAvailable.value || videoPreviewAvailable.value);
+const imagePreviewAvailable = computed(() => {
+  return props.mediaPreview === 'image' && Boolean(props.previewSrc) && !props.loading && !props.error;
+});
+const mediaPreviewAvailable = computed(
+  () => audioPreviewAvailable.value || videoPreviewAvailable.value || imagePreviewAvailable.value
+);
+const visualMediaPreviewAvailable = computed(() => videoPreviewAvailable.value || imagePreviewAvailable.value);
 const videoPreviewHeight = computed(() => (props.compact ? '96px' : '120px'));
 const isPdf = computed(() => props.mimeType.toLowerCase() === 'application/pdf' || extension.value === 'pdf');
 const pdfPreviewHref = computed(() => (isPdf.value ? props.previewSrc || props.downloadHref : ''));
@@ -120,6 +126,8 @@ const modifiers = computed(() =>
       mediaPreviewAvailable.value && 'media',
       audioPreviewAvailable.value && 'media-audio',
       videoPreviewAvailable.value && 'media-video',
+      imagePreviewAvailable.value && 'media-image',
+      visualMediaPreviewAvailable.value && 'media-visual',
       !props.iconSurface && 'icon-plain',
       !hasActions.value && 'no-actions',
     ],
@@ -133,7 +141,7 @@ const errorHandler = () => emit('error');
 
 <template>
   <div :class="modifiers">
-    <div class="nmorph-file-card__icon">
+    <div v-if="!visualMediaPreviewAvailable" class="nmorph-file-card__icon">
       <NmorphIcon size="medium">
         <component :is="icon" />
       </NmorphIcon>
@@ -152,10 +160,12 @@ const errorHandler = () => emit('error');
       </a>
     </div>
     <div class="nmorph-file-card__body">
-      <div class="nmorph-file-card__info">
+      <div class="nmorph-file-card__info" :title="props.name">
         <span class="nmorph-file-card__name">{{ props.name }}</span>
-        <span v-if="props.error && props.errorText" class="nmorph-file-card__error">{{ props.errorText }}</span>
-        <span v-else-if="meta" class="nmorph-file-card__meta">{{ meta }}</span>
+        <template v-if="!visualMediaPreviewAvailable">
+          <span v-if="props.error && props.errorText" class="nmorph-file-card__error">{{ props.errorText }}</span>
+          <span v-else-if="meta" class="nmorph-file-card__meta">{{ meta }}</span>
+        </template>
       </div>
       <NmorphAudioPreview
         v-if="audioPreviewAvailable"
@@ -182,10 +192,25 @@ const errorHandler = () => emit('error');
         :controls="false"
         :show-meta="false"
         :show-default-actions="false"
+        preview-mode="emit"
         @error="errorHandler"
+        @preview="openHandler"
       />
+      <button
+        v-if="imagePreviewAvailable"
+        class="nmorph-file-card__image-preview"
+        type="button"
+        :title="props.name"
+        :aria-label="`Preview ${props.name}`"
+        @click="openHandler"
+      >
+        <img class="nmorph-file-card__image" :src="props.previewSrc" :alt="props.name" />
+      </button>
     </div>
-    <span v-if="props.showExtensionBadge && extension" class="nmorph-file-card__badge">{{ extension }}</span>
+    <span v-if="visualMediaPreviewAvailable && fileSize" class="nmorph-file-card__visual-size">{{ fileSize }}</span>
+    <span v-if="props.showExtensionBadge && extension && !visualMediaPreviewAvailable" class="nmorph-file-card__badge">
+      {{ extension }}
+    </span>
     <div v-if="hasActions" class="nmorph-file-card__actions">
       <slot name="actions">
         <span
@@ -330,9 +355,31 @@ const errorHandler = () => emit('error');
   }
 
   .nmorph-file-card__audio-preview,
-  .nmorph-file-card__video-preview {
+  .nmorph-file-card__video-preview,
+  .nmorph-file-card__image-preview {
     width: 100%;
     min-width: 0;
+  }
+
+  .nmorph-file-card__image-preview {
+    display: block;
+    height: 120px;
+    padding: 0;
+    overflow: hidden;
+    color: inherit;
+    font: inherit;
+    background: transparent;
+    border: 0;
+    border-radius: var(--default-border-radius);
+    cursor: pointer;
+
+    .nmorph-file-card__image {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   .nmorph-file-card__badge {
@@ -351,6 +398,28 @@ const errorHandler = () => emit('error');
     border-radius: var(--default-border-radius);
   }
 
+  .nmorph-file-card__visual-size {
+    position: absolute;
+    right: var(--indentation-02);
+    bottom: var(--indentation-02);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    max-width: calc(100% - var(--indentation-04));
+    min-height: 22px;
+    padding: 0 6px;
+    overflow: hidden;
+    color: var(--nmorph-contrast-text-color);
+    font-size: var(--font-size-extra-small);
+    line-height: var(--line-height-regular);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
+    border-radius: var(--default-border-radius);
+    pointer-events: none;
+  }
+
   .nmorph-file-card__actions {
     display: flex;
     flex: 0 0 auto;
@@ -363,9 +432,12 @@ const errorHandler = () => emit('error');
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
     width: 22px;
     height: 22px;
+    padding: 0;
     color: inherit;
+    line-height: 1;
     text-decoration: none;
     border-radius: var(--default-border-radius);
   }
@@ -402,6 +474,11 @@ const errorHandler = () => emit('error');
     .nmorph-file-card__video-preview {
       margin-top: 0;
     }
+
+    .nmorph-file-card__image-preview {
+      height: 96px;
+      margin-top: 0;
+    }
   }
 
   &.nmorph-file-card--media-audio.nmorph-file-card--no-actions {
@@ -410,8 +487,96 @@ const errorHandler = () => emit('error');
     }
   }
 
-  &.nmorph-file-card--media-video.nmorph-file-card--compact {
-    padding-block: var(--indentation-03);
+  &.nmorph-file-card--media-visual {
+    position: relative;
+    display: block;
+    gap: 0;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+
+    .nmorph-file-card__body {
+      position: relative;
+      display: block;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .nmorph-file-card__info {
+      position: absolute;
+      top: var(--indentation-02);
+      left: var(--indentation-02);
+      z-index: 2;
+      max-width: calc(100% - 48px);
+      pointer-events: none;
+    }
+
+    .nmorph-file-card__name {
+      display: block;
+      min-height: 22px;
+      padding: 0 6px;
+      overflow: hidden;
+      color: var(--nmorph-contrast-text-color);
+      line-height: 22px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
+      border-radius: var(--default-border-radius);
+    }
+
+    .nmorph-file-card__image-preview,
+    .nmorph-file-card__video-preview,
+    .nmorph-video-preview,
+    .nmorph-video-preview__media,
+    .nmorph-file-card__image {
+      display: block;
+      width: 100%;
+      max-width: none;
+      height: 100%;
+      border-radius: inherit;
+      object-fit: cover;
+    }
+
+    .nmorph-file-card__actions {
+      position: absolute;
+      top: var(--indentation-02);
+      right: var(--indentation-02);
+      z-index: 3;
+    }
+
+    .nmorph-file-card__action-link,
+    .nmorph-file-card__action-loader {
+      color: var(--nmorph-contrast-text-color);
+      background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
+      border: 0;
+
+      .nmorph-icon {
+        flex: 0 0 auto;
+        --nmorph-icon-color: var(--nmorph-contrast-text-color);
+        --color: var(--nmorph-contrast-text-color);
+      }
+    }
+
+    .nmorph-file-card__action-link:hover {
+      color: var(--nmorph-contrast-text-color);
+      background: color-mix(in srgb, var(--nmorph-black-color) 72%, transparent);
+    }
+  }
+
+  &.nmorph-file-card--media-video {
+    .nmorph-file-card__info {
+      max-width: calc(100% - 112px);
+    }
+
+    .nmorph-video-preview__actions {
+      right: calc(var(--indentation-02) + 26px);
+    }
+  }
+
+  &.nmorph-file-card--media-image {
+    .nmorph-file-card__image-preview {
+      border-radius: inherit;
+    }
   }
 
   &.nmorph-file-card--error {

@@ -44,6 +44,7 @@ const props = withDefaults(defineProps<INmorphVideoPreviewProps>(), {
   showDefaultActions: true,
   showPreviewAction: true,
   showFullscreenAction: true,
+  previewMode: 'internal',
 });
 
 const emit = defineEmits<INmorphVideoPreviewEmit>();
@@ -98,7 +99,7 @@ const rootStyle = computed(() => [styles.value, attrs.style]);
 const openHandler = () => emit('open');
 const downloadHandler = () => emit('download');
 const previewHandler = () => {
-  previewOpen.value = true;
+  if (props.previewMode === 'internal') previewOpen.value = true;
   emit('preview');
 };
 const closePreviewHandler = () => {
