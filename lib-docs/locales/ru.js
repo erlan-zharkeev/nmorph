@@ -232,6 +232,8 @@ export default {
           "NmorphFileUpload now renders typed previews for uploaded video and audio files, document/file cards for PDF, Office, and unknown files, and keeps image previews for images.",
         "attachment-rendering-notes":
           "Documented the K-Room attachment rendering approach, including app-level attachment routers, Nmorph UI primitives, message attachment data shape, and compatibility with existing images.",
+        "emoji-picker-lazy-locales":
+          "Added optional NmorphEmojiPicker locale files for en, ru, and zh with lazy package imports so host apps can load only the emoji dataset they need.",
         "image-preview-keyboard-navigation":
           "NmorphImagePreview now supports ArrowLeft and ArrowRight keyboard navigation while the preview is open, including wrap-around for image sets.",
         "icon-wrapper-centering":
@@ -292,6 +294,18 @@ export default {
           "Docs API tables теперь могут использовать inline descriptions, если i18n ключа нет, без шума missing-translation на новых страницах компонентов.",
         "link-icon-name-prop":
           "NmorphLink now accepts iconName/icon-name to render a library icon before the link text, with docs and tests covering the new prop.",
+        "link-anchor-attrs":
+          "NmorphLink теперь передаёт rel, referrerpolicy, download, aria-label и title на внутренний anchor и рендерит target=\"blank\" как _blank.",
+        "callout-rich-link-slots":
+          "NmorphCallout теперь поддерживает header/title/default slots для безопасного rich-контента и может рендерить root как внешнюю ссылку с href, target, rel и referrerpolicy.",
+        "file-card-embedded-surface":
+          "NmorphFileCard теперь поддерживает soft/plain surfaces для вложений, а также отключение extension badge и background у иконки.",
+        "attachment-preview-embedded-controls":
+          "NmorphAudioPreview и NmorphVideoPreview теперь поддерживают soft/plain surfaces для вложений и показывают play/pause на media-иконке, а PDF preview в NmorphFileCard доступен через глаз на иконке файла.",
+        "file-card-audio-media-preview":
+          "NmorphFileCard теперь умеет рендерить встроенные audio и video previews из previewSrc через media-preview, сохраняя общий file-card заголовок, metadata с типом/размером, surface и download action.",
+        "notification-duration-value-toggle":
+          "NmorphNotificationProvider теперь поддерживает showDurationValue: false для countdown-индикатора только с progress bar.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":
@@ -801,6 +815,11 @@ export default {
         underline: "Показывать подчеркивание при наведении",
         "icon-name": "Имя из списка иконок",
         target: "Нативный атрибут target",
+        rel: "Нативный атрибут rel для anchor",
+        referrerpolicy: "Нативный атрибут referrerpolicy для anchor",
+        download: "Нативный атрибут download для anchor",
+        "aria-label": "Доступное имя внутренней ссылки",
+        title: "Нативный атрибут title для anchor",
         disabled: "Отключить ссылку",
         color: "Overrides the link color",
       },
@@ -1598,6 +1617,13 @@ export default {
         type: "Определяет тип callout",
         title: "Заголовок, отображаемый в callout",
         content: "Контент, отображаемый в callout",
+        as: "Тег корневого элемента",
+        href: "Нативный href anchor, когда as равен a",
+        target: "Нативный target anchor, когда as равен a",
+        rel: "Нативный rel anchor, когда as равен a",
+        referrerpolicy: "Нативный referrerpolicy anchor, когда as равен a",
+        download: "Нативный download anchor, когда as равен a",
+        "aria-label": "Доступное имя для корневой ссылки",
         color: "Overrides the callout accent color",
         padding: "Sets the callout inner spacing",
         "border-radius": "Sets the callout border radius",
@@ -1605,6 +1631,11 @@ export default {
         "title-gap": "Sets the spacing between title and content",
         "title-font-size": "Sets the title font size",
         "content-font-size": "Sets the content font size",
+      },
+      slot: {
+        header: "Кастомное содержимое header",
+        title: "Кастомное содержимое title",
+        default: "Кастомное содержимое body",
       },
       variables: {
         "callout-color": "Callout accent color",

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import {
   NmorphAvatar,
   NmorphBadge,
@@ -11,6 +11,7 @@ import {
   NmorphCollapse,
   NmorphCollapseItem,
   NmorphEmpty,
+  NmorphEmojiPicker,
   NmorphIcon,
   NmorphIconImage,
   NmorphIconUsers,
@@ -28,7 +29,9 @@ import {
   NmorphTagList,
   NmorphVirtualList,
 } from '@nmorph/nmorph-ui-kit'
-import type { NmorphSortOrderType } from '@nmorph/nmorph-ui-kit'
+import type { INmorphEmojiPickerI18n, NmorphEmojiPickerDataSource, NmorphSortOrderType } from '@nmorph/nmorph-ui-kit'
+import { loadNmorphEmojiLocale, nmorphEmojiLanguageOptions } from '@nmorph/nmorph-ui-kit/emoji'
+import type { NmorphEmojiLanguage, NmorphEmojiLocale } from '@nmorph/nmorph-ui-kit/emoji'
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
 
 const createImage = (startColor: string, endColor: string, label: string) =>
@@ -59,6 +62,7 @@ const currentPage = ref(4)
 const activeCalendarDate = ref(new Date(2026, 4, 5))
 const selectedCalendarDates = ref([new Date(2026, 4, 7), new Date(2026, 4, 9)])
 const selectedCalendarRange = ref([new Date(2026, 4, 12), new Date(2026, 4, 18)])
+const selectedEmoji = ref('🙂')
 const collapseValue = ref(['availability'])
 const tags = ref([
   { text: 'New', value: 'new', height: 'thin' as const },
@@ -88,6 +92,23 @@ const tableSort = ref<Record<string, NmorphSortOrderType>>({
   name: 'ascending',
   count: 'descending',
 })
+const selectedEmojiLanguage = ref<NmorphEmojiLanguage>('en')
+const emojiLocale = ref<NmorphEmojiLocale | null>(null)
+const emojiLoading = ref(false)
+const emojiLoadToken = ref(0)
+const fallbackEmojiI18n: INmorphEmojiPickerI18n = {
+  searchPlaceholder: 'Search emoji',
+  searchLabel: 'Search emoji',
+  quickLabel: 'Frequent reactions',
+  expandLabel: 'Open emoji picker',
+  collapseLabel: 'Collapse emoji picker',
+  noResults: 'No emoji found',
+  categoryLabel: 'Emoji categories',
+  resultsLabel: 'Emoji results',
+}
+const emojiData = computed<NmorphEmojiPickerDataSource>(() => emojiLocale.value?.data || [])
+const emojiQuickList = computed(() => emojiLocale.value?.quickList || [])
+const emojiI18n = computed(() => emojiLocale.value?.i18n || fallbackEmojiI18n)
 
 const virtualItems = Array.from({ length: 1000 }, (_, index) => ({
   id: index + 1,
@@ -98,6 +119,26 @@ const virtualItems = Array.from({ length: 1000 }, (_, index) => ({
 type VirtualItem = (typeof virtualItems)[number]
 
 const getVirtualItem = (item: unknown): VirtualItem => item as VirtualItem
+
+watch(
+  selectedEmojiLanguage,
+  async (language) => {
+    const token = emojiLoadToken.value + 1
+
+    emojiLoadToken.value = token
+    emojiLoading.value = true
+
+    try {
+      const locale = await loadNmorphEmojiLocale(language)
+
+      if (emojiLoadToken.value !== token) return
+      emojiLocale.value = locale
+    } finally {
+      if (emojiLoadToken.value === token) emojiLoading.value = false
+    }
+  },
+  { immediate: true }
+)
 
 const progressColor = (value: number) => {
   if (value >= 80) return 'var(--nmorph-success-color)'
@@ -262,6 +303,41 @@ const progressColor = (value: number) => {
           :show-action-bar="false"
         />
       </div>
+    </SandboxSection>
+
+    <SandboxSection title="NmorphEmojiPicker">
+      <div class="emoji-toolbar">
+        <NmorphButton
+          v-for="language in nmorphEmojiLanguageOptions"
+          :key="language.value"
+          class="emoji-toolbar__button"
+          :class="{ 'emoji-toolbar__button--selected': selectedEmojiLanguage === language.value }"
+          :text="language.label"
+          height="thin"
+          :disabled="emojiLoading"
+          @click="selectedEmojiLanguage = language.value"
+        />
+      </div>
+      <div class="emoji-demo">
+        <NmorphEmojiPicker
+          :language="selectedEmojiLanguage"
+          :data-source="emojiData"
+          :i18n="emojiI18n"
+          :quick-list="emojiQuickList"
+          :initial-expanded="false"
+          :disabled="emojiLoading"
+          @select="selectedEmoji = $event"
+        />
+        <NmorphEmojiPicker
+          :language="selectedEmojiLanguage"
+          :data-source="emojiData"
+          :i18n="emojiI18n"
+          :initial-expanded="true"
+          :disabled="emojiLoading"
+          @select="selectedEmoji = $event"
+        />
+      </div>
+      <p class="hint">selected: {{ selectedEmoji }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphProgress">
@@ -452,6 +528,34 @@ const progressColor = (value: number) => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 12px;
+}
+
+.emoji-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.emoji-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.emoji-toolbar__button :deep(.nmorph-button__content) {
+  min-width: 42px;
+}
+
+.emoji-toolbar__button--selected :deep(.nmorph-button__content) {
+  color: var(--nmorph-text-color);
+  background: color-mix(in srgb, var(--nmorph-text-color) 9%, var(--nmorph-main-color));
+  box-shadow: var(--nmorph-shadow-inset);
+}
+
+.emoji-toolbar__button--selected :deep(.nmorph-button__content span) {
+  color: var(--nmorph-text-color);
 }
 
 .empty-grid {

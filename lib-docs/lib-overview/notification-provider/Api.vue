@@ -10,9 +10,11 @@ import { NmorphNotificationPlacement } from "@nmorph/nmorph-ui-kit";
 const attributesData: IAttributesTableData[] = [
   {
     name: "notifications",
-    type: `Array<INmorphNotification & { width?: string; duration?: number; placement?: ${enumToString(NmorphNotificationPlacement)}; }>`,
+    type: `Array<INmorphNotification & { width?: string; duration?: number; showDurationValue?: boolean; placement?: ${enumToString(NmorphNotificationPlacement)}; }>`,
     default: "-",
     required: true,
+    description:
+      "Notification items extend NmorphAlert props. duration > 0 shows the dismiss indicator and auto-closes; pass showDurationValue: false to keep only the progress bar.",
   },
   {
     name: "placement",

@@ -66,6 +66,7 @@ export default defineConfig(() => {
           plugin: resolve(__dirname, 'src', 'plugin.ts'),
           icons: resolve(__dirname, 'src', 'icons.ts'),
           styles: resolve(__dirname, 'src', 'styles.ts'),
+          'emoji/index': resolve(__dirname, 'src', 'emoji', 'index.ts'),
         },
         name: 'library',
         formats: ['es'],

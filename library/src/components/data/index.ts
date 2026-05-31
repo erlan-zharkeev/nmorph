@@ -16,6 +16,8 @@ export { default as NmorphCollapse } from './nmorph-collapse/NmorphCollapse.vue'
 export { default as NmorphCollapseItem } from './nmorph-collapse/components/nmorph-collapse-item/NmorphCollapseItem.vue';
 export * from './nmorph-collapse/types';
 export { default as NmorphEmpty } from './nmorph-empty/NmorphEmpty.vue';
+export { default as NmorphEmojiPicker } from './nmorph-emoji-picker/NmorphEmojiPicker.vue';
+export * from './nmorph-emoji-picker/types';
 export { default as NmorphFileCard } from './nmorph-file-card/NmorphFileCard.vue';
 export * from './nmorph-file-card/types';
 export { default as NmorphImage } from './nmorph-image/NmorphImage.vue';

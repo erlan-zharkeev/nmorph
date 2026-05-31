@@ -1,4 +1,5 @@
 export type NmorphVideoPreviewFit = 'cover' | 'contain';
+export type NmorphVideoPreviewSurface = 'card' | 'soft' | 'plain';
 
 export interface INmorphVideoPreviewProps {
   src: string;
@@ -7,6 +8,9 @@ export interface INmorphVideoPreviewProps {
   width?: number | string;
   height?: number | string;
   durationMs?: number;
+  surface?: NmorphVideoPreviewSurface;
+  embedded?: boolean;
+  showMeta?: boolean;
   compact?: boolean;
   controls?: boolean;
   muted?: boolean;

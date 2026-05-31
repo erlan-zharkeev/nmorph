@@ -39,6 +39,26 @@ const attributesData: IAttributesTableData[] = [
     default: "-",
   },
   {
+    name: "media-preview",
+    type: "'none' | 'audio' | 'video'",
+    default: "none",
+  },
+  {
+    name: "surface",
+    type: "'card' | 'soft' | 'plain'",
+    default: "card",
+  },
+  {
+    name: "show-extension-badge",
+    type: "Boolean",
+    default: "true",
+  },
+  {
+    name: "icon-surface",
+    type: "Boolean",
+    default: "true",
+  },
+  {
     name: "compact",
     type: "Boolean",
     default: "false",

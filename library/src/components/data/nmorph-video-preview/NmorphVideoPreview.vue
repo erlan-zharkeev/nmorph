@@ -1,7 +1,15 @@
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { computed, ref, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
-import { NmorphIcon, NmorphIconDownload, NmorphIconLoader, NmorphIconOpen, NmorphIconVideo } from '@/components';
+import {
+  NmorphIcon,
+  NmorphIconDownload,
+  NmorphIconLoader,
+  NmorphIconOpen,
+  NmorphIconPause,
+  NmorphIconPlay,
+  NmorphIconVideo,
+} from '@/components';
 import { createCssSizeVariables, useModifiers } from '@/utils';
 import type { INmorphVideoPreviewEmit, INmorphVideoPreviewProps } from './types';
 
@@ -11,6 +19,9 @@ const props = withDefaults(defineProps<INmorphVideoPreviewProps>(), {
   width: undefined,
   height: undefined,
   durationMs: undefined,
+  surface: 'card',
+  embedded: false,
+  showMeta: true,
   compact: false,
   controls: true,
   muted: false,
@@ -26,6 +37,8 @@ const props = withDefaults(defineProps<INmorphVideoPreviewProps>(), {
 
 const emit = defineEmits<INmorphVideoPreviewEmit>();
 const slots = useSlots();
+const videoRef = ref<HTMLVideoElement | null>(null);
+const playing = ref(false);
 
 const formatDuration = (durationMs?: number) => {
   if (!durationMs || durationMs < 0) return '';
@@ -43,7 +56,17 @@ const hasActions = computed(
 );
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-video-preview': [props.compact && 'compact', props.fit, props.loading && 'loading', props.error && 'error'],
+    'nmorph-video-preview': [
+      props.surface,
+      props.embedded && 'embedded',
+      !props.showMeta && 'no-meta',
+      props.compact && 'compact',
+      props.fit,
+      props.loading && 'loading',
+      props.error && 'error',
+      playing.value && 'playing',
+      !hasActions.value && 'no-actions',
+    ],
   })
 );
 const styles = computed<CSSProperties>(() =>
@@ -55,12 +78,48 @@ const styles = computed<CSSProperties>(() =>
 
 const openHandler = () => emit('open');
 const downloadHandler = () => emit('download');
+
+const togglePlayback = async () => {
+  if (!videoRef.value || props.loading || props.error) return;
+  if (playing.value) {
+    videoRef.value.pause();
+    return;
+  }
+
+  try {
+    await videoRef.value.play();
+  } catch {
+    playing.value = false;
+  }
+};
+
+const playHandler = (event: Event) => {
+  playing.value = true;
+  emit('play', event);
+};
+
+const pauseHandler = (event: Event) => {
+  playing.value = false;
+  emit('pause', event);
+};
+
+const endedHandler = () => {
+  playing.value = false;
+};
+
+const errorHandler = (event: Event) => {
+  playing.value = false;
+  emit('error', event);
+};
+
+defineExpose({ videoRef });
 </script>
 
 <template>
   <div :class="modifiers" :style="styles">
     <video
       v-if="!props.loading && !props.error"
+      ref="videoRef"
       class="nmorph-video-preview__media"
       :src="props.src"
       :poster="props.poster || undefined"
@@ -68,10 +127,23 @@ const downloadHandler = () => emit('download');
       :muted="props.muted"
       :playsinline="props.playsinline"
       :preload="props.preload"
-      @play="emit('play', $event)"
-      @pause="emit('pause', $event)"
-      @error="emit('error', $event)"
+      @play="playHandler"
+      @pause="pauseHandler"
+      @ended="endedHandler"
+      @error="errorHandler"
     />
+    <button
+      v-if="!props.loading && !props.error"
+      class="nmorph-video-preview__play"
+      type="button"
+      :aria-label="playing ? `Pause ${props.name || 'video'}` : `Play ${props.name || 'video'}`"
+      @click="togglePlayback"
+    >
+      <NmorphIcon size="medium">
+        <NmorphIconPause v-if="playing" />
+        <NmorphIconPlay v-else />
+      </NmorphIcon>
+    </button>
     <div v-else class="nmorph-video-preview__state">
       <NmorphIcon v-if="props.loading" size="large">
         <NmorphIconLoader />
@@ -81,7 +153,7 @@ const downloadHandler = () => emit('download');
       </NmorphIcon>
       <span v-if="props.error && props.errorText" class="nmorph-video-preview__error">{{ props.errorText }}</span>
     </div>
-    <div v-if="props.name || duration" class="nmorph-video-preview__meta">
+    <div v-if="props.showMeta && (props.name || duration)" class="nmorph-video-preview__meta">
       <span v-if="props.name" class="nmorph-video-preview__name">{{ props.name }}</span>
       <span v-if="duration" class="nmorph-video-preview__duration">{{ duration }}</span>
     </div>
@@ -136,6 +208,11 @@ const downloadHandler = () => emit('download');
     height: 100%;
   }
 
+  &.nmorph-video-preview--soft .nmorph-video-preview__state,
+  &.nmorph-video-preview--plain .nmorph-video-preview__state {
+    color: var(--nmorph-text-color);
+  }
+
   .nmorph-video-preview__media {
     display: block;
     object-fit: cover;
@@ -176,6 +253,50 @@ const downloadHandler = () => emit('download');
     padding: 18px var(--indentation-03) var(--indentation-02);
     background: linear-gradient(transparent, color-mix(in srgb, var(--nmorph-black-color) 66%, transparent));
     pointer-events: none;
+  }
+
+  .nmorph-video-preview__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    color: var(--nmorph-text-color);
+    background: color-mix(in srgb, var(--nmorph-main-color) 86%, transparent);
+    border: 0;
+    border-radius: var(--border-radius-circular);
+    box-shadow: var(--nmorph-shadow-outset);
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+
+    .nmorph-icon {
+      --color: currentColor;
+    }
+
+    &:hover {
+      color: var(--nmorph-accent-color);
+    }
+  }
+
+  &.nmorph-video-preview--playing .nmorph-video-preview__play {
+    opacity: 0.72;
+  }
+
+  &.nmorph-video-preview--embedded {
+    width: var(--nmorph-video-preview-width, 100%);
+    height: var(--nmorph-video-preview-height, 120px);
+    box-shadow: none;
+  }
+
+  &.nmorph-video-preview--embedded .nmorph-video-preview__play,
+  &.nmorph-video-preview--soft .nmorph-video-preview__play,
+  &.nmorph-video-preview--plain .nmorph-video-preview__play {
+    box-shadow: none;
   }
 
   .nmorph-video-preview__name,
@@ -231,6 +352,16 @@ const downloadHandler = () => emit('download');
   &.nmorph-video-preview--compact {
     width: var(--nmorph-video-preview-width, 180px);
     height: var(--nmorph-video-preview-height, 102px);
+  }
+
+  &.nmorph-video-preview--soft {
+    background: color-mix(in srgb, var(--nmorph-accent-color) 6%, transparent);
+    box-shadow: none;
+  }
+
+  &.nmorph-video-preview--plain {
+    background: transparent;
+    box-shadow: none;
   }
 
   &.nmorph-video-preview--error {

@@ -16,8 +16,42 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "content",
     type: "String",
-    default: "-",
-    required: true,
+    default: "''",
+  },
+  {
+    name: "as",
+    type: "keyof HTMLElementTagNameMap",
+    default: "div",
+  },
+  {
+    name: "href",
+    type: "String",
+    default: "undefined",
+  },
+  {
+    name: "target",
+    type: "'_self' | '_blank' | '_parent' | '_top' | 'self' | 'blank' | 'parent' | 'top'",
+    default: "undefined",
+  },
+  {
+    name: "rel",
+    type: "String",
+    default: "undefined",
+  },
+  {
+    name: "referrerpolicy",
+    type: "String",
+    default: "undefined",
+  },
+  {
+    name: "download",
+    type: "String | Boolean",
+    default: "undefined",
+  },
+  {
+    name: "aria-label",
+    type: "String",
+    default: "undefined",
   },
   {
     name: "color",
@@ -56,7 +90,17 @@ const attributesData: IAttributesTableData[] = [
   },
 ];
 
-const slotData: ISlotsTableData[] = [];
+const slotData: ISlotsTableData[] = [
+  {
+    name: "header",
+  },
+  {
+    name: "title",
+  },
+  {
+    name: "default",
+  },
+];
 const variables: IVariablesTableData[] = [
   { name: "callout-color" },
   { name: "callout-padding" },

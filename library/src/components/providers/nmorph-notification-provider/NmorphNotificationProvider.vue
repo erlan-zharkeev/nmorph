@@ -2,11 +2,13 @@
 import { NmorphNotificationPlacement } from '@/components/providers';
 import type { INmorphNotification, TNmorphNotificationPlacement } from '@/components/providers';
 import { NmorphAlert } from '@/components';
-import { computed, inject, ref, watch } from 'vue';
+import { computed, inject, onBeforeUnmount, ref, watch } from 'vue';
+import type { CSSProperties } from 'vue';
 import type { INmorphInstance } from '@/types';
 import type { INmorphNotificationProviderProps, TNmorphNotificationItem } from './types';
 
 const ANIMATION_DURATION = 500;
+const DURATION_TICK_INTERVAL = 250;
 
 const hasNotificationId = (notification: INmorphNotification): notification is TNmorphNotificationItem =>
   typeof notification.id === 'string' && notification.id.length > 0;
@@ -14,17 +16,77 @@ const hasNotificationId = (notification: INmorphNotification): notification is T
 const removedIds = ref<string[]>([]);
 const closingIds = ref<string[]>([]);
 const renderedNotifications = ref<TNmorphNotificationItem[]>([]);
+const durationTick = ref(Date.now());
+const durationTimers = new Map<string, ReturnType<typeof setTimeout>>();
+const durationById = new Map<string, number>();
+const durationStartedAtById = new Map<string, number>();
+let durationTicker: ReturnType<typeof setInterval> | undefined;
 const placementList = Object.values(NmorphNotificationPlacement) as TNmorphNotificationPlacement[];
+
+const getNotificationDuration = (notification: TNmorphNotificationItem) => {
+  if (typeof notification.duration !== 'number' || !Number.isFinite(notification.duration)) return 0;
+  return Math.max(notification.duration, 0);
+};
+
+const hasDurationIndicator = (notification: TNmorphNotificationItem) => getNotificationDuration(notification) > 0;
+
+const hasDurationValue = (notification: TNmorphNotificationItem) => notification.showDurationValue !== false;
+
+const getNotificationRemainingDuration = (notification: TNmorphNotificationItem) => {
+  const duration = getNotificationDuration(notification);
+  const startedAt = durationStartedAtById.get(notification.id);
+
+  if (!duration || !startedAt) return duration;
+
+  return Math.max(duration - (durationTick.value - startedAt), 0);
+};
+
+const formatNotificationDuration = (duration: number) => {
+  if (duration < 1000) return `${Math.ceil(duration)}ms`;
+
+  return `${Math.ceil(duration / 1000)}s`;
+};
+
+const getNotificationDurationLabel = (notification: TNmorphNotificationItem) =>
+  formatNotificationDuration(getNotificationRemainingDuration(notification));
+
+const getNotificationStyle = (notification: TNmorphNotificationItem): CSSProperties =>
+  ({
+    '--nmorph-notification-provider-duration': `${getNotificationDuration(notification)}ms`,
+  }) as CSSProperties;
+
+const getNotificationAlertProps = (notification: TNmorphNotificationItem) => {
+  const alertProps = { ...notification };
+
+  delete alertProps.duration;
+  delete alertProps.placement;
+  delete alertProps.showDurationValue;
+  delete alertProps.width;
+
+  return alertProps;
+};
+
+const clearDurationTimer = (id: string, keepStartedAt = false) => {
+  const timer = durationTimers.get(id);
+  if (timer) clearTimeout(timer);
+
+  durationTimers.delete(id);
+  durationById.delete(id);
+  if (!keepStartedAt) durationStartedAtById.delete(id);
+};
 
 const removeRenderedNotification = (id: string) => {
   renderedNotifications.value = renderedNotifications.value.filter((notification) => notification.id !== id);
   closingIds.value = closingIds.value.filter((closingId) => closingId !== id);
+  clearDurationTimer(id);
 };
 
 const closeHandler = (id: string, trackRemoval = true) => {
   if (closingIds.value.includes(id)) {
     return;
   }
+
+  clearDurationTimer(id, true);
 
   if (trackRemoval && !removedIds.value.includes(id)) {
     removedIds.value = [...removedIds.value, id];
@@ -33,6 +95,24 @@ const closeHandler = (id: string, trackRemoval = true) => {
   closingIds.value = [...closingIds.value, id];
 
   setTimeout(() => removeRenderedNotification(id), ANIMATION_DURATION);
+};
+
+const scheduleDurationTimer = (notification: TNmorphNotificationItem) => {
+  const duration = getNotificationDuration(notification);
+
+  if (durationById.get(notification.id) === duration) return;
+
+  clearDurationTimer(notification.id);
+
+  if (!duration) return;
+
+  durationTick.value = Date.now();
+  durationStartedAtById.set(notification.id, durationTick.value);
+  durationTimers.set(
+    notification.id,
+    setTimeout(() => closeHandler(notification.id), duration)
+  );
+  durationById.set(notification.id, duration);
 };
 
 const props = withDefaults(defineProps<INmorphNotificationProviderProps>(), {
@@ -57,6 +137,37 @@ const notificationGroups = computed(() =>
   })
 );
 
+const hasRunningDurationIndicator = computed(() =>
+  renderedNotifications.value.some(
+    (notification) => hasDurationIndicator(notification) && !closingIds.value.includes(notification.id)
+  )
+);
+
+const stopDurationTicker = () => {
+  if (!durationTicker) return;
+
+  clearInterval(durationTicker);
+  durationTicker = undefined;
+};
+
+watch(
+  hasRunningDurationIndicator,
+  (isRunning) => {
+    if (!isRunning) {
+      stopDurationTicker();
+      return;
+    }
+
+    if (durationTicker) return;
+
+    durationTick.value = Date.now();
+    durationTicker = setInterval(() => {
+      durationTick.value = Date.now();
+    }, DURATION_TICK_INTERVAL);
+  },
+  { immediate: true }
+);
+
 watch(
   () => props.notifications,
   (notifications) => {
@@ -79,6 +190,8 @@ watch(
       }
     });
 
+    activeNotifications.forEach((notification) => scheduleDurationTimer(notification));
+
     renderedNotifications.value
       .filter(
         (notification) => !activeNotifications.some((activeNotification) => activeNotification.id === notification.id)
@@ -89,6 +202,14 @@ watch(
 );
 
 const zIndex = computed(() => props.zIndex ?? (nmorph?.zIndex.current.value ?? 1000) + 1);
+
+onBeforeUnmount(() => {
+  durationTimers.forEach((timer) => clearTimeout(timer));
+  durationTimers.clear();
+  durationById.clear();
+  durationStartedAtById.clear();
+  stopDurationTicker();
+});
 </script>
 
 <template>
@@ -101,17 +222,37 @@ const zIndex = computed(() => props.zIndex ?? (nmorph?.zIndex.current.value ?? 1
       tag="div"
       :class="`nmorph-notification-provider__list nmorph-notification-provider__list--${group.placement}`"
     >
-      <NmorphAlert
+      <div
         v-for="notification in group.notifications"
         :key="notification.id"
-        :style="{ width: notification.width }"
+        :style="getNotificationStyle(notification)"
         :class="[
           'nmorph-notification-provider__notification',
+          hasDurationIndicator(notification) && 'nmorph-notification-provider__notification--with-duration',
           closingIds.includes(notification.id) && 'nmorph-notification-provider__notification--closing',
         ]"
-        v-bind="notification"
-        @close="() => closeHandler(notification.id)"
-      />
+      >
+        <NmorphAlert
+          class="nmorph-notification-provider__alert"
+          :style="{ width: notification.width }"
+          v-bind="getNotificationAlertProps(notification)"
+          @close="() => closeHandler(notification.id)"
+        />
+        <div
+          v-if="hasDurationIndicator(notification)"
+          :key="`${notification.id}-${getNotificationDuration(notification)}`"
+          class="nmorph-notification-provider__duration"
+          :title="hasDurationValue(notification) ? getNotificationDurationLabel(notification) : undefined"
+          aria-hidden="true"
+        >
+          <span class="nmorph-notification-provider__duration-track">
+            <span class="nmorph-notification-provider__duration-bar" />
+          </span>
+          <span v-if="hasDurationValue(notification)" class="nmorph-notification-provider__duration-value">
+            {{ getNotificationDurationLabel(notification) }}
+          </span>
+        </div>
+      </div>
     </transition-group>
   </div>
 </template>
@@ -125,13 +266,62 @@ const zIndex = computed(() => props.zIndex ?? (nmorph?.zIndex.current.value ?? 1
   pointer-events: none;
 
   .nmorph-notification-provider__notification {
+    position: relative;
     width: fit-content;
     height: fit-content;
     margin: 1rem;
+    overflow: hidden;
+    border-radius: var(--default-border-radius);
     transition:
       transform 0.5s ease,
       opacity 0.5s ease-in-out;
     pointer-events: all;
+  }
+
+  .nmorph-notification-provider__notification--with-duration {
+    .nmorph-alert {
+      padding-bottom: calc(var(--indentation-03) + 12px);
+    }
+  }
+
+  .nmorph-notification-provider__duration {
+    position: absolute;
+    right: var(--indentation-04);
+    bottom: var(--indentation-02);
+    left: var(--indentation-04);
+    display: flex;
+    gap: var(--indentation-02);
+    align-items: center;
+    color: var(--nmorph-white-color);
+    pointer-events: none;
+  }
+
+  .nmorph-notification-provider__duration-track {
+    flex: 1 1 auto;
+    min-width: 20px;
+    height: 3px;
+    overflow: hidden;
+    background: color-mix(in srgb, currentColor 20%, transparent);
+    border-radius: 999px;
+  }
+
+  .nmorph-notification-provider__duration-bar {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: currentColor;
+    border-radius: inherit;
+    transform-origin: left center;
+    opacity: 0.72;
+    animation: nmorph-notification-provider-duration var(--nmorph-notification-provider-duration) linear forwards;
+  }
+
+  .nmorph-notification-provider__duration-value {
+    flex: 0 0 auto;
+    color: currentColor;
+    font-size: var(--font-size-extra-small);
+    line-height: 1;
+    opacity: 0.72;
   }
 
   .nmorph-notification-provider__list {
@@ -293,19 +483,19 @@ const zIndex = computed(() => props.zIndex ?? (nmorph?.zIndex.current.value ?? 1
       --color: var(--nmorph-white-color);
     }
 
-    &.nmorph-alert--success .nmorph-alert__icon .nmorph-icon {
+    .nmorph-alert--success .nmorph-alert__icon .nmorph-icon {
       --color: var(--nmorph-success-color);
     }
 
-    &.nmorph-alert--error .nmorph-alert__icon .nmorph-icon {
+    .nmorph-alert--error .nmorph-alert__icon .nmorph-icon {
       --color: var(--nmorph-error-color);
     }
 
-    &.nmorph-alert--warning .nmorph-alert__icon .nmorph-icon {
+    .nmorph-alert--warning .nmorph-alert__icon .nmorph-icon {
       --color: var(--nmorph-warn-color);
     }
 
-    &.nmorph-alert--info .nmorph-alert__icon .nmorph-icon {
+    .nmorph-alert--info .nmorph-alert__icon .nmorph-icon {
       --color: var(--nmorph-info-color);
     }
 
@@ -354,6 +544,16 @@ const zIndex = computed(() => props.zIndex ?? (nmorph?.zIndex.current.value ?? 1
     transform: translateY(100%);
     opacity: 0;
     pointer-events: none;
+  }
+}
+
+@keyframes nmorph-notification-provider-duration {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
   }
 }
 </style>

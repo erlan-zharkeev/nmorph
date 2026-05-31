@@ -1,12 +1,28 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
 import { createCssSizeVariables, createCssVariables } from '@/utils';
 import type { INmorphCalloutProps } from './types';
 
+const targetMap = {
+  self: '_self',
+  blank: '_blank',
+  parent: '_parent',
+  top: '_top',
+} as const;
+
 const props = withDefaults(defineProps<INmorphCalloutProps>(), {
   type: 'info',
   title: '',
+  content: '',
+  as: 'div',
+  href: undefined,
+  target: undefined,
+  rel: undefined,
+  referrerpolicy: undefined,
+  referrerPolicy: undefined,
+  download: undefined,
+  ariaLabel: undefined,
   color: undefined,
   padding: 'var(--indentation-03) var(--indentation-04)',
   borderRadius: 'var(--default-border-radius)',
@@ -15,6 +31,8 @@ const props = withDefaults(defineProps<INmorphCalloutProps>(), {
   titleFontSize: 'var(--font-size-medium)',
   contentFontSize: 'var(--font-size-extra-small)',
 });
+
+const slots = useSlots();
 
 const styles = computed<CSSProperties>(() => ({
   ...createCssSizeVariables({
@@ -29,13 +47,47 @@ const styles = computed<CSSProperties>(() => ({
     '--callout-color': props.color,
   }),
 }));
+
+const resolvedTarget = computed(() => {
+  if (!props.target) return undefined;
+  return props.target in targetMap ? targetMap[props.target as keyof typeof targetMap] : props.target;
+});
+
+const rootAttrs = computed(() => {
+  if (props.as !== 'a') return {};
+
+  return {
+    href: props.href,
+    target: resolvedTarget.value,
+    rel: props.rel,
+    referrerpolicy: props.referrerpolicy ?? props.referrerPolicy,
+    download: props.download === true ? '' : props.download === false ? undefined : props.download,
+    'aria-label': props.ariaLabel,
+  };
+});
+
+const hasHeader = computed(() => Boolean(slots.header || slots.title || props.title));
+const hasDefaultContent = computed(() => Boolean(slots.default));
 </script>
 
 <template>
-  <div class="nmorph-callout" :class="`nmorph-callout--${props.type}`" :style="styles">
-    <div v-if="props.title" class="nmorph-callout__title">{{ props.title }}</div>
-    <div class="nmorph-callout__content" v-html="props.content" />
-  </div>
+  <component
+    :is="props.as"
+    class="nmorph-callout"
+    :class="`nmorph-callout--${props.type}`"
+    :style="styles"
+    v-bind="rootAttrs"
+  >
+    <div v-if="hasHeader" class="nmorph-callout__title">
+      <slot name="header">
+        <slot name="title">{{ props.title }}</slot>
+      </slot>
+    </div>
+    <div v-if="hasDefaultContent" class="nmorph-callout__content">
+      <slot />
+    </div>
+    <div v-else class="nmorph-callout__content" v-html="props.content" />
+  </component>
 </template>
 
 <style lang="scss">
@@ -49,8 +101,11 @@ const styles = computed<CSSProperties>(() => ({
   --callout-content-font-size: var(--font-size-extra-small);
 
   position: relative;
+  display: block;
   padding: var(--callout-padding);
   overflow: hidden;
+  color: inherit;
+  text-decoration: none;
   border-radius: var(--callout-border-radius);
 
   &::before {

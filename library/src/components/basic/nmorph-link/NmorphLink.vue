@@ -6,7 +6,7 @@ import { NmorphIcon } from '@/components';
 import * as NmorphIcons from '@/components/basic/nmorph-icon/NmorphIcons';
 
 import { NmorphColor } from '@/types';
-import type { INmorphLinkProps } from './types';
+import { NmorphLinkTarget, type INmorphLinkProps } from './types';
 
 const props = withDefaults(defineProps<INmorphLinkProps>(), {
   type: NmorphColor.accent,
@@ -14,6 +14,12 @@ const props = withDefaults(defineProps<INmorphLinkProps>(), {
   underline: false,
   text: '',
   target: 'self',
+  rel: undefined,
+  referrerpolicy: undefined,
+  referrerPolicy: undefined,
+  download: undefined,
+  ariaLabel: undefined,
+  title: undefined,
   disabled: false,
   color: undefined,
   iconName: undefined,
@@ -46,11 +52,23 @@ const styles = computed<CSSProperties>(() =>
     '--link-color': props.color,
   })
 );
+
+const resolvedTarget = computed(() => NmorphLinkTarget[props.target] ?? props.target);
+
+const anchorAttrs = computed(() => ({
+  href: props.href,
+  target: resolvedTarget.value,
+  rel: props.rel,
+  referrerpolicy: props.referrerpolicy ?? props.referrerPolicy,
+  download: props.download === true ? '' : props.download === false ? undefined : props.download,
+  'aria-label': props.ariaLabel,
+  title: props.title,
+}));
 </script>
 
 <template>
   <div :class="modifiers" :style="styles">
-    <a :href="props.href" :target="props.target">
+    <a v-bind="anchorAttrs">
       <slot name="prepend" />
 
       <NmorphIcon v-if="resolvedIcon" class="nmorph-link__icon" width="10px" height="10px">

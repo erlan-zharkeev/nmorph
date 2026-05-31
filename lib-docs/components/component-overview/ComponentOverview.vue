@@ -15,6 +15,7 @@ import audioMeterOverview from "~/lib-overview/audio-meter";
 import audioPreviewOverview from "~/lib-overview/audio-preview";
 import cardOverview from "~/lib-overview/card";
 import emptyOverview from "~/lib-overview/empty";
+import emojiPickerOverview from "~/lib-overview/emoji-picker";
 import fileCardOverview from "~/lib-overview/file-card";
 import imageOverview from "~/lib-overview/image";
 import mediaTileOverview from "~/lib-overview/media-tile";
@@ -81,6 +82,7 @@ const overviewComponentsByName: Record<string, unknown[]> = {
   "audio-preview": audioPreviewOverview,
   card: cardOverview,
   empty: emptyOverview,
+  "emoji-picker": emojiPickerOverview,
   "file-card": fileCardOverview,
   image: imageOverview,
   "media-tile": mediaTileOverview,

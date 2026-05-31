@@ -1,3 +1,6 @@
+export type NmorphFileCardSurface = 'card' | 'soft' | 'plain';
+export type NmorphFileCardMediaPreview = 'none' | 'audio' | 'video';
+
 export interface INmorphFileCardProps {
   name: string;
   extension?: string;
@@ -5,6 +8,10 @@ export interface INmorphFileCardProps {
   size?: number;
   previewSrc?: string;
   downloadHref?: string;
+  mediaPreview?: NmorphFileCardMediaPreview;
+  surface?: NmorphFileCardSurface;
+  showExtensionBadge?: boolean;
+  iconSurface?: boolean;
   compact?: boolean;
   loading?: boolean;
   error?: boolean;

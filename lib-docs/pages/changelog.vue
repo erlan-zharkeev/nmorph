@@ -11,7 +11,7 @@ const knownBugItems: string[] = [];
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.44</h3>
+            <h3>v2.2.48</h3>
             <ul>
               <li>
                 {{
@@ -30,6 +30,41 @@ const knownBugItems: string[] = [];
               <li>
                 {{
                   $t("changelog-page.changelog.items.attachment-rendering-notes")
+                }}
+              </li>
+              <li>
+                {{
+                  $t("changelog-page.changelog.items.emoji-picker-lazy-locales")
+                }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.link-anchor-attrs") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.callout-rich-link-slots") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.file-card-embedded-surface") }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.attachment-preview-embedded-controls",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.file-card-audio-media-preview",
+                  )
+                }}
+              </li>
+              <li>
+                {{
+                  $t(
+                    "changelog-page.changelog.items.notification-duration-value-toggle",
+                  )
                 }}
               </li>
             </ul>

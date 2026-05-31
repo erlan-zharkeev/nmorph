@@ -2,7 +2,7 @@
   "name": "@nmorph/nmorph-ui-kit",
   "type": "module",
   "private": false,
-  "version": "2.2.44",
+  "version": "2.2.50",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -45,6 +45,22 @@
     "./styles": {
       "types": "./dist/src/styles.d.ts",
       "import": "./dist/styles.js"
+    },
+    "./emoji": {
+      "types": "./dist/src/emoji/index.d.ts",
+      "import": "./dist/emoji/index.js"
+    },
+    "./emoji/en": {
+      "types": "./dist/src/emoji/locales/en.d.ts",
+      "import": "./dist/emoji/locales/en.js"
+    },
+    "./emoji/ru": {
+      "types": "./dist/src/emoji/locales/ru.d.ts",
+      "import": "./dist/emoji/locales/ru.js"
+    },
+    "./emoji/zh": {
+      "types": "./dist/src/emoji/locales/zh.d.ts",
+      "import": "./dist/emoji/locales/zh.js"
     },
     "./styles.css": "./dist/style.css",
     "./style.css": "./dist/style.css",

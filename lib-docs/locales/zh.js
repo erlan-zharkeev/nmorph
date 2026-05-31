@@ -219,6 +219,8 @@ export default {
           "NmorphFileUpload now renders typed previews for uploaded video and audio files, document/file cards for PDF, Office, and unknown files, and keeps image previews for images.",
         "attachment-rendering-notes":
           "Documented the K-Room attachment rendering approach, including app-level attachment routers, Nmorph UI primitives, message attachment data shape, and compatibility with existing images.",
+        "emoji-picker-lazy-locales":
+          "Added optional NmorphEmojiPicker locale files for en, ru, and zh with lazy package imports so host apps can load only the emoji dataset they need.",
         "image-preview-keyboard-navigation":
           "NmorphImagePreview now supports ArrowLeft and ArrowRight keyboard navigation while the preview is open, including wrap-around for image sets.",
         "icon-wrapper-centering":
@@ -279,6 +281,18 @@ export default {
           "Docs API tables can now use inline descriptions when an i18n key is not available, avoiding missing-translation noise for new component pages.",
         "link-icon-name-prop":
           "NmorphLink now accepts iconName/icon-name to render a library icon before the link text, with docs and tests covering the new prop.",
+        "link-anchor-attrs":
+          "NmorphLink 现在会把 rel、referrerpolicy、download、aria-label 和 title 转发到内部 anchor，并将 target=\"blank\" 渲染为 _blank。",
+        "callout-rich-link-slots":
+          "NmorphCallout 现在支持 header/title/default slots 来安全渲染 rich content，也可以把 root 渲染为带 href、target、rel 和 referrerpolicy 的外部链接。",
+        "file-card-embedded-surface":
+          "NmorphFileCard 现在支持用于嵌入附件的 soft/plain surface，并可关闭 extension badge 和图标背景。",
+        "attachment-preview-embedded-controls":
+          "NmorphAudioPreview 和 NmorphVideoPreview 现在支持用于嵌入附件的 soft/plain surface，并在媒体图标上显示 play/pause；PDF FileCard 预览会在文件图标上显示眼睛操作。",
+        "file-card-audio-media-preview":
+          "NmorphFileCard 现在可以通过 media-preview 从 previewSrc 渲染嵌入式音频和视频预览，同时保留统一的 file-card 标题、类型/大小 metadata、surface 和下载操作。",
+        "notification-duration-value-toggle":
+          "NmorphNotificationProvider 的 duration indicator 现在支持 showDurationValue: false，仅显示进度条倒计时。",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":
@@ -778,6 +792,11 @@ export default {
         underline: "悬停时显示下划线",
         "icon-name": "图标列表中的名称",
         target: "原生 target 属性",
+        rel: "anchor 的原生 rel 属性",
+        referrerpolicy: "anchor 的原生 referrerpolicy 属性",
+        download: "anchor 的原生 download 属性",
+        "aria-label": "内部链接的可访问名称",
+        title: "anchor 的原生 title 属性",
         disabled: "禁用链接",
         color: "Overrides the link color",
       },
@@ -1506,6 +1525,13 @@ export default {
         type: "定义 callout 类型",
         title: "在 callout 中显示的标题",
         content: "在 callout 中显示的内容",
+        as: "根元素标签",
+        href: "as 为 a 时的原生 anchor href",
+        target: "as 为 a 时的原生 anchor target",
+        rel: "as 为 a 时的原生 anchor rel",
+        referrerpolicy: "as 为 a 时的原生 anchor referrerpolicy",
+        download: "as 为 a 时的原生 anchor download",
+        "aria-label": "根链接的可访问名称",
         color: "Overrides the callout accent color",
         padding: "Sets the callout inner spacing",
         "border-radius": "Sets the callout border radius",
@@ -1513,6 +1539,11 @@ export default {
         "title-gap": "Sets the spacing between title and content",
         "title-font-size": "Sets the title font size",
         "content-font-size": "Sets the content font size",
+      },
+      slot: {
+        header: "自定义 header 内容",
+        title: "自定义 title 内容",
+        default: "自定义 body 内容",
       },
       variables: {
         "callout-color": "Callout accent color",

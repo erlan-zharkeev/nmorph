@@ -24,6 +24,31 @@ const attributesData = [
     default: "self",
   },
   {
+    name: "rel",
+    type: "String",
+    default: "undefined",
+  },
+  {
+    name: "referrerpolicy",
+    type: "String",
+    default: "undefined",
+  },
+  {
+    name: "download",
+    type: "String | Boolean",
+    default: "undefined",
+  },
+  {
+    name: "aria-label",
+    type: "String",
+    default: "undefined",
+  },
+  {
+    name: "title",
+    type: "String",
+    default: "undefined",
+  },
+  {
     name: "disabled",
     type: "Boolean",
     default: "false",

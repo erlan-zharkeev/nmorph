@@ -230,6 +230,8 @@ export default {
           "NmorphFileUpload now renders typed previews for uploaded video and audio files, document/file cards for PDF, Office, and unknown files, and keeps image previews for images.",
         "attachment-rendering-notes":
           "Documented the K-Room attachment rendering approach, including app-level attachment routers, Nmorph UI primitives, message attachment data shape, and compatibility with existing images.",
+        "emoji-picker-lazy-locales":
+          "Added optional NmorphEmojiPicker locale files for en, ru, and zh with lazy package imports so host apps can load only the emoji dataset they need.",
         "image-preview-keyboard-navigation":
           "NmorphImagePreview now supports ArrowLeft and ArrowRight keyboard navigation while the preview is open, including wrap-around for image sets.",
         "icon-wrapper-centering":
@@ -290,6 +292,18 @@ export default {
           "Docs API tables can now use inline descriptions when an i18n key is not available, avoiding missing-translation noise for new component pages.",
         "link-icon-name-prop":
           "NmorphLink now accepts iconName/icon-name to render a library icon before the link text, with docs and tests covering the new prop.",
+        "link-anchor-attrs":
+          "NmorphLink now forwards rel, referrerpolicy, download, aria-label, and title to the inner anchor and resolves target=\"blank\" to _blank.",
+        "callout-rich-link-slots":
+          "NmorphCallout now supports header/title/default slots for safe rich content and can render its root as an external anchor with href, target, rel, and referrerpolicy.",
+        "file-card-embedded-surface":
+          "NmorphFileCard now supports soft/plain embedded surfaces plus optional extension badge and icon surface controls for message attachments.",
+        "attachment-preview-embedded-controls":
+          "NmorphAudioPreview and NmorphVideoPreview now support embedded soft/plain surfaces and show play/pause controls on the media icon, while PDF FileCard previews expose an eye action on the file icon.",
+        "file-card-audio-media-preview":
+          "NmorphFileCard can now render embedded audio and video previews from previewSrc through media-preview while keeping the shared file-card title, type/size metadata, surface, and download action.",
+        "notification-duration-value-toggle":
+          "NmorphNotificationProvider duration indicators now support showDurationValue: false for progress-only countdowns.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":
@@ -796,6 +810,11 @@ export default {
         underline: "Show underline on hover",
         "icon-name": "Name from the icon list",
         target: "Native target attribute",
+        rel: "Native anchor rel attribute",
+        referrerpolicy: "Native anchor referrerpolicy attribute",
+        download: "Native anchor download attribute",
+        "aria-label": "Accessible label for the inner anchor",
+        title: "Native anchor title attribute",
         disabled: "Disable the link",
         color: "Overrides the link color",
       },
@@ -1576,6 +1595,13 @@ export default {
         type: "Defines the callout type",
         title: "Title displayed in the callout",
         content: "Content displayed in the callout",
+        as: "Root element tag",
+        href: "Native anchor href when as is a",
+        target: "Native anchor target when as is a",
+        rel: "Native anchor rel when as is a",
+        referrerpolicy: "Native anchor referrerpolicy when as is a",
+        download: "Native anchor download when as is a",
+        "aria-label": "Accessible label for the root anchor",
         color: "Overrides the callout accent color",
         padding: "Sets the callout inner spacing",
         "border-radius": "Sets the callout border radius",
@@ -1583,6 +1609,11 @@ export default {
         "title-gap": "Sets the spacing between title and content",
         "title-font-size": "Sets the title font size",
         "content-font-size": "Sets the content font size",
+      },
+      slot: {
+        header: "Custom header content",
+        title: "Custom title content",
+        default: "Custom body content",
       },
       variables: {
         "callout-color": "Callout accent color",

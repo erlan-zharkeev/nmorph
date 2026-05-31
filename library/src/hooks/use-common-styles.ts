@@ -277,9 +277,89 @@ export const getCommonStyles = () => {
     .nmorph-scroll {
       --thumb-color: var(--nmorph-scroll-thumb-color, var(--nmorph-text-color));
 
+      position: relative;
+      overflow: hidden;
       color-scheme: var(--nmorph-scroll-color-scheme, light);
-      scrollbar-color: var(--thumb-color) transparent;
-      scrollbar-width: thin;
+    }
+
+    .nmorph-scroll__viewport {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      display: inherit;
+      flex-direction: inherit;
+      flex-wrap: inherit;
+      align-content: inherit;
+      align-items: inherit;
+      justify-content: inherit;
+      gap: inherit;
+      grid-auto-flow: inherit;
+      grid-template-columns: inherit;
+      grid-template-rows: inherit;
+      color-scheme: inherit;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .nmorph-scroll__viewport::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+      background: transparent;
+    }
+
+    .nmorph-scroll__bar {
+      position: absolute;
+      z-index: 1;
+      border-radius: var(--border-radius-40);
+      background: transparent;
+      ${nmorphInset()}
+      opacity: 0.78;
+      transition:
+        opacity ease-in-out 0.16s,
+        background-color ease-in-out 0.16s;
+      touch-action: none;
+    }
+
+    .nmorph-scroll__bar--vertical {
+      top: 0;
+      right: 0;
+      width: var(--bar-width);
+    }
+
+    .nmorph-scroll__bar--horizontal {
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: var(--bar-height);
+    }
+
+    .nmorph-scroll__thumb {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: var(--border-radius-40);
+      background-color: var(--thumb-color);
+      cursor: pointer;
+      transition: background-color ease-in-out 0.16s;
+      touch-action: none;
+    }
+
+    .nmorph-scroll__thumb--vertical {
+      width: 100%;
+    }
+
+    .nmorph-scroll__thumb--horizontal {
+      height: 100%;
+    }
+
+    .nmorph-scroll--show-bars .nmorph-scroll__bar,
+    .nmorph-scroll__bar:hover {
+      opacity: 1;
+    }
+
+    .nmorph-scroll--dragging .nmorph-scroll__thumb {
+      cursor: grabbing;
     }
 
     .nmorph-scroll::-webkit-scrollbar {

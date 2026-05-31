@@ -30,6 +30,26 @@ const attributesData: IAttributesTableData[] = [
     default: "undefined",
   },
   {
+    name: "surface",
+    type: "'card' | 'soft' | 'plain'",
+    default: "card",
+  },
+  {
+    name: "embedded",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "show-icon",
+    type: "Boolean",
+    default: "true",
+  },
+  {
+    name: "show-header",
+    type: "Boolean",
+    default: "true",
+  },
+  {
     name: "compact",
     type: "Boolean",
     default: "false",

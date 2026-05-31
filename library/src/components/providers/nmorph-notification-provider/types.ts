@@ -3,6 +3,7 @@ import type { INmorphAlertProps } from '../../feedback/nmorph-alert/types';
 export interface INmorphNotification extends INmorphAlertProps {
   id?: string;
   duration?: number;
+  showDurationValue?: boolean;
   width?: string;
   placement?: TNmorphNotificationPlacement;
 }

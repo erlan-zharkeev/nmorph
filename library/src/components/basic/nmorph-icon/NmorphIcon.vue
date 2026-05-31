@@ -64,10 +64,20 @@ const customStyles = computed(() => {
     width: 100%;
     height: 100%;
     fill: var(--color);
-    stroke-width: 0;
   }
 
-  path {
+  path[stroke],
+  path[stroke-width],
+  path[fill='none'],
+  rect[stroke],
+  rect[stroke-width],
+  rect[fill='none'],
+  line[stroke],
+  line[stroke-width],
+  polyline[stroke],
+  polyline[stroke-width],
+  polygon[stroke],
+  polygon[stroke-width] {
     stroke: var(--color);
   }
 

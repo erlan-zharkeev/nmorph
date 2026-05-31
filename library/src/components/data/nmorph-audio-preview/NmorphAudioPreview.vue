@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useSlots, watch, type CSSProperties } from 'vue';
 import {
-  NmorphButton,
   NmorphIcon,
   NmorphIconAudio,
   NmorphIconDownload,
@@ -17,6 +16,10 @@ const props = withDefaults(defineProps<INmorphAudioPreviewProps>(), {
   name: '',
   durationMs: undefined,
   width: undefined,
+  surface: 'card',
+  embedded: false,
+  showIcon: true,
+  showHeader: true,
   compact: false,
   preload: 'metadata',
   downloadHref: '',
@@ -56,10 +59,15 @@ const hasActions = computed(
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-audio-preview': [
+      props.surface,
+      props.embedded && 'embedded',
+      !props.showIcon && 'no-icon',
+      !props.showHeader && 'no-header',
       props.compact && 'compact',
       props.loading && 'loading',
       props.error && 'error',
       playing.value && 'playing',
+      !hasActions.value && 'no-actions',
     ],
   })
 );
@@ -143,43 +151,61 @@ defineExpose({ audioRef });
       @ended="endedHandler"
       @error="errorHandler"
     />
-    <div class="nmorph-audio-preview__icon">
+    <button
+      v-if="props.showIcon"
+      class="nmorph-audio-preview__icon"
+      type="button"
+      :disabled="props.loading || props.error"
+      :aria-label="playing ? `Pause ${props.name || 'audio'}` : `Play ${props.name || 'audio'}`"
+      @click="togglePlayback"
+    >
       <NmorphIcon v-if="props.loading" size="medium">
         <NmorphIconLoader />
       </NmorphIcon>
       <NmorphIcon v-else size="medium">
         <NmorphIconAudio />
       </NmorphIcon>
-    </div>
-    <NmorphButton
-      class="nmorph-audio-preview__play"
-      height="thin"
-      style-type="transparent"
-      :disabled="props.loading || props.error"
+      <span v-if="!props.loading && !props.error" class="nmorph-audio-preview__play-indicator">
+        <NmorphIcon size="small">
+          <NmorphIconPause v-if="playing" />
+          <NmorphIconPlay v-else />
+        </NmorphIcon>
+      </span>
+    </button>
+    <button
+      v-else-if="!props.loading && !props.error"
+      class="nmorph-audio-preview__play-button"
+      type="button"
+      :aria-label="playing ? `Pause ${props.name || 'audio'}` : `Play ${props.name || 'audio'}`"
       @click="togglePlayback"
     >
-      <template #icon-only>
+      <NmorphIcon size="small">
         <NmorphIconPause v-if="playing" />
         <NmorphIconPlay v-else />
-      </template>
-    </NmorphButton>
+      </NmorphIcon>
+    </button>
     <div class="nmorph-audio-preview__body">
-      <div class="nmorph-audio-preview__header">
+      <div v-if="props.showHeader" class="nmorph-audio-preview__header">
         <span class="nmorph-audio-preview__name">{{ props.name || 'Audio' }}</span>
         <span v-if="props.error && props.errorText" class="nmorph-audio-preview__error">{{ props.errorText }}</span>
         <span v-else class="nmorph-audio-preview__time">{{ currentTimeLabel }} / {{ durationLabel }}</span>
       </div>
-      <input
-        v-model.number="progress"
-        class="nmorph-audio-preview__range"
-        type="range"
-        min="0"
-        max="100"
-        step="0.1"
-        :style="progressStyle"
-        :disabled="props.loading || props.error || resolvedDuration <= 0"
-        :aria-label="`Audio progress ${props.name || ''}`"
-      />
+      <div class="nmorph-audio-preview__control">
+        <input
+          v-model.number="progress"
+          class="nmorph-audio-preview__range"
+          type="range"
+          min="0"
+          max="100"
+          step="0.1"
+          :style="progressStyle"
+          :disabled="props.loading || props.error || resolvedDuration <= 0"
+          :aria-label="`Audio progress ${props.name || ''}`"
+        />
+        <span v-if="!props.showHeader" class="nmorph-audio-preview__time"
+          >{{ currentTimeLabel }} / {{ durationLabel }}</span
+        >
+      </div>
     </div>
     <div v-if="hasActions" class="nmorph-audio-preview__actions">
       <slot name="actions">
@@ -233,21 +259,68 @@ defineExpose({ audioRef });
   }
 
   .nmorph-audio-preview__icon {
+    position: relative;
     display: flex;
     flex: 0 0 auto;
     justify-content: center;
     align-items: center;
     width: 36px;
     height: 36px;
+    padding: 0;
     color: var(--nmorph-accent-color);
     background: color-mix(in srgb, var(--nmorph-accent-color) 12%, transparent);
+    border: 0;
     border-radius: var(--default-border-radius);
+    cursor: pointer;
 
     --color: currentColor;
+
+    &:disabled {
+      cursor: default;
+    }
   }
 
-  .nmorph-audio-preview__play {
+  .nmorph-audio-preview__play-button {
+    display: inline-flex;
     flex: 0 0 auto;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    color: var(--nmorph-accent-color);
+    background: color-mix(in srgb, var(--nmorph-accent-color) 10%, transparent);
+    border: 0;
+    border-radius: var(--border-radius-circular);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--nmorph-focus-text-color);
+      background: var(--nmorph-accent-color);
+    }
+
+    .nmorph-icon {
+      --color: currentColor;
+    }
+  }
+
+  .nmorph-audio-preview__play-indicator {
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 18px;
+    height: 18px;
+    color: var(--nmorph-accent-color);
+    background: var(--nmorph-main-color);
+    border-radius: var(--border-radius-circular);
+    box-shadow: var(--nmorph-shadow-outset);
+
+    .nmorph-icon {
+      --color: currentColor;
+    }
   }
 
   .nmorph-audio-preview__body {
@@ -255,6 +328,7 @@ defineExpose({ audioRef });
     flex: 1 1 0;
     flex-direction: column;
     gap: var(--indentation-02);
+    box-sizing: border-box;
     min-width: 0;
   }
 
@@ -263,6 +337,14 @@ defineExpose({ audioRef });
     gap: var(--indentation-02);
     justify-content: space-between;
     align-items: center;
+    min-width: 0;
+  }
+
+  .nmorph-audio-preview__control {
+    display: flex;
+    gap: var(--indentation-02);
+    align-items: center;
+    width: 100%;
     min-width: 0;
   }
 
@@ -294,6 +376,7 @@ defineExpose({ audioRef });
   }
 
   .nmorph-audio-preview__range {
+    flex: 1 1 0;
     width: 100%;
     min-width: 0;
     height: 6px;
@@ -367,6 +450,70 @@ defineExpose({ audioRef });
     .nmorph-audio-preview__icon {
       width: 30px;
       height: 30px;
+    }
+  }
+
+  &.nmorph-audio-preview--no-actions {
+    .nmorph-audio-preview__body {
+      padding-inline-end: var(--indentation-02);
+    }
+  }
+
+  &.nmorph-audio-preview--embedded {
+    width: var(--nmorph-audio-preview-width, 100%);
+    min-height: auto;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+
+    .nmorph-audio-preview__body {
+      gap: 0;
+      padding-inline-end: 0;
+    }
+
+    .nmorph-audio-preview__range {
+      height: 5px;
+    }
+
+    .nmorph-audio-preview__range::-webkit-slider-thumb {
+      width: 11px;
+      height: 11px;
+      box-shadow: none;
+    }
+
+    .nmorph-audio-preview__range::-moz-range-thumb {
+      width: 11px;
+      height: 11px;
+      box-shadow: none;
+    }
+
+    .nmorph-audio-preview__play-indicator {
+      box-shadow: none;
+    }
+  }
+
+  &.nmorph-audio-preview--no-header {
+    .nmorph-audio-preview__time {
+      flex: 0 0 auto;
+    }
+  }
+
+  &.nmorph-audio-preview--soft {
+    background: color-mix(in srgb, var(--nmorph-accent-color) 6%, transparent);
+    box-shadow: none;
+
+    .nmorph-audio-preview__play-indicator {
+      box-shadow: none;
+    }
+  }
+
+  &.nmorph-audio-preview--plain {
+    background: transparent;
+    box-shadow: none;
+
+    .nmorph-audio-preview__play-indicator {
+      box-shadow: none;
     }
   }
 

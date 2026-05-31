@@ -3,6 +3,7 @@ import { createSSRApp, defineComponent, h, nextTick, reactive, ref } from 'vue';
 import { renderToString } from '@vue/server-renderer';
 import { describe, expect, it, vi } from 'vitest';
 import { NmorphLibrary } from '../src/main';
+import { loadNmorphEmojiLocale, nmorphEmojiQuickList } from '../src/emoji';
 import { useFieldValidation } from '../src/hooks/use-field-validation';
 import { getCommonStyles } from '../src/hooks/use-common-styles';
 import {
@@ -33,6 +34,7 @@ import {
   NmorphDrawer,
   NmorphDropdown,
   NmorphEmpty,
+  NmorphEmojiPicker,
   NmorphFileCard,
   NmorphFileUpload,
   NmorphForm,
@@ -93,6 +95,11 @@ const checkboxOptions = [
 ];
 
 const tableData = [{ name: 'Button', status: 'Ready' }];
+const emojiData = [
+  { emoji: '😀', annotation: 'grinning face', tags: ['smile'], group: 'Smileys', order: 1 },
+  { emoji: '🚀', annotation: 'rocket', tags: ['launch'], group: 'Objects', order: 1 },
+  { emoji: '✅', annotation: 'check mark', tags: ['done'], group: 'Symbols', order: 1 },
+];
 const virtualItems = Array.from({ length: 40 }, (_, index) => ({
   id: index + 1,
   title: `Virtual item ${index + 1}`,
@@ -284,6 +291,11 @@ const renderCases = [
     name: 'NmorphEmpty',
     component: NmorphEmpty,
     props: { title: 'Nothing here', description: 'Create the first item to get started.' },
+  },
+  {
+    name: 'NmorphEmojiPicker',
+    component: NmorphEmojiPicker,
+    props: { dataSource: emojiData, quickList: ['😀', '🚀'], initialExpanded: false },
   },
   {
     name: 'NmorphFileCard',
@@ -631,6 +643,15 @@ const mountCase = async (renderCase) => {
 };
 
 describe('components', () => {
+  it('loads packaged emoji locale data lazily', async () => {
+    const locale = await loadNmorphEmojiLocale('en');
+
+    expect(locale.language).toBe('en');
+    expect(locale.data.length).toBeGreaterThan(1000);
+    expect(locale.data[0].emoji).toBe('😀');
+    expect(locale.quickList).toEqual(nmorphEmojiQuickList);
+  });
+
   it.each(renderCases)('renders $name', async (renderCase) => {
     await mountCase(renderCase);
   });
@@ -907,6 +928,114 @@ describe('components', () => {
     error.unmount();
   });
 
+  it('selects quick emoji and expands compact emoji picker', async () => {
+    const wrapper = mount(NmorphEmojiPicker, {
+      props: {
+        dataSource: emojiData,
+        quickList: ['😀', '🚀'],
+        initialExpanded: false,
+        i18n: {
+          expandLabel: 'Expand emoji',
+          quickLabel: 'Quick emoji',
+        },
+      },
+    });
+
+    expect(wrapper.find('.nmorph-emoji-picker__quick-list').exists()).toBe(true);
+
+    await wrapper.findAll('.nmorph-emoji-picker__quick-button')[1].trigger('click');
+
+    expect(wrapper.emitted('select')?.at(-1)).toEqual(['🚀']);
+
+    const expandButton = wrapper.find('.nmorph-emoji-picker__expand-button');
+
+    expect(expandButton.attributes('aria-label')).toBe('Expand emoji');
+
+    await expandButton.trigger('click');
+
+    expect(wrapper.emitted('expand')).toHaveLength(1);
+    expect(wrapper.find('.nmorph-emoji-picker__panel').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-emoji-picker__quick-list').exists()).toBe(false);
+
+    wrapper.unmount();
+  });
+
+  it('filters emoji by annotation and tags', async () => {
+    const wrapper = mount(NmorphEmojiPicker, {
+      props: {
+        dataSource: {
+          Smileys: [emojiData[0]],
+          Objects: [emojiData[1]],
+          Symbols: [emojiData[2]],
+        },
+        initialExpanded: true,
+      },
+    });
+
+    await wrapper.find('.nmorph-emoji-picker__search-input').setValue('launch');
+    await nextTick();
+
+    const buttons = wrapper.findAll('.nmorph-emoji-picker__emoji');
+
+    expect(buttons).toHaveLength(1);
+    expect(buttons[0].text()).toBe('🚀');
+
+    await buttons[0].trigger('click');
+
+    expect(wrapper.emitted('select')?.at(-1)).toEqual(['🚀']);
+
+    wrapper.unmount();
+  });
+
+  it('filters emoji by localized group labels', async () => {
+    const wrapper = mount(NmorphEmojiPicker, {
+      props: {
+        language: 'ru',
+        dataSource: [{ emoji: '😀', annotation: 'радость', group: 'Smileys', groupLabel: 'Смайлы' }],
+        i18n: {
+          categories: {
+            Smileys: 'Смайлы',
+          },
+        },
+        initialExpanded: true,
+      },
+    });
+
+    await wrapper.find('.nmorph-emoji-picker__search-input').setValue('смай');
+    await nextTick();
+
+    const buttons = wrapper.findAll('.nmorph-emoji-picker__emoji');
+
+    expect(buttons).toHaveLength(1);
+    expect(buttons[0].text()).toBe('😀');
+
+    wrapper.unmount();
+  });
+
+  it('moves emoji grid focus with keyboard navigation', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphEmojiPicker, {
+      props: {
+        dataSource: emojiData.map((item) => ({ ...item, group: 'Smileys' })),
+        initialExpanded: true,
+      },
+      attachTo: target,
+    });
+
+    const buttons = wrapper.findAll('.nmorph-emoji-picker__emoji');
+
+    await buttons[0].trigger('focus');
+    await buttons[0].trigger('keydown', { key: 'ArrowRight' });
+    await nextTick();
+
+    expect(document.activeElement).toBe(buttons[1].element);
+
+    wrapper.unmount();
+    target.remove();
+  });
+
   it('updates textarea value, forwards attrs, and resizes to content', async () => {
     const wrapper = mount(NmorphTextarea, {
       props: {
@@ -957,7 +1086,8 @@ describe('components', () => {
         height: '60px',
       },
       slots: {
-        default: '<template #default="{ item, index }"><div class="virtual-row">{{ index }}: {{ item.title }}</div></template>',
+        default:
+          '<template #default="{ item, index }"><div class="virtual-row">{{ index }}: {{ item.title }}</div></template>',
       },
     });
 
@@ -1006,9 +1136,7 @@ describe('components', () => {
     const drawer = wrapper.find('.nmorph-drawer');
     const drawerElement = drawer.element as HTMLElement;
 
-    expect(drawer.classes()).toEqual(
-      expect.arrayContaining(['nmorph-drawer--left', 'nmorph-drawer--open'])
-    );
+    expect(drawer.classes()).toEqual(expect.arrayContaining(['nmorph-drawer--left', 'nmorph-drawer--open']));
     expect(drawerElement.style.getPropertyValue('--nmorph-drawer-size')).toBe('280px');
     expect(drawer.attributes('aria-label')).toBe('Settings');
     expect(wrapper.find('.custom-drawer-content').text()).toBe('Drawer content');
@@ -1467,6 +1595,410 @@ describe('components', () => {
     );
   });
 
+  it('renders file card surface variants without requiring inner class overrides', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'very-long-file-name-that-should-still-use-the-standard-ellipsis-layout.pdf',
+        mimeType: 'application/pdf',
+        size: 4096,
+        surface: 'soft',
+        showExtensionBadge: false,
+        iconSurface: false,
+        compact: true,
+      },
+    });
+
+    await nextTick();
+
+    const card = wrapper.find('.nmorph-file-card');
+
+    expect(card.classes()).toEqual(
+      expect.arrayContaining(['nmorph-file-card--soft', 'nmorph-file-card--compact', 'nmorph-file-card--icon-plain'])
+    );
+    expect(card.classes()).not.toContain('nmorph-file-card--card');
+    expect(wrapper.find('.nmorph-file-card__badge').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__icon').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-file-card__name').text()).toBe(
+      'very-long-file-name-that-should-still-use-the-standard-ellipsis-layout.pdf'
+    );
+
+    wrapper.unmount();
+  });
+
+  it('keeps file card card surface and extension badge enabled by default', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'report.pdf',
+        mimeType: 'application/pdf',
+      },
+    });
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-file-card').classes()).toContain('nmorph-file-card--card');
+    expect(wrapper.find('.nmorph-file-card').classes()).not.toContain('nmorph-file-card--icon-plain');
+    expect(wrapper.find('.nmorph-file-card__badge').text()).toBe('pdf');
+
+    wrapper.unmount();
+  });
+
+  it('renders audio media preview inside the file card shell', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'voice-message.mp3',
+        mimeType: 'audio/mpeg',
+        size: 8192,
+        previewSrc: 'blob:voice',
+        downloadHref: 'blob:voice',
+        mediaPreview: 'audio',
+        surface: 'soft',
+        showExtensionBadge: false,
+        iconSurface: false,
+        compact: true,
+      },
+    });
+
+    await nextTick();
+
+    const card = wrapper.find('.nmorph-file-card');
+    const audioPreview = wrapper.find('.nmorph-file-card__audio-preview.nmorph-audio-preview');
+    const audio = audioPreview.find('audio');
+    const actionLinks = wrapper.findAll('.nmorph-file-card__actions .nmorph-file-card__action-link');
+
+    expect(card.classes()).toEqual(
+      expect.arrayContaining([
+        'nmorph-file-card--soft',
+        'nmorph-file-card--compact',
+        'nmorph-file-card--media',
+        'nmorph-file-card--media-audio',
+      ])
+    );
+    expect(card.classes()).toContain('nmorph-file-card--icon-plain');
+    expect(wrapper.find('.nmorph-file-card__name').text()).toBe('voice-message.mp3');
+    expect(wrapper.find('.nmorph-file-card__meta').text()).toBe('mp3 · 8 KB');
+    expect(wrapper.find('.nmorph-file-card__badge').exists()).toBe(false);
+    expect(audioPreview.classes()).toEqual(
+      expect.arrayContaining([
+        'nmorph-audio-preview--plain',
+        'nmorph-audio-preview--embedded',
+        'nmorph-audio-preview--compact',
+        'nmorph-audio-preview--no-icon',
+        'nmorph-audio-preview--no-header',
+        'nmorph-audio-preview--no-actions',
+      ])
+    );
+    expect(audio.exists()).toBe(true);
+    expect(audio.attributes('src')).toBe('blob:voice');
+    expect(wrapper.find('button.nmorph-audio-preview__play-button').attributes('aria-label')).toBe(
+      'Play voice-message.mp3'
+    );
+    expect(wrapper.find('.nmorph-audio-preview__range').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-audio-preview__actions').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-audio-preview__icon').exists()).toBe(false);
+    expect(actionLinks).toHaveLength(1);
+    expect(actionLinks[0].attributes('href')).toBe('blob:voice');
+    expect(actionLinks[0].attributes('download')).toBe('voice-message.mp3');
+    expect(wrapper.find('.nmorph-file-card__icon-action').exists()).toBe(false);
+
+    wrapper.unmount();
+  });
+
+  it('renders video media preview inside the file card shell with shared title and metadata', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'clip.mp4',
+        mimeType: 'video/mp4',
+        size: 1048576,
+        previewSrc: 'blob:clip',
+        downloadHref: 'blob:clip',
+        mediaPreview: 'video',
+        surface: 'soft',
+        showExtensionBadge: false,
+        compact: true,
+      },
+    });
+
+    await nextTick();
+
+    const card = wrapper.find('.nmorph-file-card');
+    const videoPreview = wrapper.find('.nmorph-file-card__video-preview.nmorph-video-preview');
+    const video = videoPreview.find('video');
+    const actionLinks = wrapper.findAll('.nmorph-file-card__actions .nmorph-file-card__action-link');
+
+    expect(card.classes()).toEqual(
+      expect.arrayContaining([
+        'nmorph-file-card--soft',
+        'nmorph-file-card--compact',
+        'nmorph-file-card--media',
+        'nmorph-file-card--media-video',
+      ])
+    );
+    expect(wrapper.find('.nmorph-file-card__name').text()).toBe('clip.mp4');
+    expect(wrapper.find('.nmorph-file-card__meta').text()).toBe('mp4 · 1 MB');
+    expect(wrapper.find('.nmorph-file-card__badge').exists()).toBe(false);
+    expect(videoPreview.classes()).toEqual(
+      expect.arrayContaining([
+        'nmorph-video-preview--plain',
+        'nmorph-video-preview--embedded',
+        'nmorph-video-preview--compact',
+        'nmorph-video-preview--no-meta',
+        'nmorph-video-preview--no-actions',
+      ])
+    );
+    expect(video.exists()).toBe(true);
+    expect(video.attributes('src')).toBe('blob:clip');
+    expect(video.attributes('controls')).toBeUndefined();
+    expect(wrapper.find('.nmorph-video-preview__meta').exists()).toBe(false);
+    expect(wrapper.find('button.nmorph-video-preview__play').attributes('aria-label')).toBe('Play clip.mp4');
+    expect(wrapper.find('.nmorph-video-preview__actions').exists()).toBe(false);
+    expect(actionLinks).toHaveLength(1);
+    expect(actionLinks[0].attributes('href')).toBe('blob:clip');
+    expect(actionLinks[0].attributes('download')).toBe('clip.mp4');
+    expect(wrapper.find('.nmorph-file-card__icon-action').exists()).toBe(false);
+
+    wrapper.unmount();
+  });
+
+  it('falls back to regular file card when audio media preview has no preview source', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'voice-message.mp3',
+        mimeType: 'audio/mpeg',
+        mediaPreview: 'audio',
+      },
+    });
+
+    await nextTick();
+
+    const card = wrapper.find('.nmorph-file-card');
+
+    expect(card.classes()).not.toContain('nmorph-file-card--media-audio');
+    expect(wrapper.find('.nmorph-file-card__audio-preview').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__actions').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__badge').text()).toBe('mp3');
+
+    wrapper.unmount();
+  });
+
+  it('falls back to regular file card when video media preview has no preview source', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'clip.mp4',
+        mimeType: 'video/mp4',
+        mediaPreview: 'video',
+      },
+    });
+
+    await nextTick();
+
+    const card = wrapper.find('.nmorph-file-card');
+
+    expect(card.classes()).not.toContain('nmorph-file-card--media-video');
+    expect(wrapper.find('.nmorph-file-card__video-preview').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__actions').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__badge').text()).toBe('mp4');
+
+    wrapper.unmount();
+  });
+
+  it('renders embedded audio preview surfaces with playback control on the icon', async () => {
+    const wrapper = mount(NmorphAudioPreview, {
+      props: {
+        src: 'blob:audio',
+        name: '32.mp3',
+        durationMs: 200000,
+        surface: 'soft',
+        downloadHref: 'blob:audio',
+      },
+    });
+
+    await nextTick();
+
+    const preview = wrapper.find('.nmorph-audio-preview');
+    const iconButton = wrapper.find('button.nmorph-audio-preview__icon');
+
+    expect(preview.classes()).toEqual(expect.arrayContaining(['nmorph-audio-preview--soft']));
+    expect(iconButton.exists()).toBe(true);
+    expect(iconButton.attributes('aria-label')).toBe('Play 32.mp3');
+    expect(wrapper.find('.nmorph-audio-preview__play-indicator').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-audio-preview__play').exists()).toBe(false);
+
+    wrapper.unmount();
+  });
+
+  it('keeps audio preview time away from the edge when actions are hidden', async () => {
+    const wrapper = mount(NmorphAudioPreview, {
+      props: {
+        src: 'blob:audio',
+        name: '32.mp3',
+        durationMs: 200000,
+        showDefaultActions: false,
+      },
+    });
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-audio-preview').classes()).toContain('nmorph-audio-preview--no-actions');
+    expect(wrapper.find('.nmorph-audio-preview__actions').exists()).toBe(false);
+
+    wrapper.unmount();
+  });
+
+  it('renders embedded video preview surfaces with playback control over the media', async () => {
+    const wrapper = mount(NmorphVideoPreview, {
+      props: {
+        src: 'blob:video',
+        name: 'clip.mp4',
+        surface: 'plain',
+        embedded: true,
+        showMeta: false,
+        controls: false,
+      },
+    });
+
+    await nextTick();
+
+    const preview = wrapper.find('.nmorph-video-preview');
+    const playButton = wrapper.find('button.nmorph-video-preview__play');
+
+    expect(preview.classes()).toEqual(
+      expect.arrayContaining([
+        'nmorph-video-preview--plain',
+        'nmorph-video-preview--embedded',
+        'nmorph-video-preview--no-meta',
+      ])
+    );
+    expect(wrapper.find('.nmorph-video-preview__meta').exists()).toBe(false);
+    expect(playButton.exists()).toBe(true);
+    expect(playButton.attributes('aria-label')).toBe('Play clip.mp4');
+
+    await wrapper.find('video').trigger('play');
+
+    expect(preview.classes()).toEqual(expect.arrayContaining(['nmorph-video-preview--playing']));
+    expect(playButton.attributes('aria-label')).toBe('Pause clip.mp4');
+
+    wrapper.unmount();
+  });
+
+  it('renders pdf file preview action on the file icon', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'report.pdf',
+        mimeType: 'application/pdf',
+        previewSrc: 'blob:report',
+        downloadHref: 'blob:report',
+      },
+    });
+
+    await nextTick();
+
+    const iconAction = wrapper.find('.nmorph-file-card__icon-action');
+    const defaultActions = wrapper.findAll('.nmorph-file-card__actions .nmorph-file-card__action-link');
+
+    expect(iconAction.exists()).toBe(true);
+    expect(iconAction.attributes('href')).toBe('blob:report');
+    expect(iconAction.attributes('target')).toBe('_blank');
+    expect(iconAction.attributes('rel')).toBe('noopener noreferrer');
+    expect(defaultActions).toHaveLength(1);
+    expect(defaultActions[0].attributes('download')).toBe('report.pdf');
+
+    iconAction.element.addEventListener('click', (event) => event.preventDefault());
+    await iconAction.trigger('click');
+
+    expect(wrapper.emitted('open')).toHaveLength(1);
+
+    wrapper.unmount();
+  });
+
+  it('uses download href as a pdf preview fallback when preview source is missing', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'report.pdf',
+        mimeType: 'application/pdf',
+        downloadHref: 'blob:download-report',
+      },
+    });
+
+    await nextTick();
+
+    const iconAction = wrapper.find('.nmorph-file-card__icon-action');
+    const defaultActions = wrapper.findAll('.nmorph-file-card__actions .nmorph-file-card__action-link');
+
+    expect(iconAction.exists()).toBe(true);
+    expect(iconAction.attributes('href')).toBe('blob:download-report');
+    expect(iconAction.attributes('target')).toBe('_blank');
+    expect(iconAction.attributes('rel')).toBe('noopener noreferrer');
+    expect(defaultActions).toHaveLength(1);
+    expect(defaultActions[0].attributes('download')).toBe('report.pdf');
+
+    iconAction.element.addEventListener('click', (event) => event.preventDefault());
+    await iconAction.trigger('click');
+
+    expect(wrapper.emitted('open')).toHaveLength(1);
+
+    wrapper.unmount();
+  });
+
+  it('renders slotted callout content without using legacy content html', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphCallout },
+        data: () => ({
+          host: 'example.com',
+          title: '<img src=x onerror=alert(1)>',
+          description: '<strong>External description</strong>',
+        }),
+        template: `
+          <NmorphCallout title="Ignored title" content="<strong class='legacy-content'>Legacy</strong>">
+            <template #title>{{ host }}</template>
+            <strong class="preview-title">{{ title }}</strong>
+            <small class="preview-description">{{ description }}</small>
+          </NmorphCallout>
+        `,
+      })
+    );
+
+    await nextTick();
+
+    expect(wrapper.find('.legacy-content').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-callout__title').text()).toBe('example.com');
+    expect(wrapper.find('.preview-title').text()).toBe('<img src=x onerror=alert(1)>');
+    expect(wrapper.find('.preview-title img').exists()).toBe(false);
+    expect(wrapper.find('.preview-description').text()).toBe('<strong>External description</strong>');
+    expect(wrapper.find('.preview-description strong').exists()).toBe(false);
+
+    wrapper.unmount();
+  });
+
+  it('can render callout root as an external anchor', async () => {
+    const wrapper = mount(NmorphCallout, {
+      props: {
+        as: 'a',
+        href: 'https://example.com/preview',
+        target: 'blank',
+        rel: 'noopener noreferrer nofollow ugc',
+        referrerpolicy: 'no-referrer',
+        type: 'info',
+      },
+      slots: {
+        default: '<div class="preview-card">Preview</div>',
+      },
+    });
+
+    await nextTick();
+
+    const callout = wrapper.find('.nmorph-callout');
+
+    expect(callout.element.tagName).toBe('A');
+    expect(callout.attributes('href')).toBe('https://example.com/preview');
+    expect(callout.attributes('target')).toBe('_blank');
+    expect(callout.attributes('rel')).toBe('noopener noreferrer nofollow ugc');
+    expect(callout.attributes('referrerpolicy')).toBe('no-referrer');
+    expect(wrapper.find('.preview-card').exists()).toBe(true);
+
+    wrapper.unmount();
+  });
+
   it('renders link icon by icon name before text', async () => {
     const wrapper = mount(NmorphLink, {
       props: {
@@ -1483,6 +2015,36 @@ describe('components', () => {
     expect(icon.exists()).toBe(true);
     expect(icon.find('svg').exists()).toBe(true);
     expect(link.firstElementChild).toBe(icon.element);
+
+    wrapper.unmount();
+  });
+
+  it('passes external link attributes to the inner anchor', async () => {
+    const wrapper = mount(NmorphLink, {
+      props: {
+        href: 'https://example.com',
+        target: 'blank',
+        rel: 'noopener noreferrer nofollow ugc',
+        referrerpolicy: 'no-referrer',
+        download: 'message-link.html',
+        ariaLabel: 'Open external message link',
+        title: 'External link',
+      },
+    });
+
+    await nextTick();
+
+    const link = wrapper.find('a');
+
+    expect(link.attributes('href')).toBe('https://example.com');
+    expect(link.attributes('target')).toBe('_blank');
+    expect(link.attributes('rel')).toBe('noopener noreferrer nofollow ugc');
+    expect(link.attributes('referrerpolicy')).toBe('no-referrer');
+    expect(link.attributes('download')).toBe('message-link.html');
+    expect(link.attributes('aria-label')).toBe('Open external message link');
+    expect(link.attributes('title')).toBe('External link');
+    expect(wrapper.attributes('rel')).toBeUndefined();
+    expect(wrapper.attributes('referrerpolicy')).toBeUndefined();
 
     wrapper.unmount();
   });
@@ -1655,9 +2217,7 @@ describe('components', () => {
     expect(meter.attributes('role')).toBe('meter');
     expect(meter.attributes('aria-label')).toBe('Mic level');
     expect(meter.attributes('aria-valuenow')).toBe('75');
-    expect(meter.classes()).toEqual(
-      expect.arrayContaining(['nmorph-audio-meter--line', 'nmorph-audio-meter--warn'])
-    );
+    expect(meter.classes()).toEqual(expect.arrayContaining(['nmorph-audio-meter--line', 'nmorph-audio-meter--warn']));
     expect((meter.element as HTMLElement).style.getPropertyValue('--nmorph-audio-meter-percent')).toBe('75%');
 
     wrapper.unmount();
@@ -1907,10 +2467,7 @@ describe('components', () => {
       const inputWrapper = wrapper.find('input[type="file"]');
       const input = inputWrapper.element as HTMLInputElement;
 
-      setFileInputState(input, [
-        createTestFile('clip.mp4', 'video/mp4'),
-        createTestFile('voice.mp3', 'audio/mpeg'),
-      ]);
+      setFileInputState(input, [createTestFile('clip.mp4', 'video/mp4'), createTestFile('voice.mp3', 'audio/mpeg')]);
       await inputWrapper.trigger('change');
       await nextTick();
 
@@ -2098,8 +2655,8 @@ describe('components', () => {
 
     const field = wrapper.vm.formRef.formData.fields.chatName;
     expect(wrapper.vm.formValue.chatName.value).toBe('abcd');
-    expect((Array.isArray(field.errors) ? field.errors : field.errors.value)).toEqual([]);
-    expect((typeof field.valid === 'boolean' ? field.valid : field.valid.value)).toBe(true);
+    expect(Array.isArray(field.errors) ? field.errors : field.errors.value).toEqual([]);
+    expect(typeof field.valid === 'boolean' ? field.valid : field.valid.value).toBe(true);
 
     wrapper.unmount();
   });
@@ -2649,6 +3206,107 @@ describe('components', () => {
     await nextTick();
 
     expect(wrapper.find('.nmorph-notification-provider__notification').exists()).toBe(true);
+
+    wrapper.unmount();
+  });
+
+  it('renders notification duration indicator and forwards alert border props', async () => {
+    const wrapper = mount(NmorphNotificationProvider, {
+      props: {
+        notifications: [
+          {
+            id: 'timed',
+            type: 'info',
+            title: 'Timed',
+            content: 'Content',
+            duration: 3000,
+            bordered: false,
+          },
+        ],
+      },
+    });
+
+    await nextTick();
+
+    const notification = wrapper.find('.nmorph-notification-provider__notification');
+    const alert = wrapper.find('.nmorph-alert');
+
+    expect(notification.classes()).toContain('nmorph-notification-provider__notification--with-duration');
+    expect(
+      (notification.element as HTMLElement).style.getPropertyValue('--nmorph-notification-provider-duration')
+    ).toBe('3000ms');
+    expect(wrapper.find('.nmorph-notification-provider__duration').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-notification-provider__duration-value').text()).toBe('3s');
+    expect(alert.classes()).not.toContain('nmorph-alert--bordered');
+
+    wrapper.unmount();
+  });
+
+  it('updates notification duration countdown label as time passes', async () => {
+    vi.useFakeTimers();
+
+    const wrapper = mount(NmorphNotificationProvider, {
+      props: {
+        notifications: [
+          {
+            id: 'timed',
+            type: 'error',
+            title: 'Timed',
+            content: 'Content',
+            duration: 60000,
+          },
+        ],
+      },
+    });
+
+    try {
+      await nextTick();
+
+      expect(wrapper.find('.nmorph-notification-provider__duration-value').text()).toBe('60s');
+
+      await vi.advanceTimersByTimeAsync(1000);
+      await nextTick();
+
+      expect(wrapper.find('.nmorph-notification-provider__duration-value').text()).toBe('59s');
+
+      await vi.advanceTimersByTimeAsync(58000);
+      await nextTick();
+
+      expect(wrapper.find('.nmorph-notification-provider__duration-value').text()).toBe('1s');
+    } finally {
+      wrapper.unmount();
+      vi.useRealTimers();
+    }
+  });
+
+  it('can hide only notification duration value while keeping the progress bar', async () => {
+    const wrapper = mount(NmorphNotificationProvider, {
+      props: {
+        notifications: [
+          {
+            id: 'timed',
+            type: 'info',
+            title: 'Timed',
+            content: 'Content',
+            duration: 3000,
+            showDurationValue: false,
+          },
+        ],
+      },
+    });
+
+    await nextTick();
+
+    const duration = wrapper.find('.nmorph-notification-provider__duration');
+    const alert = wrapper.find('.nmorph-alert');
+
+    expect(duration.exists()).toBe(true);
+    expect(duration.attributes('title')).toBeUndefined();
+    expect(alert.attributes('showdurationvalue')).toBeUndefined();
+    expect(alert.attributes('duration')).toBeUndefined();
+    expect(wrapper.find('.nmorph-notification-provider__duration-track').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-notification-provider__duration-bar').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-notification-provider__duration-value').exists()).toBe(false);
 
     wrapper.unmount();
   });
@@ -3502,7 +4160,6 @@ describe('components', () => {
     await nextTick();
 
     const closeButton = document.body.querySelector('.nmorph-dialog__close-icon') as HTMLButtonElement;
-    const firstAction = document.body.querySelector('.first-action') as HTMLButtonElement;
     const lastAction = document.body.querySelector('.last-action') as HTMLButtonElement;
 
     expect(document.activeElement).toBe(closeButton);
@@ -3872,8 +4529,7 @@ describe('components', () => {
     await nextTick();
     await nextTick();
 
-    const getPortals = () =>
-      Array.from(document.body.querySelectorAll<HTMLElement>('.nmorph-image-preview__portal'));
+    const getPortals = () => Array.from(document.body.querySelectorAll<HTMLElement>('.nmorph-image-preview__portal'));
 
     expect(getPortals()).toHaveLength(0);
 
