@@ -44,6 +44,11 @@ const attributesData: IAttributesTableData[] = [
     default: "none",
   },
   {
+    name: "preview-mode",
+    type: "'internal' | 'emit' | 'none'",
+    default: "internal",
+  },
+  {
     name: "surface",
     type: "'card' | 'soft' | 'plain'",
     default: "card",

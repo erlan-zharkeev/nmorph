@@ -318,6 +318,12 @@ export default {
           "Added NmorphMediaGallery for fullscreen mixed image and video galleries with typed items, active index control, keyboard navigation, video pause-on-change/close behavior, and sandbox examples.",
         "preview-portal-shared-flow":
           "NmorphImagePreview and NmorphMediaGallery now share the same preview portal flow, so backdrop clicks, Escape closing, navigation arrows, image action bar controls, and synced video play/pause overlays behave consistently.",
+        "media-gallery-file-card-triggers":
+          "NmorphMediaGallery теперь может сам рендерить image/video trigger grid с FileCard-style именем файла, размером, play overlay, preview, fullscreen и download actions.",
+        "file-card-preview-mode":
+          "NmorphFileCard для image и video previews теперь по умолчанию открывает внутренний NmorphMediaGallery, а preview-mode позволяет оставить emit-only или выключить preview trigger.",
+        "sandbox-media-downloads":
+          "Sandbox media examples теперь используют download-safe href для audio и video, чтобы download action сохранял файл вместо открытия cross-origin preview URL.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":

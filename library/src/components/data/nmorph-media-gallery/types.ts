@@ -1,23 +1,26 @@
 export type NmorphMediaGalleryFit = 'cover' | 'contain';
 export type NmorphMediaGalleryVideoPreload = 'none' | 'metadata' | 'auto';
 
+export interface INmorphMediaGalleryItemBase {
+  src: string;
+  name?: string;
+  size?: number;
+  downloadHref?: string;
+}
+
 export type NmorphMediaGalleryItem =
-  | {
+  | (INmorphMediaGalleryItemBase & {
       kind: 'image';
-      src: string;
-      name?: string;
       alt?: string;
-    }
-  | {
+    })
+  | (INmorphMediaGalleryItemBase & {
       kind: 'video';
-      src: string;
-      name?: string;
       poster?: string;
       controls?: boolean;
       muted?: boolean;
       playsinline?: boolean;
       preload?: NmorphMediaGalleryVideoPreload;
-    };
+    });
 
 export interface INmorphMediaGalleryProps {
   modelValue?: boolean;
@@ -25,6 +28,7 @@ export interface INmorphMediaGalleryProps {
   initialIndex?: number;
   activeIndex?: number;
   zIndex?: number;
+  showTrigger?: boolean;
   showNavigationButtons?: boolean;
   showActionBar?: boolean;
   imageFit?: NmorphMediaGalleryFit;
@@ -36,4 +40,6 @@ export interface INmorphMediaGalleryEmit {
   (e: 'update:active-index', value: number): void;
   (e: 'close'): void;
   (e: 'change', item: NmorphMediaGalleryItem, index: number): void;
+  (e: 'download', item: NmorphMediaGalleryItem, index: number): void;
+  (e: 'fullscreen', item: NmorphMediaGalleryItem, index: number): void;
 }

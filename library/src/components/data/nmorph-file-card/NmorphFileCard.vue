@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useSlots, type Component } from 'vue';
+import { computed, ref, useSlots, type Component } from 'vue';
 import {
   NmorphIcon,
   NmorphIconArchive,
@@ -21,7 +21,9 @@ import {
   NmorphVideoResolution,
 } from '@/components/form/nmorph-file-upload/types';
 import NmorphAudioPreview from '../nmorph-audio-preview/NmorphAudioPreview.vue';
+import NmorphMediaGallery from '../nmorph-media-gallery/NmorphMediaGallery.vue';
 import NmorphVideoPreview from '../nmorph-video-preview/NmorphVideoPreview.vue';
+import type { NmorphMediaGalleryItem } from '../nmorph-media-gallery/types';
 import type { INmorphFileCardEmit, INmorphFileCardProps } from './types';
 
 const CONTRAST_ICON_COLOR = 'var(--nmorph-contrast-text-color)';
@@ -33,6 +35,7 @@ const props = withDefaults(defineProps<INmorphFileCardProps>(), {
   previewSrc: '',
   downloadHref: '',
   mediaPreview: 'none',
+  previewMode: 'internal',
   surface: 'card',
   showExtensionBadge: true,
   iconSurface: true,
@@ -45,6 +48,7 @@ const props = withDefaults(defineProps<INmorphFileCardProps>(), {
 
 const emit = defineEmits<INmorphFileCardEmit>();
 const slots = useSlots();
+const previewOpen = ref(false);
 
 const extension = computed(() => {
   return (props.extension || getFileExtension(props.name) || getPlainFileType(props.mimeType)).toLowerCase();
@@ -103,6 +107,42 @@ const mediaPreviewAvailable = computed(
 );
 const visualMediaPreviewAvailable = computed(() => videoPreviewAvailable.value || imagePreviewAvailable.value);
 const videoPreviewHeight = computed(() => (props.compact ? '96px' : '120px'));
+const mediaGalleryItems = computed<NmorphMediaGalleryItem[]>(() => {
+  if (!props.previewSrc || props.loading || props.error) return [];
+
+  if (imagePreviewAvailable.value) {
+    return [
+      {
+        kind: 'image',
+        src: props.previewSrc,
+        name: props.name,
+        alt: props.name,
+        size: props.size,
+        downloadHref: props.downloadHref,
+      },
+    ];
+  }
+
+  if (videoPreviewAvailable.value) {
+    return [
+      {
+        kind: 'video',
+        src: props.previewSrc,
+        name: props.name,
+        size: props.size,
+        downloadHref: props.downloadHref,
+        controls: true,
+        playsinline: true,
+        preload: 'metadata',
+      },
+    ];
+  }
+
+  return [];
+});
+const shouldOpenInternalPreview = computed(
+  () => props.previewMode === 'internal' && mediaGalleryItems.value.length > 0
+);
 const isPdf = computed(() => props.mimeType.toLowerCase() === 'application/pdf' || extension.value === 'pdf');
 const pdfPreviewHref = computed(() => (isPdf.value ? props.previewSrc || props.downloadHref : ''));
 const previewOnIcon = computed(
@@ -134,7 +174,10 @@ const modifiers = computed(() =>
   })
 );
 
-const openHandler = () => emit('open');
+const openHandler = () => {
+  if (shouldOpenInternalPreview.value) previewOpen.value = true;
+  if (props.previewMode !== 'none') emit('open');
+};
 const downloadHandler = () => emit('download');
 const errorHandler = () => emit('error');
 </script>
@@ -192,6 +235,7 @@ const errorHandler = () => emit('error');
         :controls="false"
         :show-meta="false"
         :show-default-actions="false"
+        :show-preview-action="props.previewMode !== 'none'"
         preview-mode="emit"
         @error="errorHandler"
         @preview="openHandler"
@@ -251,6 +295,13 @@ const errorHandler = () => emit('error');
       </slot>
     </div>
   </div>
+  <NmorphMediaGallery
+    v-if="mediaGalleryItems.length > 0"
+    v-model="previewOpen"
+    :items="mediaGalleryItems"
+    :show-navigation-buttons="false"
+    @download="downloadHandler"
+  />
 </template>
 
 <style lang="scss">

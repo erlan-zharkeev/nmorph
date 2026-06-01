@@ -305,6 +305,12 @@ export default {
           "Added NmorphMediaGallery for fullscreen mixed image and video galleries with typed items, active index control, keyboard navigation, video pause-on-change/close behavior, and sandbox examples.",
         "preview-portal-shared-flow":
           "NmorphImagePreview and NmorphMediaGallery now share the same preview portal flow, so backdrop clicks, Escape closing, navigation arrows, image action bar controls, and synced video play/pause overlays behave consistently.",
+        "media-gallery-file-card-triggers":
+          "NmorphMediaGallery 现在可以自行渲染 image/video trigger grid，并带有 FileCard 风格的文件名、大小标签、play overlay、preview、fullscreen 和 download actions。",
+        "file-card-preview-mode":
+          "NmorphFileCard 的 image 和 video previews 现在默认打开内部 NmorphMediaGallery，并可通过 preview-mode 使用 emit-only 或禁用 preview trigger。",
+        "sandbox-media-downloads":
+          "Sandbox media examples 现在为 audio 和 video 使用 download-safe href，让 download action 保存文件，而不是打开 cross-origin preview URL。",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":

@@ -13,7 +13,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "items",
-    type: "Array&lt;NmorphMediaGalleryItem&gt;",
+    type: "Array&lt;NmorphMediaGalleryItem&gt; (kind, src, name, size, downloadHref)",
     default: "[]",
     required: true,
   },
@@ -31,6 +31,11 @@ const attributesData: IAttributesTableData[] = [
     name: "z-index",
     type: "Number",
     default: "auto",
+  },
+  {
+    name: "show-trigger",
+    type: "Boolean",
+    default: "false",
   },
   {
     name: "show-navigation-buttons",
@@ -59,6 +64,8 @@ const events: IEventsTableData[] = [
   { name: "update:active-index", type: "Number" },
   { name: "close", type: "void" },
   { name: "change", type: "NmorphMediaGalleryItem, Number" },
+  { name: "download", type: "NmorphMediaGalleryItem, Number" },
+  { name: "fullscreen", type: "NmorphMediaGalleryItem, Number" },
 ];
 </script>
 

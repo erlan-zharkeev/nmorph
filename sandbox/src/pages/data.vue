@@ -65,8 +65,8 @@ const brokenImage = 'data:image/png;base64,broken'
 const pdfPreviewSrc = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
 const audioPreviewSrc = 'https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3'
 const videoPreviewSrc = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
-const createDownloadHref = (name: string) =>
-  `data:text/plain;charset=utf-8,${encodeURIComponent(`Sandbox file placeholder: ${name}`)}`
+const createDownloadHref = (name: string, mimeType = 'text/plain') =>
+  `data:${mimeType};charset=utf-8,${encodeURIComponent(`Sandbox file placeholder: ${name}`)}`
 
 type FileCardExample = {
   label: string
@@ -85,7 +85,7 @@ const createFileCard = (
     name,
     mimeType,
     size,
-    downloadHref: createDownloadHref(name),
+    downloadHref: createDownloadHref(name, mimeType),
     ...overrides,
   },
 })
@@ -102,6 +102,7 @@ const fileCardExamples: FileCardExample[] = [
     previewSrc: imageOne,
     downloadHref: imageOne,
     mediaPreview: 'image',
+    previewMode: 'emit',
     surface: 'soft',
     showExtensionBadge: false,
     iconSurface: false,
@@ -115,8 +116,8 @@ const fileCardExamples: FileCardExample[] = [
   }),
   createFileCard('Video preview', 'clip-preview.mp4', 'video/mp4', 7_340_032, {
     previewSrc: videoPreviewSrc,
-    downloadHref: videoPreviewSrc,
     mediaPreview: 'video',
+    previewMode: 'emit',
     surface: 'soft',
     showExtensionBadge: false,
     iconSurface: false,
@@ -124,7 +125,6 @@ const fileCardExamples: FileCardExample[] = [
   }),
   createFileCard('Audio preview', '32.mp3', 'audio/mpeg', 3_407_872, {
     previewSrc: audioPreviewSrc,
-    downloadHref: audioPreviewSrc,
     mediaPreview: 'audio',
     surface: 'soft',
     showExtensionBadge: false,
@@ -141,12 +141,16 @@ const mediaGalleryItems: NmorphMediaGalleryItem[] = [
     src: imageOne,
     name: 'cover-photo.jpeg',
     alt: 'cover-photo.jpeg',
+    size: 245_760,
+    downloadHref: imageOne,
   },
   {
     kind: 'video',
     src: videoPreviewSrc,
     name: 'clip-preview.mp4',
     poster: imageTwo,
+    size: 7_340_032,
+    downloadHref: createDownloadHref('clip-preview.mp4', 'video/mp4'),
     controls: true,
   },
   {
@@ -154,6 +158,8 @@ const mediaGalleryItems: NmorphMediaGalleryItem[] = [
     src: imageThree,
     name: 'gallery-photo.png',
     alt: 'gallery-photo.png',
+    size: 318_464,
+    downloadHref: imageThree,
   },
 ]
 
@@ -422,31 +428,14 @@ const progressColor = (value: number) => {
 
     <SandboxSection title="NmorphMediaGallery">
       <div class="media-gallery-demo">
-        <button
-          v-for="(item, index) in mediaGalleryItems"
-          :key="`${item.kind}-${item.name}`"
-          class="media-gallery-demo__item"
-          type="button"
-          :aria-label="`Open ${item.name}`"
-          @click="openMediaGalleryDemo(index)"
-        >
-          <NmorphImage v-if="item.kind === 'image'" :src="item.src" :alt="item.alt || item.name || ''" :frame-border="0" />
-          <video
-            v-else
-            :src="item.src"
-            :poster="item.poster"
-            muted
-            playsinline
-            preload="metadata"
-          />
-        </button>
+        <NmorphMediaGallery
+          v-model="mediaGalleryOpen"
+          :items="mediaGalleryItems"
+          :active-index="mediaGalleryIndex"
+          show-trigger
+          @update:active-index="mediaGalleryIndex = $event"
+        />
       </div>
-      <NmorphMediaGallery
-        v-model="mediaGalleryOpen"
-        :items="mediaGalleryItems"
-        :active-index="mediaGalleryIndex"
-        @update:active-index="mediaGalleryIndex = $event"
-      />
     </SandboxSection>
 
     <SandboxSection title="NmorphFileCard">
@@ -788,34 +777,7 @@ const progressColor = (value: number) => {
 }
 
 .media-gallery-demo {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(120px, 1fr));
-  gap: 12px;
   max-width: 680px;
-}
-
-.media-gallery-demo__item {
-  display: block;
-  aspect-ratio: 16 / 9;
-  min-width: 0;
-  padding: 0;
-  overflow: hidden;
-  color: inherit;
-  background: transparent;
-  border: 0;
-  border-radius: var(--default-border-radius);
-  cursor: pointer;
-}
-
-.media-gallery-demo__item .nmorph-image,
-.media-gallery-demo__item video {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.media-gallery-demo__item video {
-  object-fit: cover;
 }
 
 .file-card-grid {
