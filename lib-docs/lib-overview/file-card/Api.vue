@@ -54,6 +54,26 @@ const attributesData: IAttributesTableData[] = [
     default: "card",
   },
   {
+    name: "height",
+    type: "Height",
+    default: "undefined",
+  },
+  {
+    name: "show-name",
+    type: "Boolean",
+    default: "true",
+  },
+  {
+    name: "show-meta",
+    type: "Boolean",
+    default: "true",
+  },
+  {
+    name: "show-size",
+    type: "Boolean",
+    default: "true",
+  },
+  {
     name: "show-extension-badge",
     type: "Boolean",
     default: "true",
@@ -88,9 +108,20 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "true",
   },
+  {
+    name: "show-playback-button",
+    type: "Boolean",
+    default: "true",
+  },
 ];
 
-const slots: ISlotsTableData[] = [{ name: "actions" }];
+const slots: ISlotsTableData[] = [
+  {
+    name: "actions",
+    description:
+      "Replaces the default action controls. Custom actions render in the same top-right action area for visual, compact, and regular file cards and receive fileName, previewSrc, downloadHref, open, and download slot props.",
+  },
+];
 const events: IEventsTableData[] = [
   { name: "open", type: "void" },
   { name: "download", type: "void" },

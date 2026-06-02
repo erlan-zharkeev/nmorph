@@ -22,6 +22,7 @@ export interface INmorphVideoPreviewProps {
   loading?: boolean;
   error?: boolean;
   errorText?: string;
+  showPlaybackButton?: boolean;
   showDefaultActions?: boolean;
   showPreviewAction?: boolean;
   showFullscreenAction?: boolean;

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, ref, useSlots, type Component } from 'vue';
 import {
   NmorphIcon,
   NmorphIconArchive,
@@ -12,7 +11,6 @@ import {
   NmorphIconOpen,
   NmorphIconVideo,
 } from '@/components';
-import { getFileExtension, getPlainFileType, getTypeCandidates, isKnownFileType, useModifiers } from '@/utils';
 import {
   NmorphArchiveResolution,
   NmorphAudioResolution,
@@ -20,10 +18,19 @@ import {
   NmorphImageResolution,
   NmorphVideoResolution,
 } from '@/components/form/nmorph-file-upload/types';
+import {
+  createCssSizeVariables,
+  getFileExtension,
+  getPlainFileType,
+  getTypeCandidates,
+  isKnownFileType,
+  useModifiers,
+} from '@/utils';
+import { computed, ref, useSlots, type Component, type CSSProperties } from 'vue';
 import NmorphAudioPreview from '../nmorph-audio-preview/NmorphAudioPreview.vue';
 import NmorphMediaGallery from '../nmorph-media-gallery/NmorphMediaGallery.vue';
-import NmorphVideoPreview from '../nmorph-video-preview/NmorphVideoPreview.vue';
 import type { NmorphMediaGalleryItem } from '../nmorph-media-gallery/types';
+import NmorphVideoPreview from '../nmorph-video-preview/NmorphVideoPreview.vue';
 import type { INmorphFileCardEmit, INmorphFileCardProps } from './types';
 
 const CONTRAST_ICON_COLOR = 'var(--nmorph-contrast-text-color)';
@@ -37,6 +44,10 @@ const props = withDefaults(defineProps<INmorphFileCardProps>(), {
   mediaPreview: 'none',
   previewMode: 'internal',
   surface: 'card',
+  height: undefined,
+  showName: true,
+  showMeta: true,
+  showSize: true,
   showExtensionBadge: true,
   iconSurface: true,
   compact: false,
@@ -44,6 +55,7 @@ const props = withDefaults(defineProps<INmorphFileCardProps>(), {
   error: false,
   errorText: '',
   showDefaultActions: true,
+  showPlaybackButton: true,
 });
 
 const emit = defineEmits<INmorphFileCardEmit>();
@@ -90,7 +102,7 @@ const formatSize = (size?: number) => {
   return `${value.toFixed(digits)} ${units[exponent]}`;
 };
 
-const fileSize = computed(() => formatSize(props.size));
+const fileSize = computed(() => (props.showSize ? formatSize(props.size) : ''));
 const typeLabel = computed(() => extension.value || props.mimeType);
 const meta = computed(() => [typeLabel.value, fileSize.value].filter(Boolean).join(' · '));
 const audioPreviewAvailable = computed(() => {
@@ -106,7 +118,18 @@ const mediaPreviewAvailable = computed(
   () => audioPreviewAvailable.value || videoPreviewAvailable.value || imagePreviewAvailable.value
 );
 const visualMediaPreviewAvailable = computed(() => videoPreviewAvailable.value || imagePreviewAvailable.value);
-const videoPreviewHeight = computed(() => (props.compact ? '96px' : '120px'));
+const mediaPreviewHeight = computed(() => props.height ?? (props.compact ? '96px' : '120px'));
+const styles = computed<CSSProperties>(() =>
+  createCssSizeVariables({
+    '--nmorph-file-card-height': props.height,
+    '--nmorph-file-card-media-height': mediaPreviewHeight.value,
+  })
+);
+const showInfo = computed(() => {
+  if (visualMediaPreviewAvailable.value) return props.showName;
+
+  return props.showName || (props.showMeta && Boolean((props.error && props.errorText) || meta.value));
+});
 const mediaGalleryItems = computed<NmorphMediaGalleryItem[]>(() => {
   if (!props.previewSrc || props.loading || props.error) return [];
 
@@ -148,9 +171,10 @@ const pdfPreviewHref = computed(() => (isPdf.value ? props.previewSrc || props.d
 const previewOnIcon = computed(
   () => props.showDefaultActions && Boolean(pdfPreviewHref.value) && !mediaPreviewAvailable.value && isPdf.value
 );
+const hasCustomActions = computed(() => Boolean(slots.actions));
 const hasActions = computed(
   () =>
-    Boolean(slots.actions) ||
+    hasCustomActions.value ||
     (props.showDefaultActions &&
       (props.loading ||
         (props.previewSrc && !mediaPreviewAvailable.value && !previewOnIcon.value) ||
@@ -168,6 +192,7 @@ const modifiers = computed(() =>
       videoPreviewAvailable.value && 'media-video',
       imagePreviewAvailable.value && 'media-image',
       visualMediaPreviewAvailable.value && 'media-visual',
+      hasCustomActions.value && 'custom-actions',
       !props.iconSurface && 'icon-plain',
       !hasActions.value && 'no-actions',
     ],
@@ -183,7 +208,7 @@ const errorHandler = () => emit('error');
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div :class="modifiers" :style="styles">
     <div v-if="!visualMediaPreviewAvailable" class="nmorph-file-card__icon">
       <NmorphIcon size="medium">
         <component :is="icon" />
@@ -203,9 +228,9 @@ const errorHandler = () => emit('error');
       </a>
     </div>
     <div class="nmorph-file-card__body">
-      <div class="nmorph-file-card__info" :title="props.name">
-        <span class="nmorph-file-card__name">{{ props.name }}</span>
-        <template v-if="!visualMediaPreviewAvailable">
+      <div v-if="showInfo" class="nmorph-file-card__info" :title="props.name">
+        <span v-if="props.showName" class="nmorph-file-card__name">{{ props.name }}</span>
+        <template v-if="!visualMediaPreviewAvailable && props.showMeta">
           <span v-if="props.error && props.errorText" class="nmorph-file-card__error">{{ props.errorText }}</span>
           <span v-else-if="meta" class="nmorph-file-card__meta">{{ meta }}</span>
         </template>
@@ -220,6 +245,7 @@ const errorHandler = () => emit('error');
         compact
         :show-icon="false"
         :show-header="false"
+        :show-playback-button="props.showPlaybackButton"
         :show-default-actions="false"
         @error="errorHandler"
       />
@@ -228,14 +254,16 @@ const errorHandler = () => emit('error');
         class="nmorph-file-card__video-preview"
         :src="props.previewSrc"
         :name="props.name"
-        :height="videoPreviewHeight"
+        :height="mediaPreviewHeight"
         surface="plain"
         embedded
         compact
         :controls="false"
         :show-meta="false"
+        :show-playback-button="props.showPlaybackButton"
         :show-default-actions="false"
-        :show-preview-action="props.previewMode !== 'none'"
+        :show-preview-action="!hasCustomActions && props.showDefaultActions && props.previewMode !== 'none'"
+        :show-fullscreen-action="!hasCustomActions && props.showDefaultActions"
         preview-mode="emit"
         @error="errorHandler"
         @preview="openHandler"
@@ -256,7 +284,14 @@ const errorHandler = () => emit('error');
       {{ extension }}
     </span>
     <div v-if="hasActions" class="nmorph-file-card__actions">
-      <slot name="actions">
+      <slot
+        name="actions"
+        :file-name="props.name"
+        :preview-src="props.previewSrc"
+        :download-href="props.downloadHref"
+        :open="openHandler"
+        :download="downloadHandler"
+      >
         <span
           v-if="props.loading"
           class="nmorph-file-card__action-loader"
@@ -300,6 +335,10 @@ const errorHandler = () => emit('error');
     v-model="previewOpen"
     :items="mediaGalleryItems"
     :show-navigation-buttons="false"
+    :show-file-name="props.showName"
+    :show-file-size="props.showSize"
+    :show-file-actions="props.showDefaultActions"
+    :show-playback-button="props.showPlaybackButton"
     @download="downloadHandler"
   />
 </template>
@@ -313,7 +352,8 @@ const errorHandler = () => emit('error');
   width: 100%;
   min-width: 0;
   max-width: 100%;
-  min-height: 64px;
+  height: var(--nmorph-file-card-height, auto);
+  min-height: var(--nmorph-file-card-height, 64px);
   padding: var(--indentation-03);
   color: var(--nmorph-text-color);
   background: var(--nmorph-main-color);
@@ -414,7 +454,7 @@ const errorHandler = () => emit('error');
 
   .nmorph-file-card__image-preview {
     display: block;
-    height: 120px;
+    height: var(--nmorph-file-card-media-height, 120px);
     padding: 0;
     overflow: hidden;
     color: inherit;
@@ -512,9 +552,23 @@ const errorHandler = () => emit('error');
     }
   }
 
+  &.nmorph-file-card--custom-actions,
   &.nmorph-file-card--compact {
-    min-height: 52px;
+    position: relative;
+    padding-inline-end: calc(var(--indentation-03) + 44px + var(--indentation-01));
+
+    .nmorph-file-card__actions {
+      position: absolute;
+      top: var(--indentation-03);
+      right: var(--indentation-03);
+      z-index: 3;
+    }
+  }
+
+  &.nmorph-file-card--compact {
+    min-height: var(--nmorph-file-card-height, 52px);
     padding: var(--indentation-02);
+    padding-inline-end: calc(var(--indentation-02) + 44px + var(--indentation-01));
 
     .nmorph-file-card__icon {
       width: 30px;
@@ -527,8 +581,13 @@ const errorHandler = () => emit('error');
     }
 
     .nmorph-file-card__image-preview {
-      height: 96px;
+      height: var(--nmorph-file-card-media-height, 96px);
       margin-top: 0;
+    }
+
+    .nmorph-file-card__actions {
+      top: var(--indentation-02);
+      right: var(--indentation-02);
     }
   }
 
@@ -544,6 +603,7 @@ const errorHandler = () => emit('error');
     gap: 0;
     min-height: 0;
     padding: 0;
+    padding-inline-end: 0;
     overflow: hidden;
 
     .nmorph-file-card__body {
@@ -551,6 +611,7 @@ const errorHandler = () => emit('error');
       display: block;
       width: 100%;
       min-width: 0;
+      height: 100%;
     }
 
     .nmorph-file-card__info {
@@ -583,7 +644,7 @@ const errorHandler = () => emit('error');
       display: block;
       width: 100%;
       max-width: none;
-      height: 100%;
+      height: var(--nmorph-file-card-media-height, 100%);
       border-radius: inherit;
       object-fit: cover;
     }

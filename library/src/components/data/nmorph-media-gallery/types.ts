@@ -28,9 +28,21 @@ export interface INmorphMediaGalleryProps {
   initialIndex?: number;
   activeIndex?: number;
   zIndex?: number;
+  height?: number | string;
   showTrigger?: boolean;
+  showTriggerName?: boolean;
+  showTriggerSize?: boolean;
+  showTriggerActions?: boolean;
+  showTriggerPreviewAction?: boolean;
+  showTriggerFullscreenAction?: boolean;
+  showTriggerDownloadAction?: boolean;
+  showTriggerPlayButton?: boolean;
   showNavigationButtons?: boolean;
   showActionBar?: boolean;
+  showFileName?: boolean;
+  showFileSize?: boolean;
+  showFileActions?: boolean;
+  showPlaybackButton?: boolean;
   imageFit?: NmorphMediaGalleryFit;
   videoFit?: NmorphMediaGalleryFit;
 }

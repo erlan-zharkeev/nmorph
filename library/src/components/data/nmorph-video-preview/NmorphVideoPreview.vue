@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useAttrs, useSlots } from 'vue';
+import { computed, ref, useAttrs, useSlots, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import {
   NmorphIcon,
@@ -17,6 +17,7 @@ import { createCssSizeVariables, useModifiers } from '@/utils';
 import type { INmorphVideoPreviewEmit, INmorphVideoPreviewProps } from './types';
 
 const CONTRAST_ICON_COLOR = 'var(--nmorph-contrast-text-color)';
+const VIDEO_BUFFER_EPSILON_SECONDS = 0.25;
 
 defineOptions({
   inheritAttrs: false,
@@ -41,6 +42,7 @@ const props = withDefaults(defineProps<INmorphVideoPreviewProps>(), {
   loading: false,
   error: false,
   errorText: '',
+  showPlaybackButton: true,
   showDefaultActions: true,
   showPreviewAction: true,
   showFullscreenAction: true,
@@ -53,6 +55,7 @@ const slots = useSlots();
 const videoRef = ref<HTMLVideoElement | null>(null);
 const previewOpen = ref(false);
 const playing = ref(false);
+const videoLoaded = ref(false);
 
 const formatDuration = (durationMs?: number) => {
   if (!durationMs || durationMs < 0) return '';
@@ -66,7 +69,12 @@ const formatDuration = (durationMs?: number) => {
 
 const duration = computed(() => formatDuration(props.durationMs));
 const mediaReady = computed(() => Boolean(props.src) && !props.loading && !props.error);
-const hasPreviewActions = computed(() => mediaReady.value && (props.showPreviewAction || props.showFullscreenAction));
+const showPlaybackControl = computed(() => props.showPlaybackButton && mediaReady.value && videoLoaded.value);
+const resolvedPreload = computed(() =>
+  props.showPlaybackButton && props.preload === 'metadata' ? 'auto' : props.preload
+);
+const showFullscreenAction = computed(() => props.showFullscreenAction && mediaReady.value && !props.controls);
+const hasPreviewActions = computed(() => mediaReady.value && (props.showPreviewAction || showFullscreenAction.value));
 const hasDefaultActions = computed(() => props.showDefaultActions && (props.src || props.downloadHref));
 const hasActions = computed(() => Boolean(slots.actions) || hasPreviewActions.value || hasDefaultActions.value);
 const modifiers = computed(() =>
@@ -95,6 +103,14 @@ const rootAttrs = computed(() => {
 });
 const rootClass = computed(() => [modifiers.value, attrs.class]);
 const rootStyle = computed(() => [styles.value, attrs.style]);
+
+watch(
+  () => [props.src, props.loading, props.error] as const,
+  () => {
+    playing.value = false;
+    videoLoaded.value = false;
+  }
+);
 
 const openHandler = () => emit('open');
 const downloadHandler = () => emit('download');
@@ -132,7 +148,7 @@ const fullscreenHandler = async () => {
 };
 
 const togglePlayback = async () => {
-  if (!videoRef.value || props.loading || props.error) return;
+  if (!videoRef.value || props.loading || props.error || !videoLoaded.value) return;
   if (playing.value) {
     videoRef.value.pause();
     return;
@@ -143,6 +159,29 @@ const togglePlayback = async () => {
   } catch {
     playing.value = false;
   }
+};
+
+const isVideoFullyBuffered = (video: HTMLVideoElement) => {
+  const duration = video.duration;
+
+  if (!Number.isFinite(duration) || duration <= 0) return false;
+
+  const buffered = video.buffered;
+  const requiredEnd = Math.max(0, duration - VIDEO_BUFFER_EPSILON_SECONDS);
+
+  for (let index = 0; index < buffered.length; index += 1) {
+    try {
+      if (buffered.start(index) <= VIDEO_BUFFER_EPSILON_SECONDS && buffered.end(index) >= requiredEnd) return true;
+    } catch {
+      return false;
+    }
+  }
+
+  return false;
+};
+
+const updateVideoLoaded = () => {
+  videoLoaded.value = videoRef.value ? isVideoFullyBuffered(videoRef.value) : false;
 };
 
 const playHandler = (event: Event) => {
@@ -161,6 +200,7 @@ const endedHandler = () => {
 
 const errorHandler = (event: Event) => {
   playing.value = false;
+  videoLoaded.value = false;
   emit('error', event);
 };
 
@@ -178,14 +218,19 @@ defineExpose({ videoRef });
       :controls="props.controls"
       :muted="props.muted"
       :playsinline="props.playsinline"
-      :preload="props.preload"
+      :preload="resolvedPreload"
+      @loadedmetadata="updateVideoLoaded"
+      @durationchange="updateVideoLoaded"
+      @progress="updateVideoLoaded"
+      @canplaythrough="updateVideoLoaded"
+      @suspend="updateVideoLoaded"
       @play="playHandler"
       @pause="pauseHandler"
       @ended="endedHandler"
       @error="errorHandler"
     />
     <button
-      v-if="!props.loading && !props.error"
+      v-if="showPlaybackControl"
       class="nmorph-video-preview__play"
       type="button"
       :aria-label="playing ? `Pause ${props.name || 'video'}` : `Play ${props.name || 'video'}`"
@@ -223,7 +268,7 @@ defineExpose({ videoRef });
           </NmorphIcon>
         </button>
         <button
-          v-if="props.showFullscreenAction && mediaReady"
+          v-if="showFullscreenAction"
           type="button"
           class="nmorph-video-preview__action-button nmorph-video-preview__action-button--fullscreen"
           :aria-label="`Fullscreen ${props.name || 'video'}`"

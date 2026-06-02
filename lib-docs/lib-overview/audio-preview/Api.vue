@@ -80,6 +80,11 @@ const attributesData: IAttributesTableData[] = [
     default: "-",
   },
   {
+    name: "show-playback-button",
+    type: "Boolean",
+    default: "true",
+  },
+  {
     name: "show-default-actions",
     type: "Boolean",
     default: "true",

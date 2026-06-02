@@ -324,6 +324,14 @@ export default {
           "NmorphFileCard для image и video previews теперь по умолчанию открывает внутренний NmorphMediaGallery, а preview-mode позволяет оставить emit-only или выключить preview trigger.",
         "sandbox-media-downloads":
           "Sandbox media examples теперь используют download-safe href для audio и video, чтобы download action сохранял файл вместо открытия cross-origin preview URL.",
+        "media-card-visibility-sizing":
+          "NmorphFileCard и NmorphMediaGallery теперь поддерживают height и props для скрытия overlays, чтобы media cards, gallery triggers, info labels, actions и playback buttons можно было настраивать под layout.",
+        "file-card-actions-slot-align":
+          "NmorphFileCard custom actions now use the same top-right action area across visual, compact, and regular cards while PDF preview and default actions stay intact.",
+        "video-playback-full-buffer":
+          "NmorphVideoPreview and NmorphMediaGallery now show play/pause overlays only after a video is fully buffered.",
+        "divider-vertical-visibility":
+          "NmorphDivider vertical dividers теперь растягиваются внутри flex и grid layout и используют theme-aligned inset styling для лучшей видимости.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":
@@ -1711,11 +1719,11 @@ export default {
     divider: {
       direction: {
         subtitle:
-          "Определяет направление разделителя. Принимает значения 'horizontal' или 'vertical'.",
+          "Определяет направление разделителя. Vertical dividers растягиваются внутри flex и grid layout.",
       },
       api: {
         direction:
-          "Определяет ориентацию разделителя: 'horizontal' или 'vertical'.",
+          "Определяет ориентацию разделителя: 'horizontal' или 'vertical'. Vertical dividers растягиваются по доступному cross-axis размеру.",
       },
       slot: {},
       variables: {},

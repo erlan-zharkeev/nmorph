@@ -28,6 +28,7 @@ const props = withDefaults(defineProps<INmorphAudioPreviewProps>(), {
   loading: false,
   error: false,
   errorText: '',
+  showPlaybackButton: true,
   showDefaultActions: true,
 });
 
@@ -93,7 +94,7 @@ const currentTimeLabel = computed(() => formatTime(currentTime.value));
 const durationLabel = computed(() => formatTime(resolvedDuration.value));
 
 const togglePlayback = async () => {
-  if (!audioRef.value || props.loading || props.error) return;
+  if (!audioRef.value || !props.showPlaybackButton || props.loading || props.error) return;
   if (playing.value) {
     audioRef.value.pause();
     return;
@@ -154,7 +155,7 @@ defineExpose({ audioRef });
       @error="errorHandler"
     />
     <button
-      v-if="props.showIcon"
+      v-if="props.showIcon && props.showPlaybackButton"
       class="nmorph-audio-preview__icon"
       type="button"
       :disabled="props.loading || props.error"
@@ -174,8 +175,16 @@ defineExpose({ audioRef });
         </NmorphIcon>
       </span>
     </button>
+    <div v-else-if="props.showIcon" class="nmorph-audio-preview__icon">
+      <NmorphIcon v-if="props.loading" size="medium">
+        <NmorphIconLoader />
+      </NmorphIcon>
+      <NmorphIcon v-else size="medium">
+        <NmorphIconAudio />
+      </NmorphIcon>
+    </div>
     <button
-      v-else-if="!props.loading && !props.error"
+      v-else-if="props.showPlaybackButton && !props.loading && !props.error"
       class="nmorph-audio-preview__play-button"
       type="button"
       :aria-label="playing ? `Pause ${props.name || 'audio'}` : `Play ${props.name || 'audio'}`"
@@ -273,9 +282,13 @@ defineExpose({ audioRef });
     background: color-mix(in srgb, var(--nmorph-text-color) 10%, transparent);
     border: 0;
     border-radius: var(--default-border-radius);
-    cursor: pointer;
+    cursor: default;
 
     --color: currentColor;
+  }
+
+  button.nmorph-audio-preview__icon {
+    cursor: pointer;
 
     &:disabled {
       cursor: default;

@@ -322,6 +322,14 @@ export default {
           "NmorphFileCard image and video previews now open an internal NmorphMediaGallery by default, with preview-mode for emit-only or disabled preview triggers.",
         "sandbox-media-downloads":
           "Sandbox media examples now use download-safe hrefs for audio and video so the download action saves instead of opening cross-origin preview URLs.",
+        "media-card-visibility-sizing":
+          "NmorphFileCard and NmorphMediaGallery now expose height and overlay visibility props so media cards, gallery triggers, info labels, actions, and playback buttons can be tuned per layout.",
+        "file-card-actions-slot-align":
+          "NmorphFileCard custom actions now use the same top-right action area across visual, compact, and regular cards while PDF preview and default actions stay intact.",
+        "video-playback-full-buffer":
+          "NmorphVideoPreview and NmorphMediaGallery now show play/pause overlays only after a video is fully buffered.",
+        "divider-vertical-visibility":
+          "NmorphDivider vertical dividers now stretch inside flex and grid layouts and use theme-aligned inset styling for better visibility.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":
@@ -1687,11 +1695,11 @@ export default {
     divider: {
       direction: {
         subtitle:
-          "Defines the direction of the divider. Accepts 'horizontal' or 'vertical'.",
+          "Defines the direction of the divider. Vertical dividers stretch inside flex and grid layouts.",
       },
       api: {
         direction:
-          "Defines the orientation of the divider: 'horizontal' or 'vertical'.",
+          "Defines the orientation of the divider: 'horizontal' or 'vertical'. Vertical dividers stretch across the available cross-axis size.",
       },
       slot: {},
       variables: {},

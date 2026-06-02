@@ -180,6 +180,24 @@ const mockObjectUrlApi = (urls: string[] = []) => {
   };
 };
 
+const setVideoBufferedState = (
+  video: HTMLVideoElement,
+  { duration, start = 0, end }: { duration: number; start?: number; end: number }
+) => {
+  Object.defineProperty(video, 'duration', {
+    configurable: true,
+    value: duration,
+  });
+  Object.defineProperty(video, 'buffered', {
+    configurable: true,
+    value: {
+      length: 1,
+      start: () => start,
+      end: () => end,
+    },
+  });
+};
+
 const createFormValue = () =>
   reactive({
     email: {
@@ -661,6 +679,61 @@ describe('components', () => {
 
   it.each(renderCases)('renders $name', async (renderCase) => {
     await mountCase(renderCase);
+  });
+
+  it('updates NmorphScroll bars when slotted content changes after mount', async () => {
+    const wrapper = mount(NmorphScroll, {
+      props: {
+        height: '72px',
+        scrollXProp: 'auto',
+        scrollYProp: 'hidden',
+      },
+      slots: {
+        default: '<div class="scroll-content" style="width: 80px; height: 20px;">Content</div>',
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const viewport = wrapper.find('.nmorph-scroll__viewport').element as HTMLElement;
+    let scrollLeft = 0;
+    let scrollTop = 0;
+    let scrollWidth = 100;
+
+    Object.defineProperties(viewport, {
+      clientWidth: { configurable: true, get: () => 100 },
+      clientHeight: { configurable: true, get: () => 72 },
+      scrollWidth: { configurable: true, get: () => scrollWidth },
+      scrollHeight: { configurable: true, get: () => 72 },
+      scrollLeft: {
+        configurable: true,
+        get: () => scrollLeft,
+        set: (value) => {
+          scrollLeft = value;
+        },
+      },
+      scrollTop: {
+        configurable: true,
+        get: () => scrollTop,
+        set: (value) => {
+          scrollTop = value;
+        },
+      },
+    });
+
+    expect(wrapper.find('.nmorph-scroll__bar--horizontal').exists()).toBe(false);
+
+    scrollWidth = 260;
+    viewport.firstElementChild?.setAttribute('data-scroll-width', 'wide');
+    await new Promise((resolve) => {
+      setTimeout(resolve, 0);
+    });
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-scroll__bar--horizontal').exists()).toBe(true);
+
+    wrapper.unmount();
   });
 
   it('applies tag list design to tags while preserving explicit tag overrides', async () => {
@@ -1784,6 +1857,26 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('can hide audio playback controls inside file card media preview', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'voice-message.mp3',
+        mimeType: 'audio/mpeg',
+        size: 8192,
+        previewSrc: 'blob:voice',
+        mediaPreview: 'audio',
+        showPlaybackButton: false,
+      },
+    });
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-audio-preview__play-button').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-audio-preview__play-indicator').exists()).toBe(false);
+
+    wrapper.unmount();
+  });
+
   it('renders video media preview inside the file card shell with shared title and metadata', async () => {
     const target = document.createElement('div');
     document.body.appendChild(target);
@@ -1841,18 +1934,27 @@ describe('components', () => {
     expect(video.exists()).toBe(true);
     expect(video.attributes('src')).toBe('blob:clip');
     expect(video.attributes('controls')).toBeUndefined();
+    expect(video.attributes('preload')).toBe('auto');
     expect(wrapper.find('.nmorph-video-preview__meta').exists()).toBe(false);
-    expect(wrapper.find('button.nmorph-video-preview__play').attributes('aria-label')).toBe('Play clip.mp4');
-    expect(
-      (wrapper.find('button.nmorph-video-preview__play .nmorph-icon').element as HTMLElement).style.getPropertyValue(
-        '--nmorph-icon-color'
-      )
-    ).toBe('var(--nmorph-contrast-text-color)');
-    expect(
-      (wrapper.find('button.nmorph-video-preview__play .nmorph-icon').element as HTMLElement).style.getPropertyValue(
-        '--color'
-      )
-    ).toBe('var(--nmorph-contrast-text-color)');
+    expect(wrapper.find('button.nmorph-video-preview__play').exists()).toBe(false);
+
+    await video.trigger('loadeddata');
+
+    expect(wrapper.find('button.nmorph-video-preview__play').exists()).toBe(false);
+
+    setVideoBufferedState(video.element as HTMLVideoElement, { duration: 120, end: 120 });
+    await video.trigger('progress');
+
+    const playButton = wrapper.find('button.nmorph-video-preview__play');
+
+    expect(playButton.exists()).toBe(true);
+    expect(playButton.attributes('aria-label')).toBe('Play clip.mp4');
+    expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-icon-color')).toBe(
+      'var(--nmorph-contrast-text-color)'
+    );
+    expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--color')).toBe(
+      'var(--nmorph-contrast-text-color)'
+    );
     expect(wrapper.find('.nmorph-video-preview__actions').exists()).toBe(true);
     expect(wrapper.findAll('.nmorph-video-preview__action-button')).toHaveLength(2);
     expect(wrapper.find('.nmorph-video-preview__action-button--preview').attributes('aria-label')).toBe(
@@ -1875,9 +1977,48 @@ describe('components', () => {
     expect(wrapper.emitted('open')).toHaveLength(1);
     expect(galleryVideo?.getAttribute('src')).toBe('blob:clip');
     expect(galleryVideo?.hasAttribute('controls')).toBe(true);
+    expect(document.body.querySelector('button.nmorph-media-gallery__play')).toBeFalsy();
 
     wrapper.unmount();
     target.remove();
+  });
+
+  it('applies file card height and can hide visual info and media buttons', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'clip.mp4',
+        mimeType: 'video/mp4',
+        size: 1048576,
+        previewSrc: 'blob:clip',
+        downloadHref: 'blob:clip',
+        mediaPreview: 'video',
+        height: 150,
+        showName: false,
+        showSize: false,
+        showDefaultActions: false,
+        showPlaybackButton: false,
+      },
+    });
+
+    await nextTick();
+
+    const card = wrapper.find('.nmorph-file-card');
+    const videoPreview = wrapper.find('.nmorph-file-card__video-preview.nmorph-video-preview');
+    const video = wrapper.find('video');
+
+    expect(card.element.style.getPropertyValue('--nmorph-file-card-height')).toBe('150px');
+    expect(card.element.style.getPropertyValue('--nmorph-file-card-media-height')).toBe('150px');
+    expect(videoPreview.element.style.getPropertyValue('--nmorph-video-preview-height')).toBe('150px');
+    expect(wrapper.find('.nmorph-file-card__info').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__visual-size').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-file-card__actions').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-video-preview__actions').exists()).toBe(false);
+
+    await video.trigger('loadeddata');
+
+    expect(wrapper.find('button.nmorph-video-preview__play').exists()).toBe(false);
+
+    wrapper.unmount();
   });
 
   it('renders image media preview inside the file card shell with shared title and metadata', async () => {
@@ -2051,7 +2192,6 @@ describe('components', () => {
         previewSrc: 'blob:photo',
         downloadHref: 'blob:photo-download',
         mediaPreview: 'image',
-        showDefaultActions: false,
       },
       slots: {
         actions: '<button class="custom-file-action" type="button">Remove</button>',
@@ -2060,8 +2200,34 @@ describe('components', () => {
 
     await nextTick();
 
+    expect(wrapper.find('.nmorph-file-card').classes()).toContain('nmorph-file-card--custom-actions');
     expect(wrapper.find('.nmorph-file-card__image-preview').exists()).toBe(true);
     expect(wrapper.find('.custom-file-action').text()).toBe('Remove');
+    expect(wrapper.findAll('.nmorph-file-card__actions .nmorph-file-card__action-link')).toHaveLength(0);
+
+    wrapper.unmount();
+  });
+
+  it('lets the actions slot replace video media preview overlay actions', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'clip.mp4',
+        mimeType: 'video/mp4',
+        previewSrc: 'blob:clip',
+        downloadHref: 'blob:clip-download',
+        mediaPreview: 'video',
+      },
+      slots: {
+        actions: ({ fileName }: { fileName: string }) =>
+          h('button', { class: 'custom-file-action', type: 'button' }, `Remove ${fileName}`),
+      },
+    });
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-file-card').classes()).toContain('nmorph-file-card--custom-actions');
+    expect(wrapper.find('.custom-file-action').text()).toBe('Remove clip.mp4');
+    expect(wrapper.find('.nmorph-video-preview__actions').exists()).toBe(false);
     expect(wrapper.findAll('.nmorph-file-card__actions .nmorph-file-card__action-link')).toHaveLength(0);
 
     wrapper.unmount();
@@ -2149,7 +2315,6 @@ describe('components', () => {
     await nextTick();
 
     const preview = wrapper.find('.nmorph-video-preview');
-    const playButton = wrapper.find('button.nmorph-video-preview__play');
     const fullscreenButton = wrapper.find('.nmorph-video-preview__action-button--fullscreen');
     const previewButton = wrapper.find('.nmorph-video-preview__action-button--preview');
 
@@ -2161,6 +2326,17 @@ describe('components', () => {
       ])
     );
     expect(wrapper.find('.nmorph-video-preview__meta').exists()).toBe(false);
+    expect(wrapper.find('button.nmorph-video-preview__play').exists()).toBe(false);
+
+    await wrapper.find('video').trigger('loadeddata');
+
+    expect(wrapper.find('button.nmorph-video-preview__play').exists()).toBe(false);
+
+    setVideoBufferedState(wrapper.find('video').element as HTMLVideoElement, { duration: 120, end: 120 });
+    await wrapper.find('video').trigger('progress');
+
+    const playButton = wrapper.find('button.nmorph-video-preview__play');
+
     expect(playButton.exists()).toBe(true);
     expect(playButton.attributes('aria-label')).toBe('Play clip.mp4');
     expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-icon-color')).toBe(
@@ -2268,6 +2444,41 @@ describe('components', () => {
     expect(defaultActions).toHaveLength(1);
     expect(defaultActions[0].attributes('href')).toBe('blob:download-report');
     expect(defaultActions[0].attributes('download')).toBe('report.pdf');
+
+    iconAction.element.addEventListener('click', (event) => event.preventDefault());
+    await iconAction.trigger('click');
+
+    expect(wrapper.emitted('open')).toHaveLength(1);
+
+    wrapper.unmount();
+  });
+
+  it('keeps pdf preview on the icon when custom actions replace default actions', async () => {
+    const wrapper = mount(NmorphFileCard, {
+      props: {
+        name: 'report.pdf',
+        mimeType: 'application/pdf',
+        previewSrc: 'blob:report',
+        downloadHref: 'blob:download-report',
+        compact: true,
+      },
+      slots: {
+        actions: ({ fileName }: { fileName: string }) =>
+          h('button', { class: 'custom-file-action', type: 'button' }, `Close ${fileName}`),
+      },
+    });
+
+    await nextTick();
+
+    const card = wrapper.find('.nmorph-file-card');
+    const iconAction = wrapper.find('.nmorph-file-card__icon-action');
+
+    expect(card.classes()).toContain('nmorph-file-card--compact');
+    expect(card.classes()).toContain('nmorph-file-card--custom-actions');
+    expect(iconAction.exists()).toBe(true);
+    expect(iconAction.attributes('href')).toBe('blob:report');
+    expect(wrapper.find('.custom-file-action').text()).toBe('Close report.pdf');
+    expect(wrapper.findAll('.nmorph-file-card__actions .nmorph-file-card__action-link')).toHaveLength(0);
 
     iconAction.element.addEventListener('click', (event) => event.preventDefault());
     await iconAction.trigger('click');
@@ -5153,32 +5364,38 @@ describe('components', () => {
     await nextTick();
 
     const video = document.body.querySelector('.nmorph-media-gallery__video') as HTMLVideoElement;
-    const playButton = document.body.querySelector('button.nmorph-media-gallery__play') as HTMLButtonElement;
     const fileActions = Array.from(document.body.querySelectorAll('.nmorph-media-gallery__file-action'));
 
     expect(video.getAttribute('src')).toBe('blob:clip');
     expect(video.getAttribute('poster')).toBe('blob:poster');
     expect(video.hasAttribute('controls')).toBe(true);
     expect(video.hasAttribute('muted')).toBe(true);
+    expect(video.getAttribute('preload')).toBe('metadata');
     expect(document.body.querySelector('.nmorph-media-gallery__file-name')?.textContent).toBe('clip.mp4');
     expect(document.body.querySelector('.nmorph-media-gallery__file-size')?.textContent).toBe('7 MB');
-    expect(fileActions).toHaveLength(2);
-    expect(fileActions[0].getAttribute('aria-label')).toBe('Fullscreen clip.mp4');
-    expect(fileActions[1].getAttribute('href')).toBe('blob:clip-download');
-    expect(playButton).toBeTruthy();
-    expect(playButton.getAttribute('aria-label')).toBe('Play clip.mp4');
+    expect(fileActions).toHaveLength(1);
+    expect(fileActions[0].getAttribute('href')).toBe('blob:clip-download');
+    expect(document.body.querySelector('button.nmorph-media-gallery__play')).toBeFalsy();
+
+    setVideoBufferedState(video, { duration: 120, end: 120 });
+    video.dispatchEvent(new Event('progress'));
+    await nextTick();
+
+    expect(document.body.querySelector('button.nmorph-media-gallery__play')).toBeFalsy();
     expect(wrapper.emitted('update:active-index')?.[0]).toEqual([1]);
     expect(wrapper.emitted('change')?.[0]).toEqual([items[1], 1]);
 
     video.dispatchEvent(new Event('play'));
     await nextTick();
 
-    expect(playButton.getAttribute('aria-label')).toBe('Pause clip.mp4');
+    expect(gallery.classList.contains('nmorph-media-gallery--video-playing')).toBe(true);
+    expect(document.body.querySelector('button.nmorph-media-gallery__play')).toBeFalsy();
 
     video.dispatchEvent(new Event('pause'));
     await nextTick();
 
-    expect(playButton.getAttribute('aria-label')).toBe('Play clip.mp4');
+    expect(gallery.classList.contains('nmorph-media-gallery--video-playing')).toBe(false);
+    expect(document.body.querySelector('button.nmorph-media-gallery__play')).toBeFalsy();
 
     wrapper.unmount();
     target.remove();
@@ -5244,6 +5461,123 @@ describe('components', () => {
     expect(wrapper.emitted('change')?.at(-1)).toEqual([items[1], 1]);
 
     wrapper.unmount();
+  });
+
+  it('can show only download actions on media gallery trigger items', async () => {
+    const items = [
+      {
+        kind: 'image' as const,
+        src: imageSrc,
+        name: 'photo.jpg',
+        alt: 'Photo',
+        downloadHref: 'blob:photo-download',
+      },
+      {
+        kind: 'video' as const,
+        src: 'blob:clip',
+        name: 'clip.mp4',
+        poster: 'blob:poster',
+        downloadHref: 'blob:clip-download',
+      },
+      {
+        kind: 'video' as const,
+        src: 'blob:preview-only',
+        name: 'preview-only.mp4',
+      },
+    ];
+
+    const wrapper = mount(NmorphMediaGallery, {
+      props: {
+        items,
+        showTrigger: true,
+        showTriggerActions: true,
+        showTriggerPreviewAction: false,
+        showTriggerFullscreenAction: false,
+        showTriggerDownloadAction: true,
+      },
+    });
+
+    await nextTick();
+
+    const triggerItems = wrapper.findAll('.nmorph-media-gallery__trigger-item');
+    const imageActions = triggerItems[0].findAll('.nmorph-media-gallery__trigger-action');
+    const videoActions = triggerItems[1].findAll('.nmorph-media-gallery__trigger-action');
+
+    expect(triggerItems[0].find('.nmorph-media-gallery__trigger-actions').exists()).toBe(true);
+    expect(imageActions).toHaveLength(1);
+    expect(imageActions[0].attributes('aria-label')).toBe('Download photo.jpg');
+    expect(imageActions[0].attributes('href')).toBe('blob:photo-download');
+    expect(triggerItems[1].find('.nmorph-media-gallery__trigger-actions').exists()).toBe(true);
+    expect(videoActions).toHaveLength(1);
+    expect(videoActions[0].attributes('aria-label')).toBe('Download clip.mp4');
+    expect(videoActions[0].attributes('href')).toBe('blob:clip-download');
+    expect(triggerItems[2].find('.nmorph-media-gallery__trigger-actions').exists()).toBe(false);
+    expect(wrapper.find('[aria-label="Preview clip.mp4"]').exists()).toBe(false);
+    expect(wrapper.find('[aria-label="Fullscreen clip.mp4"]').exists()).toBe(false);
+
+    wrapper.unmount();
+  });
+
+  it('applies media gallery trigger height and can hide trigger and stage overlays', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+    const items = [
+      {
+        kind: 'video' as const,
+        src: 'blob:clip',
+        name: 'clip.mp4',
+        poster: 'blob:poster',
+        size: 7340032,
+        downloadHref: 'blob:clip-download',
+        controls: false,
+      },
+    ];
+
+    const wrapper = mount(NmorphMediaGallery, {
+      props: {
+        modelValue: true,
+        items,
+        height: 180,
+        showTrigger: true,
+        showTriggerName: false,
+        showTriggerSize: false,
+        showTriggerActions: false,
+        showTriggerPlayButton: false,
+        showFileName: false,
+        showFileSize: false,
+        showFileActions: false,
+        showPlaybackButton: false,
+      },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+
+    const trigger = wrapper.find('.nmorph-media-gallery__trigger');
+    const video = document.body.querySelector('.nmorph-media-gallery__video') as HTMLVideoElement;
+
+    expect(trigger.element.style.getPropertyValue('--nmorph-media-gallery-trigger-height')).toBe('180px');
+    expect(trigger.classes()).toContain('nmorph-media-gallery__trigger--fixed-height');
+    expect(wrapper.find('.nmorph-media-gallery__trigger-name').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-media-gallery__trigger-size').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-media-gallery__trigger-actions').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-media-gallery__trigger-play').exists()).toBe(false);
+    expect(document.body.querySelector('.nmorph-media-gallery__file-name')).toBeFalsy();
+    expect(document.body.querySelector('.nmorph-media-gallery__file-size')).toBeFalsy();
+    expect(document.body.querySelector('.nmorph-media-gallery__file-actions')).toBeFalsy();
+
+    video.dispatchEvent(new Event('loadeddata'));
+    await nextTick();
+
+    expect(document.body.querySelector('button.nmorph-media-gallery__play')).toBeFalsy();
+
+    wrapper.unmount();
+    target.remove();
   });
 
   it('closes media gallery from backdrop and Escape key', async () => {

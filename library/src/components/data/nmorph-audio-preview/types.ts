@@ -15,6 +15,7 @@ export interface INmorphAudioPreviewProps {
   loading?: boolean;
   error?: boolean;
   errorText?: string;
+  showPlaybackButton?: boolean;
   showDefaultActions?: boolean;
 }
 

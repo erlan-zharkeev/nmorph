@@ -61,9 +61,12 @@ const metrics = ref<INmorphScrollMetrics>({
   scrollTop: 0,
 });
 const isDragging = ref(false);
-let resizeObserver: ResizeObserver | undefined;
+let viewportResizeObserver: ResizeObserver | undefined;
+let contentResizeObserver: ResizeObserver | undefined;
+let mutationObserver: MutationObserver | undefined;
 let dragState: INmorphScrollDragState | undefined;
 let previousBodyUserSelect = '';
+const observedContentElements = new Set<Element>();
 
 const updateScrollableState = () => {
   const element = scrollDOMContainer.value;
@@ -94,6 +97,56 @@ const updateScrollableState = () => {
   metrics.value = nextMetrics;
   hasVerticalScroll.value = nextMetrics.scrollHeight > nextMetrics.clientHeight;
   hasHorizontalScroll.value = nextMetrics.scrollWidth > nextMetrics.clientWidth;
+};
+
+const queueScrollableStateUpdate = () => {
+  void nextTick(updateScrollableState);
+};
+
+const refreshObservedContentElements = () => {
+  if (!contentResizeObserver || !scrollDOMContainer.value) return;
+
+  const nextElements = new Set(Array.from(scrollDOMContainer.value.children));
+
+  observedContentElements.forEach((element) => {
+    if (nextElements.has(element)) return;
+
+    contentResizeObserver?.unobserve(element);
+    observedContentElements.delete(element);
+  });
+
+  nextElements.forEach((element) => {
+    if (observedContentElements.has(element)) return;
+
+    contentResizeObserver?.observe(element);
+    observedContentElements.add(element);
+  });
+};
+
+const observeScrollableContent = () => {
+  const element = scrollDOMContainer.value;
+
+  if (!element) return;
+
+  if (typeof ResizeObserver !== 'undefined') {
+    contentResizeObserver = new ResizeObserver(() => {
+      queueScrollableStateUpdate();
+    });
+    refreshObservedContentElements();
+  }
+
+  if (typeof MutationObserver !== 'undefined') {
+    mutationObserver = new MutationObserver(() => {
+      refreshObservedContentElements();
+      queueScrollableStateUpdate();
+    });
+    mutationObserver.observe(element, {
+      attributes: true,
+      characterData: true,
+      childList: true,
+      subtree: true,
+    });
+  }
 };
 
 const paddingRightCandidate = computed(() => props.yBarWidthInPx + props.yGapInPx);
@@ -154,7 +207,10 @@ onUnmounted(() => {
     clearTimeout(scrollEndTimeout);
   }
 
-  resizeObserver?.disconnect();
+  viewportResizeObserver?.disconnect();
+  contentResizeObserver?.disconnect();
+  mutationObserver?.disconnect();
+  observedContentElements.clear();
   stopThumbDrag();
 });
 
@@ -180,13 +236,14 @@ const moveTo = (coords: NmorphCoordsType) => {
 
 onMounted(() => {
   moveTo(props.modelValue);
-  nextTick(updateScrollableState);
+  observeScrollableContent();
+  queueScrollableStateUpdate();
 
   if (typeof ResizeObserver !== 'undefined' && scrollDOMContainer.value) {
-    resizeObserver = new ResizeObserver(() => {
-      updateScrollableState();
+    viewportResizeObserver = new ResizeObserver(() => {
+      queueScrollableStateUpdate();
     });
-    resizeObserver.observe(scrollDOMContainer.value);
+    viewportResizeObserver.observe(scrollDOMContainer.value);
   }
 });
 
@@ -201,7 +258,7 @@ watch(
 watch(
   () => nmorph?.browser.dimensions,
   () => {
-    nextTick(updateScrollableState);
+    queueScrollableStateUpdate();
   },
   { deep: true, immediate: true }
 );

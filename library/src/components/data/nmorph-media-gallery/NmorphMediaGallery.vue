@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, ref, watch, type CSSProperties } from 'vue';
 import {
   NmorphButton,
   NmorphIcon,
@@ -7,7 +7,6 @@ import {
   NmorphIconEnlarge,
   NmorphIconEye,
   NmorphIconFullScreen,
-  NmorphIconPause,
   NmorphIconPlay,
   NmorphIconRotateLeft,
   NmorphIconRotateRight,
@@ -16,7 +15,7 @@ import {
   NmorphIconZoomOut,
   NmorphImage,
 } from '@/components';
-import { useModifiers } from '@/utils';
+import { createCssSizeVariables, useModifiers } from '@/utils';
 import type { INmorphMediaGalleryEmit, INmorphMediaGalleryProps, NmorphMediaGalleryItem } from './types';
 import NmorphPreviewPortal from '../nmorph-preview-portal/NmorphPreviewPortal.vue';
 
@@ -27,9 +26,21 @@ const props = withDefaults(defineProps<INmorphMediaGalleryProps>(), {
   initialIndex: 0,
   activeIndex: undefined,
   zIndex: undefined,
+  height: undefined,
   showTrigger: false,
+  showTriggerName: true,
+  showTriggerSize: true,
+  showTriggerActions: true,
+  showTriggerPreviewAction: true,
+  showTriggerFullscreenAction: true,
+  showTriggerDownloadAction: true,
+  showTriggerPlayButton: true,
   showNavigationButtons: true,
   showActionBar: true,
+  showFileName: true,
+  showFileSize: true,
+  showFileActions: true,
+  showPlaybackButton: true,
   imageFit: 'contain',
   videoFit: 'contain',
 });
@@ -80,8 +91,13 @@ const videoPreload = computed(() =>
 const currentVideoName = computed(() =>
   currentItem.value?.kind === 'video' ? currentItem.value.name || 'video' : 'video'
 );
-const currentName = computed(() => currentItem.value?.name || '');
+const currentItemName = computed(() => currentItem.value?.name || '');
+const currentName = computed(() => (props.showFileName ? currentItemName.value : ''));
 const currentDownloadHref = computed(() => currentItem.value?.downloadHref || '');
+const showVideoFullscreenAction = computed(() => props.showFileActions && isVideo.value && !videoControls.value);
+const showFileActions = computed(
+  () => props.showFileActions && (showVideoFullscreenAction.value || Boolean(currentDownloadHref.value))
+);
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-media-gallery': [
@@ -95,6 +111,16 @@ const modifiers = computed(() =>
   })
 );
 const imageTransform = computed(() => `rotate(${rotateLevel.value}deg) scale(${scaleLevel.value})`);
+const triggerStyle = computed<CSSProperties>(() =>
+  createCssSizeVariables({
+    '--nmorph-media-gallery-trigger-height': props.height,
+  })
+);
+const triggerModifiers = computed(() =>
+  useModifiers({
+    'nmorph-media-gallery__trigger': [props.height !== undefined && 'fixed-height'],
+  })
+);
 
 const formatSize = (size?: number) => {
   if (size === undefined || Number.isNaN(size) || size < 0) return '';
@@ -107,12 +133,23 @@ const formatSize = (size?: number) => {
 
   return `${value.toFixed(digits)} ${units[exponent]}`;
 };
-const currentSize = computed(() => formatSize(currentItem.value?.size));
+const currentSize = computed(() => (props.showFileSize ? formatSize(currentItem.value?.size) : ''));
 const getItemName = (item: NmorphMediaGalleryItem) => item.name || '';
 const getItemLabel = (item: NmorphMediaGalleryItem, index: number) =>
   item.name || `${item.kind === 'video' ? 'Video' : 'Image'} ${index + 1}`;
 const getItemSize = (item: NmorphMediaGalleryItem) => formatSize(item.size);
 const getItemDownloadHref = (item: NmorphMediaGalleryItem) => item.downloadHref || '';
+const showTriggerPreviewActionForItem = (item: NmorphMediaGalleryItem) =>
+  props.showTriggerPreviewAction && item.kind === 'video';
+const showTriggerFullscreenActionForItem = (item: NmorphMediaGalleryItem) =>
+  props.showTriggerFullscreenAction && item.kind === 'video';
+const showTriggerDownloadActionForItem = (item: NmorphMediaGalleryItem) =>
+  props.showTriggerDownloadAction && Boolean(getItemDownloadHref(item));
+const showTriggerActionsForItem = (item: NmorphMediaGalleryItem) =>
+  props.showTriggerActions &&
+  (showTriggerPreviewActionForItem(item) ||
+    showTriggerFullscreenActionForItem(item) ||
+    showTriggerDownloadActionForItem(item));
 const setTriggerVideoRef = (index: number, element: unknown) => {
   triggerVideoRefs.value[index] = element instanceof HTMLVideoElement ? element : null;
 };
@@ -140,6 +177,14 @@ watch(
     currentIndex.value = getClampedIndex(props.initialIndex);
   },
   { immediate: true }
+);
+
+watch(
+  () => [currentItem.value?.kind, currentItem.value?.src, resolvedCurrentIndex.value] as const,
+  () => {
+    videoPlaying.value = false;
+    pausedVideoRef.value = null;
+  }
 );
 
 const pauseCurrentVideo = () => {
@@ -231,21 +276,6 @@ const zoomOut = () => {
 
 const toggleNormalSize = () => {
   scaleLevel.value = 1;
-};
-
-const toggleVideoPlayback = async () => {
-  if (!currentVideoRef.value) return;
-
-  if (videoPlaying.value) {
-    currentVideoRef.value.pause();
-    return;
-  }
-
-  try {
-    await currentVideoRef.value.play();
-  } catch {
-    videoPlaying.value = false;
-  }
 };
 
 const requestVideoFullscreen = async (videoElement: FullscreenVideoElement | null) => {
@@ -383,7 +413,7 @@ const pointerUpHandler = (event: PointerEvent) => {
 </script>
 
 <template>
-  <div v-if="props.showTrigger" class="nmorph-media-gallery__trigger">
+  <div v-if="props.showTrigger" :class="triggerModifiers" :style="triggerStyle">
     <div
       v-for="(item, index) in sourceList"
       :key="`${item.kind}-${item.src}-${index}`"
@@ -415,21 +445,21 @@ const pointerUpHandler = (event: PointerEvent) => {
           preload="metadata"
           :title="getItemName(item)"
         />
-        <span v-if="item.kind === 'video'" class="nmorph-media-gallery__trigger-play">
+        <span v-if="props.showTriggerPlayButton && item.kind === 'video'" class="nmorph-media-gallery__trigger-play">
           <NmorphIcon size="medium" color="var(--nmorph-contrast-text-color)">
             <NmorphIconPlay />
           </NmorphIcon>
         </span>
-        <span v-if="getItemName(item)" class="nmorph-media-gallery__trigger-name">
+        <span v-if="props.showTriggerName && getItemName(item)" class="nmorph-media-gallery__trigger-name">
           {{ getItemName(item) }}
         </span>
-        <span v-if="getItemSize(item)" class="nmorph-media-gallery__trigger-size">
+        <span v-if="props.showTriggerSize && getItemSize(item)" class="nmorph-media-gallery__trigger-size">
           {{ getItemSize(item) }}
         </span>
       </button>
-      <div v-if="getItemDownloadHref(item) || item.kind === 'video'" class="nmorph-media-gallery__trigger-actions">
+      <div v-if="showTriggerActionsForItem(item)" class="nmorph-media-gallery__trigger-actions">
         <button
-          v-if="item.kind === 'video'"
+          v-if="showTriggerPreviewActionForItem(item)"
           type="button"
           class="nmorph-media-gallery__trigger-action"
           :aria-label="`Preview ${getItemLabel(item, index)}`"
@@ -440,7 +470,7 @@ const pointerUpHandler = (event: PointerEvent) => {
           </NmorphIcon>
         </button>
         <button
-          v-if="item.kind === 'video'"
+          v-if="showTriggerFullscreenActionForItem(item)"
           type="button"
           class="nmorph-media-gallery__trigger-action"
           :aria-label="`Fullscreen ${getItemLabel(item, index)}`"
@@ -451,7 +481,7 @@ const pointerUpHandler = (event: PointerEvent) => {
           </NmorphIcon>
         </button>
         <a
-          v-if="getItemDownloadHref(item)"
+          v-if="showTriggerDownloadActionForItem(item)"
           :href="getItemDownloadHref(item)"
           :download="getItemName(item) || undefined"
           class="nmorph-media-gallery__trigger-action"
@@ -510,22 +540,10 @@ const pointerUpHandler = (event: PointerEvent) => {
         @ended="videoEndedHandler"
         @error="videoErrorHandler"
       />
-      <button
-        v-if="currentItem?.kind === 'video'"
-        class="nmorph-media-gallery__play"
-        type="button"
-        :aria-label="videoPlaying ? `Pause ${currentVideoName}` : `Play ${currentVideoName}`"
-        @click.stop="toggleVideoPlayback"
-      >
-        <NmorphIcon size="medium" color="var(--nmorph-contrast-text-color)">
-          <NmorphIconPause v-if="videoPlaying" />
-          <NmorphIconPlay v-else />
-        </NmorphIcon>
-      </button>
       <span v-if="currentName" class="nmorph-media-gallery__file-name">{{ currentName }}</span>
-      <div v-if="currentDownloadHref || currentItem?.kind === 'video'" class="nmorph-media-gallery__file-actions">
+      <div v-if="showFileActions" class="nmorph-media-gallery__file-actions">
         <button
-          v-if="currentItem?.kind === 'video'"
+          v-if="showVideoFullscreenAction"
           type="button"
           class="nmorph-media-gallery__file-action"
           :aria-label="`Fullscreen ${currentVideoName}`"
@@ -538,9 +556,9 @@ const pointerUpHandler = (event: PointerEvent) => {
         <a
           v-if="currentDownloadHref"
           :href="currentDownloadHref"
-          :download="currentName || undefined"
+          :download="currentItemName || undefined"
           class="nmorph-media-gallery__file-action"
-          :aria-label="`Download ${currentName || 'media'}`"
+          :aria-label="`Download ${currentItemName || 'media'}`"
           @click.stop="downloadHandler"
         >
           <NmorphIcon size="small" color="var(--nmorph-contrast-text-color)">
@@ -599,6 +617,10 @@ const pointerUpHandler = (event: PointerEvent) => {
   width: 100%;
 }
 
+.nmorph-media-gallery__trigger--fixed-height {
+  grid-auto-rows: var(--nmorph-media-gallery-trigger-height);
+}
+
 .nmorph-media-gallery__trigger-item {
   position: relative;
   min-width: 0;
@@ -606,6 +628,11 @@ const pointerUpHandler = (event: PointerEvent) => {
   background: color-mix(in srgb, var(--nmorph-accent-color) 6%, transparent);
   border-radius: var(--default-border-radius);
   aspect-ratio: 16 / 9;
+}
+
+.nmorph-media-gallery__trigger--fixed-height .nmorph-media-gallery__trigger-item {
+  height: 100%;
+  aspect-ratio: auto;
 }
 
 .nmorph-media-gallery__trigger-open {
@@ -785,39 +812,6 @@ const pointerUpHandler = (event: PointerEvent) => {
     border-radius: var(--default-border-radius);
     object-fit: contain;
     pointer-events: auto;
-  }
-
-  .nmorph-media-gallery__play {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 1;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 54px;
-    height: 54px;
-    padding: 0;
-    color: var(--nmorph-contrast-text-color);
-    background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
-    border: 0;
-    border-radius: var(--border-radius-circular);
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    pointer-events: auto;
-
-    .nmorph-icon {
-      --nmorph-icon-color: var(--nmorph-contrast-text-color);
-      --color: var(--nmorph-contrast-text-color);
-    }
-
-    &:hover {
-      background: color-mix(in srgb, var(--nmorph-black-color) 72%, transparent);
-    }
-  }
-
-  &.nmorph-media-gallery--video-playing .nmorph-media-gallery__play {
-    opacity: 0.72;
   }
 
   .nmorph-media-gallery__file-name,

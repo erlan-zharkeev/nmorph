@@ -12,6 +12,10 @@ export interface INmorphFileCardProps {
   mediaPreview?: NmorphFileCardMediaPreview;
   previewMode?: NmorphFileCardPreviewMode;
   surface?: NmorphFileCardSurface;
+  height?: number | string;
+  showName?: boolean;
+  showMeta?: boolean;
+  showSize?: boolean;
   showExtensionBadge?: boolean;
   iconSurface?: boolean;
   compact?: boolean;
@@ -19,6 +23,7 @@ export interface INmorphFileCardProps {
   error?: boolean;
   errorText?: string;
   showDefaultActions?: boolean;
+  showPlaybackButton?: boolean;
 }
 
 export interface INmorphFileCardEmit {

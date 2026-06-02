@@ -311,6 +311,14 @@ export default {
           "NmorphFileCard 的 image 和 video previews 现在默认打开内部 NmorphMediaGallery，并可通过 preview-mode 使用 emit-only 或禁用 preview trigger。",
         "sandbox-media-downloads":
           "Sandbox media examples 现在为 audio 和 video 使用 download-safe href，让 download action 保存文件，而不是打开 cross-origin preview URL。",
+        "media-card-visibility-sizing":
+          "NmorphFileCard and NmorphMediaGallery now expose height and overlay visibility props so media cards, gallery triggers, info labels, actions, and playback buttons can be tuned per layout.",
+        "file-card-actions-slot-align":
+          "NmorphFileCard custom actions now use the same top-right action area across visual, compact, and regular cards while PDF preview and default actions stay intact.",
+        "video-playback-full-buffer":
+          "NmorphVideoPreview and NmorphMediaGallery now show play/pause overlays only after a video is fully buffered.",
+        "divider-vertical-visibility":
+          "NmorphDivider vertical dividers 现在会在 flex 和 grid layout 中拉伸，并使用与主题一致的 inset styling 以提升可见性。",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":
@@ -1607,10 +1615,10 @@ export default {
     },
     divider: {
       direction: {
-        subtitle: "定义分隔符的方向。接受 'horizontal' 或 'vertical'。",
+        subtitle: "定义分隔符的方向。Vertical dividers 会在 flex 和 grid layout 中拉伸。",
       },
       api: {
-        direction: "定义分隔符的方向：'horizontal' 或 'vertical'。",
+        direction: "定义分隔符的方向：'horizontal' 或 'vertical'。Vertical dividers 会沿可用的 cross-axis 尺寸拉伸。",
       },
       slot: {},
       variables: {},

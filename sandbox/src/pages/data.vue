@@ -14,6 +14,7 @@ import {
   NmorphEmojiPicker,
   NmorphFileCard,
   NmorphIcon,
+  NmorphIconClose,
   NmorphIconImage,
   NmorphIconUsers,
   NmorphImage,
@@ -94,6 +95,7 @@ const fileCardExamples: FileCardExample[] = [
   createFileCard('PDF preview', 'morph_specification.pdf', 'application/pdf', 435_200, {
     previewSrc: pdfPreviewSrc,
     surface: 'soft',
+    height: 150,
     showExtensionBadge: false,
     iconSurface: false,
     compact: true,
@@ -104,6 +106,7 @@ const fileCardExamples: FileCardExample[] = [
     mediaPreview: 'image',
     previewMode: 'emit',
     surface: 'soft',
+    height: 150,
     showExtensionBadge: false,
     iconSurface: false,
     compact: true,
@@ -127,6 +130,28 @@ const fileCardExamples: FileCardExample[] = [
     previewSrc: audioPreviewSrc,
     mediaPreview: 'audio',
     surface: 'soft',
+    showExtensionBadge: false,
+    iconSurface: false,
+    compact: true,
+  }),
+]
+
+const fileCardCustomActionExamples: FileCardExample[] = [
+  createFileCard('PDF custom action', 'custom-report.pdf', 'application/pdf', 435_200, {
+    previewSrc: pdfPreviewSrc,
+    surface: 'soft',
+    height: 150,
+    showExtensionBadge: false,
+    iconSurface: false,
+    compact: true,
+  }),
+  createFileCard('Image custom action', 'custom-photo.jpeg', 'image/jpeg', 245_760, {
+    previewSrc: imageOne,
+    downloadHref: imageOne,
+    mediaPreview: 'image',
+    previewMode: 'emit',
+    surface: 'soft',
+    height: 150,
     showExtensionBadge: false,
     iconSurface: false,
     compact: true,
@@ -432,6 +457,7 @@ const progressColor = (value: number) => {
           v-model="mediaGalleryOpen"
           :items="mediaGalleryItems"
           :active-index="mediaGalleryIndex"
+          height="235px"
           show-trigger
           @update:active-index="mediaGalleryIndex = $event"
         />
@@ -443,6 +469,20 @@ const progressColor = (value: number) => {
         <div v-for="file in fileCardExamples" :key="file.props.name" class="file-card-demo">
           <span class="file-card-demo__label">{{ file.label }}</span>
           <NmorphFileCard v-bind="file.props" @open="openFileCardMedia(file.props.name)" />
+        </div>
+      </div>
+      <div class="file-card-grid file-card-grid--custom-actions">
+        <div v-for="file in fileCardCustomActionExamples" :key="file.props.name" class="file-card-demo">
+          <span class="file-card-demo__label">{{ file.label }}</span>
+          <NmorphFileCard v-bind="file.props" @open="openFileCardMedia(file.props.name)">
+            <template #actions="{ fileName }">
+              <button class="file-card-demo__close" type="button" :aria-label="`Remove ${fileName}`" @click.stop>
+                <NmorphIcon size="small" color="var(--nmorph-contrast-text-color)">
+                  <NmorphIconClose />
+                </NmorphIcon>
+              </button>
+            </template>
+          </NmorphFileCard>
         </div>
       </div>
     </SandboxSection>
@@ -787,6 +827,10 @@ const progressColor = (value: number) => {
   align-items: start;
 }
 
+.file-card-grid--custom-actions {
+  margin-top: 14px;
+}
+
 .file-card-demo {
   display: grid;
   gap: 6px;
@@ -800,6 +844,25 @@ const progressColor = (value: number) => {
   line-height: 1.3;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.file-card-demo__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  color: var(--nmorph-contrast-text-color);
+  background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
+  border: 0;
+  border-radius: var(--default-border-radius);
+  cursor: pointer;
+}
+
+.file-card-demo__close:hover {
+  background: color-mix(in srgb, var(--nmorph-black-color) 72%, transparent);
 }
 
 .skeleton-template {
