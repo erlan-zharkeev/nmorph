@@ -20,9 +20,11 @@ const modifiers = computed(() =>
 
 <style lang="scss">
 .nmorph-divider {
-  background: color-mix(in srgb, var(--nmorph-text-color) 14%, var(--nmorph-main-color));
-  border-radius: var(--border-radius-20);
-  box-shadow: var(--nmorph-shadow-inset);
+  background: var(--nmorph-main-color);
+  box-shadow:
+    var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
+    calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
+      var(--nmorph-light-shade-color);
 
   &.nmorph-divider--horizontal {
     width: 100%;

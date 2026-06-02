@@ -329,7 +329,7 @@ export default {
         "video-playback-full-buffer":
           "NmorphVideoPreview and NmorphMediaGallery now show play/pause overlays only after a video is fully buffered.",
         "divider-vertical-visibility":
-          "NmorphDivider vertical dividers now stretch inside flex and grid layouts and use theme-aligned inset styling for better visibility.",
+          "NmorphDivider vertical dividers now stretch inside flex and grid layouts.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":
