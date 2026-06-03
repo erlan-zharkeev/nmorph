@@ -319,6 +319,8 @@ export default {
           "NmorphVideoPreview and NmorphMediaGallery now show play/pause overlays only after a video is fully buffered.",
         "divider-vertical-visibility":
           "NmorphDivider vertical dividers 现在会在 flex 和 grid layout 中拉伸。",
+        "divider-original-styling":
+          "NmorphDivider 已恢复原来的 theme shadow styling，同时保留 vertical divider 拉伸修复。",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":
