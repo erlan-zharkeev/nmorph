@@ -90,14 +90,11 @@ const isBarActive = (index: number) => (index + 1) / barIndexes.value.length <= 
     height: 100%;
     background: var(--nmorph-audio-meter-track-color);
     border-radius: var(--border-radius-40);
-    transform: scaleY(0.3);
-    transform-origin: bottom;
     opacity: 0.7;
   }
 
   .nmorph-audio-meter__bar--active {
     background: var(--nmorph-audio-meter-color);
-    transform: scaleY(max(0.35, var(--nmorph-audio-meter-level)));
     opacity: 1;
   }
 

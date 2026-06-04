@@ -34,6 +34,7 @@ import paginationOverview from "~/lib-overview/pagination";
 import tableOverview from "~/lib-overview/table";
 import virtualListOverview from "~/lib-overview/virtual-list";
 import tooltipOverview from "~/lib-overview/tooltip";
+import guideOverview from "~/lib-overview/guide";
 import alertOverview from "~/lib-overview/alert";
 import calloutOverview from "~/lib-overview/callout";
 import dialogOverview from "~/lib-overview/dialog";
@@ -42,6 +43,7 @@ import dividerOverview from "~/lib-overview/divider";
 import overlayOverview from "~/lib-overview/overlay";
 import notificationProviderOverview from "~/lib-overview/notification-provider";
 import tabsOverview from "~/lib-overview/tabs";
+import stepperOverview from "~/lib-overview/stepper";
 import dropdownOverview from "~/lib-overview/dropdown";
 import contextMenuOverview from "~/lib-overview/context-menu";
 import backtopOverview from "~/lib-overview/backtop";
@@ -102,6 +104,8 @@ const overviewComponentsByName: Record<string, unknown[]> = {
   table: tableOverview,
   "virtual-list": virtualListOverview,
   tooltip: tooltipOverview,
+  guide: guideOverview,
+  "guide-step": guideOverview,
   alert: alertOverview,
   callout: calloutOverview,
   dialog: dialogOverview,
@@ -110,6 +114,7 @@ const overviewComponentsByName: Record<string, unknown[]> = {
   overlay: overlayOverview,
   "notification-provider": notificationProviderOverview,
   tabs: tabsOverview,
+  stepper: stepperOverview,
   dropdown: dropdownOverview,
   "context-menu": contextMenuOverview,
   backtop: backtopOverview,

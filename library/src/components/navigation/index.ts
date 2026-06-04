@@ -5,6 +5,8 @@ export { default as NmorphBreadcrumbItem } from './nmorph-breadcrumb/components/
 export { default as NmorphContextMenu } from './nmorph-context-menu/NmorphContextMenu.vue';
 export * from './nmorph-context-menu/types';
 export { default as NmorphDropdown } from './nmorph-dropdown/NmorphDropdown.vue';
+export { default as NmorphStepper } from './nmorph-stepper/NmorphStepper.vue';
+export * from './nmorph-stepper/types';
 export { default as NmorphTabs } from './nmorph-tabs/NmorphTabs.vue';
 export * from './nmorph-tabs/types';
 export * from './nmorph-tabs/utils';

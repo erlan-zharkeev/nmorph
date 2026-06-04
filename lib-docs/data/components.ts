@@ -41,7 +41,7 @@ export const componentGroups = [
   },
   {
     name: "feedback",
-    components: ["NmorphTooltip", "NmorphAlert", "NmorphCallout", "NmorphDialog", "NmorphDrawer"],
+    components: ["NmorphTooltip", "NmorphGuide", "NmorphGuideStep", "NmorphAlert", "NmorphCallout", "NmorphDialog", "NmorphDrawer"],
   },
   {
     name: "others",
@@ -53,7 +53,7 @@ export const componentGroups = [
   },
   {
     name: "navigation",
-    components: ["NmorphTabs", "NmorphDropdown", "NmorphContextMenu", "NmorphBacktop", "NmorphBreadcrumb"],
+    components: ["NmorphTabs", "NmorphStepper", "NmorphDropdown", "NmorphContextMenu", "NmorphBacktop", "NmorphBreadcrumb"],
   },
   {
     name: "form",

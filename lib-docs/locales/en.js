@@ -332,6 +332,12 @@ export default {
           "NmorphDivider vertical dividers now stretch inside flex and grid layouts.",
         "divider-original-styling":
           "NmorphDivider restored its original theme shadow styling while keeping the vertical stretch fix.",
+        "guide-component":
+          "Added NmorphGuide and NmorphGuideStep for coordinated tooltip-based walkthroughs with images, grouped targets, and previous/next controls.",
+        "stepper-component":
+          "Added NmorphStepper, a controlled horizontal stepper that shows one item at a time with transform-based previous/next movement, wheel, swipe, keyboard support, and indicator slots.",
+        "audio-meter-equal-bars":
+          "NmorphAudioMeter now keeps bar heights equal for silence and signal states while preserving the active color and opacity behavior.",
         "avatar-loader-text-color":
           "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
         "avatar-initials-text-color":

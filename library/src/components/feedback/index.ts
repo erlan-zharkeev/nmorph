@@ -4,4 +4,7 @@ export { default as NmorphCallout } from './nmorph-callout/NmorphCallout.vue';
 export * from './nmorph-callout/types';
 export { default as NmorphDialog } from './nmorph-dialog/NmorphDialog.vue';
 export { default as NmorphDrawer } from './nmorph-drawer/NmorphDrawer.vue';
+export { default as NmorphGuide } from './nmorph-guide/NmorphGuide.vue';
+export { default as NmorphGuideStep } from './nmorph-guide/NmorphGuideStep.vue';
+export * from './nmorph-guide/types';
 export { default as NmorphTooltip } from './nmorph-tooltip/NmorphTooltip.vue';
