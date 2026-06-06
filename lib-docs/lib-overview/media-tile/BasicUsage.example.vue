@@ -15,6 +15,7 @@ const videoSrc =
       muted
     />
     <NmorphMediaTile name="Nikita Kim" video-off mic-muted pinned />
+    <NmorphMediaTile name="Hidden status" video-off :show-status="false" />
     <NmorphMediaTile loading name="Preparing stream" />
   </div>
 </template>
@@ -23,7 +24,7 @@ const videoSrc =
 .media-tile-basic-usage {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
   gap: 12px;
 }
 

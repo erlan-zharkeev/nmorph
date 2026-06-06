@@ -74,6 +74,12 @@ const attributesData: IAttributesTableData[] = [
     description: "Shows fallback content when video is not available.",
   },
   {
+    name: "show-status",
+    type: "Boolean",
+    default: "true",
+    description: "Shows the bottom-right status overlay.",
+  },
+  {
     name: "mic-muted",
     type: "Boolean",
     default: "false",

@@ -67,10 +67,10 @@ const clickHandler = () => {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  height: var(--nmorph-private-select-button-item-size);
+  height: var(--nmorph-private-select-button-item-height);
   padding: 0 var(--indentation-04);
-  font-size: var(--nmorph-private-select-button-item-font-size);
-  line-height: var(--nmorph-private-select-button-item-line-height);
+  font-size: var(--nmorph-private-control-font-size);
+  line-height: var(--nmorph-private-control-line-height);
   border-radius: var(--default-border-radius);
   transform: translateY(0);
   cursor: pointer;

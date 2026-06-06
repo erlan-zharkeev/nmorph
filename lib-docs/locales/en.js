@@ -224,6 +224,16 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "button-borderless-prop":
+          "NmorphButton now supports borderless plain buttons through borderless, keeping design=\"plain\" bordered by default.",
+        "media-tile-show-status":
+          "NmorphMediaTile now supports show-status to hide the bottom-right status overlay without changing video-off fallback behavior.",
+        "select-button-custom-thickness":
+          "NmorphSelectButton now uses a single custom-thickness prop to override the selected thickness, replacing separate public item sizing props.",
+        "speaker-icons":
+          "Added NmorphIconMuteSpeaker, kept NmorphIconSpeaker in the public icon set, and kept NmorphIconSpeakerOff as a compatibility alias.",
+        "media-tile-plain-avatar":
+          "NmorphMediaTile fallback avatars now render with the plain avatar surface for cleaner call tiles.",
         "component-thickness-api":
           "Breaking: component size preset props are now named thickness instead of height across Button, form controls, selection controls, Pagination, CollapseItem, TagItem, and related option data.",
         "thin-input-centering":
@@ -766,6 +776,10 @@ export default {
       design: {
         subtitle: "Use *nmorph* or *plain* to define the visual design.",
       },
+      borderless: {
+        subtitle:
+          "Removes the visible border from a plain button while keeping the plain surface.",
+      },
       loading: {
         subtitle: "Use *boolean* to enable or disable the loading icon.",
       },
@@ -797,7 +811,8 @@ export default {
         text: "Button text",
         loading: "Enable/disable loader",
         design: "Change button design",
-        color: "Change text and icon color for a transparent button",
+        borderless: "Removes the visible border when design is plain",
+        color: "Change text and icon color for a plain button",
         "accent-bg-on-hover": "Enable/disable background color on hover",
         ripple: "Enable/disable ripple on click",
         fill: "Fill container with button",
@@ -2417,23 +2432,16 @@ export default {
       api: {
         "model-value": "The selected value",
         thickness: "thickness of the component",
+        "custom-thickness":
+          "Overrides the selected thickness with a custom CSS size",
         disabled: "Disables the component",
         fill: "Makes the component occupy the full width of its container",
         options: "List of options to render",
-        "track-padding":
-          "Overrides the inner padding around items. Numbers are treated as pixel values",
-        "item-size":
-          "Overrides each item size. Numbers are treated as pixel values",
-        "item-font-size": "Overrides each item font size",
       },
       slot: {
         default: "Slot for NmorphSelectButtonItem elements",
       },
-      variables: {
-        "track-padding": "Inner padding around items",
-        "item-size": "Select button item size",
-        "item-font-size": "Select button item font size",
-      },
+      variables: {},
       events: {
         "update:model-value": "Triggered when the selected value changes",
       },

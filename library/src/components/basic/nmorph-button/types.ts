@@ -19,6 +19,7 @@ export type NmorphButtonShape = keyof typeof NmorphButtonShape;
 
 export interface INmorphButtonProps extends INmorphCommonInputProps {
   design?: NmorphElementDesignType;
+  borderless?: boolean;
   color?: string;
   loading?: boolean;
   ripple?: boolean;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createCssSizeVariables, createCssVariables, useModifiers } from '@/utils';
+import { createCssSizeVariables, useModifiers } from '@/utils';
 import { computed, ref, watch, provide } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphComponentThickness } from '@/types';
@@ -17,10 +17,7 @@ const props = withDefaults(defineProps<INmorphSelectButtonProps>(), {
   disabled: false,
   options: () => [],
   fill: false,
-  trackPadding: undefined,
-  itemSize: undefined,
-  itemFontSize: undefined,
-  itemLineHeight: undefined,
+  customThickness: undefined,
 });
 
 const emit = defineEmits<INmorphSelectButtonEmit>();
@@ -45,12 +42,7 @@ const modifiers = computed(() =>
 
 const styles = computed<CSSProperties>(() => ({
   ...createCssSizeVariables({
-    '--nmorph-private-select-button-track-padding': props.trackPadding,
-    '--nmorph-private-select-button-item-size': props.itemSize,
-  }),
-  ...createCssVariables({
-    '--nmorph-private-select-button-item-font-size': props.itemFontSize,
-    '--nmorph-private-select-button-item-line-height': props.itemLineHeight,
+    '--nmorph-private-control-height': props.customThickness,
   }),
 }));
 
@@ -80,17 +72,15 @@ provide<NmorphSelectButtonChangeHandlerInjectionType>('select-button-change-hand
 
 <style lang="scss">
 .nmorph-select-button {
-  --nmorph-private-select-button-track-padding: 4px;
-  --nmorph-private-select-button-item-size: calc(
-    var(--nmorph-private-control-height) - var(--nmorph-private-select-button-track-padding) * 2
+  --nmorph-private-select-button-padding: max(3px, calc(var(--nmorph-private-control-height) * 0.1333));
+  --nmorph-private-select-button-item-height: calc(
+    var(--nmorph-private-control-height) - var(--nmorph-private-select-button-padding) * 2
   );
-  --nmorph-private-select-button-item-font-size: var(--nmorph-private-control-font-size);
-  --nmorph-private-select-button-item-line-height: var(--nmorph-private-control-line-height);
 
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  padding: var(--nmorph-private-select-button-track-padding);
+  padding: var(--nmorph-private-select-button-padding);
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
   box-shadow:

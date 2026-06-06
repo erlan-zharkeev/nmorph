@@ -23,6 +23,10 @@ const thicknesses = Object.keys(NmorphComponentThickness) as Array<
         <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
         <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
       </NmorphSelectButton>
+      <NmorphSelectButton v-model="value" custom-thickness="44px">
+        <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
+        <NmorphSelectButtonItem value="on">Custom</NmorphSelectButtonItem>
+      </NmorphSelectButton>
     </ClientOnly>
   </div>
 </template>

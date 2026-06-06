@@ -213,6 +213,16 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "button-borderless-prop":
+          "NmorphButton 现在支持通过 borderless 渲染无边框 plain 按钮，同时 design=\"plain\" 默认仍保留 border。",
+        "media-tile-show-status":
+          "NmorphMediaTile 现在支持 show-status，可隐藏右下角状态 overlay，同时不改变 video-off fallback 行为。",
+        "select-button-custom-thickness":
+          "NmorphSelectButton 现在使用单一 custom-thickness prop 覆盖当前 thickness，替代单独公开的 item 尺寸 props。",
+        "speaker-icons":
+          "新增 NmorphIconMuteSpeaker，NmorphIconSpeaker 保留在公开图标集中，并继续保留 NmorphIconSpeakerOff 作为兼容 alias。",
+        "media-tile-plain-avatar":
+          "NmorphMediaTile fallback avatar 现在使用 plain avatar surface，让 call tile 视觉更干净。",
         "component-thickness-api":
           "Breaking: Button、form controls、selection controls、Pagination、CollapseItem、TagItem 以及相关 option data 的尺寸预设 prop 现在从 height 改名为 thickness。",
         "thin-input-centering":
@@ -751,7 +761,10 @@ export default {
     "explore-components": "探索组件",
     button: {
       design: {
-        subtitle: "使用 *default* 或 *transparent* 来定义基本样式。",
+        subtitle: "使用 *nmorph* 或 *plain* 定义视觉样式。",
+      },
+      borderless: {
+        subtitle: "移除 plain 按钮的可见边框，同时保留 plain 表面。",
       },
       loading: {
         subtitle: "使用 *boolean* 来启用或禁用加载图标。",
@@ -781,7 +794,8 @@ export default {
         text: "按钮文本",
         loading: "启用/禁用加载器",
         design: "更改按钮样式",
-        color: "更改 transparent 按钮的文字和图标颜色",
+        borderless: "当 design 为 plain 时移除可见边框",
+        color: "更改 plain 按钮的文字和图标颜色",
         "accent-bg-on-hover": "启用/禁用悬停时的背景色",
         ripple: "启用/禁用点击时的涟漪效果",
         fill: "用按钮填充容器",
@@ -2272,23 +2286,15 @@ export default {
       api: {
         "model-value": "选中的值",
         thickness: "组件厚度",
+        "custom-thickness": "使用自定义 CSS 尺寸覆盖当前 thickness",
         disabled: "禁用组件",
         fill: "使组件占满容器宽度",
         options: "渲染的选项列表",
-        "track-padding":
-          "Overrides the inner padding around items. Numbers are treated as pixel values",
-        "item-size":
-          "Overrides each item size. Numbers are treated as pixel values",
-        "item-font-size": "Overrides each item font size",
       },
       slot: {
         default: "用于放置 NmorphSelectButtonItem 元素的插槽",
       },
-      variables: {
-        "track-padding": "Inner padding around items",
-        "item-size": "Select button item size",
-        "item-font-size": "Select button item font size",
-      },
+      variables: {},
       events: {
         "update:model-value": "当选中值改变时触发",
       },

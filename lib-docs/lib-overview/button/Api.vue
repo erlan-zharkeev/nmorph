@@ -50,6 +50,11 @@ const attributesData = [
     default: "nmorph",
   },
   {
+    name: "borderless",
+    type: "Boolean",
+    default: "false",
+  },
+  {
     name: "color",
     type: "Color",
     default: "-",

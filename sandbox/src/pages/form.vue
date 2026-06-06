@@ -243,7 +243,7 @@ watch(runtimeAccentColor, (accent) => {
           <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
           <NmorphSelectButtonItem value="maybe" disabled>Maybe</NmorphSelectButtonItem>
         </NmorphSelectButton>
-        <NmorphSelectButton model-value="compact" thickness="thin" :track-padding="3" :item-size="30" item-font-size="12px">
+        <NmorphSelectButton model-value="compact" thickness="thin" custom-thickness="36px">
           <NmorphSelectButtonItem value="compact">Compact</NmorphSelectButtonItem>
           <NmorphSelectButtonItem value="wide">Wide</NmorphSelectButtonItem>
         </NmorphSelectButton>

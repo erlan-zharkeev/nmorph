@@ -226,6 +226,16 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "button-borderless-prop":
+          "NmorphButton теперь поддерживает borderless для plain-кнопок, при этом design=\"plain\" по умолчанию остается с border.",
+        "media-tile-show-status":
+          "NmorphMediaTile теперь поддерживает show-status, чтобы скрывать правый нижний статус без изменения заглушки video-off.",
+        "select-button-custom-thickness":
+          "NmorphSelectButton теперь использует один prop custom-thickness для переопределения выбранного thickness вместо отдельных публичных props для размеров элементов.",
+        "speaker-icons":
+          "Добавлен NmorphIconMuteSpeaker, NmorphIconSpeaker остается в публичном наборе иконок, а NmorphIconSpeakerOff сохранен как совместимый alias.",
+        "media-tile-plain-avatar":
+          "Аватары-заглушки в NmorphMediaTile теперь рендерятся с plain-поверхностью для более чистого вида плиток звонка.",
         "component-thickness-api":
           "Breaking: props с размерными пресетами теперь называются thickness вместо height в Button, form controls, selection controls, Pagination, CollapseItem, TagItem и связанных option data.",
         "thin-input-centering":
@@ -768,7 +778,11 @@ export default {
     button: {
       design: {
         subtitle:
-          "Используйте *default* или *transparent* для определения базового стиля.",
+          "Используйте *nmorph* или *plain* для определения визуального стиля.",
+      },
+      borderless: {
+        subtitle:
+          "Убирает видимый border у plain-кнопки, сохраняя plain-поверхность.",
       },
       loading: {
         subtitle:
@@ -802,7 +816,8 @@ export default {
         text: "Текст кнопки",
         loading: "Включить/отключить загрузчик",
         design: "Изменить стиль кнопки",
-        color: "Изменить цвет текста и иконок для transparent-кнопки",
+        borderless: "Убирает видимый border, когда design установлен в plain",
+        color: "Изменить цвет текста и иконок для plain-кнопки",
         "accent-bg-on-hover": "Включить/отключить цвет фона при наведении",
         ripple: "Включить/отключить рябь при нажатии",
         fill: "Заполнение контейнера кнопкой",
@@ -2451,23 +2466,16 @@ export default {
       api: {
         "model-value": "Выбранное значение",
         thickness: "Толщина компонента",
+        "custom-thickness":
+          "Переопределяет выбранный thickness кастомным CSS-размером",
         disabled: "Отключает компонент",
         fill: "Растягивает компонент на всю ширину контейнера",
         options: "Список опций для отображения",
-        "track-padding":
-          "Overrides the inner padding around items. Numbers are treated as pixel values",
-        "item-size":
-          "Overrides each item size. Numbers are treated as pixel values",
-        "item-font-size": "Overrides each item font size",
       },
       slot: {
         default: "Слот для элементов NmorphSelectButtonItem",
       },
-      variables: {
-        "track-padding": "Inner padding around items",
-        "item-size": "Select button item size",
-        "item-font-size": "Select button item font size",
-      },
+      variables: {},
       events: {
         "update:model-value": "Срабатывает при изменении выбранного значения",
       },

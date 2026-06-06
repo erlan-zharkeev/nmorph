@@ -2965,12 +2965,20 @@ describe('components', () => {
       );
       expect(wrapper.find('video').exists()).toBe(true);
       expect(assignedSrcObject).toStrictEqual(stream);
+      expect(wrapper.find('.nmorph-media-tile__status').exists()).toBe(true);
       expect(wrapper.findAll('.nmorph-media-tile__status-item')).toHaveLength(2);
 
-      await wrapper.setProps({ videoOff: true });
+      await wrapper.setProps({ showStatus: false, videoOff: true });
       await nextTick();
 
       expect(wrapper.find('.nmorph-media-tile__fallback').text()).toContain('Ada Lovelace');
+      expect(wrapper.find('.nmorph-media-tile__status').exists()).toBe(false);
+      expect(wrapper.findAll('.nmorph-media-tile__status-item')).toHaveLength(0);
+
+      await wrapper.setProps({ showStatus: true });
+      await nextTick();
+
+      expect(wrapper.find('.nmorph-media-tile__status').exists()).toBe(true);
 
       wrapper.unmount();
     } finally {
@@ -3512,16 +3520,12 @@ describe('components', () => {
         props: {
           modelValue: 'first',
           options,
-          trackPadding: 3,
-          itemSize: 36,
-          itemFontSize: '13px',
+          customThickness: 36,
         },
       }),
       '.nmorph-select-button',
       {
-        '--nmorph-private-select-button-track-padding': '3px',
-        '--nmorph-private-select-button-item-size': '36px',
-        '--nmorph-private-select-button-item-font-size': '13px',
+        '--nmorph-private-control-height': '36px',
       }
     );
 
@@ -3848,6 +3852,29 @@ describe('components', () => {
     expect(wrapper.find('.nmorph-button').classes()).toContain('nmorph-button--active');
 
     wrapper.unmount();
+  });
+
+  it('keeps plain button border by default and supports borderless mode', () => {
+    const defaultWrapper = mount(NmorphButton, {
+      props: {
+        design: 'plain',
+        text: 'Copy',
+      },
+    });
+    const borderlessWrapper = mount(NmorphButton, {
+      props: {
+        design: 'plain',
+        borderless: true,
+        text: 'Copy',
+      },
+    });
+
+    expect(defaultWrapper.find('.nmorph-button').classes()).toContain('nmorph-button--plain');
+    expect(defaultWrapper.find('.nmorph-button').classes()).not.toContain('nmorph-button--borderless');
+    expect(borderlessWrapper.find('.nmorph-button').classes()).toContain('nmorph-button--borderless');
+
+    defaultWrapper.unmount();
+    borderlessWrapper.unmount();
   });
 
   it('keeps tooltip content above adjacent controls through z-index', async () => {

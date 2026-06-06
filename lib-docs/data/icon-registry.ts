@@ -10,7 +10,12 @@ const isVueComponent = (value: unknown): value is Component => {
   return "render" in value || "setup" in value;
 };
 
-const hiddenIconNames = new Set(["NmorphIconLoader1", "NmorphIconLoader2", "NmorphIconLoading"]);
+const hiddenIconNames = new Set([
+  "NmorphIconLoader1",
+  "NmorphIconLoader2",
+  "NmorphIconLoading",
+  "NmorphIconSpeakerOff",
+]);
 
 const isNmorphIconEntry = (entry: [string, unknown]): entry is [string, Component] => {
   const [name, value] = entry;

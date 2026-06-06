@@ -13,6 +13,7 @@ const props = withDefaults(defineProps<INmorphButtonProps>(), {
   disabled: false,
   loading: false,
   design: 'nmorph',
+  borderless: false,
   thickness: 'basic',
   accentBgOnHover: false,
   ripple: true,
@@ -41,6 +42,7 @@ const modifiers = computed(() =>
       props.ripple && 'ripple',
       hasIconOnlySlot.value && 'icon-only',
       props.color && 'custom-color',
+      props.design === 'plain' && props.borderless && 'borderless',
       active.value && 'active',
       props.danger && 'danger',
     ],
@@ -316,6 +318,13 @@ defineExpose({ buttonDOMElement });
         --nmorph-private-button-color,
         var(--nmorph-private-button-plain-color, var(--nmorph-text-color))
       );
+    }
+
+    &.nmorph-button--borderless {
+      .nmorph-button__content,
+      .nmorph-button__content:not(:disabled, [loading='true']):hover {
+        border: none;
+      }
     }
   }
 

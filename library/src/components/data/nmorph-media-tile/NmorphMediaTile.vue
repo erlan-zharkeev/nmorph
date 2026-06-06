@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<INmorphMediaTileProps>(), {
   avatarSrc: '',
   loading: false,
   showFallback: true,
+  showStatus: true,
   micMuted: false,
   videoOff: false,
   screenSharing: false,
@@ -90,12 +91,12 @@ defineExpose({ videoRef });
       <NmorphIcon v-if="props.loading" class="nmorph-media-tile__loader" size="large">
         <NmorphIconLoaderDots />
       </NmorphIcon>
-      <NmorphAvatar v-else-if="props.avatarSrc" :src="props.avatarSrc" :name="props.name" :size="72" />
+      <NmorphAvatar v-else-if="props.avatarSrc" :src="props.avatarSrc" :name="props.name" :size="72" design="plain" />
       <div v-else class="nmorph-media-tile__initials">{{ fallbackLabel }}</div>
       <span v-if="props.name" class="nmorph-media-tile__name">{{ props.name }}</span>
       <span v-if="props.error && props.errorText" class="nmorph-media-tile__error-text">{{ props.errorText }}</span>
     </div>
-    <div class="nmorph-media-tile__status">
+    <div v-if="props.showStatus" class="nmorph-media-tile__status">
       <span v-if="props.micMuted" class="nmorph-media-tile__status-item" aria-label="Microphone muted">
         <NmorphIcon size="small">
           <NmorphIconMic />
