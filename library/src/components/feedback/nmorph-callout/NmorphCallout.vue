@@ -28,23 +28,23 @@ const props = withDefaults(defineProps<INmorphCalloutProps>(), {
   borderRadius: 'var(--default-border-radius)',
   accentWidth: 'var(--indentation-02)',
   titleGap: 'var(--indentation-03)',
-  titleFontSize: 'var(--font-size-medium)',
-  contentFontSize: 'var(--font-size-extra-small)',
+  titleFontSize: 'var(--nmorph-typography-title-small-font-size)',
+  contentFontSize: 'var(--nmorph-typography-body-small-font-size)',
 });
 
 const slots = useSlots();
 
 const styles = computed<CSSProperties>(() => ({
   ...createCssSizeVariables({
-    '--callout-padding': props.padding,
-    '--callout-border-radius': props.borderRadius,
-    '--callout-accent-width': props.accentWidth,
-    '--callout-title-gap': props.titleGap,
-    '--callout-title-font-size': props.titleFontSize,
-    '--callout-content-font-size': props.contentFontSize,
+    '--nmorph-private-callout-padding': props.padding,
+    '--nmorph-private-callout-border-radius': props.borderRadius,
+    '--nmorph-private-callout-accent-width': props.accentWidth,
+    '--nmorph-private-callout-title-gap': props.titleGap,
+    '--nmorph-private-callout-title-font-size': props.titleFontSize,
+    '--nmorph-private-callout-content-font-size': props.contentFontSize,
   }),
   ...createCssVariables({
-    '--callout-color': props.color,
+    '--nmorph-private-callout-color': props.color,
   }),
 }));
 
@@ -92,29 +92,29 @@ const hasDefaultContent = computed(() => Boolean(slots.default));
 
 <style lang="scss">
 .nmorph-callout {
-  --callout-color: var(--nmorph-accent-color);
-  --callout-padding: var(--indentation-03) var(--indentation-04);
-  --callout-border-radius: var(--default-border-radius);
-  --callout-accent-width: var(--indentation-02);
-  --callout-title-gap: var(--indentation-03);
-  --callout-title-font-size: var(--font-size-medium);
-  --callout-content-font-size: var(--font-size-extra-small);
+  --nmorph-private-callout-color: var(--nmorph-accent-color);
+  --nmorph-private-callout-padding: var(--indentation-03) var(--indentation-04);
+  --nmorph-private-callout-border-radius: var(--default-border-radius);
+  --nmorph-private-callout-accent-width: var(--indentation-02);
+  --nmorph-private-callout-title-gap: var(--indentation-03);
+  --nmorph-private-callout-title-font-size: var(--nmorph-typography-title-small-font-size);
+  --nmorph-private-callout-content-font-size: var(--nmorph-typography-body-small-font-size);
 
   position: relative;
   display: block;
-  padding: var(--callout-padding);
+  padding: var(--nmorph-private-callout-padding);
   overflow: hidden;
   color: inherit;
   text-decoration: none;
-  border-radius: var(--callout-border-radius);
+  border-radius: var(--nmorph-private-callout-border-radius);
 
   &::before {
     position: absolute;
     top: 0;
     left: 0;
-    width: var(--callout-accent-width);
+    width: var(--nmorph-private-callout-accent-width);
     height: 100%;
-    background: var(--callout-color);
+    background: var(--nmorph-private-callout-color);
     content: '';
   }
 
@@ -124,28 +124,28 @@ const hasDefaultContent = computed(() => Boolean(slots.default));
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--callout-color);
+    background: var(--nmorph-private-callout-color);
     opacity: 0.2;
     content: '';
   }
 
   &.nmorph-callout--warning {
-    --callout-color: var(--nmorph-warn-color);
+    --nmorph-private-callout-color: var(--nmorph-warn-color);
   }
 
   &.nmorph-callout--success {
-    --callout-color: var(--nmorph-success-color);
+    --nmorph-private-callout-color: var(--nmorph-success-color);
   }
 
   &.nmorph-callout--error {
-    --callout-color: var(--nmorph-error-color);
+    --nmorph-private-callout-color: var(--nmorph-error-color);
   }
 
   .nmorph-callout__title {
-    margin-bottom: var(--callout-title-gap);
-    font-weight: 600;
-    font-size: var(--callout-title-font-size);
-    line-height: var(--line-height-loose);
+    margin-bottom: var(--nmorph-private-callout-title-gap);
+    font-weight: var(--nmorph-typography-title-small-font-weight);
+    font-size: var(--nmorph-private-callout-title-font-size);
+    line-height: var(--nmorph-typography-title-small-line-height);
   }
 
   .nmorph-callout__title,
@@ -155,9 +155,9 @@ const hasDefaultContent = computed(() => Boolean(slots.default));
   }
 
   .nmorph-callout__content {
-    font-weight: 400;
-    font-size: var(--callout-content-font-size);
-    line-height: var(--line-height-regular);
+    font-weight: var(--nmorph-typography-body-small-font-weight);
+    font-size: var(--nmorph-private-callout-content-font-size);
+    line-height: var(--nmorph-typography-body-small-line-height);
     white-space: pre-wrap;
   }
 }

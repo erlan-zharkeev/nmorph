@@ -5,7 +5,11 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { NmorphComponentHeight, NmorphDivider } from "@nmorph/nmorph-ui-kit";
+import {
+  NmorphComponentThickness,
+  NmorphDivider,
+  NmorphElementDesign,
+} from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -19,9 +23,14 @@ const attributesData: IAttributesTableData[] = [
     default: "id",
   },
   {
-    name: "height",
-    type: enumToString(NmorphComponentHeight),
+    name: "thickness",
+    type: optionsToString(NmorphComponentThickness),
     default: "basic",
+  },
+  {
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
   },
   {
     name: "disabled",
@@ -109,7 +118,7 @@ const attributesData: IAttributesTableData[] = [
   {
     name: "virtual-item-height",
     type: "Number",
-    default: "auto by height",
+    default: "auto by thickness",
   },
   {
     name: "virtual-max-height",
@@ -146,9 +155,9 @@ const selectOptionAttr = [
     default: "-",
   },
   {
-    name: "height",
-    type: enumToString(NmorphComponentHeight),
-    default: "parent select height | basic",
+    name: "thickness",
+    type: optionsToString(NmorphComponentThickness),
+    default: "parent select thickness | basic",
   },
   {
     name: "disabled",

@@ -27,6 +27,8 @@ const props = withDefaults(defineProps<INmorphMediaGalleryProps>(), {
   activeIndex: undefined,
   zIndex: undefined,
   height: undefined,
+  previewWidth: undefined,
+  previewHeight: undefined,
   showTrigger: false,
   showTriggerName: true,
   showTriggerSize: true,
@@ -113,7 +115,7 @@ const modifiers = computed(() =>
 const imageTransform = computed(() => `rotate(${rotateLevel.value}deg) scale(${scaleLevel.value})`);
 const triggerStyle = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--nmorph-media-gallery-trigger-height': props.height,
+    '--nmorph-private-media-gallery-trigger-height': props.height,
   })
 );
 const triggerModifiers = computed(() =>
@@ -504,6 +506,8 @@ const pointerUpHandler = (event: PointerEvent) => {
     left-class="nmorph-media-gallery__left"
     right-class="nmorph-media-gallery__right"
     actions-class="nmorph-media-gallery__actions"
+    :content-width="props.previewWidth"
+    :content-height="props.previewHeight"
     :show-navigation="showNavigation"
     :show-action-bar="props.showActionBar && currentItem?.kind === 'image'"
     @close="closeHandler"
@@ -618,7 +622,7 @@ const pointerUpHandler = (event: PointerEvent) => {
 }
 
 .nmorph-media-gallery__trigger--fixed-height {
-  grid-auto-rows: var(--nmorph-media-gallery-trigger-height);
+  grid-auto-rows: var(--nmorph-private-media-gallery-trigger-height);
 }
 
 .nmorph-media-gallery__trigger-item {
@@ -696,8 +700,8 @@ const pointerUpHandler = (event: PointerEvent) => {
   top: var(--indentation-02);
   left: var(--indentation-02);
   max-width: calc(100% - 56px);
-  font-weight: 600;
-  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--nmorph-typography-label-font-size);
 }
 
 .nmorph-media-gallery__trigger-item--video .nmorph-media-gallery__trigger-name {
@@ -708,7 +712,7 @@ const pointerUpHandler = (event: PointerEvent) => {
   right: var(--indentation-02);
   bottom: var(--indentation-02);
   max-width: calc(100% - var(--indentation-04));
-  font-size: var(--font-size-extra-small);
+  font-size: var(--nmorph-typography-caption-font-size);
 }
 
 .nmorph-media-gallery__trigger-actions {
@@ -739,8 +743,7 @@ const pointerUpHandler = (event: PointerEvent) => {
 
   .nmorph-icon {
     flex: 0 0 auto;
-    --nmorph-icon-color: var(--nmorph-contrast-text-color);
-    --color: var(--nmorph-contrast-text-color);
+    --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
   }
 
   &:hover {
@@ -766,8 +769,7 @@ const pointerUpHandler = (event: PointerEvent) => {
   pointer-events: none;
 
   .nmorph-icon {
-    --nmorph-icon-color: var(--nmorph-contrast-text-color);
-    --color: var(--nmorph-contrast-text-color);
+    --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
   }
 }
 
@@ -837,8 +839,8 @@ const pointerUpHandler = (event: PointerEvent) => {
     top: var(--indentation-02);
     left: var(--indentation-02);
     max-width: calc(100% - 56px);
-    font-weight: 600;
-    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--nmorph-typography-label-font-size);
   }
 
   &.nmorph-media-gallery--video .nmorph-media-gallery__file-name {
@@ -849,7 +851,7 @@ const pointerUpHandler = (event: PointerEvent) => {
     right: var(--indentation-02);
     bottom: var(--indentation-02);
     max-width: calc(100% - var(--indentation-04));
-    font-size: var(--font-size-extra-small);
+    font-size: var(--nmorph-typography-caption-font-size);
   }
 
   .nmorph-media-gallery__file-actions {
@@ -881,8 +883,7 @@ const pointerUpHandler = (event: PointerEvent) => {
 
     .nmorph-icon {
       flex: 0 0 auto;
-      --nmorph-icon-color: var(--nmorph-contrast-text-color);
-      --color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
     }
 
     &:hover {

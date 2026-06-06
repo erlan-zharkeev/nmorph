@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {
-  NmorphButton,
   NmorphIcon,
   NmorphLink,
   NmorphDropdown,
   NmorphCheckbox,
+  NmorphTextInput,
   NmorphIconSearch,
   NmorphIconLogo,
   NmorphIconMenu,
@@ -76,19 +76,32 @@ onUnmounted(() => {
       <span class="docs-top-bar__version">v{{ libraryData.version }}</span>
     </div>
     <div class="docs-top-bar__right">
-      <NmorphButton class="docs-top-bar__search-btn" style-type="transparent" height="thin" @click="openSearch">
-        <template #icon>
-          <NmorphIconSearch />
-        </template>
-        <span class="docs-top-bar__search-label">{{ $t("top-bar.search") }}</span>
+      <div
+        class="docs-top-bar__search-control"
+        @click="openSearch"
+        @keydown.enter.prevent="openSearch"
+        @keydown.space.prevent="openSearch"
+      >
+        <NmorphTextInput
+          class="docs-top-bar__search-input"
+          :model-value="''"
+          :placeholder="$t('top-bar.search')"
+          thickness="basic"
+          :input-attrs="{ readonly: true, 'aria-label': $t('top-bar.search') }"
+          @focus="openSearch"
+        >
+          <template #prepend-icon>
+            <NmorphIconSearch />
+          </template>
+        </NmorphTextInput>
         <kbd>{{ $t("top-bar.search-shortcut") }}</kbd>
-      </NmorphButton>
+      </div>
       <NmorphLink :href="repositoryUrl" target="blank" class="git-lab-button">
         <GitlabIcon />
       </NmorphLink>
       <div ref="translateBtn" class="docs-top-bar__translate-btn">
         <NmorphCheckbox v-model="translateDropdownOpen" size="small" class="docs-top-bar__translate-checkbox"
-          design="button">
+          design="nmorph">
           <template #label>
             <NmorphIcon>
               <TranslateIcon />
@@ -135,7 +148,7 @@ onUnmounted(() => {
         v-model="mobileNavMenu"
         class="docs-top-bar__nav-menu-btn"
         :aria-label="$t('top-bar.nav')"
-        design="button"
+        design="nmorph"
       >
         <template #label>
           <NmorphIcon>
@@ -172,7 +185,7 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 $top-bar-height: 50px;
 
-.nmorph-checkbox--button.docs-top-bar__translate-checkbox {
+.nmorph-checkbox--nmorph.docs-top-bar__translate-checkbox {
   --size: 28px;
 }
 
@@ -229,10 +242,22 @@ $top-bar-height: 50px;
   align-items: center;
 }
 
-.docs-top-bar__search-btn {
+.docs-top-bar__search-control {
   margin-right: 12px;
+  position: relative;
+  width: 184px;
+  cursor: pointer;
+
+  :deep(.docs-top-bar__search-input input) {
+    cursor: pointer;
+    padding-right: 58px;
+  }
 
   kbd {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
     padding: 2px 6px;
     border: 0;
     border-radius: 4px;
@@ -359,12 +384,16 @@ $top-bar-height: 50px;
     display: none;
   }
 
-  .docs-top-bar__search-btn {
+  .docs-top-bar__search-control {
     margin-right: 8px;
+    width: 34px;
 
-    .docs-top-bar__search-label,
     kbd {
       display: none;
+    }
+
+    :deep(.docs-top-bar__search-input input) {
+      padding-right: 8px;
     }
   }
 

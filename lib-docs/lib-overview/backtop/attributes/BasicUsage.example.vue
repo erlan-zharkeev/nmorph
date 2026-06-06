@@ -12,7 +12,7 @@ import { NmorphBacktop, NmorphScroll } from "@nmorph/nmorph-ui-kit";
           </li>
         </ul>
         <NmorphBacktop
-          design="common"
+          design="plain"
           :right="24"
           :bottom="24"
           :visibility-height="80"

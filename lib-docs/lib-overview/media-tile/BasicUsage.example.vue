@@ -1,0 +1,35 @@
+<script setup lang="ts">
+import { NmorphMediaTile } from "@nmorph/nmorph-ui-kit";
+
+const videoSrc =
+  "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+</script>
+
+<template>
+  <div class="media-tile-basic-usage">
+    <NmorphMediaTile
+      :src="videoSrc"
+      name="Elena Park"
+      speaking
+      selected
+      muted
+    />
+    <NmorphMediaTile name="Nikita Kim" video-off mic-muted pinned />
+    <NmorphMediaTile loading name="Preparing stream" />
+  </div>
+</template>
+
+<style scoped>
+.media-tile-basic-usage {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .media-tile-basic-usage {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

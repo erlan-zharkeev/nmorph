@@ -1,7 +1,8 @@
-import type { INmorphImage, AvatarShapeType } from '@/types';
+import type { INmorphImage, AvatarShapeType, NmorphElementDesignType } from '@/types';
 import type { Component } from 'vue';
 
-export interface INmorphAvatarProps extends Omit<INmorphImage, 'src'> {
+export interface INmorphAvatarProps extends Omit<INmorphImage, 'src' | 'width' | 'height'> {
+  design?: NmorphElementDesignType;
   src?: string | string[];
   size?: number;
   shape?: keyof typeof AvatarShapeType;

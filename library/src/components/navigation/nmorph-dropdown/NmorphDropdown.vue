@@ -23,6 +23,7 @@ const props = withDefaults(defineProps<INmorphDropdownProps>(), {
   ariaLabel: '',
   contentClass: '',
   hideShadow: false,
+  design: 'nmorph',
 });
 
 const emit = defineEmits<INmorphDropdownEmit>();
@@ -40,7 +41,7 @@ const { placementCoords, placementReady, adjustPlacement } = usePlacement({
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-dropdown': [!props.open && 'closed', props.hideShadow && 'hide-shadow'],
+    'nmorph-dropdown': [!props.open && 'closed', props.hideShadow && 'hide-shadow', props.design],
   })
 );
 
@@ -49,10 +50,10 @@ const width = computed(() =>
 );
 
 const dropdownStyle = computed<CSSProperties>(() => ({
-  '--nmorph-dropdown-width': width.value,
+  '--nmorph-private-dropdown-width': width.value,
   ...createCssSizeVariables({
-    '--nmorph-dropdown-min-width': props.minWidth === undefined ? 'auto' : props.minWidth,
-    '--nmorph-dropdown-max-width': props.maxWidth === undefined ? 'none' : props.maxWidth,
+    '--nmorph-private-dropdown-min-width': props.minWidth === undefined ? 'auto' : props.minWidth,
+    '--nmorph-private-dropdown-max-width': props.maxWidth === undefined ? 'none' : props.maxWidth,
   }),
   left: placementCoords.value.x,
   top: placementCoords.value.y,
@@ -103,9 +104,9 @@ const escapeHandler = () => {
 <style lang="scss">
 .nmorph-dropdown {
   position: fixed;
-  width: var(--nmorph-dropdown-width);
-  min-width: var(--nmorph-dropdown-min-width);
-  max-width: var(--nmorph-dropdown-max-width);
+  width: var(--nmorph-private-dropdown-width);
+  min-width: var(--nmorph-private-dropdown-min-width);
+  max-width: var(--nmorph-private-dropdown-max-width);
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
   box-shadow: var(--nmorph-shadow-outset);
@@ -117,6 +118,11 @@ const escapeHandler = () => {
 }
 
 .nmorph-dropdown--hide-shadow {
+  box-shadow: none;
+}
+
+.nmorph-dropdown--plain {
+  border: var(--nmorph-plain-border);
   box-shadow: none;
 }
 </style>

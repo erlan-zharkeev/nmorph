@@ -306,7 +306,7 @@ const pointerEndHandler = (event: PointerEvent) => {
 
 const getOptionStyle = (option: INmorphNormalizedContextMenuOption) =>
   ({
-    '--nmorph-context-menu-item-color': option.color,
+    '--nmorph-private-context-menu-item-color': option.color,
   }) as CSSProperties;
 
 const scrollHandler = () => {
@@ -454,7 +454,7 @@ defineExpose<INmorphContextMenuExpose>({ close, openAt, openAtElement });
   width: 100%;
   min-width: 120px;
   padding: var(--indentation-02) var(--indentation-04);
-  color: var(--nmorph-context-menu-item-color, var(--nmorph-text-color));
+  color: var(--nmorph-private-context-menu-item-color, var(--nmorph-text-color));
   font: inherit;
   line-height: var(--line-height-regular);
   text-align: left;
@@ -476,15 +476,15 @@ defineExpose<INmorphContextMenuExpose>({ close, openAt, openAtElement });
 }
 
 .nmorph-context-menu__item-label {
-  color: var(--nmorph-context-menu-item-color, var(--nmorph-text-color));
+  color: var(--nmorph-private-context-menu-item-color, var(--nmorph-text-color));
   text-align: left;
 }
 
 .nmorph-context-menu__item-description,
 .nmorph-context-menu__item-shortcut {
   color: var(--nmorph-semi-contrast-text-color);
-  font-size: var(--font-size-extra-small);
-  line-height: var(--line-height-regular);
+  font-size: var(--nmorph-typography-body-small-font-size);
+  line-height: var(--nmorph-typography-body-small-line-height);
 }
 
 .nmorph-context-menu__divider {
@@ -496,14 +496,18 @@ defineExpose<INmorphContextMenuExpose>({ close, openAt, openAtElement });
 .nmorph-context-menu__section {
   padding: var(--indentation-02) var(--indentation-04) var(--indentation-01);
   color: var(--nmorph-semi-contrast-text-color);
-  font-weight: 600;
-  font-size: var(--font-size-extra-small);
-  line-height: var(--line-height-regular);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--nmorph-typography-label-font-size);
+  line-height: var(--nmorph-typography-label-line-height);
   text-transform: uppercase;
 }
 
 .nmorph-context-menu__item:not(:disabled, .nmorph-context-menu__item--disabled):hover {
-  background: color-mix(in srgb, var(--nmorph-context-menu-item-color, var(--nmorph-text-color)) 12%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--nmorph-private-context-menu-item-color, var(--nmorph-text-color)) 12%,
+    transparent
+  );
 }
 
 .nmorph-context-menu__item:disabled,
@@ -513,23 +517,21 @@ defineExpose<INmorphContextMenuExpose>({ close, openAt, openAtElement });
   pointer-events: none;
 }
 
-.nmorph-context-menu__dropdown .nmorph-button--transparent .nmorph-button__content {
+.nmorph-context-menu__dropdown .nmorph-button--plain .nmorph-button__content {
   justify-content: flex-start;
   text-align: left;
 }
 
-.nmorph-context-menu__dropdown .nmorph-button--transparent .nmorph-button__content span {
+.nmorph-context-menu__dropdown .nmorph-button--plain .nmorph-button__content span {
   text-align: left;
 }
 
-.nmorph-context-menu__dropdown
-  .nmorph-button--transparent
-  .nmorph-button__content:not(:disabled, [loading='true']):hover {
+.nmorph-context-menu__dropdown .nmorph-button--plain .nmorph-button__content:not(:disabled, [loading='true']):hover {
   background: color-mix(
     in srgb,
     var(
-        --nmorph-button-hover-color,
-        var(--nmorph-button-color, var(--transparent-button-color, var(--nmorph-text-color)))
+        --nmorph-private-button-hover-color,
+        var(--nmorph-private-button-color, var(--nmorph-private-button-plain-color, var(--nmorph-text-color)))
       )
       12%,
     transparent

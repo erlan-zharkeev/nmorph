@@ -80,6 +80,7 @@ import {
   NmorphTagItem,
   NmorphTagList,
   NmorphTextarea,
+  NmorphText,
   NmorphTextInput,
   NmorphTooltip,
   NmorphVirtualList,
@@ -226,6 +227,12 @@ const renderCases = [
     name: 'NmorphLink',
     component: NmorphLink,
     props: { href: '#', text: 'Link' },
+  },
+  {
+    name: 'NmorphText',
+    component: NmorphText,
+    props: { as: 'p', variant: 'body', color: 'semi-contrast' },
+    slots: { default: 'Text' },
   },
   {
     name: 'NmorphLayout',
@@ -701,6 +708,10 @@ describe('components', () => {
     expect(locale.language).toBe('en');
     expect(locale.data.length).toBeGreaterThan(1000);
     expect(locale.data[0].emoji).toBe('😀');
+    expect(locale.data[0].annotation).toBe('grinning face');
+    expect(locale.data[0].tags).toEqual(expect.arrayContaining(['grinning face', 'smile', 'happy']));
+    expect(locale.data.find((item) => item.emoji === '❤️')?.annotation).toBe('red heart');
+    expect(locale.data.find((item) => item.emoji === '🇰🇿')?.annotation).toBe('flag Kazakhstan');
     expect(locale.quickList).toEqual(nmorphEmojiQuickList);
   });
 
@@ -766,7 +777,7 @@ describe('components', () => {
   it('applies tag list design to tags while preserving explicit tag overrides', async () => {
     const wrapper = mount(NmorphTagList, {
       props: {
-        design: 'common',
+        design: 'plain',
         color: 'var(--nmorph-success-color)',
         modelValue: [
           { value: 'status', text: 'Status' },
@@ -778,12 +789,12 @@ describe('components', () => {
 
     const tags = wrapper.findAll('.nmorph-tag-item');
 
-    expect(tags[0].classes()).toContain('nmorph-tag-item--common');
+    expect(tags[0].classes()).toContain('nmorph-tag-item--plain');
     expect(tags[1].classes()).toContain('nmorph-tag-item--nmorph');
-    expect(tags[2].classes()).toContain('nmorph-tag-item--common');
-    expect(wrapper.find('.nmorph-list').classes()).toContain('nmorph-list--common');
-    expect(tags[0].element.style.getPropertyValue('--tag-item-background-color')).toBe('var(--nmorph-success-color)');
-    expect(tags[2].element.style.getPropertyValue('--tag-item-background-color')).toBe('var(--nmorph-warn-color)');
+    expect(tags[2].classes()).toContain('nmorph-tag-item--plain');
+    expect(wrapper.find('.nmorph-list').classes()).toContain('nmorph-list--plain');
+    expect(tags[0].element.style.getPropertyValue('--nmorph-private-tag-item-background-color')).toBe('var(--nmorph-success-color)');
+    expect(tags[2].element.style.getPropertyValue('--nmorph-private-tag-item-background-color')).toBe('var(--nmorph-warn-color)');
 
     await tags[0].trigger('click');
     await tags[0].find('.nmorph-tag-item__close-icon').trigger('click');
@@ -829,7 +840,7 @@ describe('components', () => {
       props: {
         value: 'custom',
         text: 'Fallback',
-        design: 'common',
+        design: 'plain',
       },
       slots: {
         default: '<span class="custom-tag-content">Custom</span>',
@@ -863,7 +874,7 @@ describe('components', () => {
       },
       template: `
         <div>
-          <NmorphTagList v-model="tags" v-model:selected-value="selectedValue" design="common">
+          <NmorphTagList v-model="tags" v-model:selected-value="selectedValue" design="plain">
             <template #item="{ item }">
               <span class="reaction-glyph">{{ item.glyphKey }}</span>
               <span v-if="item.count > 1" class="reaction-count">{{ item.count }}</span>
@@ -910,13 +921,13 @@ describe('components', () => {
 
     const closeIcon = wrapper.find('.nmorph-tag-item__close-icon').element as HTMLElement;
 
-    expect(closeIcon.style.getPropertyValue('--nmorph-icon-color')).toBe('var(--nmorph-contrast-text-color)');
-    expect(closeIcon.style.getPropertyValue('--color')).toBe('var(--nmorph-contrast-text-color)');
+    expect(closeIcon.style.getPropertyValue('--nmorph-private-icon-color')).toBe('var(--nmorph-contrast-text-color)');
+    expect(closeIcon.style.getPropertyValue('--nmorph-private-icon-color')).toBe('var(--nmorph-contrast-text-color)');
 
     wrapper.unmount();
   });
 
-  it('uses readable content colors for common tag backgrounds', async () => {
+  it('uses readable content colors for plain tag backgrounds', async () => {
     document.documentElement.style.setProperty('--nmorph-gray-color', '#c9d2de');
     document.documentElement.style.setProperty('--nmorph-main-color', '#1c1f21');
 
@@ -924,8 +935,8 @@ describe('components', () => {
       components: { NmorphTagItem },
       template: `
         <div>
-          <NmorphTagItem value="light" text="Light" design="common" />
-          <NmorphTagItem value="dark" text="Dark" design="common" color="var(--nmorph-main-color)" />
+          <NmorphTagItem value="light" text="Light" design="plain" />
+          <NmorphTagItem value="dark" text="Dark" design="plain" color="var(--nmorph-main-color)" />
         </div>
       `,
     });
@@ -935,14 +946,14 @@ describe('components', () => {
 
     const [lightTag, darkTag] = wrapper.findAll('.nmorph-tag-item');
 
-    expect(lightTag.element.style.getPropertyValue('--tag-item-background-color')).toBe('var(--nmorph-gray-color)');
-    expect(lightTag.element.style.getPropertyValue('--tag-item-content-color')).toBe('var(--nmorph-black-color)');
-    expect(darkTag.element.style.getPropertyValue('--tag-item-background-color')).toBe('var(--nmorph-main-color)');
-    expect(darkTag.element.style.getPropertyValue('--tag-item-content-color')).toBe('var(--nmorph-white-color)');
-    expect(lightTag.find('.nmorph-tag-item__close-icon').element.style.getPropertyValue('--nmorph-icon-color')).toBe(
+    expect(lightTag.element.style.getPropertyValue('--nmorph-private-tag-item-background-color')).toBe('var(--nmorph-gray-color)');
+    expect(lightTag.element.style.getPropertyValue('--nmorph-private-tag-item-content-color')).toBe('var(--nmorph-black-color)');
+    expect(darkTag.element.style.getPropertyValue('--nmorph-private-tag-item-background-color')).toBe('var(--nmorph-main-color)');
+    expect(darkTag.element.style.getPropertyValue('--nmorph-private-tag-item-content-color')).toBe('var(--nmorph-white-color)');
+    expect(lightTag.find('.nmorph-tag-item__close-icon').element.style.getPropertyValue('--nmorph-private-icon-color')).toBe(
       'var(--nmorph-black-color)'
     );
-    expect(darkTag.find('.nmorph-tag-item__close-icon').element.style.getPropertyValue('--nmorph-icon-color')).toBe(
+    expect(darkTag.find('.nmorph-tag-item__close-icon').element.style.getPropertyValue('--nmorph-private-icon-color')).toBe(
       'var(--nmorph-white-color)'
     );
     expect(lightTag.attributes('style')).not.toContain('--nmorph-tag-item-color');
@@ -977,8 +988,8 @@ describe('components', () => {
     expect(element.tagName).toBe('ARTICLE');
     expect(layout.classes()).toContain('nmorph-layout--aside-right');
     expect(layout.classes()).toContain('nmorph-layout--full-height');
-    expect(element.style.getPropertyValue('--nmorph-layout-gap')).toBe('12px');
-    expect(element.style.getPropertyValue('--nmorph-layout-aside-width')).toBe('88px');
+    expect(element.style.getPropertyValue('--nmorph-private-layout-gap')).toBe('12px');
+    expect(element.style.getPropertyValue('--nmorph-private-layout-aside-width')).toBe('88px');
     expect(bodyChildren[0].classList.contains('nmorph-layout__main')).toBe(true);
     expect(bodyChildren[1].classList.contains('nmorph-layout__aside')).toBe(true);
     expect(wrapper.find('.nmorph-layout__header').text()).toBe('Header');
@@ -1016,9 +1027,9 @@ describe('components', () => {
         'nmorph-space--fill',
       ])
     );
-    expect(element.style.getPropertyValue('--nmorph-space-gap')).toBe('16px');
-    expect(element.style.getPropertyValue('--nmorph-space-align')).toBe('flex-end');
-    expect(element.style.getPropertyValue('--nmorph-space-justify')).toBe('space-between');
+    expect(element.style.getPropertyValue('--nmorph-private-space-gap')).toBe('16px');
+    expect(element.style.getPropertyValue('--nmorph-private-space-align')).toBe('flex-end');
+    expect(element.style.getPropertyValue('--nmorph-private-space-justify')).toBe('space-between');
 
     wrapper.unmount();
   });
@@ -1036,8 +1047,8 @@ describe('components', () => {
     });
     const qrCode = wrapper.find('.nmorph-qr-code').element as HTMLElement;
 
-    expect(qrCode.style.getPropertyValue('--nmorph-qr-code-size')).toBe('128px');
-    expect(qrCode.style.getPropertyValue('--nmorph-qr-code-color')).toBe('#111111');
+    expect(qrCode.style.getPropertyValue('--nmorph-private-qr-code-size')).toBe('128px');
+    expect(wrapper.find('path').attributes('fill')).toBe('#111111');
     expect(wrapper.find('.nmorph-qr-code__svg').exists()).toBe(true);
     expect(wrapper.find('title').text()).toBe('Nmorph QR');
     expect(wrapper.find('path').attributes('d')).toContain('M');
@@ -1268,7 +1279,7 @@ describe('components', () => {
     const drawerElement = drawer.element as HTMLElement;
 
     expect(drawer.classes()).toEqual(expect.arrayContaining(['nmorph-drawer--left', 'nmorph-drawer--open']));
-    expect(drawerElement.style.getPropertyValue('--nmorph-drawer-size')).toBe('280px');
+    expect(drawerElement.style.getPropertyValue('--nmorph-private-drawer-size')).toBe('280px');
     expect(drawer.attributes('aria-label')).toBe('Settings');
     expect(wrapper.find('.custom-drawer-content').text()).toBe('Drawer content');
     expect(wrapper.find('.nmorph-drawer__footer').text()).toBe('Footer');
@@ -1315,9 +1326,9 @@ describe('components', () => {
 
     const card = wrapper.find('.nmorph-card').element as HTMLElement;
 
-    expect(card.style.getPropertyValue('--card-padding')).toBe('18px');
-    expect(card.style.getPropertyValue('--nmorph-card-radius')).toBe('12px');
-    expect(card.style.getPropertyValue('--nmorph-card-content-padding')).toBe('8px');
+    expect(card.style.getPropertyValue('--nmorph-private-card-padding')).toBe('18px');
+    expect(card.style.getPropertyValue('--nmorph-private-card-radius')).toBe('12px');
+    expect(card.style.getPropertyValue('--nmorph-private-card-content-padding')).toBe('8px');
     expect(card.style.padding).toBe('18px');
 
     wrapper.unmount();
@@ -1344,12 +1355,12 @@ describe('components', () => {
 
     expect(
       (regular.find('.nmorph-card').element as HTMLElement).style.getPropertyValue(
-        '--nmorph-card-combined-border-width'
+        '--nmorph-private-card-combined-border-width'
       )
     ).toBe('');
     expect(
       (combined.find('.nmorph-card').element as HTMLElement).style.getPropertyValue(
-        '--nmorph-card-combined-border-width'
+        '--nmorph-private-card-combined-border-width'
       )
     ).toBe('2px');
 
@@ -1444,9 +1455,9 @@ describe('components', () => {
 
     const empty = wrapper.find('.nmorph-empty').element as HTMLElement;
 
-    expect(empty.style.getPropertyValue('--nmorph-empty-icon-size')).toBe('32px');
-    expect(empty.style.getPropertyValue('--nmorph-empty-min-height')).toBe('120px');
-    expect(empty.style.getPropertyValue('--nmorph-empty-padding')).toBe('12px');
+    expect(empty.style.getPropertyValue('--nmorph-private-empty-icon-size')).toBe('32px');
+    expect(empty.style.getPropertyValue('--nmorph-private-empty-min-height')).toBe('120px');
+    expect(empty.style.getPropertyValue('--nmorph-private-empty-padding')).toBe('12px');
     expect(wrapper.find('.nmorph-empty__action button').text()).toBe('Create');
 
     wrapper.unmount();
@@ -1456,7 +1467,7 @@ describe('components', () => {
     const wrapper = mount(NmorphEmpty);
     const empty = wrapper.find('.nmorph-empty').element as HTMLElement;
 
-    expect(empty.style.getPropertyValue('--nmorph-empty-padding')).toBe('var(--indentation-05)');
+    expect(empty.style.getPropertyValue('--nmorph-private-empty-padding')).toBe('var(--indentation-05)');
     expect(getCommonStyles()).toContain('--indentation-05: 24px;');
 
     wrapper.unmount();
@@ -1468,6 +1479,90 @@ describe('components', () => {
     expect(styles).toContain('.nmorph-scroll::-webkit-scrollbar-track');
     expect(styles).toContain('box-shadow: var(--nmorph-shadow-inset);');
     expect(styles).toContain('.nmorph-scroll::-webkit-scrollbar-button');
+  });
+
+  it('maps vertical wheel movement to horizontal scroll when vertical scrolling is unavailable', async () => {
+    const wrapper = mount(NmorphScroll, {
+      props: {
+        height: '40px',
+      },
+      slots: {
+        default: '<div style="width: 300px">Wide content</div>',
+      },
+    });
+    const viewportWrapper = wrapper.find('.nmorph-scroll__viewport');
+    const viewport = viewportWrapper.element as HTMLElement;
+
+    Object.defineProperties(viewport, {
+      clientWidth: { value: 100, configurable: true },
+      clientHeight: { value: 40, configurable: true },
+      scrollWidth: { value: 300, configurable: true },
+      scrollHeight: { value: 40, configurable: true },
+    });
+    viewport.scrollLeft = 0;
+    viewport.scrollTop = 0;
+
+    await viewportWrapper.trigger('scroll');
+
+    const wheelEvent = new Event('wheel', { cancelable: true }) as WheelEvent;
+
+    Object.defineProperties(wheelEvent, {
+      deltaX: { value: 0 },
+      deltaY: { value: 64 },
+      deltaMode: { value: 0 },
+    });
+    viewport.dispatchEvent(wheelEvent);
+
+    expect(viewport.scrollLeft).toBe(64);
+    expect(wheelEvent.defaultPrevented).toBe(true);
+
+    wrapper.unmount();
+  });
+
+  it('defines shared typography for component thickness classes', () => {
+    const styles = getCommonStyles();
+
+    expect(styles).toContain('--line-height-control: 1.15;');
+    expect(styles).toContain('--nmorph-typography-control-small-font-size: var(--font-size-extra-small);');
+    expect(styles).toContain('--nmorph-typography-control-font-size: var(--font-size-small);');
+    expect(styles).toContain('--nmorph-typography-control-large-font-size: var(--font-size-base);');
+    expect(styles).toContain('--nmorph-private-control-font-size: var(--nmorph-typography-control-small-font-size);');
+    expect(styles).toContain('--nmorph-private-control-font-size: var(--nmorph-typography-control-font-size);');
+    expect(styles).toContain('--nmorph-private-control-font-size: var(--nmorph-typography-control-large-font-size);');
+    expect(styles).toContain('font-size: var(--nmorph-private-control-font-size);');
+    expect(styles).toContain('line-height: var(--nmorph-private-control-line-height);');
+    expect(styles).toContain('.nmorph-typography--body');
+    expect(styles).toContain('.nmorph-typography--control');
+    expect(styles).toContain('--nmorph-plain-border: 1.5px solid var(--nmorph-plain-border-color);');
+    expect(styles).toContain('.nmorph--plain-surface');
+    expect(styles).not.toContain('.nmorph--thin-component.nmorph-native-input');
+  });
+
+  it('renders NmorphText with typography modifiers and style variables', () => {
+    const wrapper = mount(NmorphText, {
+      props: {
+        as: 'p',
+        variant: 'title',
+        weight: 'bold',
+        color: 'accent',
+        align: 'center',
+        truncate: true,
+      },
+      slots: {
+        default: 'Typographic text',
+      },
+    });
+    const text = wrapper.find('p');
+
+    expect(text.exists()).toBe(true);
+    expect(text.classes()).toContain('nmorph-typography');
+    expect(text.classes()).toContain('nmorph-typography--title');
+    expect(text.classes()).toContain('nmorph-typography--bold');
+    expect(text.classes()).toContain('nmorph-typography--truncate');
+    expect(text.element.style.getPropertyValue('--nmorph-private-text-color')).toBe('var(--nmorph-accent-color)');
+    expect(text.element.style.getPropertyValue('--nmorph-private-text-align')).toBe('center');
+
+    wrapper.unmount();
   });
 
   it('keeps default placeholder colors cool-toned', () => {
@@ -1504,9 +1599,9 @@ describe('components', () => {
     const backtop = portal.querySelector('.nmorph-backtop') as HTMLElement;
 
     expect(backtop).toBeTruthy();
-    expect(backtop.style.getPropertyValue('--nmorph-backtop-right')).toBe('24px');
-    expect(backtop.style.getPropertyValue('--nmorph-backtop-bottom')).toBe('32px');
-    expect(backtop.style.getPropertyValue('--nmorph-backtop-z-index')).toBe('99');
+    expect(backtop.style.getPropertyValue('--nmorph-private-backtop-right')).toBe('24px');
+    expect(backtop.style.getPropertyValue('--nmorph-private-backtop-bottom')).toBe('32px');
+    expect(backtop.style.getPropertyValue('--nmorph-private-backtop-z-index')).toBe('99');
 
     wrapper.unmount();
     target.remove();
@@ -1570,9 +1665,9 @@ describe('components', () => {
       mount(NmorphBadge, { props: { color: '#123456', ribbonSize: 30, ribbonRadius: 6 } }),
       '.nmorph-badge',
       {
-        '--nmorph-badge-color': '#123456',
-        '--nmorph-badge-ribbon-height': '30px',
-        '--nmorph-badge-ribbon-radius': '6px',
+        '--nmorph-private-badge-color': '#123456',
+        '--nmorph-private-badge-ribbon-height': '30px',
+        '--nmorph-private-badge-ribbon-radius': '6px',
       }
     );
 
@@ -1587,9 +1682,9 @@ describe('components', () => {
       }),
       '.nmorph-progress',
       {
-        '--height': '12px',
-        '--width-transition': 'width 120ms ease',
-        '--animation': 'pulse 1s linear infinite',
+        '--nmorph-private-progress-height': '12px',
+        '--nmorph-private-progress-width-transition': 'width 120ms ease',
+        '--nmorph-private-progress-indeterminate-animation': 'pulse 1s linear infinite',
       }
     );
 
@@ -1603,7 +1698,7 @@ describe('components', () => {
       }),
       '.nmorph-calendar',
       {
-        '--table-data-cell-height': '44px',
+        '--nmorph-private-calendar-cell-height': '44px',
       }
     );
 
@@ -1615,7 +1710,7 @@ describe('components', () => {
       }),
       '.nmorph-skeleton',
       {
-        '--loading-gradient': 'linear-gradient(90deg, red, blue)',
+        '--nmorph-private-skeleton-loading-gradient': 'linear-gradient(90deg, red, blue)',
       }
     );
 
@@ -1630,9 +1725,9 @@ describe('components', () => {
       }),
       '.nmorph-table',
       {
-        '--border-color': '#123456',
-        '--table-cell-height': '52px',
-        '--table-background-row-hover': 'rgba(1, 2, 3, 0.2)',
+        '--nmorph-private-table-border-color': '#123456',
+        '--nmorph-private-table-cell-height': '52px',
+        '--nmorph-private-table-row-hover-background': 'rgba(1, 2, 3, 0.2)',
       }
     );
 
@@ -1648,9 +1743,9 @@ describe('components', () => {
       }),
       '.nmorph-image-preview',
       {
-        '--width': '222px',
-        '--height': '130px',
-        '--nmorph-image-preview-radius': '10px',
+        '--nmorph-private-image-preview-trigger-width': '222px',
+        '--nmorph-private-image-preview-trigger-height': '130px',
+        '--nmorph-private-image-preview-radius': '10px',
       }
     );
 
@@ -1669,9 +1764,9 @@ describe('components', () => {
       }),
       '.nmorph-tooltip',
       {
-        '--width': '180px',
-        '--max-width': '220px',
-        '--height': '48px',
+        '--nmorph-private-tooltip-width': '180px',
+        '--nmorph-private-tooltip-max-width': '220px',
+        '--nmorph-private-tooltip-height': '48px',
       }
     );
 
@@ -1687,7 +1782,7 @@ describe('components', () => {
       }),
       '.nmorph-alert',
       {
-        '--background-color': 'rgba(10, 20, 30, 0.2)',
+        '--nmorph-private-alert-background-color': 'rgba(10, 20, 30, 0.2)',
       }
     );
 
@@ -1708,13 +1803,13 @@ describe('components', () => {
       }),
       '.nmorph-callout',
       {
-        '--callout-color': '#345678',
-        '--callout-padding': '14px',
-        '--callout-border-radius': 'var(--border-radius-80)',
-        '--callout-accent-width': '6px',
-        '--callout-title-gap': '10px',
-        '--callout-title-font-size': '18px',
-        '--callout-content-font-size': '13px',
+        '--nmorph-private-callout-color': '#345678',
+        '--nmorph-private-callout-padding': '14px',
+        '--nmorph-private-callout-border-radius': 'var(--border-radius-80)',
+        '--nmorph-private-callout-accent-width': '6px',
+        '--nmorph-private-callout-title-gap': '10px',
+        '--nmorph-private-callout-title-font-size': '18px',
+        '--nmorph-private-callout-content-font-size': '13px',
       }
     );
 
@@ -1728,7 +1823,7 @@ describe('components', () => {
       }),
       '.nmorph-link',
       {
-        '--link-color': '#abcdef',
+        '--nmorph-private-link-color': '#abcdef',
       }
     );
   });
@@ -1758,7 +1853,7 @@ describe('components', () => {
     expect(wrapper.find('.nmorph-file-card__icon').exists()).toBe(true);
     expect(
       (wrapper.find('.nmorph-file-card__icon > .nmorph-icon').element as HTMLElement).style.getPropertyValue(
-        '--nmorph-icon-color'
+        '--nmorph-private-icon-color'
       )
     ).toBe('');
     expect(wrapper.find('.nmorph-file-card__name').text()).toBe(
@@ -1866,12 +1961,12 @@ describe('components', () => {
     expect(
       (
         wrapper.find('button.nmorph-audio-preview__play-button .nmorph-icon').element as HTMLElement
-      ).style.getPropertyValue('--nmorph-icon-color')
+      ).style.getPropertyValue('--nmorph-private-icon-color')
     ).toBe('var(--nmorph-contrast-text-color)');
     expect(
       (
         wrapper.find('button.nmorph-audio-preview__play-button .nmorph-icon').element as HTMLElement
-      ).style.getPropertyValue('--color')
+      ).style.getPropertyValue('--nmorph-private-icon-color')
     ).toBe('var(--nmorph-contrast-text-color)');
     expect(wrapper.find('.nmorph-audio-preview__range').exists()).toBe(true);
     expect(wrapper.find('.nmorph-audio-preview__actions').exists()).toBe(false);
@@ -1976,10 +2071,10 @@ describe('components', () => {
 
     expect(playButton.exists()).toBe(true);
     expect(playButton.attributes('aria-label')).toBe('Play clip.mp4');
-    expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-icon-color')).toBe(
+    expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')).toBe(
       'var(--nmorph-contrast-text-color)'
     );
-    expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--color')).toBe(
+    expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')).toBe(
       'var(--nmorph-contrast-text-color)'
     );
     expect(wrapper.find('.nmorph-video-preview__actions').exists()).toBe(true);
@@ -2033,9 +2128,9 @@ describe('components', () => {
     const videoPreview = wrapper.find('.nmorph-file-card__video-preview.nmorph-video-preview');
     const video = wrapper.find('video');
 
-    expect(card.element.style.getPropertyValue('--nmorph-file-card-height')).toBe('150px');
-    expect(card.element.style.getPropertyValue('--nmorph-file-card-media-height')).toBe('150px');
-    expect(videoPreview.element.style.getPropertyValue('--nmorph-video-preview-height')).toBe('150px');
+    expect(card.element.style.getPropertyValue('--nmorph-private-file-card-height')).toBe('150px');
+    expect(card.element.style.getPropertyValue('--nmorph-private-file-card-media-height')).toBe('150px');
+    expect(videoPreview.element.style.getPropertyValue('--nmorph-private-video-preview-height')).toBe('150px');
     expect(wrapper.find('.nmorph-file-card__info').exists()).toBe(false);
     expect(wrapper.find('.nmorph-file-card__visual-size').exists()).toBe(false);
     expect(wrapper.find('.nmorph-file-card__actions').exists()).toBe(false);
@@ -2283,18 +2378,18 @@ describe('components', () => {
     expect(wrapper.find('.nmorph-audio-preview__play').exists()).toBe(false);
     expect(
       (wrapper.find('.nmorph-audio-preview__icon > .nmorph-icon').element as HTMLElement).style.getPropertyValue(
-        '--nmorph-icon-color'
+        '--nmorph-private-icon-color'
       )
     ).toBe('');
     expect(
       (
         wrapper.find('.nmorph-audio-preview__play-indicator .nmorph-icon').element as HTMLElement
-      ).style.getPropertyValue('--nmorph-icon-color')
+      ).style.getPropertyValue('--nmorph-private-icon-color')
     ).toBe('var(--nmorph-contrast-text-color)');
     expect(
       (
         wrapper.find('.nmorph-audio-preview__play-indicator .nmorph-icon').element as HTMLElement
-      ).style.getPropertyValue('--color')
+      ).style.getPropertyValue('--nmorph-private-icon-color')
     ).toBe('var(--nmorph-contrast-text-color)');
 
     wrapper.unmount();
@@ -2366,16 +2461,16 @@ describe('components', () => {
 
     expect(playButton.exists()).toBe(true);
     expect(playButton.attributes('aria-label')).toBe('Play clip.mp4');
-    expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-icon-color')).toBe(
+    expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')).toBe(
       'var(--nmorph-contrast-text-color)'
     );
-    expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--color')).toBe(
+    expect((playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')).toBe(
       'var(--nmorph-contrast-text-color)'
     );
     expect(fullscreenButton.exists()).toBe(true);
     expect(previewButton.exists()).toBe(true);
     expect(
-      (fullscreenButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-icon-color')
+      (fullscreenButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')
     ).toBe('var(--nmorph-contrast-text-color)');
 
     await wrapper.find('video').trigger('play');
@@ -2459,13 +2554,13 @@ describe('components', () => {
     expect(iconAction.attributes('rel')).toBe('noopener noreferrer');
     expect(
       (wrapper.find('.nmorph-file-card__icon > .nmorph-icon').element as HTMLElement).style.getPropertyValue(
-        '--nmorph-icon-color'
+        '--nmorph-private-icon-color'
       )
     ).toBe('');
-    expect((iconAction.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-icon-color')).toBe(
+    expect((iconAction.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')).toBe(
       'var(--nmorph-contrast-text-color)'
     );
-    expect((iconAction.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--color')).toBe(
+    expect((iconAction.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')).toBe(
       'var(--nmorph-contrast-text-color)'
     );
     expect(defaultActions).toHaveLength(1);
@@ -2672,8 +2767,8 @@ describe('components', () => {
 
     const badge = wrapper.find('.nmorph-badge').element as HTMLElement;
 
-    expect(badge.style.getPropertyValue('--nmorph-badge-ribbon-offset-x')).toBe('-6px');
-    expect(badge.style.getPropertyValue('--nmorph-badge-ribbon-offset-y')).toBe('8px');
+    expect(badge.style.getPropertyValue('--nmorph-private-badge-ribbon-offset-x')).toBe('-6px');
+    expect(badge.style.getPropertyValue('--nmorph-private-badge-ribbon-offset-y')).toBe('8px');
     expect(wrapper.find('.nmorph-badge__ribbon-frame').exists()).toBe(true);
     expect(wrapper.find('.nmorph-badge__ribbon-corner').classes()).toContain(
       'nmorph-badge__ribbon-corner--bottom-left'
@@ -2703,8 +2798,8 @@ describe('components', () => {
     const badge = wrapper.find('.nmorph-badge').element as HTMLElement;
     const ribbonCorner = wrapper.find('.nmorph-badge__ribbon-corner');
 
-    expect(badge.style.getPropertyValue('--nmorph-badge-ribbon-offset-x')).toBe('12px');
-    expect(badge.style.getPropertyValue('--nmorph-badge-ribbon-offset-y')).toBe('4px');
+    expect(badge.style.getPropertyValue('--nmorph-private-badge-ribbon-offset-x')).toBe('12px');
+    expect(badge.style.getPropertyValue('--nmorph-private-badge-ribbon-offset-y')).toBe('4px');
     expect(ribbonCorner.classes()).toContain('nmorph-badge__ribbon-corner--top-right');
     expect(ribbonCorner.classes()).toContain('nmorph-badge__ribbon-corner--flat');
 
@@ -2716,8 +2811,6 @@ describe('components', () => {
       props: {
         value: 'New',
         type: 'ribbon',
-        isDot: true,
-        isTag: true,
       },
       slots: {
         default: '<div>Card</div>',
@@ -2733,12 +2826,12 @@ describe('components', () => {
         default: '<button>Ignored</button>',
       },
     });
-    const legacyDot = mount(NmorphBadge, {
+    const dot = mount(NmorphBadge, {
       props: {
-        isDot: true,
+        type: 'dot',
       },
       slots: {
-        default: '<button>Legacy</button>',
+        default: '<button>Dot</button>',
       },
     });
 
@@ -2753,14 +2846,14 @@ describe('components', () => {
     expect(tag.text()).toContain('Stable');
     expect(tag.text()).not.toContain('Ignored');
 
-    expect(legacyDot.find('.nmorph-badge__dot').exists()).toBe(true);
+    expect(dot.find('.nmorph-badge__dot').exists()).toBe(true);
     expect(
-      (legacyDot.find('.nmorph-badge').element as HTMLElement).style.getPropertyValue('--nmorph-badge-dot-size')
+      (dot.find('.nmorph-badge').element as HTMLElement).style.getPropertyValue('--nmorph-private-badge-dot-size')
     ).toBe('');
 
     ribbon.unmount();
     tag.unmount();
-    legacyDot.unmount();
+    dot.unmount();
   });
 
   it('applies extended badge size modifiers', async () => {
@@ -2823,7 +2916,7 @@ describe('components', () => {
     expect(meter.attributes('aria-label')).toBe('Mic level');
     expect(meter.attributes('aria-valuenow')).toBe('75');
     expect(meter.classes()).toEqual(expect.arrayContaining(['nmorph-audio-meter--line', 'nmorph-audio-meter--warn']));
-    expect((meter.element as HTMLElement).style.getPropertyValue('--nmorph-audio-meter-percent')).toBe('75%');
+    expect((meter.element as HTMLElement).style.getPropertyValue('--nmorph-private-audio-meter-percent')).toBe('75%');
 
     wrapper.unmount();
   });
@@ -3407,10 +3500,10 @@ describe('components', () => {
       }),
       '.nmorph-switch',
       {
-        '--width': '54px',
-        '--height': '30px',
-        '--offset': '4px',
-        '--thumb-height': '22px',
+        '--nmorph-private-switch-width': '54px',
+        '--nmorph-private-switch-height': '30px',
+        '--nmorph-private-switch-offset': '4px',
+        '--nmorph-private-switch-thumb-height': '22px',
       }
     );
 
@@ -3426,9 +3519,9 @@ describe('components', () => {
       }),
       '.nmorph-select-button',
       {
-        '--track-padding': '3px',
-        '--item-size': '36px',
-        '--item-font-size': '13px',
+        '--nmorph-private-select-button-track-padding': '3px',
+        '--nmorph-private-select-button-item-size': '36px',
+        '--nmorph-private-select-button-item-font-size': '13px',
       }
     );
 
@@ -3442,7 +3535,7 @@ describe('components', () => {
       }),
       '.nmorph-select',
       {
-        '--base-width': '280px',
+        '--nmorph-private-select-width': '280px',
       }
     );
 
@@ -3463,8 +3556,8 @@ describe('components', () => {
       }),
       '.nmorph-select-option',
       {
-        '--hover-bg': '#111111',
-        '--hover-color': '#eeeeee',
+        '--nmorph-private-select-option-hover-background': '#111111',
+        '--nmorph-private-select-option-hover-color': '#eeeeee',
       }
     );
 
@@ -3480,7 +3573,7 @@ describe('components', () => {
     expect(fileUpload.find('.nmorph-file-upload').classes()).toEqual(
       expect.arrayContaining(['nmorph-file-upload--compact', 'nmorph-file-upload--layout-inline'])
     );
-    expect(fileUploadElement.style.getPropertyValue('--nmorph-file-upload-name-width')).toBe('180px');
+    expect(fileUploadElement.style.getPropertyValue('--nmorph-private-file-upload-name-width')).toBe('180px');
     fileUpload.unmount();
 
     await assertStyles(
@@ -3494,9 +3587,9 @@ describe('components', () => {
       }),
       '.nmorph-slider',
       {
-        '--nmorph-slider-thumb-width': '64px',
-        '--slider-height': '28px',
-        '--value-fixed-container-height': '12px',
+        '--nmorph-private-slider-thumb-width': '64px',
+        '--nmorph-private-slider-height': '28px',
+        '--nmorph-private-slider-value-container-height': '12px',
       }
     );
 
@@ -3511,8 +3604,8 @@ describe('components', () => {
       }),
       '.nmorph-date-picker',
       {
-        '--width': '260px',
-        '--date-picker-calendar-cell-height': '38px',
+        '--nmorph-private-date-picker-width': '260px',
+        '--nmorph-private-date-picker-calendar-cell-height': '38px',
       }
     );
 
@@ -3525,7 +3618,7 @@ describe('components', () => {
       }),
       '.nmorph-time-picker',
       {
-        '--width': '180px',
+        '--nmorph-private-time-picker-width': '180px',
       }
     );
 
@@ -3542,15 +3635,64 @@ describe('components', () => {
       ),
       '.nmorph-collapse-item',
       {
-        '--transition-speed': '220ms',
+        '--nmorph-private-collapse-item-transition-speed': '220ms',
       }
     );
   });
 
-  it('aligns dropdown option heights with their form control height', async () => {
+  it('keeps design variants on checkbox and radio controls', async () => {
+    const checkbox = mount(NmorphCheckbox, {
+      props: {
+        id: 'plain-checkbox',
+        design: 'plain',
+        label: 'Plain checkbox',
+      },
+    });
+
+    expect(checkbox.find('.nmorph-checkbox').classes()).toContain('nmorph-checkbox--plain');
+    checkbox.unmount();
+
+    const checkboxGroup = mount(NmorphCheckboxGroup, {
+      props: {
+        modelValue: ['first'],
+        options: checkboxOptions,
+        design: 'plain',
+      },
+    });
+
+    expect(checkboxGroup.find('.nmorph-checkbox-group').classes()).toContain('nmorph-checkbox-group--plain');
+    expect(checkboxGroup.find('.nmorph-checkbox').classes()).toContain('nmorph-checkbox--plain');
+    checkboxGroup.unmount();
+
+    const radio = mount(NmorphRadio, {
+      props: {
+        value: 'first',
+        checked: true,
+        design: 'plain',
+        label: 'Plain radio',
+      },
+    });
+
+    expect(radio.find('.nmorph-radio').classes()).toContain('nmorph-radio--plain');
+    radio.unmount();
+
+    const radioGroup = mount(NmorphRadioGroup, {
+      props: {
+        modelValue: 'first',
+        options,
+        design: 'plain',
+      },
+    });
+
+    expect(radioGroup.find('.nmorph-radio-group').classes()).toContain('nmorph-radio-group--plain');
+    expect(radioGroup.find('.nmorph-radio').classes()).toContain('nmorph-radio--plain');
+    radioGroup.unmount();
+  });
+
+  it('aligns dropdown option heights with their form control thickness', async () => {
     const autocomplete = mount(NmorphAutocomplete, {
       props: {
-        height: 'thick',
+        thickness: 'thick',
         list: options,
       },
     });
@@ -3565,7 +3707,7 @@ describe('components', () => {
       defineComponent({
         components: { NmorphSelect, NmorphSelectOption },
         template: `
-          <NmorphSelect :open="true" height="thin" :model-value="''">
+          <NmorphSelect :open="true" thickness="thin" :model-value="''">
             <NmorphSelectOption value="first" label="First" />
           </NmorphSelect>
         `,
@@ -3579,7 +3721,7 @@ describe('components', () => {
 
     const timePicker = mount(NmorphTimePicker, {
       props: {
-        height: 'thick',
+        thickness: 'thick',
       },
     });
 
@@ -3590,12 +3732,56 @@ describe('components', () => {
     timePicker.unmount();
   });
 
+  it('aligns compact control typography with component thickness classes', () => {
+    const selectButton = mount(NmorphSelectButton, {
+      props: {
+        modelValue: 'first',
+        options,
+        thickness: 'thin',
+      },
+    });
+
+    const selectButtonElement = selectButton.find('.nmorph-select-button');
+
+    expect(selectButtonElement.classes()).toEqual(
+      expect.arrayContaining(['nmorph--thin-component', 'nmorph-select-button--thin'])
+    );
+    expect(selectButtonElement.attributes('style')).toBeUndefined();
+    selectButton.unmount();
+
+    const collapse = mount(
+      defineComponent({
+        components: { NmorphCollapse, NmorphCollapseItem },
+        template: `
+          <NmorphCollapse :model-value="['first']">
+            <NmorphCollapseItem name="first" title="First" thickness="thin">Content</NmorphCollapseItem>
+          </NmorphCollapse>
+        `,
+      })
+    );
+
+    expect(collapse.find('.nmorph-collapse-item__title').classes()).toContain('nmorph--thin-component');
+    collapse.unmount();
+
+    const progress = mount(NmorphProgress, {
+      props: {
+        percentage: 50,
+        valueInside: true,
+      },
+    });
+
+    expect((progress.find('.nmorph-progress').element as HTMLElement).style.getPropertyValue('--nmorph-private-progress-height')).toBe(
+      '18px'
+    );
+    progress.unmount();
+  });
+
   it('keeps explicit icon color inside transparent button', () => {
     const wrapper = mount(
       defineComponent({
         components: { NmorphButton, NmorphIcon, NmorphIconSearch },
         template: `
-          <NmorphButton style-type="transparent">
+          <NmorphButton design="plain">
             <NmorphIcon color="var(--nmorph-contrast-text-color)">
               <NmorphIconSearch />
             </NmorphIcon>
@@ -3606,8 +3792,8 @@ describe('components', () => {
 
     const icon = wrapper.find('.nmorph-icon').element as HTMLElement;
 
-    expect(icon.style.getPropertyValue('--nmorph-icon-color')).toBe('var(--nmorph-contrast-text-color)');
-    expect(icon.style.getPropertyValue('--color')).toBe('var(--nmorph-contrast-text-color)');
+    expect(icon.style.getPropertyValue('--nmorph-private-icon-color')).toBe('var(--nmorph-contrast-text-color)');
+    expect(icon.style.getPropertyValue('--nmorph-private-icon-color')).toBe('var(--nmorph-contrast-text-color)');
 
     wrapper.unmount();
   });
@@ -3615,7 +3801,7 @@ describe('components', () => {
   it('keeps transparent button color prop and derives hover color from it', () => {
     const wrapper = mount(NmorphButton, {
       props: {
-        styleType: 'transparent',
+        design: 'plain',
         color: 'var(--nmorph-error-text-color)',
         text: 'Delete',
       },
@@ -3623,9 +3809,9 @@ describe('components', () => {
 
     const button = wrapper.find('.nmorph-button').element as HTMLElement;
 
-    expect(button.style.getPropertyValue('--nmorph-button-color')).toBe('var(--nmorph-error-text-color)');
-    expect(button.style.getPropertyValue('--transparent-button-color')).toBe('var(--nmorph-error-text-color)');
-    expect(button.style.getPropertyValue('--nmorph-button-hover-color')).toBe(
+    expect(button.style.getPropertyValue('--nmorph-private-button-color')).toBe('var(--nmorph-error-text-color)');
+    expect(button.style.getPropertyValue('--nmorph-private-button-plain-color')).toBe('var(--nmorph-error-text-color)');
+    expect(button.style.getPropertyValue('--nmorph-private-button-hover-color')).toBe(
       'color-mix(in srgb, var(--nmorph-error-text-color) 75%, var(--nmorph-white-color))'
     );
 
@@ -3681,7 +3867,7 @@ describe('components', () => {
     const tooltip = wrapper.find('.nmorph-tooltip').element as HTMLElement;
     const content = wrapper.find('.nmorph-tooltip__info-content').element as HTMLElement;
 
-    expect(tooltip.style.getPropertyValue('--nmorph-tooltip-z-index')).toBe('1234');
+    expect(tooltip.style.getPropertyValue('--nmorph-private-tooltip-z-index')).toBe('1234');
     expect(content).toBeTruthy();
 
     wrapper.unmount();
@@ -3860,6 +4046,72 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('does not crash when clicking a single-item stepper', async () => {
+    const createPointerEvent = (type: string, init: Partial<PointerEvent>) => {
+      const event = new Event(type, { bubbles: true, cancelable: true });
+
+      Object.entries(init).forEach(([key, value]) => {
+        Object.defineProperty(event, key, {
+          configurable: true,
+          value,
+        });
+      });
+
+      return event as PointerEvent;
+    };
+
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphStepper },
+        setup() {
+          const clicks = ref(0);
+          const changes = ref<unknown[]>([]);
+          const onChange = (payload: unknown) => {
+            changes.value.push(payload);
+          };
+
+          return { clicks, changes, onChange };
+        },
+        template: `
+          <NmorphStepper :model-value="0" :count="1" aria-label="Single slide" @change="onChange">
+            <button class="single-slide-button" @click="clicks += 1">Only</button>
+          </NmorphStepper>
+        `,
+      })
+    );
+
+    const root = wrapper.find('.nmorph-stepper');
+    const slideButton = wrapper.find('.single-slide-button').element as HTMLElement;
+
+    expect(root.attributes('tabindex')).toBeUndefined();
+
+    slideButton.dispatchEvent(
+      createPointerEvent('pointerdown', {
+        clientX: 120,
+        clientY: 30,
+        pointerId: 1,
+        pointerType: 'touch',
+      })
+    );
+    expect(() => {
+      slideButton.dispatchEvent(
+        createPointerEvent('pointerup', {
+          clientX: 120,
+          clientY: 30,
+          pointerId: 1,
+          pointerType: 'touch',
+        })
+      );
+    }).not.toThrow();
+    await wrapper.find('.single-slide-button').trigger('click');
+    await nextTick();
+
+    expect(wrapper.vm.clicks).toBe(1);
+    expect(wrapper.vm.changes).toEqual([]);
+
+    wrapper.unmount();
+  });
+
   it('controls stepper with one-step wheel, keyboard, swipe, and count clamping', async () => {
     const createWheelEvent = (init: Partial<WheelEvent>) => {
       const event = new Event('wheel', { bubbles: true, cancelable: true });
@@ -3989,7 +4241,7 @@ describe('components', () => {
         pointerType: 'touch',
       })
     );
-    slideButton.click();
+    await wrapper.find('.slide-button').trigger('click');
     await nextTick();
 
     expect(wrapper.vm.index).toBe(1);
@@ -4040,7 +4292,7 @@ describe('components', () => {
 
     expect(notification.classes()).toContain('nmorph-notification-provider__notification--with-duration');
     expect(
-      (notification.element as HTMLElement).style.getPropertyValue('--nmorph-notification-provider-duration')
+      (notification.element as HTMLElement).style.getPropertyValue('--nmorph-private-notification-provider-duration')
     ).toBe('3000ms');
     expect(wrapper.find('.nmorph-notification-provider__duration').exists()).toBe(true);
     expect(wrapper.find('.nmorph-notification-provider__duration-value').text()).toBe('3s');
@@ -4544,7 +4796,7 @@ describe('components', () => {
 
     expect(dropdown).toBeTruthy();
     expect(dropdown.classList.contains('nmorph-context-menu__dropdown')).toBe(true);
-    expect(dropdown.style.getPropertyValue('--nmorph-dropdown-width')).toBe('max-content');
+    expect(dropdown.style.getPropertyValue('--nmorph-private-dropdown-width')).toBe('max-content');
 
     wrapper.unmount();
     target.remove();
@@ -4854,7 +5106,7 @@ describe('components', () => {
 
     expect(items).toHaveLength(3);
     expect(items[0].textContent).toContain('Open');
-    expect(items[1].style.getPropertyValue('--nmorph-context-menu-item-color')).toBe('var(--nmorph-error-text-color)');
+    expect(items[1].style.getPropertyValue('--nmorph-private-context-menu-item-color')).toBe('var(--nmorph-error-text-color)');
     expect(items[1].querySelector('.nmorph-context-menu__item-icon')).toBeTruthy();
     expect(items[1].querySelector('.nmorph-context-menu__item-shortcut')?.textContent).toBe('Del');
     expect(items[1].querySelector('.nmorph-context-menu__item-description')?.textContent).toContain('Remove item');
@@ -5011,8 +5263,8 @@ describe('components', () => {
 
     const dialog = wrapper.find('.nmorph-dialog').element as HTMLElement;
 
-    expect(dialog.style.getPropertyValue('--nmorph-dialog-width')).toBe('960px');
-    expect(dialog.style.getPropertyValue('--nmorph-dialog-max-height')).toBe('240px');
+    expect(dialog.style.getPropertyValue('--nmorph-private-dialog-width')).toBe('960px');
+    expect(dialog.style.getPropertyValue('--nmorph-private-dialog-max-height')).toBe('240px');
     expect(wrapper.find('.nmorph-dialog__header').exists()).toBe(true);
     expect(wrapper.find('.nmorph-dialog__content').exists()).toBe(true);
 
@@ -5176,6 +5428,32 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('uses checkbox design for native and nmorph variants', () => {
+    const checkbox = mount(NmorphCheckbox, {
+      props: {
+        id: 'native',
+        design: 'plain',
+        label: 'Native',
+      },
+    });
+
+    expect(checkbox.find('.nmorph-checkbox').classes()).not.toContain('nmorph-checkbox--nmorph');
+    expect(checkbox.find('.nmorph-checkbox__input-wrapper').exists()).toBe(true);
+    checkbox.unmount();
+
+    const group = mount(NmorphCheckboxGroup, {
+      props: {
+        modelValue: ['first'],
+        options: checkboxOptions,
+        design: 'plain',
+      },
+    });
+
+    expect(group.find('.nmorph-checkbox-group').classes()).toContain('nmorph-checkbox-group--plain');
+    expect(group.find('.nmorph-checkbox').classes()).not.toContain('nmorph-checkbox--nmorph');
+    group.unmount();
+  });
+
   it('syncs radio groups bound to the same model', async () => {
     const wrapper = mount(
       defineComponent({
@@ -5218,8 +5496,8 @@ describe('components', () => {
 
     const icon = wrapper.find('.nmorph-image__loading .nmorph-icon').element as HTMLElement;
 
-    expect(icon.style.getPropertyValue('--nmorph-icon-color')).toBe('');
-    expect(icon.style.getPropertyValue('--color')).toBe('');
+    expect(icon.style.getPropertyValue('--nmorph-private-icon-color')).toBe('');
+    expect(icon.style.getPropertyValue('--nmorph-private-icon-color')).toBe('');
 
     wrapper.unmount();
   });
@@ -5260,7 +5538,7 @@ describe('components', () => {
 
     const image = wrapper.find('.nmorph-image').element as HTMLElement;
 
-    expect(image.style.getPropertyValue('--nmorph-image-fit')).toBe('contain');
+    expect(image.style.getPropertyValue('--nmorph-private-image-fit')).toBe('contain');
 
     wrapper.unmount();
   });
@@ -5790,7 +6068,7 @@ describe('components', () => {
     const trigger = wrapper.find('.nmorph-media-gallery__trigger');
     const video = document.body.querySelector('.nmorph-media-gallery__video') as HTMLVideoElement;
 
-    expect(trigger.element.style.getPropertyValue('--nmorph-media-gallery-trigger-height')).toBe('180px');
+    expect(trigger.element.style.getPropertyValue('--nmorph-private-media-gallery-trigger-height')).toBe('180px');
     expect(trigger.classes()).toContain('nmorph-media-gallery__trigger--fixed-height');
     expect(wrapper.find('.nmorph-media-gallery__trigger-name').exists()).toBe(false);
     expect(wrapper.find('.nmorph-media-gallery__trigger-size').exists()).toBe(false);
@@ -5893,7 +6171,7 @@ describe('components', () => {
     target.remove();
   });
 
-  it('uses basic height for pagination page controls by default', async () => {
+  it('uses basic thickness for pagination page controls by default', async () => {
     const wrapper = mount(NmorphPagination, {
       props: { totalElementsQuantity: 24, elementsQuantityOnPage: 8 },
     });
@@ -5902,7 +6180,7 @@ describe('components', () => {
 
     const pagination = wrapper.find('.nmorph-pagination').element as HTMLElement;
 
-    expect(pagination.style.getPropertyValue('--nmorph-pagination-height')).toBe('var(--default-thickness-component)');
+    expect(pagination.style.getPropertyValue('--nmorph-private-pagination-height')).toBe('var(--basic-component)');
     expect(wrapper.find('.nmorph-pagination__page-btn.nmorph-radio').classes()).toContain('nmorph--basic-component');
     wrapper.unmount();
   });

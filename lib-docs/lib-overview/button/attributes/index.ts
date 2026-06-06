@@ -1,17 +1,17 @@
-import StyleTypeProps from "./StyleType.vue";
+import Design from "./Design.vue";
 import Loading from "./Loading.vue";
 import Ripple from "./Ripple.vue";
 import Shape from "./Shape.vue";
-import Height from "./Height.vue";
+import Thickness from "./Thickness.vue";
 import Disabled from "./Disabled.vue";
 import IconSlots from "./IconSlots.vue";
 
 export const Attributes = [
-  StyleTypeProps,
+  Design,
   IconSlots,
   Loading,
   Ripple,
-  Height,
+  Thickness,
   Disabled,
   Shape,
 ];

@@ -1,4 +1,4 @@
-import type { NmorphDomElementType, NmorphPlacementType } from '@/types';
+import type { NmorphDomElementType, NmorphElementDesignType, NmorphPlacementType } from '@/types';
 
 export interface INmorphDropdownProps {
   open: boolean;
@@ -18,6 +18,7 @@ export interface INmorphDropdownProps {
   ariaLabel?: string;
   contentClass?: string;
   hideShadow?: boolean;
+  design?: NmorphElementDesignType;
 }
 
 export interface INmorphDropdownEmit {

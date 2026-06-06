@@ -22,11 +22,11 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
   }
 
   .custom-circle-button {
-    --height: 50px;
+    --nmorph-private-control-height: 50px;
   }
 
   .custom-square-button {
-    --height: 70px;
+    --nmorph-private-control-height: 70px;
   }
 }
 </style>

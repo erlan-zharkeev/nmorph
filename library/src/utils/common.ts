@@ -30,16 +30,16 @@ export const createCssSizeVariables = (
   );
 };
 
-type NmorphOptionHeightType = 'basic' | 'thick' | 'thin';
+type NmorphOptionThicknessType = 'basic' | 'thick' | 'thin';
 
-const nmorphOptionHeightMap: Record<NmorphOptionHeightType, number> = {
+const nmorphOptionThicknessHeightMap: Record<NmorphOptionThicknessType, number> = {
   basic: 30,
   thick: 38,
-  thin: 22,
+  thin: 24,
 };
 
-export const getNmorphOptionHeight = (height: NmorphOptionHeightType = 'basic') => {
-  return nmorphOptionHeightMap[height];
+export const getNmorphOptionHeight = (thickness: NmorphOptionThicknessType = 'basic') => {
+  return nmorphOptionThicknessHeightMap[thickness];
 };
 
 export const resolveDomElement = (element: unknown): Element | null => {

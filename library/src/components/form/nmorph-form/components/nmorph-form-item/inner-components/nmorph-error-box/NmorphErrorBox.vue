@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { NmorphComponentHeight } from '@/types';
+import { NmorphComponentThickness } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed } from 'vue';
 import type { INmorphErrorBoxProps } from './types';
 
 const props = withDefaults(defineProps<INmorphErrorBoxProps>(), {
-  height: 'basic',
+  thickness: 'basic',
   errors: () => [],
   staticHeight: false,
 });
@@ -17,7 +17,7 @@ const currentError = computed(() => {
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height]],
+    nmorph: [NmorphComponentThickness[props.thickness]],
     'nmorph-error-box': [props.staticHeight && 'static-height', currentError.value.length === 0 && 'empty'],
   })
 );

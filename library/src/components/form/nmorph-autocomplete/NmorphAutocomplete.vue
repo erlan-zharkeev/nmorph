@@ -2,7 +2,7 @@
 import { computed, nextTick, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { getNmorphOptionHeight, resolveDomElement, toCssSize, useModifiers } from '@/utils';
-import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { NmorphComponentThickness, NmorphDomElementType } from '@/types';
 import { useZIndex } from '@/hooks/use-z-index';
 import { useVirtualList } from '@/hooks/use-virtual-list';
 import {
@@ -18,7 +18,7 @@ import type { INmorphAutocompleteEmit, INmorphAutocompleteProps } from './types'
 const props = withDefaults(defineProps<INmorphAutocompleteProps>(), {
   modelValue: '',
   placeholder: '',
-  height: 'basic',
+  thickness: 'basic',
   disabled: false,
   clearable: true,
   list: () => [],
@@ -75,7 +75,7 @@ const filteredList = computed(() => {
 });
 
 const virtualEnabled = computed(() => props.virtual && filteredList.value.length > 0);
-const virtualItemHeight = computed(() => props.virtualItemHeight || getNmorphOptionHeight(props.height));
+const virtualItemHeight = computed(() => props.virtualItemHeight || getNmorphOptionHeight(props.thickness));
 const virtualOverscan = computed(() => props.virtualOverscan);
 const virtualDynamicHeight = computed(() => props.virtualDynamicHeight);
 const virtualList = useVirtualList(filteredList, {
@@ -190,11 +190,11 @@ const setVirtualItemRef = (element: unknown, index: number) => {
 
 const dropdownZIndex = useZIndex(open, () => props.zIndex);
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-autocomplete-input-z-index': dropdownZIndex.value + 1,
+  '--nmorph-private-autocomplete-input-z-index': dropdownZIndex.value + 1,
 }));
 const optionHeightModifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height]],
+    nmorph: [NmorphComponentThickness[props.thickness]],
   })
 );
 </script>
@@ -208,7 +208,7 @@ const optionHeightModifiers = computed(() =>
           v-model="inputValue"
           :name="props.name"
           :autocomplete="props.autocomplete"
-          :height="props.height"
+          :thickness="props.thickness"
           :disabled="props.disabled"
           :placeholder="props.placeholder"
           :clearable="props.clearable"
@@ -243,7 +243,10 @@ const optionHeightModifiers = computed(() =>
         :ref="virtualList.containerRef"
         class="nmorph-autocomplete__list nmorph-autocomplete__list--virtual"
         :class="{ 'nmorph-autocomplete__list--dynamic': virtualDynamicHeight }"
-        :style="{ '--autocomplete-virtual-item-height': `${virtualItemHeight}px`, maxHeight: virtualMaxHeight }"
+        :style="{
+          '--nmorph-private-autocomplete-virtual-item-height': `${virtualItemHeight}px`,
+          maxHeight: virtualMaxHeight,
+        }"
         role="listbox"
         @scroll="virtualList.scrollHandler"
       >
@@ -294,7 +297,7 @@ const optionHeightModifiers = computed(() =>
 
   &.nmorph-autocomplete--open {
     .nmorph-autocomplete__input-content {
-      z-index: var(--nmorph-autocomplete-input-z-index);
+      z-index: var(--nmorph-private-autocomplete-input-z-index);
     }
   }
 }
@@ -333,7 +336,7 @@ const optionHeightModifiers = computed(() =>
 }
 
 .nmorph-autocomplete__list--virtual .nmorph-autocomplete__list-item {
-  height: var(--autocomplete-virtual-item-height);
+  height: var(--nmorph-private-autocomplete-virtual-item-height);
   overflow: hidden;
 }
 

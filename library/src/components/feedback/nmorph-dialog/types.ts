@@ -2,13 +2,10 @@ export interface INmorphDialogProps {
   modelValue?: boolean;
   title?: string;
   width?: string;
+  maxWidth?: string;
   maxHeight?: string;
   openDelay?: number;
   closeDelay?: number;
-  /**
-   * @deprecated Use `closeOnOverlay` instead.
-   */
-  closeOnClickModal?: boolean;
   showClose?: boolean;
   zIndex?: number;
   closeOnOverlay?: boolean;

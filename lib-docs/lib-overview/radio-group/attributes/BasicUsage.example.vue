@@ -16,7 +16,7 @@ const value = ref("three");
         <NmorphRadioGroup
           :options="options"
           v-model="value"
-          height="extra-thin"
+          thickness="thin"
         />
       </div>
       <div class="radio-group-el">
@@ -24,8 +24,8 @@ const value = ref("three");
           :options="options"
           v-model="value"
           direction="column"
-          style-type="radio-style"
-          height="thin"
+          design="plain"
+          thickness="extra-thin"
         />
       </div>
     </ClientOnly>

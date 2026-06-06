@@ -68,7 +68,7 @@ const highlightRowOnHover = ref(false);
 const toggleDesignProp = () => {
   if (design.value === "nmorph") {
     bordered.value = true;
-    design.value = "common";
+    design.value = "plain";
   } else {
     bordered.value = false;
     design.value = "nmorph";
@@ -127,7 +127,7 @@ const clickMeText = "Click me!";
                 :text="clickMeText"
                 fill
                 @click="clickHandler(cellData)"
-                style-type="transparent"
+                design="plain"
               />
             </NmorphTableCell>
           </template>

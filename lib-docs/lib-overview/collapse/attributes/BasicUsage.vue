@@ -6,6 +6,11 @@ import basicUsageSource from "./BasicUsage.example.vue?raw";
 
 <template>
   <div id="content-basic-usage">
-    <DocsExample :header="$t('overview.basic-usage')" :component="BasicUsageExample" :source="basicUsageSource" />
+    <DocsExample
+      :header="$t('overview.basic-usage')"
+      :subtitle="$t('overview.collapse.basic-usage.subtitle')"
+      :component="BasicUsageExample"
+      :source="basicUsageSource"
+    />
   </div>
 </template>

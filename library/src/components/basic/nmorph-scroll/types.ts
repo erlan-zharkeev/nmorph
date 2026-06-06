@@ -2,23 +2,27 @@ import type { INmorphCoords, NmorphDomElementType } from '@/types';
 
 export type NmorphCoordsType = INmorphCoords<number>;
 
-export enum NmorphOverflowProp {
-  auto = 'auto',
-  hidden = 'hidden',
-  scroll = 'scroll',
-}
+export const NmorphOverflowProp = {
+  auto: 'auto',
+  hidden: 'hidden',
+  scroll: 'scroll',
+} as const;
 
-export enum NmorphScrollBehavior {
-  auto = 'auto',
-  smooth = 'smooth',
-  inherit = 'inherit',
-  initial = 'initial',
-  unset = 'unset',
-}
+export type NmorphOverflowProp = keyof typeof NmorphOverflowProp;
 
-export type NmorphScrollOverflowType = keyof typeof NmorphOverflowProp;
+export const NmorphScrollBehavior = {
+  auto: 'auto',
+  smooth: 'smooth',
+  inherit: 'inherit',
+  initial: 'initial',
+  unset: 'unset',
+} as const;
 
-export type NmorphScrollBehaviorType = keyof typeof NmorphScrollBehavior;
+export type NmorphScrollBehavior = keyof typeof NmorphScrollBehavior;
+
+export type NmorphScrollOverflowType = NmorphOverflowProp;
+
+export type NmorphScrollBehaviorType = NmorphScrollBehavior;
 
 export interface INmorphScrollProps {
   height?: string;

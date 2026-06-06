@@ -3,7 +3,7 @@ import { type IAttributesTableData, type ISlotsTableData } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
 import {
   NmorphCard,
-  NmorphComponentHeight,
+  NmorphComponentThickness,
   NmorphDivider,
 } from "@nmorph/nmorph-ui-kit";
 
@@ -30,38 +30,36 @@ const attributesDataValue = `
   type NmorphRulesType = INmorphRule[];
   interface INmorphRule {
     pattern?: RegExp;
-    numberCompareType?: keyof typeof NmorphNumberCompareOperator;
-    booleanCompareType?: keyof typeof NmorphBooleanCompareOperator;
-    arrayCompareType?: keyof typeof NmorphArrayValidationOperator;
+    numberCompareType?: NmorphNumberCompareOperator;
+    booleanCompareType?: NmorphBooleanCompareOperator;
+    arrayCompareType?: NmorphArrayValidationOperator;
     compareValue?: boolean | number | string | string[];
     fileMaxSize?: number;
-    maxFileSize?: number;
     fileAllowedTypes?: string[];
-    allowedTypes?: string[];
     fileMaxCount?: number;
-    maxFiles?: number;
     error: string;
   }
-  enum NmorphArrayValidationOperator {
-    'contains-one' = 'contains-one',
-    'not-contains' = 'not-contains',
-    'full-eq' = 'full-eq',
-  }
-  enum NmorphNumberCompareOperator {
-    'eq' = 'eq',
-    'gte' = 'gte',
-    'lte' = 'lte',
-    'gt' = 'gt',
-    'lt' = 'lt',
-  }
-  enum NmorphBooleanCompareOperator {
-    'eq' = 'eq',
-    'not-eq' = 'not-eq',
-  }
-  // File rule aliases:
-  // fileMaxSize / maxFileSize - maximum file size in bytes.
-  // fileAllowedTypes / allowedTypes - MIME, extension, or Nmorph resolution key.
-  // fileMaxCount / maxFiles - maximum number of accepted files.
+  const NmorphArrayValidationOperator = {
+    'contains-one': 'contains-one',
+    'not-contains': 'not-contains',
+    'full-eq': 'full-eq',
+  } as const;
+  type NmorphArrayValidationOperator = keyof typeof NmorphArrayValidationOperator;
+
+  const NmorphNumberCompareOperator = {
+    eq: 'eq',
+    gte: 'gte',
+    lte: 'lte',
+    gt: 'gt',
+    lt: 'lt',
+  } as const;
+  type NmorphNumberCompareOperator = keyof typeof NmorphNumberCompareOperator;
+
+  const NmorphBooleanCompareOperator = {
+    eq: 'eq',
+    'not-eq': 'not-eq',
+  } as const;
+  type NmorphBooleanCompareOperator = keyof typeof NmorphBooleanCompareOperator;
 `;
 
 const exposesFormData = `
@@ -129,8 +127,8 @@ const attributesDataFormItem: IAttributesTableData[] = [
     default: "-",
   },
   {
-    name: "height",
-    type: enumToString(NmorphComponentHeight),
+    name: "thickness",
+    type: optionsToString(NmorphComponentThickness),
     default: "basic",
   },
   {

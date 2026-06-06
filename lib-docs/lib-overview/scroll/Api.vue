@@ -23,17 +23,17 @@ const attributesData = [
   },
   {
     name: "scroll-y-prop",
-    type: enumToString(NmorphOverflowProp),
+    type: optionsToString(NmorphOverflowProp),
     default: "auto",
   },
   {
     name: "scroll-x-prop",
-    type: enumToString(NmorphOverflowProp),
+    type: optionsToString(NmorphOverflowProp),
     default: "auto",
   },
   {
     name: "css-scroll-behavior",
-    type: enumToString(NmorphScrollBehavior),
+    type: optionsToString(NmorphScrollBehavior),
     default: "smooth",
   },
   {

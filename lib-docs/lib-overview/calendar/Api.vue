@@ -32,7 +32,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "type",
-    type: enumToString(NmorphSelectionDateType),
+    type: optionsToString(NmorphSelectionDateType),
     default: "date",
   },
   {

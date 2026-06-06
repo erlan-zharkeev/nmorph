@@ -8,6 +8,7 @@ export const componentGroups = [
       "NmorphLink",
       "NmorphScroll",
       "NmorphSpace",
+      "NmorphText",
     ],
   },
   {

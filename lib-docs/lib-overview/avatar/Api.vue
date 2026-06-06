@@ -55,7 +55,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "shape",
-    type: enumToString(AvatarShapeType),
+    type: optionsToString(AvatarShapeType),
     default: "circle",
   },
   {

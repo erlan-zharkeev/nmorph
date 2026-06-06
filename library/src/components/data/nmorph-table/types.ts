@@ -1,4 +1,4 @@
-import { NmorphSortOrderType } from '@/types';
+import { NmorphElementDesignType, NmorphSortOrderType } from '@/types';
 import { ComputedRef, Ref } from 'vue';
 
 export type NmorphTableSortType = Record<string, NmorphSortOrderType>;
@@ -34,7 +34,7 @@ export interface INmorphTableProps {
   rowHover?: boolean;
   bordered?: boolean;
   sort?: NmorphTableSortType;
-  design?: 'nmorph' | 'common';
+  design?: NmorphElementDesignType;
   virtual?: boolean;
   virtualHeight?: number | string;
   virtualOverscan?: number;

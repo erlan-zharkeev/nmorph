@@ -11,12 +11,12 @@ import type { INmorphRadioGroupEmit, INmorphRadioGroupProps } from './types';
 
 const props = withDefaults(defineProps<INmorphRadioGroupProps>(), {
   modelValue: '',
-  styleType: 'button',
+  design: 'nmorph',
   options: () => [],
   direction: 'row',
   label: '',
   disabled: false,
-  height: 'thin',
+  thickness: 'basic',
 });
 
 const emit = defineEmits<INmorphRadioGroupEmit>();
@@ -36,12 +36,12 @@ const changeHandler = (value: string) => {
   updateModelValue(initialValue.value);
 };
 
-const modifiers = computed(() => useModifiers({ 'nmorph-radio-group': [props.styleType, props.direction] }));
-const height = computed(() => props.height);
+const modifiers = computed(() => useModifiers({ 'nmorph-radio-group': [props.design, props.direction] }));
+const thickness = computed(() => props.thickness);
 
 provide<NmorphRadioGroupSelectedValueInjectionType>('radio-group-selected-value', initialValue);
 provide<NmorphRadioChangeRadioButtonValueHandlerInjectionType>('change-radio-button-value-handler', changeHandler);
-provide('radio-group-height', height);
+provide('radio-group-thickness', thickness);
 </script>
 
 <template>
@@ -54,9 +54,9 @@ provide('radio-group-height', height);
           :label="option.label"
           :value="option.value"
           :disabled="option.disabled || props.disabled"
-          :style-type="props.styleType"
+          :design="option.design || props.design"
           :tabindex="option.tabindex"
-          :height="option.height || props.height"
+          :thickness="option.thickness || thickness"
         />
         <slot />
       </div>

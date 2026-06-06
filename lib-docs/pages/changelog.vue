@@ -11,6 +11,41 @@ const knownBugItems: string[] = [];
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v3.0.0</h3>
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.design-api-plain") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.selection-design-api") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.form-control-design-api") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.component-thickness-api") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.thin-input-centering") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.control-typography-contract") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.typography-system") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.plain-surface-contract") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.component-css-vars-private-api") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.stepper-single-item-click") }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v2.2.59</h3>
             <ul>
               <li>

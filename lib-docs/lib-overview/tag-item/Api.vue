@@ -5,7 +5,7 @@ import {
   type ISlotsTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
+import { NmorphComponentThickness } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -26,13 +26,13 @@ const attributesData: IAttributesTableData[] = [
     default: "true",
   },
   {
-    name: "height",
-    type: enumToString(NmorphComponentHeight),
+    name: "thickness",
+    type: optionsToString(NmorphComponentThickness),
     default: "basic",
   },
   {
     name: "design",
-    type: "nmorph, common",
+    type: "nmorph, plain",
     default: "nmorph",
   },
   {
@@ -40,7 +40,7 @@ const attributesData: IAttributesTableData[] = [
     type: "String",
     default: "var(--nmorph-gray-color)",
     description:
-      "Background color for common design. Use token values such as var(--nmorph-success-color).",
+      "Background color for plain design. Use token values such as var(--nmorph-success-color).",
   },
 ];
 

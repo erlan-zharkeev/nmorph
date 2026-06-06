@@ -17,6 +17,7 @@ export interface INmorphSelectButtonProps extends INmorphCommonInputProps {
   trackPadding?: number | string;
   itemSize?: number | string;
   itemFontSize?: string;
+  itemLineHeight?: string;
 }
 
 export interface INmorphSelectButtonEmit {

@@ -33,12 +33,12 @@ const attributesData: IAttributesTableData[] = [
 const itemAttributesData: IAttributesTableData[] = [
   {
     name: "variant",
-    type: enumToString(NmorphSkeletonItemPropsType),
+    type: optionsToString(NmorphSkeletonItemPropsType),
     default: "rect",
   },
   {
     name: "design",
-    type: "nmorph, common",
+    type: "nmorph, plain",
     default: "nmorph",
   },
   {

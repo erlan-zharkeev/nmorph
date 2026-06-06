@@ -50,6 +50,12 @@ export interface INmorphEmojiPickerProps {
   width?: number | string;
   height?: number | string;
   columns?: number;
+  cellSize?: number | string;
+  toggleSize?: number | string;
+  scrollbarSize?: number | string;
+  hoverBackground?: string;
+  activeBackground?: string;
+  focusRing?: string;
   disabled?: boolean;
   hideShadow?: boolean;
 }

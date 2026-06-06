@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphComponentHeight } from '@/types';
+import { NmorphComponentThickness } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, onMounted, ref, watch } from 'vue';
 import { useFocusableInput } from '@/hooks/use-focusable-input';
@@ -9,7 +9,7 @@ import type { INmorphColorPickerEmit, INmorphColorPickerProps } from './types';
 const props = withDefaults(defineProps<INmorphColorPickerProps>(), {
   modelValue: '',
   disabled: false,
-  height: 'basic',
+  thickness: 'basic',
   showValue: false,
   displayFormat: 'hex',
 });
@@ -119,7 +119,7 @@ defineExpose({ inputDOMRef });
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], focused.value && 'focused'],
+    nmorph: [NmorphComponentThickness[props.thickness], focused.value && 'focused'],
     'nmorph-color-picker': [props.disabled && 'disabled', props.displayFormat],
   })
 );
@@ -169,7 +169,7 @@ const displayValue = computed(() => {
     align-items: center;
     width: fit-content;
     max-width: 100%;
-    height: var(--height);
+    height: var(--nmorph-private-control-height);
     padding: 0 var(--default-indentation-input);
     background: var(--nmorph-main-color);
     border-radius: var(--default-border-radius);
@@ -190,8 +190,8 @@ const displayValue = computed(() => {
 
   .nmorph-color-picker__swatch {
     flex: 0 0 auto;
-    width: calc(var(--height) - var(--indentation-03));
-    height: calc(var(--height) - var(--indentation-03));
+    width: calc(var(--nmorph-private-control-height) - var(--indentation-03));
+    height: calc(var(--nmorph-private-control-height) - var(--indentation-03));
     border-radius: var(--default-border-radius);
     box-shadow:
       inset 0 0 0 1px rgb(255 255 255 / 25%),
@@ -203,12 +203,13 @@ const displayValue = computed(() => {
     width: 7ch;
     min-width: 7ch;
     overflow: hidden;
-    font-weight: 400;
-    font-size: var(--font-size-small);
-    font-family: monospace;
-    line-height: var(--line-height-regular);
+    font-weight: var(--nmorph-private-control-font-weight);
+    font-size: var(--nmorph-private-control-font-size);
+    font-family: var(--font-family-mono);
+    line-height: var(--nmorph-private-control-line-height);
     white-space: nowrap;
     text-overflow: ellipsis;
+    transform: translateY(var(--nmorph-private-control-text-offset-y));
     user-select: none;
     font-variant-numeric: tabular-nums;
     font-feature-settings: 'tnum';
@@ -227,22 +228,6 @@ const displayValue = computed(() => {
       flex-basis: 20ch;
       width: 20ch;
       min-width: 20ch;
-    }
-  }
-
-  &.nmorph--thin-component {
-    .nmorph-color-picker__value {
-      font-weight: 400;
-      font-size: var(--font-size-extra-small);
-      line-height: var(--line-height-regular);
-    }
-  }
-
-  &.nmorph--thick-component {
-    .nmorph-color-picker__value {
-      font-weight: 400;
-      font-size: var(--font-size-base);
-      line-height: var(--line-height-regular);
     }
   }
 

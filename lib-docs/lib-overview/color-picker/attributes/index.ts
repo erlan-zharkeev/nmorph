@@ -1,7 +1,7 @@
 import ModelValue from "./ModelValue.vue";
-import Height from "./Height.vue";
+import Thickness from "./Thickness.vue";
 import ShowValue from "./ShowValue.vue";
 import DisplayFormat from "./DisplayFormat.vue";
 import Disabled from "./Disabled.vue";
 
-export const Attributes = [ModelValue, Height, ShowValue, DisplayFormat, Disabled];
+export const Attributes = [ModelValue, Thickness, ShowValue, DisplayFormat, Disabled];

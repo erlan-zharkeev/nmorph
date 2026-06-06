@@ -12,6 +12,7 @@ import {
   NmorphTableColumn,
   NmorphTableCell,
   NmorphDialog,
+  type NmorphDataTableElRecordType,
 } from "@nmorph/nmorph-ui-kit";
 import { linkApiType } from "~/utils/api-type-links";
 
@@ -29,25 +30,32 @@ interface IProps {
   additionalId?: string;
 }
 
+type ApiDescriptionItem = { name: string; description?: string };
+
 const props = withDefaults(defineProps<IProps>(), {
   additionalId: "",
 });
 
-const getDescriptions = (
-  data:
-    | IAttributesTableData[]
-    | ISlotsTableData[]
-    | IVariablesTableData[]
-    | undefined,
+const getFallbackDescription = (name: string) => {
+  const normalized = name.replace(/[-_:]/g, " ").replace(/\s+/g, " ").trim();
+  if (!normalized) return name;
+
+  return normalized[0].toUpperCase() + normalized.slice(1);
+};
+
+const getDescriptions = <T extends ApiDescriptionItem>(
+  data: T[] | undefined,
   block: "api" | "slot" | "variables" | "exposes" | "events" | "translates",
-) => {
+): NmorphDataTableElRecordType[] | null => {
   if (!data) return null;
   return data.map((el) => {
     const descriptionKey = `overview.${props.name}.${block}.${el.name}`;
     return {
       ...el,
-      description: te(descriptionKey) ? t(descriptionKey) : el.description || descriptionKey,
-    };
+      description: te(descriptionKey)
+        ? t(descriptionKey)
+        : el.description || getFallbackDescription(el.name),
+    } as NmorphDataTableElRecordType;
   });
 };
 
@@ -55,9 +63,6 @@ const updatedAttributes = computed(() =>
   getDescriptions(props.attributes, "api"),
 );
 const updatedSlots = computed(() => getDescriptions(props.slots, "slot"));
-const updatedVariables = computed(() =>
-  getDescriptions(props.variables, "variables"),
-);
 const updatedExposes = computed(() =>
   getDescriptions(props.exposes, "exposes"),
 );
@@ -150,23 +155,6 @@ const attributeNameLabel = (name: string, required: boolean) =>
         {{ $t("slots") }}
       </h3>
       <NmorphTable :data="updatedSlots" bordered :row-hover="false">
-        <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
-        <NmorphTableColumn
-          prop="description"
-          :label="$t('description')"
-          alignment="right"
-        />
-      </NmorphTable>
-    </div>
-    <div
-      v-if="updatedVariables?.length"
-      class="docs-api-table__variables"
-      :id="getID('variables')"
-    >
-      <h3 class="docs-api-table__title nmorph-title-2">
-        {{ $t("variables") }}
-      </h3>
-      <NmorphTable :data="updatedVariables" bordered :row-hover="false">
         <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
         <NmorphTableColumn
           prop="description"
@@ -273,7 +261,6 @@ const attributeNameLabel = (name: string, required: boolean) =>
 }
 
 .docs-api-table__slots,
-.docs-api-table__variables,
 .docs-api-table__exposes,
 .docs-api-table__events,
 .docs-api-table__translates {

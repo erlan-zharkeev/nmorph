@@ -21,12 +21,12 @@ const tableAttributesData: IAttributesTableData[] = [
   },
   {
     name: "sort",
-    type: `Record&lt;String, ${enumToString(NmorphSortOrder)}&gt;`,
+    type: `Record&lt;String, ${optionsToString(NmorphSortOrder)}&gt;`,
     default: "-",
   },
   {
     name: "design",
-    type: "nmorph | common",
+    type: "nmorph | plain",
     default: "nmorph",
   },
   {

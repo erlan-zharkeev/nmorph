@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<INmorphPaginationProps>(), {
   hideOnSinglePage: true,
   maxVisiblePages: 9,
   fastForwardStep: 5,
-  height: 'basic',
+  thickness: 'basic',
 });
 
 const emit = defineEmits<INmorphPaginationEmit>();
@@ -22,14 +22,14 @@ const modifiers = computed(() =>
   })
 );
 
-const heightMap = {
+const thicknessHeightMap = {
   thick: 'var(--thick-component)',
-  basic: 'var(--default-thickness-component)',
+  basic: 'var(--basic-component)',
   thin: 'var(--thin-component)',
 };
 
 const paginationStyle = computed(() => ({
-  '--nmorph-pagination-height': heightMap[props.height],
+  '--nmorph-private-pagination-height': thicknessHeightMap[props.thickness],
 }));
 
 const prevClick = () => {
@@ -95,7 +95,7 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
   <div v-if="show" :class="modifiers" :style="paginationStyle">
     <NmorphButton
       class="nmorph-pagination__btn nmorph-pagination__prev-btn"
-      :height="props.height"
+      :thickness="props.thickness"
       :disabled="blockPrevButton || props.disabled"
       @click="prevClick"
     >
@@ -106,7 +106,7 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
     <NmorphRadioGroup
       v-model="selectedPage"
       class="nmorph-pagination__page-group"
-      :height="props.height"
+      :thickness="props.thickness"
       :disabled="props.disabled"
     >
       <div v-for="page in visiblePages" :key="page.value" class="nmorph-pagination__page-btn-wrapper">
@@ -114,22 +114,23 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
           v-if="page.value === 'prev' || page.value === 'next'"
           :class="`nmorph-pagination__page-btn nmorph-pagination__${page.value}`"
           :text="page.label"
-          :height="props.height"
+          :thickness="props.thickness"
           :disabled="props.disabled"
           @click="bigStepUpdate(page.value)"
         />
         <NmorphRadio
           v-else
-          v-bind="page"
+          :value="page.value"
+          :label="page.label"
           class="nmorph-pagination__page-btn"
-          :height="props.height"
+          :thickness="props.thickness"
           :disabled="props.disabled"
         />
       </div>
     </NmorphRadioGroup>
     <NmorphButton
       class="nmorph-pagination__btn nmorph-pagination__next-btn"
-      :height="props.height"
+      :thickness="props.thickness"
       :disabled="blockNextButton || props.disabled"
       @click="nextClick"
     >
@@ -183,13 +184,13 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
   }
 
   .nmorph-pagination__page-btn {
-    --height: var(--nmorph-pagination-height);
-    --size: var(--nmorph-pagination-height);
+    --nmorph-private-control-height: var(--nmorph-private-pagination-height);
+    --nmorph-private-selection-control-size: var(--nmorph-private-pagination-height);
 
     width: 40px;
     min-width: 40px;
-    height: var(--height);
-    min-height: var(--height);
+    height: var(--nmorph-private-pagination-height);
+    min-height: var(--nmorph-private-pagination-height);
   }
 
   .nmorph-pagination__page-btn.nmorph-radio {
@@ -199,7 +200,7 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
       height: 100%;
     }
 
-    &.nmorph-radio--button .nmorph-radio__fake {
+    &.nmorph-radio--nmorph .nmorph-radio__fake {
       padding: 0;
     }
   }

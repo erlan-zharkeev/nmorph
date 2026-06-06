@@ -122,7 +122,7 @@ onBeforeUnmount(removeKeydownListener);
   <div
     v-if="renderInline"
     :class="modifiers"
-    :style="{ '--nmorph-overlay-z-index': zIndex }"
+    :style="{ '--nmorph-private-overlay-z-index': zIndex }"
     @click.stop="clickHandler"
   >
     <div ref="contentRef" class="nmorph-overlay__slot" :tabindex="props.trapFocus ? -1 : undefined" @click.stop>
@@ -130,7 +130,7 @@ onBeforeUnmount(removeKeydownListener);
     </div>
   </div>
   <Teleport v-else :to="props.teleportTo">
-    <div :class="modifiers" :style="{ '--nmorph-overlay-z-index': zIndex }" @click.stop="clickHandler">
+    <div :class="modifiers" :style="{ '--nmorph-private-overlay-z-index': zIndex }" @click.stop="clickHandler">
       <div ref="contentRef" class="nmorph-overlay__slot" :tabindex="props.trapFocus ? -1 : undefined" @click.stop>
         <slot />
       </div>
@@ -143,7 +143,7 @@ onBeforeUnmount(removeKeydownListener);
   position: fixed;
   top: 0;
   left: 0;
-  z-index: var(--nmorph-overlay-z-index);
+  z-index: var(--nmorph-private-overlay-z-index);
   width: 100vw;
   height: 100vh;
   overflow: hidden;

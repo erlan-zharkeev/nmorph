@@ -6,7 +6,8 @@ import {
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
 import {
-  NmorphComponentHeight,
+  NmorphComponentThickness,
+  NmorphElementDesign,
   NmorphSelectionDateType,
 } from "@nmorph/nmorph-ui-kit";
 
@@ -33,9 +34,14 @@ const attributesData: IAttributesTableData[] = [
     required: true,
   },
   {
-    name: "height",
-    type: enumToString(NmorphComponentHeight),
+    name: "thickness",
+    type: optionsToString(NmorphComponentThickness),
     default: "basic",
+  },
+  {
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
   },
   {
     name: "disabled",
@@ -54,7 +60,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "type",
-    type: enumToString(NmorphSelectionDateType),
+    type: optionsToString(NmorphSelectionDateType),
     default: "date",
   },
   {
@@ -101,6 +107,12 @@ const attributesData: IAttributesTableData[] = [
     name: "width",
     type: "Width",
     default: "undefined",
+  },
+  {
+    name: "range-width",
+    type: "Width",
+    default: "undefined",
+    description: "Width used when type is daterange.",
   },
   {
     name: "calendar-cell-height",

@@ -1,6 +1,7 @@
-import type { INmorphImage } from '@/types';
+import type { INmorphImage, NmorphElementDesignType } from '@/types';
 
 export interface INmorphImageProps extends INmorphImage {
+  design?: NmorphElementDesignType;
   loadingText?: string;
   loadFailedText?: string;
   frameBorder?: number;

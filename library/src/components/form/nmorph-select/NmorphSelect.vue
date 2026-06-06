@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { NmorphComponentThickness, NmorphDomElementType } from '@/types';
 import { createCssSizeVariables, getNmorphOptionHeight, resolveDomElement, toCssSize, useModifiers } from '@/utils';
 import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick, toRef } from 'vue';
 import type { CSSProperties } from 'vue';
@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<INmorphSelectProps>(), {
   multiple: undefined,
   nullable: false,
   loading: false,
-  height: 'basic',
+  thickness: 'basic',
   disabled: false,
   open: false,
   fill: false,
@@ -106,9 +106,9 @@ const blurHandler = () => {
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height]],
+    nmorph: [NmorphComponentThickness[props.thickness]],
     'nmorph-select': [
-      props.disabled && 'disabled',
+      disabledInput.value && 'disabled',
       modelValue.value ? 'on' : 'off',
       props.loading && 'loading',
       open.value && !disabledInput.value && 'open',
@@ -122,7 +122,7 @@ const modifiers = computed(() =>
 
 const styles = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--base-width': props.width,
+    '--nmorph-private-select-width': props.width,
   })
 );
 
@@ -163,7 +163,7 @@ const optionsDOMRef = ref<NmorphDomElementType>(null);
 const slotDomOptions = ref<string[]>([]);
 const renderedOptions = computed(() => props.options);
 const virtualEnabled = computed(() => props.virtual && renderedOptions.value.length > 0);
-const virtualItemHeight = computed(() => props.virtualItemHeight || getNmorphOptionHeight(props.height));
+const virtualItemHeight = computed(() => props.virtualItemHeight || getNmorphOptionHeight(props.thickness));
 const virtualOverscan = computed(() => props.virtualOverscan);
 const virtualDynamicHeight = computed(() => props.virtualDynamicHeight);
 const virtualList = useVirtualList(renderedOptions, {
@@ -262,7 +262,7 @@ const tags = computed(() => {
 
 provide<NmorphSelectSelectedValueInjectionType>('select-selected-value', initialValue);
 provide<NmorphSelectChangeSelectedValue>('select-change-selected-value', changeHandler);
-provide('select-height', toRef(props, 'height'));
+provide('select-thickness', toRef(props, 'thickness'));
 
 const nmorphSelectDOMRef = ref<NmorphDomElementType>(null);
 const optionsMinWidth = computed(() =>
@@ -352,10 +352,11 @@ const endHandler = () => {
           <NmorphTagItem
             v-for="tag in tags"
             :key="tag.value"
-            v-bind="tag"
+            :value="tag.value"
+            :text="tag.text"
             transparent
             :removable="tags.length > 1 || !props.valueRequired"
-            height="thin"
+            thickness="thin"
             @close="changeHandler"
           />
         </div>
@@ -366,8 +367,8 @@ const endHandler = () => {
       </div>
     </div>
     <NmorphDropdown
-      v-if="nmorphSelectDOMRef && !props.disabled"
-      :open="open && !props.loading"
+      v-if="nmorphSelectDOMRef && !disabledInput"
+      :open="open && !disabledInput"
       :relative-element="nmorphSelectDOMRef"
       :fill-width="!autoOptionsWidth"
       :width="autoOptionsWidth ? 'max-content' : undefined"
@@ -396,9 +397,13 @@ const endHandler = () => {
                 :id="getOptionId(virtualOption.item.value)"
                 :ref="(element) => setVirtualOptionRef(element, virtualOption.index)"
                 :key="virtualOption.index"
-                v-bind="virtualOption.item"
+                :value="virtualOption.item.value"
+                :label="virtualOption.item.label"
+                :disabled="virtualOption.item.disabled"
+                :hover-background="virtualOption.item.hoverBackground"
+                :hover-color="virtualOption.item.hoverColor"
                 :focused="virtualOption.item.value === currentFocusedEl"
-                :height="props.height"
+                :thickness="virtualOption.item.thickness || props.thickness"
               />
             </div>
           </div>
@@ -408,9 +413,13 @@ const endHandler = () => {
             v-for="option in options"
             :id="getOptionId(option.value)"
             :key="option.value"
-            v-bind="option"
+            :value="option.value"
+            :label="option.label"
+            :disabled="option.disabled"
+            :hover-background="option.hoverBackground"
+            :hover-color="option.hoverColor"
             :focused="option.value === currentFocusedEl"
-            :height="props.height"
+            :thickness="option.thickness || props.thickness"
           />
           <slot />
         </template>
@@ -421,10 +430,10 @@ const endHandler = () => {
 
 <style lang="scss">
 .nmorph-select {
-  --base-width: 200px;
+  --nmorph-private-select-width: 200px;
 
-  width: var(--base-width);
-  height: var(--height);
+  width: var(--nmorph-private-select-width);
+  height: var(--nmorph-private-control-height);
   border-radius: var(--default-border-radius);
   cursor: pointer;
 
@@ -449,6 +458,7 @@ const endHandler = () => {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    transform: translateY(var(--nmorph-private-control-text-offset-y));
   }
 
   select,

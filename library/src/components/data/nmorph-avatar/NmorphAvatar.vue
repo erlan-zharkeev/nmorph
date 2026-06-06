@@ -7,6 +7,7 @@ import NmorphImagePreview from '../nmorph-image-preview/NmorphImagePreview.vue';
 import type { INmorphAvatarEmit, INmorphAvatarProps } from './types';
 
 const props = withDefaults(defineProps<INmorphAvatarProps>(), {
+  design: 'nmorph',
   src: undefined,
   size: 48,
   shape: 'circle',
@@ -54,10 +55,16 @@ const imagePreviewSrc = computed<string | string[]>(() => {
   return source || '';
 });
 const previewAvailable = computed(() => props.preview && hasPreviewSource.value);
+const resolvedDesign = computed(() => props.design || 'nmorph');
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [props.frameBorder > 0 && 'shadow-combined'],
-    'nmorph-avatar': [props.shape, previewAvailable.value && 'preview'],
+    nmorph: [resolvedDesign.value === 'nmorph' ? 'shadow-combined' : ''],
+    'nmorph-avatar': [
+      resolvedDesign.value,
+      props.shape,
+      props.frameBorder > 0 && 'framed',
+      previewAvailable.value && 'preview',
+    ],
   })
 );
 const stubIconSize = computed(() => `${(props.size / 100) * 60}px`);
@@ -67,11 +74,10 @@ const imageRadius = computed(() => (props.shape === 'circle' ? '50%' : '2px'));
 const styles = computed(() => ({
   width: size.value,
   height: size.value,
-  '--nmorph-avatar-size': size.value,
-  '--nmorph-avatar-image-padding': imagePadding.value,
-  '--nmorph-avatar-radius': radius.value,
-  '--nmorph-avatar-image-radius': imageRadius.value,
-  '--nmorph-avatar-frame-border': `${props.frameBorder}px`,
+  '--nmorph-private-avatar-image-padding': imagePadding.value,
+  '--nmorph-private-avatar-radius': radius.value,
+  '--nmorph-private-avatar-image-radius': imageRadius.value,
+  '--nmorph-private-avatar-frame-border': `${props.frameBorder}px`,
 }));
 const fallback = computed(() => props.fallback || NmorphIconAvatar);
 const initials = computed(() => {
@@ -92,10 +98,13 @@ const openPreview = () => {
 <template>
   <div :class="modifiers" :style="styles" @click="openPreview">
     <NmorphImage
+      design="plain"
       :fit="props.fit"
       :src="imageSrc"
       :src-set="props.srcSet"
       :alt="props.alt"
+      :width="size"
+      :height="size"
       :frame-border="0"
       @load="onImageLoad"
       @error="onImageError"
@@ -150,7 +159,10 @@ const openPreview = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
   overflow: hidden;
+  font-weight: var(--font-weight-semibold);
+  background: var(--nmorph-main-color);
 }
 
 .nmorph-avatar--circle {
@@ -162,27 +174,36 @@ const openPreview = () => {
 }
 
 .nmorph-avatar > .nmorph-image {
-  --width: var(--nmorph-avatar-size);
-  --height: var(--nmorph-avatar-size);
-
   position: absolute;
-  padding: var(--nmorph-avatar-image-padding);
-  border-radius: var(--nmorph-avatar-radius);
+  padding: var(--nmorph-private-avatar-image-padding);
+  border-radius: var(--nmorph-private-avatar-radius);
 }
 
-.nmorph-avatar.nmorph--shadow-combined {
+.nmorph-avatar:not(.nmorph-avatar--plain) {
   background: var(--nmorph-main-color);
-  border: var(--nmorph-avatar-frame-border) solid var(--nmorph-main-color);
   box-shadow: var(--nmorph-shadow-combined-dark);
 }
 
+.nmorph-avatar:not(.nmorph-avatar--plain).nmorph-avatar--framed {
+  border: var(--nmorph-private-avatar-frame-border) solid var(--nmorph-main-color);
+}
+
+.nmorph-avatar--plain {
+  background: var(--nmorph-main-color);
+  box-shadow: none;
+}
+
+.nmorph-avatar--plain.nmorph-avatar--framed {
+  border: var(--nmorph-plain-border);
+}
+
 .nmorph-avatar > .nmorph-image > img {
-  border-radius: var(--nmorph-avatar-image-radius);
+  border-radius: var(--nmorph-private-avatar-image-radius);
 }
 
 .nmorph-avatar__initials {
   color: var(--nmorph-text-color);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   line-height: 1;
 }
 

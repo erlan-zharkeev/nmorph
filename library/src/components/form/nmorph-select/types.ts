@@ -1,4 +1,4 @@
-import { INmorphCommonInputProps } from '@/types';
+import type { INmorphCommonInputProps } from '@/types';
 import { Ref } from 'vue';
 
 export type NmorphSelectSingleModelValueType = string;

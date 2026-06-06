@@ -97,23 +97,23 @@ onBeforeUnmount(() => {
             v-if="guide?.showClose.value"
             class="nmorph-guide-step__close"
             :text="guide.closeText.value"
-            style-type="transparent"
-            height="thin"
+            design="plain"
+            thickness="thin"
             @click="guide.close"
           />
           <span class="nmorph-guide-step__spacer" />
           <NmorphButton
             class="nmorph-guide-step__back"
             :text="guide?.backText.value"
-            style-type="transparent"
-            height="thin"
+            design="plain"
+            thickness="thin"
             :disabled="isFirstStep && !guide?.loop.value"
             @click="guide?.back"
           />
           <NmorphButton
             class="nmorph-guide-step__next"
             :text="isLastStep && !guide?.loop.value ? guide?.finishText.value : guide?.nextText.value"
-            height="thin"
+            thickness="thin"
             @click="isLastStep && !guide?.loop.value ? guide?.finish() : guide?.next()"
           />
         </div>
@@ -144,22 +144,22 @@ onBeforeUnmount(() => {
 
 .nmorph-guide-step__progress {
   color: var(--nmorph-placeholder-text-color);
-  font-size: var(--font-size-extra-small);
-  line-height: var(--line-height-regular);
+  font-size: var(--nmorph-typography-body-small-font-size);
+  line-height: var(--nmorph-typography-body-small-line-height);
 }
 
 .nmorph-guide-step__title {
   margin: 0;
   color: var(--nmorph-text-color);
-  font-size: var(--font-size-medium);
-  line-height: var(--line-height-compact);
+  font-size: var(--nmorph-typography-title-small-font-size);
+  line-height: var(--nmorph-typography-title-small-line-height);
 }
 
 .nmorph-guide-step__text {
   margin: 0;
   color: var(--nmorph-text-color);
-  font-size: var(--font-size-small);
-  line-height: var(--line-height-regular);
+  font-size: var(--nmorph-typography-body-font-size);
+  line-height: var(--nmorph-typography-body-line-height);
 }
 
 .nmorph-guide-step__actions {

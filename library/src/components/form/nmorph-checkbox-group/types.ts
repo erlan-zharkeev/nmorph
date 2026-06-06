@@ -1,18 +1,15 @@
 import type {
-  INmorphCheckboxOption,
+  INmorphCheckboxGroupOption,
   INmorphCommonInputProps,
-  NmorphCheckboxDesignType,
   NmorphComponentDirection,
-  NmorphSelectionControlHeightType,
+  NmorphSelectionControlDesignProps,
 } from '@/types';
 
-export interface INmorphCheckboxGroupProps extends Omit<INmorphCommonInputProps, 'height'> {
+export type INmorphCheckboxGroupProps = Omit<INmorphCommonInputProps, 'thickness'> & {
   modelValue?: string[];
-  options?: INmorphCheckboxOption[];
-  design?: NmorphCheckboxDesignType;
+  options?: INmorphCheckboxGroupOption[];
   direction?: keyof typeof NmorphComponentDirection;
-  height?: NmorphSelectionControlHeightType;
-}
+} & NmorphSelectionControlDesignProps;
 
 export interface INmorphCheckboxGroupEmit {
   (e: 'update:model-value', val: string[]): void;

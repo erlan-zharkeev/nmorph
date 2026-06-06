@@ -28,6 +28,8 @@ const props = withDefaults(defineProps<INmorphVideoPreviewProps>(), {
   name: '',
   width: undefined,
   height: undefined,
+  previewWidth: undefined,
+  previewHeight: undefined,
   durationMs: undefined,
   surface: 'card',
   embedded: false,
@@ -94,8 +96,10 @@ const modifiers = computed(() =>
 );
 const styles = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--nmorph-video-preview-width': props.width,
-    '--nmorph-video-preview-height': props.height,
+    '--nmorph-private-video-preview-width': props.width,
+    '--nmorph-private-video-preview-height': props.height,
+    '--nmorph-private-video-preview-portal-width': props.previewWidth,
+    '--nmorph-private-video-preview-portal-height': props.previewHeight,
   })
 );
 const rootAttrs = computed(() => {
@@ -335,10 +339,10 @@ defineExpose({ videoRef });
 .nmorph-video-preview {
   position: relative;
   display: flex;
-  width: var(--nmorph-video-preview-width, 280px);
+  width: var(--nmorph-private-video-preview-width, 280px);
   min-width: 0;
   max-width: 100%;
-  height: var(--nmorph-video-preview-height, 158px);
+  height: var(--nmorph-private-video-preview-height, 158px);
   overflow: hidden;
   color: var(--nmorph-white-color);
   background: color-mix(in srgb, var(--nmorph-black-color) 72%, var(--nmorph-main-color));
@@ -379,7 +383,8 @@ defineExpose({ videoRef });
     max-width: 100%;
     overflow: hidden;
     color: var(--nmorph-error-text-color);
-    font-size: var(--font-size-extra-small);
+    font-size: var(--nmorph-typography-body-small-font-size);
+    line-height: var(--nmorph-typography-body-small-line-height);
     white-space: nowrap;
     text-overflow: ellipsis;
   }
@@ -418,8 +423,7 @@ defineExpose({ videoRef });
     cursor: pointer;
 
     .nmorph-icon {
-      --nmorph-icon-color: var(--nmorph-contrast-text-color);
-      --color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
     }
 
     &:hover {
@@ -432,8 +436,8 @@ defineExpose({ videoRef });
   }
 
   &.nmorph-video-preview--embedded {
-    width: var(--nmorph-video-preview-width, 100%);
-    height: var(--nmorph-video-preview-height, 120px);
+    width: var(--nmorph-private-video-preview-width, 100%);
+    height: var(--nmorph-private-video-preview-height, 120px);
     box-shadow: none;
   }
 
@@ -447,8 +451,8 @@ defineExpose({ videoRef });
   .nmorph-video-preview__duration {
     min-width: 0;
     overflow: hidden;
-    font-size: var(--font-size-extra-small);
-    line-height: var(--line-height-regular);
+    font-size: var(--nmorph-typography-body-small-font-size);
+    line-height: var(--nmorph-typography-body-small-line-height);
     white-space: nowrap;
     text-overflow: ellipsis;
   }
@@ -493,14 +497,13 @@ defineExpose({ videoRef });
     }
 
     .nmorph-icon {
-      --nmorph-icon-color: var(--nmorph-contrast-text-color);
-      --color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
     }
   }
 
   &.nmorph-video-preview--compact {
-    width: var(--nmorph-video-preview-width, 180px);
-    height: var(--nmorph-video-preview-height, 102px);
+    width: var(--nmorph-private-video-preview-width, 180px);
+    height: var(--nmorph-private-video-preview-height, 102px);
   }
 
   &.nmorph-video-preview--soft {
@@ -522,8 +525,8 @@ defineExpose({ videoRef });
   display: contents;
 
   .nmorph-video-preview__portal-content {
-    --nmorph-video-preview-portal-width: min(calc(100vw - 96px), 1080px);
-    --nmorph-video-preview-portal-height: min(calc(100vh - 180px), 720px);
+    --nmorph-private-video-preview-portal-width: min(calc(100vw - 96px), 1080px);
+    --nmorph-private-video-preview-portal-height: min(calc(100vh - 180px), 720px);
 
     position: absolute;
     top: 50%;
@@ -531,8 +534,8 @@ defineExpose({ videoRef });
     display: flex;
     justify-content: center;
     align-items: center;
-    width: var(--nmorph-video-preview-portal-width);
-    height: var(--nmorph-video-preview-portal-height);
+    width: var(--nmorph-private-video-preview-portal-width);
+    height: var(--nmorph-private-video-preview-portal-height);
     transform: translate(-50%, -50%);
   }
 

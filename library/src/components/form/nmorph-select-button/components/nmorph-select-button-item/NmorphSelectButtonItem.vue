@@ -56,7 +56,9 @@ const clickHandler = () => {
       tabindex="-1"
       class="nmorph-native-input"
     />
-    <slot />
+    <span class="nmorph-select-button-item__content">
+      <slot />
+    </span>
   </label>
 </template>
 
@@ -65,12 +67,20 @@ const clickHandler = () => {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  height: var(--item-size);
+  height: var(--nmorph-private-select-button-item-size);
   padding: 0 var(--indentation-04);
-  font-size: var(--item-font-size);
+  font-size: var(--nmorph-private-select-button-item-font-size);
+  line-height: var(--nmorph-private-select-button-item-line-height);
   border-radius: var(--default-border-radius);
+  transform: translateY(0);
   cursor: pointer;
   opacity: 0.45;
+  transition:
+    color ease-in-out var(--transition-02),
+    background-color ease-in-out var(--transition-02),
+    box-shadow ease-in-out var(--transition-02),
+    opacity ease-in-out var(--transition-02),
+    transform ease-in-out var(--transition-01);
 
   input {
     position: absolute;
@@ -85,12 +95,29 @@ const clickHandler = () => {
     outline-offset: 2px;
   }
 
+  &:not(.nmorph-select-button-item--disabled):hover {
+    opacity: 0.72;
+  }
+
+  &:not(.nmorph-select-button-item--disabled):active {
+    transform: translateY(1px);
+  }
+
+  .nmorph-select-button-item__content {
+    min-width: 0;
+    transform: translateY(var(--nmorph-private-control-text-offset-y));
+  }
+
   &.nmorph-select-button-item--checked {
     background: var(--nmorph-main-color);
     box-shadow:
       var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
+    opacity: 1;
+  }
+
+  &.nmorph-select-button-item--checked:hover {
     opacity: 1;
   }
 

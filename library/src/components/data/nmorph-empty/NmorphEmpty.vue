@@ -34,9 +34,9 @@ const modifiers = computed(() =>
 
 const styles = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--nmorph-empty-icon-size': props.iconSize,
-    '--nmorph-empty-min-height': props.minHeight,
-    '--nmorph-empty-padding': props.padding,
+    '--nmorph-private-empty-icon-size': props.iconSize,
+    '--nmorph-private-empty-min-height': props.minHeight,
+    '--nmorph-private-empty-padding': props.padding,
   })
 );
 </script>
@@ -71,8 +71,8 @@ const styles = computed<CSSProperties>(() =>
   align-items: center;
   box-sizing: border-box;
   width: 100%;
-  min-height: var(--nmorph-empty-min-height);
-  padding: var(--nmorph-empty-padding);
+  min-height: var(--nmorph-private-empty-min-height);
+  padding: var(--nmorph-private-empty-padding);
   color: var(--nmorph-text-color);
   text-align: center;
   border-radius: var(--default-border-radius);
@@ -81,29 +81,29 @@ const styles = computed<CSSProperties>(() =>
     display: flex;
     justify-content: center;
     align-items: center;
-    width: var(--nmorph-empty-icon-size);
-    height: var(--nmorph-empty-icon-size);
+    width: var(--nmorph-private-empty-icon-size);
+    height: var(--nmorph-private-empty-icon-size);
     color: var(--nmorph-semi-contrast-text-color);
 
     .nmorph-icon {
-      --color: var(--nmorph-semi-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-semi-contrast-text-color);
     }
   }
 
   .nmorph-empty__title {
     max-width: 100%;
-    font-weight: 600;
-    font-size: var(--font-size-large);
-    line-height: var(--line-height-regular);
+    font-weight: var(--nmorph-typography-title-font-weight);
+    font-size: var(--nmorph-typography-title-font-size);
+    line-height: var(--nmorph-typography-title-line-height);
     overflow-wrap: anywhere;
   }
 
   .nmorph-empty__description {
     max-width: min(420px, 100%);
     color: var(--nmorph-semi-contrast-text-color);
-    font-weight: 400;
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-loose);
+    font-weight: var(--nmorph-typography-body-font-weight);
+    font-size: var(--nmorph-typography-body-font-size);
+    line-height: var(--nmorph-typography-body-line-height);
     overflow-wrap: anywhere;
   }
 
@@ -126,8 +126,8 @@ const styles = computed<CSSProperties>(() =>
     }
   }
 
-  &.nmorph-empty--common {
-    border: 1px solid var(--nmorph-gray-color);
+  &.nmorph-empty--plain {
+    border: var(--nmorph-plain-border);
   }
 }
 </style>

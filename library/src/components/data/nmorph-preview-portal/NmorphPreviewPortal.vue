@@ -15,6 +15,8 @@ const props = withDefaults(
     rightClass?: string;
     actionsClass?: string;
     navigationButtonMargin?: number | string;
+    contentWidth?: number | string;
+    contentHeight?: number | string;
     showNavigation?: boolean;
     showActionBar?: boolean;
   }>(),
@@ -27,6 +29,8 @@ const props = withDefaults(
     rightClass: '',
     actionsClass: '',
     navigationButtonMargin: undefined,
+    contentWidth: undefined,
+    contentHeight: undefined,
     showNavigation: false,
     showActionBar: false,
   }
@@ -46,7 +50,9 @@ const rootClasses = computed(() => [
 ]);
 const portalStyle = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--nmorph-preview-portal-btn-margin': props.navigationButtonMargin,
+    '--nmorph-private-preview-portal-btn-margin': props.navigationButtonMargin,
+    '--nmorph-private-preview-portal-content-width': props.contentWidth,
+    '--nmorph-private-preview-portal-content-height': props.contentHeight,
   })
 );
 </script>
@@ -65,14 +71,14 @@ const portalStyle = computed<CSSProperties>(() =>
           <slot />
         </div>
         <div v-if="props.showNavigation" class="nmorph-preview-portal__left" :class="props.leftClass">
-          <NmorphButton @click="emit('previous')">
+          <NmorphButton design="plain" @click="emit('previous')">
             <NmorphIcon>
               <NmorphIconChevronDown />
             </NmorphIcon>
           </NmorphButton>
         </div>
         <div v-if="props.showNavigation" class="nmorph-preview-portal__right" :class="props.rightClass">
-          <NmorphButton @click="emit('next')">
+          <NmorphButton design="plain" @click="emit('next')">
             <NmorphIcon>
               <NmorphIconChevronDown />
             </NmorphIcon>
@@ -91,8 +97,8 @@ const portalStyle = computed<CSSProperties>(() =>
   display: contents;
 
   .nmorph-preview-portal__content {
-    --nmorph-preview-portal-content-width: min(calc(100vw - 96px), 960px);
-    --nmorph-preview-portal-content-height: min(calc(100vh - 180px), 720px);
+    --nmorph-private-preview-portal-content-width: min(calc(100vw - 96px), 960px);
+    --nmorph-private-preview-portal-content-height: min(calc(100vh - 180px), 720px);
 
     position: absolute;
     top: 50%;
@@ -100,8 +106,8 @@ const portalStyle = computed<CSSProperties>(() =>
     display: flex;
     justify-content: center;
     align-items: center;
-    width: var(--nmorph-preview-portal-content-width);
-    height: var(--nmorph-preview-portal-content-height);
+    width: var(--nmorph-private-preview-portal-content-width);
+    height: var(--nmorph-private-preview-portal-content-height);
     transform: translate(-50%, -50%);
     transition: var(--transition-04) opacity ease-in-out;
     pointer-events: none;
@@ -148,14 +154,14 @@ const portalStyle = computed<CSSProperties>(() =>
       bottom: 50px;
     }
 
-    --nmorph-preview-portal-btn-margin: 20px;
+    --nmorph-private-preview-portal-btn-margin: 20px;
 
     .nmorph-preview-portal__left {
-      left: var(--nmorph-preview-portal-btn-margin);
+      left: var(--nmorph-private-preview-portal-btn-margin);
     }
 
     .nmorph-preview-portal__right {
-      right: var(--nmorph-preview-portal-btn-margin);
+      right: var(--nmorph-private-preview-portal-btn-margin);
     }
   }
 }

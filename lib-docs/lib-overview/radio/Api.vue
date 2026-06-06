@@ -5,7 +5,7 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { NmorphRadioStyleType, NmorphSelectionControlHeight } from "@nmorph/nmorph-ui-kit";
+import { NmorphElementDesign, NmorphSelectionControlThickness } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -25,13 +25,13 @@ const attributesData: IAttributesTableData[] = [
     default: "-",
   },
   {
-    name: "style-type",
-    type: enumToString(NmorphRadioStyleType),
-    default: "button",
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
   },
   {
-    name: "height",
-    type: enumToString(NmorphSelectionControlHeight),
+    name: "thickness",
+    type: optionsToString(NmorphSelectionControlThickness),
     default: "thin",
   },
   {

@@ -1,6 +1,6 @@
-import { INmorphCommonInputProps } from '@/types';
+import type { INmorphCommonInputProps } from '@/types';
 
-export interface INmorphSliderProps extends Omit<INmorphCommonInputProps, 'height'> {
+export interface INmorphSliderProps extends Omit<INmorphCommonInputProps, 'thickness'> {
   modelValue?: number;
   max?: number;
   min?: number;

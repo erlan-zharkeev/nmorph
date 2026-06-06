@@ -211,12 +211,12 @@ const selectedCalendarRange = ref([new Date(2026, 4, 12), new Date(2026, 4, 18)]
 const selectedEmoji = ref('🙂')
 const collapseValue = ref(['availability'])
 const tags = ref([
-  { text: 'New', value: 'new', height: 'thin' as const },
+  { text: 'New', value: 'new', thickness: 'thin' as const },
   { text: 'Stable', value: 'stable', removable: false },
-  { text: 'Preview', value: 'preview', design: 'common' as const },
+  { text: 'Preview', value: 'preview', design: 'plain' as const },
 ])
-const commonTags = ref([
-  { text: 'New', value: 'new', height: 'thin' as const },
+const plainTags = ref([
+  { text: 'New', value: 'new', thickness: 'thin' as const },
   { text: 'Stable', value: 'stable', removable: false },
   { text: 'Preview', value: 'preview', color: 'var(--nmorph-gray-color)' },
 ])
@@ -304,7 +304,7 @@ const progressColor = (value: number) => {
           <NmorphButton text="Max" />
         </NmorphBadge>
         <div class="badge-dot-demo">
-          <NmorphBadge type="dot" color="var(--nmorph-error-color)">
+          <NmorphBadge type="dot" color="var(--nmorph-error-color)" :dot-size="10">
             <NmorphButton text="Dot" />
           </NmorphBadge>
         </div>
@@ -382,11 +382,11 @@ const progressColor = (value: number) => {
           description="Create a dashboard to start tracking this workspace."
         >
           <template #action>
-            <NmorphButton text="Create dashboard" height="thin" />
+            <NmorphButton text="Create dashboard" thickness="thin" />
           </template>
         </NmorphEmpty>
         <NmorphEmpty
-          design="common"
+          design="plain"
           title="No media"
           description="Drop assets here or connect an external source."
           :icon-size="42"
@@ -414,7 +414,7 @@ const progressColor = (value: number) => {
         <NmorphAvatar :src="imageOne" :size="40" alt="Small avatar" />
         <NmorphAvatar :src="imageTwo" :size="56" shape="square" fit="cover" />
         <NmorphAvatar :src="[imageOne, imageTwo, imageThree]" preview :size="64" shape="square" alt="Preview avatar" />
-        <NmorphAvatar :src="imageOne" :preview-src="[imageOne, imageTwo, imageThree]" preview :size="56" />
+        <NmorphAvatar :src="imageOne" :preview-src="[imageOne, imageTwo, imageThree]" preview :size="56" design="plain" />
         <NmorphAvatar name="John Doe" :size="56" />
         <NmorphAvatar name="Alex Smith" :size="72" shape="square" />
         <NmorphAvatar :src="brokenImage" name="Broken Image" :size="56" />
@@ -424,9 +424,25 @@ const progressColor = (value: number) => {
 
     <SandboxSection title="NmorphImage">
       <div class="row">
-        <NmorphImage class="image-demo" :src="imageOne" alt="Cover" fit="cover" loading-text="Loading image" />
-        <NmorphImage class="image-demo" :src="imageTwo" alt="Contain" fit="contain" :frame-border="0" />
-        <NmorphImage class="image-demo" :src="brokenImage" load-failed-text="Load failed" />
+        <NmorphImage
+          class="image-demo"
+          :src="imageOne"
+          alt="Cover"
+          fit="cover"
+          :width="180"
+          :height="120"
+          loading-text="Loading image"
+        />
+        <NmorphImage
+          class="image-demo"
+          :src="imageTwo"
+          alt="Contain"
+          fit="contain"
+          :width="180"
+          :height="120"
+          :frame-border="0"
+        />
+        <NmorphImage class="image-demo" :src="brokenImage" :width="180" :height="120" load-failed-text="Load failed" />
       </div>
     </SandboxSection>
 
@@ -495,7 +511,7 @@ const progressColor = (value: number) => {
           class="emoji-toolbar__button"
           :class="{ 'emoji-toolbar__button--selected': selectedEmojiLanguage === language.value }"
           :text="language.label"
-          height="thin"
+          thickness="thin"
           :disabled="emojiLoading"
           @click="selectedEmojiLanguage = language.value"
         />
@@ -545,7 +561,7 @@ const progressColor = (value: number) => {
         <div class="stack">
           <p class="hint">encoded value</p>
           <code>{{ qrValue }}</code>
-          <NmorphButton text="Use docs URL" height="thin" @click="qrValue = 'https://nmorph-ui-kit.example/docs'" />
+          <NmorphButton text="Use docs URL" thickness="thin" @click="qrValue = 'https://nmorph-ui-kit.example/docs'" />
         </div>
       </div>
     </SandboxSection>
@@ -634,11 +650,11 @@ const progressColor = (value: number) => {
     <SandboxSection title="NmorphTagList">
       <div class="stack">
         <NmorphTagList v-model="tags" />
-        <NmorphTagList v-model="commonTags" design="common" color="var(--nmorph-accent-color)" />
+        <NmorphTagList v-model="plainTags" design="plain" color="var(--nmorph-accent-color)" />
         <div class="row">
-          <NmorphTagItem text="Thin" value="thin" height="thin" />
+          <NmorphTagItem text="Thin" value="thin" thickness="thin" />
           <NmorphTagItem text="Default" value="default" removable />
-          <NmorphTagItem text="Thick" value="thick" height="thick" design="common" color="var(--nmorph-warn-color)" />
+          <NmorphTagItem text="Thick" value="thick" thickness="thick" design="plain" color="var(--nmorph-warn-color)" />
         </div>
       </div>
     </SandboxSection>
@@ -651,7 +667,7 @@ const progressColor = (value: number) => {
         <NmorphCollapseItem name="disabled" title="Disabled" disabled :block="false">
           <p>Disabled panel content.</p>
         </NmorphCollapseItem>
-        <NmorphCollapseItem name="custom" :block="false" height="thin">
+        <NmorphCollapseItem name="custom" :block="false" thickness="thin">
           <template #title>
             <span>Custom title slot</span>
           </template>
@@ -796,10 +812,6 @@ const progressColor = (value: number) => {
   gap: 4px;
 }
 
-.badge-dot-demo :deep(.nmorph-badge) {
-  --nmorph-badge-dot-size: 10px;
-}
-
 .badge-ribbon-card {
   display: flex;
   align-items: center;
@@ -809,11 +821,6 @@ const progressColor = (value: number) => {
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
   box-shadow: var(--nmorph-shadow-outset);
-}
-
-.image-demo {
-  --width: 180px;
-  --height: 120px;
 }
 
 .media-gallery-demo {

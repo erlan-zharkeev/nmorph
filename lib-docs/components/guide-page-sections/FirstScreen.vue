@@ -29,7 +29,7 @@ const localePath = useLocalePath();
         <NmorphDivider />
         <div v-html="$t('guide-page.explained')"></div>
         <div v-html="$t('guide-page.main-content')"></div>
-        <NmorphButton :text="$t('guide-page.get-started-btn')" height="thick" class="main-section__get-started-btn"
+        <NmorphButton :text="$t('guide-page.get-started-btn')" thickness="thick" class="main-section__get-started-btn"
           @click="router.push(localePath('/guide'))" />
       </div>
     </div>

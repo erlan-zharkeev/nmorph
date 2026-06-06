@@ -109,8 +109,8 @@ const showStickyNotification = () => {
     <SandboxSection title="NmorphDialog">
       <div class="row">
         <NmorphButton text="Open dialog" @click="dialogOpen = true" />
-        <NmorphButton text="Custom header" style-type="transparent" @click="customDialogOpen = true" />
-        <NmorphButton text="Tall content" style-type="transparent" @click="tallDialogOpen = true" />
+        <NmorphButton text="Custom header" design="plain" @click="customDialogOpen = true" />
+        <NmorphButton text="Tall content" design="plain" @click="tallDialogOpen = true" />
       </div>
       <NmorphDialog v-model="dialogOpen" title="Dialog title" width="380px" :close-delay="120" :z-index="1100">
         <p>Dialog content goes here.</p>
@@ -125,7 +125,7 @@ const showStickyNotification = () => {
         <template #header>
           <div class="dialog-header">
             <span>Custom header slot</span>
-            <NmorphButton text="Close" height="thin" @click="customDialogOpen = false" />
+            <NmorphButton text="Close" thickness="thin" @click="customDialogOpen = false" />
           </div>
         </template>
         <p>Overlay click is disabled for this dialog.</p>
@@ -140,7 +140,7 @@ const showStickyNotification = () => {
     <SandboxSection title="NmorphDrawer">
       <div class="row">
         <NmorphButton text="Right drawer" @click="drawerOpen = true" />
-        <NmorphButton text="Left drawer" style-type="transparent" @click="leftDrawerOpen = true" />
+        <NmorphButton text="Left drawer" design="plain" @click="leftDrawerOpen = true" />
       </div>
       <NmorphDrawer v-model="drawerOpen" title="Drawer title" size="360px">
         <div class="drawer-content">
@@ -154,7 +154,7 @@ const showStickyNotification = () => {
       <NmorphDrawer v-model="leftDrawerOpen" title="Left drawer" placement="left" :size="300">
         <div class="drawer-content">
           <p>This one opens from the left side.</p>
-          <NmorphButton text="Close" height="thin" @click="leftDrawerOpen = false" />
+          <NmorphButton text="Close" thickness="thin" @click="leftDrawerOpen = false" />
         </div>
       </NmorphDrawer>
     </SandboxSection>
@@ -174,7 +174,7 @@ const showStickyNotification = () => {
           <NmorphButton text="Left" />
         </NmorphTooltip>
         <NmorphTooltip force-show text="Forced" :force-coordinate="{ x: '0', y: '34px' }">
-          <NmorphButton text="Force show" style-type="transparent" />
+          <NmorphButton text="Force show" design="plain" />
         </NmorphTooltip>
       </div>
     </SandboxSection>
@@ -182,21 +182,21 @@ const showStickyNotification = () => {
     <SandboxSection title="NmorphNotificationProvider">
       <div class="row">
         <NmorphButton text="Success" @click="showNotification('success')" />
-        <NmorphButton text="Info" style-type="transparent" @click="showNotification('info')">
+        <NmorphButton text="Info" design="plain" @click="showNotification('info')">
           <template #icon>
             <NmorphIconBell />
           </template>
         </NmorphButton>
         <NmorphButton text="Warning" @click="showNotification('warning')" />
         <NmorphButton text="Error" @click="showNotification('error')" />
-        <NmorphButton text="Sticky" style-type="transparent" @click="showStickyNotification" />
+        <NmorphButton text="Sticky" design="plain" @click="showStickyNotification" />
       </div>
       <div class="row">
         <NmorphButton
           v-for="placement in notificationPlacements"
           :key="placement"
           :text="placement"
-          style-type="transparent"
+          design="plain"
           @click="showPlacementNotification(placement)"
         />
       </div>

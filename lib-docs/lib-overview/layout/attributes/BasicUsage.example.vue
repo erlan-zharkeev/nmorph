@@ -19,10 +19,14 @@ import { NmorphCard, NmorphLayout } from "@nmorph/nmorph-ui-kit";
 
 <style lang="scss">
 .layout-basic-usage-overview {
-  max-width: 520px;
+  width: 100%;
+  min-height: 260px;
 
   .nmorph-card {
     width: 100%;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
   }
 }
 </style>

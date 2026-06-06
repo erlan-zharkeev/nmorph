@@ -1,10 +1,12 @@
 import type { I18n } from 'vue-i18n';
 
-export enum Locale {
-  en = 'en',
-  ru = 'ru',
-  zh = 'zh',
-}
+export const Locale = {
+  en: 'en',
+  ru: 'ru',
+  zh: 'zh',
+} as const;
+
+export type Locale = keyof typeof Locale;
 
 export type TranslateType = Partial<Record<keyof typeof Locale, TranslateMessages>> & { en: TranslateMessages };
 
@@ -19,5 +21,5 @@ export interface LibraryOptions {
 export interface INmorphApplyTranslation {
   outsideMessagesMerge?: boolean;
   messages?: TranslateType;
-  locale?: keyof typeof Locale;
+  locale?: Locale;
 }

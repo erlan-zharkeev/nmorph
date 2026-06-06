@@ -2,19 +2,16 @@ import type {
   INmorphCommonInputProps,
   INmorphRadioOption,
   NmorphComponentDirection,
-  NmorphRadioStyleType,
-  NmorphSelectionControlHeightType,
+  NmorphSelectionControlDesignProps,
 } from '@/types';
 
-export type NmorphListRadioOptionElementType = Omit<INmorphRadioOption, 'checked'>;
+export type NmorphListRadioOptionElementType = INmorphRadioOption;
 
-export interface INmorphRadioGroupProps extends Omit<INmorphCommonInputProps, 'height'> {
+export type INmorphRadioGroupProps = Omit<INmorphCommonInputProps, 'thickness'> & {
   modelValue?: string;
   options?: NmorphListRadioOptionElementType[];
-  styleType?: keyof typeof NmorphRadioStyleType;
   direction?: keyof typeof NmorphComponentDirection;
-  height?: NmorphSelectionControlHeightType;
-}
+} & NmorphSelectionControlDesignProps;
 
 export interface INmorphRadioGroupEmit {
   (e: 'update:model-value', val: string): void;

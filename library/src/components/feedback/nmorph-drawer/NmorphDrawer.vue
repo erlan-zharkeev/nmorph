@@ -30,7 +30,7 @@ const modifiers = computed(() =>
 
 const drawerStyle = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--nmorph-drawer-size': props.size,
+    '--nmorph-private-drawer-size': props.size,
   })
 );
 
@@ -100,13 +100,13 @@ const hasHeader = computed(() => Boolean(slots.header || props.title || props.sh
   overflow: hidden;
   color: var(--nmorph-text-color);
   background: var(--nmorph-main-color);
-  box-shadow: var(--nmorph-shadow-outset);
+  box-shadow: none;
   transition: transform var(--transition-02) ease;
 
   &--left,
   &--right {
     top: 0;
-    width: min(var(--nmorph-drawer-size), 100vw);
+    width: min(var(--nmorph-private-drawer-size), 100vw);
     height: 100vh;
   }
 
@@ -114,7 +114,7 @@ const hasHeader = computed(() => Boolean(slots.header || props.title || props.sh
   &--bottom {
     left: 0;
     width: 100vw;
-    height: min(var(--nmorph-drawer-size), 100vh);
+    height: min(var(--nmorph-private-drawer-size), 100vh);
   }
 
   &--left {
@@ -153,9 +153,9 @@ const hasHeader = computed(() => Boolean(slots.header || props.title || props.sh
     gap: var(--indentation-03);
     justify-content: space-between;
     align-items: center;
-    font-weight: 600;
-    font-size: var(--font-size-large);
-    line-height: var(--line-height-loose);
+    font-weight: var(--nmorph-typography-title-font-weight);
+    font-size: var(--nmorph-typography-title-font-size);
+    line-height: var(--nmorph-typography-title-line-height);
   }
 
   .nmorph-drawer__title {

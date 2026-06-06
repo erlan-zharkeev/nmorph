@@ -19,7 +19,7 @@ const validateIconSize = '18px';
 </script>
 
 <template>
-  <div :class="modifiers" :style="{ '--nmorph-validation-icon-size': validateIconSize }">
+  <div :class="modifiers">
     <NmorphIcon
       v-if="show"
       class="nmorph-validation-icon__content"
@@ -33,18 +33,18 @@ const validateIconSize = '18px';
 
 <style lang="scss">
 .nmorph-validation-icon {
-  width: var(--nmorph-validation-icon-size);
+  width: 18px;
   margin-left: var(--indentation-03);
 
   &.nmorph-validation-icon--valid {
     .nmorph-validation-icon__content {
-      --color: var(--nmorph-success-color);
+      --nmorph-private-icon-color: var(--nmorph-success-color);
     }
   }
 
   &.nmorph-validation-icon--invalid {
     .nmorph-validation-icon__content {
-      --color: var(--nmorph-error-text-color);
+      --nmorph-private-icon-color: var(--nmorph-error-text-color);
     }
   }
 }

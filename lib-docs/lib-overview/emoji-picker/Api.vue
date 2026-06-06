@@ -48,6 +48,42 @@ const attributesData: IAttributesTableData[] = [
     default: "8",
   },
   {
+    name: "cell-size",
+    type: "Length",
+    default: "undefined",
+    description: "Emoji cell size.",
+  },
+  {
+    name: "toggle-size",
+    type: "Length",
+    default: "undefined",
+    description: "Category toggle size.",
+  },
+  {
+    name: "scrollbar-size",
+    type: "Length",
+    default: "undefined",
+    description: "Internal scrollbar size.",
+  },
+  {
+    name: "hover-background",
+    type: "Color",
+    default: "undefined",
+    description: "Emoji hover background.",
+  },
+  {
+    name: "active-background",
+    type: "Color",
+    default: "undefined",
+    description: "Active emoji background.",
+  },
+  {
+    name: "focus-ring",
+    type: "Color",
+    default: "undefined",
+    description: "Keyboard focus ring color.",
+  },
+  {
     name: "disabled",
     type: "Boolean",
     default: "false",

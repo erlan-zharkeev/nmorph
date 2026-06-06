@@ -1,6 +1,7 @@
-import type { NmorphShadowType } from '@/types';
+import type { NmorphElementDesignType, NmorphShadowType } from '@/types';
 
 export interface INmorphCardProps {
+  design?: NmorphElementDesignType;
   shadowType?: keyof typeof NmorphShadowType;
   combinedShadowBorderWidth?: number;
   cardPadding?: number | string;

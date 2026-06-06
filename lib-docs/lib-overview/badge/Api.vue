@@ -58,6 +58,24 @@ const attributesData: IAttributesTableData[] = [
     default: "undefined",
   },
   {
+    name: "dot-size",
+    type: "Length",
+    default: "undefined",
+    description: "Dot size when type is dot.",
+  },
+  {
+    name: "ribbon-width",
+    type: "Width",
+    default: "undefined",
+    description: "Ribbon width when type is ribbon.",
+  },
+  {
+    name: "ribbon-corner-size",
+    type: "Length",
+    default: "undefined",
+    description: "Ribbon corner fold size.",
+  },
+  {
     name: "ribbon-radius",
     type: "Border-radius",
     default: "undefined",

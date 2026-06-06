@@ -6,8 +6,8 @@ import {
   NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType,
   NmorphCheckboxGroupSelectedValueInjectionType,
   NmorphDomElementType,
-  NmorphSelectionControlHeight,
-  NmorphSelectionControlHeightType,
+  NmorphSelectionControlThickness,
+  NmorphSelectionControlThicknessType,
 } from '@/types';
 import { useFormItemModel } from '../nmorph-form/use-form-item-input';
 import type { INmorphCheckboxEmit } from './types';
@@ -21,14 +21,17 @@ const changeValue = inject<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectio
   'change-checkbox-value-handler',
   undefined
 );
-const groupHeight = inject<Ref<NmorphSelectionControlHeightType> | undefined>('checkbox-group-height', undefined);
+const groupThickness = inject<Ref<NmorphSelectionControlThicknessType> | undefined>(
+  'checkbox-group-thickness',
+  undefined
+);
 
 const props = withDefaults(defineProps<INmorphCheckboxOption>(), {
   id: '',
   disabled: false,
   modelValue: false,
   label: '',
-  design: 'button',
+  design: 'nmorph',
 });
 
 const emit = defineEmits<INmorphCheckboxEmit>();
@@ -49,7 +52,12 @@ const hasGroup = groupSelectedValue !== undefined;
 const initialValue = hasGroup ? ref(groupSelectedValue.value) : ref(modelValue.value);
 
 const checked = computed(() => (hasGroup ? groupSelectedValue.value.includes(props.id) : modelValue.value));
-const height = computed(() => props.height || groupHeight?.value || 'thin');
+const resolvedDesign = computed(() => props.design || 'nmorph');
+const requestedThickness = computed(() => props.thickness || groupThickness?.value || 'basic');
+const thickness = computed(() => {
+  if (resolvedDesign.value !== 'plain' && requestedThickness.value === 'extra-thin') return 'basic';
+  return requestedThickness.value;
+});
 
 const handleChange = () => {
   if (props.disabled) return;
@@ -58,24 +66,20 @@ const handleChange = () => {
     updateModelValue(initialValue.value);
     return;
   }
-  if (changeValue && Array.isArray(initialValue.value)) changeValue(props.id, initialValue.value);
+  if (changeValue) changeValue(props.id);
 };
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphSelectionControlHeight[height.value]],
-    'nmorph-checkbox': [
-      checked.value && 'checked',
-      props.disabled && 'disabled',
-      props.design === 'button' && 'button',
-    ],
+    nmorph: [NmorphSelectionControlThickness[thickness.value]],
+    'nmorph-checkbox': [checked.value && 'checked', props.disabled && 'disabled', resolvedDesign.value],
   })
 );
 </script>
 
 <template>
   <label :class="modifiers">
-    <div v-if="props.design === 'checkbox'" class="nmorph-checkbox__content">
+    <div v-if="props.design === 'plain'" class="nmorph-checkbox__content">
       <div class="nmorph-checkbox__input-wrapper">
         <input
           ref="inputDOMRef"
@@ -95,7 +99,7 @@ const modifiers = computed(() =>
         <slot />
       </div>
     </div>
-    <div v-if="props.design === 'button'" class="nmorph-checkbox__content">
+    <div v-if="props.design === 'nmorph'" class="nmorph-checkbox__content">
       <input ref="inputDOMRef" type="checkbox" :disabled="props.disabled" :checked="checked" @change="handleChange" />
       <div v-if="props.label" class="nmorph-checkbox__fake">
         <span>{{ props.label }}</span>
@@ -111,10 +115,11 @@ const modifiers = computed(() =>
 
 <style lang="scss">
 .nmorph-checkbox {
-  --size: var(--height);
-  --nmorph-selection-control-font-size: var(--font-size-small);
-  --nmorph-selection-control-line-height: var(--line-height-regular);
-  --nmorph-selection-control-inline-padding: var(--indentation-03);
+  --nmorph-private-selection-control-size: var(--nmorph-private-control-height);
+  --nmorph-private-selection-control-font-size: var(--nmorph-private-control-font-size);
+  --nmorph-private-selection-control-line-height: var(--nmorph-private-control-line-height);
+  --nmorph-private-selection-control-font-weight: var(--nmorph-private-control-font-weight);
+  --nmorph-private-selection-control-inline-padding: var(--indentation-03);
 
   display: inline-flex;
   align-items: center;
@@ -123,7 +128,7 @@ const modifiers = computed(() =>
 
   &.nmorph {
     height: auto;
-    min-height: var(--size);
+    min-height: var(--nmorph-private-selection-control-size);
   }
 
   .nmorph-checkbox__content {
@@ -131,13 +136,13 @@ const modifiers = computed(() =>
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: var(--size);
+    min-height: var(--nmorph-private-selection-control-size);
   }
 
   .nmorph-checkbox__input-wrapper {
     position: relative;
-    width: var(--size);
-    height: var(--size);
+    width: var(--nmorph-private-selection-control-size);
+    height: var(--nmorph-private-selection-control-size);
   }
 
   input {
@@ -171,9 +176,12 @@ const modifiers = computed(() =>
 
   .nmorph-checkbox__label,
   .nmorph-checkbox__fake span {
-    font-weight: 400;
-    font-size: var(--nmorph-selection-control-font-size);
-    line-height: var(--nmorph-selection-control-line-height);
+    display: inline-flex;
+    align-items: center;
+    font-weight: var(--nmorph-private-selection-control-font-weight);
+    font-size: var(--nmorph-private-selection-control-font-size);
+    line-height: var(--nmorph-private-selection-control-line-height);
+    transform: translateY(var(--nmorph-private-control-text-offset-y));
   }
 
   .nmorph-checkbox__fake-checked {
@@ -193,19 +201,20 @@ const modifiers = computed(() =>
   }
 
   .nmorph-checkbox__fake span {
-    line-height: 0.8;
+    white-space: nowrap;
   }
 
-  &.nmorph-checkbox--button {
+  &.nmorph-checkbox--nmorph {
     .nmorph-checkbox__fake {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
+      box-sizing: border-box;
       width: auto;
-      min-width: var(--size);
-      height: var(--size);
-      padding: var(--nmorph-selection-control-inline-padding);
+      min-width: var(--nmorph-private-selection-control-size);
+      height: var(--nmorph-private-selection-control-size);
+      padding: 0 var(--nmorph-private-selection-control-inline-padding);
       background: var(--nmorph-main-color);
       border-radius: var(--default-border-radius);
       box-shadow:
@@ -216,21 +225,7 @@ const modifiers = computed(() =>
   }
 
   &.nmorph--extra-thin-component {
-    --nmorph-selection-control-font-size: var(--font-size-tiny);
-    --nmorph-selection-control-line-height: var(--line-height-line);
-    --nmorph-selection-control-inline-padding: var(--indentation-02);
-  }
-
-  &.nmorph--thin-component {
-    --nmorph-selection-control-font-size: var(--font-size-extra-small);
-  }
-
-  &.nmorph--basic-component {
-    --nmorph-selection-control-font-size: var(--font-size-small);
-  }
-
-  &.nmorph--thick-component {
-    --nmorph-selection-control-font-size: var(--font-size-base);
+    --nmorph-private-selection-control-inline-padding: var(--indentation-02);
   }
 
   &.nmorph-checkbox--checked {
@@ -240,6 +235,13 @@ const modifiers = computed(() =>
         inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
         inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
           var(--nmorph-light-shade-color);
+    }
+  }
+
+  &.nmorph-checkbox--plain {
+    .nmorph-checkbox__fake {
+      border: var(--nmorph-plain-border);
+      box-shadow: none;
     }
   }
 

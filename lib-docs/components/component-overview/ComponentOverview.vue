@@ -9,6 +9,7 @@ import layoutOverview from "~/lib-overview/layout";
 import linkOverview from "~/lib-overview/link";
 import scrollOverview from "~/lib-overview/scroll";
 import spaceOverview from "~/lib-overview/space";
+import textOverview from "~/lib-overview/text";
 import avatarOverview from "~/lib-overview/avatar";
 import badgeOverview from "~/lib-overview/badge";
 import audioMeterOverview from "~/lib-overview/audio-meter";
@@ -79,6 +80,7 @@ const overviewComponentsByName: Record<string, unknown[]> = {
   link: linkOverview,
   scroll: scrollOverview,
   space: spaceOverview,
+  text: textOverview,
   avatar: avatarOverview,
   badge: badgeOverview,
   "audio-meter": audioMeterOverview,

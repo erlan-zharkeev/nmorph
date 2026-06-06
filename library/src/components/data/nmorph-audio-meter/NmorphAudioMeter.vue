@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { createCssVariables, useModifiers } from '@/utils';
 import type { INmorphAudioMeterProps } from './types';
 
 const props = withDefaults(defineProps<INmorphAudioMeterProps>(), {
@@ -11,6 +11,10 @@ const props = withDefaults(defineProps<INmorphAudioMeterProps>(), {
   bars: 12,
   warnThreshold: 0.7,
   errorThreshold: 0.9,
+  color: undefined,
+  warnColor: undefined,
+  errorColor: undefined,
+  trackColor: undefined,
   label: 'Audio level',
 });
 
@@ -32,8 +36,13 @@ const modifiers = computed(() =>
   })
 );
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-audio-meter-level': level.value,
-  '--nmorph-audio-meter-percent': `${Math.round(level.value * 100)}%`,
+  '--nmorph-private-audio-meter-percent': `${Math.round(level.value * 100)}%`,
+  ...createCssVariables({
+    '--nmorph-private-audio-meter-color': props.color,
+    '--nmorph-private-audio-meter-warn-color': props.warnColor,
+    '--nmorph-private-audio-meter-error-color': props.errorColor,
+    '--nmorph-private-audio-meter-track-color': props.trackColor,
+  }),
 }));
 const isBarActive = (index: number) => (index + 1) / barIndexes.value.length <= level.value;
 </script>
@@ -63,20 +72,21 @@ const isBarActive = (index: number) => (index + 1) / barIndexes.value.length <= 
 
 <style lang="scss">
 .nmorph-audio-meter {
-  --nmorph-audio-meter-color: var(--nmorph-success-color);
-  --nmorph-audio-meter-track-color: color-mix(in srgb, var(--nmorph-text-color) 16%, transparent);
-  --nmorph-audio-meter-level: 0;
-  --nmorph-audio-meter-percent: 0%;
+  --nmorph-private-audio-meter-color: var(--nmorph-success-color);
+  --nmorph-private-audio-meter-warn-color: var(--nmorph-warn-color);
+  --nmorph-private-audio-meter-error-color: var(--nmorph-error-color);
+  --nmorph-private-audio-meter-track-color: color-mix(in srgb, var(--nmorph-text-color) 16%, transparent);
+  --nmorph-private-audio-meter-percent: 0%;
 
   display: inline-flex;
   align-items: end;
 
   &.nmorph-audio-meter--warn {
-    --nmorph-audio-meter-color: var(--nmorph-warn-color);
+    --nmorph-private-audio-meter-color: var(--nmorph-private-audio-meter-warn-color);
   }
 
   &.nmorph-audio-meter--error {
-    --nmorph-audio-meter-color: var(--nmorph-error-color);
+    --nmorph-private-audio-meter-color: var(--nmorph-private-audio-meter-error-color);
   }
 
   &.nmorph-audio-meter--bars {
@@ -88,13 +98,13 @@ const isBarActive = (index: number) => (index + 1) / barIndexes.value.length <= 
   .nmorph-audio-meter__bar {
     width: 4px;
     height: 100%;
-    background: var(--nmorph-audio-meter-track-color);
+    background: var(--nmorph-private-audio-meter-track-color);
     border-radius: var(--border-radius-40);
     opacity: 0.7;
   }
 
   .nmorph-audio-meter__bar--active {
-    background: var(--nmorph-audio-meter-color);
+    background: var(--nmorph-private-audio-meter-color);
     opacity: 1;
   }
 
@@ -102,15 +112,15 @@ const isBarActive = (index: number) => (index + 1) / barIndexes.value.length <= 
     width: 72px;
     height: 6px;
     overflow: hidden;
-    background: var(--nmorph-audio-meter-track-color);
+    background: var(--nmorph-private-audio-meter-track-color);
     border-radius: var(--border-radius-40);
   }
 
   .nmorph-audio-meter__line {
     display: block;
-    width: var(--nmorph-audio-meter-percent);
+    width: var(--nmorph-private-audio-meter-percent);
     height: 100%;
-    background: var(--nmorph-audio-meter-color);
+    background: var(--nmorph-private-audio-meter-color);
   }
 
   &.nmorph-audio-meter--ring {
@@ -125,8 +135,8 @@ const isBarActive = (index: number) => (index + 1) / barIndexes.value.length <= 
     background:
       radial-gradient(circle at center, var(--nmorph-main-color) 56%, transparent 58%),
       conic-gradient(
-        var(--nmorph-audio-meter-color) var(--nmorph-audio-meter-percent),
-        var(--nmorph-audio-meter-track-color) 0
+        var(--nmorph-private-audio-meter-color) var(--nmorph-private-audio-meter-percent),
+        var(--nmorph-private-audio-meter-track-color) 0
       );
     border-radius: var(--border-radius-circular);
   }

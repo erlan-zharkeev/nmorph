@@ -8,7 +8,7 @@ const nmorphTags = ref([
   { value: "locked", text: "Locked", removable: false },
 ]);
 
-const commonTags = ref([
+const plainTags = ref([
   { value: "status", text: "Status" },
   { value: "priority", text: "Priority" },
   {
@@ -22,14 +22,14 @@ const commonTags = ref([
 const reactionTags = ref([
   {
     value: "plus-one",
-    glyphKey: "+1",
+    glyphKey: "👍",
     count: 3,
-    visibleUsers: ["ER", "AK", "MJ"],
+    visibleUsers: ["ER", "AK"],
     color: "var(--nmorph-success-color)",
   },
   {
     value: "eyes",
-    glyphKey: "eyes",
+    glyphKey: "👀",
     count: 1,
     visibleUsers: ["NK"],
     color: "var(--nmorph-accent-color)",
@@ -40,15 +40,15 @@ const selectedTag = ref<string>();
 </script>
 
 <template>
-  <NmorphSpace direction="column" align="start">
+  <NmorphSpace class="tag-list-basic-usage-overview" direction="column" align="start">
     <NmorphTagList v-model="nmorphTags" />
     <NmorphTagList
-      v-model="commonTags"
+      v-model="plainTags"
       v-model:selected-value="selectedTag"
-      design="common"
+      design="plain"
       color="var(--nmorph-success-color)"
     />
-    <NmorphTagList v-model="reactionTags" design="common">
+    <NmorphTagList v-model="reactionTags" design="plain">
       <template #item="{ item }">
         <span>{{ item.glyphKey }}</span>
         <span v-if="item.count > 1">{{ item.count }}</span>
@@ -67,17 +67,28 @@ const selectedTag = ref<string>();
 </template>
 
 <style scoped>
+.tag-list-basic-usage-overview {
+  max-width: 100%;
+}
+
+.tag-list-basic-usage-overview :deep(.nmorph-tag-list) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .reaction-users {
   display: inline-flex;
+  gap: 3px;
+  margin-left: 2px;
 }
 
 .reaction-users__avatar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
-  margin-left: -4px;
+  width: 16px;
+  height: 16px;
   color: var(--tag-item-content-color);
   font-size: 9px;
   line-height: 1;
@@ -85,7 +96,4 @@ const selectedTag = ref<string>();
   border-radius: 50%;
 }
 
-.reaction-users__avatar:first-child {
-  margin-left: 0;
-}
 </style>

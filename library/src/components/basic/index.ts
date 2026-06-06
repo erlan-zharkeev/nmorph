@@ -9,3 +9,5 @@ export * from './nmorph-link/types';
 export { default as NmorphScroll } from './nmorph-scroll/NmorphScroll.vue';
 export * from './nmorph-scroll/types';
 export { default as NmorphSpace } from './nmorph-space/NmorphSpace.vue';
+export { default as NmorphText } from './nmorph-text/NmorphText.vue';
+export * from './nmorph-text/types';

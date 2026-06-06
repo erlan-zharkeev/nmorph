@@ -36,9 +36,9 @@ const modifiers = computed(() =>
 );
 
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-alert-close-align': props.closeIconPosition,
+  '--nmorph-private-alert-close-align': props.closeIconPosition,
   ...createCssVariables({
-    '--background-color': props.backgroundColor,
+    '--nmorph-private-alert-background-color': props.backgroundColor,
   }),
 }));
 
@@ -88,11 +88,11 @@ const slots = useSlots();
 
 <style lang="scss">
 .nmorph-alert {
-  --background-color: var(--nmorph-overlay-color);
+  --nmorph-private-alert-background-color: var(--nmorph-overlay-color);
 
   display: inline-block;
   padding: var(--indentation-03) var(--indentation-04);
-  background: var(--background-color);
+  background: var(--nmorph-private-alert-background-color);
   border-radius: var(--default-border-radius);
 
   .nmorph-alert__content,
@@ -102,8 +102,8 @@ const slots = useSlots();
   }
 
   .nmorph-alert__content-title {
-    font-weight: 600;
-    font-size: var(--font-size-medium);
+    font-weight: var(--nmorph-typography-title-small-font-weight);
+    font-size: var(--nmorph-typography-title-small-font-size);
     line-height: 1;
     line-height: var(--line-height-loose);
   }
@@ -127,19 +127,19 @@ const slots = useSlots();
   }
 
   .nmorph-alert__close {
-    align-self: var(--nmorph-alert-close-align);
+    align-self: var(--nmorph-private-alert-close-align);
     margin-left: var(--indentation-03);
     cursor: pointer;
 
     .nmorph-icon {
-      --color: var(--nmorph-white-color);
+      --nmorph-private-icon-color: var(--nmorph-white-color);
     }
   }
 
   .nmorph-alert--success {
     .nmorph-alert__icon {
       .nmorph-icon {
-        --color: var(--nmorph-success-color);
+        --nmorph-private-icon-color: var(--nmorph-success-color);
       }
     }
   }
@@ -147,7 +147,7 @@ const slots = useSlots();
   &.nmorph-alert--error {
     .nmorph-alert__icon {
       .nmorph-icon {
-        --color: var(--nmorph-error-color);
+        --nmorph-private-icon-color: var(--nmorph-error-color);
       }
     }
   }
@@ -155,7 +155,7 @@ const slots = useSlots();
   &.nmorph-alert--warning {
     .nmorph-alert__icon {
       .nmorph-icon {
-        --color: var(--nmorph-warn-color);
+        --nmorph-private-icon-color: var(--nmorph-warn-color);
       }
     }
   }
@@ -163,7 +163,7 @@ const slots = useSlots();
   &.nmorph-alert--info {
     .nmorph-alert__icon {
       .nmorph-icon {
-        --color: var(--nmorph-info-color);
+        --nmorph-private-icon-color: var(--nmorph-info-color);
       }
     }
   }

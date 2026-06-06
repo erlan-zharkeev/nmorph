@@ -4,9 +4,9 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="button-ripple-overview">
-    <NmorphButton style-type="default" ripple text="I have ripple" />
+    <NmorphButton design="nmorph" ripple text="I have ripple" />
     <NmorphButton
-      style-type="default"
+      design="nmorph"
       ripple
       accent-bg-on-hover
       text="I have ripple and hover background"

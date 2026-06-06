@@ -44,8 +44,9 @@ const apiTypeLinks: Record<string, string> = {
   "Transition-duration": mdn("Web/CSS/transition-duration"),
   Width: mdn("Web/CSS/width"),
 
+  INmorphCheckboxGroupOption: source("types/index.ts"),
   INmorphCheckboxOption: source("types/index.ts"),
-  INmorphFromDataExpose: source("types/index.ts"),
+  INmorphFormDataExpose: source("types/index.ts"),
   INmorphNotification: source(
     "components/providers/nmorph-notification-provider/types.ts",
   ),

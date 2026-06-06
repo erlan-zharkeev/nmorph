@@ -5,8 +5,8 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 <template>
   <div class="button-loading-overview">
     <ClientOnly>
-      <NmorphButton style-type="default" loading />
-      <NmorphButton style-type="transparent" loading />
+      <NmorphButton design="nmorph" loading />
+      <NmorphButton design="plain" loading />
     </ClientOnly>
   </div>
 </template>

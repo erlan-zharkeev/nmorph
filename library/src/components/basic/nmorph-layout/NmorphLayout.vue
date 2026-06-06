@@ -22,8 +22,8 @@ const modifiers = computed(() =>
 
 const styles = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--nmorph-layout-gap': props.gap,
-    '--nmorph-layout-aside-width': props.asideWidth,
+    '--nmorph-private-layout-gap': props.gap,
+    '--nmorph-private-layout-aside-width': props.asideWidth,
   })
 );
 </script>
@@ -54,7 +54,7 @@ const styles = computed<CSSProperties>(() =>
 .nmorph-layout {
   display: flex;
   flex-direction: column;
-  gap: var(--nmorph-layout-gap);
+  gap: var(--nmorph-private-layout-gap);
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
@@ -72,14 +72,14 @@ const styles = computed<CSSProperties>(() =>
   .nmorph-layout__body {
     display: flex;
     flex: 1 1 auto;
-    gap: var(--nmorph-layout-gap);
+    gap: var(--nmorph-private-layout-gap);
     min-width: 0;
     min-height: 0;
   }
 
   .nmorph-layout__aside {
-    flex: 0 0 var(--nmorph-layout-aside-width);
-    width: var(--nmorph-layout-aside-width);
+    flex: 0 0 var(--nmorph-private-layout-aside-width);
+    width: var(--nmorph-private-layout-aside-width);
     min-width: 0;
   }
 

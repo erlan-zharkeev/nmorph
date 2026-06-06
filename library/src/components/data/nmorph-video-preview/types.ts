@@ -8,6 +8,8 @@ export interface INmorphVideoPreviewProps {
   name?: string;
   width?: number | string;
   height?: number | string;
+  previewWidth?: number | string;
+  previewHeight?: number | string;
   durationMs?: number;
   surface?: NmorphVideoPreviewSurface;
   embedded?: boolean;

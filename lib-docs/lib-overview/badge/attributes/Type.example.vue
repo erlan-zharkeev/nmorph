@@ -16,7 +16,7 @@ const ribbonCorners = [
         <NmorphButton text="Default" />
       </NmorphBadge>
       <div class="badge-type-overview__dot">
-        <NmorphBadge type="dot" color="var(--nmorph-error-color)">
+        <NmorphBadge type="dot" color="var(--nmorph-error-color)" :dot-size="9">
           <NmorphButton text="Dot" />
         </NmorphBadge>
       </div>
@@ -70,7 +70,4 @@ const ribbonCorners = [
   box-shadow: var(--nmorph-shadow-outset);
 }
 
-.badge-type-overview__dot .nmorph-badge {
-  --nmorph-badge-dot-size: 9px;
-}
 </style>

@@ -2,12 +2,17 @@
 import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { createCssVariables, useModifiers } from '@/utils';
-import { NmorphCollapseDataInjectionType, NmorphCollapseUpdateModelInjectionType } from '@/components';
-import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import {
+  NmorphCollapseDataInjectionType,
+  NmorphCollapseUpdateModelInjectionType,
+  NmorphIcon,
+  NmorphIconChevronDown,
+} from '@/components';
+import { NmorphComponentThickness, NmorphDomElementType } from '@/types';
 import type { INmorphCollapseItemComponentProps, INmorphCollapseItemEmit } from './types';
 
 const props = withDefaults(defineProps<INmorphCollapseItemComponentProps>(), {
-  height: 'basic',
+  thickness: 'basic',
   title: '',
   disabled: false,
   block: false,
@@ -26,13 +31,13 @@ const modifiers = computed(() =>
 
 const titleModifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height]],
+    nmorph: [NmorphComponentThickness[props.thickness]],
   })
 );
 const getCssDuration = (value?: number | string) => (typeof value === 'number' ? `${value}ms` : value);
 const styles = computed<CSSProperties>(() =>
   createCssVariables({
-    '--transition-speed': getCssDuration(props.transitionSpeed),
+    '--nmorph-private-collapse-item-transition-speed': getCssDuration(props.transitionSpeed),
   })
 );
 
@@ -92,9 +97,14 @@ watch(isOpen, updateContentHeightAfterRender);
 <template>
   <div :class="modifiers" :style="styles">
     <div class="nmorph-collapse-item__title" :class="titleModifiers" @click.stop="clickHandler">
-      <slot name="title">
-        {{ props.title }}
-      </slot>
+      <div class="nmorph-collapse-item__title-content">
+        <slot name="title">
+          {{ props.title }}
+        </slot>
+      </div>
+      <NmorphIcon class="nmorph-collapse-item__chevron" size="small">
+        <NmorphIconChevronDown />
+      </NmorphIcon>
     </div>
     <div class="nmorph-collapse-item__content" :style="{ height: `${contentHeight}px` }">
       <div ref="collapseItemDOMElContent" class="nmorph-collapse-item__inner-wrapper">
@@ -106,14 +116,15 @@ watch(isOpen, updateContentHeightAfterRender);
 
 <style lang="scss">
 .nmorph-collapse-item {
-  --transition-speed: 0.2s;
+  --nmorph-private-collapse-item-transition-speed: 0.2s;
 
   margin-bottom: var(--indentation-03);
 
   .nmorph-collapse-item__title {
     display: flex;
+    gap: var(--indentation-02);
     align-items: center;
-    padding: var(--indentation-02);
+    padding: var(--indentation-01) var(--indentation-03);
     background: var(--nmorph-main-color);
     border-radius: var(--default-border-radius);
     box-shadow:
@@ -121,6 +132,17 @@ watch(isOpen, updateContentHeightAfterRender);
       calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
     cursor: pointer;
+  }
+
+  .nmorph-collapse-item__title-content {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .nmorph-collapse-item__chevron {
+    flex: 0 0 auto;
+    margin-left: auto;
+    transition: transform var(--nmorph-private-collapse-item-transition-speed) ease-in-out;
   }
 
   .nmorph-collapse-item__content {
@@ -132,7 +154,7 @@ watch(isOpen, updateContentHeightAfterRender);
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
-    transition: height var(--transition-speed) ease-in-out;
+    transition: height var(--nmorph-private-collapse-item-transition-speed) ease-in-out;
   }
 
   .nmorph-collapse-item__inner-wrapper {
@@ -151,6 +173,12 @@ watch(isOpen, updateContentHeightAfterRender);
   &.nmorph-collapse-item--block {
     .nmorph-collapse-item__title {
       cursor: default;
+    }
+  }
+
+  &.nmorph-collapse-item--is-open {
+    .nmorph-collapse-item__chevron {
+      transform: rotate(180deg);
     }
   }
 }

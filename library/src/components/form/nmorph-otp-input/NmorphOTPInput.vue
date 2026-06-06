@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useModifiers } from '@/utils';
-import { NmorphComponentHeight } from '@/types';
+import { NmorphComponentThickness } from '@/types';
 import { computed, nextTick, ref, watch, type WritableComputedRef } from 'vue';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 import NmorphTextInput from '../nmorph-text-input/NmorphTextInput.vue';
@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<INmorphOTPInputProps>(), {
   mode: 'numeric',
   autofocus: false,
   autocapitalize: 'none',
-  height: 'basic',
+  thickness: 'basic',
   disabled: false,
 });
 
@@ -79,7 +79,7 @@ watch(
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], focused.value && 'focused'],
+    nmorph: [NmorphComponentThickness[props.thickness], focused.value && 'focused'],
     'nmorph-otp-input': [props.disabled && 'disabled'],
   })
 );
@@ -282,7 +282,7 @@ watch(
         :ref="(element) => setInputRef(element, index)"
         v-model="getFieldModel(index).value"
         class="nmorph-otp-input__field"
-        :height="props.height"
+        :thickness="props.thickness"
         :disabled="props.disabled"
         :autocomplete="resolvedAutocomplete"
         :tabindex="getFieldTabindex(index)"
@@ -329,7 +329,8 @@ watch(
   }
 
   .nmorph-otp-input__field input {
-    padding: 0;
+    padding: var(--nmorph-private-control-text-offset-y) 0 0;
+    line-height: calc(var(--nmorph-private-control-height) - var(--nmorph-private-control-text-offset-y));
     text-align: center;
     text-indent: 0;
     font-variant-numeric: tabular-nums;

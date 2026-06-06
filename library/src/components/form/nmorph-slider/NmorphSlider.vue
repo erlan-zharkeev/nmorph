@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NmorphDomElementType } from '@/types';
 import { createCssSizeVariables, useModifiers } from '@/utils';
-import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphTooltip } from '@/components';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
@@ -52,29 +52,31 @@ watch(modelValue, (updatedValue) => {
 });
 
 const tooltipRootRef = ref<InstanceType<typeof NmorphTooltip> | null>(null);
+const tooltipWidth = ref(24);
+
+const updateTooltipWidth = () => {
+  tooltipWidth.value = tooltipRootRef.value?.tooltipBody?.clientWidth || 24;
+};
+
+watch([thumbValue, tooltipVisible], () => nextTick(updateTooltipWidth), { flush: 'post' });
 
 const thumbXPercentPosition = computed(() => {
-  const resizeRecomputeTrigger = windowWidth.value - windowWidth.value;
-  const range = props.max - props.min + resizeRecomputeTrigger;
-  const basePosition = ((thumbValue.value - props.min) / range) * 100;
+  windowWidth.value;
+  windowHeight.value;
+  const range = props.max - props.min;
   const containerWidth = sliderContainer.value?.clientWidth || 0;
-  const thumbPercentWidth = (props.thumbWidth / containerWidth) * 100;
-  const halfThumbPercent = thumbPercentWidth / 2;
-  let adjustedPosition = basePosition - halfThumbPercent;
-  const thumbPosition = Math.max(0, Math.min(100 - thumbPercentWidth, adjustedPosition));
-  const thumb = `${thumbPosition}%`;
 
-  const onePercentInPx = containerWidth / 100;
-  const halfThumbInPx = props.thumbWidth / 2;
-  const tooltipOffsetInPercent = halfThumbInPx / onePercentInPx;
+  if (!containerWidth || range <= 0) return { thumb: '0px', tooltip: '0px' };
 
-  const selfWidthInPx = tooltipRootRef.value?.tooltipBody.clientWidth ?? 24;
-  const halfSelfOffsetInPx = selfWidthInPx / 2;
+  const progress = Math.max(0, Math.min(1, (thumbValue.value - props.min) / range));
+  const thumbWidth = Math.min(props.thumbWidth, containerWidth);
+  const thumbLeft = progress * Math.max(0, containerWidth - thumbWidth);
+  const thumbCenter = thumbLeft + thumbWidth / 2;
+  const maxTooltipLeft = Math.max(0, containerWidth - tooltipWidth.value);
+  const tooltipLeft = Math.max(0, Math.min(maxTooltipLeft, thumbCenter - tooltipWidth.value / 2));
 
-  const selfOffsetCandidate = halfSelfOffsetInPx / onePercentInPx;
-  const selfOffsetInPercent = selfOffsetCandidate === Infinity ? 1.714 : selfOffsetCandidate;
-
-  const tooltip = `${parseFloat(thumb) + tooltipOffsetInPercent - selfOffsetInPercent}%`;
+  const thumb = `${thumbLeft}px`;
+  const tooltip = `${tooltipLeft}px`;
   return {
     thumb,
     tooltip,
@@ -86,6 +88,7 @@ const windowHeight = ref(0);
 const resizeWindowHandler = () => {
   windowWidth.value = window.innerWidth;
   windowHeight.value = window.innerHeight;
+  nextTick(updateTooltipWidth);
 };
 
 onMounted(() => {
@@ -93,6 +96,7 @@ onMounted(() => {
     windowWidth.value = window.innerWidth;
     windowHeight.value = window.innerHeight;
     window.addEventListener('resize', resizeWindowHandler);
+    nextTick(updateTooltipWidth);
   }
 });
 
@@ -157,10 +161,10 @@ const nativeInputHandler = (event: Event): void => {
 
 const transitionEnabled = ref(true);
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-slider-thumb-width': thumbWidthCss.value,
+  '--nmorph-private-slider-thumb-width': thumbWidthCss.value,
   ...createCssSizeVariables({
-    '--slider-height': props.sliderHeight,
-    '--value-fixed-container-height': props.valueFixedContainerHeight,
+    '--nmorph-private-slider-height': props.sliderHeight,
+    '--nmorph-private-slider-value-container-height': props.valueFixedContainerHeight,
   }),
 }));
 </script>
@@ -211,8 +215,8 @@ const styles = computed<CSSProperties>(() => ({
   width: 100%;
   height: 20px;
 
-  --slider-height: 24px;
-  --value-fixed-container-height: 18px;
+  --nmorph-private-slider-height: 24px;
+  --nmorph-private-slider-value-container-height: 18px;
 
   cursor: pointer;
 
@@ -225,7 +229,7 @@ const styles = computed<CSSProperties>(() => ({
     display: flex;
     align-items: center;
     width: 100%;
-    height: var(--value-fixed-container-height);
+    height: var(--nmorph-private-slider-value-container-height);
     background: var(--nmorph-main-color);
     border-radius: var(--default-border-radius);
     box-shadow:
@@ -239,14 +243,31 @@ const styles = computed<CSSProperties>(() => ({
     display: flex;
     align-items: center;
     width: 100%;
-    height: var(--slider-height);
+    height: var(--nmorph-private-slider-height);
     touch-action: none;
+  }
+
+  .nmorph-tooltip {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    pointer-events: none;
+
+    .nmorph-tooltip__content {
+      width: 100%;
+      height: 100%;
+    }
+
+    .nmorph-tooltip__trigger {
+      display: none;
+    }
   }
 
   .nmorph-slider__thumb {
     position: absolute;
     z-index: 1;
-    width: var(--nmorph-slider-thumb-width);
+    width: var(--nmorph-private-slider-thumb-width);
     height: 20px;
     background: var(--nmorph-main-color);
     border: 0;
@@ -261,13 +282,6 @@ const styles = computed<CSSProperties>(() => ({
     transition: left ease-in-out 0.2s;
   }
 
-  .nmorph-slider__value {
-    display: flex;
-    justify-content: center;
-    width: var(--value-fixed-container-width);
-    margin-left: var(--indentation-04);
-  }
-
   .nmorph-slide__native-input {
     position: absolute;
     top: 50%;
@@ -279,12 +293,12 @@ const styles = computed<CSSProperties>(() => ({
   }
 
   .nmorph-slide__native-input::-webkit-slider-runnable-track {
-    height: var(--slider-height);
+    height: var(--nmorph-private-slider-height);
     background: transparent;
   }
 
   .nmorph-slide__native-input::-moz-range-track {
-    height: var(--slider-height);
+    height: var(--nmorph-private-slider-height);
     background: transparent;
   }
 

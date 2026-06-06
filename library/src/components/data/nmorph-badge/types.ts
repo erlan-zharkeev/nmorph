@@ -10,19 +10,14 @@ export interface INmorphBadgeProps {
   type?: NmorphBadgeType;
   ribbonCorner?: NmorphBadgeRibbonCorner;
   ribbonTilt?: boolean;
-  /**
-   * @deprecated Use `type="dot"` instead.
-   */
-  isDot?: boolean;
-  /**
-   * @deprecated Use `type="tag"` instead.
-   */
-  isTag?: boolean;
   hidden?: boolean;
   hideOnFalsyValue?: boolean;
   color?: string;
   size?: NmorphBadgeSize;
+  dotSize?: number | string;
   ribbonSize?: number | string;
+  ribbonWidth?: number | string;
+  ribbonCornerSize?: number | string;
   ribbonRadius?: number | string;
   offsetY?: number;
   offsetX?: number;

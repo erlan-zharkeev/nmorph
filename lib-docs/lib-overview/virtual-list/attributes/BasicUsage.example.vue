@@ -5,7 +5,12 @@ const items = Array.from({ length: 1000 }, (_, index) => `Virtual row ${index + 
 </script>
 
 <template>
-  <NmorphVirtualList class="virtual-list-basic-usage-overview" :items="items" :item-height="44" height="220px">
+  <NmorphVirtualList
+    class="virtual-list-basic-usage-overview"
+    :items="items"
+    :item-height="44"
+    height="260px"
+  >
     <template #default="{ item, index }">
       <div class="virtual-list-basic-usage-overview__item">
         <strong>{{ index + 1 }}</strong>
@@ -17,7 +22,7 @@ const items = Array.from({ length: 1000 }, (_, index) => `Virtual row ${index + 
 
 <style lang="scss">
 .virtual-list-basic-usage-overview {
-  max-width: 360px;
+  width: min(100%, 520px);
 }
 
 .virtual-list-basic-usage-overview__item {

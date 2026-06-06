@@ -31,7 +31,7 @@ const color = computed(() => {
 });
 
 const animation = computed(() => {
-  return props.indeterminate ? 'var(--animation)' : 'none';
+  return props.indeterminate ? 'var(--nmorph-private-progress-indeterminate-animation)' : 'none';
 });
 
 const circle = ref<SVGCircleElement | null>(null);
@@ -46,17 +46,18 @@ onMounted(() => {
 
 const circleContainerSize = computed(() => `${props.circleSize}px`);
 const displayPercentage = computed(() => `${props.percentage}%`);
+const linearHeight = computed(() => props.height ?? (props.valueInside ? '18px' : undefined));
 const styles = computed<CSSProperties>(() => ({
   ...createCssVariables({
-    '--nmorph-progress-percentage': displayPercentage.value,
-    '--nmorph-progress-color': color.value,
-    '--nmorph-progress-animation': animation.value,
-    '--nmorph-progress-circle-size': circleContainerSize.value,
-    '--width-transition': props.widthTransition,
-    '--animation': props.indeterminateAnimation,
+    '--nmorph-private-progress-percentage': displayPercentage.value,
+    '--nmorph-private-progress-color': color.value,
+    '--nmorph-private-progress-animation': animation.value,
+    '--nmorph-private-progress-circle-size': circleContainerSize.value,
+    '--nmorph-private-progress-width-transition': props.widthTransition,
+    '--nmorph-private-progress-indeterminate-animation': props.indeterminateAnimation,
   }),
   ...createCssSizeVariables({
-    '--height': props.height,
+    '--nmorph-private-progress-height': linearHeight.value,
   }),
 }));
 </script>
@@ -96,9 +97,9 @@ const styles = computed<CSSProperties>(() => ({
 
 <style lang="scss">
 .nmorph-progress {
-  --height: 8px;
-  --width-transition: 0.4s ease-in-out width;
-  --animation: slide 2s linear infinite;
+  --nmorph-private-progress-height: 8px;
+  --nmorph-private-progress-width-transition: 0.4s ease-in-out width;
+  --nmorph-private-progress-indeterminate-animation: slide 2s linear infinite;
 
   display: inline;
 
@@ -106,7 +107,7 @@ const styles = computed<CSSProperties>(() => ({
     display: flex;
     align-items: center;
     height: 100%;
-    height: var(--height);
+    height: var(--nmorph-private-progress-height);
 
     .nmorph-progress__outer {
       width: 100%;
@@ -124,15 +125,15 @@ const styles = computed<CSSProperties>(() => ({
       position: relative;
       height: 100%;
       border-radius: var(--border-radius-40);
-      transition: var(--width-transition);
+      transition: var(--nmorph-private-progress-width-transition);
     }
 
     .nmorph-progress__percentage,
     .nmorph-progress__inner-text {
       margin-left: var(--indentation-03);
-      font-weight: 400;
-      font-size: var(--font-size-extra-small);
-      line-height: var(--line-height-regular);
+      font-weight: var(--nmorph-typography-caption-font-weight);
+      font-size: var(--nmorph-typography-caption-font-size);
+      line-height: var(--nmorph-typography-caption-line-height);
     }
 
     .nmorph-progress__inner-text {
@@ -146,8 +147,8 @@ const styles = computed<CSSProperties>(() => ({
 
   .nmorph-progress__circle {
     position: relative;
-    width: var(--nmorph-progress-circle-size);
-    height: var(--nmorph-progress-circle-size);
+    width: var(--nmorph-private-progress-circle-size);
+    height: var(--nmorph-private-progress-circle-size);
     background: var(--nmorph-main-color);
     border-radius: var(--border-radius-circular);
     box-shadow:
@@ -182,14 +183,14 @@ const styles = computed<CSSProperties>(() => ({
     transform-origin: center;
     transition: stroke-dashoffset 0.5s;
     fill: none;
-    stroke: var(--nmorph-progress-color);
+    stroke: var(--nmorph-private-progress-color);
     stroke-width: 4px;
   }
 
   .nmorph-progress__inner {
-    width: var(--nmorph-progress-percentage);
-    background: var(--nmorph-progress-color);
-    animation: var(--nmorph-progress-animation);
+    width: var(--nmorph-private-progress-percentage);
+    background: var(--nmorph-private-progress-color);
+    animation: var(--nmorph-private-progress-animation);
   }
 }
 </style>

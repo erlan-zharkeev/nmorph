@@ -29,6 +29,8 @@ export interface INmorphMediaGalleryProps {
   activeIndex?: number;
   zIndex?: number;
   height?: number | string;
+  previewWidth?: number | string;
+  previewHeight?: number | string;
   showTrigger?: boolean;
   showTriggerName?: boolean;
   showTriggerSize?: boolean;

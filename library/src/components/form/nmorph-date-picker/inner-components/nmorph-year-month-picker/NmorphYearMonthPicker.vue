@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { useModifiers } from '@/utils';
 import {
   NmorphButton,
   NmorphIcon,
@@ -56,12 +55,6 @@ watch(
 
 const emit = defineEmits<INmorphYearMonthPickerEmit>();
 
-const modifiers = computed(() =>
-  useModifiers({
-    'nmorph-year-month-picker': [],
-  })
-);
-
 const selectedValueModel = computed({
   get: () => selectedValue.value,
   set: (value: string) => {
@@ -108,7 +101,7 @@ const goToYearsHandler = () => {
 </script>
 
 <template>
-  <div :class="modifiers">
+  <div class="nmorph-year-month-picker">
     <div class="nmorph-year-month-picker__header">
       <NmorphButton class="nmorph-year-month-picker__action-btn" :tabindex="-1" @click="buttonClickHandler('decrease')">
         <NmorphIcon class="nmorph-year-month-picker__chevron-left">
@@ -116,7 +109,7 @@ const goToYearsHandler = () => {
         </NmorphIcon>
       </NmorphButton>
       <div class="nmorph-year-month-picker__value">
-        <NmorphButton :text="value" :tabindex="-1" style-type="transparent" @click="goToYearsHandler" />
+        <NmorphButton :text="value" :tabindex="-1" @click="goToYearsHandler" />
       </div>
       <NmorphButton class="nmorph-year-month-picker__action-btn" :tabindex="-1" @click="buttonClickHandler('increase')">
         <NmorphIcon class="nmorph-year-month-picker__chevron-right">

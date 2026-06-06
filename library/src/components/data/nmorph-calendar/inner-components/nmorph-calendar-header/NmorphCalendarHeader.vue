@@ -4,7 +4,9 @@ import { NmorphButton, getMonthName, NmorphIcon, NmorphIconArrowLeft, NmorphIcon
 import { useModifiers } from '@/utils';
 import type { INmorphCalendarHeaderEmit, INmorphCalendarHeaderProps } from './types';
 
-const props = withDefaults(defineProps<INmorphCalendarHeaderProps>(), {});
+const props = withDefaults(defineProps<INmorphCalendarHeaderProps>(), {
+  design: 'nmorph',
+});
 
 const emit = defineEmits<INmorphCalendarHeaderEmit>();
 
@@ -23,6 +25,7 @@ const modifiers = computed(() =>
         <NmorphButton
           v-if="showPreviousMonthButton"
           class="nmorph-calendar-header__action"
+          :design="props.design"
           @click="emit('click-previous-month')"
         >
           <NmorphIcon>
@@ -33,11 +36,13 @@ const modifiers = computed(() =>
           v-if="showTodayButton"
           class="nmorph-calendar-header__action"
           text="Today"
+          :design="props.design"
           @click="emit('click-today')"
         />
         <NmorphButton
           v-if="showNextMonthButton"
           class="nmorph-calendar-header__action"
+          :design="props.design"
           @click="emit('click-next-month')"
         >
           <NmorphIcon>
@@ -68,9 +73,9 @@ const modifiers = computed(() =>
   .nmorph-calendar-header__text {
     width: 160px;
     margin-right: 8px;
-    font-weight: 800;
-    font-size: var(--font-size-extra-large);
-    line-height: var(--line-height-loose);
+    font-weight: var(--font-weight-extrabold);
+    font-size: var(--nmorph-typography-title-large-font-size);
+    line-height: var(--nmorph-typography-title-large-line-height);
   }
 }
 </style>

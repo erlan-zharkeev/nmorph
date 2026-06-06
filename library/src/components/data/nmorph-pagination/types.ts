@@ -1,4 +1,4 @@
-import type { NmorphComponentHeight } from '@/types';
+import type { NmorphComponentThickness } from '@/types';
 
 export interface INmorphPaginationProps {
   totalElementsQuantity: number;
@@ -8,7 +8,7 @@ export interface INmorphPaginationProps {
   hideOnSinglePage?: boolean;
   maxVisiblePages?: number;
   fastForwardStep?: number;
-  height?: keyof typeof NmorphComponentHeight;
+  thickness?: keyof typeof NmorphComponentThickness;
 }
 
 export interface INmorphPaginationEmit {

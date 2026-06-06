@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { NmorphComponentThickness, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref, watch } from 'vue';
 import { NmorphButton, NmorphIcon, NmorphIconMinusThin, NmorphIconPlusThin } from '@/components';
@@ -7,7 +7,7 @@ import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item
 import type { INmorphNumberInputEmit, INmorphNumberInputProps } from './types';
 
 const props = withDefaults(defineProps<INmorphNumberInputProps>(), {
-  height: 'basic',
+  thickness: 'basic',
   modelValue: 0,
   max: Infinity,
   min: -Infinity,
@@ -20,7 +20,7 @@ const { id, name, autocomplete, tabindex } = useFormItemInput(props);
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height]],
+    nmorph: [NmorphComponentThickness[props.thickness]],
     'nmorph-number-input': [props.disabled && 'disabled', props.actionBtnPositionRight && 'action-btn-position-right'],
   })
 );
@@ -41,7 +41,7 @@ const iconSizeMap = {
 };
 const actionBtnIconSize = computed(() => {
   const positionKey = props.actionBtnPositionRight ? 'right' : 'default';
-  return iconSizeMap[props.height][positionKey];
+  return iconSizeMap[props.thickness][positionKey];
 });
 
 const emit = defineEmits<INmorphNumberInputEmit>();
@@ -62,7 +62,7 @@ const decreaseHandler = () => {
 const minBtnDisabled = computed(() => initialValue.value <= props.min);
 const maxBtnDisabled = computed(() => initialValue.value >= props.max);
 
-const rightActionBtnHeight = computed(() => (props.height === 'thick' ? '16px' : '12px'));
+const rightActionBtnHeight = computed(() => 'calc(var(--nmorph-private-control-height) / 2)');
 
 const inputHandler = (event: Event) => {
   const target = event.target as HTMLInputElement;
@@ -95,16 +95,11 @@ defineExpose({ inputDOMRef });
 </script>
 
 <template>
-  <div :class="modifiers" :style="{ '--nmorph-number-input-right-action-height': rightActionBtnHeight }">
+  <div :class="modifiers" :style="{ '--nmorph-private-number-input-right-action-height': rightActionBtnHeight }">
     <div class="nmorph-number-input__content">
       <div class="nmorph-number-input__input-content">
         <div v-if="!actionBtnPositionRight" class="nmorph-number-input__decrease">
-          <NmorphButton
-            style-type="transparent"
-            :disabled="minBtnDisabled"
-            :height="props.height"
-            @click="decreaseHandler"
-          >
+          <NmorphButton design="plain" :disabled="minBtnDisabled" :thickness="props.thickness" @click="decreaseHandler">
             <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
               <NmorphIconMinusThin />
             </NmorphIcon>
@@ -124,27 +119,32 @@ defineExpose({ inputDOMRef });
           @input="inputHandler"
         />
         <div v-if="!actionBtnPositionRight" class="nmorph-number-input__increase">
-          <NmorphButton
-            style-type="transparent"
-            :disabled="maxBtnDisabled"
-            :height="props.height"
-            @click="increaseHandler"
-          >
-            <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
+          <NmorphButton design="plain" :disabled="maxBtnDisabled" :thickness="props.thickness" @click="increaseHandler">
+            <NmorphIcon class="nmorph-number-input__plus-icon" :width="actionBtnIconSize" :height="actionBtnIconSize">
               <NmorphIconPlusThin />
             </NmorphIcon>
           </NmorphButton>
         </div>
         <div v-else class="nmorph-number-input__action-btns">
           <div class="nmorph-number-input__increase">
-            <NmorphButton style-type="transparent" :disabled="maxBtnDisabled" @click="increaseHandler">
-              <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
+            <NmorphButton
+              design="plain"
+              :disabled="maxBtnDisabled"
+              :thickness="props.thickness"
+              @click="increaseHandler"
+            >
+              <NmorphIcon class="nmorph-number-input__plus-icon" :width="actionBtnIconSize" :height="actionBtnIconSize">
                 <NmorphIconPlusThin />
               </NmorphIcon>
             </NmorphButton>
           </div>
           <div class="nmorph-number-input__decrease">
-            <NmorphButton style-type="transparent" :disabled="minBtnDisabled" @click="decreaseHandler">
+            <NmorphButton
+              design="plain"
+              :disabled="minBtnDisabled"
+              :thickness="props.thickness"
+              @click="decreaseHandler"
+            >
               <NmorphIcon :width="actionBtnIconSize" :height="actionBtnIconSize">
                 <NmorphIconMinusThin />
               </NmorphIcon>
@@ -171,7 +171,7 @@ defineExpose({ inputDOMRef });
   .nmorph-number-input__input-content {
     display: flex;
     width: 100%;
-    height: var(--height);
+    height: var(--nmorph-private-control-height);
     height: 100%;
     background: var(--nmorph-main-color);
     border-radius: var(--default-border-radius);
@@ -195,10 +195,27 @@ defineExpose({ inputDOMRef });
     }
   }
 
+  .nmorph-button.nmorph-button--plain .nmorph-button__content {
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .nmorph-button.nmorph-button--plain .nmorph-button__content:not(:disabled, [loading='true']):hover,
+  .nmorph-button.nmorph-button--plain .nmorph-button__content:focus,
+  .nmorph-button.nmorph-button--plain .nmorph-button__content:focus-visible {
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+
   input {
     width: auto;
     width: 100%;
-    padding: var(--indentation-00) var(--default-indentation-input);
+    padding: var(--nmorph-private-control-text-offset-y) var(--default-indentation-input) 0;
+    line-height: calc(var(--nmorph-private-control-height) - var(--nmorph-private-control-text-offset-y));
     text-align: center;
     background: var(--nmorph-main-color);
     border: none;
@@ -227,6 +244,16 @@ defineExpose({ inputDOMRef });
   .nmorph-number-input__action-btns {
     display: flex;
     flex-direction: column;
+    align-self: stretch;
+    width: var(--nmorph-private-control-height);
+    min-width: var(--nmorph-private-control-height);
+    overflow: hidden;
+    border-top-right-radius: var(--default-border-radius);
+    border-bottom-right-radius: var(--default-border-radius);
+  }
+
+  .nmorph-number-input__plus-icon {
+    transform: translateY(1px);
   }
 
   &.nmorph-number-input--disabled {
@@ -247,8 +274,11 @@ defineExpose({ inputDOMRef });
     .nmorph-number-input__decrease,
     .nmorph-number-input__increase {
       display: flex;
+      flex: 1 1 0;
       justify-content: center;
+      align-items: center;
       width: 100%;
+      min-height: 0;
     }
 
     .nmorph-number-input__increase {
@@ -266,9 +296,23 @@ defineExpose({ inputDOMRef });
     }
 
     .nmorph-button {
-      --height: var(--nmorph-number-input-right-action-height);
+      --nmorph-private-control-height: var(--nmorph-private-number-input-right-action-height);
 
+      display: flex;
       width: 100%;
+      height: 100%;
+      min-height: 0;
+    }
+
+    .nmorph-button__content {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      padding: 0;
+    }
+
+    .nmorph-number-input__plus-icon {
+      transform: translateY(2px);
     }
   }
 }

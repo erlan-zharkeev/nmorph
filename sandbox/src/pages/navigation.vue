@@ -127,9 +127,9 @@ const panes = [
             :right="76"
             :bottom="24"
             :visibility-height="120"
-            design="common"
+            design="plain"
           >
-            <NmorphButton text="Top" style-type="transparent" />
+            <NmorphButton text="Top" design="plain" />
           </NmorphBacktop>
         </div>
       </div>

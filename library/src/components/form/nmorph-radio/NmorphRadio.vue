@@ -5,8 +5,8 @@ import {
   NmorphDomElementType,
   NmorphRadioChangeRadioButtonValueHandlerInjectionType,
   NmorphRadioGroupSelectedValueInjectionType,
-  NmorphSelectionControlHeight,
-  NmorphSelectionControlHeightType,
+  NmorphSelectionControlThickness,
+  NmorphSelectionControlThicknessType,
 } from '@/types';
 import type { INmorphRadioProps } from './types';
 
@@ -18,12 +18,12 @@ const changeValue = inject<NmorphRadioChangeRadioButtonValueHandlerInjectionType
   'change-radio-button-value-handler',
   undefined
 );
-const groupHeight = inject<Ref<NmorphSelectionControlHeightType> | undefined>('radio-group-height', undefined);
+const groupThickness = inject<Ref<NmorphSelectionControlThicknessType> | undefined>('radio-group-thickness', undefined);
 
 const props = withDefaults(defineProps<INmorphRadioProps>(), {
   disabled: false,
   label: '',
-  styleType: 'button',
+  design: 'nmorph',
   checked: false,
   tabindex: 0,
   value: '',
@@ -34,12 +34,17 @@ const changeHandler = () => {
 };
 
 const checked = computed(() => groupSelectedValue?.value === props.value || props.checked);
-const height = computed(() => props.height || groupHeight?.value || 'thin');
+const resolvedDesign = computed(() => props.design || 'nmorph');
+const requestedThickness = computed(() => props.thickness || groupThickness?.value || 'basic');
+const thickness = computed(() => {
+  if (resolvedDesign.value !== 'plain' && requestedThickness.value === 'extra-thin') return 'basic';
+  return requestedThickness.value;
+});
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphSelectionControlHeight[height.value]],
-    'nmorph-radio': [props.disabled && 'disabled', checked.value && 'checked', props.styleType],
+    nmorph: [NmorphSelectionControlThickness[thickness.value]],
+    'nmorph-radio': [props.disabled && 'disabled', checked.value && 'checked', resolvedDesign.value],
   })
 );
 
@@ -49,7 +54,7 @@ defineExpose({ inputDOMRef });
 
 <template>
   <label :class="modifiers" @click.prevent="changeHandler">
-    <div v-if="props.styleType === 'radio-style'" class="nmorph-radio__content">
+    <div v-if="props.design === 'plain'" class="nmorph-radio__content">
       <div class="nmorph-radio__input-wrapper">
         <input
           ref="inputDOMRef"
@@ -68,7 +73,7 @@ defineExpose({ inputDOMRef });
       </span>
       <slot v-else name="label" />
     </div>
-    <div v-if="props.styleType === 'button'" class="nmorph-radio__content">
+    <div v-if="props.design === 'nmorph'" class="nmorph-radio__content">
       <input
         ref="inputDOMRef"
         type="radio"
@@ -93,10 +98,11 @@ defineExpose({ inputDOMRef });
 
 <style lang="scss">
 .nmorph-radio {
-  --size: var(--height);
-  --nmorph-selection-control-font-size: var(--font-size-small);
-  --nmorph-selection-control-line-height: var(--line-height-regular);
-  --nmorph-selection-control-inline-padding: var(--indentation-03);
+  --nmorph-private-selection-control-size: var(--nmorph-private-control-height);
+  --nmorph-private-selection-control-font-size: var(--nmorph-private-control-font-size);
+  --nmorph-private-selection-control-line-height: var(--nmorph-private-control-line-height);
+  --nmorph-private-selection-control-font-weight: var(--nmorph-private-control-font-weight);
+  --nmorph-private-selection-control-inline-padding: var(--indentation-03);
 
   display: inline-flex;
   align-items: center;
@@ -104,7 +110,7 @@ defineExpose({ inputDOMRef });
 
   &.nmorph {
     height: auto;
-    min-height: var(--size);
+    min-height: var(--nmorph-private-selection-control-size);
   }
 
   .nmorph-radio__content {
@@ -112,17 +118,13 @@ defineExpose({ inputDOMRef });
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: var(--size);
-  }
-
-  span {
-    margin-top: 2px;
+    min-height: var(--nmorph-private-selection-control-size);
   }
 
   .nmorph-radio__input-wrapper {
     position: relative;
-    width: var(--size);
-    height: var(--size);
+    width: var(--nmorph-private-selection-control-size);
+    height: var(--nmorph-private-selection-control-size);
   }
 
   input {
@@ -157,9 +159,12 @@ defineExpose({ inputDOMRef });
 
   .nmorph-radio__fake span,
   .nmorph-radio__label {
-    font-weight: 400;
-    font-size: var(--nmorph-selection-control-font-size);
-    line-height: var(--nmorph-selection-control-line-height);
+    display: inline-flex;
+    align-items: center;
+    font-weight: var(--nmorph-private-selection-control-font-weight);
+    font-size: var(--nmorph-private-selection-control-font-size);
+    line-height: var(--nmorph-private-selection-control-line-height);
+    transform: translateY(var(--nmorph-private-control-text-offset-y));
   }
 
   .nmorph-radio__fake-checked {
@@ -177,14 +182,15 @@ defineExpose({ inputDOMRef });
     margin-left: var(--indentation-02);
   }
 
-  &.nmorph-radio--button {
+  &.nmorph-radio--nmorph {
     .nmorph-radio__fake {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: var(--size);
-      padding: var(--nmorph-selection-control-inline-padding);
+      box-sizing: border-box;
+      height: var(--nmorph-private-selection-control-size);
+      padding: 0 var(--nmorph-private-selection-control-inline-padding);
       white-space: nowrap;
       background: var(--nmorph-main-color);
       border-radius: var(--default-border-radius);
@@ -196,21 +202,7 @@ defineExpose({ inputDOMRef });
   }
 
   &.nmorph--extra-thin-component {
-    --nmorph-selection-control-font-size: var(--font-size-tiny);
-    --nmorph-selection-control-line-height: var(--line-height-line);
-    --nmorph-selection-control-inline-padding: var(--indentation-02);
-  }
-
-  &.nmorph--thin-component {
-    --nmorph-selection-control-font-size: var(--font-size-extra-small);
-  }
-
-  &.nmorph--basic-component {
-    --nmorph-selection-control-font-size: var(--font-size-small);
-  }
-
-  &.nmorph--thick-component {
-    --nmorph-selection-control-font-size: var(--font-size-base);
+    --nmorph-private-selection-control-inline-padding: var(--indentation-02);
   }
 
   &.nmorph-radio--checked {
@@ -220,6 +212,13 @@ defineExpose({ inputDOMRef });
         inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
         inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
           var(--nmorph-light-shade-color);
+    }
+  }
+
+  &.nmorph-radio--plain {
+    .nmorph-radio__fake {
+      border: var(--nmorph-plain-border);
+      box-shadow: none;
     }
   }
 

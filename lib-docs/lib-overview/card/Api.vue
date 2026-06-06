@@ -10,7 +10,7 @@ import { NmorphShadowType } from "@nmorph/nmorph-ui-kit";
 const attributesData: IAttributesTableData[] = [
   {
     name: "shadow-type",
-    type: enumToString(NmorphShadowType),
+    type: optionsToString(NmorphShadowType),
     default: "outset",
   },
   {

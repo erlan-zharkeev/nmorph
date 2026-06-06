@@ -102,7 +102,7 @@ export default {
       "other-messages": "其他翻译",
       "css-variables": "CSS 变量",
       "css-variables-content":
-        "库提供以下 CSS 自定义属性，可在自定义样式中使用。",
+        "The library exposes theme and foundation CSS custom properties for your own styles. Component-specific customization is handled through props.",
       "css-variables-theme-derived": "主题派生变量（按主题设置）",
       "css-variables-auto-generated": "附加文字对比度变量（可按主题配置）",
       "css-variables-static": "附加主题颜色变量（按主题设置）",
@@ -156,7 +156,7 @@ export default {
       },
       typescript: {
         title: "类型化 API",
-        text: "类型化 props、导出的 enum、辅助类型和示例，用于说明组件公开 API。",
+        text: "类型化 props、导出的 option objects、辅助类型和示例，用于说明组件公开 API。",
       },
     },
     "system-title": "库的内部结构",
@@ -213,6 +213,26 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "component-thickness-api":
+          "Breaking: Button、form controls、selection controls、Pagination、CollapseItem、TagItem 以及相关 option data 的尺寸预设 prop 现在从 height 改名为 thickness。",
+        "thin-input-centering":
+          "Thin native input 的文本现在使用组件高度作为 line box，让视觉垂直居中更稳定，同时不改变 swipe、click 或 layout 行为。",
+        "design-api-plain":
+          "Breaking: Empty、Backtop、SkeletonItem、Table、TagList 和 TagItem 的 surface design value 现在使用 design=\"plain\"，替代 design=\"common\"。",
+        "selection-design-api":
+          "Breaking: NmorphButton、NmorphCheckbox、NmorphCheckboxGroup、NmorphRadio 和 NmorphRadioGroup 现在使用 design=\"nmorph | plain\" 定义视觉设计。",
+        "form-control-design-api":
+          "Breaking: input-like form controls 不再暴露 design prop；design 只保留在 Checkbox、CheckboxGroup、Radio 和 RadioGroup 这类 selection controls 上。",
+        "control-typography-contract":
+          "共享的组件 height classes 现在定义 control font size 和 line height，让 thin/basic/thick 在紧凑控件中保持一致。",
+        "typography-system":
+          "新增 foundation typography tokens、NmorphText 和 role-based component text styles，让库内文本尺寸更一致。",
+        "plain-surface-contract":
+          "Plain buttons、dropdowns、selection controls 和 data surfaces 现在使用可见 border。",
+        "component-css-vars-private-api":
+          "Breaking: component-level CSS variables 现在是 private internals。组件定制迁移到显式 props，public CSS variables 保留给 theme 和 foundation tokens。",
+        "stepper-single-item-click":
+          "NmorphStepper 在 single-item non-interactive stepper 的 pointerup 上不再抛错，同时保留 swipe 行为和 drag 后的 click suppression。",
         "attachment-preview-primitives":
           "Added NmorphVideoPreview, NmorphAudioPreview, and NmorphFileCard as reusable attachment UI primitives for video, audio, documents, and unknown files.",
         "file-upload-attachment-previews":
@@ -730,7 +750,7 @@ export default {
     "model-text": "模型文本：",
     "explore-components": "探索组件",
     button: {
-      "style-type": {
+      design: {
         subtitle: "使用 *default* 或 *transparent* 来定义基本样式。",
       },
       loading: {
@@ -739,8 +759,8 @@ export default {
       ripple: {
         subtitle: "使用 *boolean* 来启用或禁用点击时的涟漪效果。",
       },
-      height: {
-        subtitle: "设置高度，支持值 *thick*, *basic*, *thin*。",
+      thickness: {
+        subtitle: "设置厚度，支持值 *thick*, *basic*, *thin*。",
       },
       disabled: {
         subtitle: "使用 *boolean* 来禁用按钮。",
@@ -752,7 +772,7 @@ export default {
       shape: {
         info: {
           title: "信息",
-          content: "使用 round 或 square 时，大小通过变量 --height 改变。",
+          content: "使用 round 或 square 时，大小遵循所选 thickness。",
         },
         subtitle: "使用 shape 来改变按钮的边框半径。",
       },
@@ -760,13 +780,13 @@ export default {
         type: "原生按钮类型",
         text: "按钮文本",
         loading: "启用/禁用加载器",
-        "style-type": "更改按钮样式",
+        design: "更改按钮样式",
         color: "更改 transparent 按钮的文字和图标颜色",
         "accent-bg-on-hover": "启用/禁用悬停时的背景色",
         ripple: "启用/禁用点击时的涟漪效果",
         fill: "用按钮填充容器",
         disabled: "禁用按钮",
-        height: "更改按钮高度",
+        thickness: "更改按钮厚度",
         shape: "更改形状",
       },
       slot: {
@@ -776,7 +796,7 @@ export default {
         "icon-only": "纯图标按钮模式。会隐藏 default、text 和 append 内容",
       },
       variables: {
-        height: "按钮高度",
+        height: "Button height",
       },
       exposes: {
         buttonDOMElement: "原始按钮 DOM 元素",
@@ -995,9 +1015,9 @@ export default {
           "Sets the badge text size: tiny, extra-small, base, medium, large, or extra-large",
         "z-index": "Defines the stacking order of the badge",
         "offset-y":
-          "Vertical offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-y. Ignored when type is tag",
+          "Vertical offset of the badge. For ribbon, controls ribbon positioning. Ignored when type is tag",
         "offset-x":
-          "Horizontal offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-x. Ignored when type is tag",
+          "Horizontal offset of the badge. For ribbon, controls ribbon positioning. Ignored when type is tag",
       },
       slot: {
         default:
@@ -1020,7 +1040,7 @@ export default {
       },
       "card-padding": {
         subtitle:
-          "Sets the card padding through the same CSS value used by the `--card-padding` variable.",
+          "Sets the card padding.",
       },
       fill: {
         subtitle:
@@ -1051,7 +1071,7 @@ export default {
     empty: {
       "basic-usage": {
         subtitle:
-          "Shows empty states with default content, custom icons, actions, and common or nmorph surfaces.",
+          "Shows empty states with default content, custom icons, actions, and plain or nmorph surfaces.",
       },
       api: {
         title: "Main empty state title.",
@@ -1124,7 +1144,15 @@ export default {
         loadFailedText: "加载图像失败。",
       },
     },
+    layout: {
+      "basic-usage": {
+        subtitle: "让 header、aside、main 和 footer 区域在示例卡片内撑满宽度。",
+      },
+    },
     "tag-list": {
+      "basic-usage": {
+        subtitle: "展示可移除标签、可选择的 plain 标签，以及带自定义内容的紧凑行。",
+      },
       api: {
         "model-value": "标签列表",
         design: "定义列表中标签的默认视觉样式",
@@ -1146,12 +1174,12 @@ export default {
             "如果你希望标签显示自动处理，可以将组件包装在 NmorphTagList 中。",
         },
       },
-      height: {
-        subtitle: "定义组件的高度。",
+      thickness: {
+        subtitle: "定义组件的厚度。",
       },
       design: {
         subtitle:
-          "如果设置为 *common*，组件将使用普通 token 背景，并使用高对比度文本和图标。",
+          "如果设置为 *plain*，组件将使用普通 token 背景，并使用高对比度文本和图标。",
       },
       api: {
         value: "定义组件的标识符值",
@@ -1159,7 +1187,7 @@ export default {
         removable:
           "定义组件是否可以删除。将其包装在 NmorphTagList 中时自动工作。",
         design: "定义组件的样式",
-        height: "设置组件的高度",
+        thickness: "设置组件的厚度",
       },
       events: {
         close: "返回关闭标签的值",
@@ -1179,6 +1207,9 @@ export default {
       },
     },
     collapse: {
+      "basic-usage": {
+        subtitle: "展示普通、禁用和自定义标题面板，并在标题右侧显示 chevron。",
+      },
       api: {
         "model-value": "当前打开的面板名称",
         accordion: "同一时间只允许打开一个面板",
@@ -1193,7 +1224,7 @@ export default {
         title: "面板标题文本",
         disabled: "禁用面板",
         block: "设置为 true 时禁止切换面板",
-        height: "设置标题高度",
+        thickness: "设置标题厚度",
         "transition-speed":
           "Overrides the panel open and close transition speed. Numbers are treated as milliseconds",
       },
@@ -1203,6 +1234,57 @@ export default {
       slot: {
         default: "面板内容",
         title: "自定义面板标题",
+      },
+    },
+    "emoji-picker": {
+      "basic-usage": {
+        subtitle: "展示带搜索和已选值的 emoji 选择器。",
+      },
+    },
+    "audio-preview": {
+      "basic-usage": {
+        subtitle: "展示带名称、时长和默认操作的内嵌音频预览。",
+      },
+    },
+    "audio-meter": {
+      "basic-usage": {
+        subtitle: "请求麦克风并把实时音量传给 bars、line 和 ring 变体。",
+      },
+    },
+    "media-gallery": {
+      "basic-usage": {
+        subtitle:
+          "展示包含图片和视频的混合画廊，带 trigger cards 和 preview overlay。",
+      },
+    },
+    "media-tile": {
+      "basic-usage": {
+        subtitle: "展示通话 UI 中的视频 tile、fallback tile 和 loading 状态。",
+      },
+    },
+    "video-preview": {
+      "basic-usage": {
+        subtitle: "展示带 poster、metadata 和内部 preview overlay 的视频预览。",
+      },
+    },
+    "file-card": {
+      "basic-usage": {
+        subtitle: "展示 document、image-preview 和 loading 文件卡片的响应式一行。",
+      },
+    },
+    guide: {
+      "basic-usage": {
+        subtitle: "展示绑定到包装目标元素的两步 guide。",
+      },
+    },
+    stepper: {
+      "basic-usage": {
+        subtitle: "展示带自定义 indicator slot 的受控 step navigation。",
+      },
+    },
+    text: {
+      "basic-usage": {
+        subtitle: "展示 typography variants、color roles 和 truncation 的紧凑堆叠。",
       },
     },
     skeleton: {
@@ -1398,7 +1480,7 @@ export default {
         "model-value": "当前活动的页码。",
         "elements-quantity-on-page": "每页显示的元素数量。",
         disabled: "布尔值，禁用分页组件。",
-        height: "分页控件的高度。",
+        thickness: "分页控件的厚度。",
         "hide-on-single-page": "如果只有一页，则隐藏分页组件。",
         "max-visible-pages": "定义在分页控件中显示的页面数量。",
         "fast-forward-step": "定义快进时跳过的页面数量。",
@@ -1418,14 +1500,14 @@ export default {
         info: {
           title: "重要信息",
           content:
-            "'bordered' 属性仅在 'design' 属性设置为 'common' 时有效。此外，排序当前仅支持 'ascending' 和 'descending' 两个值。\n请注意，表格处于积极开发阶段，可能包含错误。",
+            "'bordered' 属性仅在 'design' 属性设置为 'plain' 时有效。此外，排序当前仅支持 'ascending' 和 'descending' 两个值。\n请注意，表格处于积极开发阶段，可能包含错误。",
         },
       },
       api: {
         data: "定义要显示在表格中的数据",
         "row-hover": "布尔值，启用或禁用表格行的悬停效果",
         bordered:
-          "布尔值，启用或禁用表格单元格的边框。仅在 'design' 属性设置为 'common' 时有效",
+          "布尔值，启用或禁用表格单元格的边框。仅在 'design' 属性设置为 'plain' 时有效",
         sort: "定义表格列的排序行为",
         design: "表格的显示样式",
         virtual: "为大量表格数据启用虚拟渲染",
@@ -1820,7 +1902,7 @@ export default {
         subtitle:
           "控制允许输入的字符类型：*numeric*、*text* 或 *alphanumeric*。",
       },
-      height: {
+      thickness: {
         subtitle: "设置每个 OTP 单元的尺寸。",
       },
       disabled: {
@@ -1831,7 +1913,7 @@ export default {
         name: "设置隐藏 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         autocomplete:
           "OTP 单元的 autocomplete 值。默认是 one-time-code，也可以从 NmorphFormItem 继承",
-        height: "定义每个 OTP 单元的尺寸",
+        thickness: "定义每个 OTP 单元的尺寸",
         disabled: "布尔值，禁用 OTP 输入组件",
         tabindex: "OTP 单元的基础 tabindex，后续单元会自动递增",
         "model-value": "当前合并后的 OTP 字符串值",
@@ -1855,8 +1937,8 @@ export default {
       },
     },
     "text-input": {
-      height: {
-        subtitle: "设置输入字段的高度。",
+      thickness: {
+        subtitle: "设置输入字段的厚度。",
       },
       disabled: {
         subtitle: "如果设置为 *true*，则禁用输入字段。",
@@ -1877,7 +1959,7 @@ export default {
         autocomplete:
           "原生 input 的 autocomplete 值。也可以从 NmorphFormItem 继承",
         tabindex: "原生 input 的 tabindex 值",
-        height: "定义输入框的高度",
+        thickness: "定义输入框的厚度",
         disabled: "布尔值，禁用输入框",
         placeholder: "当输入框为空时显示的提示文本",
         label: "与输入框关联的文本标签",
@@ -1908,8 +1990,8 @@ export default {
       },
     },
     "color-picker": {
-      height: {
-        subtitle: "设置颜色选择器的高度。",
+      thickness: {
+        subtitle: "设置颜色选择器的厚度。",
       },
       disabled: {
         subtitle: "如果设置为 *true*，则禁用颜色选择器。",
@@ -1927,7 +2009,7 @@ export default {
       api: {
         id: "设置原生 input 的 id。在 NmorphFormItem 内部使用时会继承其 id",
         name: "设置原生 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
-        height: "定义颜色选择器的高度",
+        thickness: "定义颜色选择器的厚度",
         disabled: "布尔值，禁用颜色选择器",
         "model-value": "当前的十六进制颜色值",
         "show-value": "布尔值，在色块旁显示当前颜色值",
@@ -2013,18 +2095,18 @@ export default {
         subtitle: "指定复选框的标签文本。",
       },
       design: {
-        subtitle: "定义复选框的设计风格。",
+        subtitle: "定义复选框的视觉样式。",
       },
-      height: {
-        subtitle: "设置复选框高度。",
+      thickness: {
+        subtitle: "设置复选框厚度。",
       },
       api: {
         id: "复选框的唯一标识符",
         disabled: "布尔值，禁用复选框",
         "model-value": "复选框状态（选中或未选中）",
         label: "显示在复选框旁边的标签",
-        design: "定义复选框的设计风格",
-        height: "定义复选框高度",
+        design: "定义复选框的视觉样式",
+        thickness: "定义复选框厚度",
       },
       slot: {
         default: "自定义复选框内容的插槽",
@@ -2042,11 +2124,11 @@ export default {
     },
     "checkbox-group": {
       api: {
-        height: "定义组内复选框的高度",
+        thickness: "定义组内复选框的厚度",
         disabled: "禁用组中的所有复选框",
         "model-value": "选中值的数组",
         options: "复选框选项",
-        design: "复选框组的设计风格",
+        design: "复选框组的视觉样式",
         direction: "复选框组的布局方向",
       },
       slot: {
@@ -2061,8 +2143,8 @@ export default {
       "basic-usage": {
         placeholder: "文本...",
       },
-      height: {
-        subtitle: "定义自动完成输入框的高度。",
+      thickness: {
+        subtitle: "定义自动完成输入框的厚度。",
       },
       disabled: {
         subtitle: "禁用自动完成输入框。",
@@ -2084,7 +2166,7 @@ export default {
         name: "设置内部文本输入框的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         autocomplete:
           "传递给内部文本输入框的 autocomplete 值。也可以从 NmorphFormItem 继承",
-        height: "自动完成输入框的高度",
+        thickness: "自动完成输入框的厚度",
         disabled: "禁用自动完成输入框",
         "model-value": "输入框的当前值",
         placeholder: "当输入框为空时显示的提示文本",
@@ -2145,8 +2227,8 @@ export default {
     },
     "number-input": {
       "basic-usage": {},
-      height: {
-        subtitle: "定义数字输入框的高度。",
+      thickness: {
+        subtitle: "定义数字输入框的厚度。",
       },
       disabled: {
         subtitle: "如果设置为 *true*，则禁用数字输入框。",
@@ -2159,7 +2241,7 @@ export default {
         name: "设置原生 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         autocomplete:
           "原生 number input 的 autocomplete 值。也可以从 NmorphFormItem 继承",
-        height: "数字输入框的高度",
+        thickness: "数字输入框的厚度",
         disabled: "布尔值，禁用输入框",
         "model-value": "数字输入框的当前值",
         max: "最大允许值",
@@ -2178,8 +2260,8 @@ export default {
       },
     },
     "select-button": {
-      height: {
-        subtitle: "设置组件的高度。",
+      thickness: {
+        subtitle: "设置组件的厚度。",
       },
       disabled: {
         subtitle: "禁用组件。",
@@ -2189,7 +2271,7 @@ export default {
       },
       api: {
         "model-value": "选中的值",
-        height: "组件高度",
+        thickness: "组件厚度",
         disabled: "禁用组件",
         fill: "使组件占满容器宽度",
         options: "渲染的选项列表",
@@ -2212,8 +2294,8 @@ export default {
       },
     },
     select: {
-      height: {
-        subtitle: "设置下拉列表的高度。",
+      thickness: {
+        subtitle: "设置下拉列表的厚度。",
       },
       disabled: {
         subtitle: "禁用该组件。",
@@ -2237,7 +2319,7 @@ export default {
         name: "设置原生 select 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         autocomplete:
           "原生 select 的 autocomplete 值。也可以从 NmorphFormItem 继承",
-        height: "下拉列表的高度",
+        thickness: "下拉列表的厚度",
         disabled: "禁用下拉列表",
         "no-element-placeholder": "当没有选项时显示的占位文本",
         "value-required": "需要选择一个值",
@@ -2273,7 +2355,7 @@ export default {
     "select-option": {
       api: {
         label: "定义显示在下拉列表中的选项标签",
-        height: "设置选项的高度",
+        thickness: "Sets the thickness preset of the select option",
         disabled: "布尔值，指示选项是否禁用，无法选择",
         "hover-background": "Overrides the option hover background",
         "hover-color": "Overrides the option hover text and icon color",
@@ -2323,8 +2405,8 @@ export default {
       },
     },
     "date-picker": {
-      height: {
-        subtitle: "设置日期选择字段的高度。",
+      thickness: {
+        subtitle: "设置日期选择字段的厚度。",
       },
       disabled: {
         subtitle: "如果设置为 *true*，禁用日期选择。",
@@ -2334,7 +2416,7 @@ export default {
         name: "设置原生 input 的 name。未传入时会继承 NmorphFormItem 的 name 或 id",
         autocomplete:
           "隐藏原生 date input 的 autocomplete 值。也可以从 NmorphFormItem 继承",
-        height: "日期选择字段的高度",
+        thickness: "日期选择字段的厚度",
         disabled: "布尔值，禁用日期选择",
         placeholder: "没有选择日期时显示的文本",
         "model-value": "当前选择的日期或日期范围",
@@ -2373,7 +2455,7 @@ export default {
         id: "原生 input id",
         name: "原生 input name",
         "model-value": "选中的时间，格式为 HH:mm 或 HH:mm:ss",
-        height: "设置组件高度",
+        thickness: "设置组件厚度",
         disabled: "禁用时间选择器",
         autocomplete: "原生 autocomplete 属性",
         placeholder: "未选择时间时显示的占位文本",
@@ -2405,15 +2487,15 @@ export default {
         info: {
           title: "Radio Group 使用方法",
           content:
-            "通常用于一组单选按钮中，让用户从多个选项中选择一个。选中单选按钮后，不能通过再次点击取消选中状态，只能通过选择该组中的其他单选按钮来改变状态。为确保正确显示，当 'style-type' 设置为 'button' 时，应提供标签（label）。",
+            "通常用于一组单选按钮中，让用户从多个选项中选择一个。选中单选按钮后，不能通过再次点击取消选中状态，只能通过选择该组中的其他单选按钮来改变状态。为确保正确显示，当 'design' 设置为 'button' 时，应提供标签（label）。",
         },
       },
       api: {
         disabled: "布尔值，禁用单选按钮",
         label: "显示在单选按钮旁边或内部的标签文本",
         value: "分配给单选按钮的值",
-        "style-type": "定义单选按钮的视觉样式",
-        height: "定义单选按钮高度",
+        design: "定义单选按钮的视觉样式",
+        thickness: "定义单选按钮厚度",
         checked: "将单选按钮标记为选中",
       },
       slot: {
@@ -2428,11 +2510,11 @@ export default {
     },
     "radio-group": {
       api: {
-        height: "定义组内单选按钮的高度",
+        thickness: "定义组内单选按钮的厚度",
         disabled: "禁用组中的所有单选按钮",
         "model-value": "单选按钮组的选中值",
         options: "可供选择的选项列表",
-        "style-type": "单选按钮的视觉样式",
+        design: "单选按钮的视觉样式",
         direction: "单选按钮的布局方向",
       },
       slot: {
@@ -2477,7 +2559,7 @@ export default {
         info: {
           title: "类型信息",
           content:
-            "为了正确的类型检查，您必须导入 INmorphFromDataExpose 类型。",
+            "为了正确的类型检查，您必须导入 INmorphFormDataExpose 类型。",
         },
       },
       "validate-immediately": {

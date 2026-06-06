@@ -23,6 +23,7 @@ const props = withDefaults(defineProps<INmorphMediaTileProps>(), {
   name: '',
   avatarSrc: '',
   loading: false,
+  showFallback: true,
   micMuted: false,
   videoOff: false,
   screenSharing: false,
@@ -85,7 +86,7 @@ defineExpose({ videoRef });
       :autoplay="props.autoplay"
       :playsinline="props.playsinline"
     />
-    <div v-if="!hasVideo || props.loading" class="nmorph-media-tile__fallback">
+    <div v-if="props.showFallback && (!hasVideo || props.loading)" class="nmorph-media-tile__fallback">
       <NmorphIcon v-if="props.loading" class="nmorph-media-tile__loader" size="large">
         <NmorphIconLoaderDots />
       </NmorphIcon>
@@ -167,8 +168,8 @@ defineExpose({ videoRef });
     width: 72px;
     height: 72px;
     color: var(--nmorph-focus-text-color);
-    font-weight: 700;
-    font-size: var(--font-size-extra-large);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--nmorph-typography-title-large-font-size);
     background: var(--nmorph-accent-color);
     border-radius: var(--border-radius-circular);
   }
@@ -183,7 +184,8 @@ defineExpose({ videoRef });
 
   .nmorph-media-tile__error-text {
     color: var(--nmorph-error-text-color);
-    font-size: var(--font-size-extra-small);
+    font-size: var(--nmorph-typography-body-small-font-size);
+    line-height: var(--nmorph-typography-body-small-line-height);
   }
 
   .nmorph-media-tile__status {
@@ -205,7 +207,7 @@ defineExpose({ videoRef });
     border-radius: var(--border-radius-circular);
     box-shadow: var(--nmorph-shadow-outset);
 
-    --color: currentColor;
+    --nmorph-private-icon-color: currentColor;
   }
 
   &.nmorph-media-tile--selected {

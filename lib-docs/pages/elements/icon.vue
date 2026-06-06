@@ -124,34 +124,10 @@ const clickIconHandler = async (iconName: string) => {
 
   .docs-icon__list-content {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
     grid-gap: 8px;
     margin: 20px 0;
     padding: 8px;
-  }
-
-  @include max-width-query(768) {
-    .docs-icon__list-content {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  @include max-width-query(768) {
-    .docs-icon__list-content {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  @include max-width-query(500) {
-    .docs-icon__list-content {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  @include max-width-query(360) {
-    .docs-icon__list-content {
-      grid-template-columns: repeat(2, 1fr);
-    }
   }
 
   .docs-icon__list-el {
@@ -159,14 +135,19 @@ const clickIconHandler = async (iconName: string) => {
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 88px;
     padding: 8px;
     text-align: center;
-    height: 80px;
     cursor: pointer;
   }
 
   .docs-icon__icon-name {
+    max-width: 100%;
     margin-top: 4px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
   }
 }
 </style>

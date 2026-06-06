@@ -10,7 +10,7 @@ const attributesData = [
   },
   {
     name: "size",
-    type: enumToString(NmorphIconSize),
+    type: optionsToString(NmorphIconSize),
     default: "small",
   },
   {

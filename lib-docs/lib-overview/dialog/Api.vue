@@ -23,6 +23,12 @@ const attributesData: IAttributesTableData[] = [
     default: "330px",
   },
   {
+    name: "max-width",
+    type: "Max-width",
+    default: "calc(100vw - 32px)",
+    description: "Maximum dialog width.",
+  },
+  {
     name: "max-height",
     type: "Max-height",
     default: "calc(100dvh - 32px)",

@@ -110,7 +110,7 @@ export default {
       "other-messages": "Прочие переводы",
       "css-variables": "CSS-переменные",
       "css-variables-content":
-        "Библиотека предоставляет следующие CSS-переменные, которые можно использовать в своих стилях.",
+        "The library exposes theme and foundation CSS custom properties for your own styles. Component-specific customization is handled through props.",
       "css-variables-theme-derived":
         "Переменные темы (задаются для каждой темы)",
       "css-variables-auto-generated":
@@ -169,7 +169,7 @@ export default {
       },
       typescript: {
         title: "Типизированный API",
-        text: "Типизированные props, экспортируемые enum, вспомогательные типы и примеры, которые описывают публичный API компонентов.",
+        text: "Типизированные props, экспортируемые option objects, вспомогательные типы и примеры, которые описывают публичный API компонентов.",
       },
     },
     "system-title": "Как устроена библиотека",
@@ -226,6 +226,26 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "component-thickness-api":
+          "Breaking: props с размерными пресетами теперь называются thickness вместо height в Button, form controls, selection controls, Pagination, CollapseItem, TagItem и связанных option data.",
+        "thin-input-centering":
+          "Текст в thin native input теперь использует высоту компонента как line box, поэтому вертикальное центрирование выглядит ровнее без изменения свайпов, кликов или layout.",
+        "design-api-plain":
+          "Breaking: surface design values теперь используют design=\"plain\" вместо design=\"common\" в Empty, Backtop, SkeletonItem, Table, TagList и TagItem.",
+        "selection-design-api":
+          "Breaking: NmorphButton, NmorphCheckbox, NmorphCheckboxGroup, NmorphRadio и NmorphRadioGroup теперь используют design=\"nmorph | plain\" для визуального дизайна.",
+        "form-control-design-api":
+          "Breaking: input-like form controls больше не экспортируют design prop; design остается только у Checkbox, CheckboxGroup, Radio и RadioGroup.",
+        "control-typography-contract":
+          "Общие height-классы компонентов теперь задают font size и line height для control typography, чтобы thin/basic/thick выглядели согласованно в compact controls.",
+        "typography-system":
+          "Добавлены foundation typography tokens, NmorphText и role-based text styles для согласованного размера текста во всей библиотеке.",
+        "plain-surface-contract":
+          "Plain buttons, dropdowns, selection controls и data surfaces теперь используют видимый border.",
+        "component-css-vars-private-api":
+          "Breaking: component-level CSS variables теперь считаются private internals. Кастомизация компонентов переезжает в явные props, а публичные CSS variables остаются для theme и foundation tokens.",
+        "stepper-single-item-click":
+          "NmorphStepper больше не падает на pointerup у single-item non-interactive stepper, сохраняя swipe behavior и click suppression после drag.",
         "attachment-preview-primitives":
           "Added NmorphVideoPreview, NmorphAudioPreview, and NmorphFileCard as reusable attachment UI primitives for video, audio, documents, and unknown files.",
         "file-upload-attachment-previews":
@@ -746,7 +766,7 @@ export default {
     "model-text": "Текст модели:",
     "explore-components": "Обзор компонентов",
     button: {
-      "style-type": {
+      design: {
         subtitle:
           "Используйте *default* или *transparent* для определения базового стиля.",
       },
@@ -758,9 +778,9 @@ export default {
         subtitle:
           "Используйте *boolean*, чтобы включить или отключить эффект ряби при нажатии.",
       },
-      height: {
+      thickness: {
         subtitle:
-          "Установите высоту, доступны значения *thick*, *basic*, *thin*.",
+          "Установите толщину, доступны значения *thick*, *basic*, *thin*.",
       },
       disabled: {
         subtitle: "Используйте *boolean*, чтобы отключить кнопку.",
@@ -773,7 +793,7 @@ export default {
         info: {
           title: "Информация",
           content:
-            "При использовании round или square размер изменяется с помощью переменной --height.",
+            "При использовании round или square размер следует выбранному thickness.",
         },
         subtitle: "Используйте shape, чтобы изменить радиус границы кнопки.",
       },
@@ -781,13 +801,13 @@ export default {
         type: "Нативный тип кнопки",
         text: "Текст кнопки",
         loading: "Включить/отключить загрузчик",
-        "style-type": "Изменить стиль кнопки",
+        design: "Изменить стиль кнопки",
         color: "Изменить цвет текста и иконок для transparent-кнопки",
         "accent-bg-on-hover": "Включить/отключить цвет фона при наведении",
         ripple: "Включить/отключить рябь при нажатии",
         fill: "Заполнение контейнера кнопкой",
         disabled: "Отключить кнопку",
-        height: "Изменить высоту кнопки",
+        thickness: "Изменить толщину кнопки",
         shape: "Изменить форму",
       },
       slot: {
@@ -798,7 +818,7 @@ export default {
           "Отдельный режим кнопки только с иконкой. Скрывает default, text и append контент",
       },
       variables: {
-        height: "Высота кнопки",
+        height: "Button height",
       },
       exposes: {
         buttonDOMElement: "Оригинальный DOM элемент кнопки",
@@ -1030,9 +1050,9 @@ export default {
           "Устанавливает размер текста бейджа: tiny, extra-small, base, medium, large или extra-large",
         "z-index": "Определяет порядок наложения бейджа",
         "offset-y":
-          "Вертикальное смещение бейджа. Для ribbon прокидывается в --nmorph-badge-ribbon-offset-y. Игнорируется при type tag",
+          "Vertical offset of the badge. For ribbon, controls ribbon positioning. Ignored when type is tag",
         "offset-x":
-          "Горизонтальное смещение бейджа. Для ribbon прокидывается в --nmorph-badge-ribbon-offset-x. Игнорируется при type tag",
+          "Horizontal offset of the badge. For ribbon, controls ribbon positioning. Ignored when type is tag",
       },
       slot: {
         default:
@@ -1058,7 +1078,7 @@ export default {
       },
       "card-padding": {
         subtitle:
-          "Задает отступ карточки тем же CSS-значением, которое использует переменная `--card-padding`.",
+          "Sets the card padding.",
       },
       fill: {
         subtitle:
@@ -1091,7 +1111,7 @@ export default {
     empty: {
       "basic-usage": {
         subtitle:
-          "Показывает пустые состояния с дефолтным содержимым, кастомными иконками, действиями и common/nmorph-поверхностями.",
+          "Показывает пустые состояния с дефолтным содержимым, кастомными иконками, действиями и plain/nmorph-поверхностями.",
       },
       api: {
         title: "Основной заголовок пустого состояния.",
@@ -1171,7 +1191,17 @@ export default {
         loadFailedText: "Не удалось загрузить изображение",
       },
     },
+    layout: {
+      "basic-usage": {
+        subtitle:
+          "Растягивает header, aside, main и footer по ширине карточки примера.",
+      },
+    },
     "tag-list": {
+      "basic-usage": {
+        subtitle:
+          "Показывает удаляемые теги, выбираемые plain-теги и компактный ряд с пользовательским содержимым.",
+      },
       api: {
         "model-value": "Список тэгов",
         design: "Определяет визуальный стиль тегов в списке по умолчанию",
@@ -1194,12 +1224,12 @@ export default {
             "Если вы хотите, чтобы отображение тега обрабатывалось автоматически, можно обернуть компонент в NmorphTagList.",
         },
       },
-      height: {
-        subtitle: "Определяет высоту компонента.",
+      thickness: {
+        subtitle: "Определяет толщину компонента.",
       },
       design: {
         subtitle:
-          "Если установлено в *common*, компонент использует простой фон из токенов с контрастными текстом и иконками.",
+          "Если установлено в *plain*, компонент использует простой фон из токенов с контрастными текстом и иконками.",
       },
       api: {
         value: "Определяет значение-идентификатор для компонента",
@@ -1207,7 +1237,7 @@ export default {
         removable:
           "Определяет, может ли компонент быть удален. Работает автоматически при оборачивании в NmorphTagList",
         design: "Определяет стиль компонента",
-        height: "Задает высоту компонента",
+        thickness: "Задает толщину компонента",
       },
       events: {
         close: "Возвращает значение закрытого тега",
@@ -1227,6 +1257,10 @@ export default {
       },
     },
     collapse: {
+      "basic-usage": {
+        subtitle:
+          "Показывает обычную, отключенную и кастомную панели с шевроном в заголовке.",
+      },
       api: {
         "model-value": "Имена открытых панелей",
         accordion: "Разрешает открыть только одну панель одновременно",
@@ -1241,7 +1275,7 @@ export default {
         title: "Текст заголовка панели",
         disabled: "Отключает панель",
         block: "Запрещает переключение панели, если установлено в true",
-        height: "Задает высоту заголовка",
+        thickness: "Задает толщину заголовка",
         "transition-speed":
           "Overrides the panel open and close transition speed. Numbers are treated as milliseconds",
       },
@@ -1251,6 +1285,65 @@ export default {
       slot: {
         default: "Содержимое панели",
         title: "Кастомный заголовок панели",
+      },
+    },
+    "emoji-picker": {
+      "basic-usage": {
+        subtitle: "Показывает выбор emoji с поиском и выбранным значением.",
+      },
+    },
+    "audio-preview": {
+      "basic-usage": {
+        subtitle:
+          "Показывает встроенный audio preview с названием, длительностью и default actions.",
+      },
+    },
+    "audio-meter": {
+      "basic-usage": {
+        subtitle:
+          "Запрашивает микрофон и передает live level в bars, line и ring варианты.",
+      },
+    },
+    "media-gallery": {
+      "basic-usage": {
+        subtitle:
+          "Показывает mixed image/video галерею с trigger cards и preview overlay.",
+      },
+    },
+    "media-tile": {
+      "basic-usage": {
+        subtitle:
+          "Показывает video tile, fallback tile и loading state для call UI.",
+      },
+    },
+    "video-preview": {
+      "basic-usage": {
+        subtitle:
+          "Показывает video preview с poster, metadata и internal preview overlay.",
+      },
+    },
+    "file-card": {
+      "basic-usage": {
+        subtitle:
+          "Показывает document, image-preview и loading file cards в адаптивной строке.",
+      },
+    },
+    guide: {
+      "basic-usage": {
+        subtitle:
+          "Показывает guide из двух шагов, привязанный к обернутым target-элементам.",
+      },
+    },
+    stepper: {
+      "basic-usage": {
+        subtitle:
+          "Показывает controlled step navigation с кастомным indicator slot.",
+      },
+    },
+    text: {
+      "basic-usage": {
+        subtitle:
+          "Показывает typography variants, color roles и truncation в компактном стеке.",
       },
     },
     skeleton: {
@@ -1471,7 +1564,7 @@ export default {
         "elements-quantity-on-page":
           "Количество элементов, отображаемых на каждой странице.",
         disabled: "Булево значение, отключающее компонент пагинации.",
-        height: "Высота элементов управления пагинацией.",
+        thickness: "Толщина элементов управления пагинацией.",
         "hide-on-single-page":
           "Скрывает компонент пагинации, если есть только одна страница.",
         "max-visible-pages":
@@ -1494,7 +1587,7 @@ export default {
         info: {
           title: "Важная информация",
           content:
-            "Свойство 'bordered' работает только если свойство 'design' установлено в 'common'. Кроме того, сортировка в настоящее время работает только с двумя значениями: 'ascending' и 'descending'.\nОбратите внимание, что таблица находится в стадии активной разработки и может содержать ошибки.",
+            "Свойство 'bordered' работает только если свойство 'design' установлено в 'plain'. Кроме того, сортировка в настоящее время работает только с двумя значениями: 'ascending' и 'descending'.\nОбратите внимание, что таблица находится в стадии активной разработки и может содержать ошибки.",
         },
       },
       api: {
@@ -1502,7 +1595,7 @@ export default {
         "row-hover":
           "Булево значение, которое включает или отключает эффект наведения на строки таблицы",
         bordered:
-          "Булево значение, которое включает или отключает границы вокруг ячеек таблицы. Работает только если свойство 'design' установлено в 'common'",
+          "Булево значение, которое включает или отключает границы вокруг ячеек таблицы. Работает только если свойство 'design' установлено в 'plain'",
         sort: "Определяет поведение сортировки для столбцов таблицы",
         design: "Стиль отображения таблицы",
         virtual: "Включает виртуальный рендеринг для больших наборов данных",
@@ -1956,7 +2049,7 @@ export default {
         subtitle:
           "Управляет допустимыми символами: *numeric*, *text* или *alphanumeric*.",
       },
-      height: {
+      thickness: {
         subtitle: "Устанавливает размер каждой OTP-ячейки.",
       },
       disabled: {
@@ -1967,7 +2060,7 @@ export default {
         name: "Устанавливает name скрытого input. Если prop не передан, берется name или id из NmorphFormItem",
         autocomplete:
           "Autocomplete-значение для OTP-ячеек. По умолчанию используется one-time-code и также может наследоваться из NmorphFormItem",
-        height: "Определяет размер каждой OTP-ячейки",
+        thickness: "Определяет размер каждой OTP-ячейки",
         disabled: "Булево значение, отключающее OTP input",
         tabindex:
           "Базовый tabindex для OTP-ячеек. Следующие ячейки получают увеличенное значение автоматически",
@@ -1995,8 +2088,8 @@ export default {
       },
     },
     "text-input": {
-      height: {
-        subtitle: "Устанавливает высоту поля ввода.",
+      thickness: {
+        subtitle: "Устанавливает толщину поля ввода.",
       },
       disabled: {
         subtitle: "Отключает поле ввода, если установлено в *true*.",
@@ -2019,7 +2112,7 @@ export default {
         autocomplete:
           "Autocomplete-значение для нативного input. Также может наследоваться из NmorphFormItem",
         tabindex: "Нативное tabindex-значение для input",
-        height: "Определяет высоту текстового поля",
+        thickness: "Определяет толщину текстового поля",
         disabled: "Булево значение, отключающее текстовое поле",
         placeholder:
           "Текст, отображаемый как подсказка, когда поле ввода пусто",
@@ -2055,8 +2148,8 @@ export default {
       },
     },
     "color-picker": {
-      height: {
-        subtitle: "Устанавливает высоту color picker.",
+      thickness: {
+        subtitle: "Устанавливает толщину color picker.",
       },
       disabled: {
         subtitle: "Отключает color picker, если установлено в *true*.",
@@ -2075,7 +2168,7 @@ export default {
       api: {
         id: "Устанавливает id нативного input. Внутри NmorphFormItem наследует его id",
         name: "Устанавливает name нативного input. Если prop не передан, берется name или id из NmorphFormItem",
-        height: "Определяет высоту color picker",
+        thickness: "Определяет толщину color picker",
         disabled: "Булево значение, отключающее color picker",
         "model-value": "Текущее значение цвета в hex-формате",
         "show-value":
@@ -2166,18 +2259,18 @@ export default {
         subtitle: "Указывает текст метки для чекбокса.",
       },
       design: {
-        subtitle: "Определяет стиль дизайна чекбокса",
+        subtitle: "Определяет визуальный стиль чекбокса",
       },
-      height: {
-        subtitle: "Устанавливает высоту чекбокса.",
+      thickness: {
+        subtitle: "Устанавливает толщину чекбокса.",
       },
       api: {
         id: "Уникальный идентификатор для чекбокса",
         disabled: "Булево значение, отключающее чекбокс",
         "model-value": "Состояние чекбокса (отмечен или нет)",
         label: "Лэйбл, отображаемый рядом с чекбоксом",
-        design: "Определяет стиль дизайна чекбокса",
-        height: "Определяет высоту чекбокса",
+        design: "Определяет визуальный стиль чекбокса",
+        thickness: "Определяет толщину чекбокса",
       },
       slot: {
         default: "Слот для кастомизации содержимого чекбокса",
@@ -2196,11 +2289,11 @@ export default {
     },
     "checkbox-group": {
       api: {
-        height: "Определяет высоту чекбоксов в группе",
+        thickness: "Определяет толщину чекбоксов в группе",
         disabled: "Отключает все чекбоксы в группе",
         "model-value": "Массив выбранных значений",
         options: "Опции для чекбоксов",
-        design: "Стиль дизайна группы чекбоксов",
+        design: "Визуальный стиль группы чекбоксов",
         direction: "Направление расположения группы чекбоксов",
       },
       slot: {
@@ -2216,8 +2309,8 @@ export default {
       "basic-usage": {
         placeholder: "Teкст...",
       },
-      height: {
-        subtitle: "Определяет высоту поля ввода автодополнения.",
+      thickness: {
+        subtitle: "Определяет толщину поля ввода автодополнения.",
       },
       disabled: {
         subtitle: "Отключает поле автодополнения.",
@@ -2240,7 +2333,7 @@ export default {
         name: "Устанавливает name вложенного текстового input. Если prop не передан, берется name или id из NmorphFormItem",
         autocomplete:
           "Autocomplete-значение, передаваемое во вложенный text input. Также может наследоваться из NmorphFormItem",
-        height: "Высота поля ввода автодополнения",
+        thickness: "Толщина поля ввода автодополнения",
         disabled: "Отключает поле ввода автодополнения",
         "model-value": "Текущее значение поля ввода",
         placeholder: "Подсказка, отображаемая, когда поле ввода пустое",
@@ -2311,8 +2404,8 @@ export default {
     },
     "number-input": {
       "basic-usage": {},
-      height: {
-        subtitle: "Определяет высоту числового поля ввода.",
+      thickness: {
+        subtitle: "Определяет толщину числового поля ввода.",
       },
       disabled: {
         subtitle: "Отключает числовое поле ввода, если установлено в *true*.",
@@ -2326,7 +2419,7 @@ export default {
         name: "Устанавливает name нативного input. Если prop не передан, берется name или id из NmorphFormItem",
         autocomplete:
           "Autocomplete-значение для нативного number input. Также может наследоваться из NmorphFormItem",
-        height: "Высота числового поля ввода",
+        thickness: "Толщина числового поля ввода",
         disabled: "Булево значение, отключающее поле ввода",
         "model-value": "Текущее значение числового поля ввода",
         max: "Максимально допустимое значение",
@@ -2346,8 +2439,8 @@ export default {
       },
     },
     "select-button": {
-      height: {
-        subtitle: "Устанавливает высоту компонента.",
+      thickness: {
+        subtitle: "Устанавливает толщину компонента.",
       },
       disabled: {
         subtitle: "Отключает компонент.",
@@ -2357,7 +2450,7 @@ export default {
       },
       api: {
         "model-value": "Выбранное значение",
-        height: "Высота компонента",
+        thickness: "Толщина компонента",
         disabled: "Отключает компонент",
         fill: "Растягивает компонент на всю ширину контейнера",
         options: "Список опций для отображения",
@@ -2380,8 +2473,8 @@ export default {
       },
     },
     select: {
-      height: {
-        subtitle: "Устанавливает высоту выпадающего списка.",
+      thickness: {
+        subtitle: "Устанавливает толщину выпадающего списка.",
       },
       disabled: {
         subtitle: "Отключает компонент.",
@@ -2405,7 +2498,7 @@ export default {
         name: "Устанавливает name нативного select. Если prop не передан, берется name или id из NmorphFormItem",
         autocomplete:
           "Autocomplete-значение для нативного select. Также может наследоваться из NmorphFormItem",
-        height: "Высота выпадающего списка",
+        thickness: "Толщина выпадающего списка",
         disabled: "Отключает выпадающий список",
         "no-element-placeholder":
           "Текст-заполнитель, отображаемый, когда опции нет",
@@ -2448,7 +2541,7 @@ export default {
       api: {
         label:
           "Определяет метку для опции, которая отображается в выпадающем списке",
-        height: "Задает высоту опции выбора",
+        thickness: "Sets the thickness preset of the select option",
         disabled:
           "Булево значение, которое указывает, отключена ли опция и не может быть выбрана",
         "hover-background": "Overrides the option hover background",
@@ -2502,8 +2595,8 @@ export default {
       },
     },
     "date-picker": {
-      height: {
-        subtitle: "Устанавливает высоту поля выбора даты.",
+      thickness: {
+        subtitle: "Устанавливает толщину поля выбора даты.",
       },
       disabled: {
         subtitle: "Отключает выбор даты, если установлено в *true*.",
@@ -2513,7 +2606,7 @@ export default {
         name: "Устанавливает name нативного input. Если prop не передан, берется name или id из NmorphFormItem",
         autocomplete:
           "Autocomplete-значение для скрытого нативного date input. Также может наследоваться из NmorphFormItem",
-        height: "Высота поля выбора даты",
+        thickness: "Толщина поля выбора даты",
         disabled: "Булево значение, отключающее выбор даты",
         placeholder: "Текст, отображаемый, когда дата не выбрана",
         "model-value": "Текущая выбранная дата или диапазон дат",
@@ -2554,7 +2647,7 @@ export default {
         id: "Нативный id поля ввода",
         name: "Нативное name поля ввода",
         "model-value": "Выбранное время в формате HH:mm или HH:mm:ss",
-        height: "Задает высоту компонента",
+        thickness: "Задает толщину компонента",
         disabled: "Отключает выбор времени",
         autocomplete: "Нативный атрибут autocomplete",
         placeholder: "Placeholder, когда время не выбрано",
@@ -2587,15 +2680,15 @@ export default {
         info: {
           title: "Использование Radio Group",
           content:
-            "Обычно используется в группе радиокнопок, чтобы позволить пользователю выбрать один вариант из набора. После выбора радиокнопки она не может быть отменена повторным нажатием—только путем выбора другой радиокнопки в группе для изменения состояния. Для правильного отображения, при использовании 'style-type' как 'button', следует предоставить лэйбл (label).",
+            "Обычно используется в группе радиокнопок, чтобы позволить пользователю выбрать один вариант из набора. После выбора радиокнопки она не может быть отменена повторным нажатием—только путем выбора другой радиокнопки в группе для изменения состояния. Для правильного отображения, при использовании 'design' как 'button', следует предоставить лэйбл (label).",
         },
       },
       api: {
         disabled: "Булево значение, отключающее радиокнопку",
         label: "Текст метки, отображаемый рядом или внутри радиокнопки",
         value: "Значение, присвоенное радиокнопке",
-        "style-type": "Определяет визуальный стиль радиокнопки",
-        height: "Определяет высоту радиокнопки",
+        design: "Определяет визуальный стиль радиокнопки",
+        thickness: "Определяет толщину радиокнопки",
         checked: "Отметить радиокнопку как выбранную",
       },
       slot: {
@@ -2610,11 +2703,11 @@ export default {
     },
     "radio-group": {
       api: {
-        height: "Определяет высоту радиокнопок в группе",
+        thickness: "Определяет толщину радиокнопок в группе",
         disabled: "Отключает все радиокнопки в группе",
         "model-value": "Выбранное значение группы радиокнопок",
         options: "Список опций для выбора",
-        "style-type": "Визуальный стиль радиокнопок",
+        design: "Визуальный стиль радиокнопок",
         direction: "Направление расположения радиокнопок",
       },
       slot: {
@@ -2660,7 +2753,7 @@ export default {
         info: {
           title: "Информация о типизации",
           content:
-            "Для обеспечения правильной типизации необходимо импортировать тип INmorphFromDataExpose.",
+            "Для обеспечения правильной типизации необходимо импортировать тип INmorphFormDataExpose.",
         },
       },
       "validate-immediately": {
@@ -2712,7 +2805,7 @@ export default {
             <strong>Свойства правила:</strong> <code>arrayCompareType</code> (использует <code>NmorphArrayValidationOperator</code>), <code>compareValue</code>, <code>error</code>
           </p>
 
-          <h2>2. Определение перечислений (Enum)</h2>
+          <h2>2. Определение перечислений (Option)</h2>
           <p>
             Следующие перечисления используются для определения различных типов операторов валидации:
           </p>

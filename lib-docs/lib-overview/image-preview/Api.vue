@@ -94,6 +94,18 @@ const attributesData: IAttributesTableData[] = [
     default: "undefined",
   },
   {
+    name: "preview-width",
+    type: "Width",
+    default: "undefined",
+    description: "Preview portal content width.",
+  },
+  {
+    name: "preview-height",
+    type: "Height",
+    default: "undefined",
+    description: "Preview portal content height.",
+  },
+  {
     name: "radius",
     type: "Border-radius",
     default: "undefined",
@@ -111,11 +123,22 @@ const slotData: ISlotsTableData[] = [
 ];
 
 const variables: IVariablesTableData[] = [
-  { name: "width" },
-  { name: "height" },
-  { name: "nmorph-image-preview-radius" },
-  { name: "nmorph-image-preview-btn-margin" },
-  { name: "nmorph-image-preview-trigger-gap" },
+  {
+    name: "nmorph-private-image-preview-trigger-width",
+    description: "Resolved trigger width.",
+  },
+  {
+    name: "nmorph-private-image-preview-trigger-height",
+    description: "Resolved trigger height.",
+  },
+  {
+    name: "nmorph-private-image-preview-radius",
+    description: "Resolved trigger border radius.",
+  },
+  {
+    name: "nmorph-private-image-preview-trigger-gap",
+    description: "Resolved gallery trigger gap.",
+  },
 ];
 
 const events = [

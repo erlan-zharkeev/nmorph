@@ -14,12 +14,12 @@ import {
       description="Create a project to start filling this workspace."
     >
       <template #action>
-        <NmorphButton text="Create project" height="thin" />
+        <NmorphButton text="Create project" thickness="thin" />
       </template>
     </NmorphEmpty>
 
     <NmorphEmpty
-      design="common"
+      design="plain"
       title="No search results"
       description="Try a different query or clear active filters."
       :icon-size="40"

@@ -17,14 +17,14 @@ const value = ref(["2"]);
         v-model="value"
         :options="options"
         direction="row"
-        height="extra-thin"
+        thickness="thin"
       />
       <NmorphCheckboxGroup
         v-model="value"
         :options="options"
         direction="column"
-        design="checkbox"
-        height="thin"
+        design="plain"
+        thickness="extra-thin"
       />
     </ClientOnly>
   </div>

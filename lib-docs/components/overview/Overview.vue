@@ -8,6 +8,7 @@ import {
   NmorphCard,
   NmorphButton,
   NmorphLink,
+  NmorphText,
   NmorphAvatar,
   NmorphBadge,
   NmorphImage,
@@ -90,6 +91,16 @@ const localePath = useLocalePath();
             <template #header>Link</template>
             <div class="overview-component-content">
               <NmorphLink text="Link" class="nmorph-title-3" />
+            </div>
+          </NmorphCard>
+        </NuxtLink>
+      </div>
+      <div class="overview-component-wrapper">
+        <NuxtLink :to="localePath('/elements/text')">
+          <NmorphCard>
+            <template #header>Text</template>
+            <div class="overview-component-content">
+              <NmorphText variant="title-small" color="accent">Text</NmorphText>
             </div>
           </NmorphCard>
         </NuxtLink>
@@ -177,7 +188,7 @@ const localePath = useLocalePath();
             <template #header>Tag Item</template>
             <div class="overview-component-content">
               <NmorphTagItem value="1" text="Lorem" removable />
-              <NmorphTagItem value="2" text="Ipsum" design="common" />
+              <NmorphTagItem value="2" text="Ipsum" design="plain" />
             </div>
           </NmorphCard>
         </NuxtLink>
@@ -288,7 +299,7 @@ const localePath = useLocalePath();
           <NmorphCard>
             <template #header>Checkbox</template>
             <div class="overview-component-content">
-              <NmorphCheckbox :model-value="true" design="button" label="Checkbox" />
+              <NmorphCheckbox :model-value="true" design="nmorph" label="Checkbox" />
             </div>
           </NmorphCard>
         </NuxtLink>

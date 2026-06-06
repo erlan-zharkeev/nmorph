@@ -41,10 +41,10 @@ const modifiers = computed(() =>
 
 const styles = computed<CSSProperties>(() => ({
   ...createCssSizeVariables({
-    '--nmorph-virtual-list-height': props.height,
-    '--nmorph-virtual-list-max-height': props.maxHeight,
+    '--nmorph-private-virtual-list-height': props.height,
+    '--nmorph-private-virtual-list-max-height': props.maxHeight,
   }),
-  '--nmorph-virtual-list-item-height': `${props.itemHeight}px`,
+  '--nmorph-private-virtual-list-item-height': `${props.itemHeight}px`,
 }));
 
 const contentStyle = computed<CSSProperties>(() => ({
@@ -110,8 +110,8 @@ defineExpose({
   position: relative;
   box-sizing: border-box;
   min-width: 0;
-  height: var(--nmorph-virtual-list-height);
-  max-height: var(--nmorph-virtual-list-max-height);
+  height: var(--nmorph-private-virtual-list-height);
+  max-height: var(--nmorph-private-virtual-list-max-height);
   overflow: auto;
   color: var(--nmorph-text-color);
   background: var(--nmorph-main-color);
@@ -142,7 +142,7 @@ defineExpose({
 
   .nmorph-virtual-list__item {
     box-sizing: border-box;
-    min-height: var(--nmorph-virtual-list-item-height);
+    min-height: var(--nmorph-private-virtual-list-item-height);
   }
 
   .nmorph-virtual-list__empty {

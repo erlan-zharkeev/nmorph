@@ -51,11 +51,10 @@ const path = computed(() => {
 
 const styles = computed<CSSProperties>(() => ({
   ...createCssSizeVariables({
-    '--nmorph-qr-code-size': props.size,
+    '--nmorph-private-qr-code-size': props.size,
   }),
   ...createCssVariables({
-    '--nmorph-qr-code-color': props.color,
-    '--nmorph-qr-code-background': props.background,
+    '--nmorph-private-qr-code-background': props.background,
   }),
 }));
 
@@ -94,11 +93,11 @@ const modifiers = computed(() =>
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: var(--nmorph-qr-code-size);
-  height: var(--nmorph-qr-code-size);
+  width: var(--nmorph-private-qr-code-size);
+  height: var(--nmorph-private-qr-code-size);
   padding: var(--indentation-02);
   color: var(--nmorph-text-color);
-  background: var(--nmorph-qr-code-background);
+  background: var(--nmorph-private-qr-code-background);
   border-radius: var(--default-border-radius);
   box-shadow: var(--nmorph-shadow-outset);
 
@@ -114,8 +113,8 @@ const modifiers = computed(() =>
     padding: var(--indentation-02);
     overflow: hidden;
     color: var(--nmorph-error-text-color);
-    font-size: var(--font-size-extra-small);
-    line-height: var(--line-height-regular);
+    font-size: var(--nmorph-typography-body-small-font-size);
+    line-height: var(--nmorph-typography-body-small-line-height);
     text-align: center;
     text-overflow: ellipsis;
   }

@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<INmorphFormItemProps>(), {
   name: '',
   autocomplete: '',
   label: '',
-  height: 'basic',
+  thickness: 'basic',
   showValidationIcon: true,
   staticErrorBoxSpace: false,
 });
@@ -68,7 +68,11 @@ const modifiers = computed(() =>
         :show="showStatusIcon"
       />
     </div>
-    <NmorphErrorBox :errors="validationData?.errors" :height="props.height" :static-height="staticErrorBoxSpace" />
+    <NmorphErrorBox
+      :errors="validationData?.errors"
+      :thickness="props.thickness"
+      :static-height="staticErrorBoxSpace"
+    />
   </div>
 </template>
 
@@ -79,9 +83,9 @@ const modifiers = computed(() =>
   margin: var(--indentation-04) var(--indentation-00);
 
   label {
-    font-weight: 600;
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-loose);
+    font-weight: var(--nmorph-typography-label-font-weight);
+    font-size: var(--nmorph-typography-label-font-size);
+    line-height: var(--nmorph-typography-label-line-height);
   }
 
   .nmorph-form-item__content {

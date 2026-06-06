@@ -16,7 +16,6 @@ const extensionByResolution: Partial<Record<NmorphResolutionType, string>> = {
   mpeg: 'mp3',
   'audio-ogg': 'ogg',
   'video-ogg': 'ogg',
-  'wideo-ogg': 'ogg',
 };
 
 export const getPlainFileType = (mimeType: string) => mimeType.split('/')[1]?.toLowerCase() || '';

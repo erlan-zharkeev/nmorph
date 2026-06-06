@@ -5,7 +5,7 @@ import { NmorphRadio } from "@nmorph/nmorph-ui-kit";
 <template>
   <div class="radio-value-overview">
     <NmorphRadio checked value="1" label="One" />
-    <NmorphRadio value="2" checked style-type="radio-style" label="Two" />
+    <NmorphRadio value="2" checked design="plain" label="Two" />
   </div>
 </template>
 

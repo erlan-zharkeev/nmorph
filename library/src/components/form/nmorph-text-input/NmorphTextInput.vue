@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { NmorphComponentHeight } from '@/types';
-import { useModifiers } from '@/utils';
+import { NmorphComponentThickness } from '@/types';
+import { createCssSizeVariables, createCssVariables, useModifiers } from '@/utils';
 import { computed, ref, useSlots } from 'vue';
 import { NmorphIcon, NmorphButton, NmorphIconError, NmorphIconEye, NmorphIconEyeBlocked } from '@/components';
 import { useFocusableInput } from '@/hooks/use-focusable-input';
@@ -14,9 +14,12 @@ const props = withDefaults(defineProps<INmorphTextInputProps>(), {
   typePassword: false,
   disabled: false,
   modelValue: '',
-  height: 'basic',
+  thickness: 'basic',
   clearable: false,
   indentation: '',
+  prependIconIndent: undefined,
+  prependIconSize: undefined,
+  prependIconColor: undefined,
   inputAttrs: () => ({}),
 });
 
@@ -30,7 +33,7 @@ const { modelValue, updateModelValue } = useFormItemModel<string>(
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], focused.value && 'focused'],
+    nmorph: [NmorphComponentThickness[props.thickness], focused.value && 'focused'],
     'nmorph-text-input': [props.typePassword && 'password', (props.typePassword || props.clearable) && 'with-action'],
   })
 );
@@ -75,7 +78,16 @@ const actionIcon = computed(() => {
 });
 
 const indentation = computed(() => props.indentation || (slots['prepend-icon'] ? '28px' : '8px'));
-const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.value }));
+const styles = computed(() => ({
+  '--nmorph-private-text-input-indentation': indentation.value,
+  ...createCssSizeVariables({
+    '--nmorph-private-text-input-prepend-icon-indent': props.prependIconIndent,
+    '--nmorph-private-text-input-prepend-icon-size': props.prependIconSize,
+  }),
+  ...createCssVariables({
+    '--nmorph-private-text-input-prepend-icon-color': props.prependIconColor,
+  }),
+}));
 </script>
 
 <template>
@@ -106,9 +118,8 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
         v-if="props.typePassword || props.clearable"
         :disabled="props.disabled"
         class="nmorph-text-input__password-btn"
-        style-type="transparent"
-        width="32px"
-        :height="props.height"
+        design="plain"
+        :thickness="props.thickness"
         @mousedown.prevent
         @click="actionButtonClickHandler"
       >
@@ -122,9 +133,9 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
 
 <style lang="scss">
 .nmorph-text-input {
-  --prepend-icon-indent: 8px;
-  --prepend-icon-size: 14px;
-  --nmorph-text-input-prepend-icon-color: var(--nmorph-placeholder-text-color);
+  --nmorph-private-text-input-prepend-icon-indent: 8px;
+  --nmorph-private-text-input-prepend-icon-size: 14px;
+  --nmorph-private-text-input-prepend-icon-color: var(--nmorph-placeholder-text-color);
 
   display: flex;
   flex: 1 1 auto;
@@ -148,16 +159,16 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
   display: flex;
   justify-content: center;
   align-items: center;
-  width: var(--prepend-icon-size);
-  min-width: var(--prepend-icon-size);
-  height: var(--prepend-icon-size);
-  min-height: var(--prepend-icon-size);
-  margin-left: var(--prepend-icon-indent);
-  color: var(--nmorph-text-input-prepend-icon-color);
+  width: var(--nmorph-private-text-input-prepend-icon-size);
+  min-width: var(--nmorph-private-text-input-prepend-icon-size);
+  height: var(--nmorph-private-text-input-prepend-icon-size);
+  min-height: var(--nmorph-private-text-input-prepend-icon-size);
+  margin-left: var(--nmorph-private-text-input-prepend-icon-indent);
+  color: var(--nmorph-private-text-input-prepend-icon-color);
   pointer-events: none;
 
   .nmorph-icon {
-    --color: var(--nmorph-text-input-prepend-icon-color);
+    --nmorph-private-icon-color: var(--nmorph-private-text-input-prepend-icon-color);
   }
 }
 
@@ -171,18 +182,21 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
 }
 
 .nmorph-text-input__prepend-icon svg {
-  fill: var(--nmorph-text-input-prepend-icon-color);
+  fill: var(--nmorph-private-text-input-prepend-icon-color);
   stroke-width: 0;
 }
 
 .nmorph-text-input__prepend-icon path {
-  stroke: var(--nmorph-text-input-prepend-icon-color);
+  stroke: var(--nmorph-private-text-input-prepend-icon-color);
 }
 
 .nmorph-text-input input {
   width: 100%;
-  height: var(--height);
-  text-indent: var(--nmorph-text-input-indentation);
+  height: var(--nmorph-private-control-height);
+  padding-top: var(--nmorph-private-control-text-offset-y);
+  padding-bottom: 0;
+  line-height: calc(var(--nmorph-private-control-height) - var(--nmorph-private-control-text-offset-y));
+  text-indent: var(--nmorph-private-text-input-indentation);
   background: var(--nmorph-main-color);
   border: none;
   border-radius: var(--default-border-radius);
@@ -190,7 +204,7 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
 }
 
 .nmorph-text-input--with-action input {
-  padding-right: calc(var(--height) + var(--indentation-03));
+  padding-right: calc(var(--nmorph-private-control-height) + var(--indentation-03));
 }
 
 .nmorph-text-input input:focus {
@@ -200,7 +214,7 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
 }
 
 .nmorph-text-input.nmorph--focused {
-  --nmorph-text-input-prepend-icon-color: var(--nmorph-focus-text-color);
+  --nmorph-private-text-input-prepend-icon-color: var(--nmorph-focus-text-color);
 }
 
 .nmorph-text-input input:-webkit-autofill,
@@ -233,26 +247,36 @@ const styles = computed(() => ({ '--nmorph-text-input-indentation': indentation.
   height: 100%;
 }
 
-.nmorph-text-input__password-btn .nmorph-button__content {
+.nmorph-text-input__password-btn.nmorph-button.nmorph-button--plain .nmorph-button__content {
   padding: var(--indentation-03);
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
-.nmorph-text-input.nmorph-button.nmorph--thin-component .nmorph-text-input__password-btn {
+.nmorph-text-input__password-btn.nmorph-button.nmorph-button--plain
+  .nmorph-button__content:not(:disabled, [loading='true']):hover {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.nmorph-text-input.nmorph--thin-component .nmorph-text-input__password-btn {
   margin-top: var(--indentation-00);
 }
 
-.nmorph-text-input.nmorph-button.nmorph--thin-component .nmorph-text-input__password-btn .nmorph-button {
-  --height: var(--thin-component);
+.nmorph-text-input.nmorph--thin-component .nmorph-text-input__password-btn .nmorph-button {
+  --nmorph-private-control-height: var(--thin-component);
 }
 
-.nmorph-text-input.nmorph-button.nmorph--focused .nmorph-text-input__password-btn .nmorph-icon {
-  --color: var(--nmorph-white-color);
+.nmorph-text-input.nmorph--focused .nmorph-text-input__password-btn .nmorph-icon {
+  --nmorph-private-icon-color: var(--nmorph-white-color);
 }
 
-.nmorph-text-input.nmorph-button.nmorph--focused
+.nmorph-text-input.nmorph--focused
   .nmorph-text-input__password-btn
   .nmorph-button:not(:disabled, [loading='true']):hover
   .nmorph-icon {
-  --color: var(--nmorph-white-color);
+  --nmorph-private-icon-color: var(--nmorph-white-color);
 }
 </style>

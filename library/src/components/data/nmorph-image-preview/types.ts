@@ -22,6 +22,8 @@ export interface INmorphImagePreviewProps {
   showActionBar?: boolean;
   width?: number | string;
   height?: number | string;
+  previewWidth?: number | string;
+  previewHeight?: number | string;
   radius?: number | string;
   fit?: NmorphImagePreviewFit;
   navigationButtonMargin?: number | string;

@@ -5,6 +5,10 @@ import type {
   IExposesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
+import {
+  NmorphComponentThickness,
+  NmorphElementDesign,
+} from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -50,10 +54,16 @@ const attributesData: IAttributesTableData[] = [
     description: "Automatically grows the field to fit its content.",
   },
   {
-    name: "height",
-    type: "'thick' | 'basic' | 'thin'",
+    name: "thickness",
+    type: optionsToString(NmorphComponentThickness),
     default: "basic",
-    description: "Nmorph input height preset.",
+    description: "Nmorph input thickness preset.",
+  },
+  {
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
+    description: "Visual shell design.",
   },
   {
     name: "disabled",

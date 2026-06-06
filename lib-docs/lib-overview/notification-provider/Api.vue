@@ -10,7 +10,7 @@ import { NmorphNotificationPlacement } from "@nmorph/nmorph-ui-kit";
 const attributesData: IAttributesTableData[] = [
   {
     name: "notifications",
-    type: `Array<INmorphNotification & { width?: string; duration?: number; showDurationValue?: boolean; placement?: ${enumToString(NmorphNotificationPlacement)}; }>`,
+    type: `Array<INmorphNotification & { width?: string; duration?: number; showDurationValue?: boolean; placement?: ${optionsToString(NmorphNotificationPlacement)}; }>`,
     default: "-",
     required: true,
     description:
@@ -18,7 +18,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "placement",
-    type: enumToString(NmorphNotificationPlacement),
+    type: optionsToString(NmorphNotificationPlacement),
     default: "top-right",
   },
   {

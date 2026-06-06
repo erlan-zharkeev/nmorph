@@ -7,6 +7,7 @@ import type { INmorphCarouselEmit, INmorphCarouselProps } from './types';
 const currentSlide = ref(0);
 
 const props = withDefaults(defineProps<INmorphCarouselProps>(), {
+  design: 'nmorph',
   loop: true,
 });
 
@@ -14,7 +15,8 @@ const emit = defineEmits<INmorphCarouselEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-carousel': [],
+    nmorph: [props.design === 'nmorph' ? 'shadow-outset' : ''],
+    'nmorph-carousel': [props.design],
   })
 );
 
@@ -96,20 +98,17 @@ watch(currentSlide, () => {
     <slot />
   </div>
 </template>
-<!--
-<style lang="scss">
-@use '@/styles/mixins' as *;
 
+<style lang="scss">
 .nmorph-carousel {
-  --height: 500px;
+  --nmorph-private-carousel-height: 500px;
+  --nmorph-private-carousel-frame-border: 10px;
 
   position: relative;
-  height: var(--height);
+  box-sizing: border-box;
+  height: var(--nmorph-private-carousel-height);
   overflow: hidden;
-  border: 10px solid var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
-
-  ${nmorphOutset()}
 
   .nmorph-carousel__wrapper {
     display: flex;
@@ -148,7 +147,7 @@ watch(currentSlide, () => {
     position: absolute;
     top: 50%;
     padding: var(--indentation-03);
-    background: var(--info-color-01);
+    background: var(--nmorph-info-color);
     border-radius: var(--default-border-radius);
     transform: translateY(-50%);
     cursor: pointer;
@@ -158,7 +157,7 @@ watch(currentSlide, () => {
     }
 
     .nmorph-icon {
-      --color: var(--nmorph-white-color);
+      --nmorph-private-icon-color: var(--nmorph-white-color);
     }
   }
 
@@ -178,4 +177,32 @@ watch(currentSlide, () => {
     height: 100%;
   }
 }
-</style> -->
+
+.nmorph-carousel--nmorph {
+  background: var(--nmorph-main-color);
+  border: var(--nmorph-private-carousel-frame-border) solid var(--nmorph-main-color);
+}
+
+.nmorph-carousel--plain {
+  background: var(--nmorph-main-color);
+  border: var(--nmorph-plain-border);
+  box-shadow: none;
+
+  .nmorph-carousel__action-btn {
+    color: var(--nmorph-text-color);
+    background: var(--nmorph-main-color);
+    border: var(--nmorph-plain-border);
+    box-shadow: none;
+
+    .nmorph-icon {
+      --nmorph-private-icon-color: currentColor;
+    }
+
+    &:hover {
+      color: var(--nmorph-accent-color);
+      background: var(--nmorph-main-color);
+      border-color: var(--nmorph-accent-color);
+    }
+  }
+}
+</style>

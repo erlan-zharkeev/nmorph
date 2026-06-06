@@ -11,19 +11,21 @@ export type NmorphLinkReferrerPolicy =
   | 'strict-origin-when-cross-origin'
   | 'unsafe-url';
 
-export enum NmorphLinkTarget {
-  self = '_self',
-  blank = '_blank',
-  parent = '_parent',
-  top = '_top',
-}
+export const NmorphLinkTarget = {
+  self: '_self',
+  blank: '_blank',
+  parent: '_parent',
+  top: '_top',
+} as const;
+
+export type NmorphLinkTarget = keyof typeof NmorphLinkTarget;
 
 export interface INmorphLinkProps {
-  type?: keyof typeof NmorphColor;
+  type?: NmorphColor;
   underline?: boolean;
   href?: string;
   text?: string;
-  target?: keyof typeof NmorphLinkTarget;
+  target?: NmorphLinkTarget;
   rel?: string;
   referrerpolicy?: NmorphLinkReferrerPolicy;
   referrerPolicy?: NmorphLinkReferrerPolicy;

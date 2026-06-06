@@ -1,7 +1,9 @@
-import type { INmorphRadioOption, NmorphRadioStyleType } from '@/types';
+import type { NmorphSelectionControlDesignProps } from '@/types';
 
-export interface INmorphRadioProps extends Omit<INmorphRadioOption, 'value'> {
+export type INmorphRadioProps = {
+  disabled?: boolean;
+  label?: string;
   value?: string;
-  styleType?: keyof typeof NmorphRadioStyleType;
+  tabindex?: number;
   checked?: boolean;
-}
+} & NmorphSelectionControlDesignProps;

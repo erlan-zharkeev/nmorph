@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { NmorphComponentThickness, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { computed, ref, useSlots } from 'vue';
 import { NmorphIcon, NmorphIconSize, NmorphIconLoader } from '@/components';
@@ -12,8 +12,8 @@ const props = withDefaults(defineProps<INmorphButtonProps>(), {
   color: undefined,
   disabled: false,
   loading: false,
-  styleType: 'default',
-  height: 'basic',
+  design: 'nmorph',
+  thickness: 'basic',
   accentBgOnHover: false,
   ripple: true,
   shape: 'default',
@@ -32,9 +32,9 @@ const active = computed(() => props.active || Boolean(props.modelValue));
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], props.fill && 'fill'],
+    nmorph: [NmorphComponentThickness[props.thickness], props.fill && 'fill'],
     'nmorph-button': [
-      props.styleType,
+      props.design,
       props.shape,
       props.disabled && 'disabled',
       props.accentBgOnHover && 'accent-bg-on-hover',
@@ -55,13 +55,13 @@ const iconSizeMap = {
   thick: 'large',
 };
 
-const loadingButtonSize = computed(() => iconSizeMap[props.height] as NmorphIconSize);
+const loadingButtonSize = computed(() => iconSizeMap[props.thickness] as NmorphIconSize);
 const buttonColorStyles = computed(() => {
   if (!props.color) return {};
   return {
-    '--nmorph-button-color': props.color,
-    '--transparent-button-color': props.color,
-    '--nmorph-button-hover-color': `color-mix(in srgb, ${props.color} 75%, var(--nmorph-white-color))`,
+    '--nmorph-private-button-color': props.color,
+    '--nmorph-private-button-plain-color': props.color,
+    '--nmorph-private-button-hover-color': `color-mix(in srgb, ${props.color} 75%, var(--nmorph-white-color))`,
   };
 });
 
@@ -108,7 +108,7 @@ defineExpose({ buttonDOMElement });
   display: inline-block;
   width: auto;
   height: auto;
-  min-height: var(--height);
+  min-height: var(--nmorph-private-control-height);
 
   &.nmorph--basic-component,
   &.nmorph--thin-component,
@@ -128,10 +128,10 @@ defineExpose({ buttonDOMElement });
     box-sizing: border-box;
     width: 100%;
     height: auto;
-    min-height: var(--height);
+    min-height: var(--nmorph-private-control-height);
     padding: var(--indentation-00) var(--indentation-04);
-    color: var(--nmorph-button-color, var(--nmorph-text-color));
-    line-height: var(--line-height-regular);
+    color: var(--nmorph-private-button-color, var(--nmorph-text-color));
+    line-height: var(--nmorph-private-control-line-height, var(--line-height-regular));
     background: var(--nmorph-main-color);
     border: none;
     border-radius: var(--default-border-radius);
@@ -142,23 +142,25 @@ defineExpose({ buttonDOMElement });
     cursor: pointer;
 
     span {
-      color: var(--nmorph-button-color, var(--nmorph-text-color));
+      color: var(--nmorph-private-button-color, var(--nmorph-text-color));
 
-      --color: var(--nmorph-button-color, var(--nmorph-text-color));
+      --nmorph-private-icon-color: var(--nmorph-private-button-color, var(--nmorph-text-color));
     }
   }
 
   .nmorph-button__label {
+    display: inline-block;
     min-width: 0;
     white-space: normal;
     text-align: center;
     overflow-wrap: anywhere;
+    transform: translateY(var(--nmorph-private-control-text-offset-y));
   }
 
   .nmorph-button__content > .nmorph-icon {
     flex-shrink: 0;
 
-    --color: var(--nmorph-button-color, var(--nmorph-text-color));
+    --nmorph-private-icon-color: var(--nmorph-private-button-color, var(--nmorph-text-color));
   }
 
   .nmorph-button__content:disabled {
@@ -207,7 +209,7 @@ defineExpose({ buttonDOMElement });
     }
 
     .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
-      --color: var(--nmorph-white-color);
+      --nmorph-private-icon-color: var(--nmorph-white-color);
     }
 
     .nmorph-button__content:not(:disabled, [loading='true']):hover span {
@@ -226,7 +228,7 @@ defineExpose({ buttonDOMElement });
     .nmorph-button__content .nmorph-icon {
       color: var(--nmorph-focus-text-color);
 
-      --color: var(--nmorph-focus-text-color);
+      --nmorph-private-icon-color: var(--nmorph-focus-text-color);
     }
   }
 
@@ -234,7 +236,7 @@ defineExpose({ buttonDOMElement });
     .nmorph-button__content {
       color: var(--nmorph-error-text-color);
 
-      --nmorph-button-color: var(--nmorph-error-text-color);
+      --nmorph-private-button-color: var(--nmorph-error-text-color);
     }
   }
 
@@ -245,28 +247,30 @@ defineExpose({ buttonDOMElement });
   }
 
   &.nmorph-button--circle {
-    width: var(--height);
-    height: var(--height);
-    min-height: var(--height);
+    width: var(--nmorph-private-control-height);
+    height: var(--nmorph-private-control-height);
+    min-height: var(--nmorph-private-control-height);
 
     .nmorph-button__content {
-      height: var(--height);
-      min-height: var(--height);
+      height: var(--nmorph-private-control-height);
+      min-height: var(--nmorph-private-control-height);
       border-radius: var(--border-radius-circular);
     }
   }
 
-  &.nmorph-button--transparent {
+  &.nmorph-button--plain {
     padding: var(--indentation-00);
 
     .nmorph-button__content:not(:disabled, [loading='true']):hover {
       color: var(--nmorph-accent-color);
       background: transparent;
+      border-color: var(--nmorph-accent-color);
       box-shadow: none;
     }
 
     &.nmorph-button--custom-color .nmorph-button__content:not(:disabled, [loading='true']):hover {
-      color: var(--nmorph-button-hover-color);
+      color: var(--nmorph-private-button-hover-color);
+      border-color: var(--nmorph-private-button-hover-color);
     }
 
     .nmorph-button__content:not(:disabled, [loading='true']):hover span {
@@ -274,64 +278,69 @@ defineExpose({ buttonDOMElement });
     }
 
     &.nmorph-button--custom-color .nmorph-button__content:not(:disabled, [loading='true']):hover span {
-      color: var(--nmorph-button-hover-color);
+      color: var(--nmorph-private-button-hover-color);
 
-      --color: var(--nmorph-button-hover-color);
+      --nmorph-private-icon-color: var(--nmorph-private-button-hover-color);
     }
 
     .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
-      --color: var(--nmorph-accent-color);
+      --nmorph-private-icon-color: var(--nmorph-accent-color);
     }
 
     &.nmorph-button--custom-color .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
-      --color: var(--nmorph-button-hover-color);
+      --nmorph-private-icon-color: var(--nmorph-private-button-hover-color);
     }
 
     .nmorph-button__content {
-      color: var(--nmorph-button-color, var(--transparent-button-color, var(--nmorph-text-color)));
+      color: var(--nmorph-private-button-color, var(--nmorph-private-button-plain-color, var(--nmorph-text-color)));
       background: transparent;
+      border: var(--nmorph-plain-border);
+      border-color: var(
+        --nmorph-private-button-color,
+        var(--nmorph-private-button-plain-color, var(--nmorph-text-color))
+      );
       box-shadow: none;
     }
 
     .nmorph-button__content span {
-      color: var(--nmorph-button-color, var(--transparent-button-color, var(--nmorph-text-color)));
+      color: var(--nmorph-private-button-color, var(--nmorph-private-button-plain-color, var(--nmorph-text-color)));
 
-      --color: var(--nmorph-button-color, var(--transparent-button-color, var(--nmorph-text-color)));
+      --nmorph-private-icon-color: var(
+        --nmorph-private-button-color,
+        var(--nmorph-private-button-plain-color, var(--nmorph-text-color))
+      );
     }
 
     .nmorph-button__content .nmorph-icon {
-      --color: var(--nmorph-button-color, var(--transparent-button-color, var(--nmorph-text-color)));
+      --nmorph-private-icon-color: var(
+        --nmorph-private-button-color,
+        var(--nmorph-private-button-plain-color, var(--nmorph-text-color))
+      );
     }
   }
 
   &.nmorph-button--square {
-    width: var(--height);
-    height: var(--height);
-    min-height: var(--height);
+    width: var(--nmorph-private-control-height);
+    height: var(--nmorph-private-control-height);
+    min-height: var(--nmorph-private-control-height);
 
     .nmorph-button__content {
-      height: var(--height);
-      min-height: var(--height);
+      height: var(--nmorph-private-control-height);
+      min-height: var(--nmorph-private-control-height);
     }
   }
 
   &.nmorph-button--icon-only {
-    width: var(--height);
-    height: var(--height);
-    min-height: var(--height);
+    width: var(--nmorph-private-control-height);
+    height: var(--nmorph-private-control-height);
+    min-height: var(--nmorph-private-control-height);
 
     .nmorph-button__content {
-      height: var(--height);
-      min-height: var(--height);
+      height: var(--nmorph-private-control-height);
+      min-height: var(--nmorph-private-control-height);
       padding: 0;
       line-height: 0;
     }
-  }
-
-  &.nmorph-button.nmorph--thin-component {
-    font-weight: 400;
-    font-size: var(--font-size-extra-small);
-    line-height: var(--line-height-regular);
   }
 
   &.nmorph-button--disabled {

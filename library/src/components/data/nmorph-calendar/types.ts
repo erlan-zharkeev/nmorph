@@ -1,4 +1,4 @@
-import type { NmorphSelectionDateType } from '@/types';
+import type { NmorphElementDesignType, NmorphSelectionDateType } from '@/types';
 export type NmorphCalendarDateType = 'current' | 'previous' | 'next';
 export interface INmorphCalendarDate {
   monthType: NmorphCalendarDateType;
@@ -26,6 +26,7 @@ export interface INmorphCalendarProps {
   type?: keyof typeof NmorphSelectionDateType;
   modelValue?: NmorphSelectedDateModelType;
   cellHeight?: number | string;
+  design?: NmorphElementDesignType;
 }
 
 export interface INmorphCalendarEmit {

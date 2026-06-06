@@ -9,16 +9,11 @@ import { Spring, Summer, Autumn, Winter } from "@/assets/images";
       <NmorphImagePreview
         :src="[Summer, Spring, Winter, Autumn]"
         :initial-index="3"
+        :width="76"
+        :height="76"
+        preview-width="min(92vw, 840px)"
+        preview-height="min(72vh, 560px)"
       />
     </ClientOnly>
   </div>
 </template>
-
-<style lang="scss">
-.image-preview-initial-index-overview {
-  .nmorph-image-preview {
-    --width: 200px;
-    --height: 200px;
-  }
-}
-</style>

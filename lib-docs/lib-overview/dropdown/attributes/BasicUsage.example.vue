@@ -23,11 +23,11 @@ const closeHandler = () => {
             <NmorphCheckbox
               v-model="firstMenuOpen"
               label="First menu"
-              design="button"
+              design="nmorph"
             />
             <NmorphDropdown
               :fill-width="false"
-              :width="120"
+              :width="160"
               v-if="firstMenu"
               :open="firstMenuOpen"
               :relative-element="firstMenu"
@@ -53,7 +53,7 @@ const closeHandler = () => {
             <NmorphCheckbox
               v-model="secondMenuOpen"
               label="Second menu"
-              design="button"
+              design="nmorph"
             />
             <NmorphDropdown
               v-if="secondMenu"
@@ -92,12 +92,15 @@ const closeHandler = () => {
 
   .content {
     border-radius: 4px;
+    padding: 8px;
     overflow: hidden;
   }
 
   .content__element {
     cursor: pointer;
-    padding: 4px;
+    margin: 0;
+    padding: 6px 8px;
+    border-radius: 4px;
 
     &:hover {
       background: var(--nmorph-text-color);

@@ -4,6 +4,7 @@ import {
   type ISlotsTableData,
   type IVariablesTableData,
 } from "~/types";
+import { NmorphElementDesign } from "@nmorph/nmorph-ui-kit";
 import ApiTable from "~/components/api-table/ApiTable.vue";
 
 const attributesData: IAttributesTableData[] = [
@@ -93,6 +94,12 @@ const attributesData: IAttributesTableData[] = [
     name: "hide-shadow",
     type: "Boolean",
     default: "false",
+  },
+  {
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
+    description: "Dropdown surface design. Plain dropdowns use a visible border and no nmorph shadow.",
   },
 ];
 

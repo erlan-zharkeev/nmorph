@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<INmorphSkeletonItemProps>(), {
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-skeleton-item': [props.variant, `${props.design === 'nmorph' ? 'nmorph-design' : ''}`],
+    'nmorph-skeleton-item': [props.variant, props.design === 'nmorph' ? 'nmorph-design' : 'plain-design'],
   })
 );
 
@@ -24,7 +24,7 @@ const cssHeight = computed(() => props.height);
 <template>
   <div
     :class="modifiers"
-    :style="{ '--nmorph-skeleton-item-width': cssWidth, '--nmorph-skeleton-item-height': cssHeight }"
+    :style="{ '--nmorph-private-skeleton-item-width': cssWidth, '--nmorph-private-skeleton-item-height': cssHeight }"
   >
     <div class="nmorph-skeleton-item__element">
       <NmorphIcon v-if="props.variant === 'image'" :width="props.width" :height="props.height">
@@ -37,8 +37,8 @@ const cssHeight = computed(() => props.height);
 <style lang="scss">
 .nmorph-skeleton-item {
   position: relative;
-  width: var(--nmorph-skeleton-item-width);
-  height: var(--nmorph-skeleton-item-height);
+  width: var(--nmorph-private-skeleton-item-width);
+  height: var(--nmorph-private-skeleton-item-height);
   margin-bottom: var(--indentation-02);
   overflow: hidden;
   background: var(--nmorph-text-color);
@@ -48,7 +48,7 @@ const cssHeight = computed(() => props.height);
 
     .nmorph-skeleton-item__element {
       .nmorph-icon {
-        --color: var(--nmorph-text-color);
+        --nmorph-private-icon-color: var(--nmorph-text-color);
       }
     }
   }
@@ -63,6 +63,10 @@ const cssHeight = computed(() => props.height);
       inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
       inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
         var(--nmorph-light-shade-color);
+  }
+
+  &.nmorph-skeleton-item--plain-design {
+    border: var(--nmorph-plain-border);
   }
 }
 </style>

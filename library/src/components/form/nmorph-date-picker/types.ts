@@ -15,6 +15,7 @@ export interface INmorphDatePickerProps extends INmorphCommonInputProps {
   valueSeparator?: string;
   rangeSeparator?: string;
   width?: number | string;
+  rangeWidth?: number | string;
   calendarCellHeight?: number | string;
 }
 

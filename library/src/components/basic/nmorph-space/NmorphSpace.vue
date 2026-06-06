@@ -39,9 +39,9 @@ const justifyContent = computed(() =>
 );
 
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-space-gap': resolveSpaceSize(props.size),
-  '--nmorph-space-align': alignItems.value,
-  '--nmorph-space-justify': justifyContent.value,
+  '--nmorph-private-space-gap': resolveSpaceSize(props.size),
+  '--nmorph-private-space-align': alignItems.value,
+  '--nmorph-private-space-justify': justifyContent.value,
 }));
 </script>
 
@@ -55,9 +55,9 @@ const styles = computed<CSSProperties>(() => ({
 .nmorph-space {
   display: flex;
   flex-direction: row;
-  gap: var(--nmorph-space-gap);
-  justify-content: var(--nmorph-space-justify);
-  align-items: var(--nmorph-space-align);
+  gap: var(--nmorph-private-space-gap);
+  justify-content: var(--nmorph-private-space-justify);
+  align-items: var(--nmorph-private-space-align);
   min-width: 0;
 
   &--column {

@@ -10,6 +10,8 @@ import {
   nmorphOutset,
   nmorphInset,
   nmorphCombined,
+  nmorphPlainSurface,
+  typography,
 } from '@/utils';
 
 const mixins = {
@@ -24,6 +26,7 @@ const mixins = {
   'nmorph--shadow-outset': nmorphOutset,
   'nmorph--shadow-inset': nmorphInset,
   'nmorph--shadow-combined': nmorphCombined,
+  'nmorph--plain-surface': nmorphPlainSurface,
 };
 
 export const getCommonStyles = () => {
@@ -37,10 +40,63 @@ export const getCommonStyles = () => {
       --font-size-large: 18px;
       --font-size-extra-large: 20px;
 
+      --font-family-base: Helvetica, Roboto, Arial, sans-serif;
+      --font-family-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+
+      --font-weight-regular: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 600;
+      --font-weight-bold: 700;
+      --font-weight-extrabold: 800;
+
       --line-height-line: 1;
+      --line-height-control: 1.15;
       --line-height-compact: 1.3;
       --line-height-regular: 1.5;
       --line-height-loose: 1.7;
+
+      --nmorph-typography-display-large-font-size: 32px;
+      --nmorph-typography-display-large-line-height: 1.15;
+      --nmorph-typography-display-large-font-weight: var(--font-weight-extrabold);
+      --nmorph-typography-display-medium-font-size: 24px;
+      --nmorph-typography-display-medium-line-height: 1.2;
+      --nmorph-typography-display-medium-font-weight: var(--font-weight-bold);
+      --nmorph-typography-title-large-font-size: var(--font-size-extra-large);
+      --nmorph-typography-title-large-line-height: var(--line-height-compact);
+      --nmorph-typography-title-large-font-weight: var(--font-weight-bold);
+      --nmorph-typography-title-font-size: var(--font-size-large);
+      --nmorph-typography-title-line-height: var(--line-height-compact);
+      --nmorph-typography-title-font-weight: var(--font-weight-semibold);
+      --nmorph-typography-title-small-font-size: var(--font-size-medium);
+      --nmorph-typography-title-small-line-height: var(--line-height-compact);
+      --nmorph-typography-title-small-font-weight: var(--font-weight-semibold);
+      --nmorph-typography-body-large-font-size: var(--font-size-base);
+      --nmorph-typography-body-large-line-height: var(--line-height-regular);
+      --nmorph-typography-body-large-font-weight: var(--font-weight-regular);
+      --nmorph-typography-body-font-size: var(--font-size-small);
+      --nmorph-typography-body-line-height: var(--line-height-regular);
+      --nmorph-typography-body-font-weight: var(--font-weight-regular);
+      --nmorph-typography-body-small-font-size: var(--font-size-extra-small);
+      --nmorph-typography-body-small-line-height: var(--line-height-regular);
+      --nmorph-typography-body-small-font-weight: var(--font-weight-regular);
+      --nmorph-typography-caption-font-size: var(--font-size-tiny);
+      --nmorph-typography-caption-line-height: var(--line-height-regular);
+      --nmorph-typography-caption-font-weight: var(--font-weight-regular);
+      --nmorph-typography-label-font-size: var(--font-size-small);
+      --nmorph-typography-label-line-height: var(--line-height-compact);
+      --nmorph-typography-label-font-weight: var(--font-weight-semibold);
+      --nmorph-typography-control-large-font-size: var(--font-size-base);
+      --nmorph-typography-control-large-line-height: var(--line-height-control);
+      --nmorph-typography-control-large-font-weight: var(--font-weight-regular);
+      --nmorph-typography-control-font-size: var(--font-size-small);
+      --nmorph-typography-control-line-height: var(--line-height-control);
+      --nmorph-typography-control-font-weight: var(--font-weight-regular);
+      --nmorph-typography-control-small-font-size: var(--font-size-extra-small);
+      --nmorph-typography-control-small-line-height: var(--line-height-control);
+      --nmorph-typography-control-small-font-weight: var(--font-weight-regular);
+      --nmorph-typography-control-tiny-font-size: var(--font-size-tiny);
+      --nmorph-typography-control-tiny-line-height: var(--line-height-line);
+      --nmorph-typography-control-tiny-font-weight: var(--font-weight-regular);
 
       --border-radius-none: 0px;
       --border-radius-20: 2px;
@@ -54,11 +110,10 @@ export const getCommonStyles = () => {
       --default-border-radius: var(--border-radius-40);
 
       --thick-component: 38px;
-      --default-thickness-component: 30px;
-      --thin-component: 22px;
+      --basic-component: 30px;
+      --default-thickness-component: var(--basic-component);
+      --thin-component: 24px;
       --extra-thin-component: 14px;
-
-      --form-container: 280px;
 
       --default-indentation-input: 8px;
 
@@ -95,6 +150,8 @@ export const getCommonStyles = () => {
         inset calc(-1 * var(--base-shadow-width)) calc(-0.5 * var(--base-shadow-width)) var(--base-shadow-blur)
           var(--nmorph-dark-shade-color);
       --nmorph-wrapper-padding: calc(var(--base-shadow-width) * 1.5);
+      --nmorph-plain-border-color: color-mix(in srgb, var(--nmorph-text-color) 18%, transparent);
+      --nmorph-plain-border: 1.5px solid var(--nmorph-plain-border-color);
 
       --transition-04: 0.4s;
       --transition-03: 0.3s;
@@ -125,7 +182,7 @@ export const getCommonStyles = () => {
     body {
       margin: 0;
       width: auto;
-      font-family: Helvetica, Roboto, Arial, sans-serif;
+      font-family: var(--font-family-base);
 
       ${body1()}
     }
@@ -275,7 +332,7 @@ export const getCommonStyles = () => {
     }
 
     .nmorph-scroll {
-      --thumb-color: var(--nmorph-scroll-thumb-color, var(--nmorph-text-color));
+      --nmorph-private-scroll-thumb-color: var(--nmorph-scroll-thumb-color, var(--nmorph-text-color));
 
       position: relative;
       overflow: hidden;
@@ -324,14 +381,14 @@ export const getCommonStyles = () => {
     .nmorph-scroll__bar--vertical {
       top: 0;
       right: 0;
-      width: var(--bar-width);
+      width: var(--nmorph-private-scroll-bar-width);
     }
 
     .nmorph-scroll__bar--horizontal {
       right: 0;
       bottom: 0;
       left: 0;
-      height: var(--bar-height);
+      height: var(--nmorph-private-scroll-bar-height);
     }
 
     .nmorph-scroll__thumb {
@@ -339,7 +396,7 @@ export const getCommonStyles = () => {
       top: 0;
       left: 0;
       border-radius: var(--border-radius-40);
-      background-color: var(--thumb-color);
+      background-color: var(--nmorph-private-scroll-thumb-color);
       cursor: pointer;
       transition: background-color ease-in-out 0.16s;
       touch-action: none;
@@ -363,8 +420,8 @@ export const getCommonStyles = () => {
     }
 
     .nmorph-scroll::-webkit-scrollbar {
-      width: var(--bar-width);
-      height: var(--bar-height);
+      width: var(--nmorph-private-scroll-bar-width);
+      height: var(--nmorph-private-scroll-bar-height);
       background-color: transparent;
       cursor: pointer;
       transition: width ease-in-out 0.2s;
@@ -397,7 +454,7 @@ export const getCommonStyles = () => {
     }
 
     .nmorph-scroll::-webkit-scrollbar-thumb {
-      background-color: var(--thumb-color);
+      background-color: var(--nmorph-private-scroll-thumb-color);
       border-radius: var(--border-radius-40);
     }
 
@@ -405,32 +462,156 @@ export const getCommonStyles = () => {
       background-color: transparent;
     }
 
-    .nmorph--basic-component {
-      --height: var(--default-thickness-component);
+    .nmorph-typography {
+      margin: 0;
+      color: var(--nmorph-private-text-color, var(--nmorph-text-color));
+      font-family: var(--font-family-base);
+      text-align: var(--nmorph-private-text-align, inherit);
+    }
 
-      height: var(--height);
+    .nmorph-typography--display-large {
+      ${typography('display-large')}
+    }
+
+    .nmorph-typography--display-medium {
+      ${typography('display-medium')}
+    }
+
+    .nmorph-typography--title-large {
+      ${typography('title-large')}
+    }
+
+    .nmorph-typography--title {
+      ${typography('title')}
+    }
+
+    .nmorph-typography--title-small {
+      ${typography('title-small')}
+    }
+
+    .nmorph-typography--body-large {
+      ${typography('body-large')}
+    }
+
+    .nmorph-typography--body {
+      ${typography('body')}
+    }
+
+    .nmorph-typography--body-small {
+      ${typography('body-small')}
+    }
+
+    .nmorph-typography--caption {
+      ${typography('caption')}
+    }
+
+    .nmorph-typography--label {
+      ${typography('label')}
+    }
+
+    .nmorph-typography--control-large {
+      ${typography('control-large')}
+    }
+
+    .nmorph-typography--control {
+      ${typography('control')}
+    }
+
+    .nmorph-typography--control-small {
+      ${typography('control-small')}
+    }
+
+    .nmorph-typography--control-tiny {
+      ${typography('control-tiny')}
+    }
+
+    .nmorph-typography--regular {
+      font-weight: var(--font-weight-regular);
+    }
+
+    .nmorph-typography--medium {
+      font-weight: var(--font-weight-medium);
+    }
+
+    .nmorph-typography--semibold {
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .nmorph-typography--bold {
+      font-weight: var(--font-weight-bold);
+    }
+
+    .nmorph-typography--extrabold {
+      font-weight: var(--font-weight-extrabold);
+    }
+
+    .nmorph-typography--truncate {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .nmorph-typography--nowrap {
+      white-space: nowrap;
+    }
+
+    .nmorph-typography--line-clamp {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: var(--nmorph-private-text-line-clamp);
+    }
+
+    .nmorph--basic-component {
+      --nmorph-private-control-height: var(--basic-component);
+      --nmorph-private-control-font-size: var(--nmorph-typography-control-font-size);
+      --nmorph-private-control-line-height: var(--nmorph-typography-control-line-height);
+      --nmorph-private-control-font-weight: var(--nmorph-typography-control-font-weight);
+      --nmorph-private-control-text-offset-y: 0px;
+
+      height: var(--nmorph-private-control-height);
+      font-weight: var(--nmorph-private-control-font-weight);
+      font-size: var(--nmorph-private-control-font-size);
+      line-height: var(--nmorph-private-control-line-height);
     }
 
     .nmorph--thin-component {
-      --height: var(--thin-component);
+      --nmorph-private-control-height: var(--thin-component);
+      --nmorph-private-control-font-size: var(--nmorph-typography-control-small-font-size);
+      --nmorph-private-control-line-height: var(--nmorph-typography-control-small-line-height);
+      --nmorph-private-control-font-weight: var(--nmorph-typography-control-small-font-weight);
+      --nmorph-private-control-text-offset-y: 1px;
 
-      height: var(--height);
+      height: var(--nmorph-private-control-height);
+      font-weight: var(--nmorph-private-control-font-weight);
+      font-size: var(--nmorph-private-control-font-size);
+      line-height: var(--nmorph-private-control-line-height);
     }
 
     .nmorph--extra-thin-component {
-      --height: var(--extra-thin-component);
+      --nmorph-private-control-height: var(--extra-thin-component);
+      --nmorph-private-control-font-size: var(--nmorph-typography-control-tiny-font-size);
+      --nmorph-private-control-line-height: var(--nmorph-typography-control-tiny-line-height);
+      --nmorph-private-control-font-weight: var(--nmorph-typography-control-tiny-font-weight);
+      --nmorph-private-control-text-offset-y: 0px;
 
-      height: var(--height);
+      height: var(--nmorph-private-control-height);
+      font-weight: var(--nmorph-private-control-font-weight);
+      font-size: var(--nmorph-private-control-font-size);
+      line-height: var(--nmorph-private-control-line-height);
     }
 
     .nmorph--thick-component {
-      --height: var(--thick-component);
+      --nmorph-private-control-height: var(--thick-component);
+      --nmorph-private-control-font-size: var(--nmorph-typography-control-large-font-size);
+      --nmorph-private-control-line-height: var(--nmorph-typography-control-large-line-height);
+      --nmorph-private-control-font-weight: var(--nmorph-typography-control-large-font-weight);
+      --nmorph-private-control-text-offset-y: 0px;
 
-      height: var(--height);
-    }
-
-    .nmorph--thin-component.nmorph-native-input {
-      ${body3()}
+      height: var(--nmorph-private-control-height);
+      font-weight: var(--nmorph-private-control-font-weight);
+      font-size: var(--nmorph-private-control-font-size);
+      line-height: var(--nmorph-private-control-line-height);
     }
 
     .nmorph-native-input:focus {
@@ -458,7 +639,7 @@ export const getCommonStyles = () => {
 
     .nmorph--focused {
       .nmorph-icon svg {
-        --color: var(--nmorph-focus-text-color);
+        --nmorph-private-icon-color: var(--nmorph-focus-text-color);
       }
     }
 

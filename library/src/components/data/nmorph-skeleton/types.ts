@@ -1,8 +1,10 @@
-export enum NmorphSkeletonItemPropsType {
-  image = 'image',
-  circle = 'circle',
-  rect = 'rect',
-}
+export const NmorphSkeletonItemPropsType = {
+  image: 'image',
+  circle: 'circle',
+  rect: 'rect',
+} as const;
+
+export type NmorphSkeletonItemPropsType = keyof typeof NmorphSkeletonItemPropsType;
 
 export interface INmorphSkeletonProps {
   animated?: boolean;

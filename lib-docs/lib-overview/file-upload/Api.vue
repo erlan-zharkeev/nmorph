@@ -5,7 +5,7 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { resolution } from "@nmorph/nmorph-ui-kit";
+import { NmorphElementDesign, resolution } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -49,13 +49,18 @@ const attributesData: IAttributesTableData[] = [
     default: "false",
   },
   {
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
+  },
+  {
     name: "multiple",
     type: "Boolean",
     default: "false",
   },
   {
     name: "allowed-types",
-    type: `${enumToString(resolution)} | String`,
+    type: `${optionsToString(resolution)} | String`,
     default: "all files",
   },
   {

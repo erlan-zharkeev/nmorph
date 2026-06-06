@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { createCssSizeVariables, useModifiers } from '@/utils';
-import { NmorphComponentHeight, NmorphDomElementType } from '@/types';
+import { NmorphComponentThickness, NmorphDomElementType } from '@/types';
 import { NmorphDropdown, NmorphIcon, formatDate, NmorphSelectedDateModelType, NmorphIconCalendar } from '@/components';
 import NmorphClearButton from './inner-components/nmorph-clear-button/NmorphClearButton.vue';
 import NmorphDatePickerContent from './inner-components/nmorph-date-picker-content/NmorphDatePickerContent.vue';
@@ -14,7 +14,7 @@ const { t } = useI18n();
 
 const props = withDefaults(defineProps<INmorphDatePickerProps>(), {
   disabled: false,
-  height: 'basic',
+  thickness: 'basic',
   placeholder: '',
   modelValue: null,
   type: 'date',
@@ -28,6 +28,7 @@ const props = withDefaults(defineProps<INmorphDatePickerProps>(), {
   valueSeparator: ', ',
   rangeSeparator: ' - ',
   width: undefined,
+  rangeWidth: undefined,
   calendarCellHeight: undefined,
 });
 
@@ -54,15 +55,16 @@ const blurHandler = () => {
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height]],
+    nmorph: [NmorphComponentThickness[props.thickness]],
     'nmorph-date-picker': [props.disabled && 'disabled', props.type, focus.value && 'focus'],
   })
 );
 
 const styles = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--width': props.width,
-    '--date-picker-calendar-cell-height': props.calendarCellHeight,
+    '--nmorph-private-date-picker-width': props.width,
+    '--nmorph-private-date-picker-range-width': props.rangeWidth,
+    '--nmorph-private-date-picker-calendar-cell-height': props.calendarCellHeight,
   })
 );
 
@@ -172,11 +174,12 @@ const showClearButton = computed(() => {
 
 <style lang="scss">
 .nmorph-date-picker {
-  --width: 200px;
-  --date-picker-calendar-cell-height: 42px;
+  --nmorph-private-date-picker-width: 200px;
+  --nmorph-private-date-picker-range-width: 250px;
+  --nmorph-private-date-picker-calendar-cell-height: 42px;
 
   position: relative;
-  width: var(--width);
+  width: var(--nmorph-private-date-picker-width);
 
   .nmorph-date-picker__date-wrapper {
     height: 100%;
@@ -203,6 +206,7 @@ const showClearButton = computed(() => {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    transform: translateY(var(--nmorph-private-control-text-offset-y));
   }
 
   .nmorph-date-picker__input--open {
@@ -235,11 +239,11 @@ const showClearButton = computed(() => {
   }
 
   .nmorph-calendar {
-    --table-data-cell-height: var(--date-picker-calendar-cell-height);
+    --nmorph-private-calendar-cell-height: var(--nmorph-private-date-picker-calendar-cell-height);
   }
 
   &.nmorph-date-picker--daterange {
-    --width: 250px;
+    --nmorph-private-date-picker-width: var(--nmorph-private-date-picker-range-width);
 
     .nmorph-dropdown {
       display: flex;

@@ -11,6 +11,7 @@ export interface INmorphMediaTileProps {
   name?: string;
   avatarSrc?: string;
   loading?: boolean;
+  showFallback?: boolean;
   micMuted?: boolean;
   videoOff?: boolean;
   screenSharing?: boolean;

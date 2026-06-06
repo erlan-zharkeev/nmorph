@@ -1,10 +1,10 @@
-import { NmorphComponentHeight, NmorphElementDesignType } from '@/types';
+import { NmorphComponentThickness, NmorphElementDesignType } from '@/types';
 
 export interface INmorphTagItemProps {
   value: string;
   text?: string;
   removable?: boolean;
-  height?: keyof typeof NmorphComponentHeight;
+  thickness?: keyof typeof NmorphComponentThickness;
   design?: NmorphElementDesignType;
   color?: string;
 }

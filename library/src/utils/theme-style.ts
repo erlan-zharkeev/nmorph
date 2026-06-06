@@ -1,49 +1,39 @@
+export const typography = (variant = 'body') => `
+  font-weight: var(--nmorph-typography-${variant}-font-weight);
+  font-size: var(--nmorph-typography-${variant}-font-size);
+  line-height: var(--nmorph-typography-${variant}-line-height);
+`;
+
 export const body4 = () => `
-  font-weight: 400;
-  font-size: var(--font-size-tiny);
-  line-height: var(--line-height-regular);
+  ${typography('caption')}
 `;
 
 export const body3 = () => `
-  font-weight: 400;
-  font-size: var(--font-size-extra-small);
-  line-height: var(--line-height-regular);
+  ${typography('body-small')}
 `;
 
 export const body2 = () => `
-  font-weight: 400;
-  font-size: var(--font-size-small);
-  line-height: var(--line-height-regular);
+  ${typography('body')}
 `;
 
 export const body1 = () => `
-  font-weight: 400;
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-regular);
+  ${typography('body-large')}
 `;
 
 export const title4 = () => `
-  font-weight: 600;
-  font-size: var(--font-size-small);
-  line-height: var(--line-height-loose);
+  ${typography('label')}
 `;
 
 export const title3 = () => `
-  font-weight: 600;
-  font-size: var(--font-size-medium);
-  line-height: var(--line-height-loose);
+  ${typography('title-small')}
 `;
 
 export const title2 = () => `
-  font-weight: 600;
-  font-size: var(--font-size-large);
-  line-height: var(--line-height-loose);
+  ${typography('title')}
 `;
 
 export const title1 = () => `
-  font-weight: 800;
-  font-size: var(--font-size-extra-large);
-  line-height: var(--line-height-loose);
+  ${typography('title-large')}
 `;
 
 export const nmorphOutset = () => `
@@ -65,6 +55,12 @@ export const nmorphCombined = (borderWidth = 0, isInsetDark = false) => `
 
   background: var(--nmorph-main-color);
   box-shadow: ${isInsetDark ? 'var(--nmorph-shadow-combined-dark)' : 'var(--nmorph-shadow-combined)'};
+`;
+
+export const nmorphPlainSurface = () => `
+  background: var(--nmorph-main-color);
+  border: var(--nmorph-plain-border);
+  box-shadow: none;
 `;
 
 export const disabled = () => `

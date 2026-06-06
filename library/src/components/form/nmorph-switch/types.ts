@@ -2,7 +2,7 @@ import type { INmorphCommonInputProps } from '@/types';
 
 export type NmorphSwitchModelType = boolean | string | number;
 
-export interface INmorphSwitchProps extends Omit<INmorphCommonInputProps, 'height'> {
+export interface INmorphSwitchProps extends Omit<INmorphCommonInputProps, 'thickness'> {
   modelValue?: NmorphSwitchModelType;
   loading?: boolean;
   activeValue?: NmorphSwitchModelType;

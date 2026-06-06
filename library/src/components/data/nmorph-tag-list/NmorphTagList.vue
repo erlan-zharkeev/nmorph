@@ -32,23 +32,7 @@ const getResolvedTagItem = (tagData: TTagItem): NmorphTagListSlotItem<TTagItem> 
   color: tagData.color ?? props.color,
 });
 
-const resolvedTagList = computed(() =>
-  tagList.value.map((tagData) => {
-    const item = getResolvedTagItem(tagData);
-
-    return {
-      item,
-      tagItemProps: {
-        value: tagData.value,
-        text: tagData.text,
-        removable: tagData.removable,
-        height: tagData.height,
-        design: item.design,
-        color: item.color,
-      },
-    };
-  })
-);
+const resolvedTagList = computed(() => tagList.value.map(getResolvedTagItem));
 
 watch(
   () => props.modelValue,
@@ -72,18 +56,38 @@ const clickTagHandler = (value: string) => {
 
 <template>
   <div :class="modifiers">
-    <template v-for="tagData in resolvedTagList" :key="tagData.item.value">
-      <NmorphTagItem v-if="$slots.item" v-bind="tagData.tagItemProps" @click="clickTagHandler" @close="closeTagHandler">
-        <slot name="item" :item="tagData.item" />
+    <template v-for="tagData in resolvedTagList" :key="tagData.value">
+      <NmorphTagItem
+        v-if="$slots.item"
+        :value="tagData.value"
+        :text="tagData.text"
+        :removable="tagData.removable"
+        :thickness="tagData.thickness"
+        :design="tagData.design"
+        :color="tagData.color"
+        @click="clickTagHandler"
+        @close="closeTagHandler"
+      >
+        <slot name="item" :item="tagData" />
       </NmorphTagItem>
-      <NmorphTagItem v-else v-bind="tagData.tagItemProps" @click="clickTagHandler" @close="closeTagHandler" />
+      <NmorphTagItem
+        v-else
+        :value="tagData.value"
+        :text="tagData.text"
+        :removable="tagData.removable"
+        :thickness="tagData.thickness"
+        :design="tagData.design"
+        :color="tagData.color"
+        @click="clickTagHandler"
+        @close="closeTagHandler"
+      />
     </template>
   </div>
 </template>
 
 <style lang="scss">
-.nmorph-list--common {
-  .nmorph-tag-item--common {
+.nmorph-list--plain {
+  .nmorph-tag-item--plain {
     border: none;
   }
 }

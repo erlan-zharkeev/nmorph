@@ -18,11 +18,11 @@ const opened = ref(["availability"]);
     >
       <p>Disabled panel content.</p>
     </NmorphCollapseItem>
-    <NmorphCollapseItem name="custom" :block="false" height="thin">
+    <NmorphCollapseItem name="custom" :block="false" thickness="thin">
       <template #title>
         <span>Custom title slot</span>
       </template>
-      <p>Thin title height.</p>
+      <p>Thin title thickness.</p>
     </NmorphCollapseItem>
   </NmorphCollapse>
 </template>

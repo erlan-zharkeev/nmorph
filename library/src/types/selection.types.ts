@@ -1,35 +1,43 @@
 import type { Ref } from 'vue';
-import type { NmorphSelectionControlHeightType } from './common.types';
+import type {
+  NmorphSelectionControlNmorphThicknessType,
+  NmorphSelectionControlPlainThicknessType,
+} from './common.types';
 
-export interface INmorphCheckboxOption {
+export type NmorphSelectionControlDesignProps =
+  | {
+      design: 'plain';
+      thickness?: NmorphSelectionControlPlainThicknessType;
+    }
+  | {
+      design?: 'nmorph';
+      thickness?: NmorphSelectionControlNmorphThicknessType;
+    };
+
+type INmorphCheckboxOptionBase = {
   id?: string;
   disabled?: boolean;
   modelValue?: boolean;
   label?: string;
-  design?: NmorphCheckboxDesignType;
-  height?: NmorphSelectionControlHeightType;
-}
+};
 
-export type NmorphCheckboxDesignType = 'button' | 'checkbox';
+export type INmorphCheckboxOption = INmorphCheckboxOptionBase & NmorphSelectionControlDesignProps;
+
+export type INmorphCheckboxGroupOption = Omit<INmorphCheckboxOptionBase, 'modelValue'> & {
+  id: string;
+} & NmorphSelectionControlDesignProps;
 
 export type NmorphCheckboxGroupSelectedValueInjectionType = Ref<string[]>;
-export type NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType = (
-  value: string,
-  currentState: string[]
-) => void;
+export type NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType = (value: string) => void;
 
-export interface INmorphRadioOption {
+type INmorphRadioOptionBase = {
   disabled?: boolean;
   label?: string;
   value: string;
   tabindex?: number;
-  height?: NmorphSelectionControlHeightType;
-}
+};
 
-export enum NmorphRadioStyleType {
-  'radio-style' = 'radio-style',
-  'button' = 'button',
-}
+export type INmorphRadioOption = INmorphRadioOptionBase & NmorphSelectionControlDesignProps;
 
 export type NmorphRadioGroupSelectedValueInjectionType = Ref<string>;
 

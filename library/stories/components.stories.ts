@@ -100,8 +100,8 @@ const tableData = [
   { name: 'Dialog', group: 'Feedback', status: 'Ready' },
 ];
 const tagList = [
-  { value: 'basic', text: 'Basic', removable: true, height: 'thin' },
-  { value: 'form', text: 'Form', removable: true, height: 'thin' },
+  { value: 'basic', text: 'Basic', removable: true, thickness: 'thin' },
+  { value: 'form', text: 'Form', removable: true, thickness: 'thin' },
 ];
 const virtualItems = Array.from({ length: 120 }, (_, index) => ({
   id: index + 1,
@@ -127,9 +127,10 @@ const boolean = { control: 'boolean' };
 const object = { control: 'object' };
 const color = { control: 'color' };
 const noControl = { control: false };
-const height = select(['thin', 'basic', 'thick']);
+const thickness = select(['thin', 'basic', 'thick']);
 const direction = select(['row', 'column']);
-const design = select(['nmorph', 'common']);
+const design = select(['nmorph', 'plain']);
+const selectionDesign = select(['nmorph', 'plain']);
 const placement = select([
   'top',
   'top-start',
@@ -152,7 +153,7 @@ const commonInputArgTypes = {
   id: text,
   name: text,
   autocomplete: text,
-  height,
+  thickness,
   disabled: boolean,
   tabindex: number,
 };
@@ -203,13 +204,13 @@ const renderWithAnchor = (template: string) => {
 export const Button: Story = {
   args: {
     text: 'Button',
-    styleType: 'default',
+    design: 'nmorph',
     color: '#578bd6',
     loading: false,
     ripple: true,
     type: 'button',
     disabled: false,
-    height: 'basic',
+    thickness: 'basic',
     fill: false,
     accentBgOnHover: false,
     shape: 'default',
@@ -218,7 +219,7 @@ export const Button: Story = {
   argTypes: {
     ...commonInputArgTypes,
     text: text,
-    styleType: select(['default', 'transparent']),
+    design: select(['nmorph', 'plain']),
     color: color,
     loading: boolean,
     ripple: boolean,
@@ -446,22 +447,22 @@ export const Collapse: Story = {
   args: {
     modelValue: ['first'],
     accordion: false,
-    itemHeight: 'basic',
+    itemThickness: 'basic',
     firstDisabled: false,
     itemBlock: false,
   },
   argTypes: {
     modelValue: object,
     accordion: boolean,
-    itemHeight: height,
+    itemThickness: thickness,
     firstDisabled: boolean,
     itemBlock: boolean,
   },
   render: render(
     { NmorphCollapse, NmorphCollapseItem },
     `<NmorphCollapse v-model="modelValue" :accordion="args.accordion">
-      <NmorphCollapseItem name="first" title="First item" :height="args.itemHeight" :disabled="args.firstDisabled" :block="args.itemBlock">First content</NmorphCollapseItem>
-      <NmorphCollapseItem name="second" title="Second item" :height="args.itemHeight" :block="args.itemBlock">Second content</NmorphCollapseItem>
+      <NmorphCollapseItem name="first" title="First item" :thickness="args.itemThickness" :disabled="args.firstDisabled" :block="args.itemBlock">First content</NmorphCollapseItem>
+      <NmorphCollapseItem name="second" title="Second item" :thickness="args.itemThickness" :block="args.itemBlock">Second content</NmorphCollapseItem>
     </NmorphCollapse>`
   ),
 };
@@ -632,7 +633,7 @@ export const Table: Story = {
 export const TagList: Story = {
   args: {
     modelValue: tagList,
-    design: 'common',
+    design: 'plain',
   },
   argTypes: {
     modelValue: object,
@@ -694,7 +695,6 @@ export const Dialog: Story = {
     maxHeight: undefined,
     openDelay: 0,
     closeDelay: 0,
-    closeOnClickModal: true,
     showClose: true,
     zIndex: 43183,
     closeOnOverlay: true,
@@ -706,7 +706,6 @@ export const Dialog: Story = {
     maxHeight: text,
     openDelay: number,
     closeDelay: number,
-    closeOnClickModal: boolean,
     showClose: boolean,
     zIndex: number,
     closeOnOverlay: boolean,
@@ -744,7 +743,7 @@ export const Autocomplete: Story = {
     id: 'autocomplete',
     name: 'autocomplete',
     autocomplete: 'off',
-    height: 'basic',
+    thickness: 'basic',
     disabled: false,
     tabindex: 0,
     modelValue: '',
@@ -775,16 +774,16 @@ export const Checkbox: Story = {
     disabled: false,
     modelValue: true,
     label: 'Checkbox',
-    design: 'checkbox',
-    height: 'thin',
+    design: 'plain',
+    thickness: 'thin',
   },
   argTypes: {
     id: text,
     disabled: boolean,
     modelValue: boolean,
     label: text,
-    design: select(['button', 'checkbox']),
-    height,
+    design: selectionDesign,
+    thickness,
   },
   render: render(
     { NmorphCheckbox },
@@ -797,19 +796,19 @@ export const CheckboxGroup: Story = {
     id: 'checkbox-group',
     name: 'checkbox-group',
     autocomplete: '',
-    height: 'thin',
+    thickness: 'thin',
     disabled: false,
     tabindex: 0,
     modelValue: ['first'],
     options,
-    design: 'checkbox',
+    design: 'plain',
     direction: 'row',
   },
   argTypes: {
     ...commonInputArgTypes,
     modelValue: object,
     options: object,
-    design: select(['button', 'checkbox']),
+    design: selectionDesign,
     direction,
   },
   render: render(
@@ -823,7 +822,7 @@ export const ColorPicker: Story = {
     id: 'color-picker',
     name: 'color-picker',
     autocomplete: '',
-    height: 'basic',
+    thickness: 'basic',
     disabled: false,
     tabindex: 0,
     modelValue: '#578bd6',
@@ -847,7 +846,7 @@ export const DatePicker: Story = {
     id: 'date-picker',
     name: 'date-picker',
     autocomplete: '',
-    height: 'basic',
+    thickness: 'basic',
     disabled: false,
     tabindex: 0,
     placeholder: '',
@@ -902,7 +901,7 @@ export const Form: Story = {
     formItemId: 'email',
     formItemName: 'email',
     formItemAutocomplete: 'email',
-    formItemHeight: 'basic',
+    formItemThickness: 'basic',
     formItemLabel: 'Email',
     showValidationIcon: true,
     staticErrorBoxSpace: true,
@@ -913,7 +912,7 @@ export const Form: Story = {
     formItemId: text,
     formItemName: text,
     formItemAutocomplete: text,
-    formItemHeight: height,
+    formItemThickness: thickness,
     formItemLabel: text,
     showValidationIcon: boolean,
     staticErrorBoxSpace: boolean,
@@ -921,7 +920,7 @@ export const Form: Story = {
   render: render(
     { NmorphForm, NmorphFormItem, NmorphTextInput },
     `<NmorphForm :value="args.value" :validate-immediately="args.validateImmediately" style="${wideStyle}">
-      <NmorphFormItem :id="args.formItemId" :name="args.formItemName" :autocomplete="args.formItemAutocomplete" :height="args.formItemHeight" :label="args.formItemLabel" :show-validation-icon="args.showValidationIcon" :static-error-box-space="args.staticErrorBoxSpace">
+      <NmorphFormItem :id="args.formItemId" :name="args.formItemName" :autocomplete="args.formItemAutocomplete" :thickness="args.formItemThickness" :label="args.formItemLabel" :show-validation-icon="args.showValidationIcon" :static-error-box-space="args.staticErrorBoxSpace">
         <NmorphTextInput :id="args.formItemId" model-value="" placeholder="name@mail.com" />
       </NmorphFormItem>
     </NmorphForm>`
@@ -933,7 +932,7 @@ export const NumberInput: Story = {
     id: 'number-input',
     name: 'number-input',
     autocomplete: '',
-    height: 'basic',
+    thickness: 'basic',
     disabled: false,
     tabindex: 0,
     modelValue: 4,
@@ -961,7 +960,7 @@ export const OTPInput: Story = {
     id: 'otp-input',
     name: 'otp-input',
     autocomplete: 'one-time-code',
-    height: 'basic',
+    thickness: 'basic',
     disabled: false,
     tabindex: 0,
     modelValue: '',
@@ -989,7 +988,7 @@ export const Select: Story = {
     id: 'select',
     name: 'select',
     autocomplete: '',
-    height: 'basic',
+    thickness: 'basic',
     disabled: false,
     tabindex: 0,
     noElementPlaceholder: '',
@@ -1087,7 +1086,7 @@ export const TextInput: Story = {
     id: 'text-input',
     name: 'text-input',
     autocomplete: 'off',
-    height: 'basic',
+    thickness: 'basic',
     disabled: false,
     tabindex: 0,
     placeholder: 'Text',
@@ -1116,20 +1115,20 @@ export const Radio: Story = {
   args: {
     disabled: false,
     label: 'Radio',
-    styleType: 'radio-style',
+    design: 'plain',
     checked: true,
     tabindex: 0,
     value: 'radio',
-    height: 'thin',
+    thickness: 'thin',
   },
   argTypes: {
     disabled: boolean,
     label: text,
-    styleType: select(['radio-style', 'button']),
+    design: select(['plain', 'nmorph']),
     checked: boolean,
     tabindex: number,
     value: text,
-    height,
+    thickness,
   },
   render: render({ NmorphRadio }, '<NmorphRadio v-bind="args" />'),
 };
@@ -1139,19 +1138,19 @@ export const RadioGroup: Story = {
     id: 'radio-group',
     name: 'radio-group',
     autocomplete: '',
-    height: 'thin',
+    thickness: 'thin',
     disabled: false,
     tabindex: 0,
     modelValue: 'first',
     options,
-    styleType: 'radio-style',
+    design: 'plain',
     direction: 'row',
   },
   argTypes: {
     ...commonInputArgTypes,
     modelValue: text,
     options: object,
-    styleType: select(['radio-style', 'button']),
+    design: select(['plain', 'nmorph']),
     direction,
   },
   render: render(
@@ -1165,7 +1164,7 @@ export const SelectButton: Story = {
     id: 'select-button',
     name: 'select-button',
     autocomplete: '',
-    height: 'basic',
+    thickness: 'basic',
     disabled: false,
     tabindex: 0,
     modelValue: 'first',
@@ -1352,7 +1351,7 @@ export const CollapseItem: Story = {
     name: 'item',
     title: 'Collapse item',
     disabled: false,
-    height: 'basic',
+    thickness: 'basic',
     block: false,
     transitionSpeed: 220,
   },
@@ -1360,7 +1359,7 @@ export const CollapseItem: Story = {
     name: text,
     title: text,
     disabled: boolean,
-    height,
+    thickness,
     block: boolean,
     transitionSpeed: number,
   },
@@ -1451,7 +1450,7 @@ export const Empty: Story = {
   },
   render: render(
     { NmorphEmpty, NmorphButton },
-    '<NmorphEmpty v-bind="args"><template #action><NmorphButton text="Create" height="thin" /></template></NmorphEmpty>'
+    '<NmorphEmpty v-bind="args"><template #action><NmorphButton text="Create" thickness="thin" /></template></NmorphEmpty>'
   ),
 };
 
@@ -1462,7 +1461,7 @@ export const FormItem: Story = {
     label: 'Email',
     name: 'email',
     autocomplete: 'email',
-    height: 'basic',
+    thickness: 'basic',
     showValidationIcon: true,
     staticErrorBoxSpace: true,
   },
@@ -1472,14 +1471,14 @@ export const FormItem: Story = {
     label: text,
     name: text,
     autocomplete: text,
-    height,
+    thickness,
     showValidationIcon: boolean,
     staticErrorBoxSpace: boolean,
   },
   render: render(
     { NmorphForm, NmorphFormItem, NmorphTextInput },
     `<NmorphForm :value="args.value" validate-immediately style="${wideStyle}">
-      <NmorphFormItem :id="args.id" :label="args.label" :name="args.name" :autocomplete="args.autocomplete" :height="args.height" :show-validation-icon="args.showValidationIcon" :static-error-box-space="args.staticErrorBoxSpace">
+      <NmorphFormItem :id="args.id" :label="args.label" :name="args.name" :autocomplete="args.autocomplete" :thickness="args.thickness" :show-validation-icon="args.showValidationIcon" :static-error-box-space="args.staticErrorBoxSpace">
         <NmorphTextInput placeholder="name@mail.com" />
       </NmorphFormItem>
     </NmorphForm>`
@@ -1692,14 +1691,14 @@ export const TagItem: Story = {
     value: 'story',
     text: 'Story tag',
     removable: true,
-    height: 'basic',
+    thickness: 'basic',
     design: 'nmorph',
   },
   argTypes: {
     value: text,
     text: text,
     removable: boolean,
-    height,
+    thickness,
     design,
   },
   render: render({ NmorphTagItem }, '<NmorphTagItem v-bind="args" />'),
@@ -1710,7 +1709,7 @@ export const Textarea: Story = {
     id: 'textarea',
     name: 'textarea',
     autocomplete: '',
-    height: 'basic',
+    thickness: 'basic',
     disabled: false,
     tabindex: 0,
     modelValue: 'Textarea content',
@@ -1742,7 +1741,7 @@ export const TimePicker: Story = {
     id: 'time-picker',
     name: 'time-picker',
     autocomplete: '',
-    height: 'basic',
+    thickness: 'basic',
     disabled: false,
     tabindex: 0,
     modelValue: '09:30',

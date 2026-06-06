@@ -10,7 +10,7 @@ import {
   NmorphScroll,
   NmorphTextInput,
 } from '@/components';
-import { createCssSizeVariables, useModifiers } from '@/utils';
+import { createCssSizeVariables, createCssVariables, useModifiers } from '@/utils';
 import type {
   INmorphEmojiPickerEmit,
   INmorphEmojiPickerI18n,
@@ -42,6 +42,12 @@ const props = withDefaults(defineProps<INmorphEmojiPickerProps>(), {
   width: '300px',
   height: '260px',
   columns: 8,
+  cellSize: undefined,
+  toggleSize: undefined,
+  scrollbarSize: undefined,
+  hoverBackground: undefined,
+  activeBackground: undefined,
+  focusRing: undefined,
   disabled: false,
   hideShadow: false,
 });
@@ -386,10 +392,18 @@ const modifiers = computed(() =>
 );
 const styles = computed<CSSProperties>(() => ({
   ...createCssSizeVariables({
-    '--nmorph-emoji-picker-width': props.width,
-    '--nmorph-emoji-picker-height': props.height,
+    '--nmorph-private-emoji-picker-width': props.width,
+    '--nmorph-private-emoji-picker-height': props.height,
+    '--nmorph-private-emoji-picker-cell-size': props.cellSize,
+    '--nmorph-private-emoji-picker-toggle-size': props.toggleSize,
+    '--nmorph-private-emoji-picker-scrollbar-size': props.scrollbarSize,
   }),
-  '--nmorph-emoji-picker-columns': Math.max(1, Math.floor(props.columns)),
+  ...createCssVariables({
+    '--nmorph-private-emoji-picker-hover-background': props.hoverBackground,
+    '--nmorph-private-emoji-picker-active-background': props.activeBackground,
+    '--nmorph-private-emoji-picker-focus-ring': props.focusRing,
+  }),
+  '--nmorph-private-emoji-picker-columns': Math.max(1, Math.floor(props.columns)),
 }));
 
 const getEmojiLabel = (emoji: string) => labelByEmoji.value.get(emoji) || emoji;
@@ -466,7 +480,7 @@ const gridKeydownHandler = (event: KeyboardEvent) => {
       v-if="canCollapse"
       class="nmorph-emoji-picker__toggle-button nmorph-emoji-picker__expand-button"
       :class="{ 'nmorph-emoji-picker__collapse-button': expanded }"
-      design="button"
+      design="nmorph"
       :model-value="expanded"
       :aria-label="expanded ? texts.collapseLabel : texts.expandLabel"
       :title="expanded ? texts.collapseLabel : texts.expandLabel"
@@ -485,8 +499,8 @@ const gridKeydownHandler = (event: KeyboardEvent) => {
     <div v-if="showCompact" class="nmorph-emoji-picker__compact" role="group" :aria-label="texts.quickLabel">
       <NmorphScroll
         class="nmorph-emoji-picker__quick-list"
-        height="calc(var(--nmorph-emoji-picker-cell-size) + var(--nmorph-emoji-picker-scrollbar-size))"
-        max-height="calc(var(--nmorph-emoji-picker-cell-size) + var(--nmorph-emoji-picker-scrollbar-size))"
+        height="calc(var(--nmorph-private-emoji-picker-cell-size) + var(--nmorph-private-emoji-picker-scrollbar-size))"
+        max-height="calc(var(--nmorph-private-emoji-picker-cell-size) + var(--nmorph-private-emoji-picker-scrollbar-size))"
         scroll-y-prop="hidden"
         scroll-x-prop="auto"
         css-scroll-behavior="auto"
@@ -602,23 +616,28 @@ const gridKeydownHandler = (event: KeyboardEvent) => {
 
 <style lang="scss">
 .nmorph-emoji-picker {
-  --nmorph-emoji-picker-width: 300px;
-  --nmorph-emoji-picker-height: 260px;
-  --nmorph-emoji-picker-columns: 8;
-  --nmorph-emoji-picker-cell-size: 32px;
-  --nmorph-emoji-picker-toggle-size: 28px;
-  --nmorph-emoji-picker-scrollbar-size: 6px;
-  --nmorph-emoji-picker-hover-background: color-mix(in srgb, var(--nmorph-text-color) 8%, transparent);
-  --nmorph-emoji-picker-active-background: color-mix(in srgb, var(--nmorph-text-color) 12%, var(--nmorph-main-color));
-  --nmorph-emoji-picker-focus-ring: color-mix(in srgb, var(--nmorph-text-color) 24%, transparent);
-  --nmorph-emoji-picker-toggle-inset: calc(var(--indentation-02) + 2px);
-  --nmorph-emoji-picker-toggle-reserve: calc(
-    var(--nmorph-emoji-picker-toggle-size) + var(--nmorph-emoji-picker-toggle-inset) + var(--indentation-02)
+  --nmorph-private-emoji-picker-width: 300px;
+  --nmorph-private-emoji-picker-height: 260px;
+  --nmorph-private-emoji-picker-columns: 8;
+  --nmorph-private-emoji-picker-cell-size: 32px;
+  --nmorph-private-emoji-picker-toggle-size: 28px;
+  --nmorph-private-emoji-picker-scrollbar-size: 6px;
+  --nmorph-private-emoji-picker-hover-background: color-mix(in srgb, var(--nmorph-text-color) 8%, transparent);
+  --nmorph-private-emoji-picker-active-background: color-mix(
+    in srgb,
+    var(--nmorph-text-color) 12%,
+    var(--nmorph-main-color)
   );
+  --nmorph-private-emoji-picker-focus-ring: color-mix(in srgb, var(--nmorph-text-color) 24%, transparent);
+  --nmorph-private-emoji-picker-toggle-inset: calc(var(--indentation-02) + 2px);
+  --nmorph-private-ep-toggle-size: var(--nmorph-private-emoji-picker-toggle-size);
+  --nmorph-private-ep-toggle-inset: var(--nmorph-private-emoji-picker-toggle-inset);
+  --nmorph-private-ep-toggle-edge: calc(var(--nmorph-private-ep-toggle-size) + var(--nmorph-private-ep-toggle-inset));
+  --nmorph-private-emoji-picker-toggle-reserve: calc(var(--nmorph-private-ep-toggle-edge) + var(--indentation-02));
 
   position: relative;
   box-sizing: border-box;
-  width: min(100%, var(--nmorph-emoji-picker-width));
+  width: min(100%, var(--nmorph-private-emoji-picker-width));
   min-width: 0;
   color: var(--nmorph-text-color);
   font: inherit;
@@ -671,50 +690,50 @@ const gridKeydownHandler = (event: KeyboardEvent) => {
     &:focus-visible {
       box-shadow:
         var(--nmorph-shadow-inset),
-        0 0 0 1px var(--nmorph-emoji-picker-focus-ring);
+        0 0 0 1px var(--nmorph-private-emoji-picker-focus-ring);
     }
   }
 
   .nmorph-emoji-picker__quick-button,
   .nmorph-emoji-picker__emoji {
     display: inline-flex;
-    flex: 0 0 var(--nmorph-emoji-picker-cell-size);
+    flex: 0 0 var(--nmorph-private-emoji-picker-cell-size);
     justify-content: center;
     align-items: center;
-    width: var(--nmorph-emoji-picker-cell-size);
-    height: var(--nmorph-emoji-picker-cell-size);
+    width: var(--nmorph-private-emoji-picker-cell-size);
+    height: var(--nmorph-private-emoji-picker-cell-size);
     padding: 0;
     font-size: 20px;
     line-height: 1;
     border-radius: var(--default-border-radius);
 
     &:hover:not(:disabled) {
-      background: var(--nmorph-emoji-picker-hover-background);
+      background: var(--nmorph-private-emoji-picker-hover-background);
     }
   }
 
   .nmorph-emoji-picker__toggle-button {
     position: absolute;
-    top: var(--nmorph-emoji-picker-toggle-inset);
-    right: var(--nmorph-emoji-picker-toggle-inset);
+    top: var(--nmorph-private-emoji-picker-toggle-inset);
+    right: var(--nmorph-private-emoji-picker-toggle-inset);
     z-index: 2;
-    width: var(--nmorph-emoji-picker-toggle-size);
-    min-width: var(--nmorph-emoji-picker-toggle-size);
-    height: var(--nmorph-emoji-picker-toggle-size);
-    min-height: var(--nmorph-emoji-picker-toggle-size);
+    width: var(--nmorph-private-emoji-picker-toggle-size);
+    min-width: var(--nmorph-private-emoji-picker-toggle-size);
+    height: var(--nmorph-private-emoji-picker-toggle-size);
+    min-height: var(--nmorph-private-emoji-picker-toggle-size);
     color: var(--nmorph-semi-contrast-text-color);
 
-    --height: var(--nmorph-emoji-picker-toggle-size);
-    --size: var(--nmorph-emoji-picker-toggle-size);
-    --nmorph-selection-control-inline-padding: 0;
-    --color: currentColor;
+    --nmorph-private-control-height: var(--nmorph-private-emoji-picker-toggle-size);
+    --nmorph-private-selection-control-size: var(--nmorph-private-emoji-picker-toggle-size);
+    --nmorph-private-selection-control-inline-padding: 0;
+    --nmorph-private-icon-color: currentColor;
 
     .nmorph-checkbox__content,
     .nmorph-checkbox__fake {
-      width: var(--nmorph-emoji-picker-toggle-size);
-      min-width: var(--nmorph-emoji-picker-toggle-size);
-      height: var(--nmorph-emoji-picker-toggle-size);
-      min-height: var(--nmorph-emoji-picker-toggle-size);
+      width: var(--nmorph-private-emoji-picker-toggle-size);
+      min-width: var(--nmorph-private-emoji-picker-toggle-size);
+      height: var(--nmorph-private-emoji-picker-toggle-size);
+      min-height: var(--nmorph-private-emoji-picker-toggle-size);
     }
 
     .nmorph-checkbox__fake {
@@ -723,7 +742,7 @@ const gridKeydownHandler = (event: KeyboardEvent) => {
     }
 
     .nmorph-icon {
-      --color: currentColor;
+      --nmorph-private-icon-color: currentColor;
     }
 
     input:focus-visible {
@@ -733,18 +752,18 @@ const gridKeydownHandler = (event: KeyboardEvent) => {
     }
 
     input:focus-visible + .nmorph-checkbox__fake {
-      outline: 1px solid var(--nmorph-emoji-picker-focus-ring);
+      outline: 1px solid var(--nmorph-private-emoji-picker-focus-ring);
       outline-offset: 1px;
     }
 
     &:hover:not(.nmorph-checkbox--disabled) {
       color: var(--nmorph-text-color);
 
-      --color: var(--nmorph-text-color);
+      --nmorph-private-icon-color: var(--nmorph-text-color);
     }
 
     &:hover:not(.nmorph-checkbox--disabled) .nmorph-icon {
-      --color: var(--nmorph-text-color);
+      --nmorph-private-icon-color: var(--nmorph-text-color);
     }
   }
 
@@ -761,9 +780,9 @@ const gridKeydownHandler = (event: KeyboardEvent) => {
   .nmorph-emoji-picker__panel {
     display: flex;
     flex-direction: column;
-    height: var(--nmorph-emoji-picker-height);
+    height: var(--nmorph-private-emoji-picker-height);
     min-height: 180px;
-    max-height: min(60vh, var(--nmorph-emoji-picker-height));
+    max-height: min(60vh, var(--nmorph-private-emoji-picker-height));
     padding: var(--indentation-02);
     overflow: hidden;
   }
@@ -785,11 +804,11 @@ const gridKeydownHandler = (event: KeyboardEvent) => {
 
   &.nmorph-emoji-picker--collapsible {
     .nmorph-emoji-picker__compact {
-      padding-right: var(--nmorph-emoji-picker-toggle-reserve);
+      padding-right: var(--nmorph-private-emoji-picker-toggle-reserve);
     }
 
     .nmorph-emoji-picker__toolbar {
-      padding-right: var(--nmorph-emoji-picker-toggle-reserve);
+      padding-right: var(--nmorph-private-emoji-picker-toggle-reserve);
     }
   }
 
@@ -823,20 +842,20 @@ const gridKeydownHandler = (event: KeyboardEvent) => {
     padding: 0 10px;
     overflow: hidden;
     color: var(--nmorph-semi-contrast-text-color);
-    font-size: var(--font-size-extra-small);
-    line-height: var(--line-height-regular);
+    font-size: var(--nmorph-typography-body-small-font-size);
+    line-height: var(--nmorph-typography-body-small-line-height);
     white-space: nowrap;
     text-overflow: ellipsis;
     border-radius: var(--default-border-radius);
 
     &:hover:not(:disabled) {
       color: var(--nmorph-text-color);
-      background: var(--nmorph-emoji-picker-hover-background);
+      background: var(--nmorph-private-emoji-picker-hover-background);
     }
 
     &.nmorph-emoji-picker__category--active {
       color: var(--nmorph-text-color);
-      background: var(--nmorph-emoji-picker-active-background);
+      background: var(--nmorph-private-emoji-picker-active-background);
       box-shadow: var(--nmorph-shadow-inset);
     }
   }
@@ -864,14 +883,14 @@ const gridKeydownHandler = (event: KeyboardEvent) => {
   .nmorph-emoji-picker__section-title {
     padding: 0 4px;
     color: var(--nmorph-semi-contrast-text-color);
-    font-weight: 600;
-    font-size: var(--font-size-extra-small);
-    line-height: var(--line-height-regular);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--nmorph-typography-label-font-size);
+    line-height: var(--nmorph-typography-label-line-height);
   }
 
   .nmorph-emoji-picker__grid {
     display: grid;
-    grid-template-columns: repeat(var(--nmorph-emoji-picker-columns), minmax(0, 1fr));
+    grid-template-columns: repeat(var(--nmorph-private-emoji-picker-columns), minmax(0, 1fr));
     gap: 2px;
   }
 
@@ -894,7 +913,7 @@ const gridKeydownHandler = (event: KeyboardEvent) => {
     color: var(--nmorph-semi-contrast-text-color);
     text-align: center;
 
-    --color: currentColor;
+    --nmorph-private-icon-color: currentColor;
   }
 
   &.nmorph-emoji-picker--disabled {

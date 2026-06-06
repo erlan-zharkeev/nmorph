@@ -37,7 +37,7 @@
 - Компонент должен уметь стартовать в compact режиме с quick-row и кнопкой раскрытия.
 - Quick-list должен приходить пропом, чтобы проект мог подставлять часто используемые emoji.
 - Внутри UI-kit не должно быть чтения project settings, i18n store, Dexie или localStorage проекта.
-- Компонент должен быть стилизуем через nmorph CSS variables.
+- Component-specific styling should use explicit props; nmorph CSS variables are reserved for theme and foundation tokens.
 
 ## Frequent Emoji
 

@@ -12,22 +12,23 @@ const showHandler = () => {
 <template>
   <div class="image-preview-model-value-overview">
     <ClientOnly>
-      <NmorphImagePreview v-model="show" :src="Winter" />
-      <NmorphButton text="Show" @click="showHandler" />
+      <NmorphImagePreview
+        v-model="show"
+        :src="Winter"
+        :width="76"
+        :height="76"
+        preview-width="min(92vw, 840px)"
+        preview-height="min(72vh, 560px)"
+      />
+      <NmorphButton text="Show" design="plain" @click="showHandler" />
     </ClientOnly>
   </div>
 </template>
 
 <style lang="scss">
 .image-preview-model-value-overview {
-  .nmorph-image-preview {
-    --width: 200px;
-    --height: 200px;
-  }
-
   .nmorph-button {
     margin-top: 8px;
-    width: 100%;
   }
 }
 </style>

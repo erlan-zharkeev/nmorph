@@ -52,19 +52,8 @@ const getNotificationDurationLabel = (notification: TNmorphNotificationItem) =>
 
 const getNotificationStyle = (notification: TNmorphNotificationItem): CSSProperties =>
   ({
-    '--nmorph-notification-provider-duration': `${getNotificationDuration(notification)}ms`,
+    '--nmorph-private-notification-provider-duration': `${getNotificationDuration(notification)}ms`,
   }) as CSSProperties;
-
-const getNotificationAlertProps = (notification: TNmorphNotificationItem) => {
-  const alertProps = { ...notification };
-
-  delete alertProps.duration;
-  delete alertProps.placement;
-  delete alertProps.showDurationValue;
-  delete alertProps.width;
-
-  return alertProps;
-};
 
 const clearDurationTimer = (id: string, keepStartedAt = false) => {
   const timer = durationTimers.get(id);
@@ -233,9 +222,19 @@ onBeforeUnmount(() => {
         ]"
       >
         <NmorphAlert
+          :id="notification.id"
           class="nmorph-notification-provider__alert"
           :style="{ width: notification.width }"
-          v-bind="getNotificationAlertProps(notification)"
+          :type="notification.type"
+          :closable="notification.closable"
+          :title="notification.title"
+          :content="notification.content"
+          :fill="notification.fill"
+          :show-icon="notification.showIcon"
+          :bordered="notification.bordered"
+          :html="notification.html"
+          :close-icon-position="notification.closeIconPosition"
+          :background-color="notification.backgroundColor"
           @close="() => closeHandler(notification.id)"
         />
         <div
@@ -313,13 +312,14 @@ onBeforeUnmount(() => {
     border-radius: inherit;
     transform-origin: left center;
     opacity: 0.72;
-    animation: nmorph-notification-provider-duration var(--nmorph-notification-provider-duration) linear forwards;
+    animation: nmorph-notification-provider-duration var(--nmorph-private-notification-provider-duration) linear
+      forwards;
   }
 
   .nmorph-notification-provider__duration-value {
     flex: 0 0 auto;
     color: currentColor;
-    font-size: var(--font-size-extra-small);
+    font-size: var(--nmorph-typography-caption-font-size);
     line-height: 1;
     opacity: 0.72;
   }
@@ -441,73 +441,73 @@ onBeforeUnmount(() => {
     overflow: hidden;
 
     .nmorph-icon {
-      --color: var(--nmorph-text-color);
+      --nmorph-private-icon-color: var(--nmorph-text-color);
 
       display: flex;
       align-items: center;
-      width: var(--width);
-      min-width: var(--width);
-      height: var(--height);
-      min-height: var(--height);
+      width: var(--nmorph-private-icon-width);
+      min-width: var(--nmorph-private-icon-width);
+      height: var(--nmorph-private-icon-height);
+      min-height: var(--nmorph-private-icon-height);
     }
 
     .nmorph-icon--small {
-      --width: 14px;
-      --height: 14px;
+      --nmorph-private-icon-width: 14px;
+      --nmorph-private-icon-height: 14px;
     }
 
     .nmorph-icon--medium {
-      --width: 20px;
-      --height: 20px;
+      --nmorph-private-icon-width: 20px;
+      --nmorph-private-icon-height: 20px;
     }
 
     .nmorph-icon--large {
-      --width: 32px;
-      --height: 32px;
+      --nmorph-private-icon-width: 32px;
+      --nmorph-private-icon-height: 32px;
     }
 
     .nmorph-icon__content {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: var(--width);
-      min-width: var(--width);
-      height: var(--height);
-      min-height: var(--height);
+      width: var(--nmorph-private-icon-width);
+      min-width: var(--nmorph-private-icon-width);
+      height: var(--nmorph-private-icon-height);
+      min-height: var(--nmorph-private-icon-height);
       overflow: hidden;
     }
 
     .nmorph-alert__close .nmorph-icon,
     .nmorph-alert__content,
     .nmorph-alert__content-title {
-      --color: var(--nmorph-white-color);
+      --nmorph-private-icon-color: var(--nmorph-white-color);
     }
 
     .nmorph-alert--success .nmorph-alert__icon .nmorph-icon {
-      --color: var(--nmorph-success-color);
+      --nmorph-private-icon-color: var(--nmorph-success-color);
     }
 
     .nmorph-alert--error .nmorph-alert__icon .nmorph-icon {
-      --color: var(--nmorph-error-color);
+      --nmorph-private-icon-color: var(--nmorph-error-color);
     }
 
     .nmorph-alert--warning .nmorph-alert__icon .nmorph-icon {
-      --color: var(--nmorph-warn-color);
+      --nmorph-private-icon-color: var(--nmorph-warn-color);
     }
 
     .nmorph-alert--info .nmorph-alert__icon .nmorph-icon {
-      --color: var(--nmorph-info-color);
+      --nmorph-private-icon-color: var(--nmorph-info-color);
     }
 
     svg {
       width: 100%;
       height: 100%;
-      fill: var(--color);
+      fill: var(--nmorph-private-icon-color);
       stroke-width: 0;
     }
 
     path {
-      stroke: var(--color);
+      stroke: var(--nmorph-private-icon-color);
     }
   }
 

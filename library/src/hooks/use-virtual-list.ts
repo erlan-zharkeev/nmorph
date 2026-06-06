@@ -11,6 +11,7 @@ export const useVirtualList = <T>(items: Readonly<Ref<T[]>>, options: INmorphVir
   const containerRef = ref<HTMLElement | null>(null);
   const scrollTop = ref(0);
   const viewportHeight = ref(0);
+  let resizeObserver: ResizeObserver | null = null;
 
   const enabled = computed(() => options.enabled?.value ?? true);
   const overscan = computed(() => Math.max(options.overscan?.value ?? 0, 0));
@@ -129,6 +130,11 @@ export const useVirtualList = <T>(items: Readonly<Ref<T[]>>, options: INmorphVir
     nextTick(refresh);
     if (typeof window !== 'undefined') {
       window.addEventListener('resize', resizeHandler);
+
+      if ('ResizeObserver' in window) {
+        resizeObserver = new ResizeObserver(refresh);
+        if (containerRef.value) resizeObserver.observe(containerRef.value);
+      }
     }
   });
 
@@ -136,7 +142,20 @@ export const useVirtualList = <T>(items: Readonly<Ref<T[]>>, options: INmorphVir
     if (typeof window !== 'undefined') {
       window.removeEventListener('resize', resizeHandler);
     }
+
+    resizeObserver?.disconnect();
+    resizeObserver = null;
   });
+
+  watch(
+    containerRef,
+    (element, oldElement) => {
+      if (oldElement) resizeObserver?.unobserve(oldElement);
+      if (element) resizeObserver?.observe(element);
+      nextTick(refresh);
+    },
+    { flush: 'post' }
+  );
 
   watch(
     () => [items.value.length, enabled.value, itemHeight.value, dynamic.value],

@@ -209,7 +209,8 @@ const clearPointer = () => {
 };
 
 const handlePointerEnd = (event: PointerEvent) => {
-  if (pointerStart.value?.pointerId !== null && event.pointerId !== pointerStart.value.pointerId) return;
+  if (!pointerStart.value) return;
+  if (pointerStart.value.pointerId !== null && event.pointerId !== pointerStart.value.pointerId) return;
 
   const diff = getPointerDiff(event);
   const hasRealDrag = Boolean(diff && isHorizontalDrag(diff, DRAG_CLICK_THRESHOLD));

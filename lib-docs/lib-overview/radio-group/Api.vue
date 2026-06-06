@@ -5,7 +5,11 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { NmorphSelectionControlHeight } from "@nmorph/nmorph-ui-kit";
+import {
+  NmorphComponentDirection,
+  NmorphElementDesign,
+  NmorphSelectionControlThickness,
+} from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -15,8 +19,8 @@ const attributesData: IAttributesTableData[] = [
     required: true,
   },
   {
-    name: "height",
-    type: enumToString(NmorphSelectionControlHeight),
+    name: "thickness",
+    type: optionsToString(NmorphSelectionControlThickness),
     default: "thin",
   },
   {
@@ -34,13 +38,13 @@ const attributesData: IAttributesTableData[] = [
     default: "[]",
   },
   {
-    name: "style-type",
-    type: "button | radio-style",
-    default: "button",
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
   },
   {
     name: "direction",
-    type: "row | column",
+    type: optionsToString(NmorphComponentDirection),
     default: "row",
   },
 ];

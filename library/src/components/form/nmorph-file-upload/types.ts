@@ -1,45 +1,51 @@
-export enum NmorphImageResolution {
-  jpeg = 'image/jpeg',
-  jpg = 'image/jpg',
-  png = 'image/png',
-  gif = 'image/gif',
-  'svg-xml' = 'image/svg+xml',
-  webp = 'image/webp',
-}
+export const NmorphImageResolution = {
+  jpeg: 'image/jpeg',
+  jpg: 'image/jpg',
+  png: 'image/png',
+  gif: 'image/gif',
+  'svg-xml': 'image/svg+xml',
+  webp: 'image/webp',
+} as const;
+
+export type NmorphImageResolution = keyof typeof NmorphImageResolution;
 
 export const NmorphVideoResolution = {
   mp4: 'video/mp4',
   webm: 'video/webm',
   'video-ogg': 'video/ogg',
-  /**
-   * @deprecated Use `video-ogg` instead.
-   */
-  'wideo-ogg': 'video/ogg',
 } as const;
 
-export enum NmorphAudioResolution {
-  mpeg = 'audio/mpeg',
-  'audio-ogg' = 'audio/ogg',
-  wav = 'audio/wav',
-}
+export type NmorphVideoResolution = keyof typeof NmorphVideoResolution;
 
-export enum NmorphDocResolution {
-  pdf = 'application/pdf',
-  msword = 'application/msword',
-  docx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  xls = 'application/vnd.ms-excel',
-  xlsx = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  ppt = 'application/vnd.ms-powerpoint',
-  pptx = 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-  json = 'application/json',
-  xml = 'application/xml',
-}
+export const NmorphAudioResolution = {
+  mpeg: 'audio/mpeg',
+  'audio-ogg': 'audio/ogg',
+  wav: 'audio/wav',
+} as const;
 
-export enum NmorphArchiveResolution {
-  zip = 'application/zip',
-  rar = 'application/x-rar-compressed',
-  '7z' = 'application/x-7z-compressed',
-}
+export type NmorphAudioResolution = keyof typeof NmorphAudioResolution;
+
+export const NmorphDocResolution = {
+  pdf: 'application/pdf',
+  msword: 'application/msword',
+  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  xls: 'application/vnd.ms-excel',
+  xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  ppt: 'application/vnd.ms-powerpoint',
+  pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  json: 'application/json',
+  xml: 'application/xml',
+} as const;
+
+export type NmorphDocResolution = keyof typeof NmorphDocResolution;
+
+export const NmorphArchiveResolution = {
+  zip: 'application/zip',
+  rar: 'application/x-rar-compressed',
+  '7z': 'application/x-7z-compressed',
+} as const;
+
+export type NmorphArchiveResolution = keyof typeof NmorphArchiveResolution;
 
 export const resolution = {
   ...NmorphImageResolution,

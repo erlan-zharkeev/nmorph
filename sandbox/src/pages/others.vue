@@ -29,7 +29,7 @@ const transparentOverlayVisible = ref(false)
     <SandboxSection title="NmorphOverlay">
       <div class="row">
         <NmorphButton text="Show overlay" @click="overlayVisible = true" />
-        <NmorphButton text="Transparent overlay" style-type="transparent" @click="transparentOverlayVisible = true" />
+        <NmorphButton text="Transparent overlay" design="plain" @click="transparentOverlayVisible = true" />
       </div>
       <NmorphOverlay :show="overlayVisible" @on-outside-click="overlayVisible = false">
         <div class="overlay-panel">
@@ -41,7 +41,7 @@ const transparentOverlayVisible = ref(false)
       <NmorphOverlay :show="transparentOverlayVisible" transparent @on-outside-click="transparentOverlayVisible = false">
         <div class="overlay-panel overlay-panel--transparent">
           <h3>Transparent overlay</h3>
-          <NmorphButton text="Close" style-type="transparent" @click="transparentOverlayVisible = false" />
+          <NmorphButton text="Close" design="plain" @click="transparentOverlayVisible = false" />
         </div>
       </NmorphOverlay>
     </SandboxSection>

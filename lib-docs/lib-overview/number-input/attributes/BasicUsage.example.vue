@@ -12,7 +12,7 @@ const value = ref(3);
         :max="5"
         :min="1"
         :step="1"
-        height="thin"
+        thickness="thin"
       />
     </ClientOnly>
   </div>

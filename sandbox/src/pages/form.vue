@@ -166,8 +166,8 @@ watch(runtimeAccentColor, (accent) => {
             <NmorphIconSearch />
           </template>
         </NmorphTextInput>
-        <NmorphTextInput v-model="passwordValue" type-password placeholder="Password" height="thick" />
-        <NmorphTextInput model-value="Disabled value" disabled height="thin" />
+        <NmorphTextInput v-model="passwordValue" type-password placeholder="Password" thickness="thick" />
+        <NmorphTextInput model-value="Disabled value" disabled thickness="thin" />
       </div>
       <p class="hint">value: {{ textValue || 'empty' }}</p>
     </SandboxSection>
@@ -190,10 +190,10 @@ watch(runtimeAccentColor, (accent) => {
           v-model="multiSelectValue"
           :options="multiSelectOptions"
           value-required
-          height="thick"
+          thickness="thick"
           no-element-placeholder="Select stages"
         />
-        <NmorphSelect v-model="optionSelectValue" height="thin">
+        <NmorphSelect v-model="optionSelectValue" thickness="thin">
           <NmorphSelectOption value="small" label="Small" />
           <NmorphSelectOption value="medium" label="Medium" />
           <NmorphSelectOption
@@ -230,7 +230,7 @@ watch(runtimeAccentColor, (accent) => {
     <SandboxSection title="NmorphNumberInput">
       <div class="row">
         <NmorphNumberInput v-model="numberValue" :min="0" :max="10" :step="1" />
-        <NmorphNumberInput v-model="rightNumberValue" :min="0" :max="20" :step="2" action-btn-position-right height="thick" />
+        <NmorphNumberInput v-model="rightNumberValue" :min="0" :max="20" :step="2" action-btn-position-right thickness="thick" />
         <NmorphNumberInput :model-value="3" disabled />
       </div>
       <p class="hint">values: {{ numberValue }} / {{ rightNumberValue }}</p>
@@ -243,7 +243,7 @@ watch(runtimeAccentColor, (accent) => {
           <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
           <NmorphSelectButtonItem value="maybe" disabled>Maybe</NmorphSelectButtonItem>
         </NmorphSelectButton>
-        <NmorphSelectButton model-value="compact" height="thin" :track-padding="3" :item-size="30" item-font-size="12px">
+        <NmorphSelectButton model-value="compact" thickness="thin" :track-padding="3" :item-size="30" item-font-size="12px">
           <NmorphSelectButtonItem value="compact">Compact</NmorphSelectButtonItem>
           <NmorphSelectButtonItem value="wide">Wide</NmorphSelectButtonItem>
         </NmorphSelectButton>
@@ -259,7 +259,7 @@ watch(runtimeAccentColor, (accent) => {
     <SandboxSection title="NmorphOTPInput">
       <div class="stack">
         <NmorphOTPInput v-model="otpValue" :length="6" mode="numeric" />
-        <NmorphOTPInput v-model="alphaOtpValue" :length="4" mode="alphanumeric" height="thin" autocapitalize="characters" />
+        <NmorphOTPInput v-model="alphaOtpValue" :length="4" mode="alphanumeric" thickness="thin" autocapitalize="characters" />
         <NmorphOTPInput model-value="1234" :length="4" disabled />
       </div>
       <p class="hint">value: {{ otpValue || 'empty' }} / {{ alphaOtpValue || 'empty' }}</p>
@@ -276,9 +276,9 @@ watch(runtimeAccentColor, (accent) => {
         </p>
       </div>
       <div class="row">
-        <NmorphColorPicker v-model="colorValue" height="thin" />
+        <NmorphColorPicker v-model="colorValue" thickness="thin" />
         <NmorphColorPicker v-model="colorValue" show-value display-format='rgb' />
-        <NmorphColorPicker v-model="colorValue" height="thick" show-value />
+        <NmorphColorPicker v-model="colorValue" thickness="thick" show-value />
         <NmorphColorPicker model-value="#22c55e" show-value disabled />
       </div>
       <p class="hint">value: {{ colorValue }}</p>
@@ -288,23 +288,23 @@ watch(runtimeAccentColor, (accent) => {
       <div class="stack">
         <div class="row">
           <NmorphCheckbox v-model="checked" label="Single checkbox" />
-          <NmorphCheckbox v-model="checked" label="Thin checkbox" height="thin" />
+          <NmorphCheckbox v-model="checked" label="Thin checkbox" thickness="thin" />
           <NmorphCheckbox model-value label="Checked disabled" disabled />
-          <NmorphCheckbox v-model="checked" design="button" label="Button checkbox" height="thick" />
+          <NmorphCheckbox v-model="checked" design="nmorph" label="Button checkbox" thickness="thick" />
         </div>
-        <NmorphCheckboxGroup v-model="checkboxGroupValue" :options="checkboxOptions" height="thin" />
-        <NmorphCheckboxGroup v-model="checkboxButtonGroupValue" :options="checkboxOptions" design="checkbox" direction="column" height="thick" />
+        <NmorphCheckboxGroup v-model="checkboxGroupValue" :options="checkboxOptions" thickness="thin" />
+        <NmorphCheckboxGroup v-model="checkboxButtonGroupValue" :options="checkboxOptions" design="plain" direction="column" thickness="extra-thin" />
       </div>
       <p class="hint">checked: {{ checked }} / group: {{ checkboxGroupValue }} / buttons: {{ checkboxButtonGroupValue }}</p>
     </SandboxSection>
 
     <SandboxSection title="NmorphRadio">
       <div class="stack">
-        <NmorphRadioGroup v-model="radioValue" :options="radioOptions" height="thin" />
-        <NmorphRadioGroup v-model="radioStyleValue" :options="radioOptions" style-type="radio-style" direction="column" height="thick" />
+        <NmorphRadioGroup v-model="radioValue" :options="radioOptions" thickness="thin" />
+        <NmorphRadioGroup v-model="radioStyleValue" :options="radioOptions" design="plain" direction="column" thickness="thick" />
         <div class="row">
           <NmorphRadio value="standalone" label="Standalone checked" checked />
-          <NmorphRadio value="disabled" label="Disabled" height="thin" disabled />
+          <NmorphRadio value="disabled" label="Disabled" thickness="thin" disabled />
         </div>
       </div>
       <p class="hint">radio: {{ radioValue }} / {{ radioStyleValue }}</p>
@@ -343,8 +343,8 @@ watch(runtimeAccentColor, (accent) => {
     <SandboxSection title="NmorphDatePicker">
       <div class="row">
         <NmorphDatePicker v-model="dateValue" placeholder="Date" :width="260" :calendar-cell-height="40" />
-        <NmorphDatePicker v-model="datesValue" type="dates" placeholder="Dates" height="thin" />
-        <NmorphDatePicker v-model="rangeValue" type="daterange" placeholder="Range" height="thick" />
+        <NmorphDatePicker v-model="datesValue" type="dates" placeholder="Dates" thickness="thin" />
+        <NmorphDatePicker v-model="rangeValue" type="daterange" placeholder="Range" thickness="thick" />
         <NmorphDatePicker :model-value="dateValue" disabled />
       </div>
     </SandboxSection>
@@ -352,8 +352,8 @@ watch(runtimeAccentColor, (accent) => {
     <SandboxSection title="NmorphTimePicker">
       <div class="row">
         <NmorphTimePicker v-model="timeValue" placeholder="Time" :width="180" />
-        <NmorphTimePicker v-model="preciseTimeValue" show-seconds :minute-step="15" :second-step="10" height="thick" />
-        <NmorphTimePicker model-value="12:00" min-time="09:00" max-time="18:00" height="thin" />
+        <NmorphTimePicker v-model="preciseTimeValue" show-seconds :minute-step="15" :second-step="10" thickness="thick" />
+        <NmorphTimePicker model-value="12:00" min-time="09:00" max-time="18:00" thickness="thin" />
         <NmorphTimePicker model-value="08:00" disabled />
       </div>
       <p class="hint">time: {{ timeValue || 'empty' }} / {{ preciseTimeValue || 'empty' }}</p>

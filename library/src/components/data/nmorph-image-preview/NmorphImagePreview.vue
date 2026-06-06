@@ -30,6 +30,8 @@ const props = withDefaults(defineProps<INmorphImagePreviewProps>(), {
   showActionBar: true,
   width: undefined,
   height: undefined,
+  previewWidth: undefined,
+  previewHeight: undefined,
   radius: undefined,
   fit: 'cover',
   navigationButtonMargin: undefined,
@@ -238,10 +240,10 @@ const multipleSources = computed(() => sourceList.value.length > 1);
 const showNavigation = computed(() => props.showNavigationButtons && multipleSources.value);
 const triggerStyle = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--width': props.width,
-    '--height': props.height,
-    '--nmorph-image-preview-radius': props.radius,
-    '--nmorph-image-preview-trigger-gap': props.triggerGap,
+    '--nmorph-private-image-preview-trigger-width': props.width,
+    '--nmorph-private-image-preview-trigger-height': props.height,
+    '--nmorph-private-image-preview-radius': props.radius,
+    '--nmorph-private-image-preview-trigger-gap': props.triggerGap,
   })
 );
 const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 1}` : `Image ${index + 1}`);
@@ -296,6 +298,8 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
     right-class="nmorph-image-preview__right"
     actions-class="nmorph-image-preview__actions"
     :navigation-button-margin="props.navigationButtonMargin"
+    :content-width="props.previewWidth"
+    :content-height="props.previewHeight"
     :show-navigation="showNavigation"
     :show-action-bar="props.showActionBar"
     @close="closeHandler"
@@ -318,14 +322,14 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
     </NmorphImage>
     <template #actions>
       <div v-for="(action, idx) in actions" :key="idx" class="nmorph-image-preview__action-element">
-        <NmorphButton @click="action.handler">
+        <NmorphButton design="plain" @click="action.handler">
           <NmorphIcon>
             <component :is="action.icon" />
           </NmorphIcon>
         </NmorphButton>
       </div>
       <div class="nmorph-image-preview__action-element">
-        <NmorphButton :disabled="scaleLevel === 1" @click="enlargeShrinkActionData.handler">
+        <NmorphButton design="plain" :disabled="scaleLevel === 1" @click="enlargeShrinkActionData.handler">
           <NmorphIcon>
             <component :is="enlargeShrinkActionData.icon" />
           </NmorphIcon>
@@ -337,14 +341,14 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
 
 <style lang="scss">
 .nmorph-image-preview {
-  --width: 50px;
-  --height: 50px;
-  --nmorph-image-preview-radius: var(--default-border-radius);
+  --nmorph-private-image-preview-trigger-width: 50px;
+  --nmorph-private-image-preview-trigger-height: 50px;
+  --nmorph-private-image-preview-radius: var(--default-border-radius);
 
-  width: var(--width);
-  height: var(--height);
+  width: var(--nmorph-private-image-preview-trigger-width);
+  height: var(--nmorph-private-image-preview-trigger-height);
   overflow: hidden;
-  border-radius: var(--nmorph-image-preview-radius);
+  border-radius: var(--nmorph-private-image-preview-radius);
 
   .nmorph-image-preview__trigger {
     position: relative;
@@ -360,6 +364,16 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
       width: 100%;
       height: 100%;
     }
+
+    .nmorph-image__loading,
+    .nmorph-image__load-failed {
+      min-width: 0;
+      padding: var(--indentation-01);
+      overflow: hidden;
+      font-size: var(--nmorph-typography-caption-font-size);
+      line-height: var(--nmorph-typography-caption-line-height);
+      overflow-wrap: anywhere;
+    }
   }
 
   &.nmorph-image-preview--gallery-trigger {
@@ -370,7 +384,7 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
     .nmorph-image-preview__trigger {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--nmorph-image-preview-trigger-gap, 8px);
+      gap: var(--nmorph-private-image-preview-trigger-gap, 8px);
       width: auto;
       height: auto;
 
@@ -382,15 +396,15 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
     .nmorph-image-preview__trigger-item {
       position: relative;
       display: block;
-      width: var(--width);
-      height: var(--height);
+      width: var(--nmorph-private-image-preview-trigger-width);
+      height: var(--nmorph-private-image-preview-trigger-height);
       padding: 0;
       overflow: hidden;
       color: inherit;
       font: inherit;
       background: transparent;
       border: 0;
-      border-radius: var(--nmorph-image-preview-radius);
+      border-radius: var(--nmorph-private-image-preview-radius);
       cursor: pointer;
 
       &:hover {
@@ -410,8 +424,8 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
       justify-content: center;
       align-items: center;
       color: var(--nmorph-white-color);
-      font-weight: 600;
-      line-height: var(--line-height-regular);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--nmorph-typography-body-line-height);
       background: color-mix(in srgb, var(--nmorph-black-color) 60%, transparent);
       pointer-events: none;
     }

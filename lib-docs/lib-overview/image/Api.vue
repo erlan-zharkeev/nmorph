@@ -18,6 +18,18 @@ const attributesData: IAttributesTableData[] = [
     default: "-",
   },
   {
+    name: "width",
+    type: "Width",
+    default: "undefined",
+    description: "Root image width.",
+  },
+  {
+    name: "height",
+    type: "Height",
+    default: "undefined",
+    description: "Root image height.",
+  },
+  {
     name: "fit",
     type: docsLink(
       "Object-fit",

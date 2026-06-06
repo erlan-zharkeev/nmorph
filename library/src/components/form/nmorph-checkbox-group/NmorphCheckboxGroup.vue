@@ -12,9 +12,9 @@ import type { INmorphCheckboxGroupEmit, INmorphCheckboxGroupProps } from './type
 const props = withDefaults(defineProps<INmorphCheckboxGroupProps>(), {
   modelValue: () => [],
   options: () => [],
-  design: 'button',
+  design: 'nmorph',
   direction: 'row',
-  height: 'thin',
+  thickness: 'basic',
   disabled: false,
 });
 
@@ -46,11 +46,11 @@ const modifiers = computed(() =>
     'nmorph-checkbox-group': [props.design, props.direction],
   })
 );
-const height = computed(() => props.height);
+const thickness = computed(() => props.thickness);
 
 provide<NmorphCheckboxGroupSelectedValueInjectionType>('checkbox-group-selected-value', initialValue);
 provide<NmorphCheckboxGroupChangeCheckboxValueHandlerInjectionType>('change-checkbox-value-handler', changeHandler);
-provide('checkbox-group-height', height);
+provide('checkbox-group-thickness', thickness);
 </script>
 
 <template>
@@ -62,10 +62,9 @@ provide('checkbox-group-height', height);
           :id="option.id"
           :key="idx"
           :label="option.label"
-          :model-value="option.modelValue"
           :disabled="option.disabled || props.disabled"
-          :design="props.design"
-          :height="option.height || props.height"
+          :design="option.design || props.design"
+          :thickness="option.thickness || thickness"
         />
         <slot />
       </div>

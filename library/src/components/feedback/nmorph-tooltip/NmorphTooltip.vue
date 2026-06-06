@@ -166,12 +166,12 @@ const zIndex = useZIndex(
   () => props.zIndex
 );
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-tooltip-width': rootWidth.value,
-  '--nmorph-tooltip-z-index': zIndex.value,
+  '--nmorph-private-tooltip-root-width': rootWidth.value,
+  '--nmorph-private-tooltip-z-index': zIndex.value,
   ...createCssSizeVariables({
-    '--width': props.width,
-    '--max-width': props.maxWidth,
-    '--height': props.height,
+    '--nmorph-private-tooltip-width': props.width,
+    '--nmorph-private-tooltip-max-width': props.maxWidth,
+    '--nmorph-private-tooltip-height': props.height,
   }),
 }));
 const tooltipBody = ref<NmorphDomElementType>(null);
@@ -248,10 +248,9 @@ defineExpose({ tooltipBody, open, close, toggle });
 
 <style lang="scss">
 .nmorph-tooltip {
-  --max-width: 120px;
-
-  --width: fit-content;
-  --height: fit-content;
+  --nmorph-private-tooltip-max-width: 120px;
+  --nmorph-private-tooltip-width: fit-content;
+  --nmorph-private-tooltip-height: fit-content;
 
   display: inline-block;
 
@@ -269,10 +268,10 @@ defineExpose({ tooltipBody, open, close, toggle });
 
   .nmorph-tooltip__info-content {
     position: absolute;
-    z-index: var(--nmorph-tooltip-z-index);
-    width: var(--width);
-    max-width: var(--max-width);
-    height: var(--height);
+    z-index: var(--nmorph-private-tooltip-z-index);
+    width: var(--nmorph-private-tooltip-width);
+    max-width: var(--nmorph-private-tooltip-max-width);
+    height: var(--nmorph-private-tooltip-height);
     padding: var(--indentation-03);
     background: var(--nmorph-main-color);
     border-radius: var(--default-border-radius);
@@ -361,6 +360,6 @@ defineExpose({ tooltipBody, open, close, toggle });
     }
   }
 
-  width: var(--nmorph-tooltip-width);
+  width: var(--nmorph-private-tooltip-root-width);
 }
 </style>

@@ -59,17 +59,22 @@ const stepperSlots: ISlotsTableData[] = [
 ];
 
 const stepperEvents: IEventsTableData[] = [
-  { name: "update:model-value", type: "Number" },
+  {
+    name: "update:model-value",
+    type: "Number",
+    description: "Emitted when the active slide index changes.",
+  },
   {
     name: "change",
     type: "{ index: number; previousIndex: number; direction: 'previous' | 'next' }",
+    description: "Emitted with navigation details after the active slide changes.",
   },
 ];
 
 const stepperExposes: IExposesTableData[] = [
-  { name: "goTo", type: "(index: Number) => void" },
-  { name: "next", type: "() => void" },
-  { name: "previous", type: "() => void" },
+  { name: "goTo", type: "(index: Number) => void", description: "Moves to a specific slide." },
+  { name: "next", type: "() => void", description: "Moves to the next slide." },
+  { name: "previous", type: "() => void", description: "Moves to the previous slide." },
 ];
 </script>
 

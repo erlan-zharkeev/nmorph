@@ -2,46 +2,46 @@
 import { createCssVariables, useModifiers } from '@/utils';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { NmorphIcon, NmorphIconError } from '@/components';
-import { NmorphComponentHeight, type NmorphCSSProperties } from '@/types';
+import { NmorphComponentThickness, type NmorphCSSProperties } from '@/types';
 import type { INmorphTagItemComponentProps, INmorphTagItemEmit, INmorphTagItemSlots } from './types';
 
-const DEFAULT_COMMON_BACKGROUND_COLOR = 'var(--nmorph-gray-color)';
+const DEFAULT_PLAIN_BACKGROUND_COLOR = 'var(--nmorph-gray-color)';
 const DARK_CONTRAST_COLOR = 'var(--nmorph-black-color)';
 const LIGHT_CONTRAST_COLOR = 'var(--nmorph-white-color)';
 const DEFAULT_RGB_COLOR = { r: 201, g: 210, b: 222 };
 
 const props = withDefaults(defineProps<INmorphTagItemComponentProps>(), {
   text: '',
-  height: 'basic',
+  thickness: 'basic',
   removable: true,
   design: 'nmorph',
-  color: DEFAULT_COMMON_BACKGROUND_COLOR,
+  color: DEFAULT_PLAIN_BACKGROUND_COLOR,
 });
 
 defineSlots<INmorphTagItemSlots>();
 
 const tagRef = ref<HTMLElement | null>(null);
-const commonContentColor = ref(DARK_CONTRAST_COLOR);
+const plainContentColor = ref(DARK_CONTRAST_COLOR);
 let themeObserver: MutationObserver | null = null;
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height]],
+    nmorph: [NmorphComponentThickness[props.thickness]],
     'nmorph-tag-item': [props.design],
   })
 );
 
-const isCommonDesign = computed(() => props.design === 'common');
+const isPlainDesign = computed(() => props.design === 'plain');
 const closeIconColor = computed(() =>
-  isCommonDesign.value ? commonContentColor.value : 'var(--nmorph-contrast-text-color)'
+  isPlainDesign.value ? plainContentColor.value : 'var(--nmorph-contrast-text-color)'
 );
 
 const styles = computed<NmorphCSSProperties>(() => {
-  if (!isCommonDesign.value) return {};
+  if (!isPlainDesign.value) return {};
 
   return createCssVariables({
-    '--tag-item-background-color': props.color,
-    '--tag-item-content-color': commonContentColor.value,
+    '--nmorph-private-tag-item-background-color': props.color,
+    '--nmorph-private-tag-item-content-color': plainContentColor.value,
   });
 });
 
@@ -139,19 +139,19 @@ const getReadableContentColor = (backgroundColor: typeof DEFAULT_RGB_COLOR) => {
   return whiteContrast > blackContrast ? LIGHT_CONTRAST_COLOR : DARK_CONTRAST_COLOR;
 };
 
-const updateCommonContentColor = async () => {
+const updatePlainContentColor = async () => {
   await nextTick();
-  if (!isCommonDesign.value || !tagRef.value) return;
+  if (!isPlainDesign.value || !tagRef.value) return;
 
-  commonContentColor.value = getReadableContentColor(resolveColor(props.color, tagRef.value));
+  plainContentColor.value = getReadableContentColor(resolveColor(props.color, tagRef.value));
 };
 
 onMounted(() => {
-  updateCommonContentColor();
+  updatePlainContentColor();
 
   if (typeof MutationObserver === 'undefined' || !tagRef.value) return;
 
-  themeObserver = new MutationObserver(() => updateCommonContentColor());
+  themeObserver = new MutationObserver(() => updatePlainContentColor());
   themeObserver.observe(tagRef.value.ownerDocument.documentElement, {
     attributes: true,
     attributeFilter: ['nmorph-data-theme', 'class', 'style'],
@@ -162,7 +162,7 @@ onBeforeUnmount(() => {
   themeObserver?.disconnect();
 });
 
-watch(() => [props.color, props.design], updateCommonContentColor, { flush: 'post' });
+watch(() => [props.color, props.design], updatePlainContentColor, { flush: 'post' });
 </script>
 
 <template>
@@ -200,13 +200,15 @@ watch(() => [props.color, props.design], updateCommonContentColor, { flush: 'pos
   }
 
   span {
+    display: inline-block;
     color: inherit;
+    transform: translateY(var(--nmorph-private-control-text-offset-y));
   }
 
   .nmorph-tag-item__close-icon {
     cursor: pointer;
 
-    --color: currentColor;
+    --nmorph-private-icon-color: currentColor;
   }
 
   &.nmorph-tag-item--nmorph {
@@ -218,25 +220,11 @@ watch(() => [props.color, props.design], updateCommonContentColor, { flush: 'pos
         var(--nmorph-light-shade-color);
   }
 
-  &.nmorph-tag-item--common {
-    color: var(--tag-item-content-color);
-    background: var(--tag-item-background-color);
+  &.nmorph-tag-item--plain {
+    color: var(--nmorph-private-tag-item-content-color);
+    background: var(--nmorph-private-tag-item-background-color);
     border: none;
     box-shadow: none;
-  }
-
-  &.nmorph-tag-item--thin {
-    --height: var(--thin-component);
-
-    span {
-      font-weight: 400;
-      font-size: var(--font-size-extra-small);
-      line-height: var(--line-height-regular);
-    }
-  }
-
-  &.nmorph-tag-item--thick {
-    --height: var(--thick-component);
   }
 }
 </style>

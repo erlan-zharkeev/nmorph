@@ -55,7 +55,9 @@ const progress = computed({
     currentTime.value = audioRef.value.currentTime;
   },
 });
-const progressStyle = computed<CSSProperties>(() => ({ '--nmorph-audio-preview-progress': `${progress.value}%` }));
+const progressStyle = computed<CSSProperties>(() => ({
+  '--nmorph-private-audio-preview-progress': `${progress.value}%`,
+}));
 const hasActions = computed(
   () => Boolean(slots.actions) || (props.showDefaultActions && (props.src || props.downloadHref))
 );
@@ -76,7 +78,7 @@ const modifiers = computed(() =>
 );
 const styles = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--nmorph-audio-preview-width': props.width,
+    '--nmorph-private-audio-preview-width': props.width,
   })
 );
 
@@ -255,7 +257,7 @@ defineExpose({ audioRef });
   gap: var(--indentation-02);
   align-items: center;
   box-sizing: border-box;
-  width: var(--nmorph-audio-preview-width, 360px);
+  width: var(--nmorph-private-audio-preview-width, 360px);
   min-width: 0;
   max-width: 100%;
   min-height: 64px;
@@ -284,7 +286,7 @@ defineExpose({ audioRef });
     border-radius: var(--default-border-radius);
     cursor: default;
 
-    --color: currentColor;
+    --nmorph-private-icon-color: currentColor;
   }
 
   button.nmorph-audio-preview__icon {
@@ -314,8 +316,7 @@ defineExpose({ audioRef });
     }
 
     .nmorph-icon {
-      --nmorph-icon-color: var(--nmorph-contrast-text-color);
-      --color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
     }
   }
 
@@ -334,8 +335,7 @@ defineExpose({ audioRef });
     box-shadow: var(--nmorph-shadow-outset);
 
     .nmorph-icon {
-      --nmorph-icon-color: var(--nmorph-contrast-text-color);
-      --color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
     }
   }
 
@@ -369,15 +369,15 @@ defineExpose({ audioRef });
   .nmorph-audio-preview__error {
     min-width: 0;
     overflow: hidden;
-    font-size: var(--font-size-extra-small);
-    line-height: var(--line-height-regular);
+    font-size: var(--nmorph-typography-body-small-font-size);
+    line-height: var(--nmorph-typography-body-small-line-height);
     white-space: nowrap;
     text-overflow: ellipsis;
   }
 
   .nmorph-audio-preview__name {
     flex: 1 1 auto;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   .nmorph-audio-preview__time {
@@ -399,7 +399,7 @@ defineExpose({ audioRef });
     padding: 0;
     background: linear-gradient(
       to right,
-      var(--nmorph-accent-color) var(--nmorph-audio-preview-progress, 0%),
+      var(--nmorph-accent-color) var(--nmorph-private-audio-preview-progress, 0%),
       color-mix(in srgb, var(--nmorph-text-color) 16%, transparent) 0
     );
     border-radius: var(--border-radius-100);
@@ -455,7 +455,7 @@ defineExpose({ audioRef });
     }
 
     .nmorph-icon {
-      --color: currentColor;
+      --nmorph-private-icon-color: currentColor;
     }
   }
 
@@ -476,7 +476,7 @@ defineExpose({ audioRef });
   }
 
   &.nmorph-audio-preview--embedded {
-    width: var(--nmorph-audio-preview-width, 100%);
+    width: var(--nmorph-private-audio-preview-width, 100%);
     min-height: auto;
     padding: 0;
     background: transparent;

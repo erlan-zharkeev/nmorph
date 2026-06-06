@@ -24,7 +24,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "design",
-    type: "common | nmorph",
+    type: "nmorph | plain",
     default: "nmorph",
   },
   {

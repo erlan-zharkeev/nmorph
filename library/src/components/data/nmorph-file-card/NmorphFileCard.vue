@@ -121,8 +121,8 @@ const visualMediaPreviewAvailable = computed(() => videoPreviewAvailable.value |
 const mediaPreviewHeight = computed(() => props.height ?? (props.compact ? '96px' : '120px'));
 const styles = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--nmorph-file-card-height': props.height,
-    '--nmorph-file-card-media-height': mediaPreviewHeight.value,
+    '--nmorph-private-file-card-height': props.height,
+    '--nmorph-private-file-card-media-height': mediaPreviewHeight.value,
   })
 );
 const showInfo = computed(() => {
@@ -352,8 +352,8 @@ const errorHandler = () => emit('error');
   width: 100%;
   min-width: 0;
   max-width: 100%;
-  height: var(--nmorph-file-card-height, auto);
-  min-height: var(--nmorph-file-card-height, 64px);
+  height: var(--nmorph-private-file-card-height, auto);
+  min-height: var(--nmorph-private-file-card-height, 64px);
   padding: var(--indentation-03);
   color: var(--nmorph-text-color);
   background: var(--nmorph-main-color);
@@ -372,7 +372,7 @@ const errorHandler = () => emit('error');
     background: color-mix(in srgb, var(--nmorph-text-color) 10%, transparent);
     border-radius: var(--default-border-radius);
 
-    --color: currentColor;
+    --nmorph-private-icon-color: currentColor;
   }
 
   .nmorph-file-card__icon-action {
@@ -395,8 +395,7 @@ const errorHandler = () => emit('error');
     }
 
     .nmorph-icon {
-      --nmorph-icon-color: var(--nmorph-contrast-text-color);
-      --color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
     }
   }
 
@@ -426,15 +425,15 @@ const errorHandler = () => emit('error');
   }
 
   .nmorph-file-card__name {
-    font-weight: 600;
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-regular);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--nmorph-typography-label-font-size);
+    line-height: var(--nmorph-typography-label-line-height);
   }
 
   .nmorph-file-card__meta,
   .nmorph-file-card__error {
-    font-size: var(--font-size-extra-small);
-    line-height: var(--line-height-regular);
+    font-size: var(--nmorph-typography-body-small-font-size);
+    line-height: var(--nmorph-typography-body-small-line-height);
   }
 
   .nmorph-file-card__meta {
@@ -454,7 +453,7 @@ const errorHandler = () => emit('error');
 
   .nmorph-file-card__image-preview {
     display: block;
-    height: var(--nmorph-file-card-media-height, 120px);
+    height: var(--nmorph-private-file-card-media-height, 120px);
     padding: 0;
     overflow: hidden;
     color: inherit;
@@ -479,9 +478,9 @@ const errorHandler = () => emit('error');
     padding: 2px 6px;
     overflow: hidden;
     color: var(--nmorph-accent-color);
-    font-weight: 700;
-    font-size: var(--font-size-extra-small);
-    line-height: var(--line-height-regular);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--nmorph-typography-caption-font-size);
+    line-height: var(--nmorph-typography-caption-line-height);
     white-space: nowrap;
     text-transform: uppercase;
     text-overflow: ellipsis;
@@ -502,8 +501,8 @@ const errorHandler = () => emit('error');
     padding: 0 6px;
     overflow: hidden;
     color: var(--nmorph-contrast-text-color);
-    font-size: var(--font-size-extra-small);
-    line-height: var(--line-height-regular);
+    font-size: var(--nmorph-typography-caption-font-size);
+    line-height: var(--nmorph-typography-caption-line-height);
     white-space: nowrap;
     text-overflow: ellipsis;
     background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
@@ -540,7 +539,7 @@ const errorHandler = () => emit('error');
     }
 
     .nmorph-icon {
-      --color: currentColor;
+      --nmorph-private-icon-color: currentColor;
     }
   }
 
@@ -548,7 +547,7 @@ const errorHandler = () => emit('error');
     color: var(--nmorph-semi-contrast-text-color);
 
     .nmorph-icon {
-      --color: currentColor;
+      --nmorph-private-icon-color: currentColor;
     }
   }
 
@@ -566,7 +565,7 @@ const errorHandler = () => emit('error');
   }
 
   &.nmorph-file-card--compact {
-    min-height: var(--nmorph-file-card-height, 52px);
+    min-height: var(--nmorph-private-file-card-height, 52px);
     padding: var(--indentation-02);
     padding-inline-end: calc(var(--indentation-02) + 44px + var(--indentation-01));
 
@@ -581,7 +580,7 @@ const errorHandler = () => emit('error');
     }
 
     .nmorph-file-card__image-preview {
-      height: var(--nmorph-file-card-media-height, 96px);
+      height: var(--nmorph-private-file-card-media-height, 96px);
       margin-top: 0;
     }
 
@@ -644,7 +643,7 @@ const errorHandler = () => emit('error');
       display: block;
       width: 100%;
       max-width: none;
-      height: var(--nmorph-file-card-media-height, 100%);
+      height: var(--nmorph-private-file-card-media-height, 100%);
       border-radius: inherit;
       object-fit: cover;
     }
@@ -664,8 +663,7 @@ const errorHandler = () => emit('error');
 
       .nmorph-icon {
         flex: 0 0 auto;
-        --nmorph-icon-color: var(--nmorph-contrast-text-color);
-        --color: var(--nmorph-contrast-text-color);
+        --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
       }
     }
 

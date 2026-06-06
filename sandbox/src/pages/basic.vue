@@ -13,6 +13,7 @@ import {
   NmorphLink,
   NmorphScroll,
   NmorphSpace,
+  NmorphText,
 } from '@nmorph/nmorph-ui-kit'
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
 
@@ -25,18 +26,30 @@ const moveScroll = () => {
 
 <template>
   <div class="page">
+    <SandboxSection title="NmorphText">
+      <div class="stack text-demo">
+        <NmorphText as="h2" variant="title-large">Title large</NmorphText>
+        <NmorphText variant="body">Body text with the shared Nmorph typography scale.</NmorphText>
+        <NmorphText variant="caption" color="semi-contrast">Caption text</NmorphText>
+        <NmorphText variant="label" color="accent">Accent label</NmorphText>
+        <NmorphText class="text-demo__truncate" truncate>
+          Long single-line text that is intentionally truncated by the NmorphText component.
+        </NmorphText>
+      </div>
+    </SandboxSection>
+
     <SandboxSection title="NmorphButton">
       <div class="stack">
         <div class="row">
           <NmorphButton text="Default" />
-          <NmorphButton text="Thin" height="thin" />
-          <NmorphButton text="Thick" height="thick" />
+          <NmorphButton text="Thin" thickness="thin" />
+          <NmorphButton text="Thick" thickness="thick" />
           <NmorphButton text="Loading" loading />
           <NmorphButton text="Disabled" disabled />
         </div>
         <div class="row">
-          <NmorphButton text="Transparent" style-type="transparent" />
-          <NmorphButton text="Custom color" style-type="transparent" color="var(--nmorph-success-color)" />
+          <NmorphButton text="Transparent" design="plain" />
+          <NmorphButton text="Custom color" design="plain" color="var(--nmorph-success-color)" />
           <NmorphButton text="Accent hover" accent-bg-on-hover />
           <NmorphButton text="No ripple" :ripple="false" />
         </div>
@@ -52,7 +65,7 @@ const moveScroll = () => {
               <NmorphIconSearch />
             </template>
           </NmorphButton>
-          <NmorphButton text="With icon" style-type="transparent">
+          <NmorphButton text="With icon" design="plain">
             <template #icon>
               <NmorphIconCheck />
             </template>
@@ -99,7 +112,7 @@ const moveScroll = () => {
       <div class="stack">
         <NmorphSpace wrap size="large" align="center">
           <NmorphButton text="Save" />
-          <NmorphButton text="Cancel" style-type="transparent" />
+          <NmorphButton text="Cancel" design="plain" />
           <NmorphButton text="Disabled" disabled />
         </NmorphSpace>
         <NmorphSpace direction="column" size="small" fill>
@@ -127,7 +140,7 @@ const moveScroll = () => {
     <SandboxSection title="NmorphScroll">
       <div class="stack">
         <div class="row">
-          <NmorphButton text="Move to content" height="thin" @click="moveScroll" />
+          <NmorphButton text="Move to content" thickness="thin" @click="moveScroll" />
           <span class="hint">x: {{ scrollCoords.x }}, y: {{ scrollCoords.y }}</span>
         </div>
         <NmorphScroll
@@ -165,6 +178,10 @@ const moveScroll = () => {
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
+}
+
+.text-demo__truncate {
+  max-width: 260px;
 }
 
 .layout-demo {

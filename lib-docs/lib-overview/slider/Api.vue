@@ -5,6 +5,7 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
+import { NmorphElementDesign } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -21,6 +22,11 @@ const attributesData: IAttributesTableData[] = [
     name: "fill",
     type: "Boolean",
     default: "true",
+  },
+  {
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
   },
   {
     name: "disabled",

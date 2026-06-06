@@ -128,15 +128,15 @@ provide<NmorphTableIdInjectionType>('table-identifier', tableIdentifier);
 const virtualHeight = computed(() => toCssSize(props.virtualHeight));
 const tableStyle = computed<CSSProperties>(() => ({
   ...createCssVariables({
-    '--border-color': props.borderColor,
-    '--table-background-row-hover': props.rowHoverBackground,
+    '--nmorph-private-table-border-color': props.borderColor,
+    '--nmorph-private-table-row-hover-background': props.rowHoverBackground,
   }),
   ...createCssSizeVariables({
-    '--table-cell-height': props.cellHeight,
+    '--nmorph-private-table-cell-height': props.cellHeight,
   }),
 }));
 const tableBodyStyle = computed<Record<string, string | undefined>>(() => ({
-  '--table-virtual-row-height': `${props.virtualRowHeight}px`,
+  '--nmorph-private-table-virtual-row-height': `${props.virtualRowHeight}px`,
   height: virtualEnabled.value ? virtualHeight.value : undefined,
   overflowY: virtualEnabled.value ? 'auto' : undefined,
 }));
@@ -345,9 +345,9 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
 
 <style lang="scss">
 .nmorph-table {
-  --border-color: var(--nmorph-info-text-color);
-  --table-cell-height: auto;
-  --table-background-row-hover: var(--nmorph-info-color);
+  --nmorph-private-table-border-color: var(--nmorph-info-text-color);
+  --nmorph-private-table-cell-height: auto;
+  --nmorph-private-table-row-hover-background: var(--nmorph-info-color);
 
   .nmorph-table__header th {
     border-bottom: 0;
@@ -368,11 +368,11 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
 
   .nmorph-table__table-data {
     padding: var(--indentation-03) 0;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--nmorph-private-table-border-color);
   }
 
   .nmorph-table__table-data--bordered {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--nmorph-private-table-border-color);
   }
 
   .nmorph-table__cell {
@@ -385,7 +385,7 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
   }
 
   .nmorph-table__cell--data {
-    height: var(--table-cell-height);
+    height: var(--nmorph-private-table-cell-height);
   }
 
   .nmorph-table__body {
@@ -397,7 +397,7 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
   }
 
   .nmorph-table__body--virtual .nmorph-table__table-data {
-    height: var(--table-virtual-row-height);
+    height: var(--nmorph-private-table-virtual-row-height);
     padding-top: 0;
     padding-bottom: 0;
   }
@@ -419,11 +419,11 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
   }
 
   .nmorph-table__table-data-row--row-hover:hover {
-    background: var(--table-background-row-hover);
+    background: var(--nmorph-private-table-row-hover-background);
   }
 
   .nmorph-table__table-data-row--active {
-    background: var(--table-background-row-hover);
+    background: var(--nmorph-private-table-row-hover-background);
   }
 }
 
@@ -433,7 +433,7 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
   border-radius: var(--default-border-radius);
   box-shadow: var(--nmorph-shadow-outset);
 
-  --border-color: transparent;
+  --nmorph-private-table-border-color: transparent;
 
   .nmorph-table__button-wrapper {
     padding: var(--indentation-02);
@@ -443,5 +443,12 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
     background: var(--nmorph-main-color);
     box-shadow: var(--nmorph-shadow-inset);
   }
+}
+
+.nmorph-table--plain {
+  overflow: hidden;
+  background: var(--nmorph-main-color);
+  border: var(--nmorph-plain-border);
+  border-radius: var(--default-border-radius);
 }
 </style>

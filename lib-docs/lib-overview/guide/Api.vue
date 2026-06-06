@@ -166,21 +166,53 @@ const guideStepSlots: ISlotsTableData[] = [
 ];
 
 const guideEvents: IEventsTableData[] = [
-  { name: "update:model-value", type: "Boolean" },
-  { name: "update:active-step", type: "String | Number" },
-  { name: "change", type: "(step, index) => void" },
-  { name: "back", type: "(step, index) => void" },
-  { name: "next", type: "(step, index) => void" },
-  { name: "finish", type: "(step | null, index) => void" },
-  { name: "close", type: "(step | null, index) => void" },
+  {
+    name: "update:model-value",
+    type: "Boolean",
+    description: "Emitted when guide visibility changes.",
+  },
+  {
+    name: "update:active-step",
+    type: "String | Number",
+    description: "Emitted when the active step changes.",
+  },
+  {
+    name: "change",
+    type: "(step, index) => void",
+    description: "Emitted after the active step changes.",
+  },
+  {
+    name: "back",
+    type: "(step, index) => void",
+    description: "Emitted when the Back action is used.",
+  },
+  {
+    name: "next",
+    type: "(step, index) => void",
+    description: "Emitted when the Next action is used.",
+  },
+  {
+    name: "finish",
+    type: "(step | null, index) => void",
+    description: "Emitted when the guide finishes.",
+  },
+  {
+    name: "close",
+    type: "(step | null, index) => void",
+    description: "Emitted when the guide closes.",
+  },
 ];
 
 const guideExposes: IExposesTableData[] = [
-  { name: "back", type: "() => void" },
-  { name: "next", type: "() => void" },
-  { name: "finish", type: "() => void" },
-  { name: "close", type: "() => void" },
-  { name: "goToStep", type: "(name: String | Number) => void" },
+  { name: "back", type: "() => void", description: "Moves to the previous step." },
+  { name: "next", type: "() => void", description: "Moves to the next step." },
+  { name: "finish", type: "() => void", description: "Finishes the guide." },
+  { name: "close", type: "() => void", description: "Closes the guide." },
+  {
+    name: "goToStep",
+    type: "(name: String | Number) => void",
+    description: "Moves to a specific registered step.",
+  },
 ];
 </script>
 

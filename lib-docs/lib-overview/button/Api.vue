@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import {
   NmorphButtonType,
-  NmorphButtonStyle,
-  NmorphComponentHeight,
+  NmorphComponentThickness,
   NmorphButtonShape,
+  NmorphElementDesign,
 } from "@nmorph/nmorph-ui-kit";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { enumToString } from "~/utils";
+import { optionsToString } from "~/utils";
 
 const attributesData = [
   {
     name: "type",
-    type: enumToString(NmorphButtonType),
+    type: optionsToString(NmorphButtonType),
     default: "button",
   },
   {
@@ -45,9 +45,9 @@ const attributesData = [
     default: "false",
   },
   {
-    name: "style-type",
-    type: enumToString(NmorphButtonStyle),
-    default: "default",
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
   },
   {
     name: "color",
@@ -76,12 +76,12 @@ const attributesData = [
   },
   {
     name: "shape",
-    type: enumToString(NmorphButtonShape),
+    type: optionsToString(NmorphButtonShape),
     default: "default",
   },
   {
-    name: "height",
-    type: enumToString(NmorphComponentHeight),
+    name: "thickness",
+    type: optionsToString(NmorphComponentThickness),
     default: "basic",
   },
 ];
@@ -103,8 +103,8 @@ const slotData = [
 
 const variables = [
   {
-    name: "height",
-    default: "30px",
+    name: "nmorph-private-control-height",
+    default: "based on thickness",
   },
 ];
 

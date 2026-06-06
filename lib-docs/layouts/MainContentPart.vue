@@ -26,6 +26,19 @@ const leftAsideStorageKey = computed(() => {
   return `nmorph-docs:left-aside-scroll:${key}`;
 });
 
+const getSavedLeftAsideScrollTop = () => {
+  if (!import.meta.client) return 0;
+
+  const savedScrollTop = Number(sessionStorage.getItem(leftAsideStorageKey.value) ?? 0);
+
+  return Number.isFinite(savedScrollTop) ? savedScrollTop : 0;
+};
+
+const leftAsideScrollPosition = ref({
+  x: 0,
+  y: getSavedLeftAsideScrollTop(),
+});
+
 const saveLeftAsideScroll = (event?: Event) => {
   if (!import.meta.client) return;
 
@@ -40,12 +53,17 @@ const saveLeftAsideScroll = (event?: Event) => {
 const restoreLeftAsideScroll = async () => {
   if (!import.meta.client) return;
 
+  const savedScrollTop = getSavedLeftAsideScrollTop();
+  leftAsideScrollPosition.value = {
+    x: 0,
+    y: savedScrollTop,
+  };
+
   await nextTick();
 
   const scrollContainer = leftAsideScroll.value?.scrollDOMContainer;
-  const savedScrollTop = Number(sessionStorage.getItem(leftAsideStorageKey.value) ?? 0);
 
-  if (!scrollContainer || !Number.isFinite(savedScrollTop)) return;
+  if (!scrollContainer) return;
 
   scrollContainer.scrollTop = savedScrollTop;
 };
@@ -76,6 +94,8 @@ const slots = useSlots() as Record<string, unknown>;
   <div class="docs-main-layout">
     <NmorphScroll
       ref="leftAsideScroll"
+      :model-value="leftAsideScrollPosition"
+      css-scroll-behavior="auto"
       class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card docs-main-layout__left-aside"
       @on-scroll="saveLeftAsideScroll"
     >
@@ -98,7 +118,7 @@ const slots = useSlots() as Record<string, unknown>;
         v-if="slots['aside-right'] && isRouteReady && !isMainFullPage">
         <slot name="aside-right" />
       </aside>
-      <NmorphBacktop design="common" class="docs-main-layout__backtop" />
+      <NmorphBacktop design="plain" class="docs-main-layout__backtop" />
     </NmorphScroll>
   </div>
 </template>

@@ -15,11 +15,6 @@ export interface INmorphFormDataExpose {
   formData: NmorphFormValidationDataType;
 }
 
-/**
- * @deprecated Use `INmorphFormDataExpose` instead.
- */
-export interface INmorphFromDataExpose extends INmorphFormDataExpose {}
-
 export interface INmorphOptions {
   theme?: INmorphThemeOptions;
   i18n?: INmorphApplyTranslation;

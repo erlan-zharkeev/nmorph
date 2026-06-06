@@ -1,8 +1,8 @@
 import type { INmorphCollapseItemProps } from '@/components';
-import type { NmorphComponentHeight } from '@/types';
+import type { NmorphComponentThickness } from '@/types';
 
 export interface INmorphCollapseItemComponentProps extends INmorphCollapseItemProps {
-  height?: keyof typeof NmorphComponentHeight;
+  thickness?: keyof typeof NmorphComponentThickness;
   block?: boolean;
   transitionSpeed?: number | string;
 }

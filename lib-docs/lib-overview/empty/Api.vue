@@ -35,12 +35,12 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "design",
-    type: "'nmorph' | 'common'",
+    type: "'nmorph' | 'plain'",
     default: "nmorph",
   },
   {
     name: "shadow-type",
-    type: enumToString(NmorphShadowType),
+    type: optionsToString(NmorphShadowType),
     default: "inset",
   },
   {

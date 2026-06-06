@@ -10,7 +10,7 @@ const value = ref(2);
       <NmorphNumberInput
         action-btn-position-right
         v-model="value"
-        height="thick"
+        thickness="thick"
       />
     </ClientOnly>
   </div>

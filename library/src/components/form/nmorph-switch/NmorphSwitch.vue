@@ -61,10 +61,10 @@ defineExpose({ inputDOMRef });
 
 const styles = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--width': props.width,
-    '--height': props.height,
-    '--offset': props.offset,
-    '--thumb-height': props.thumbHeight,
+    '--nmorph-private-switch-width': props.width,
+    '--nmorph-private-switch-height': props.height,
+    '--nmorph-private-switch-offset': props.offset,
+    '--nmorph-private-switch-thumb-height': props.thumbHeight,
   })
 );
 
@@ -106,13 +106,13 @@ watch(modelValue, (newValue) => {
 
 <style lang="scss">
 .nmorph-switch {
-  --width: 40px;
-  --height: 20px;
-  --offset: 3px;
-  --thumb-height: 14px;
+  --nmorph-private-switch-width: 40px;
+  --nmorph-private-switch-height: 20px;
+  --nmorph-private-switch-offset: 3px;
+  --nmorph-private-switch-thumb-height: 14px;
 
-  width: var(--width);
-  height: var(--height);
+  width: var(--nmorph-private-switch-width);
+  height: var(--nmorph-private-switch-height);
   overflow: hidden;
   border-radius: var(--border-radius-999);
   cursor: pointer;
@@ -120,9 +120,9 @@ watch(modelValue, (newValue) => {
   .nmorph-switch__content {
     position: relative;
     height: 100%;
-    font-weight: 400;
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-regular);
+    font-weight: var(--nmorph-typography-control-small-font-weight);
+    font-size: var(--nmorph-typography-control-small-font-size);
+    line-height: var(--nmorph-typography-control-small-line-height);
     background: var(--nmorph-main-color);
     border-radius: var(--border-radius-999);
     box-shadow:
@@ -140,7 +140,7 @@ watch(modelValue, (newValue) => {
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 8px;
+    padding: 0 8px;
 
     &.nmorph-switch__bg-content--enable {
       justify-content: flex-start;
@@ -150,19 +150,19 @@ watch(modelValue, (newValue) => {
 
   input {
     width: 100%;
-    height: var(--height);
+    height: var(--nmorph-private-switch-height);
     opacity: 0;
   }
 
   .nmorph-switch-thumb {
     position: absolute;
-    top: var(--offset);
-    left: var(--offset);
+    top: var(--nmorph-private-switch-offset);
+    left: var(--nmorph-private-switch-offset);
     display: flex;
     justify-content: center;
     align-items: center;
-    width: var(--thumb-height);
-    height: var(--thumb-height);
+    width: var(--nmorph-private-switch-thumb-height);
+    height: var(--nmorph-private-switch-thumb-height);
     background: var(--nmorph-main-color);
     border-radius: var(--border-radius-999);
     box-shadow:
@@ -188,7 +188,7 @@ watch(modelValue, (newValue) => {
     }
 
     .nmorph-switch-thumb {
-      left: calc(100% - var(--thumb-height) - var(--offset));
+      left: calc(100% - var(--nmorph-private-switch-thumb-height) - var(--nmorph-private-switch-offset));
       box-shadow: none;
     }
   }

@@ -281,7 +281,7 @@ export const guidePages: GuidePage[] = [
           },
         ],
         points: [
-          { en: "`thick`, `basic`, `thin`, and `extra-thin` heights are used by inputs and selection controls.", ru: "`thick`, `basic`, `thin` и `extra-thin` используются inputs и selection controls." },
+          { en: "`thick`, `basic`, and `thin` heights are shared by inputs and selection controls; `extra-thin` is reserved for plain selection controls.", ru: "`thick`, `basic` и `thin` используются inputs и selection controls; `extra-thin` доступен только для plain selection controls." },
           { en: "`nmorph--shadow-outset`, `nmorph--shadow-inset`, and `nmorph--shadow-combined` are shared utility classes.", ru: "`nmorph--shadow-outset`, `nmorph--shadow-inset` и `nmorph--shadow-combined` - общие utility classes." },
           { en: "Focus states switch to accent background and focus text color for readable active controls.", ru: "Focus states переключаются на accent background и focus text color, чтобы активные контролы оставались читаемыми." },
         ],
@@ -300,7 +300,7 @@ export const guidePages: GuidePage[] = [
         title: { en: "NmorphIcon wrapper", ru: "NmorphIcon wrapper" },
         paragraphs: [
           {
-            en: "`NmorphIcon` normalizes icon size and color. It passes the icon color through CSS variables so exported icons and most raw SVG icons follow the same theme tokens.",
+            en: "`NmorphIcon` normalizes icon size and color through props so exported icons and most raw SVG icons follow the same theme tokens.",
             ru: "`NmorphIcon` нормализует размер и цвет иконок. Цвет проходит через CSS variables, поэтому экспортируемые icons и большинство raw SVG работают с одними theme tokens.",
           },
         ],
@@ -346,8 +346,8 @@ export const guidePages: GuidePage[] = [
             ru: "Form components включают text input, OTP input, number input, select, autocomplete, checkbox, checkbox group, radio, radio group, select button, switch, slider, color picker, date picker и file upload.",
           },
           {
-            en: "Most controls share `height`, `disabled`, `id`, `name`, `autocomplete`, and `tabindex` patterns through common input props. Selection controls also support `extra-thin` for compact screens and dense layouts.",
-            ru: "Большинство контролов разделяют `height`, `disabled`, `id`, `name`, `autocomplete` и `tabindex` через common input props. Selection controls также поддерживают `extra-thin` для компактных экранов и плотных layout.",
+            en: "Most controls share `thickness`, `disabled`, `id`, `name`, `autocomplete`, and `tabindex` patterns through common input props. Checkbox and radio controls also support `extra-thin` only when `design` is `plain`.",
+            ru: "Большинство контролов разделяют `thickness`, `disabled`, `id`, `name`, `autocomplete` и `tabindex` через common input props. Checkbox и radio поддерживают `extra-thin` только при `design=\"plain\"`.",
           },
         ],
       },

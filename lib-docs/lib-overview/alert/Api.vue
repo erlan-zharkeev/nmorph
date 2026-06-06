@@ -15,7 +15,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "type",
-    type: enumToString(NmorphAlertType),
+    type: optionsToString(NmorphAlertType),
     default: "info",
   },
   {

@@ -176,7 +176,7 @@ const modifiers = computed(() =>
 );
 const styles = computed(() =>
   createCssSizeVariables({
-    '--nmorph-file-upload-name-width': props.fileNameWidth,
+    '--nmorph-private-file-upload-name-width': props.fileNameWidth,
   })
 );
 </script>
@@ -247,7 +247,7 @@ const styles = computed(() =>
             compact
           />
           <div class="nmorph-file-upload__remove-file">
-            <NmorphButton height="thin" style-type="transparent" @click="removeFile(data.name)">
+            <NmorphButton design="plain" thickness="thin" @click="removeFile(data.name)">
               <template #icon-only>
                 <NmorphIconCross />
               </template>
@@ -359,7 +359,7 @@ const styles = computed(() =>
   .nmorph-file-upload__file-name {
     display: block;
     flex: 1 1 0;
-    width: var(--nmorph-file-upload-name-width, auto);
+    width: var(--nmorph-private-file-upload-name-width, auto);
     min-width: 0;
     max-width: 100%;
     overflow: hidden;

@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
+import {
+  NmorphComponentThickness,
+  NmorphElementDesign,
+} from "@nmorph/nmorph-ui-kit";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { enumToString } from "~/utils";
+import { optionsToString } from "~/utils";
 import type { IAttributesTableData, ISlotsTableData, IVariablesTableData } from "~/types";
 
 const attributesData: IAttributesTableData[] = [
@@ -12,9 +15,14 @@ const attributesData: IAttributesTableData[] = [
     required: true,
   },
   {
-    name: "height",
-    type: enumToString(NmorphComponentHeight),
+    name: "thickness",
+    type: optionsToString(NmorphComponentThickness),
     default: "basic",
+  },
+  {
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
   },
   {
     name: "disabled",
@@ -45,6 +53,12 @@ const attributesData: IAttributesTableData[] = [
     name: "item-font-size",
     type: "Font-size",
     default: "undefined",
+  },
+  {
+    name: "item-line-height",
+    type: "Line-height",
+    default: "undefined",
+    description: "Line height for select button items.",
   },
 ];
 

@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<INmorphCalendarProps>(), {
   type: 'date',
   modelValue: () => new Date(),
   cellHeight: undefined,
+  design: 'nmorph',
 });
 
 const emit = defineEmits<INmorphCalendarEmit>();
@@ -196,7 +197,7 @@ const modifiers = computed(() =>
 );
 const styles = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--table-data-cell-height': props.cellHeight,
+    '--nmorph-private-calendar-cell-height': props.cellHeight,
   })
 );
 const dateData = (data: unknown) => data as INmorphCalendarDate;
@@ -210,6 +211,7 @@ updateCalendar();
       <NmorphCalendarHeader
         :year="initialDate.getFullYear()"
         :month="initialDate.getMonth()"
+        :design="props.design"
         :show-previous-month-button="showHeaderButtons.showPreviousMonthButton"
         :show-today-button="showHeaderButtons.showTodayButton"
         :show-next-month-button="showHeaderButtons.showNextMonthButton"
@@ -219,7 +221,7 @@ updateCalendar();
       />
     </slot>
     <slot name="content">
-      <NmorphTable :data="calendar" bordered :row-hover="false">
+      <NmorphTable :data="calendar" bordered :row-hover="false" :design="props.design">
         <NmorphTableColumn
           v-for="columnName in days"
           :key="`${columnName}`"
@@ -264,20 +266,20 @@ updateCalendar();
 
 <style lang="scss">
 .nmorph-calendar {
-  --table-data-cell-height: 50px;
+  --nmorph-private-calendar-cell-height: 50px;
 
   background: var(--nmorph-main-color);
 
   .nmorph-table__table-data-row {
-    height: var(--table-data-cell-height);
+    height: var(--nmorph-private-calendar-cell-height);
   }
 
   .nmorph-table__cell {
-    --table-cell-height: var(--table-data-cell-height);
+    --nmorph-private-table-cell-height: var(--nmorph-private-calendar-cell-height);
 
-    font-weight: 400;
-    font-size: var(--font-size-extra-small);
-    line-height: var(--line-height-regular);
+    font-weight: var(--nmorph-typography-body-small-font-weight);
+    font-size: var(--nmorph-typography-body-small-font-size);
+    line-height: var(--nmorph-typography-body-small-line-height);
   }
 
   .nmorph-calendar-date {
@@ -289,9 +291,9 @@ updateCalendar();
 
   .nmorph-calendar-date--today {
     color: var(--nmorph-text-color);
-    font-weight: 700;
-    font-size: var(--font-size-medium);
-    line-height: var(--line-height-loose);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--nmorph-typography-title-small-font-size);
+    line-height: var(--nmorph-typography-title-small-line-height);
   }
 
   .nmorph-table .nmorph-table__cell {

@@ -1,31 +1,31 @@
-import type { INmorphCommonInputProps } from '@/types';
-export enum NmorphButtonStyle {
-  default = 'default',
-  transparent = 'transparent',
-}
+import type { INmorphCommonInputProps, NmorphElementDesignType } from '@/types';
 
-export enum NmorphButtonType {
-  submit = 'submit',
-  reset = 'reset',
-  button = 'button',
-}
+export const NmorphButtonType = {
+  submit: 'submit',
+  reset: 'reset',
+  button: 'button',
+} as const;
 
-export enum NmorphButtonShape {
-  default = 'default',
-  square = 'square',
-  round = 'round',
-  circle = 'circle',
-}
+export type NmorphButtonType = keyof typeof NmorphButtonType;
+
+export const NmorphButtonShape = {
+  default: 'default',
+  square: 'square',
+  round: 'round',
+  circle: 'circle',
+} as const;
+
+export type NmorphButtonShape = keyof typeof NmorphButtonShape;
 
 export interface INmorphButtonProps extends INmorphCommonInputProps {
-  styleType?: keyof typeof NmorphButtonStyle;
+  design?: NmorphElementDesignType;
   color?: string;
   loading?: boolean;
   ripple?: boolean;
-  type?: keyof typeof NmorphButtonType;
+  type?: NmorphButtonType;
   text?: string | number;
   accentBgOnHover?: boolean;
-  shape?: keyof typeof NmorphButtonShape;
+  shape?: NmorphButtonShape;
   fill?: boolean;
   tabindex?: number;
   toggle?: boolean;

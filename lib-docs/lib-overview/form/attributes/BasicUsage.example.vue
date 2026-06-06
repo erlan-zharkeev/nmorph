@@ -18,7 +18,7 @@ import {
   NmorphButton,
   NmorphIconEye,
   NmorphIconEyeBlocked,
-  type INmorphFromDataExpose,
+  type INmorphFormDataExpose,
   type NmorphFormValueType,
 } from "@nmorph/nmorph-ui-kit";
 
@@ -169,7 +169,7 @@ const form = reactive({
   },
 } satisfies NmorphFormValueType);
 
-const formRef: Ref<INmorphFromDataExpose | null> = ref(null);
+const formRef: Ref<INmorphFormDataExpose | null> = ref(null);
 
 const isFormValid = ref(false);
 
@@ -220,7 +220,7 @@ watch(
               :key="option.id"
               :label="option.label"
               :disabled="option.disabled"
-              style-type="button"
+              design="nmorph"
             />
           </NmorphCheckboxGroup>
         </NmorphFormItem>

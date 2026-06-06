@@ -202,6 +202,44 @@ const scrollHandler = (event: Event) => {
   }, props.scrollEndDelay);
 };
 
+const getWheelDeltaMultiplier = (event: WheelEvent) => {
+  if (event.deltaMode === 1) return 16;
+  if (event.deltaMode === 2) return Math.max(metrics.value.clientWidth, 1);
+
+  return 1;
+};
+
+const canConsumeVerticalWheel = (deltaY: number) => {
+  if (props.scrollYProp === 'hidden' || !hasVerticalScroll.value || !deltaY) return false;
+
+  const currentScrollTop = metrics.value.scrollTop;
+  const maxScrollTop = getMaxScroll('y');
+
+  if (deltaY < 0) return currentScrollTop > 0;
+  if (deltaY > 0) return currentScrollTop < maxScrollTop;
+
+  return false;
+};
+
+const wheelHandler = (event: WheelEvent) => {
+  const element = scrollDOMContainer.value;
+
+  if (!element || props.scrollXProp === 'hidden' || !hasHorizontalScroll.value || !event.deltaY) return;
+  if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+
+  const deltaY = event.deltaY * getWheelDeltaMultiplier(event);
+
+  if (canConsumeVerticalWheel(deltaY)) return;
+
+  const previousScrollLeft = element.scrollLeft;
+
+  setScrollPosition('x', previousScrollLeft + deltaY);
+
+  if (element.scrollLeft === previousScrollLeft) return;
+
+  event.preventDefault();
+};
+
 onUnmounted(() => {
   if (scrollEndTimeout !== undefined) {
     clearTimeout(scrollEndTimeout);
@@ -225,12 +263,14 @@ const modifiers = computed(() =>
   })
 );
 
+const getProgrammaticScrollBehavior = (): ScrollBehavior => (props.cssScrollBehavior === 'smooth' ? 'smooth' : 'auto');
+
 const moveTo = (coords: NmorphCoordsType) => {
   const { x, y } = coords;
   scrollDOMContainer.value?.scrollTo({
     left: x,
     top: y,
-    behavior: 'smooth',
+    behavior: getProgrammaticScrollBehavior(),
   });
 };
 
@@ -267,8 +307,8 @@ const scrollBehavior = computed(() => props.cssScrollBehavior);
 const scrollHeight = computed(() => props.height);
 const maxHeight = computed(() => props.maxHeight);
 const rootStyle = computed<StyleValue>(() => ({
-  '--bar-width': barWidth.value,
-  '--bar-height': barHeight.value,
+  '--nmorph-private-scroll-bar-width': barWidth.value,
+  '--nmorph-private-scroll-bar-height': barHeight.value,
   boxSizing: 'border-box',
   minWidth: '0',
   minHeight: '0',
@@ -435,7 +475,13 @@ const mouseLeaveHandler = () => {
     @mouseenter="mouseEnterHandler"
     @mouseleave="mouseLeaveHandler"
   >
-    <div ref="scrollDOMContainer" class="nmorph-scroll__viewport" :style="viewportStyle" @scroll="scrollHandler">
+    <div
+      ref="scrollDOMContainer"
+      class="nmorph-scroll__viewport"
+      :style="viewportStyle"
+      @scroll="scrollHandler"
+      @wheel="wheelHandler"
+    >
       <slot />
     </div>
     <div
@@ -467,7 +513,7 @@ const mouseLeaveHandler = () => {
 
 <style lang="scss">
 .nmorph-scroll {
-  --thumb-color: var(--nmorph-scroll-thumb-color, var(--nmorph-text-color));
+  --nmorph-private-scroll-thumb-color: var(--nmorph-scroll-thumb-color, var(--nmorph-text-color));
 
   position: relative;
   overflow: hidden;
@@ -515,21 +561,21 @@ const mouseLeaveHandler = () => {
   &__bar--vertical {
     top: 0;
     right: 0;
-    width: var(--bar-width);
+    width: var(--nmorph-private-scroll-bar-width);
   }
 
   &__bar--horizontal {
     right: 0;
     bottom: 0;
     left: 0;
-    height: var(--bar-height);
+    height: var(--nmorph-private-scroll-bar-height);
   }
 
   &__thumb {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: var(--thumb-color);
+    background-color: var(--nmorph-private-scroll-thumb-color);
     border-radius: var(--border-radius-40);
     cursor: pointer;
     transition: background-color ease-in-out 0.16s;
@@ -555,8 +601,8 @@ const mouseLeaveHandler = () => {
 }
 
 .nmorph-scroll::-webkit-scrollbar {
-  width: var(--bar-width);
-  height: var(--bar-height);
+  width: var(--nmorph-private-scroll-bar-width);
+  height: var(--nmorph-private-scroll-bar-height);
   background-color: transparent;
   cursor: pointer;
   transition: width ease-in-out 0.2s;
@@ -589,7 +635,7 @@ const mouseLeaveHandler = () => {
 }
 
 .nmorph-scroll::-webkit-scrollbar-thumb {
-  background-color: var(--thumb-color);
+  background-color: var(--nmorph-private-scroll-thumb-color);
   border-radius: var(--border-radius-40);
 }
 

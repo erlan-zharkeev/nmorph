@@ -5,7 +5,7 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 <template>
   <div class="button-disabled-overview">
     <NmorphButton disabled>Disabled</NmorphButton>
-    <NmorphButton disabled height="thin">Disabled</NmorphButton>
+    <NmorphButton disabled thickness="thin">Disabled</NmorphButton>
     <ClientOnly>
       <NmorphButton disabled loading />
     </ClientOnly>

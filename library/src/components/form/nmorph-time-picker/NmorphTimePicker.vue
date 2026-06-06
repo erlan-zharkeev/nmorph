@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphComponentHeight } from '@/types';
+import { NmorphComponentThickness } from '@/types';
 import { computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -18,7 +18,7 @@ import type {
 const props = withDefaults(defineProps<INmorphTimePickerProps>(), {
   modelValue: null,
   placeholder: '',
-  height: 'basic',
+  thickness: 'basic',
   disabled: false,
   hourStep: 1,
   minuteStep: 5,
@@ -149,7 +149,7 @@ const showClearButton = computed(() => props.clearable && Boolean(modelValue.val
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height]],
+    nmorph: [NmorphComponentThickness[props.thickness]],
     'nmorph-time-picker': [
       props.disabled && 'disabled',
       open.value && 'open',
@@ -161,13 +161,13 @@ const modifiers = computed(() =>
 
 const optionHeightModifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height]],
+    nmorph: [NmorphComponentThickness[props.thickness]],
   })
 );
 
 const styles = computed<CSSProperties>(() =>
   createCssSizeVariables({
-    '--width': props.width,
+    '--nmorph-private-time-picker-width': props.width,
   })
 );
 
@@ -221,7 +221,7 @@ defineExpose({ inputDOMRef });
       v-if="inputDOMRef && !props.disabled"
       :open="open"
       :relative-element="inputDOMRef"
-      :width="props.showSeconds ? 216 : 152"
+      :width="props.showSeconds ? 300 : 208"
       :fill-width="false"
       :z-index="props.zIndex"
       :aria-label="name"
@@ -292,11 +292,11 @@ defineExpose({ inputDOMRef });
 
 <style lang="scss">
 .nmorph-time-picker {
-  --width: 160px;
+  --nmorph-private-time-picker-width: 160px;
 
   position: relative;
-  width: var(--width);
-  height: var(--height);
+  width: var(--nmorph-private-time-picker-width);
+  height: var(--nmorph-private-control-height);
 
   .nmorph-time-picker__input {
     display: flex;
@@ -330,6 +330,7 @@ defineExpose({ inputDOMRef });
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    transform: translateY(var(--nmorph-private-control-text-offset-y));
   }
 
   .nmorph-time-picker__clear {
@@ -348,27 +349,31 @@ defineExpose({ inputDOMRef });
 
   .nmorph-time-picker__panel {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 8px minmax(0, 1fr);
-    gap: 6px;
+    grid-template-columns: minmax(64px, 1fr) 8px minmax(64px, 1fr);
+    gap: 8px;
     align-items: start;
-    padding: 8px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
     color: var(--nmorph-text-color);
   }
 
   .nmorph-time-picker__panel--with-seconds {
-    grid-template-columns: minmax(0, 1fr) 8px minmax(0, 1fr) 8px minmax(0, 1fr);
+    grid-template-columns: minmax(64px, 1fr) 8px minmax(64px, 1fr) 8px minmax(64px, 1fr);
   }
 
   .nmorph-time-picker__column {
     display: grid;
     grid-auto-flow: row;
-    grid-auto-rows: var(--height);
+    grid-auto-rows: var(--nmorph-private-control-height);
     grid-template-columns: minmax(0, 1fr);
-    gap: 4px;
+    gap: 6px;
     align-content: start;
-    max-height: 220px;
-    padding: 2px;
+    max-height: 210px;
+    padding: 4px;
     overflow: hidden auto;
+    background: color-mix(in srgb, var(--nmorph-text-color) 4%, transparent);
+    border-radius: var(--default-border-radius);
     scrollbar-gutter: stable;
   }
 
@@ -377,9 +382,9 @@ defineExpose({ inputDOMRef });
     justify-content: center;
     align-items: flex-start;
     min-width: 8px;
-    padding-top: calc((var(--height) - 1em) / 2 + 2px);
+    padding-top: calc((var(--nmorph-private-control-height) - 1em) / 2 + 2px);
     color: var(--nmorph-semi-contrast-text-color);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     line-height: 1;
   }
 
@@ -387,18 +392,19 @@ defineExpose({ inputDOMRef });
     display: flex;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
     width: 100%;
     min-width: 0;
-    min-height: var(--height);
+    min-height: var(--nmorph-private-control-height);
     margin: 0;
     padding: 0 8px;
     color: var(--nmorph-text-color);
     font: inherit;
     line-height: 1;
-    background: transparent;
+    background: var(--nmorph-main-color);
     border: 0;
     border-radius: 4px;
-    box-shadow: none;
+    box-shadow: var(--nmorph-shadow-outset);
     cursor: pointer;
     appearance: none;
   }
@@ -407,6 +413,7 @@ defineExpose({ inputDOMRef });
   .nmorph-time-picker__option--active {
     color: var(--nmorph-focus-text-color);
     background: var(--nmorph-accent-color);
+    box-shadow: var(--nmorph-shadow-inset);
   }
 
   .nmorph-time-picker__option:focus-visible {

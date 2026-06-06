@@ -8,14 +8,14 @@ export interface INmorphNotification extends INmorphAlertProps {
   placement?: TNmorphNotificationPlacement;
 }
 
-export enum NmorphNotificationPlacement {
-  'top-left' = 'top-left',
-  'top-center' = 'top-center',
-  'top-right' = 'top-right',
-  'bottom-left' = 'bottom-left',
-  'bottom-center' = 'bottom-center',
-  'bottom-right' = 'bottom-right',
-}
+export const NmorphNotificationPlacement = {
+  'top-left': 'top-left',
+  'top-center': 'top-center',
+  'top-right': 'top-right',
+  'bottom-left': 'bottom-left',
+  'bottom-center': 'bottom-center',
+  'bottom-right': 'bottom-right',
+} as const;
 
 export type TNmorphNotificationPlacement = keyof typeof NmorphNotificationPlacement;
 

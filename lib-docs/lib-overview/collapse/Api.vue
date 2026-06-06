@@ -6,7 +6,7 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
+import { NmorphComponentThickness } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -52,8 +52,8 @@ const itemAttributesData: IAttributesTableData[] = [
     default: "false",
   },
   {
-    name: "height",
-    type: enumToString(NmorphComponentHeight),
+    name: "thickness",
+    type: optionsToString(NmorphComponentThickness),
     default: "basic",
   },
   {

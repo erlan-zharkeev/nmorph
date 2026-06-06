@@ -20,7 +20,7 @@ const modifiers = computed(() =>
 
 const styles = computed<CSSProperties>(() =>
   createCssVariables({
-    '--loading-gradient': props.loadingGradient,
+    '--nmorph-private-skeleton-loading-gradient': props.loadingGradient,
   })
 );
 </script>
@@ -42,7 +42,7 @@ const styles = computed<CSSProperties>(() =>
 <style lang="scss">
 .nmorph-skeleton {
   &.nmorph-skeleton--loading {
-    --loading-gradient: linear-gradient(
+    --nmorph-private-skeleton-loading-gradient: linear-gradient(
       90deg,
       var(--nmorph-text-color) 25%,
       var(--nmorph-white-color) 37%,
@@ -55,7 +55,7 @@ const styles = computed<CSSProperties>(() =>
       left: 0;
       width: 100%;
       height: 100%;
-      background: var(--loading-gradient);
+      background: var(--nmorph-private-skeleton-loading-gradient);
       background-size: 400% 100%;
       opacity: 0.3;
       animation: nmorph-skeleton-loading-animation 2.4s ease infinite;

@@ -5,7 +5,10 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { NmorphComponentHeight } from "@nmorph/nmorph-ui-kit";
+import {
+  NmorphComponentThickness,
+  NmorphElementDesign,
+} from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -19,9 +22,14 @@ const attributesData: IAttributesTableData[] = [
     default: "id",
   },
   {
-    name: "height",
-    type: enumToString(NmorphComponentHeight),
+    name: "thickness",
+    type: optionsToString(NmorphComponentThickness),
     default: "basic",
+  },
+  {
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
   },
   {
     name: "disabled",
@@ -67,6 +75,24 @@ const attributesData: IAttributesTableData[] = [
     name: "indentation",
     type: "String",
     default: "auto",
+  },
+  {
+    name: "prepend-icon-indent",
+    type: "Length",
+    default: "undefined",
+    description: "Left padding reserved for a prepend icon.",
+  },
+  {
+    name: "prepend-icon-size",
+    type: "Length",
+    default: "undefined",
+    description: "Size of the prepend icon.",
+  },
+  {
+    name: "prepend-icon-color",
+    type: "Color",
+    default: "undefined",
+    description: "Color of the prepend icon.",
   },
   {
     name: "input-attrs",

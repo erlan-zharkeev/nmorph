@@ -110,7 +110,7 @@ export default {
       "other-messages": "Other translations",
       "css-variables": "CSS Variables",
       "css-variables-content":
-        "The library exposes the following CSS custom properties that you can use in your own styles.",
+        "The library exposes theme and foundation CSS custom properties for your own styles. Component-specific customization is handled through props.",
       "css-variables-theme-derived": "Theme-derived variables (set per theme)",
       "css-variables-auto-generated":
         "Additional text contrast variables (configurable per theme)",
@@ -167,7 +167,7 @@ export default {
       },
       typescript: {
         title: "Typed API",
-        text: "Typed props, exported enums, helper types, and examples that document the public component API.",
+        text: "Typed props, exported option objects, helper types, and examples that document the public component API.",
       },
     },
     "system-title": "How the library works",
@@ -224,6 +224,26 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "component-thickness-api":
+          "Breaking: component size preset props are now named thickness instead of height across Button, form controls, selection controls, Pagination, CollapseItem, TagItem, and related option data.",
+        "thin-input-centering":
+          "Thin native input text now uses the component height as its line box, improving optical vertical centering without changing swipe, click, or layout behavior.",
+        "design-api-plain":
+          "Breaking: surface design values now use design=\"plain\" instead of design=\"common\" across Empty, Backtop, SkeletonItem, Table, TagList, and TagItem.",
+        "selection-design-api":
+          "Breaking: NmorphButton, NmorphCheckbox, NmorphCheckboxGroup, NmorphRadio, and NmorphRadioGroup now use design=\"nmorph | plain\" for visual design.",
+        "form-control-design-api":
+          "Breaking: input-like form controls no longer expose a design prop; design remains available only for Checkbox, CheckboxGroup, Radio, and RadioGroup selection controls.",
+        "control-typography-contract":
+          "Shared component height classes now define control font size and line height, keeping thin/basic/thick text sizing consistent across compact controls.",
+        "typography-system":
+          "Added foundation typography tokens, NmorphText, and role-based component text styles for consistent text sizing across the library.",
+        "plain-surface-contract":
+          "Plain buttons, dropdowns, selection controls, and data surfaces now use a visible border.",
+        "component-css-vars-private-api":
+          "Breaking: component-level CSS variables are now private internals. Component customization moves to explicit props, while public CSS variables are reserved for theme and foundation tokens.",
+        "stepper-single-item-click":
+          "NmorphStepper no longer throws on pointerup for a single-item, non-interactive stepper while preserving swipe behavior and drag click suppression.",
         "attachment-preview-primitives":
           "Added NmorphVideoPreview, NmorphAudioPreview, and NmorphFileCard as reusable attachment UI primitives for video, audio, documents, and unknown files.",
         "file-upload-attachment-previews":
@@ -743,8 +763,8 @@ export default {
     "model-text": "Model text:",
     "explore-components": "Explore components",
     button: {
-      "style-type": {
-        subtitle: "Use *default* or *transparent* to define the base style.",
+      design: {
+        subtitle: "Use *nmorph* or *plain* to define the visual design.",
       },
       loading: {
         subtitle: "Use *boolean* to enable or disable the loading icon.",
@@ -753,9 +773,9 @@ export default {
         subtitle:
           "Use *boolean* to enable or disable the ripple effect on click.",
       },
-      height: {
+      thickness: {
         subtitle:
-          "Set the height, available values are *thick*, *basic*, *thin*.",
+          "Set the thickness, available values are *thick*, *basic*, *thin*.",
       },
       disabled: {
         subtitle: "Use *boolean* to disable the button.",
@@ -768,7 +788,7 @@ export default {
         info: {
           title: "Info",
           content:
-            "When using round or square, the size is changed using the --height variable.",
+            "When using round or square, the size follows the selected thickness.",
         },
         subtitle: "Use shape to change the border radius of the button.",
       },
@@ -776,13 +796,13 @@ export default {
         type: "Native button type",
         text: "Button text",
         loading: "Enable/disable loader",
-        "style-type": "Change button style",
+        design: "Change button design",
         color: "Change text and icon color for a transparent button",
         "accent-bg-on-hover": "Enable/disable background color on hover",
         ripple: "Enable/disable ripple on click",
         fill: "Fill container with button",
         disabled: "Disable button",
-        height: "Change button height",
+        thickness: "Change button thickness",
         shape: "Change shape",
       },
       slot: {
@@ -1022,9 +1042,9 @@ export default {
           "Sets the badge text size: tiny, extra-small, base, medium, large, or extra-large",
         "z-index": "Defines the stacking order of the badge",
         "offset-y":
-          "Vertical offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-y. Ignored when type is tag",
+          "Vertical offset of the badge. For ribbon, controls ribbon positioning. Ignored when type is tag",
         "offset-x":
-          "Horizontal offset of the badge. For ribbon, forwards to --nmorph-badge-ribbon-offset-x. Ignored when type is tag",
+          "Horizontal offset of the badge. For ribbon, controls ribbon positioning. Ignored when type is tag",
       },
       slot: {
         default:
@@ -1050,7 +1070,7 @@ export default {
       },
       "card-padding": {
         subtitle:
-          "Sets the card padding through the same CSS value used by the `--card-padding` variable.",
+          "Sets the card padding.",
       },
       fill: {
         subtitle:
@@ -1081,7 +1101,7 @@ export default {
     empty: {
       "basic-usage": {
         subtitle:
-          "Shows empty states with default content, custom icons, actions, and common or nmorph surfaces.",
+          "Shows empty states with default content, custom icons, actions, and plain or nmorph surfaces.",
       },
       api: {
         title: "Main empty state title.",
@@ -1156,7 +1176,17 @@ export default {
         loadFailedText: "Failed to load image.",
       },
     },
+    layout: {
+      "basic-usage": {
+        subtitle:
+          "Stretches header, aside, main, and footer areas across the example card.",
+      },
+    },
     "tag-list": {
+      "basic-usage": {
+        subtitle:
+          "Shows removable tags, selectable plain tags, and a compact custom-content row.",
+      },
       api: {
         "model-value": "List of tags",
         design: "Defines the default visual style for tags in the list",
@@ -1179,12 +1209,12 @@ export default {
             "If you want the tag display to be handled automatically, you can wrap the component in NmorphTagList.",
         },
       },
-      height: {
-        subtitle: "Defines the height of the component.",
+      thickness: {
+        subtitle: "Defines the thickness of the component.",
       },
       design: {
         subtitle:
-          "If set to *common*, the component uses a plain token-backed background with contrast text and icons.",
+          "If set to *plain*, the component uses a token-backed background with contrast text and icons.",
       },
       api: {
         value: "Defines the identifier value for the component",
@@ -1192,7 +1222,7 @@ export default {
         removable:
           "Defines whether the component can be removed. Works automatically when wrapped in NmorphTagList",
         design: "Defines the style of the component",
-        height: "Sets the height of the component",
+        thickness: "Sets the thickness of the component",
       },
       events: {
         close: "Returns the value of the closed tag",
@@ -1212,6 +1242,10 @@ export default {
       },
     },
     collapse: {
+      "basic-usage": {
+        subtitle:
+          "Shows regular, disabled, and custom-title panels with the title chevron.",
+      },
       api: {
         "model-value": "Names of the currently opened panels",
         accordion: "Allows only one panel to be opened at a time",
@@ -1226,7 +1260,7 @@ export default {
         title: "Panel title text",
         disabled: "Disables the panel",
         block: "Prevents toggling the panel when set to true",
-        height: "Sets the title height",
+        thickness: "Sets the title thickness",
         "transition-speed":
           "Overrides the panel open and close transition speed. Numbers are treated as milliseconds",
       },
@@ -1236,6 +1270,63 @@ export default {
       },
       variables: {
         "transition-speed": "Panel content transition speed",
+      },
+    },
+    "emoji-picker": {
+      "basic-usage": {
+        subtitle: "Shows emoji selection with search and the selected value.",
+      },
+    },
+    "audio-preview": {
+      "basic-usage": {
+        subtitle:
+          "Shows an embedded audio preview with name, duration, and default actions.",
+      },
+    },
+    "audio-meter": {
+      "basic-usage": {
+        subtitle:
+          "Requests microphone access and feeds the live level into bars, line, and ring variants.",
+      },
+    },
+    "media-gallery": {
+      "basic-usage": {
+        subtitle:
+          "Shows a mixed image and video gallery with trigger cards and a preview overlay.",
+      },
+    },
+    "media-tile": {
+      "basic-usage": {
+        subtitle:
+          "Shows a video tile, fallback tile, and loading state for call interfaces.",
+      },
+    },
+    "video-preview": {
+      "basic-usage": {
+        subtitle:
+          "Shows a video preview with poster, metadata, and an internal preview overlay.",
+      },
+    },
+    "file-card": {
+      "basic-usage": {
+        subtitle:
+          "Shows document, image-preview, and loading file cards in one responsive row.",
+      },
+    },
+    guide: {
+      "basic-usage": {
+        subtitle: "Shows a two-step guide attached to wrapped targets.",
+      },
+    },
+    stepper: {
+      "basic-usage": {
+        subtitle: "Shows controlled step navigation with a custom indicator slot.",
+      },
+    },
+    text: {
+      "basic-usage": {
+        subtitle:
+          "Shows typography variants, color roles, and truncation in one compact stack.",
       },
     },
     skeleton: {
@@ -1451,7 +1542,7 @@ export default {
         "elements-quantity-on-page":
           "Number of elements displayed on each page.",
         disabled: "Boolean value that disables the pagination component.",
-        height: "Height of pagination controls.",
+        thickness: "thickness of pagination controls.",
         "hide-on-single-page":
           "Hides the pagination component if there is only one page.",
         "max-visible-pages":
@@ -1474,7 +1565,7 @@ export default {
         info: {
           title: "Important Information",
           content:
-            "'bordered' property works only if 'design' property is set to 'common'. Additionally, sorting currently works only with two values: 'ascending' and 'descending'.\nPlease note that the table is under active development and may contain bugs.",
+            "'bordered' property works only if 'design' property is set to 'plain'. Additionally, sorting currently works only with two values: 'ascending' and 'descending'.\nPlease note that the table is under active development and may contain bugs.",
         },
       },
       api: {
@@ -1482,7 +1573,7 @@ export default {
         "row-hover":
           "Boolean value that enables or disables hover effect on table rows",
         bordered:
-          "Boolean value that enables or disables borders around table cells. Works only if 'design' property is set to 'common'",
+          "Boolean value that enables or disables borders around table cells. Works only if 'design' property is set to 'plain'",
         sort: "Defines the sorting behavior for table columns",
         design: "Table display style",
         virtual: "Enables virtual rendering for large table datasets",
@@ -1934,7 +2025,7 @@ export default {
         subtitle:
           "Controls which characters are allowed: *numeric*, *text*, or *alphanumeric*.",
       },
-      height: {
+      thickness: {
         subtitle: "Sets the size of each OTP cell.",
       },
       disabled: {
@@ -1945,7 +2036,7 @@ export default {
         name: "Sets the hidden input name. Inherits NmorphFormItem name or id when omitted",
         autocomplete:
           "Autocomplete token for OTP cells. Defaults to one-time-code and can also be inherited from NmorphFormItem",
-        height: "Defines the size of each OTP cell",
+        thickness: "Defines the size of each OTP cell",
         disabled: "Boolean value that disables the OTP input",
         tabindex:
           "Base tabindex for OTP cells. Following cells increment it automatically",
@@ -1971,8 +2062,8 @@ export default {
       },
     },
     "text-input": {
-      height: {
-        subtitle: "Sets the height of the input field.",
+      thickness: {
+        subtitle: "Sets the thickness of the input field.",
       },
       disabled: {
         subtitle: "Disables the input field if set to *true*.",
@@ -1995,7 +2086,7 @@ export default {
         autocomplete:
           "Autocomplete value for the native input. Can also be inherited from NmorphFormItem",
         tabindex: "Native tabindex value for the input",
-        height: "Defines the height of the input field",
+        thickness: "Defines the thickness of the input field",
         disabled: "Boolean value that disables the input field",
         placeholder: "Text displayed as a hint when the input field is empty",
         label: "Text label associated with the input field",
@@ -2032,8 +2123,8 @@ export default {
       },
     },
     "color-picker": {
-      height: {
-        subtitle: "Sets the height of the color picker.",
+      thickness: {
+        subtitle: "Sets the thickness of the color picker.",
       },
       disabled: {
         subtitle: "Disables the color picker if set to *true*.",
@@ -2052,7 +2143,7 @@ export default {
       api: {
         id: "Sets the native input id. Inherits NmorphFormItem id when used inside a form item",
         name: "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
-        height: "Defines the height of the color picker",
+        thickness: "Defines the thickness of the color picker",
         disabled: "Boolean value that disables the color picker",
         "model-value": "Current color value in hex format",
         "show-value":
@@ -2139,18 +2230,18 @@ export default {
         subtitle: "Specifies the label text for the checkbox.",
       },
       design: {
-        subtitle: "Defines the design style of the checkbox.",
+        subtitle: "Defines the visual style of the checkbox.",
       },
-      height: {
-        subtitle: "Sets the checkbox height.",
+      thickness: {
+        subtitle: "Sets the checkbox thickness.",
       },
       api: {
         id: "Unique identifier for the checkbox",
         disabled: "Boolean value that disables the checkbox",
         "model-value": "Checkbox state (checked or not)",
         label: "Label displayed next to the checkbox",
-        design: "Defines the design style of the checkbox",
-        height: "Defines the checkbox height",
+        design: "Defines the visual design of the checkbox",
+        thickness: "Defines the checkbox thickness",
       },
       slot: {
         default: "Slot for customizing the checkbox content",
@@ -2168,11 +2259,11 @@ export default {
     },
     "checkbox-group": {
       api: {
-        height: "Defines the height of checkboxes in the group",
+        thickness: "Defines the thickness of checkboxes in the group",
         disabled: "Disables all checkboxes in the group",
         "model-value": "Array of selected values",
         options: "Checkbox options",
-        design: "Design style of the checkbox group",
+        design: "Visual design of the checkbox group",
         direction: "Direction of the checkbox group layout",
       },
       slot: {
@@ -2188,8 +2279,8 @@ export default {
       "basic-usage": {
         placeholder: "Text...",
       },
-      height: {
-        subtitle: "Defines the height of the autocomplete input field.",
+      thickness: {
+        subtitle: "Defines the thickness of the autocomplete input field.",
       },
       disabled: {
         subtitle: "Disables the autocomplete field.",
@@ -2212,7 +2303,7 @@ export default {
         name: "Sets the name for the nested text input. Inherits NmorphFormItem name or id when omitted",
         autocomplete:
           "Autocomplete value passed to the nested text input. Can also be inherited from NmorphFormItem",
-        height: "Height of the autocomplete input field",
+        thickness: "thickness of the autocomplete input field",
         disabled: "Disables the autocomplete input field",
         "model-value": "Current value of the input field",
         placeholder: "Hint displayed when the input field is empty",
@@ -2279,8 +2370,8 @@ export default {
     },
     "number-input": {
       "basic-usage": {},
-      height: {
-        subtitle: "Defines the height of the number input field.",
+      thickness: {
+        subtitle: "Defines the thickness of the number input field.",
       },
       disabled: {
         subtitle: "Disables the number input field if set to *true*.",
@@ -2294,7 +2385,7 @@ export default {
         name: "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
         autocomplete:
           "Autocomplete value for the native number input. Can also be inherited from NmorphFormItem",
-        height: "Height of the number input field",
+        thickness: "thickness of the number input field",
         disabled: "Boolean value that disables the input field",
         "model-value": "Current value of the number input field",
         max: "Maximum allowed value",
@@ -2314,8 +2405,8 @@ export default {
       },
     },
     "select-button": {
-      height: {
-        subtitle: "Sets the height of the component.",
+      thickness: {
+        subtitle: "Sets the thickness of the component.",
       },
       disabled: {
         subtitle: "Disables the component.",
@@ -2325,7 +2416,7 @@ export default {
       },
       api: {
         "model-value": "The selected value",
-        height: "Height of the component",
+        thickness: "thickness of the component",
         disabled: "Disables the component",
         fill: "Makes the component occupy the full width of its container",
         options: "List of options to render",
@@ -2348,8 +2439,8 @@ export default {
       },
     },
     select: {
-      height: {
-        subtitle: "Sets the height of the dropdown list.",
+      thickness: {
+        subtitle: "Sets the thickness of the dropdown list.",
       },
       disabled: {
         subtitle: "Disables the component.",
@@ -2373,7 +2464,7 @@ export default {
         name: "Sets the name for the native select element. Inherits NmorphFormItem name or id when omitted",
         autocomplete:
           "Autocomplete value for the native select element. Can also be inherited from NmorphFormItem",
-        height: "Height of the dropdown list",
+        thickness: "thickness of the dropdown list",
         disabled: "Disables the dropdown list",
         "no-element-placeholder":
           "Placeholder text displayed when no options are available",
@@ -2413,7 +2504,7 @@ export default {
       api: {
         label:
           "Defines the label for the option displayed in the dropdown list",
-        height: "Sets the height of the select option",
+        thickness: "Sets the thickness preset of the select option",
         disabled:
           "Boolean value indicating whether the option is disabled and cannot be selected",
         "hover-background": "Overrides the option hover background",
@@ -2466,8 +2557,8 @@ export default {
       },
     },
     "date-picker": {
-      height: {
-        subtitle: "Sets the height of the date picker field.",
+      thickness: {
+        subtitle: "Sets the thickness of the date picker field.",
       },
       disabled: {
         subtitle: "Disables date selection if set to *true*.",
@@ -2477,7 +2568,7 @@ export default {
         name: "Sets the native input name. Inherits NmorphFormItem name or id when omitted",
         autocomplete:
           "Autocomplete value for the hidden native date input. Can also be inherited from NmorphFormItem",
-        height: "Height of the date picker field",
+        thickness: "thickness of the date picker field",
         disabled: "Boolean value that disables the date picker",
         placeholder: "Text displayed when no date is selected",
         "model-value": "Currently selected date or date range",
@@ -2518,7 +2609,7 @@ export default {
         id: "Native input id",
         name: "Native input name",
         "model-value": "Selected time in HH:mm or HH:mm:ss format",
-        height: "Sets the component height",
+        thickness: "Sets the component thickness",
         disabled: "Disables the time picker",
         autocomplete: "Native autocomplete attribute",
         placeholder: "Placeholder text when no time is selected",
@@ -2550,15 +2641,15 @@ export default {
         info: {
           title: "Radio Group usage",
           content:
-            "Typically used in a group of radio buttons to allow the user to select one option from a set. Once a radio button is selected, it cannot be unselected by clicking it again—only by selecting another radio button in the group to change its state. For proper display, when using 'style-type' as 'button', a label (label) should be provided.",
+            "Typically used in a group of radio buttons to allow the user to select one option from a set. Once a radio button is selected, it cannot be unselected by clicking it again—only by selecting another radio button in the group to change its state. For proper display, when using design as 'nmorph', a label should be provided.",
         },
       },
       api: {
         disabled: "Boolean value that disables the radio button",
         label: "Label text displayed next to or inside the radio button",
         value: "Value assigned to the radio button",
-        "style-type": "Defines the visual style of the radio button",
-        height: "Defines the radio button height",
+        design: "Defines the visual design of the radio button",
+        thickness: "Defines the radio button thickness",
         checked: "Marks the radio button as selected",
       },
       slot: {
@@ -2573,11 +2664,11 @@ export default {
     },
     "radio-group": {
       api: {
-        height: "Defines the height of radio buttons in the group",
+        thickness: "Defines the thickness of radio buttons in the group",
         disabled: "Disables all radio buttons in the group",
         "model-value": "Selected value of the radio button group",
         options: "List of options to select from",
-        "style-type": "Visual style of the radio buttons",
+        design: "Visual design of the radio buttons",
         direction: "Direction of the radio button layout",
       },
       slot: {
@@ -2622,7 +2713,7 @@ export default {
         info: {
           title: "Typing Information",
           content:
-            "For correct typing, you must import the type INmorphFromDataExpose.",
+            "For correct typing, you must import the type INmorphFormDataExpose.",
         },
       },
       "validate-immediately": {
@@ -2675,9 +2766,9 @@ export default {
             <strong>Rule properties:</strong> <code>arrayCompareType</code> (uses <code>NmorphArrayValidationOperator</code>), <code>compareValue</code>, <code>error</code>
           </p>
 
-          <h2>2. Enum Definitions</h2>
+          <h2>2. Option Definitions</h2>
           <p>
-            The following enums are used to define different types of validation operators:
+            The following option objects are used to define different types of validation operators:
           </p>
 
           <h3>NmorphArrayValidationOperator:</h3>

@@ -22,7 +22,7 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "design",
-    type: "nmorph, common",
+    type: "nmorph, plain",
     default: "nmorph",
   },
   {
@@ -30,7 +30,7 @@ const attributesData: IAttributesTableData[] = [
     type: "String",
     default: "var(--nmorph-gray-color)",
     description:
-      "Background color for common design tags. Individual tag items can override it with their own color.",
+      "Background color for plain design tags. Individual tag items can override it with their own color.",
   },
 ];
 

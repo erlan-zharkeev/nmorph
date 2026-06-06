@@ -49,7 +49,7 @@ const modifiers = computed(() =>
 
 const styles = computed<CSSProperties>(() =>
   createCssVariables({
-    '--link-color': props.color,
+    '--nmorph-private-link-color': props.color,
   })
 );
 
@@ -85,20 +85,20 @@ const anchorAttrs = computed(() => ({
 
 <style lang="scss">
 .nmorph-link {
-  --link-color: var(--nmorph-accent-color);
+  --nmorph-private-link-color: var(--nmorph-accent-color);
 
   display: inline-block;
 
   a {
     display: flex;
     align-items: center;
-    color: var(--link-color);
+    color: var(--nmorph-private-link-color);
     text-decoration: none;
   }
 
   .nmorph-link__icon {
     margin: 0 var(--indentation-02);
-    --color: var(--link-color);
+    --nmorph-private-icon-color: var(--nmorph-private-link-color);
   }
 
   &:hover {
@@ -114,7 +114,7 @@ const anchorAttrs = computed(() => ({
       bottom: 0;
       left: 0;
       height: 0;
-      border-bottom: 1px solid var(--link-color);
+      border-bottom: 1px solid var(--nmorph-private-link-color);
       content: '';
     }
   }
@@ -129,15 +129,15 @@ const anchorAttrs = computed(() => ({
   }
 
   &.nmorph-link--success {
-    --link-color: var(--nmorph-success-color);
+    --nmorph-private-link-color: var(--nmorph-success-color);
   }
 
   &.nmorph-link--warning {
-    --link-color: var(--nmorph-warn-color);
+    --nmorph-private-link-color: var(--nmorph-warn-color);
   }
 
   &.nmorph-link--error {
-    --link-color: var(--nmorph-error-color);
+    --nmorph-private-link-color: var(--nmorph-error-color);
   }
 }
 </style>

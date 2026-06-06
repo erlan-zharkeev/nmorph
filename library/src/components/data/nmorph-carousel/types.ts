@@ -1,4 +1,5 @@
 import { Ref } from 'vue';
+import type { NmorphElementDesignType } from '@/types';
 
 export interface INmorphCarouselInjection {
   data: Ref<string[]>;
@@ -6,6 +7,7 @@ export interface INmorphCarouselInjection {
 }
 
 export interface INmorphCarouselProps {
+  design?: NmorphElementDesignType;
   loop?: boolean;
 }
 

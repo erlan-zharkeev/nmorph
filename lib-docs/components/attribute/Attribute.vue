@@ -7,7 +7,7 @@ import {
   NmorphCallout,
   NmorphIcon,
   NmorphIconCode,
-  NmorphIconCopy,
+  NmorphIconCopyDocument,
   type NmorphCalloutType,
 } from "@nmorph/nmorph-ui-kit";
 import { ref, computed } from "vue";
@@ -78,7 +78,12 @@ const infoData = `overview.${props.infoName}.info`;
 
 <template>
   <div class="docs-attribute">
-    <h2 class="docs-attribute__header nmorph-title-3">{{ props.header }}</h2>
+    <h2
+      class="docs-attribute__header nmorph-title-3"
+      :class="{ 'docs-attribute__header--standalone': !props.subtitle && !props.infoName }"
+    >
+      {{ props.header }}
+    </h2>
     <NmorphCallout
       v-if="props.infoName"
       :title="$t(`${infoData}.title`)"
@@ -98,13 +103,13 @@ const infoData = `overview.${props.infoName}.info`;
       <div class="docs-component__overview-component-actions">
         <NmorphButton @click.stop="copyHandler">
           <template #icon-only>
-            <NmorphIconCopy />
+            <NmorphIconCopyDocument />
           </template>
         </NmorphButton>
         <NmorphCheckbox
           v-model="codeOpen"
-          design="button"
-          height="basic"
+          design="nmorph"
+          thickness="basic"
           class="docs-attribute__code-btn"
         >
           <template #label>
@@ -124,12 +129,6 @@ const infoData = `overview.${props.infoName}.info`;
 </template>
 
 <style lang="scss" scoped>
-.docs-component__overview-component-actions {
-  .nmorph-button {
-    margin: 0 8px;
-  }
-}
-
 :deep(.docs-attribute__code-collapse > .nmorph-collapse-item > .nmorph-collapse-item__title) {
   display: none;
 }
@@ -148,10 +147,15 @@ const infoData = `overview.${props.infoName}.info`;
   padding: 16px 8px 0px 8px;
   display: flex;
   align-items: baseline;
+  width: 100%;
 }
 
 .docs-attribute__header {
   margin-bottom: 4px;
+}
+
+.docs-attribute__header--standalone {
+  margin-bottom: 12px;
 }
 
 .docs-attribute__subtitle {
@@ -166,6 +170,7 @@ const infoData = `overview.${props.infoName}.info`;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 8px;
   padding: 12px 8px;
 }
 </style>

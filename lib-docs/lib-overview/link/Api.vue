@@ -5,7 +5,7 @@ import ApiTable from "~/components/api-table/ApiTable.vue";
 const attributesData = [
   {
     name: "type",
-    type: enumToString(NmorphColor),
+    type: optionsToString(NmorphColor),
     default: "accent",
   },
   {
@@ -20,7 +20,7 @@ const attributesData = [
   },
   {
     name: "target",
-    type: enumToString(NmorphLinkTarget),
+    type: optionsToString(NmorphLinkTarget),
     default: "self",
   },
   {

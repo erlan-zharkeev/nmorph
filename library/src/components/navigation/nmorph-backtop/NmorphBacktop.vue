@@ -24,9 +24,9 @@ const modifiers = computed(() =>
 );
 
 const styles = computed(() => ({
-  '--nmorph-backtop-right': `${props.right}px`,
-  '--nmorph-backtop-bottom': `${props.bottom}px`,
-  '--nmorph-backtop-z-index': props.zIndex,
+  '--nmorph-private-backtop-right': `${props.right}px`,
+  '--nmorph-private-backtop-bottom': `${props.bottom}px`,
+  '--nmorph-private-backtop-z-index': props.zIndex,
 }));
 
 const isWindow = (value: NmorphBacktopScrollContainer): value is Window => value === window;
@@ -96,7 +96,7 @@ onUnmounted(() => {
       <div ref="selfDOMEl" :class="modifiers" :style="styles">
         <div @click.stop="scrollToTopHandler">
           <slot>
-            <NmorphButton :style-type="props.design === 'nmorph' ? 'default' : 'transparent'">
+            <NmorphButton :design="props.design">
               <NmorphIcon
                 class="nmorph-backtop__up-icon"
                 :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-contrast-text-color)'"
@@ -114,9 +114,9 @@ onUnmounted(() => {
 <style lang="scss">
 .nmorph-backtop {
   position: fixed;
-  right: var(--nmorph-backtop-right);
-  bottom: calc(var(--nmorph-backtop-bottom) + env(safe-area-inset-bottom, 0px));
-  z-index: var(--nmorph-backtop-z-index);
+  right: var(--nmorph-private-backtop-right);
+  bottom: calc(var(--nmorph-private-backtop-bottom) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--nmorph-private-backtop-z-index);
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
   pointer-events: none;
@@ -130,10 +130,15 @@ onUnmounted(() => {
     pointer-events: auto;
   }
 
-  &.nmorph-backtop--common {
+  &.nmorph-backtop--plain {
     .nmorph-button {
       background: var(--nmorph-overlay-color);
       border-radius: 4px;
+    }
+
+    .nmorph-button.nmorph-button--plain .nmorph-button__content,
+    .nmorph-button.nmorph-button--plain .nmorph-button__content:not(:disabled, [loading='true']):hover {
+      border: 0;
     }
   }
 }

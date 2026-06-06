@@ -2,6 +2,7 @@
 import { createCssSizeVariables, createCssVariables, useModifiers } from '@/utils';
 import { computed, ref, watch, provide } from 'vue';
 import type { CSSProperties } from 'vue';
+import { NmorphComponentThickness } from '@/types';
 import {
   NmorphSelectButtonChangeHandlerInjectionType,
   NmorphSelectButtonSelectedValueInjectionType,
@@ -12,13 +13,14 @@ import type { INmorphSelectButtonEmit, INmorphSelectButtonProps } from './types'
 
 const props = withDefaults(defineProps<INmorphSelectButtonProps>(), {
   modelValue: '',
-  height: 'basic',
+  thickness: 'basic',
   disabled: false,
   options: () => [],
   fill: false,
   trackPadding: undefined,
   itemSize: undefined,
   itemFontSize: undefined,
+  itemLineHeight: undefined,
 });
 
 const emit = defineEmits<INmorphSelectButtonEmit>();
@@ -36,17 +38,19 @@ watch(modelValue, (newValue) => {
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-select-button': [props.disabled && 'disabled', props.fill && 'fill', props.height],
+    nmorph: [NmorphComponentThickness[props.thickness]],
+    'nmorph-select-button': [props.disabled && 'disabled', props.fill && 'fill', props.thickness],
   })
 );
 
 const styles = computed<CSSProperties>(() => ({
   ...createCssSizeVariables({
-    '--track-padding': props.trackPadding,
-    '--item-size': props.itemSize,
+    '--nmorph-private-select-button-track-padding': props.trackPadding,
+    '--nmorph-private-select-button-item-size': props.itemSize,
   }),
   ...createCssVariables({
-    '--item-font-size': props.itemFontSize,
+    '--nmorph-private-select-button-item-font-size': props.itemFontSize,
+    '--nmorph-private-select-button-item-line-height': props.itemLineHeight,
   }),
 }));
 
@@ -76,30 +80,27 @@ provide<NmorphSelectButtonChangeHandlerInjectionType>('select-button-change-hand
 
 <style lang="scss">
 .nmorph-select-button {
-  --track-padding: 4px;
-  --item-size: calc(var(--default-thickness-component) - var(--track-padding) * 2);
-  --item-font-size: var(--font-size-small);
+  --nmorph-private-select-button-track-padding: 4px;
+  --nmorph-private-select-button-item-size: calc(
+    var(--nmorph-private-control-height) - var(--nmorph-private-select-button-track-padding) * 2
+  );
+  --nmorph-private-select-button-item-font-size: var(--nmorph-private-control-font-size);
+  --nmorph-private-select-button-item-line-height: var(--nmorph-private-control-line-height);
 
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  padding: var(--track-padding);
+  padding: var(--nmorph-private-select-button-track-padding);
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
   box-shadow:
     inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
     inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
       var(--nmorph-light-shade-color);
-
-  &.nmorph-select-button--thin {
-    --item-size: calc(var(--thin-component) - var(--track-padding) * 2);
-    --item-font-size: var(--font-size-extra-small);
-  }
-
-  &.nmorph-select-button--thick {
-    --item-size: calc(var(--thick-component) - var(--track-padding) * 2);
-    --item-font-size: var(--font-size-base);
-  }
+  transition:
+    background-color ease-in-out var(--transition-02),
+    border-color ease-in-out var(--transition-02),
+    box-shadow ease-in-out var(--transition-02);
 
   &.nmorph-select-button--disabled {
     cursor: not-allowed;

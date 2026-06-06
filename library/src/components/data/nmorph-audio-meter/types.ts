@@ -7,5 +7,9 @@ export interface INmorphAudioMeterProps {
   bars?: number;
   warnThreshold?: number;
   errorThreshold?: number;
+  color?: string;
+  warnColor?: string;
+  errorColor?: string;
+  trackColor?: string;
   label?: string;
 }

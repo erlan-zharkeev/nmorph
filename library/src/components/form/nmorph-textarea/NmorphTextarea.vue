@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { NmorphComponentHeight } from '@/types';
+import { NmorphComponentThickness } from '@/types';
 import { useModifiers } from '@/utils';
 import { useFocusableInput } from '@/hooks/use-focusable-input';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<INmorphTextareaProps>(), {
   resize: 'vertical',
   autoSize: false,
   indentation: '12px',
-  height: 'basic',
+  thickness: 'basic',
   disabled: false,
   textareaAttrs: () => ({}),
 });
@@ -43,7 +43,7 @@ const {
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[props.height], focused.value && 'focused'],
+    nmorph: [NmorphComponentThickness[props.thickness], focused.value && 'focused'],
     'nmorph-textarea': [props.disabled && 'disabled', props.autoSize && 'auto-size'],
   })
 );
@@ -83,8 +83,8 @@ defineExpose({ textareaDOMRef, focus, blur, select, resizeToContent });
 const minRows = computed(() => Math.max(props.minRows, 1));
 const rows = computed(() => Math.max(props.rows, minRows.value));
 const styles = computed<CSSProperties>(() => ({
-  '--nmorph-textarea-resize': props.autoSize ? 'none' : props.resize,
-  '--nmorph-textarea-indentation': props.indentation,
+  '--nmorph-private-textarea-resize': props.autoSize ? 'none' : props.resize,
+  '--nmorph-private-textarea-indentation': props.indentation,
 }));
 </script>
 
@@ -120,7 +120,8 @@ const styles = computed<CSSProperties>(() => ({
     box-sizing: border-box;
     width: 100%;
     min-width: 0;
-    padding: var(--indentation-03) var(--indentation-03) var(--indentation-03) var(--nmorph-textarea-indentation);
+    padding: var(--indentation-03) var(--indentation-03) var(--indentation-03)
+      var(--nmorph-private-textarea-indentation);
     color: var(--nmorph-text-color);
     font: inherit;
     line-height: var(--line-height-regular);
@@ -132,7 +133,7 @@ const styles = computed<CSSProperties>(() => ({
       background var(--transition-02) ease,
       box-shadow var(--transition-02) ease,
       color var(--transition-02) ease;
-    resize: var(--nmorph-textarea-resize);
+    resize: var(--nmorph-private-textarea-resize);
   }
 
   textarea:focus {

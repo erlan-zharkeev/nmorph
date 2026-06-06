@@ -5,17 +5,21 @@ const activeTab = ref("tab-1");
 const customActiveTab = ref("tab-1");
 
 const tabs = ref([
-  { name: "tab-1", label: "Tab 1", content: "Lorem ipsum 1" },
+  {
+    name: "tab-1",
+    label: "Tab 1",
+    content: "Overview content with enough space to show the stretched tabs layout.",
+  },
   {
     name: "tab-2",
     label: "Tab 2",
-    content: "Lorem ipsum 2",
+    content: "A disabled tab stays visible while other labels keep equal width.",
     disabled: true,
   },
   {
     name: "tab-3",
     label: "Tab 3",
-    content: "Lorem ipsum 3",
+    content: "Details content for the selected tab.",
   },
 ]);
 </script>
@@ -32,9 +36,11 @@ const tabs = ref([
                 <div v-else>{{ scope.label }}</div>
               </template>
               <template #default="{ scope }">
-                Custom content for
-                {{ scope.name }}</template
-              >
+                <div class="tabs-basic-usage-overview__content">
+                  <strong>Custom content for {{ scope.name }}</strong>
+                  <span>{{ scope.content }}</span>
+                </div>
+              </template>
             </NmorphTabPane>
           </NmorphTabs>
         </div>
@@ -48,14 +54,38 @@ const tabs = ref([
 
 <style lang="scss">
 .tabs-basic-usage-overview {
+  width: 100%;
+
   .elements {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 24px;
+    width: 100%;
   }
 
   .elements__element {
-    margin-right: 24px;
-    margin-bottom: 8px;
+    min-width: 0;
+  }
+
+  :deep(.nmorph-tabs) {
+    width: 100%;
+  }
+
+  :deep(.nmorph-tabs__content) {
+    min-height: 96px;
+  }
+}
+
+.tabs-basic-usage-overview__content {
+  display: grid;
+  gap: 8px;
+}
+
+@media (max-width: 820px) {
+  .tabs-basic-usage-overview {
+    .elements {
+      grid-template-columns: 1fr;
+    }
   }
 }
 </style>

@@ -6,6 +6,9 @@ export interface INmorphTextInputProps extends INmorphCommonInputProps {
   modelValue?: string;
   clearable?: boolean;
   indentation?: string;
+  prependIconIndent?: number | string;
+  prependIconSize?: number | string;
+  prependIconColor?: string;
   inputAttrs?: Record<string, string | number | boolean | undefined>;
 }
 

@@ -22,12 +22,9 @@ const modifiers = computed(() =>
 
 const customStyles = computed(() => {
   const styles: { [key: string]: string } = {};
-  if (props.width) styles['--width'] = props.width;
-  if (props.height) styles['--height'] = props.height;
-  if (props.color) {
-    styles['--nmorph-icon-color'] = props.color;
-    styles['--color'] = props.color;
-  }
+  if (props.width) styles['--nmorph-private-icon-width'] = props.width;
+  if (props.height) styles['--nmorph-private-icon-height'] = props.height;
+  if (props.color) styles['--nmorph-private-icon-color'] = props.color;
   return styles;
 });
 </script>
@@ -45,25 +42,25 @@ const customStyles = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: var(--width);
-  min-width: var(--width);
-  height: var(--height);
-  min-height: var(--height);
+  width: var(--nmorph-private-icon-width);
+  min-width: var(--nmorph-private-icon-width);
+  height: var(--nmorph-private-icon-height);
+  min-height: var(--nmorph-private-icon-height);
 
   .nmorph-icon__content {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: var(--width);
-    min-width: var(--width);
-    height: var(--height);
-    min-height: var(--height);
+    width: var(--nmorph-private-icon-width);
+    min-width: var(--nmorph-private-icon-width);
+    height: var(--nmorph-private-icon-height);
+    min-height: var(--nmorph-private-icon-height);
   }
 
   svg {
     width: 100%;
     height: 100%;
-    fill: var(--color);
+    fill: var(--nmorph-private-icon-color);
   }
 
   path[stroke],
@@ -78,24 +75,24 @@ const customStyles = computed(() => {
   polyline[stroke-width],
   polygon[stroke],
   polygon[stroke-width] {
-    stroke: var(--color);
+    stroke: var(--nmorph-private-icon-color);
   }
 
   &.nmorph-icon--small {
-    --width: 14px;
-    --height: 14px;
+    --nmorph-private-icon-width: 14px;
+    --nmorph-private-icon-height: 14px;
   }
 
   &.nmorph-icon--medium {
-    --width: 20px;
-    --height: 20px;
+    --nmorph-private-icon-width: 20px;
+    --nmorph-private-icon-height: 20px;
   }
 
   &.nmorph-icon--large {
-    --width: 32px;
-    --height: 32px;
+    --nmorph-private-icon-width: 32px;
+    --nmorph-private-icon-height: 32px;
   }
 
-  --color: var(--nmorph-icon-color, var(--nmorph-text-color));
+  --nmorph-private-icon-color: var(--nmorph-text-color);
 }
 </style>

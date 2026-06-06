@@ -3,24 +3,30 @@ import { type INmorphCustomFileData, type NmorphResolutionType } from '@/compone
 import { isFileAllowedByTypes } from '@/utils/file-types';
 import { ref } from 'vue';
 
-export const enum NmorphArrayValidationOperator {
-  'contains-one' = 'contains-one',
-  'not-contains' = 'not-contains',
-  'full-eq' = 'full-eq',
-}
+export const NmorphArrayValidationOperator = {
+  'contains-one': 'contains-one',
+  'not-contains': 'not-contains',
+  'full-eq': 'full-eq',
+} as const;
 
-export enum NmorphNumberCompareOperator {
-  'eq' = 'eq',
-  'gte' = 'gte',
-  'lte' = 'lte',
-  'gt' = 'gt',
-  'lt' = 'lt',
-}
+export type NmorphArrayValidationOperator = keyof typeof NmorphArrayValidationOperator;
 
-export enum NmorphBooleanCompareOperator {
-  'eq' = 'eq',
-  'not-eq' = 'not-eq',
-}
+export const NmorphNumberCompareOperator = {
+  eq: 'eq',
+  gte: 'gte',
+  lte: 'lte',
+  gt: 'gt',
+  lt: 'lt',
+} as const;
+
+export type NmorphNumberCompareOperator = keyof typeof NmorphNumberCompareOperator;
+
+export const NmorphBooleanCompareOperator = {
+  eq: 'eq',
+  'not-eq': 'not-eq',
+} as const;
+
+export type NmorphBooleanCompareOperator = keyof typeof NmorphBooleanCompareOperator;
 
 export interface INmorphRule {
   pattern?: RegExp;
@@ -28,11 +34,8 @@ export interface INmorphRule {
   booleanCompareType?: keyof typeof NmorphBooleanCompareOperator;
   arrayCompareType?: keyof typeof NmorphArrayValidationOperator;
   compareValue?: boolean | number | string | string[];
-  maxFileSize?: number;
   fileMaxSize?: number;
-  allowedTypes?: Array<NmorphResolutionType | string>;
   fileAllowedTypes?: Array<NmorphResolutionType | string>;
-  maxFiles?: number;
   fileMaxCount?: number;
   error: string;
 }
@@ -51,7 +54,7 @@ export interface INmorphTextValidationRule extends INmorphRule {
 }
 
 export interface INmorphNumberValidationRule extends INmorphRule {
-  numberCompareType: keyof typeof NmorphNumberCompareOperator;
+  numberCompareType: NmorphNumberCompareOperator;
   compareValue: number;
 }
 
@@ -61,16 +64,13 @@ export interface INmorphRadioGroupValidationRule extends INmorphRule {
 }
 
 export interface INmorphCheckboxGroupValidationRule extends INmorphRule {
-  arrayCompareType: keyof typeof NmorphArrayValidationOperator;
+  arrayCompareType: NmorphArrayValidationOperator;
   compareValue: string[];
 }
 
 export interface INmorphFileValidationRule extends INmorphRule {
-  maxFileSize?: number;
   fileMaxSize?: number;
-  allowedTypes?: Array<NmorphResolutionType | string>;
   fileAllowedTypes?: Array<NmorphResolutionType | string>;
-  maxFiles?: number;
   fileMaxCount?: number;
 }
 
@@ -118,13 +118,7 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
       (typeof value === 'string' || typeof value === 'boolean') && hasRuleKey('booleanCompareType');
 
     const arrayValidation = Array.isArray(value) && hasRuleKey('arrayCompareType');
-    const hasFileRules =
-      hasRuleKey('fileMaxSize') ||
-      hasRuleKey('maxFileSize') ||
-      hasRuleKey('fileAllowedTypes') ||
-      hasRuleKey('allowedTypes') ||
-      hasRuleKey('fileMaxCount') ||
-      hasRuleKey('maxFiles');
+    const hasFileRules = hasRuleKey('fileMaxSize') || hasRuleKey('fileAllowedTypes') || hasRuleKey('fileMaxCount');
     const filesValue = hasFileRules ? getFilesFromValue(value) : null;
     const fileValidation = hasFileRules && filesValue !== null;
 
@@ -150,7 +144,7 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
       const compareValues = (
         inputValue: number,
         compareValue: number,
-        numberCompareType: keyof typeof NmorphNumberCompareOperator
+        numberCompareType: NmorphNumberCompareOperator
       ) => {
         switch (numberCompareType) {
           case 'eq':
@@ -196,7 +190,7 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
       const compareValues = (
         inputValue: string[],
         compareValue: string[],
-        arrayCompareType: keyof typeof NmorphArrayValidationOperator
+        arrayCompareType: NmorphArrayValidationOperator
       ) => {
         switch (arrayCompareType) {
           case 'contains-one':
@@ -229,19 +223,15 @@ export const useFieldValidation = (data: INmorphUseValidationPayload) => {
       const files = filesValue || [];
 
       errors.value = typeInferredRules.reduce((acc, rule) => {
-        const maxFileSize = rule.fileMaxSize ?? rule.maxFileSize;
-        const allowedTypes = rule.fileAllowedTypes ?? rule.allowedTypes;
-        const maxFiles = rule.fileMaxCount ?? rule.maxFiles;
-
-        if (typeof maxFileSize === 'number' && files.some((file) => file.size > maxFileSize)) {
+        if (typeof rule.fileMaxSize === 'number' && files.some((file) => file.size > rule.fileMaxSize)) {
           acc.push(rule.error);
         }
 
-        if (allowedTypes && files.some((file) => !isFileAllowedByTypes(file, allowedTypes))) {
+        if (rule.fileAllowedTypes && files.some((file) => !isFileAllowedByTypes(file, rule.fileAllowedTypes))) {
           acc.push(rule.error);
         }
 
-        if (typeof maxFiles === 'number' && files.length > maxFiles) {
+        if (typeof rule.fileMaxCount === 'number' && files.length > rule.fileMaxCount) {
           acc.push(rule.error);
         }
 

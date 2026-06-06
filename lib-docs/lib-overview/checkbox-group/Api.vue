@@ -7,7 +7,8 @@ import {
 import ApiTable from "~/components/api-table/ApiTable.vue";
 import {
   NmorphComponentDirection,
-  NmorphSelectionControlHeight,
+  NmorphElementDesign,
+  NmorphSelectionControlThickness,
 } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
@@ -23,27 +24,27 @@ const attributesData: IAttributesTableData[] = [
     default: "false",
   },
   {
-    name: "height",
-    type: enumToString(NmorphSelectionControlHeight),
+    name: "thickness",
+    type: optionsToString(NmorphSelectionControlThickness),
     default: "thin",
   },
   {
     name: "options",
     type: `Array<${docsLink(
-      "INmorphCheckboxOption",
-      "/elements/checkbox#content-attributes",
+      "INmorphCheckboxGroupOption",
+      "/elements/checkbox-group#content-attributes",
       "_self",
     )}>`,
     default: "[]",
   },
   {
     name: "design",
-    type: "button | checkbox",
-    default: "button",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
   },
   {
     name: "direction",
-    type: enumToString(NmorphComponentDirection),
+    type: optionsToString(NmorphComponentDirection),
     default: "row",
   },
 ];

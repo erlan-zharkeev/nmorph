@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NmorphComponentHeight } from '@/types';
+import { NmorphComponentThickness } from '@/types';
 import { createCssVariables, useModifiers } from '@/utils';
 import { inject, computed, type Ref } from 'vue';
 import type { CSSProperties } from 'vue';
@@ -14,8 +14,8 @@ import type { INmorphSelectOptionEmit } from './types';
 
 const selectSelectedValue = inject<NmorphSelectSelectedValueInjectionType>('select-selected-value');
 const selectChangeSelectedValue = inject<NmorphSelectChangeSelectedValue>('select-change-selected-value');
-const selectHeight = inject<Ref<keyof typeof NmorphComponentHeight | undefined> | undefined>(
-  'select-height',
+const selectThickness = inject<Ref<keyof typeof NmorphComponentThickness | undefined> | undefined>(
+  'select-thickness',
   undefined
 );
 
@@ -46,11 +46,11 @@ const checked = computed(() => {
   return false;
 });
 
-const height = computed(() => props.height || selectHeight?.value || 'basic');
+const thickness = computed(() => props.thickness || selectThickness?.value || 'basic');
 
 const modifiers = computed(() =>
   useModifiers({
-    nmorph: [NmorphComponentHeight[height.value]],
+    nmorph: [NmorphComponentThickness[thickness.value]],
     'nmorph-select-option': [
       props.disabled && 'disabled',
       props.label && 'with-label',
@@ -62,8 +62,8 @@ const modifiers = computed(() =>
 
 const styles = computed<CSSProperties>(() =>
   createCssVariables({
-    '--hover-bg': props.hoverBackground,
-    '--hover-color': props.hoverColor,
+    '--nmorph-private-select-option-hover-background': props.hoverBackground,
+    '--nmorph-private-select-option-hover-color': props.hoverColor,
   })
 );
 </script>
@@ -90,8 +90,8 @@ const styles = computed<CSSProperties>(() =>
 
 <style lang="scss">
 .nmorph-select-option {
-  --hover-bg: var(--nmorph-accent-color);
-  --hover-color: var(--nmorph-white-color);
+  --nmorph-private-select-option-hover-background: var(--nmorph-accent-color);
+  --nmorph-private-select-option-hover-color: var(--nmorph-white-color);
 
   display: flex;
   gap: var(--indentation-01);
@@ -108,6 +108,7 @@ const styles = computed<CSSProperties>(() =>
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    transform: translateY(var(--nmorph-private-control-text-offset-y));
   }
 
   .nmorph-select-option__content span {
@@ -122,28 +123,28 @@ const styles = computed<CSSProperties>(() =>
   }
 
   &:not(.nmorph-select-option--disabled):hover {
-    background: var(--hover-bg);
+    background: var(--nmorph-private-select-option-hover-background);
   }
 
   &:not(.nmorph-select-option--disabled):hover span {
-    color: var(--hover-color);
+    color: var(--nmorph-private-select-option-hover-color);
   }
 
   &:not(.nmorph-select-option--disabled):hover .nmorph-select-option__checked {
-    --color: var(--hover-color);
+    --nmorph-private-icon-color: var(--nmorph-private-select-option-hover-color);
   }
 
   &.nmorph-select-option--focused {
     &:not(.nmorph-select-option--disabled) {
-      background: var(--hover-bg);
+      background: var(--nmorph-private-select-option-hover-background);
     }
 
     &:not(.nmorph-select-option--disabled) span {
-      color: var(--hover-color);
+      color: var(--nmorph-private-select-option-hover-color);
     }
 
     &:not(.nmorph-select-option--disabled) .nmorph-select-option__checked {
-      --color: var(--hover-color);
+      --nmorph-private-icon-color: var(--nmorph-private-select-option-hover-color);
     }
   }
 

@@ -9,10 +9,10 @@ const props = withDefaults(defineProps<INmorphDialogProps>(), {
   modelValue: false,
   title: '',
   width: '330px',
+  maxWidth: undefined,
   maxHeight: undefined,
   openDelay: 0,
   closeDelay: 0,
-  closeOnClickModal: true,
   showClose: true,
   zIndex: undefined,
   closeOnOverlay: true,
@@ -29,11 +29,11 @@ const modifiers = computed(() =>
 );
 
 const dialogStyle = computed<CSSProperties>(() => ({
-  '--nmorph-dialog-width': props.width,
-  ...(props.maxHeight && { '--nmorph-dialog-max-height': props.maxHeight }),
+  '--nmorph-private-dialog-width': props.width,
+  ...(props.maxWidth && { '--nmorph-private-dialog-max-width': props.maxWidth }),
+  ...(props.maxHeight && { '--nmorph-private-dialog-max-height': props.maxHeight }),
 }));
 const hasHeader = computed(() => Boolean(slots.header || props.title || props.showClose));
-const shouldCloseOnOverlay = computed(() => props.closeOnOverlay && props.closeOnClickModal);
 
 const isVisible = ref(props.modelValue);
 
@@ -73,7 +73,7 @@ const closeHandler = () => {
 };
 
 const overlayClickHandler = () => {
-  if (!shouldCloseOnOverlay.value) return;
+  if (!props.closeOnOverlay) return;
   closeHandler();
 };
 </script>
@@ -119,19 +119,19 @@ const overlayClickHandler = () => {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  width: var(--width);
-  max-width: var(--nmorph-dialog-max-width, calc(100vw - 32px));
-  max-height: var(--nmorph-dialog-max-height, var(--nmorph-dialog-default-max-height));
+  width: var(--nmorph-private-dialog-width);
+  max-width: var(--nmorph-private-dialog-max-width);
+  max-height: var(--nmorph-private-dialog-max-height, var(--nmorph-private-dialog-default-max-height));
   padding: var(--indentation-03);
   background: var(--nmorph-main-color);
   border-radius: var(--default-border-radius);
   transform: translate(-50%, -50%);
 
-  --width: var(--nmorph-dialog-width);
-  --nmorph-dialog-default-max-height: calc(100vh - 32px);
+  --nmorph-private-dialog-max-width: calc(100vw - 32px);
+  --nmorph-private-dialog-default-max-height: calc(100vh - 32px);
 
   @supports (height: 100dvh) {
-    --nmorph-dialog-default-max-height: calc(100dvh - 32px);
+    --nmorph-private-dialog-default-max-height: calc(100dvh - 32px);
   }
 
   .nmorph-dialog__header {
@@ -141,9 +141,9 @@ const overlayClickHandler = () => {
     align-items: center;
     box-sizing: border-box;
     padding: var(--indentation-02);
-    font-weight: 600;
-    font-size: var(--font-size-large);
-    line-height: var(--line-height-loose);
+    font-weight: var(--nmorph-typography-title-font-weight);
+    font-size: var(--nmorph-typography-title-font-size);
+    line-height: var(--nmorph-typography-title-line-height);
   }
 
   .nmorph-dialog__close-icon {
