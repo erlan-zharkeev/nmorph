@@ -434,6 +434,7 @@ const pointerUpHandler = (event: PointerEvent) => {
           :alt="item.alt || getItemLabel(item, index)"
           :title="getItemName(item)"
           fit="cover"
+          design="plain"
           :frame-border="0"
         />
         <video
@@ -521,6 +522,7 @@ const pointerUpHandler = (event: PointerEvent) => {
         :alt="currentItem.alt || currentItem.name || ''"
         :title="currentItem.name"
         :fit="props.imageFit"
+        design="plain"
         :frame-border="0"
         :style="{ transform: imageTransform }"
         @pointerdown="pointerDownHandler"
@@ -574,35 +576,41 @@ const pointerUpHandler = (event: PointerEvent) => {
     </div>
     <template #actions>
       <div class="nmorph-media-gallery__action-element">
-        <NmorphButton @click="rotateRight">
+        <NmorphButton class="nmorph-preview-portal__control-button" design="plain" borderless @click="rotateRight">
           <NmorphIcon>
             <NmorphIconRotateRight />
           </NmorphIcon>
         </NmorphButton>
       </div>
       <div class="nmorph-media-gallery__action-element">
-        <NmorphButton @click="rotateLeft">
+        <NmorphButton class="nmorph-preview-portal__control-button" design="plain" borderless @click="rotateLeft">
           <NmorphIcon>
             <NmorphIconRotateLeft />
           </NmorphIcon>
         </NmorphButton>
       </div>
       <div class="nmorph-media-gallery__action-element">
-        <NmorphButton @click="zoomIn">
+        <NmorphButton class="nmorph-preview-portal__control-button" design="plain" borderless @click="zoomIn">
           <NmorphIcon>
             <NmorphIconZoomIn />
           </NmorphIcon>
         </NmorphButton>
       </div>
       <div class="nmorph-media-gallery__action-element">
-        <NmorphButton @click="zoomOut">
+        <NmorphButton class="nmorph-preview-portal__control-button" design="plain" borderless @click="zoomOut">
           <NmorphIcon>
             <NmorphIconZoomOut />
           </NmorphIcon>
         </NmorphButton>
       </div>
       <div class="nmorph-media-gallery__action-element">
-        <NmorphButton :disabled="scaleLevel === 1" @click="toggleNormalSize">
+        <NmorphButton
+          class="nmorph-preview-portal__control-button"
+          design="plain"
+          borderless
+          :disabled="scaleLevel === 1"
+          @click="toggleNormalSize"
+        >
           <NmorphIcon>
             <NmorphIconEnlarge v-if="scaleLevel < 1" />
             <NmorphIconShrink v-else />

@@ -71,14 +71,19 @@ const portalStyle = computed<CSSProperties>(() =>
           <slot />
         </div>
         <div v-if="props.showNavigation" class="nmorph-preview-portal__left" :class="props.leftClass">
-          <NmorphButton design="plain" @click="emit('previous')">
+          <NmorphButton
+            class="nmorph-preview-portal__control-button"
+            design="plain"
+            borderless
+            @click="emit('previous')"
+          >
             <NmorphIcon>
               <NmorphIconChevronDown />
             </NmorphIcon>
           </NmorphButton>
         </div>
         <div v-if="props.showNavigation" class="nmorph-preview-portal__right" :class="props.rightClass">
-          <NmorphButton design="plain" @click="emit('next')">
+          <NmorphButton class="nmorph-preview-portal__control-button" design="plain" borderless @click="emit('next')">
             <NmorphIcon>
               <NmorphIconChevronDown />
             </NmorphIcon>
@@ -126,6 +131,24 @@ const portalStyle = computed<CSSProperties>(() =>
 
   .nmorph-button__content {
     box-shadow: none;
+  }
+
+  .nmorph-preview-portal__control-button {
+    background: var(--nmorph-overlay-color);
+    border-radius: 4px;
+
+    .nmorph-button__content,
+    .nmorph-button__content:not(:disabled, [loading='true']):hover {
+      color: var(--nmorph-contrast-text-color);
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .nmorph-button__content .nmorph-icon,
+    .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
+      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
+    }
   }
 
   .nmorph-preview-portal__left,

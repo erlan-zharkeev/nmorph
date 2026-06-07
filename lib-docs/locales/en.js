@@ -224,6 +224,16 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "avatar-borderless-prop":
+          "NmorphAvatar now supports borderless plain avatars through borderless, keeping design=\"plain\" bordered by default.",
+        "badge-tag-value-slot":
+          "NmorphBadge type=\"tag\" now supports the value slot for compact icon badges while preserving text fallback behavior.",
+        "preview-borderless-controls":
+          "NmorphImagePreview and NmorphMediaGallery preview controls now use borderless plain buttons with the same overlay background as Backtop.",
+        "image-preview-plain-surface":
+          "NmorphImagePreview and NmorphMediaGallery now render preview images with plain image surfaces to avoid extra nmorph edges.",
+        "hand-icon-outline":
+          "NmorphIconHand now uses a thinner outline-only hand glyph without a filled shape.",
         "button-borderless-prop":
           "NmorphButton now supports borderless plain buttons through borderless, keeping design=\"plain\" bordered by default.",
         "media-tile-show-status":
@@ -969,6 +979,8 @@ export default {
       api: {
         size: "Sets the size of the avatar",
         shape: "Defines the shape of the avatar",
+        design: "Defines the visual design of the avatar",
+        borderless: "Removes the visible border when design is plain",
         src: "Avatar image URL or preview gallery URLs",
         name: "Name used to generate fallback initials",
         preview: "Enables image preview on click",
@@ -996,11 +1008,11 @@ export default {
     badge: {
       value: {
         subtitle:
-          "The displayed value on the badge, can be *string* or *number*. If omitted and `type` is not `dot`, the badge is not rendered.",
+          "The displayed value on the badge, can be *string* or *number*. If omitted and no `value` slot is provided, non-dot badges are not rendered.",
       },
       "value-slot": {
         subtitle:
-          "Lets you fully replace the content inside the badge through the `value` slot. Slot props expose `value` and `displayValue`. Works in the default overlay mode.",
+          "Lets you fully replace the content inside the badge through the `value` slot. Slot props expose `value` and `displayValue`. Works in default, ribbon, and tag modes.",
       },
       max: {
         subtitle:

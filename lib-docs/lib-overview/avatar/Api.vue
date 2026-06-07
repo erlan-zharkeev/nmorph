@@ -5,7 +5,7 @@ import {
   type IVariablesTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
-import { AvatarShapeType } from "@nmorph/nmorph-ui-kit";
+import { AvatarShapeType, NmorphElementDesign } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -57,6 +57,16 @@ const attributesData: IAttributesTableData[] = [
     name: "shape",
     type: optionsToString(AvatarShapeType),
     default: "circle",
+  },
+  {
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
+  },
+  {
+    name: "borderless",
+    type: "Boolean",
+    default: "false",
   },
   {
     name: "frame-border",

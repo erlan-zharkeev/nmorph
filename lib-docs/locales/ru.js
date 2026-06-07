@@ -226,6 +226,16 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "avatar-borderless-prop":
+          "NmorphAvatar теперь поддерживает borderless для plain-аватаров, при этом design=\"plain\" по умолчанию остается с border.",
+        "badge-tag-value-slot":
+          "NmorphBadge с type=\"tag\" теперь поддерживает slot value для компактных icon badges, сохраняя текстовый fallback.",
+        "preview-borderless-controls":
+          "Preview controls в NmorphImagePreview и NmorphMediaGallery теперь используют borderless plain-кнопки с тем же overlay-фоном, что и Backtop.",
+        "image-preview-plain-surface":
+          "NmorphImagePreview и NmorphMediaGallery теперь рендерят preview-картинки с plain image surface, чтобы убрать лишние nmorph-края.",
+        "hand-icon-outline":
+          "NmorphIconHand теперь использует более тонкую outline-only hand icon без заливки.",
         "button-borderless-prop":
           "NmorphButton теперь поддерживает borderless для plain-кнопок, при этом design=\"plain\" по умолчанию остается с border.",
         "media-tile-show-status":
@@ -975,6 +985,8 @@ export default {
       api: {
         size: "Задает размер аватара",
         shape: "Определяет форму аватара",
+        design: "Определяет визуальный стиль аватара",
+        borderless: "Убирает видимый border, когда design установлен в plain",
         src: "URL изображения аватара или URL галереи preview",
         name: "Имя для генерации инициалов фолбэка",
         preview: "Включает preview изображения по клику",
@@ -1003,11 +1015,11 @@ export default {
     badge: {
       value: {
         subtitle:
-          "Отображаемое значение на бейдже, может быть *string* или *number*. Если не передано и `type` не равен `dot`, бейдж не рендерится.",
+          "Отображаемое значение на бейдже, может быть *string* или *number*. Если значение не передано и нет slot `value`, non-dot бейджи не рендерятся.",
       },
       "value-slot": {
         subtitle:
-          "Позволяет полностью заменить содержимое внутри бейджа через slot `value`. В slot props доступны `value` и `displayValue`. Работает в стандартном overlay-режиме.",
+          "Позволяет полностью заменить содержимое внутри бейджа через slot `value`. В slot props доступны `value` и `displayValue`. Работает в default, ribbon и tag режимах.",
       },
       max: {
         subtitle:

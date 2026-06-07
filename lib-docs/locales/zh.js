@@ -213,6 +213,16 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "avatar-borderless-prop":
+          "NmorphAvatar 现在支持通过 borderless 渲染无边框 plain 头像，同时 design=\"plain\" 默认仍保留 border。",
+        "badge-tag-value-slot":
+          "NmorphBadge type=\"tag\" 现在支持 value slot，可用于紧凑图标徽标，同时保留文本 fallback 行为。",
+        "preview-borderless-controls":
+          "NmorphImagePreview 和 NmorphMediaGallery 的预览控件现在使用无边框 plain 按钮，并采用与 Backtop 相同的 overlay 背景。",
+        "image-preview-plain-surface":
+          "NmorphImagePreview 和 NmorphMediaGallery 现在使用 plain image surface 渲染预览图片，避免多余的 nmorph 边缘。",
+        "hand-icon-outline":
+          "NmorphIconHand 现在使用更细的纯描边手形图标，不再使用填充形状。",
         "button-borderless-prop":
           "NmorphButton 现在支持通过 borderless 渲染无边框 plain 按钮，同时 design=\"plain\" 默认仍保留 border。",
         "media-tile-show-status":
@@ -944,6 +954,8 @@ export default {
       api: {
         size: "Sets the size of the avatar",
         shape: "Defines the shape of the avatar",
+        design: "定义头像的视觉样式",
+        borderless: "当 design 为 plain 时移除可见边框",
         src: "头像图片 URL 或预览图库 URL",
         name: "Name used to generate fallback initials",
         preview: "启用点击图片预览",
@@ -971,11 +983,11 @@ export default {
     badge: {
       value: {
         subtitle:
-          "The displayed value on the badge, can be *string* or *number*. If omitted and `type` is not `dot`, the badge is not rendered.",
+          "徽标上显示的值，可以是 *string* 或 *number*。如果未传入且没有 `value` slot，非 dot 徽标不会渲染。",
       },
       "value-slot": {
         subtitle:
-          "Lets you fully replace the content inside the badge through the `value` slot. Slot props expose `value` and `displayValue`. Works in the default overlay mode.",
+          "通过 `value` slot 完全替换徽标内部内容。Slot props 暴露 `value` 和 `displayValue`，适用于 default、ribbon 和 tag 模式。",
       },
       max: {
         subtitle:

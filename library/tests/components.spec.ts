@@ -2856,6 +2856,33 @@ describe('components', () => {
     dot.unmount();
   });
 
+  it('renders custom value slot inside tag badge without overlay positioning', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphBadge, NmorphIcon, NmorphIconPin },
+        template: `
+          <NmorphBadge type="tag" size="tiny" color="var(--nmorph-accent-color)" :value="''">
+            <template #value>
+              <NmorphIcon>
+                <NmorphIconPin />
+              </NmorphIcon>
+            </template>
+          </NmorphBadge>
+        `,
+      })
+    );
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-badge').classes()).toContain('nmorph-badge--tag');
+    expect(wrapper.find('.nmorph-badge__container').classes()).toContain('nmorph-badge__container--tag');
+    expect(wrapper.find('.nmorph-badge__content').classes()).toContain('nmorph-badge__content--custom');
+    expect(wrapper.find('.nmorph-icon').exists()).toBe(true);
+    expect(wrapper.text()).toBe('');
+
+    wrapper.unmount();
+  });
+
   it('applies extended badge size modifiers', async () => {
     const sizes = ['medium', 'large', 'extra-large'] as const;
 
@@ -5512,6 +5539,29 @@ describe('components', () => {
 
     expect(wrapper.find('.nmorph-image-preview__trigger').exists()).toBe(false);
     wrapper.unmount();
+  });
+
+  it('keeps plain avatar border by default and supports borderless mode', () => {
+    const defaultWrapper = mount(NmorphAvatar, {
+      props: {
+        design: 'plain',
+        name: 'Plain Avatar',
+      },
+    });
+    const borderlessWrapper = mount(NmorphAvatar, {
+      props: {
+        design: 'plain',
+        borderless: true,
+        name: 'Plain Avatar',
+      },
+    });
+
+    expect(defaultWrapper.find('.nmorph-avatar').classes()).toContain('nmorph-avatar--plain');
+    expect(defaultWrapper.find('.nmorph-avatar').classes()).not.toContain('nmorph-avatar--borderless');
+    expect(borderlessWrapper.find('.nmorph-avatar').classes()).toContain('nmorph-avatar--borderless');
+
+    defaultWrapper.unmount();
+    borderlessWrapper.unmount();
   });
 
   it('uses default text color for avatar loading icon', async () => {

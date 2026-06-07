@@ -3,6 +3,7 @@ import {
   NmorphBadge,
   NmorphButton,
   NmorphIcon,
+  NmorphIconPin,
   NmorphIconUsers,
 } from "@nmorph/nmorph-ui-kit";
 
@@ -23,6 +24,18 @@ const teamSize = 12;
         </template>
         <NmorphButton text="team" />
       </NmorphBadge>
+      <NmorphBadge
+        type="tag"
+        size="tiny"
+        color="var(--nmorph-accent-color)"
+        :value="''"
+      >
+        <template #value>
+          <NmorphIcon>
+            <NmorphIconPin />
+          </NmorphIcon>
+        </template>
+      </NmorphBadge>
     </ClientOnly>
   </div>
 </template>
@@ -30,6 +43,8 @@ const teamSize = 12;
 <style lang="scss">
 .badge-value-slot-overview {
   display: flex;
+  gap: var(--indentation-04);
+  align-items: center;
 }
 
 .badge-value-slot-overview__content {

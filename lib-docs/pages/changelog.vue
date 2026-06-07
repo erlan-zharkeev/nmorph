@@ -11,6 +11,26 @@ const knownBugItems: string[] = [];
         <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
+            <h3>v3.0.2</h3>
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.avatar-borderless-prop") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.badge-tag-value-slot") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.preview-borderless-controls") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.image-preview-plain-surface") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.hand-icon-outline") }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
             <h3>v3.0.1</h3>
             <ul>
               <li>

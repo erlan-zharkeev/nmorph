@@ -8,6 +8,7 @@ import type { INmorphAvatarEmit, INmorphAvatarProps } from './types';
 
 const props = withDefaults(defineProps<INmorphAvatarProps>(), {
   design: 'nmorph',
+  borderless: false,
   src: undefined,
   size: 48,
   shape: 'circle',
@@ -63,6 +64,7 @@ const modifiers = computed(() =>
       resolvedDesign.value,
       props.shape,
       props.frameBorder > 0 && 'framed',
+      resolvedDesign.value === 'plain' && props.borderless && 'borderless',
       previewAvailable.value && 'preview',
     ],
   })
@@ -195,6 +197,10 @@ const openPreview = () => {
 
 .nmorph-avatar--plain.nmorph-avatar--framed {
   border: var(--nmorph-plain-border);
+}
+
+.nmorph-avatar--plain.nmorph-avatar--borderless {
+  border: 0;
 }
 
 .nmorph-avatar > .nmorph-image > img {

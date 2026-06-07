@@ -8,6 +8,7 @@ import { Dog, Racoon } from "~/assets/images";
     <ClientOnly>
       <NmorphAvatar :src="Dog" :size="70" shape="square" />
       <NmorphAvatar :src="Racoon" :size="70" shape="circle" />
+      <NmorphAvatar :src="Dog" :size="70" shape="square" design="plain" borderless />
     </ClientOnly>
   </div>
 </template>

@@ -3,6 +3,7 @@ import type { Component } from 'vue';
 
 export interface INmorphAvatarProps extends Omit<INmorphImage, 'src' | 'width' | 'height'> {
   design?: NmorphElementDesignType;
+  borderless?: boolean;
   src?: string | string[];
   size?: number;
   shape?: keyof typeof AvatarShapeType;

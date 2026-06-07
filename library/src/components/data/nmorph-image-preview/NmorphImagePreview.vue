@@ -261,7 +261,13 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
           :aria-label="getTriggerLabel(source.index)"
           @click.stop="openPreviewAt(source.index)"
         >
-          <NmorphImage :src="source.src" :alt="getTriggerLabel(source.index)" :fit="props.fit" :frame-border="0">
+          <NmorphImage
+            :src="source.src"
+            :alt="getTriggerLabel(source.index)"
+            :fit="props.fit"
+            design="plain"
+            :frame-border="0"
+          >
             <template v-if="$slots.loading" #loading>
               <slot name="loading" />
             </template>
@@ -277,7 +283,7 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
           </span>
         </button>
       </template>
-      <NmorphImage v-else :src="triggerSource" :alt="props.alt" :fit="props.fit" :frame-border="0">
+      <NmorphImage v-else :src="triggerSource" :alt="props.alt" :fit="props.fit" design="plain" :frame-border="0">
         <template v-if="$slots.loading" #loading>
           <slot name="loading" />
         </template>
@@ -310,6 +316,7 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
       :src="triggerSource"
       :alt="props.alt"
       fit="contain"
+      design="plain"
       :frame-border="0"
       :style="{ transform: `rotate(${rotateLevel}deg) scale(${scaleLevel})` }"
     >
@@ -322,14 +329,20 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
     </NmorphImage>
     <template #actions>
       <div v-for="(action, idx) in actions" :key="idx" class="nmorph-image-preview__action-element">
-        <NmorphButton design="plain" @click="action.handler">
+        <NmorphButton class="nmorph-preview-portal__control-button" design="plain" borderless @click="action.handler">
           <NmorphIcon>
             <component :is="action.icon" />
           </NmorphIcon>
         </NmorphButton>
       </div>
       <div class="nmorph-image-preview__action-element">
-        <NmorphButton design="plain" :disabled="scaleLevel === 1" @click="enlargeShrinkActionData.handler">
+        <NmorphButton
+          class="nmorph-preview-portal__control-button"
+          design="plain"
+          borderless
+          :disabled="scaleLevel === 1"
+          @click="enlargeShrinkActionData.handler"
+        >
           <NmorphIcon>
             <component :is="enlargeShrinkActionData.icon" />
           </NmorphIcon>

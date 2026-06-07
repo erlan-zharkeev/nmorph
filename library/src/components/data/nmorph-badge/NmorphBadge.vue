@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<INmorphBadgeProps>(), {
   disabled: false,
 });
 
-defineSlots<INmorphBadgeSlots>();
+const slots = defineSlots<INmorphBadgeSlots>();
 
 const isDotType = computed(() => props.type === 'dot');
 const isTagType = computed(() => props.type === 'tag');
@@ -66,8 +66,11 @@ const displayValue = computed(() => {
   return isHaveMaxValue ? `${props.max}+` : props.value;
 });
 
+const hasValueSlot = computed(() => Boolean(slots.value));
 const shouldHideOnFalsyValue = computed(() => props.hideOnFalsyValue && !props.value);
-const shouldShowBadge = computed(() => (isDotType.value || props.value !== undefined) && !shouldHideOnFalsyValue.value);
+const shouldShowBadge = computed(
+  () => (isDotType.value || props.value !== undefined || hasValueSlot.value) && !shouldHideOnFalsyValue.value
+);
 
 const appliedOffset = computed(() => {
   const x = `${(badgeWidth?.value / 2 + props.offsetX) * -1}px`;
@@ -136,7 +139,7 @@ watch(
     <div v-if="shouldShowBadge && isRibbon" class="nmorph-badge__ribbon-frame" :style="ribbonFrameStyle">
       <div :class="ribbonCornerModifiers">
         <div ref="badge" :class="containerModifiers" :style="containerStyle">
-          <div class="nmorph-badge__content">
+          <div class="nmorph-badge__content" :class="hasValueSlot && 'nmorph-badge__content--custom'">
             <slot name="value" :value="props.value" :display-value="displayValue"> {{ displayValue }} </slot>
           </div>
         </div>
@@ -144,11 +147,8 @@ watch(
     </div>
     <div v-else-if="shouldShowBadge" ref="badge" :class="containerModifiers" :style="containerStyle">
       <div v-if="isDotType" class="nmorph-badge__dot" />
-      <div v-else class="nmorph-badge__content">
-        <template v-if="isTagType">
-          {{ displayValue }}
-        </template>
-        <slot v-else name="value" :value="props.value" :display-value="displayValue"> {{ displayValue }} </slot>
+      <div v-else class="nmorph-badge__content" :class="hasValueSlot && 'nmorph-badge__content--custom'">
+        <slot name="value" :value="props.value" :display-value="displayValue"> {{ displayValue }} </slot>
       </div>
     </div>
   </div>
@@ -195,6 +195,15 @@ $nmorph-badge-dot-size-extra-large: 8px;
     position: static;
   }
 
+  .nmorph-badge__container--tag .nmorph-badge__content--custom {
+    min-height: calc(1em * var(--line-height-regular) + 4px);
+    padding: 2px;
+
+    > .nmorph-icon {
+      flex: 0 0 auto;
+    }
+  }
+
   .nmorph-badge__content {
     display: inline-flex;
     justify-content: center;
@@ -206,6 +215,10 @@ $nmorph-badge-dot-size-extra-large: 8px;
     font-size: var(--nmorph-typography-body-large-font-size);
     line-height: var(--nmorph-typography-body-large-line-height);
     text-align: center;
+  }
+
+  .nmorph-badge__content .nmorph-icon {
+    --nmorph-private-icon-color: currentColor;
   }
 
   &.nmorph-badge--tiny .nmorph-badge__content {
