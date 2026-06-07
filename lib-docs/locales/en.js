@@ -231,7 +231,7 @@ export default {
         "loading-icon-states":
           "NmorphImage now renders a loader icon while images load; loadingText is deprecated in favor of the loading slot, and docs examples no longer show textual loading states.",
         "media-gallery-trigger-api":
-          "NmorphMediaGallery trigger cards now support triggerImageFit, triggerVideoFit, item aspectRatio, itemClass/itemStyle, trigger item callbacks, and open the preview at the clicked item index.",
+          "NmorphMediaGallery trigger cards now support content-aware triggerLayout modes, triggerClass/triggerStyle on the trigger container, thumbnail fit controls, item aspectRatio, itemClass/itemStyle, trigger item callbacks, and open the preview at the clicked item index.",
         "scroll-progress-polish":
           "NmorphScroll now keeps nested horizontal scrolling from also driving the outer vertical scroller, docs scroll examples use y-gap consistently, and NmorphProgress indeterminate starts from the edge without a center jump.",
         "audio-backtop-polish":

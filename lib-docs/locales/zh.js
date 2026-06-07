@@ -220,7 +220,7 @@ export default {
         "loading-icon-states":
           "NmorphImage 现在在图片加载时渲染 loader icon；loadingText 已标记为 deprecated，推荐使用 loading slot，docs examples 也不再显示文本 loading states。",
         "media-gallery-trigger-api":
-          "NmorphMediaGallery trigger cards 现在支持 triggerImageFit、triggerVideoFit、item aspectRatio、itemClass/itemStyle、trigger item callbacks，并会从点击的卡片 index 打开 preview。",
+          "NmorphMediaGallery trigger cards 现在支持 content-aware triggerLayout modes、triggerClass/triggerStyle trigger container、thumbnail fit controls、item aspectRatio、itemClass/itemStyle、trigger item callbacks，并会从点击的卡片 index 打开 preview。",
         "scroll-progress-polish":
           "NmorphScroll 现在避免嵌套 horizontal scroll 同时驱动外层 vertical scroll，docs scroll examples 统一使用 y-gap，NmorphProgress indeterminate 从边缘开始而不会从中心跳动。",
         "audio-backtop-polish":

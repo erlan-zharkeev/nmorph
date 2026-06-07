@@ -233,7 +233,7 @@ export default {
         "loading-icon-states":
           "NmorphImage теперь показывает loader icon во время загрузки изображения; loadingText помечен как deprecated в пользу loading slot, а docs examples больше не показывают текстовые loading states.",
         "media-gallery-trigger-api":
-          "NmorphMediaGallery trigger cards теперь поддерживают triggerImageFit, triggerVideoFit, item aspectRatio, itemClass/itemStyle, trigger item callbacks и открывают preview с индекса выбранной карточки.",
+          "NmorphMediaGallery trigger cards теперь поддерживают content-aware triggerLayout modes, triggerClass/triggerStyle на trigger container, thumbnail fit controls, item aspectRatio, itemClass/itemStyle, trigger item callbacks и открывают preview с индекса выбранной карточки.",
         "scroll-progress-polish":
           "NmorphScroll теперь не прокручивает внешний vertical scroll при работе с вложенным horizontal scroll, docs scroll examples используют y-gap консистентно, а NmorphProgress indeterminate стартует от края без прыжка из центра.",
         "audio-backtop-polish":

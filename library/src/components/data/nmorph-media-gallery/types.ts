@@ -1,9 +1,12 @@
 import type { NmorphCSSProperties } from '@/types';
 
 export type NmorphMediaGalleryFit = 'cover' | 'contain';
+export type NmorphMediaGalleryTriggerLayout = 'grid' | 'natural' | 'mosaic';
 export type NmorphMediaGalleryVideoPreload = 'none' | 'metadata' | 'auto';
-export type NmorphMediaGalleryTriggerItemClass = string | string[] | Record<string, boolean | undefined>;
-export type NmorphMediaGalleryTriggerItemStyle = NmorphCSSProperties;
+export type NmorphMediaGalleryTriggerClass = string | string[] | Record<string, boolean | undefined>;
+export type NmorphMediaGalleryTriggerStyle = NmorphCSSProperties;
+export type NmorphMediaGalleryTriggerItemClass = NmorphMediaGalleryTriggerClass;
+export type NmorphMediaGalleryTriggerItemStyle = NmorphMediaGalleryTriggerStyle;
 
 export interface INmorphMediaGalleryItemBase {
   src: string;
@@ -46,6 +49,9 @@ export interface INmorphMediaGalleryProps {
   showTriggerFullscreenAction?: boolean;
   showTriggerDownloadAction?: boolean;
   showTriggerPlayButton?: boolean;
+  triggerLayout?: NmorphMediaGalleryTriggerLayout;
+  triggerClass?: NmorphMediaGalleryTriggerClass;
+  triggerStyle?: NmorphMediaGalleryTriggerStyle;
   triggerImageFit?: NmorphMediaGalleryFit;
   triggerVideoFit?: NmorphMediaGalleryFit;
   triggerItemClass?: (item: NmorphMediaGalleryItem, index: number) => NmorphMediaGalleryTriggerItemClass | undefined;

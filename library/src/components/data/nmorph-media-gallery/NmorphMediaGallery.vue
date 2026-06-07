@@ -21,6 +21,9 @@ import type { INmorphMediaGalleryEmit, INmorphMediaGalleryProps, NmorphMediaGall
 import NmorphPreviewPortal from '../nmorph-preview-portal/NmorphPreviewPortal.vue';
 
 const SWIPE_THRESHOLD = 45;
+const DEFAULT_TRIGGER_ASPECT_RATIO = 16 / 9;
+const NATURAL_TRIGGER_ROW_BASIS = 160;
+const MOSAIC_TRIGGER_ROW_BASIS = 128;
 
 const props = withDefaults(defineProps<INmorphMediaGalleryProps>(), {
   modelValue: false,
@@ -38,6 +41,9 @@ const props = withDefaults(defineProps<INmorphMediaGalleryProps>(), {
   showTriggerFullscreenAction: true,
   showTriggerDownloadAction: true,
   showTriggerPlayButton: true,
+  triggerLayout: 'grid',
+  triggerClass: undefined,
+  triggerStyle: undefined,
   triggerImageFit: 'cover',
   triggerVideoFit: 'cover',
   showNavigationButtons: true,
@@ -121,13 +127,22 @@ const triggerStyle = computed<NmorphCSSProperties>(() => ({
   ...createCssSizeVariables({
     '--nmorph-private-media-gallery-trigger-height': props.height,
   }),
+  '--nmorph-private-media-gallery-trigger-image-fit': props.triggerImageFit,
   '--nmorph-private-media-gallery-trigger-video-fit': props.triggerVideoFit,
+  ...(props.triggerStyle || {}),
 }));
 const triggerModifiers = computed(() =>
   useModifiers({
-    'nmorph-media-gallery__trigger': [props.height !== undefined && 'fixed-height'],
+    'nmorph-media-gallery__trigger': [
+      props.height !== undefined && 'fixed-height',
+      props.triggerLayout !== 'grid' && props.triggerLayout,
+      props.triggerLayout !== 'grid' && sourceList.value.length === 1 && 'single',
+      props.triggerLayout !== 'grid' && sourceList.value.length === 2 && 'paired',
+      props.triggerLayout !== 'grid' && sourceList.value.length > 2 && 'wrapped',
+    ],
   })
 );
+const triggerClasses = computed(() => [triggerModifiers.value, props.triggerClass]);
 
 const formatSize = (size?: number) => {
   if (size === undefined || Number.isNaN(size) || size < 0) return '';
@@ -161,6 +176,58 @@ const setTriggerVideoRef = (index: number, element: unknown) => {
   triggerVideoRefs.value[index] = element instanceof HTMLVideoElement ? element : null;
 };
 
+const getItemAspectRatio = (item: NmorphMediaGalleryItem) => {
+  if (typeof item.aspectRatio === 'number' && Number.isFinite(item.aspectRatio) && item.aspectRatio > 0) {
+    return item.aspectRatio;
+  }
+
+  return DEFAULT_TRIGGER_ASPECT_RATIO;
+};
+
+const getTriggerRowBasis = (fallback: number) => {
+  if (typeof props.height === 'number') return props.height;
+
+  if (typeof props.height === 'string') {
+    const pixelHeight = props.height.trim().match(/^(\d+(?:\.\d+)?)px$/);
+    const pixelHeightValue = pixelHeight?.[1];
+
+    if (pixelHeightValue) return Number.parseFloat(pixelHeightValue);
+  }
+
+  return fallback;
+};
+
+const getTriggerFlexBasis = (aspectRatio: number, fallback: number) =>
+  `${parseFloat((aspectRatio * getTriggerRowBasis(fallback)).toFixed(3))}px`;
+
+const getTriggerLayoutStyle = (item: NmorphMediaGalleryItem): NmorphCSSProperties => {
+  const aspectRatio = getItemAspectRatio(item);
+
+  if (props.triggerLayout === 'natural') {
+    const flexBasis = getTriggerFlexBasis(aspectRatio, NATURAL_TRIGGER_ROW_BASIS);
+
+    return {
+      '--nmorph-private-media-gallery-trigger-item-ratio': aspectRatio,
+      '--nmorph-private-media-gallery-trigger-item-basis': flexBasis,
+      flexGrow: aspectRatio,
+      flexBasis,
+    };
+  }
+
+  if (props.triggerLayout === 'mosaic') {
+    const flexBasis = getTriggerFlexBasis(aspectRatio, MOSAIC_TRIGGER_ROW_BASIS);
+
+    return {
+      '--nmorph-private-media-gallery-trigger-item-ratio': aspectRatio,
+      '--nmorph-private-media-gallery-trigger-item-basis': flexBasis,
+      flexGrow: Math.min(Math.max(aspectRatio, 0.75), 2.35),
+      flexBasis,
+    };
+  }
+
+  return {};
+};
+
 const getTriggerItemClass = (item: NmorphMediaGalleryItem, index: number) => [
   item.itemClass,
   props.triggerItemClass?.(item, index),
@@ -171,9 +238,13 @@ const getTriggerItemStyle = (item: NmorphMediaGalleryItem, index: number): Nmorp
     ...(item.itemStyle || {}),
     ...(props.triggerItemStyle?.(item, index) || {}),
   };
+  const aspectRatio = getItemAspectRatio(item);
 
-  if (typeof item.aspectRatio === 'number' && Number.isFinite(item.aspectRatio) && item.aspectRatio > 0) {
-    style.aspectRatio = String(item.aspectRatio);
+  if (props.triggerLayout !== 'grid') {
+    Object.assign(style, getTriggerLayoutStyle(item));
+    style.aspectRatio = String(aspectRatio);
+  } else if (typeof item.aspectRatio === 'number' && Number.isFinite(item.aspectRatio) && item.aspectRatio > 0) {
+    style.aspectRatio = String(aspectRatio);
   }
 
   return style;
@@ -444,7 +515,7 @@ const pointerUpHandler = (event: PointerEvent) => {
 </script>
 
 <template>
-  <div v-if="props.showTrigger" :class="triggerModifiers" :style="triggerStyle">
+  <div v-if="props.showTrigger" :class="triggerClasses" :style="triggerStyle">
     <div
       v-for="(item, index) in sourceList"
       :key="`${item.kind}-${item.src}-${index}`"
@@ -659,11 +730,40 @@ const pointerUpHandler = (event: PointerEvent) => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: var(--indentation-03);
+  box-sizing: border-box;
   width: 100%;
+  max-width: 100%;
 }
 
 .nmorph-media-gallery__trigger--fixed-height {
   grid-auto-rows: var(--nmorph-private-media-gallery-trigger-height);
+
+  &:not(.nmorph-media-gallery__trigger--natural, .nmorph-media-gallery__trigger--mosaic) {
+    .nmorph-media-gallery__trigger-item {
+      height: 100%;
+      aspect-ratio: auto;
+    }
+  }
+}
+
+.nmorph-media-gallery__trigger--natural,
+.nmorph-media-gallery__trigger--mosaic {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.nmorph-media-gallery__trigger--natural.nmorph-media-gallery__trigger--paired {
+  flex-wrap: nowrap;
+}
+
+.nmorph-media-gallery__trigger--natural .nmorph-media-gallery__trigger-item,
+.nmorph-media-gallery__trigger--mosaic .nmorph-media-gallery__trigger-item {
+  flex-shrink: 1;
+  flex-basis: var(--nmorph-private-media-gallery-trigger-item-basis);
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: var(--nmorph-private-media-gallery-trigger-item-ratio);
 }
 
 .nmorph-media-gallery__trigger-item {
@@ -674,11 +774,6 @@ const pointerUpHandler = (event: PointerEvent) => {
   border-radius: var(--default-border-radius);
   box-shadow: var(--nmorph-shadow-outset);
   aspect-ratio: 16 / 9;
-}
-
-.nmorph-media-gallery__trigger--fixed-height .nmorph-media-gallery__trigger-item {
-  height: 100%;
-  aspect-ratio: auto;
 }
 
 .nmorph-media-gallery__trigger-open {
@@ -721,6 +816,10 @@ const pointerUpHandler = (event: PointerEvent) => {
     display: block;
     width: 100%;
     height: 100%;
+  }
+
+  .nmorph-image img {
+    object-fit: var(--nmorph-private-media-gallery-trigger-image-fit);
   }
 
   .nmorph-media-gallery__trigger-video {

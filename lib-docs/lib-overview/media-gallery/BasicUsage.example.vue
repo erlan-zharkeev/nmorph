@@ -83,6 +83,7 @@ const mediaItems = [
       v-model:active-index="activeIndex"
       :items="mediaItems"
       show-trigger
+      trigger-layout="natural"
       trigger-image-fit="cover"
       trigger-video-fit="cover"
       preview-width="min(92vw, 860px)"
@@ -97,7 +98,6 @@ const mediaItems = [
 }
 
 .media-gallery-basic-usage :deep(.nmorph-media-gallery__trigger) {
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
 }
 

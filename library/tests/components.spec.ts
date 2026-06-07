@@ -6047,6 +6047,98 @@ describe('components', () => {
     wrapper.unmount();
   });
 
+  it('applies content-aware media gallery trigger layout and container options', async () => {
+    const items = [
+      {
+        kind: 'image' as const,
+        src: imageSrc,
+        name: 'wide.jpg',
+        alt: 'Wide',
+        aspectRatio: 2,
+      },
+      {
+        kind: 'video' as const,
+        src: 'blob:square-clip',
+        name: 'square.mp4',
+        poster: imageSrc,
+        aspectRatio: 1,
+      },
+    ];
+
+    const wrapper = mount(NmorphMediaGallery, {
+      props: {
+        items,
+        height: 180,
+        showTrigger: true,
+        triggerLayout: 'natural',
+        triggerClass: 'media-gallery-custom-trigger',
+        triggerStyle: { maxWidth: '420px' },
+        triggerImageFit: 'contain',
+        triggerVideoFit: 'contain',
+      },
+    });
+
+    await nextTick();
+
+    const trigger = wrapper.find('.nmorph-media-gallery__trigger');
+    const triggerItems = wrapper.findAll('.nmorph-media-gallery__trigger-item');
+    const wideItemStyle = (triggerItems[0].element as HTMLElement).style;
+    const squareItemStyle = (triggerItems[1].element as HTMLElement).style;
+
+    expect(trigger.classes()).toContain('nmorph-media-gallery__trigger--natural');
+    expect(trigger.classes()).toContain('nmorph-media-gallery__trigger--paired');
+    expect(trigger.classes()).toContain('media-gallery-custom-trigger');
+    expect(trigger.element.style.maxWidth).toBe('420px');
+    expect(trigger.element.style.getPropertyValue('--nmorph-private-media-gallery-trigger-image-fit')).toBe(
+      'contain'
+    );
+    expect(trigger.element.style.getPropertyValue('--nmorph-private-media-gallery-trigger-video-fit')).toBe(
+      'contain'
+    );
+    expect(wideItemStyle.getPropertyValue('aspect-ratio')).toBe('2 / 1');
+    expect(wideItemStyle.flexGrow).toBe('2');
+    expect(wideItemStyle.flexBasis).toBe('360px');
+    expect(squareItemStyle.getPropertyValue('aspect-ratio')).toBe('1 / 1');
+    expect(squareItemStyle.flexGrow).toBe('1');
+    expect(squareItemStyle.flexBasis).toBe('180px');
+    expect(
+      (wrapper.find('.nmorph-image').element as HTMLElement).style.getPropertyValue('--nmorph-private-image-fit')
+    ).toBe(
+      'contain'
+    );
+
+    await wrapper.setProps({ items: [items[0]] });
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-media-gallery__trigger').classes()).toContain(
+      'nmorph-media-gallery__trigger--single'
+    );
+    expect((wrapper.find('.nmorph-media-gallery__trigger-item').element as HTMLElement).style.flexGrow).toBe('2');
+
+    await wrapper.setProps({
+      items: [
+        ...items,
+        {
+          kind: 'image' as const,
+          src: imageSrc,
+          name: 'portrait.jpg',
+          alt: 'Portrait',
+          aspectRatio: 0.75,
+        },
+      ],
+    });
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-media-gallery__trigger').classes()).toContain(
+      'nmorph-media-gallery__trigger--wrapped'
+    );
+    expect((wrapper.findAll('.nmorph-media-gallery__trigger-item')[2].element as HTMLElement).style.flexGrow).toBe(
+      '0.75'
+    );
+
+    wrapper.unmount();
+  });
+
   it('can show only download actions on media gallery trigger items', async () => {
     const items = [
       {

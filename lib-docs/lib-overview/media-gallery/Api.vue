@@ -108,16 +108,35 @@ const attributesData: IAttributesTableData[] = [
     description: "Shows the play button overlay for video trigger cards.",
   },
   {
+    name: "trigger-layout",
+    type: "'grid' | 'natural' | 'mosaic'",
+    default: "grid",
+    description:
+      "Controls trigger card layout. natural and mosaic derive item widths from item.aspectRatio.",
+  },
+  {
+    name: "trigger-class",
+    type: "string | string[] | Record&lt;string, boolean&gt;",
+    default: "undefined",
+    description: "Additional class applied to the trigger container.",
+  },
+  {
+    name: "trigger-style",
+    type: "CSSProperties",
+    default: "undefined",
+    description: "Additional inline styles applied to the trigger container.",
+  },
+  {
     name: "trigger-image-fit",
     type: "'cover' | 'contain'",
     default: "cover",
-    description: "Object fit used for image trigger cards.",
+    description: "Object fit used for image thumbnails in trigger cards.",
   },
   {
     name: "trigger-video-fit",
     type: "'cover' | 'contain'",
     default: "cover",
-    description: "Object fit used for video trigger cards.",
+    description: "Object fit used for video thumbnails in trigger cards.",
   },
   {
     name: "trigger-item-class",
@@ -130,7 +149,7 @@ const attributesData: IAttributesTableData[] = [
     type: "(item, index) =&gt; CSSProperties",
     default: "undefined",
     description:
-      "Returns additional inline styles for a trigger item. item.aspectRatio is applied as CSS aspect-ratio when provided.",
+      "Returns additional inline styles for a trigger item. item.aspectRatio is applied as CSS aspect-ratio and drives natural/mosaic layout sizing.",
   },
   {
     name: "show-navigation-buttons",
