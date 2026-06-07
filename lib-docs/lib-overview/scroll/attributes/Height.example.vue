@@ -20,7 +20,6 @@ import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
 <style lang="scss">
 .scroll-height-overview {
   width: 100%;
-  margin-left: 8px;
   display: grid;
   gap: 16px;
 

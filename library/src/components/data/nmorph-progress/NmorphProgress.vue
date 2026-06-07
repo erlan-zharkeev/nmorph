@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<INmorphProgressProps>(), {
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-progress': [],
+    'nmorph-progress': [props.indeterminate && 'indeterminate'],
   })
 );
 
@@ -99,7 +99,7 @@ const styles = computed<CSSProperties>(() => ({
 .nmorph-progress {
   --nmorph-private-progress-height: 8px;
   --nmorph-private-progress-width-transition: 0.4s ease-in-out width;
-  --nmorph-private-progress-indeterminate-animation: slide 2s linear infinite;
+  --nmorph-private-progress-indeterminate-animation: nmorph-progress-indeterminate 1.4s ease-in-out infinite;
 
   display: inline;
 
@@ -191,6 +191,26 @@ const styles = computed<CSSProperties>(() => ({
     width: var(--nmorph-private-progress-percentage);
     background: var(--nmorph-private-progress-color);
     animation: var(--nmorph-private-progress-animation);
+  }
+
+  &.nmorph-progress--indeterminate {
+    .nmorph-progress__inner {
+      width: 40%;
+      min-width: 32px;
+      transform: translateX(-100%);
+      transition: none;
+      will-change: transform;
+    }
+  }
+}
+
+@keyframes nmorph-progress-indeterminate {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(250%);
   }
 }
 </style>

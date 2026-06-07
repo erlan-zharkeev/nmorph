@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { NmorphAvatar } from "@nmorph/nmorph-ui-kit";
-import { Autumn, Spring, Summer, Winter } from "~/assets/images";
+import { Dog, Racoon } from "~/assets/images";
 </script>
 
 <template>
   <div class="avatar-preview-overview">
     <ClientOnly>
       <NmorphAvatar
-        :src="[Summer, Spring, Winter, Autumn]"
+        :src="[Dog, Racoon]"
         preview
         :size="80"
         shape="square"
-        :preview-initial-index="1"
+        :preview-initial-index="0"
       />
     </ClientOnly>
   </div>

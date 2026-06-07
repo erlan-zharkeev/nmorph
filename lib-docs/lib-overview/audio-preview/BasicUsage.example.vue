@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import { NmorphAudioPreview } from "@nmorph/nmorph-ui-kit";
+import { createSoftPingAudioSrc } from "~/utils";
 
-const audioSrc =
-  "https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3";
+const durationMs = 350;
+const audioSrc = ref("");
+
+onMounted(() => {
+  audioSrc.value = createSoftPingAudioSrc(durationMs);
+});
 </script>
 
 <template>
   <div class="audio-preview-basic-usage">
     <NmorphAudioPreview
       :src="audioSrc"
-      name="T-Rex roar"
-      :duration-ms="2200"
+      name="Soft ping"
+      :duration-ms="durationMs"
       width="100%"
     />
   </div>

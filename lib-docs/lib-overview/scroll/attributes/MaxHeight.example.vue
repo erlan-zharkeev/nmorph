@@ -25,13 +25,11 @@ const removeItem = () => (elements.value -= 1);
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-left: 8px;
-
-  .nmorph-button {
-    margin-right: 8px;
-  }
 
   .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
     margin-bottom: 12px;
   }
 

@@ -1,3 +1,16 @@
+<script setup lang="ts">
+const lazyLocaleScriptExample = `import { loadNmorphEmojiLocale } from "@nmorph/nmorph-ui-kit/emoji"
+
+const locale = await loadNmorphEmojiLocale(language)`;
+
+const lazyLocaleTemplateExample = `<NmorphEmojiPicker
+  :language="language"
+  :data-source="locale.data"
+  :i18n="locale.i18n"
+  :quick-list="locale.quickList"
+/>`;
+</script>
+
 <template>
   <div id="content-lazy-locale-data" class="emoji-picker-lazy-data">
     <h2 class="nmorph-title-2">Lazy Locale Data</h2>
@@ -5,16 +18,10 @@
       NmorphEmojiPicker stays a renderer: pass data-source, i18n, quick-list, and language from the host wrapper. The
       package also ships optional locale files for en, ru, and zh that can be loaded separately.
     </p>
-    <pre><code>import { loadNmorphEmojiLocale } from "@nmorph/nmorph-ui-kit/emoji"
-
-const locale = await loadNmorphEmojiLocale(language)
-
-&lt;NmorphEmojiPicker
-  :language="language"
-  :data-source="locale.data"
-  :i18n="locale.i18n"
-  :quick-list="locale.quickList"
-/&gt;</code></pre>
+    <div class="emoji-picker-lazy-data__code">
+      <code-example lang="javascript">{{ lazyLocaleScriptExample }}</code-example>
+      <code-example lang="html">{{ lazyLocaleTemplateExample }}</code-example>
+    </div>
   </div>
 </template>
 
@@ -30,7 +37,7 @@ const locale = await loadNmorphEmojiLocale(language)
   color: var(--nmorph-semi-contrast-text-color);
 }
 
-.emoji-picker-lazy-data pre {
+.emoji-picker-lazy-data__code {
   margin: 0;
   padding: 14px;
   overflow: auto;
@@ -39,8 +46,15 @@ const locale = await loadNmorphEmojiLocale(language)
   box-shadow: var(--nmorph-shadow-inset);
 }
 
-.emoji-picker-lazy-data code {
+.emoji-picker-lazy-data__code :deep(.hljs) {
+  width: max-content;
+  min-width: 100%;
+  overflow-x: visible;
   font-size: 13px;
   line-height: 1.5;
+}
+
+.emoji-picker-lazy-data__code :deep(.hljs + .hljs) {
+  margin-top: 16px;
 }
 </style>

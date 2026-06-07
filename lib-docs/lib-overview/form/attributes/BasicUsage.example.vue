@@ -285,10 +285,6 @@ watch(
 .form-basic-usage-overview {
   width: 260px;
 
-  .form-basic-usage-overview__value {
-    margin-left: 8px;
-  }
-
   .nmorph-text-input,
   .nmorph-number-input,
   .nmorph-radio-group,

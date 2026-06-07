@@ -431,7 +431,6 @@ const progressColor = (value: number) => {
           fit="cover"
           :width="180"
           :height="120"
-          loading-text="Loading image"
         />
         <NmorphImage
           class="image-demo"

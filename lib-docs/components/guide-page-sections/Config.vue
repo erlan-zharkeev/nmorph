@@ -71,11 +71,11 @@ const i18nApp = createI18n({
   legacy: false,
   messages: {
     ru: {
-      loadingText: 'Загружаю что-то...', // ${t('guide-page.config.rewrite-translation')}
+      loadFailedText: 'Не удалось загрузить...', // ${t('guide-page.config.rewrite-translation')}
       ... // ${t('guide-page.config.other-messages')}
     },
     en: {
-      loadingText: 'Loading something...', // ${t('guide-page.config.rewrite-translation')}
+      loadFailedText: 'Failed to load something...', // ${t('guide-page.config.rewrite-translation')}
       ... // ${t('guide-page.config.other-messages')}
     },
   },

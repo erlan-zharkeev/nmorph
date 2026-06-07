@@ -4,8 +4,8 @@ import {
   NmorphIcon,
   NmorphIconAudio,
   NmorphIconDownload,
+  NmorphIconExternalLink,
   NmorphIconLoader,
-  NmorphIconOpen,
   NmorphIconPause,
   NmorphIconPlay,
 } from '@/components';
@@ -231,7 +231,7 @@ defineExpose({ audioRef });
           @click="openHandler"
         >
           <NmorphIcon size="small">
-            <NmorphIconOpen />
+            <NmorphIconExternalLink />
           </NmorphIcon>
         </a>
         <a
@@ -306,13 +306,13 @@ defineExpose({ audioRef });
     height: 20px;
     padding: 0;
     color: var(--nmorph-contrast-text-color);
-    background: color-mix(in srgb, var(--nmorph-black-color) 36%, transparent);
+    background: var(--nmorph-black-color);
     border: 0;
     border-radius: var(--border-radius-circular);
     cursor: pointer;
 
     &:hover {
-      background: color-mix(in srgb, var(--nmorph-black-color) 48%, transparent);
+      background: var(--nmorph-accent-color);
     }
 
     .nmorph-icon {
@@ -330,7 +330,7 @@ defineExpose({ audioRef });
     width: 18px;
     height: 18px;
     color: var(--nmorph-contrast-text-color);
-    background: color-mix(in srgb, var(--nmorph-black-color) 36%, transparent);
+    background: var(--nmorph-black-color);
     border-radius: var(--border-radius-circular);
     box-shadow: var(--nmorph-shadow-outset);
 

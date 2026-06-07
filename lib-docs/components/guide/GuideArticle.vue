@@ -53,7 +53,6 @@ const nextPage = computed(() => guidePages[currentIndex.value + 1]);
 <style scoped lang="scss">
 .docs-guide-article {
   width: 100%;
-  padding: 16px;
 }
 
 .docs-guide-article__header {
@@ -120,6 +119,12 @@ const nextPage = computed(() => guidePages[currentIndex.value + 1]);
       var(--nmorph-light-shade-color);
 }
 
+.docs-guide-article__code :deep(.hljs) {
+  width: max-content;
+  min-width: 100%;
+  overflow-x: visible;
+}
+
 .docs-guide-article__pager {
   display: flex;
   justify-content: space-between;
@@ -138,10 +143,6 @@ const nextPage = computed(() => guidePages[currentIndex.value + 1]);
 }
 
 @media (max-width: 720px) {
-  .docs-guide-article {
-    padding: 12px;
-  }
-
   .docs-guide-article__header {
     padding: 24px;
 

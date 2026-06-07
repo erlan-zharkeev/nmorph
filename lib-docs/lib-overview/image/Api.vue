@@ -43,11 +43,6 @@ const attributesData: IAttributesTableData[] = [
     default: "-",
   },
   {
-    name: "loading-text",
-    type: "String",
-    default: "-",
-  },
-  {
     name: "load-failed-text",
     type: "String",
     default: "-",
@@ -78,7 +73,7 @@ const events = [
     ),
   },
 ];
-const translates = [{ name: "loadingText" }, { name: "loadFailedText" }]
+const translates = [{ name: "loadFailedText" }];
 </script>
 
 <template>

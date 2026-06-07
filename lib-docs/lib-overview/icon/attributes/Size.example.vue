@@ -20,9 +20,6 @@ import { NmorphIcon, NmorphIconEye } from "@nmorph/nmorph-ui-kit";
 .icon-size-overview {
   display: flex;
   align-items: center;
-
-  .nmorph-icon {
-    margin: 0 8px;
-  }
+  gap: 16px;
 }
 </style>

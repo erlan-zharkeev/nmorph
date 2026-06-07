@@ -12,8 +12,9 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 <style lang="scss">
 .button-thickness-overview {
-  .nmorph-button {
-    margin: 4px 8px;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
 }
 </style>

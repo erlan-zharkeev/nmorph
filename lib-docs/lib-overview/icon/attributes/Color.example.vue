@@ -24,9 +24,7 @@ import {
 <style lang="scss">
 .icon-color-overview {
   display: flex;
-
-  .nmorph-icon {
-    margin: 0 8px;
-  }
+  align-items: center;
+  gap: 16px;
 }
 </style>

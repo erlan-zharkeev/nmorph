@@ -10,7 +10,7 @@ import {
   NmorphIconMenu,
 } from "@nmorph/nmorph-ui-kit";
 import TranslateIcon from "~/assets/icons/translate.svg";
-import GitlabIcon from "~/assets/icons/gitlab.svg";
+import GithubIcon from "~/assets/icons/github.svg";
 import type { LocaleObject } from "@nuxtjs/i18n";
 import SearchDialog from "~/components/search-dialog/SearchDialog.vue";
 import libraryData from "../../../library/package.json";
@@ -96,8 +96,8 @@ onUnmounted(() => {
         </NmorphTextInput>
         <kbd>{{ $t("top-bar.search-shortcut") }}</kbd>
       </div>
-      <NmorphLink :href="repositoryUrl" target="blank" class="git-lab-button">
-        <GitlabIcon />
+      <NmorphLink :href="repositoryUrl" target="blank" class="github-button">
+        <GithubIcon />
       </NmorphLink>
       <div ref="translateBtn" class="docs-top-bar__translate-btn">
         <NmorphCheckbox v-model="translateDropdownOpen" size="small" class="docs-top-bar__translate-checkbox"
@@ -190,16 +190,32 @@ $top-bar-height: 50px;
 }
 
 .docs-top-bar {
-  height: $top-bar-height;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-shrink: 0;
+  height: var(--header-height);
+  margin: var(--margin) var(--docs-shell-surface-margin) 0;
   padding: 4px 20px;
+  border-radius: 4px;
+  background: var(--nmorph-main-color);
+  box-shadow:
+    var(--docs-layout-shadow-width) var(--docs-layout-shadow-width) var(--docs-layout-shadow-blur)
+      var(--nmorph-dark-shade-color),
+    calc(-1 * var(--docs-layout-shadow-width)) calc(-1 * var(--docs-layout-shadow-width))
+      var(--docs-layout-shadow-blur) var(--nmorph-light-shade-color);
   z-index: 1;
 }
 
 .docs-top-bar__translate-btn {
   margin: 0 16px;
+}
+
+.github-button {
+  :deep(svg) {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 .docs-top-bar__left {

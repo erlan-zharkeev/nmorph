@@ -71,9 +71,10 @@ import { NmorphDivider, NmorphCard } from "@nmorph/nmorph-ui-kit";
 
   .divider-vertical {
     display: flex;
+    gap: 16px;
 
     .nmorph-divider {
-      margin: 0 16px;
+      margin: 0;
     }
   }
 

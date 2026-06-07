@@ -13,8 +13,9 @@ import { NmorphLink } from "@nmorph/nmorph-ui-kit";
 
 <style lang="scss">
 .link-disabled-overview {
-  .nmorph-link {
-    margin: 0 8px;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
 }
 </style>

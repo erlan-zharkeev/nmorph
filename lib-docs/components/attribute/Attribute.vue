@@ -136,6 +136,19 @@ const infoData = `overview.${props.infoName}.info`;
 :deep(.docs-attribute__code-collapse .nmorph-collapse-item__inner-wrapper) {
   margin-top: 0;
   padding: 16px 8px 14px;
+  width: max-content;
+  min-width: 100%;
+}
+
+:deep(.docs-attribute__code-collapse .nmorph-collapse-item__content) {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+:deep(.docs-attribute__code-collapse .hljs) {
+  width: max-content;
+  min-width: 100%;
+  overflow-x: visible;
 }
 
 .docs-attribute {
@@ -144,7 +157,7 @@ const infoData = `overview.${props.infoName}.info`;
 }
 
 .docs-component__overview {
-  padding: 16px 8px 0px 8px;
+  padding: 16px 12px 0px 12px;
   display: flex;
   align-items: baseline;
   width: 100%;
@@ -171,6 +184,6 @@ const infoData = `overview.${props.infoName}.info`;
   justify-content: flex-end;
   align-items: center;
   gap: 8px;
-  padding: 12px 8px;
+  padding: 12px;
 }
 </style>

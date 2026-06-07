@@ -17,11 +17,18 @@ const { t } = useI18n();
 <style lang="scss" scoped>
 .docs-footer-bar {
   height: var(--footer-height);
-  margin: 0 var(--margin);
+  margin: 0 var(--docs-shell-surface-margin);
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   border-radius: 4px;
+  background: var(--nmorph-main-color);
+  box-shadow:
+    var(--docs-layout-shadow-width) var(--docs-layout-shadow-width) var(--docs-layout-shadow-blur)
+      var(--nmorph-dark-shade-color),
+    calc(-1 * var(--docs-layout-shadow-width)) calc(-1 * var(--docs-layout-shadow-width))
+      var(--docs-layout-shadow-blur) var(--nmorph-light-shade-color);
   margin-bottom: var(--margin);
 }
 

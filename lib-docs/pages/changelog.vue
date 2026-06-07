@@ -6,10 +6,34 @@ const knownBugItems: string[] = [];
 
 <template>
   <div class="nmorph-docs-content docs-changelog-page">
-    <NmorphCard>
-      <NmorphScroll class="docs-changelog-page__scroll">
-        <section id="changelog">
+    <NmorphCard class="docs-changelog-page__card" padding="0">
+      <NmorphScroll class="docs-changelog-page__scroll" :y-gap-in-px="8">
+        <div class="docs-changelog-page__content">
+          <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
+          <div class="docs-changelog-page__release">
+            <h3>v3.0.3</h3>
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.docs-layout-refresh") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.overview-preview-polish") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.loading-icon-states") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.media-gallery-trigger-api") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.scroll-progress-polish") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.audio-backtop-polish") }}
+              </li>
+            </ul>
+          </div>
           <div class="docs-changelog-page__release">
             <h3>v3.0.2</h3>
             <ul>
@@ -1572,28 +1596,47 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
         </section>
-        <NmorphDivider v-if="knownBugItems.length" />
-        <section v-if="knownBugItems.length" id="known-bugs">
-          <h2>{{ $t("changelog-page.known-bugs.title") }}</h2>
-          <ul>
-            <li v-for="knownBugItem in knownBugItems" :key="knownBugItem">
-              {{ $t(`changelog-page.known-bugs.items.${knownBugItem}`) }}
-            </li>
-          </ul>
-        </section>
+          <NmorphDivider v-if="knownBugItems.length" />
+          <section v-if="knownBugItems.length" id="known-bugs">
+            <h2>{{ $t("changelog-page.known-bugs.title") }}</h2>
+            <ul>
+              <li v-for="knownBugItem in knownBugItems" :key="knownBugItem">
+                {{ $t(`changelog-page.known-bugs.items.${knownBugItem}`) }}
+              </li>
+            </ul>
+          </section>
+        </div>
       </NmorphScroll>
     </NmorphCard>
   </div>
 </template>
 
 <style scoped lang="scss">
-.docs-changelog-page__scroll {
-  padding: 4px;
-  height: calc(var(--container-height) - 32px) !important;
+.docs-changelog-page {
+  padding: var(--docs-layout-shadow-space);
 }
 
-.nmorph-card {
+.docs-changelog-page__card {
   height: 100%;
+  min-height: 0;
+}
+
+.docs-changelog-page__scroll {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+}
+
+.docs-changelog-page__content {
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: var(--docs-content-padding);
+  padding-bottom: calc(var(--docs-content-padding) + var(--docs-layout-shadow-space));
+}
+
+.docs-changelog-page :deep(.nmorph-card__content) {
+  height: 100%;
+  min-height: 0;
 }
 
 .docs-changelog-page {
@@ -1602,7 +1645,7 @@ const knownBugItems: string[] = [];
   }
 
   h2 {
-    margin-bottom: 10px;
+    margin: 0 0 10px;
   }
 
   h3 {

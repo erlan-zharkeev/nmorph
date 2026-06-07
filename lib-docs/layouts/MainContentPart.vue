@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { NmorphScroll, NmorphBacktop, type INmorphScrollExpose } from "@nmorph/nmorph-ui-kit";
+import {
+  NmorphBacktop,
+  NmorphLayout,
+  NmorphScroll,
+  type INmorphScrollExpose,
+} from "@nmorph/nmorph-ui-kit";
 import { nextTick, useSlots } from "vue";
 
 interface IProps {
@@ -88,39 +93,59 @@ watch(leftAsideStorageKey, restoreLeftAsideScroll);
 
 const isMainFullPage = computed(() => !router.currentRoute.value.fullPath.includes("elements"));
 const slots = useSlots() as Record<string, unknown>;
+const showCenterAside = computed(() => Boolean(slots["aside-right"]) && isRouteReady.value && !isMainFullPage.value);
 </script>
 
 <template>
-  <div class="docs-main-layout">
-    <NmorphScroll
-      ref="leftAsideScroll"
-      :model-value="leftAsideScrollPosition"
-      css-scroll-behavior="auto"
-      class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card docs-main-layout__left-aside"
-      @on-scroll="saveLeftAsideScroll"
-    >
-      <aside>
-        <slot name="aside" />
-      </aside>
-    </NmorphScroll>
-    <NmorphScroll ref="scroll" class="docs-main-layout__scroll-container nmorph--shadow-outset docs-main-layout__card"
-      id="page-content-part">
-      <main
-        class="docs-main-layout__center"
-        :class="{
-          'docs-main-layout__center--full-page': isMainFullPage,
-          'docs-main-layout__center--lib-page': !isMainFullPage,
-        }"
+  <NmorphLayout
+    class="docs-main-layout"
+    gap="var(--docs-layout-shadow-space)"
+    aside-width="clamp(220px, 20vw, 320px)"
+    full-height
+  >
+    <template #aside>
+      <NmorphScroll
+        ref="leftAsideScroll"
+        :model-value="leftAsideScrollPosition"
+        css-scroll-behavior="auto"
+        :y-gap-in-px="8"
+        class="docs-main-layout__scroll-container docs-main-layout__card docs-main-layout__card--outset docs-main-layout__left-aside"
+        @on-scroll="saveLeftAsideScroll"
       >
+        <aside class="docs-main-layout__aside-content">
+          <slot name="aside" />
+        </aside>
+      </NmorphScroll>
+    </template>
+    <NmorphScroll
+      id="page-content-part"
+      ref="scroll"
+      :y-gap-in-px="8"
+      class="docs-main-layout__scroll-container docs-main-layout__card docs-main-layout__card--outset"
+    >
+      <NmorphLayout
+        v-if="showCenterAside"
+        class="docs-main-layout__content-layout"
+        gap="var(--docs-layout-shadow-space)"
+        aside-width="200px"
+        aside-position="right"
+        full-height
+      >
+        <main class="docs-main-layout__center docs-main-layout__center--lib-page">
+          <slot name="default" />
+        </main>
+        <template #aside>
+          <aside class="docs-main-layout__card docs-main-layout__card--inset docs-main-layout__center-aside">
+            <slot name="aside-right" />
+          </aside>
+        </template>
+      </NmorphLayout>
+      <main v-else class="docs-main-layout__center docs-main-layout__center--full-page">
         <slot name="default" />
       </main>
-      <aside class="docs-main-layout__card nmorph--shadow-inset docs-main-layout__center-aside"
-        v-if="slots['aside-right'] && isRouteReady && !isMainFullPage">
-        <slot name="aside-right" />
-      </aside>
       <NmorphBacktop design="plain" class="docs-main-layout__backtop" />
     </NmorphScroll>
-  </div>
+  </NmorphLayout>
 </template>
 
 <style lang="scss">
@@ -129,30 +154,53 @@ const slots = useSlots() as Record<string, unknown>;
 }
 
 .docs-main-layout {
-  display: grid;
-  grid-gap: 8px;
-  grid-template-columns: 1fr 4fr;
+  height: 100%;
+  min-height: 0;
+  padding: var(--docs-layout-shadow-space);
 }
 
 .docs-main-layout__card {
   border-radius: 4px;
-  padding: 8px;
-  padding-bottom: 8px;
-  height: calc(var(--container-height) - 24px) !important;
+  background: var(--nmorph-main-color);
+  height: 100%;
+}
+
+.docs-main-layout__card--outset {
+  box-shadow:
+    var(--docs-layout-shadow-width) var(--docs-layout-shadow-width) var(--docs-layout-shadow-blur)
+      var(--nmorph-dark-shade-color),
+    calc(-1 * var(--docs-layout-shadow-width)) calc(-1 * var(--docs-layout-shadow-width))
+      var(--docs-layout-shadow-blur) var(--nmorph-light-shade-color);
+}
+
+.docs-main-layout__card--inset {
+  box-shadow:
+    inset var(--docs-layout-shadow-width) var(--docs-layout-shadow-width) var(--docs-layout-shadow-blur)
+      var(--nmorph-dark-shade-color),
+    inset calc(-1 * var(--docs-layout-shadow-width)) calc(-1 * var(--docs-layout-shadow-width))
+      var(--docs-layout-shadow-blur) var(--nmorph-light-shade-color);
 }
 
 .docs-main-layout__scroll-container {
-  display: flex;
-  justify-content: space-between;
-  height: var(--container-height) !important;
+  min-height: 0;
+}
+
+.docs-main-layout__content-layout {
+  height: 100%;
+  min-height: 0;
 }
 
 .docs-main-layout__center {
-  width: calc(100% - 200px);
+  min-width: 0;
+  padding: var(--docs-content-padding);
+}
+
+.docs-main-layout__aside-content {
+  padding: var(--docs-content-padding);
 }
 
 .docs-main-layout__center--lib-page {
-  width: calc(100% - 224px);
+  width: 100%;
 }
 
 .docs-main-layout__center--full-page {
@@ -161,8 +209,12 @@ const slots = useSlots() as Record<string, unknown>;
 
 .docs-main-layout__center-aside {
   position: sticky;
-  top: 0;
-  width: 200px;
+  top: var(--docs-content-padding);
+  width: 100%;
+  margin-top: var(--docs-content-padding);
+  padding: var(--docs-content-padding);
+  height: fit-content;
+  max-height: calc(100% - var(--docs-content-padding));
 }
 
 @include max-width-query(1024) {
@@ -172,6 +224,11 @@ const slots = useSlots() as Record<string, unknown>;
 
   .docs-main-layout__center {
     width: 100%;
+    padding: 8px 12px;
+  }
+
+  .docs-main-layout__aside-content {
+    padding: 8px 12px;
   }
 }
 
@@ -180,8 +237,8 @@ const slots = useSlots() as Record<string, unknown>;
     display: none;
   }
 
-  .docs-main-layout {
-    grid-template-columns: 1fr;
+  .docs-main-layout > .nmorph-layout__body > .nmorph-layout__aside {
+    display: none;
   }
 }
 </style>

@@ -13,8 +13,9 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 <style lang="scss">
 .button-loading-overview {
-  .nmorph-button {
-    margin: 0 8px;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
 }
 </style>

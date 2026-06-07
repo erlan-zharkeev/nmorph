@@ -18,13 +18,6 @@ import CatReal from "~/assets/images/cat-real.png";
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-
-  .nmorph-avatar {
-    margin: 0 12px;
-  }
-
-  .nmorph-avatar:last-child {
-    margin-top: 8px;
-  }
+  gap: 8px 24px;
 }
 </style>

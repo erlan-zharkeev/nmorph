@@ -265,16 +265,9 @@ watch(() => props.name, loadOverview, { immediate: true });
 <style lang="scss" scoped>
 .component-overview {
   width: 100%;
-  padding: 16px;
-}
-
-@include max-width-query(768) {
-  .component-overview {
-    padding: 2px 4px 16px 4px;
-  }
 }
 
 .component-overview__title {
-  margin-bottom: 8px;
+  margin-bottom: var(--docs-content-padding);
 }
 </style>

@@ -80,7 +80,6 @@ const selectedTag = ref<string>();
 .reaction-users {
   display: inline-flex;
   gap: 3px;
-  margin-left: 2px;
 }
 
 .reaction-users__avatar {

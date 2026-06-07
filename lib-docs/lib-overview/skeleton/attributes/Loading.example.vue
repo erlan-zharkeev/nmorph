@@ -47,11 +47,9 @@ const loading = ref(true);
 .skeleton-loading-overview {
   .switch {
     display: flex;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 8px;
-
-    .nmorph-switch {
-      margin-left: 8px;
-    }
   }
 }
 </style>

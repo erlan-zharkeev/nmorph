@@ -205,20 +205,22 @@ $nmorph-badge-dot-size-extra-large: 8px;
   }
 
   .nmorph-badge__content {
+    --nmorph-private-badge-content-color: var(--nmorph-light-shade-color);
+
     display: inline-flex;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
     min-width: calc(1em * var(--line-height-regular) + 4px);
     padding: 2px 4px;
-    color: var(--nmorph-light-shade-color);
+    color: var(--nmorph-private-badge-content-color);
     font-size: var(--nmorph-typography-body-large-font-size);
     line-height: var(--nmorph-typography-body-large-line-height);
     text-align: center;
   }
 
   .nmorph-badge__content .nmorph-icon {
-    --nmorph-private-icon-color: currentColor;
+    --nmorph-private-icon-color: var(--nmorph-private-badge-content-color);
   }
 
   &.nmorph-badge--tiny .nmorph-badge__content {

@@ -48,7 +48,6 @@ const scrollY = computed({
 <style lang="scss">
 .scroll-value-overview {
   width: 100%;
-  margin-left: 8px;
 
   .slider {
     margin-bottom: 40px;

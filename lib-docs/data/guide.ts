@@ -323,8 +323,8 @@ export const guidePages: GuidePage[] = [
         title: { en: "Raw SVG", ru: "Raw SVG" },
         paragraphs: [
           {
-            en: "The docs use raw SVG imports for GitLab and translation icons. Wrap raw SVG in `NmorphIcon` when it needs size and color behavior consistent with exported icons.",
-            ru: "В документации raw SVG imports используются для GitLab и translation icons. Оборачивайте raw SVG в `NmorphIcon`, если нужны размер и цвет как у экспортируемых иконок.",
+            en: "The docs use raw SVG imports for GitHub and translation icons. Wrap raw SVG in `NmorphIcon` when it needs size and color behavior consistent with exported icons.",
+            ru: "В документации raw SVG imports используются для GitHub и translation icons. Оборачивайте raw SVG в `NmorphIcon`, если нужны размер и цвет как у экспортируемых иконок.",
           },
         ],
       },

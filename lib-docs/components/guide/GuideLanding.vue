@@ -33,7 +33,6 @@ const localePath = useLocalePath();
 <style scoped lang="scss">
 .docs-guide-landing {
   width: 100%;
-  padding: 16px;
 }
 
 .docs-guide-landing__hero {
@@ -95,10 +94,6 @@ const localePath = useLocalePath();
 }
 
 @media (max-width: 720px) {
-  .docs-guide-landing {
-    padding: 12px;
-  }
-
   .docs-guide-landing__hero {
     padding: 24px;
 

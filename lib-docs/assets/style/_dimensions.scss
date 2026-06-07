@@ -3,16 +3,21 @@
   --footer-height: 30px;
   --margin: 8px;
   --vh: 1vh;
+  --docs-layout-shadow-width: calc(var(--base-shadow-width) * 0.75);
+  --docs-layout-shadow-blur: calc(var(--docs-layout-shadow-width) * var(--base-shadow-blur-coefficient));
+  --docs-layout-shadow-space: calc(var(--docs-layout-shadow-width) + var(--docs-layout-shadow-blur));
+  --docs-shell-surface-margin: var(--margin);
+  --docs-content-padding: 16px;
 
   --container-height: calc(
     calc(var(--vh, 1vh) * 100) - var(--header-height) - var(--footer-height) -
-      (var(--margin) * 3) - 4px
+      (var(--margin) * 2)
   );
 }
 
 .nmorph-docs-content {
   height: var(--container-height);
-  margin: var(--margin);
+  margin: 0;
   min-width: 0;
   overflow: hidden;
 }

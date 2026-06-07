@@ -20,9 +20,6 @@ import { NmorphIcon, NmorphIconLoaderDots } from "@nmorph/nmorph-ui-kit";
 .icon-width-height-overview {
   display: flex;
   align-items: center;
-
-  .nmorph-icon {
-    margin: 0 8px;
-  }
+  gap: 16px;
 }
 </style>

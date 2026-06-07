@@ -53,15 +53,11 @@ const animated = ref(true);
 
 <style lang="scss">
 .skeleton-animated-overview {
-  margin-left: 8px;
-
   .switch {
     display: flex;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 8px;
-
-    .nmorph-switch {
-      margin-left: 8px;
-    }
   }
 }
 </style>

@@ -19,6 +19,6 @@ import MainContentPart from "~/layouts/MainContentPart.vue";
 
 <style scoped lang="scss">
 .docs-guide-page {
-  width: calc(100% - 16px);
+  width: 100%;
 }
 </style>

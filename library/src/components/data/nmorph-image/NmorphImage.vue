@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { NmorphIcon, NmorphIconLoader } from '@/components';
 import { createCssSizeVariables, useModifiers } from '@/utils';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -18,7 +19,6 @@ const props = withDefaults(defineProps<INmorphImageProps>(), {
   frameBorder: 4,
 });
 
-const computedLoadingText = computed(() => (props.loadingText ? props.loadingText : t('loadingText')));
 const computedLoadFailedText = computed(() => (props.loadFailedText ? props.loadFailedText : t('loadFailedText')));
 
 const imageLoadFinished = ref(false);
@@ -72,7 +72,9 @@ const styles = computed(() => ({
     </div>
     <div v-else-if="!imageLoadFinished" class="nmorph-image__loading">
       <slot name="loading">
-        {{ computedLoadingText }}
+        <NmorphIcon size="medium">
+          <NmorphIconLoader />
+        </NmorphIcon>
       </slot>
     </div>
   </div>

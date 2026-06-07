@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, watch, type CSSProperties } from 'vue';
+import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import {
   NmorphButton,
   NmorphIcon,
@@ -16,6 +16,7 @@ import {
   NmorphImage,
 } from '@/components';
 import { createCssSizeVariables, useModifiers } from '@/utils';
+import type { NmorphCSSProperties } from '@/types';
 import type { INmorphMediaGalleryEmit, INmorphMediaGalleryProps, NmorphMediaGalleryItem } from './types';
 import NmorphPreviewPortal from '../nmorph-preview-portal/NmorphPreviewPortal.vue';
 
@@ -37,6 +38,8 @@ const props = withDefaults(defineProps<INmorphMediaGalleryProps>(), {
   showTriggerFullscreenAction: true,
   showTriggerDownloadAction: true,
   showTriggerPlayButton: true,
+  triggerImageFit: 'cover',
+  triggerVideoFit: 'cover',
   showNavigationButtons: true,
   showActionBar: true,
   showFileName: true,
@@ -62,6 +65,7 @@ const videoPlaying = ref(false);
 const scaleLevel = ref(1);
 const rotateLevel = ref(0);
 const pointerStart = ref<{ x: number; y: number } | null>(null);
+const openingFromTrigger = ref(false);
 
 const sourceList = computed(() => props.items || []);
 const multipleItems = computed(() => sourceList.value.length > 1);
@@ -113,11 +117,12 @@ const modifiers = computed(() =>
   })
 );
 const imageTransform = computed(() => `rotate(${rotateLevel.value}deg) scale(${scaleLevel.value})`);
-const triggerStyle = computed<CSSProperties>(() =>
-  createCssSizeVariables({
+const triggerStyle = computed<NmorphCSSProperties>(() => ({
+  ...createCssSizeVariables({
     '--nmorph-private-media-gallery-trigger-height': props.height,
-  })
-);
+  }),
+  '--nmorph-private-media-gallery-trigger-video-fit': props.triggerVideoFit,
+}));
 const triggerModifiers = computed(() =>
   useModifiers({
     'nmorph-media-gallery__trigger': [props.height !== undefined && 'fixed-height'],
@@ -154,6 +159,24 @@ const showTriggerActionsForItem = (item: NmorphMediaGalleryItem) =>
     showTriggerDownloadActionForItem(item));
 const setTriggerVideoRef = (index: number, element: unknown) => {
   triggerVideoRefs.value[index] = element instanceof HTMLVideoElement ? element : null;
+};
+
+const getTriggerItemClass = (item: NmorphMediaGalleryItem, index: number) => [
+  item.itemClass,
+  props.triggerItemClass?.(item, index),
+];
+
+const getTriggerItemStyle = (item: NmorphMediaGalleryItem, index: number): NmorphCSSProperties => {
+  const style: NmorphCSSProperties = {
+    ...(item.itemStyle || {}),
+    ...(props.triggerItemStyle?.(item, index) || {}),
+  };
+
+  if (typeof item.aspectRatio === 'number' && Number.isFinite(item.aspectRatio) && item.aspectRatio > 0) {
+    style.aspectRatio = String(item.aspectRatio);
+  }
+
+  return style;
 };
 
 watch(
@@ -241,6 +264,7 @@ const openPreviewAt = (index: number) => {
   videoPlaying.value = false;
   currentIndex.value = nextIndex;
   resetImageTransform();
+  openingFromTrigger.value = true;
   open.value = true;
   emit('update:model-value', true);
   emit('update:active-index', nextIndex);
@@ -379,10 +403,15 @@ watch(
     if (show) {
       addKeyboardNavigationListener();
       pausedVideoRef.value = null;
+      if (openingFromTrigger.value) {
+        openingFromTrigger.value = false;
+        return;
+      }
       currentIndex.value = getClampedIndex(
         typeof props.activeIndex === 'number' ? props.activeIndex : props.initialIndex
       );
     } else {
+      openingFromTrigger.value = false;
       pauseCurrentVideo();
       videoPlaying.value = false;
       removeKeyboardNavigationListener();
@@ -419,8 +448,12 @@ const pointerUpHandler = (event: PointerEvent) => {
     <div
       v-for="(item, index) in sourceList"
       :key="`${item.kind}-${item.src}-${index}`"
-      class="nmorph-media-gallery__trigger-item"
-      :class="`nmorph-media-gallery__trigger-item--${item.kind}`"
+      :class="[
+        'nmorph-media-gallery__trigger-item',
+        `nmorph-media-gallery__trigger-item--${item.kind}`,
+        getTriggerItemClass(item, index),
+      ]"
+      :style="getTriggerItemStyle(item, index)"
     >
       <button
         type="button"
@@ -433,7 +466,7 @@ const pointerUpHandler = (event: PointerEvent) => {
           :src="item.src"
           :alt="item.alt || getItemLabel(item, index)"
           :title="getItemName(item)"
-          fit="cover"
+          :fit="props.triggerImageFit"
           design="plain"
           :frame-border="0"
         />
@@ -639,6 +672,7 @@ const pointerUpHandler = (event: PointerEvent) => {
   overflow: hidden;
   background: color-mix(in srgb, var(--nmorph-accent-color) 6%, transparent);
   border-radius: var(--default-border-radius);
+  box-shadow: var(--nmorph-shadow-outset);
   aspect-ratio: 16 / 9;
 }
 
@@ -661,12 +695,25 @@ const pointerUpHandler = (event: PointerEvent) => {
   border: 0;
   cursor: pointer;
 
+  &::after {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--nmorph-black-color) 38%, transparent), transparent 42%),
+      linear-gradient(0deg, color-mix(in srgb, var(--nmorph-black-color) 28%, transparent), transparent 48%);
+    content: '';
+    pointer-events: none;
+  }
+
   .nmorph-image,
   .nmorph-media-gallery__trigger-video {
     display: block;
     width: 100%;
     height: 100%;
-    transition: filter var(--transition-03) ease-in-out;
+    transition:
+      filter var(--transition-03) ease-in-out,
+      transform var(--transition-03) ease-in-out;
   }
 
   .nmorph-image img,
@@ -674,12 +721,16 @@ const pointerUpHandler = (event: PointerEvent) => {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+  }
+
+  .nmorph-media-gallery__trigger-video {
+    object-fit: var(--nmorph-private-media-gallery-trigger-video-fit);
   }
 
   &:hover {
     .nmorph-image,
     .nmorph-media-gallery__trigger-video {
+      transform: scale(1.035);
       filter: brightness(0.86);
     }
   }

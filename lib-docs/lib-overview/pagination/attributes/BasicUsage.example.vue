@@ -4,6 +4,8 @@ import {
   NmorphCard,
   NmorphButton,
   NmorphNumberInput,
+  NmorphIcon,
+  NmorphIconLoader,
 } from "@nmorph/nmorph-ui-kit";
 
 const quantityElementsOnPage = ref(10);
@@ -98,8 +100,10 @@ getData(0);
         </div>
       </div>
       <div class="cards">
-        <div class="cards__loader nmorph-title-3" v-if="loading">
-          Loading...
+        <div class="cards__loader" v-if="loading">
+          <NmorphIcon size="large">
+            <NmorphIconLoader />
+          </NmorphIcon>
         </div>
         <div class="cards__container" v-else>
           <div class="cards__card" v-for="card in elements" :key="card.id">
@@ -140,8 +144,11 @@ getData(0);
   }
 
   .cards__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 94px;
     margin-top: 16px;
-    text-align: center;
   }
 }
 </style>

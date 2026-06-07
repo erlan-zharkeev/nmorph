@@ -15,7 +15,6 @@ import { NmorphScroll } from "@nmorph/nmorph-ui-kit";
 <style lang="scss">
 .horizontal-scroll-overview {
   width: 100%;
-  margin-left: 8px;
 
   .scroll__box-item {
     background: var(--nmorph-accent-color);

@@ -18,7 +18,7 @@ const isComponentPage = computed(() => route.path.includes("components") || rout
 <template>
   <div class="docs-main-menu" :class="{ 'docs-main-menu--open': props.isMenuOpen }" @click="emit('menu-click')">
     <div class="nmorph-inset docs-main-menu__content">
-      <NmorphScroll class="docs-main-menu__content__scroll">
+      <NmorphScroll class="docs-main-menu__content__scroll" :y-gap-in-px="8">
         <ComponentsList v-if="isComponentPage" />
         <GuideMenu v-else />
       </NmorphScroll>

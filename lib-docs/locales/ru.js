@@ -226,6 +226,18 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "docs-layout-refresh":
+          "Docs теперь используют общий NmorphLayout shell с плавающими карточками header/footer, выровненными отступами aside/content, GitHub-иконкой в topbar и overlay search dialog, который закрывается после выбора результата.",
+        "overview-preview-polish":
+          "Overview cards для компонентов теперь используют более выразительные preview, аккуратные padding в примерах, видимый общий code scroll, подсвеченные snippets и обновленные media/file-card изображения.",
+        "loading-icon-states":
+          "NmorphImage теперь показывает loader icon во время загрузки изображения; loadingText помечен как deprecated в пользу loading slot, а docs examples больше не показывают текстовые loading states.",
+        "media-gallery-trigger-api":
+          "NmorphMediaGallery trigger cards теперь поддерживают triggerImageFit, triggerVideoFit, item aspectRatio, itemClass/itemStyle, trigger item callbacks и открывают preview с индекса выбранной карточки.",
+        "scroll-progress-polish":
+          "NmorphScroll теперь не прокручивает внешний vertical scroll при работе с вложенным horizontal scroll, docs scroll examples используют y-gap консистентно, а NmorphProgress indeterminate стартует от края без прыжка из центра.",
+        "audio-backtop-polish":
+          "NmorphAudioPreview теперь использует плотный play surface и более понятный external-link action, а NmorphBacktop plain controls рендерятся без лишнего border.",
         "avatar-borderless-prop":
           "NmorphAvatar теперь поддерживает borderless для plain-аватаров, при этом design=\"plain\" по умолчанию остается с border.",
         "badge-tag-value-slot":
@@ -760,8 +772,6 @@ export default {
     "date-range": "Диапазон дат",
     summer: "Лето",
     "load-error": "Ошибка загрузки",
-    "custom-loading-text": "Пользовательский текст загрузки",
-    "download-in-progress": "Загрузка в процессе",
     show: "Показать",
     edit: "Редактировать",
     check: "Проверить",
@@ -1180,7 +1190,7 @@ export default {
         },
       },
       "loading-text": {
-        subtitle: "Текст, отображаемый во время загрузки изображения.",
+        subtitle: "Иконка загрузчика, отображаемая во время загрузки изображения.",
       },
       "load-failed-text": {
         subtitle: "Текст, отображаемый при неудачной загрузке изображения.",
@@ -1190,7 +1200,8 @@ export default {
         "close-on-outside-click":
           "Закрывает предпросмотр при нажатии вне контейнера.",
         alt: "Текстовое описание для изображения.",
-        "loading-text": "Текст, отображаемый во время загрузки изображения.",
+        "loading-text":
+          "Устаревший проп. Во время загрузки изображения теперь отображается иконка загрузчика; для кастомного содержимого используйте слот loading.",
         "load-failed-text":
           "Текст, отображаемый при неудачной загрузке изображения.",
         "frame-border": "Определяет толщину рамки",
@@ -1214,7 +1225,6 @@ export default {
         load: "Событие загрузки изображения",
       },
       translates: {
-        loadingText: "Загрузка ...",
         loadFailedText: "Не удалось загрузить изображение",
       },
     },
@@ -1334,7 +1344,7 @@ export default {
     "media-gallery": {
       "basic-usage": {
         subtitle:
-          "Показывает mixed image/video галерею с trigger cards и preview overlay.",
+          "Показывает mixed image/video галерею с более выразительными trigger cards и preview overlay.",
       },
     },
     "media-tile": {

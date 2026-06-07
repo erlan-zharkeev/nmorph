@@ -96,7 +96,7 @@ onUnmounted(() => {
       <div ref="selfDOMEl" :class="modifiers" :style="styles">
         <div @click.stop="scrollToTopHandler">
           <slot>
-            <NmorphButton :design="props.design">
+            <NmorphButton :design="props.design" :borderless="props.design === 'plain'">
               <NmorphIcon
                 class="nmorph-backtop__up-icon"
                 :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-contrast-text-color)'"

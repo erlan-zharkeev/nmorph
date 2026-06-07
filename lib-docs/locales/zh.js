@@ -213,6 +213,18 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "docs-layout-refresh":
+          "Docs 现在使用共享的 NmorphLayout shell，包含浮动 header/footer 卡片、对齐的 aside/content 间距、GitHub topbar 图标，以及选择结果后会关闭的 overlay search dialog。",
+        "overview-preview-polish":
+          "组件 overview cards 现在使用更丰富的视觉 preview、更紧凑的示例 padding、可见的共享 code scroll、更清晰的高亮 snippets，以及更新后的 media/file-card artwork。",
+        "loading-icon-states":
+          "NmorphImage 现在在图片加载时渲染 loader icon；loadingText 已标记为 deprecated，推荐使用 loading slot，docs examples 也不再显示文本 loading states。",
+        "media-gallery-trigger-api":
+          "NmorphMediaGallery trigger cards 现在支持 triggerImageFit、triggerVideoFit、item aspectRatio、itemClass/itemStyle、trigger item callbacks，并会从点击的卡片 index 打开 preview。",
+        "scroll-progress-polish":
+          "NmorphScroll 现在避免嵌套 horizontal scroll 同时驱动外层 vertical scroll，docs scroll examples 统一使用 y-gap，NmorphProgress indeterminate 从边缘开始而不会从中心跳动。",
+        "audio-backtop-polish":
+          "NmorphAudioPreview 现在使用更实的 play surface 和更清晰的 external-link action，NmorphBacktop plain controls 则不再渲染额外 border。",
         "avatar-borderless-prop":
           "NmorphAvatar 现在支持通过 borderless 渲染无边框 plain 头像，同时 design=\"plain\" 默认仍保留 border。",
         "badge-tag-value-slot":
@@ -744,8 +756,6 @@ export default {
     "date-range": "日期范围",
     summer: "夏季",
     "load-error": "加载错误",
-    "custom-loading-text": "自定义加载文本",
-    "download-in-progress": "下载中",
     show: "显示",
     edit: "编辑",
     check: "检查",
@@ -1136,7 +1146,7 @@ export default {
         },
       },
       "loading-text": {
-        subtitle: "加载图像时显示的文本。",
+        subtitle: "图像加载期间显示的加载图标。",
       },
       "load-failed-text": {
         subtitle: "图像加载失败时显示的文本。",
@@ -1145,7 +1155,8 @@ export default {
         fit: "定义图像如何适应容器。",
         "close-on-outside-click": "点击容器外部时关闭预览。",
         alt: "图像的文本描述。",
-        "loading-text": "加载图像时显示的文本。",
+        "loading-text":
+          "已弃用。图像加载现在显示加载图标；如需自定义内容，请使用 loading 插槽。",
         "load-failed-text": "图像加载失败时显示的文本。",
         "frame-border": "定义边框的厚度。",
         "image-padding": "定义图像的内边距。",
@@ -1166,7 +1177,6 @@ export default {
         load: "图像加载事件。",
       },
       translates: {
-        loadingText: "加载中 ...",
         loadFailedText: "加载图像失败。",
       },
     },
@@ -1280,7 +1290,7 @@ export default {
     "media-gallery": {
       "basic-usage": {
         subtitle:
-          "展示包含图片和视频的混合画廊，带 trigger cards 和 preview overlay。",
+          "展示包含图片和视频的混合画廊，带更精致的 trigger cards 和 preview overlay。",
       },
     },
     "media-tile": {

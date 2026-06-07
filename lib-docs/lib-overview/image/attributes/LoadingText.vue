@@ -7,7 +7,7 @@ import loadingTextSource from "./LoadingText.example.vue?raw";
 <template>
   <div id="content-loading-text">
     <DocsExample
-      header="Loading Text"
+      header="Loading Icon"
       :subtitle="$t('overview.image.loading-text.subtitle')"
       :component="LoadingTextExample"
       :source="loadingTextSource"

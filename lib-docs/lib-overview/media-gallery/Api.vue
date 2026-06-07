@@ -14,10 +14,11 @@ const attributesData: IAttributesTableData[] = [
   },
   {
     name: "items",
-    type: "Array&lt;NmorphMediaGalleryItem&gt; (kind, src, name, size, downloadHref)",
+    type: "Array&lt;NmorphMediaGalleryItem&gt; (kind, src, name, size, downloadHref, aspectRatio, itemClass, itemStyle)",
     default: "[]",
     required: true,
-    description: "Media items rendered by the gallery.",
+    description:
+      "Media items rendered by the gallery. Trigger cards can read aspectRatio, itemClass, and itemStyle from each item.",
   },
   {
     name: "initial-index",
@@ -105,6 +106,31 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "true",
     description: "Shows the play button overlay for video trigger cards.",
+  },
+  {
+    name: "trigger-image-fit",
+    type: "'cover' | 'contain'",
+    default: "cover",
+    description: "Object fit used for image trigger cards.",
+  },
+  {
+    name: "trigger-video-fit",
+    type: "'cover' | 'contain'",
+    default: "cover",
+    description: "Object fit used for video trigger cards.",
+  },
+  {
+    name: "trigger-item-class",
+    type: "(item, index) =&gt; string | string[] | Record&lt;string, boolean&gt;",
+    default: "undefined",
+    description: "Returns additional classes for a trigger item.",
+  },
+  {
+    name: "trigger-item-style",
+    type: "(item, index) =&gt; CSSProperties",
+    default: "undefined",
+    description:
+      "Returns additional inline styles for a trigger item. item.aspectRatio is applied as CSS aspect-ratio when provided.",
   },
   {
     name: "show-navigation-buttons",

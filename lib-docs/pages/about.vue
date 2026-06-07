@@ -11,99 +11,111 @@ const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays",
 
 <template>
   <div class="nmorph-docs-content docs-about-page">
-    <NmorphScroll class="docs-about-page__scroll">
-      <div class="docs-about-page__content">
-        <section class="docs-about-page__hero nmorph--shadow-outset">
-          <p class="docs-about-page__eyebrow">{{ $t("about-page.eyebrow") }}</p>
-          <h1>Nmorph UI Kit</h1>
-          <p class="docs-about-page__lead">{{ $t("about-page.lead") }}</p>
-          <div class="docs-about-page__meta">
-            <span>{{ $t("about-page.meta.vue") }}</span>
-            <span>{{ $t("about-page.meta.nuxt") }}</span>
-            <span>{{ $t("about-page.meta.typescript") }}</span>
-            <span>{{ $t("about-page.meta.lightweight") }}</span>
-            <span>{{ $t("about-page.meta.treeShaking") }}</span>
-            <span>{{ $t("about-page.meta.license") }}</span>
-          </div>
-        </section>
-
-        <section class="docs-about-page__section">
-          <h2>{{ $t("about-page.overview-title") }}</h2>
-          <p>{{ $t("about-page.overview-content") }}</p>
-        </section>
-
-        <NmorphDivider />
-
-        <section class="docs-about-page__section">
-          <h2>{{ $t("about-page.features-title") }}</h2>
-          <div class="docs-about-page__feature-grid">
-            <NmorphCard v-for="featureKey in featureKeys" :key="featureKey" class="docs-about-page__feature-card">
-              <h3>{{ $t(`about-page.features.${featureKey}.title`) }}</h3>
-              <p>{{ $t(`about-page.features.${featureKey}.text`) }}</p>
-            </NmorphCard>
-          </div>
-        </section>
-
-        <NmorphDivider />
-
-        <section class="docs-about-page__section">
-          <h2>{{ $t("about-page.system-title") }}</h2>
-          <div class="docs-about-page__system-grid">
-            <div v-for="systemKey in systemKeys" :key="systemKey" class="docs-about-page__system-item">
-              <h3>{{ $t(`about-page.system.${systemKey}.title`) }}</h3>
-              <p>{{ $t(`about-page.system.${systemKey}.text`) }}</p>
+    <NmorphCard class="docs-about-page__card" content-class="docs-about-page__card-content" padding="0">
+      <NmorphScroll class="docs-about-page__scroll" :y-gap-in-px="8">
+        <div class="docs-about-page__content">
+          <section class="docs-about-page__hero nmorph--shadow-outset">
+            <p class="docs-about-page__eyebrow">{{ $t("about-page.eyebrow") }}</p>
+            <h1>Nmorph UI Kit</h1>
+            <p class="docs-about-page__lead">{{ $t("about-page.lead") }}</p>
+            <div class="docs-about-page__meta">
+              <span>{{ $t("about-page.meta.vue") }}</span>
+              <span>{{ $t("about-page.meta.nuxt") }}</span>
+              <span>{{ $t("about-page.meta.typescript") }}</span>
+              <span>{{ $t("about-page.meta.lightweight") }}</span>
+              <span>{{ $t("about-page.meta.treeShaking") }}</span>
+              <span>{{ $t("about-page.meta.license") }}</span>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <NmorphDivider />
+          <section class="docs-about-page__section">
+            <h2>{{ $t("about-page.overview-title") }}</h2>
+            <p>{{ $t("about-page.overview-content") }}</p>
+          </section>
 
-        <section class="docs-about-page__section docs-about-page__text-grid">
-          <div>
-            <h2>{{ $t("about-page.design-title") }}</h2>
-            <p>{{ $t("about-page.design-content") }}</p>
-          </div>
-          <div>
-            <h2>{{ $t("about-page.status-title") }}</h2>
-            <p>{{ $t("about-page.status-content") }}</p>
-          </div>
-        </section>
+          <NmorphDivider />
 
-        <NmorphDivider />
+          <section class="docs-about-page__section">
+            <h2>{{ $t("about-page.features-title") }}</h2>
+            <div class="docs-about-page__feature-grid">
+              <NmorphCard v-for="featureKey in featureKeys" :key="featureKey" class="docs-about-page__feature-card">
+                <h3>{{ $t(`about-page.features.${featureKey}.title`) }}</h3>
+                <p>{{ $t(`about-page.features.${featureKey}.text`) }}</p>
+              </NmorphCard>
+            </div>
+          </section>
 
-        <section class="docs-about-page__section">
-          <h2>{{ $t("about-page.links-title") }}</h2>
-          <div class="docs-about-page__links">
-            <NuxtLink :to="localePath('/guide')">{{ $t("about-page.links.guide") }}</NuxtLink>
-            <NuxtLink :to="localePath('/components')">{{ $t("about-page.links.components") }}</NuxtLink>
-            <NuxtLink :to="localePath('/changelog')">{{ $t("about-page.links.changelog") }}</NuxtLink>
-            <NmorphLink :href="repositoryUrl" target="blank">
-              {{ $t("about-page.links.repository") }}
-            </NmorphLink>
-            <NmorphLink :href="issuesUrl" target="blank">
-              {{ $t("about-page.links.issues") }}
-            </NmorphLink>
-          </div>
-        </section>
-      </div>
-    </NmorphScroll>
+          <NmorphDivider />
+
+          <section class="docs-about-page__section">
+            <h2>{{ $t("about-page.system-title") }}</h2>
+            <div class="docs-about-page__system-grid">
+              <div v-for="systemKey in systemKeys" :key="systemKey" class="docs-about-page__system-item">
+                <h3>{{ $t(`about-page.system.${systemKey}.title`) }}</h3>
+                <p>{{ $t(`about-page.system.${systemKey}.text`) }}</p>
+              </div>
+            </div>
+          </section>
+
+          <NmorphDivider />
+
+          <section class="docs-about-page__section docs-about-page__text-grid">
+            <div>
+              <h2>{{ $t("about-page.design-title") }}</h2>
+              <p>{{ $t("about-page.design-content") }}</p>
+            </div>
+            <div>
+              <h2>{{ $t("about-page.status-title") }}</h2>
+              <p>{{ $t("about-page.status-content") }}</p>
+            </div>
+          </section>
+
+          <NmorphDivider />
+
+          <section class="docs-about-page__section">
+            <h2>{{ $t("about-page.links-title") }}</h2>
+            <div class="docs-about-page__links">
+              <NuxtLink :to="localePath('/guide')">{{ $t("about-page.links.guide") }}</NuxtLink>
+              <NuxtLink :to="localePath('/components')">{{ $t("about-page.links.components") }}</NuxtLink>
+              <NuxtLink :to="localePath('/changelog')">{{ $t("about-page.links.changelog") }}</NuxtLink>
+              <NmorphLink :href="repositoryUrl" target="blank">
+                {{ $t("about-page.links.repository") }}
+              </NmorphLink>
+              <NmorphLink :href="issuesUrl" target="blank">
+                {{ $t("about-page.links.issues") }}
+              </NmorphLink>
+            </div>
+          </section>
+        </div>
+      </NmorphScroll>
+    </NmorphCard>
   </div>
 </template>
 
 <style scoped lang="scss">
 .docs-about-page {
-  width: calc(100% - 16px);
-  border-radius: 4px;
-  overflow: hidden;
+  padding: var(--docs-layout-shadow-space);
+}
+
+.docs-about-page__card {
+  height: 100%;
+  min-height: 0;
+}
+
+.docs-about-page :deep(.docs-about-page__card-content) {
+  height: 100%;
+  min-height: 0;
 }
 
 .docs-about-page__scroll {
-  height: 100% !important;
+  height: 100%;
+  min-height: 0;
 }
 
 .docs-about-page__content {
-  padding: 24px 32px 24px 24px;
   box-sizing: border-box;
+  min-height: 100%;
+  padding: 24px 32px calc(24px + var(--docs-layout-shadow-space)) 24px;
 }
 
 .docs-about-page__hero {
@@ -217,7 +229,7 @@ const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays",
 
 @media (max-width: 720px) {
   .docs-about-page__content {
-    padding: 16px 24px 16px 16px;
+    padding: 16px 24px calc(16px + var(--docs-layout-shadow-space)) 16px;
   }
 
   .docs-about-page__hero {

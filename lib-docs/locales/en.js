@@ -224,6 +224,18 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "docs-layout-refresh":
+          "Docs now use the shared NmorphLayout shell with floating header/footer cards, aligned aside/content padding, a GitHub topbar icon, and an overlay search dialog that closes after selecting a result.",
+        "overview-preview-polish":
+          "Component overview cards now use richer visual previews, tighter example padding, visible shared code scrolling, cleaner highlighted snippets, and refreshed media/file-card artwork.",
+        "loading-icon-states":
+          "NmorphImage now renders a loader icon while images load; loadingText is deprecated in favor of the loading slot, and docs examples no longer show textual loading states.",
+        "media-gallery-trigger-api":
+          "NmorphMediaGallery trigger cards now support triggerImageFit, triggerVideoFit, item aspectRatio, itemClass/itemStyle, trigger item callbacks, and open the preview at the clicked item index.",
+        "scroll-progress-polish":
+          "NmorphScroll now keeps nested horizontal scrolling from also driving the outer vertical scroller, docs scroll examples use y-gap consistently, and NmorphProgress indeterminate starts from the edge without a center jump.",
+        "audio-backtop-polish":
+          "NmorphAudioPreview now uses a solid play surface and a clearer external-link action, while NmorphBacktop plain controls render without the extra border.",
         "avatar-borderless-prop":
           "NmorphAvatar now supports borderless plain avatars through borderless, keeping design=\"plain\" bordered by default.",
         "badge-tag-value-slot":
@@ -757,8 +769,6 @@ export default {
     "date-range": "Date range",
     summer: "Summer",
     "load-error": "Load error",
-    "custom-loading-text": "Custom loading text",
-    "download-in-progress": "Download in progress",
     show: "Show",
     edit: "Edit",
     check: "Check",
@@ -1168,7 +1178,7 @@ export default {
         },
       },
       "loading-text": {
-        subtitle: "Text displayed during image loading.",
+        subtitle: "Loader icon displayed during image loading.",
       },
       "load-failed-text": {
         subtitle: "Text displayed when the image fails to load.",
@@ -1178,7 +1188,8 @@ export default {
         "close-on-outside-click":
           "Closes the preview when clicking outside the container.",
         alt: "Text description for the image.",
-        "loading-text": "Text displayed during image loading.",
+        "loading-text":
+          "Deprecated. Image loading now renders a loader icon; use the loading slot for custom content.",
         "load-failed-text": "Text displayed when the image fails to load.",
         "frame-border": "Defines the thickness of the frame.",
         "image-padding": "Defines the padding of the image.",
@@ -1199,7 +1210,6 @@ export default {
         load: "Image load event.",
       },
       translates: {
-        loadingText: "Loading ...",
         loadFailedText: "Failed to load image.",
       },
     },
@@ -1319,7 +1329,7 @@ export default {
     "media-gallery": {
       "basic-usage": {
         subtitle:
-          "Shows a mixed image and video gallery with trigger cards and a preview overlay.",
+          "Shows a mixed image and video gallery with polished trigger cards and a preview overlay.",
       },
     },
     "media-tile": {

@@ -57,8 +57,9 @@ const localizedPath = (path: string) => {
 };
 
 const openItem = async (item: (typeof filteredItems.value)[number]) => {
-  await router.push(localizedPath(item.path));
+  const path = localizedPath(item.path);
   close();
+  await router.push(path);
 };
 
 const openSelected = () => {
@@ -97,7 +98,7 @@ watch(filteredItems, (value) => {
 </script>
 
 <template>
-  <NmorphOverlay :show="props.open" transparent :z-index="3000" @on-outside-click="close">
+  <NmorphOverlay :show="props.open" :z-index="3000" :restore-focus="false" @on-outside-click="close">
     <div
       v-if="props.open"
       class="docs-search-dialog"
@@ -106,7 +107,7 @@ watch(filteredItems, (value) => {
       @keydown.enter.prevent="openSelected"
       @keydown.esc.prevent="close"
     >
-      <div class="docs-search-dialog__panel nmorph--shadow-outset">
+      <div class="docs-search-dialog__panel">
         <NmorphTextInput
           ref="searchInput"
           v-model="query"

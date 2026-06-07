@@ -221,23 +221,62 @@ const canConsumeVerticalWheel = (deltaY: number) => {
   return false;
 };
 
+const isNestedScrollEvent = (event: WheelEvent) => {
+  const target = event.target;
+  const root = scrollRoot.value;
+
+  if (!(target instanceof Element) || !root) return false;
+
+  const closestScroll = target.closest('.nmorph-scroll');
+
+  return Boolean(closestScroll && closestScroll !== root);
+};
+
+const isCurrentHorizontalBarEvent = (event: WheelEvent) => {
+  const target = event.target;
+  const root = scrollRoot.value;
+
+  if (!(target instanceof Element) || !root) return false;
+
+  const horizontalBar = target.closest('.nmorph-scroll__bar--horizontal');
+
+  return Boolean(horizontalBar && horizontalBar.closest('.nmorph-scroll') === root);
+};
+
 const wheelHandler = (event: WheelEvent) => {
   const element = scrollDOMContainer.value;
 
-  if (!element || props.scrollXProp === 'hidden' || !hasHorizontalScroll.value || !event.deltaY) return;
-  if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+  updateScrollableState();
 
-  const deltaY = event.deltaY * getWheelDeltaMultiplier(event);
+  if (isNestedScrollEvent(event)) return;
+  const isHorizontalBarWheel = isCurrentHorizontalBarEvent(event);
+  const wheelDelta =
+    isHorizontalBarWheel && Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
 
-  if (canConsumeVerticalWheel(deltaY)) return;
+  if (!element || props.scrollXProp === 'hidden' || !hasHorizontalScroll.value || !wheelDelta) return;
+  if (!isHorizontalBarWheel && Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+
+  const delta = wheelDelta * getWheelDeltaMultiplier(event);
+
+  if (!isHorizontalBarWheel && canConsumeVerticalWheel(delta)) {
+    event.stopPropagation();
+    return;
+  }
 
   const previousScrollLeft = element.scrollLeft;
 
-  setScrollPosition('x', previousScrollLeft + deltaY);
+  setScrollPosition('x', previousScrollLeft + delta);
 
-  if (element.scrollLeft === previousScrollLeft) return;
+  if (element.scrollLeft === previousScrollLeft) {
+    if (isHorizontalBarWheel) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    return;
+  }
 
   event.preventDefault();
+  event.stopPropagation();
 };
 
 onUnmounted(() => {
@@ -501,6 +540,7 @@ const mouseLeaveHandler = () => {
       class="nmorph-scroll__bar nmorph-scroll__bar--horizontal"
       :style="{ right: horizontalBarRight }"
       @pointerdown="trackPointerDownHandler('x', $event)"
+      @wheel="wheelHandler"
     >
       <div
         class="nmorph-scroll__thumb nmorph-scroll__thumb--horizontal"
