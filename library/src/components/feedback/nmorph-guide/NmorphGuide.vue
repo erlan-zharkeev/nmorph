@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, provide, ref, watch } from 'vue';
+import { useZIndex } from '@/hooks/use-z-index';
 import type { INmorphGuideProps, INmorphGuideEmit, INmorphGuideStepItem } from './types';
 import { nmorphGuideInjectionKey, type INmorphGuideResolvedStep, type NmorphGuideStepName } from './types';
 
@@ -16,6 +17,8 @@ const props = withDefaults(defineProps<INmorphGuideProps>(), {
   finishText: 'Finish',
   closeText: 'Close',
   zIndex: undefined,
+  teleportTo: 'body',
+  disabledTeleport: false,
   width: undefined,
   maxWidth: '280px',
 });
@@ -58,6 +61,7 @@ const steps = computed<INmorphGuideResolvedStep[]>(() =>
 );
 
 const active = computed(() => props.modelValue && steps.value.length > 0);
+const guideZIndex = useZIndex(active, () => props.zIndex);
 const activeStepName = computed(() => props.activeStep ?? internalActiveStep.value);
 const activeIndex = computed(() => steps.value.findIndex((step) => step.name === activeStepName.value));
 const activeStep = computed(() => steps.value[activeIndex.value] ?? null);
@@ -170,7 +174,9 @@ provide(nmorphGuideInjectionKey, {
   nextText: computed(() => props.nextText),
   finishText: computed(() => props.finishText),
   closeText: computed(() => props.closeText),
-  zIndex: computed(() => props.zIndex),
+  zIndex: guideZIndex,
+  teleportTo: computed(() => props.teleportTo),
+  disabledTeleport: computed(() => props.disabledTeleport),
   width: computed(() => props.width),
   maxWidth: computed(() => props.maxWidth),
   registerStep,

@@ -224,6 +224,16 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "card-paper-surface":
+          "NmorphCard now supports a built-in paper texture through paper, and docs card examples use a consistent paper strength for the same tactile surface.",
+        "media-tile-audio-sink":
+          "NmorphMediaTile now keeps remote audio playing in audio-only videoOff streams, avoids duplicate playback when video is visible, respects muted, and can route media through sinkId when the browser supports setSinkId.",
+        "docs-paper-shell":
+          "Lib docs now use shared paper cards for the main shell, header, footer, overview, guide, about, changelog, and examples, with a real search button that aligns the Ctrl K shortcut cleanly.",
+        "component-api-docs-refresh":
+          "Docs API tables and examples were refreshed for Card paper, Image frame borders and loading states, MediaTile sinkId, Pagination loading, Scroll, Tooltip, Guide, and related component props.",
+        "interaction-polish":
+          "Polished component interaction details across scroll, pagination, carousel, guide, tooltip, stepper, time picker, file upload, and media previews, including the filled hand icon update.",
         "docs-layout-refresh":
           "Docs now use the shared NmorphLayout shell with floating header/footer cards, aligned aside/content padding, a GitHub topbar icon, and an overlay search dialog that closes after selecting a result.",
         "overview-preview-polish":
@@ -1109,6 +1119,10 @@ export default {
         subtitle:
           "Sets the card padding.",
       },
+      paper: {
+        subtitle:
+          "Adds a subtle paper texture. Use 0 to disable it, then increase the value for a stronger effect.",
+      },
       fill: {
         subtitle:
           "Controls whether the card stretches to the available width or fits its content.",
@@ -1121,6 +1135,8 @@ export default {
         "card-padding":
           "Overrides the card padding. Numbers are treated as pixel values.",
         "content-class": "Adds a custom class to the card content wrapper.",
+        paper:
+          "Paper texture strength. 0 disables the effect; higher values make it more visible.",
         "combined-shadow-border-width":
           "Border width used only when shadow-type is combined.",
         fill: "When true, the card takes the available width. Set false to fit the content width.",

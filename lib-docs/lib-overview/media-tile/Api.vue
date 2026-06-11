@@ -20,6 +20,12 @@ const attributesData: IAttributesTableData[] = [
     description: "Live media stream assigned to the video element.",
   },
   {
+    name: "sink-id",
+    type: "String",
+    default: "-",
+    description: "Audio output device id applied through setSinkId when the browser supports it.",
+  },
+  {
     name: "fit",
     type: "'cover' | 'contain'",
     default: "cover",
@@ -108,12 +114,6 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "false",
     description: "Highlights the tile as selected.",
-  },
-  {
-    name: "pinned",
-    type: "Boolean",
-    default: "false",
-    description: "Shows the pinned status.",
   },
   {
     name: "error",

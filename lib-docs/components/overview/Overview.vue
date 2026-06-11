@@ -82,7 +82,7 @@ const overviewComponents = [
     <div class="overview-component-list">
       <div v-for="component in overviewComponents" :key="component.path" class="overview-component-wrapper">
         <NuxtLink :to="localePath(`/elements/${component.path}`)">
-          <NmorphCard>
+          <NmorphCard :paper="3">
             <template #header>{{ component.title }}</template>
             <div class="overview-component-content">
               <div class="overview-preview" :class="`overview-preview--${component.preview}`" aria-hidden="true">

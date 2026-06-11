@@ -20,6 +20,8 @@ const props = withDefaults(defineProps<INmorphTooltipProps>(), {
   openDelay: 0,
   closeDelay: 0,
   zIndex: undefined,
+  teleportTo: 'body',
+  disabledTeleport: true,
   width: undefined,
   maxWidth: undefined,
   height: undefined,
@@ -30,6 +32,7 @@ defineSlots<INmorphTooltipSlots>();
 const showTooltip = ref(props.forceShow);
 const tooltipDOMRef = ref<NmorphDomElementType>(null);
 const slotDOMRef = ref<NmorphDomElementType>(null);
+const tooltipBody = ref<NmorphDomElementType>(null);
 const slots = useSlots();
 const openTimer = ref<ReturnType<typeof setTimeout> | null>(null);
 const closeTimer = ref<ReturnType<typeof setTimeout> | null>(null);
@@ -39,10 +42,11 @@ const suppressNextClick = ref(false);
 const hasTooltipContent = computed(() => Boolean(props.text || slots.content));
 const shouldRenderTooltip = computed(() => showTooltip.value && hasTooltipContent.value && !props.disabled);
 
-const { placement } = usePlacement({
+const { placement, placementCoords, placementReady } = usePlacement({
   initialPlacement: props.position,
-  contentDOMElement: tooltipDOMRef,
+  contentDOMElement: tooltipBody,
   relativeElement: slotDOMRef,
+  enabled: shouldRenderTooltip,
 });
 
 const modifiers = computed(() =>
@@ -174,8 +178,26 @@ const styles = computed<CSSProperties>(() => ({
     '--nmorph-private-tooltip-height': props.height,
   }),
 }));
-const tooltipBody = ref<NmorphDomElementType>(null);
-
+const canTeleportTooltip = computed(
+  () => !props.disabledTeleport && !props.forceCoordinate && typeof document !== 'undefined'
+);
+const teleportTooltip = computed(() => canTeleportTooltip.value && shouldRenderTooltip.value);
+const placementSide = computed(() => placement.value.split('-')[0]);
+const tooltipContentClass = computed(() => [
+  'nmorph-tooltip__info-content',
+  `nmorph-tooltip__info-content--${placementSide.value}`,
+  teleportTooltip.value && 'nmorph-tooltip__info-content--teleported',
+]);
+const tooltipContentStyle = computed<CSSProperties>(() => ({
+  ...styles.value,
+  ...(teleportTooltip.value
+    ? {
+        left: placementCoords.value.x,
+        top: placementCoords.value.y,
+        visibility: placementReady.value ? 'visible' : 'hidden',
+      }
+    : {}),
+}));
 watch(
   () => [props.forceShow, props.disabled],
   ([forceShow, disabled], previousValue) => {
@@ -217,12 +239,12 @@ defineExpose({ tooltipBody, open, close, toggle });
       <div ref="slotDOMRef" class="nmorph-tooltip__trigger">
         <slot />
       </div>
-      <template v-if="!props.disabled">
+      <template v-if="!props.disabled && !teleportTooltip">
         <Transition v-if="props.forceCoordinate" name="opacity">
           <div
             v-if="shouldRenderTooltip"
             ref="tooltipBody"
-            class="nmorph-tooltip__info-content"
+            :class="tooltipContentClass"
             :style="{ left: forceCoordinate?.x, bottom: forceCoordinate?.y }"
           >
             <div class="nmorph-tooltip__shadow-content">
@@ -233,7 +255,7 @@ defineExpose({ tooltipBody, open, close, toggle });
           </div>
         </Transition>
         <Transition v-else name="opacity">
-          <div v-if="shouldRenderTooltip" ref="tooltipBody" class="nmorph-tooltip__info-content">
+          <div v-if="shouldRenderTooltip" ref="tooltipBody" :class="tooltipContentClass">
             <div class="nmorph-tooltip__shadow-content">
               <div class="nmorph-tooltip__triangle" />
               <span v-if="props.text">{{ text }}</span>
@@ -243,6 +265,17 @@ defineExpose({ tooltipBody, open, close, toggle });
         </Transition>
       </template>
     </div>
+    <Teleport v-if="teleportTooltip" :to="props.teleportTo">
+      <Transition name="opacity">
+        <div v-if="shouldRenderTooltip" ref="tooltipBody" :class="tooltipContentClass" :style="tooltipContentStyle">
+          <div class="nmorph-tooltip__shadow-content">
+            <div class="nmorph-tooltip__triangle" />
+            <span v-if="props.text">{{ text }}</span>
+            <slot v-else name="content" />
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
@@ -361,5 +394,77 @@ defineExpose({ tooltipBody, open, close, toggle });
   }
 
   width: var(--nmorph-private-tooltip-root-width);
+}
+
+.nmorph-tooltip__info-content--teleported {
+  position: fixed;
+  z-index: var(--nmorph-private-tooltip-z-index);
+  width: var(--nmorph-private-tooltip-width);
+  max-width: var(--nmorph-private-tooltip-max-width);
+  height: var(--nmorph-private-tooltip-height);
+  padding: var(--indentation-03);
+  background: var(--nmorph-main-color);
+  border-radius: var(--default-border-radius);
+  box-shadow: 0 0 20px var(--nmorph-dark-shade-color);
+
+  span {
+    white-space: nowrap;
+  }
+
+  .nmorph-tooltip__triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    content: '';
+  }
+
+  &.nmorph-tooltip__info-content--top {
+    transform: translateY(-8px);
+  }
+
+  &.nmorph-tooltip__info-content--right {
+    transform: translateX(12px);
+  }
+
+  &.nmorph-tooltip__info-content--bottom {
+    transform: translateY(12px);
+  }
+
+  &.nmorph-tooltip__info-content--left {
+    transform: translateX(-12px);
+  }
+
+  &.nmorph-tooltip__info-content--top .nmorph-tooltip__triangle {
+    top: 100%;
+    left: 50%;
+    border-width: 8px 8px 0;
+    border-color: var(--nmorph-main-color) transparent transparent transparent;
+    transform: translateX(-50%);
+  }
+
+  &.nmorph-tooltip__info-content--right .nmorph-tooltip__triangle {
+    top: 50%;
+    right: 100%;
+    border-width: 8px 8px 8px 0;
+    border-color: transparent var(--nmorph-main-color) transparent transparent;
+    transform: translateY(-50%);
+  }
+
+  &.nmorph-tooltip__info-content--bottom .nmorph-tooltip__triangle {
+    bottom: 100%;
+    left: 50%;
+    border-width: 0 8px 8px;
+    border-color: transparent transparent var(--nmorph-main-color) transparent;
+    transform: translateX(-50%);
+  }
+
+  &.nmorph-tooltip__info-content--left .nmorph-tooltip__triangle {
+    top: 50%;
+    left: 100%;
+    border-width: 8px 0 8px 8px;
+    border-color: transparent transparent transparent var(--nmorph-main-color);
+    transform: translateY(-50%);
+  }
 }
 </style>

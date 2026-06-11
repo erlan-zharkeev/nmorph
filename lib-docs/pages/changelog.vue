@@ -6,11 +6,31 @@ const knownBugItems: string[] = [];
 
 <template>
   <div class="nmorph-docs-content docs-changelog-page">
-    <NmorphCard class="docs-changelog-page__card" padding="0">
+    <NmorphCard class="docs-changelog-page__card" padding="0" :paper="3">
       <NmorphScroll class="docs-changelog-page__scroll" :y-gap-in-px="8">
         <div class="docs-changelog-page__content">
           <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
+          <div class="docs-changelog-page__release">
+            <h3>v3.0.5</h3>
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.card-paper-surface") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.media-tile-audio-sink") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.docs-paper-shell") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.component-api-docs-refresh") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.interaction-polish") }}
+              </li>
+            </ul>
+          </div>
           <div class="docs-changelog-page__release">
             <h3>v3.0.3</h3>
             <ul>

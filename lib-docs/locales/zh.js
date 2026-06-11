@@ -102,7 +102,7 @@ export default {
       "other-messages": "其他翻译",
       "css-variables": "CSS 变量",
       "css-variables-content":
-        "The library exposes theme and foundation CSS custom properties for your own styles. Component-specific customization is handled through props.",
+        "库会暴露主题和基础 CSS custom properties，供自定义样式使用。单个组件的定制通过 props 完成。",
       "css-variables-theme-derived": "主题派生变量（按主题设置）",
       "css-variables-auto-generated": "附加文字对比度变量（可按主题配置）",
       "css-variables-static": "附加主题颜色变量（按主题设置）",
@@ -206,13 +206,23 @@ export default {
       components: "组件",
       changelog: "变更日志",
       repository: "仓库",
-      issues: "Issues",
+      issues: "问题",
     },
   },
   "changelog-page": {
     changelog: {
       title: "变更日志",
       items: {
+        "card-paper-surface":
+          "NmorphCard 现在通过 paper 支持内置纸张纹理，docs 中的卡片示例也统一使用相同的 paper 强度，保持一致的触感表面。",
+        "media-tile-audio-sink":
+          "NmorphMediaTile 现在会在 videoOff 的 audio-only 流中继续播放 remote audio，视频可见时避免重复播放，遵守 muted，并在浏览器支持 setSinkId 时可通过 sinkId 路由媒体输出。",
+        "docs-paper-shell":
+          "Lib docs 现在为主 shell、header、footer、overview、guide、about、changelog 和示例统一使用 paper 卡片，search 也改为真正的按钮并让 Ctrl K 对齐更稳定。",
+        "component-api-docs-refresh":
+          "刷新了 Card paper、Image frame border 与 loading states、MediaTile sinkId、Pagination loading、Scroll、Tooltip、Guide 以及相关组件 props 的 API 表格和示例。",
+        "interaction-polish":
+          "优化了 scroll、pagination、carousel、guide、tooltip、stepper、time picker、file upload 和 media previews 的交互细节，并更新为填充式 hand icon。",
         "docs-layout-refresh":
           "Docs 现在使用共享的 NmorphLayout shell，包含浮动 header/footer 卡片、对齐的 aside/content 间距、GitHub topbar 图标，以及选择结果后会关闭的 overlay search dialog。",
         "overview-preview-polish":
@@ -226,9 +236,9 @@ export default {
         "audio-backtop-polish":
           "NmorphAudioPreview 现在使用更实的 play surface 和更清晰的 external-link action，NmorphBacktop plain controls 则不再渲染额外 border。",
         "avatar-borderless-prop":
-          "NmorphAvatar 现在支持通过 borderless 渲染无边框 plain 头像，同时 design=\"plain\" 默认仍保留 border。",
+          'NmorphAvatar 现在支持通过 borderless 渲染无边框 plain 头像，同时 design="plain" 默认仍保留 border。',
         "badge-tag-value-slot":
-          "NmorphBadge type=\"tag\" 现在支持 value slot，可用于紧凑图标徽标，同时保留文本 fallback 行为。",
+          'NmorphBadge type="tag" 现在支持 value slot，可用于紧凑图标徽标，同时保留文本 fallback 行为。',
         "preview-borderless-controls":
           "NmorphImagePreview 和 NmorphMediaGallery 的预览控件现在使用无边框 plain 按钮，并采用与 Backtop 相同的 overlay 背景。",
         "image-preview-plain-surface":
@@ -236,7 +246,7 @@ export default {
         "hand-icon-outline":
           "NmorphIconHand 现在使用更细的纯描边手形图标，不再使用填充形状。",
         "button-borderless-prop":
-          "NmorphButton 现在支持通过 borderless 渲染无边框 plain 按钮，同时 design=\"plain\" 默认仍保留 border。",
+          'NmorphButton 现在支持通过 borderless 渲染无边框 plain 按钮，同时 design="plain" 默认仍保留 border。',
         "media-tile-show-status":
           "NmorphMediaTile 现在支持 show-status，可隐藏右下角状态 overlay，同时不改变 video-off fallback 行为。",
         "select-button-custom-thickness":
@@ -250,9 +260,9 @@ export default {
         "thin-input-centering":
           "Thin native input 的文本现在使用组件高度作为 line box，让视觉垂直居中更稳定，同时不改变 swipe、click 或 layout 行为。",
         "design-api-plain":
-          "Breaking: Empty、Backtop、SkeletonItem、Table、TagList 和 TagItem 的 surface design value 现在使用 design=\"plain\"，替代 design=\"common\"。",
+          'Breaking: Empty、Backtop、SkeletonItem、Table、TagList 和 TagItem 的 surface design value 现在使用 design="plain"，替代 design="common"。',
         "selection-design-api":
-          "Breaking: NmorphButton、NmorphCheckbox、NmorphCheckboxGroup、NmorphRadio 和 NmorphRadioGroup 现在使用 design=\"nmorph | plain\" 定义视觉设计。",
+          'Breaking: NmorphButton、NmorphCheckbox、NmorphCheckboxGroup、NmorphRadio 和 NmorphRadioGroup 现在使用 design="nmorph | plain" 定义视觉设计。',
         "form-control-design-api":
           "Breaking: input-like form controls 不再暴露 design prop；design 只保留在 Checkbox、CheckboxGroup、Radio 和 RadioGroup 这类 selection controls 上。",
         "control-typography-contract":
@@ -266,75 +276,75 @@ export default {
         "stepper-single-item-click":
           "NmorphStepper 在 single-item non-interactive stepper 的 pointerup 上不再抛错，同时保留 swipe 行为和 drag 后的 click suppression。",
         "attachment-preview-primitives":
-          "Added NmorphVideoPreview, NmorphAudioPreview, and NmorphFileCard as reusable attachment UI primitives for video, audio, documents, and unknown files.",
+          "新增 NmorphVideoPreview、NmorphAudioPreview 和 NmorphFileCard，作为视频、音频、文档与未知文件的可复用附件 UI 基础组件。",
         "file-upload-attachment-previews":
-          "NmorphFileUpload now renders typed previews for uploaded video and audio files, document/file cards for PDF, Office, and unknown files, and keeps image previews for images.",
+          "NmorphFileUpload 现在会为上传的视频和音频渲染类型化预览，为 PDF、Office 和未知文件渲染文档/文件卡片，并继续保留图片预览。",
         "attachment-rendering-notes":
-          "Documented the K-Room attachment rendering approach, including app-level attachment routers, Nmorph UI primitives, message attachment data shape, and compatibility with existing images.",
+          "补充了 K-Room 附件渲染方案文档，包括应用层附件路由、Nmorph UI 基础组件、消息附件数据结构，以及与现有图片的兼容性。",
         "emoji-picker-lazy-locales":
-          "Added optional NmorphEmojiPicker locale files for en, ru, and zh with lazy package imports so host apps can load only the emoji dataset they need.",
+          "新增可选的 NmorphEmojiPicker en、ru、zh locale 文件，并支持懒加载包导入，让宿主应用只加载所需的 emoji 数据集。",
         "image-preview-keyboard-navigation":
-          "NmorphImagePreview now supports ArrowLeft and ArrowRight keyboard navigation while the preview is open, including wrap-around for image sets.",
+          "NmorphImagePreview 现在在预览打开时支持 ArrowLeft 和 ArrowRight 键盘导航，并支持图片集合循环切换。",
         "icon-wrapper-centering":
-          "NmorphIcon now centers its inner icon content when external classes resize the icon wrapper.",
+          "当外部类调整图标包裹层尺寸时，NmorphIcon 现在会居中内部图标内容。",
         "scroll-runtime-skin":
-          "NmorphScroll runtime common styles again include the inset track skin and hidden native scrollbar buttons for plugin-only usage.",
+          "NmorphScroll 的 runtime common styles 重新包含 inset 轨道外观，并隐藏原生滚动条按钮，以支持仅安装 plugin 的使用方式。",
         "tag-list-common-color-api":
-          "NmorphTagList and NmorphTagItem now expose a color prop for common design backgrounds, support v-model:selected-value and click events for clicked tag values, automatically choose readable text and close icon colors, and remove borders from common tags.",
+          "NmorphTagList 和 NmorphTagItem 现在为 common 背景暴露 color prop，支持 v-model:selected-value 和标签值点击事件，自动选择可读的文字/关闭图标颜色，并移除 common tags 的边框。",
         "tag-list-custom-content":
-          "NmorphTagItem now supports a default slot for custom content, and NmorphTagList can forward an item scoped slot while preserving existing text, click, close, and v-model behavior.",
+          "NmorphTagItem 现在支持用于自定义内容的 default slot，NmorphTagList 可转发 item scoped slot，同时保留既有 text、click、close 和 v-model 行为。",
         "realtime-ui-components-api":
-          "Added touch-friendly tooltip triggers, call-oriented media and audio meter components, toggle button state, public styling props, typed select modes, richer context menu items, and backward-compatible typo aliases.",
+          "新增适合触控的 tooltip 触发方式、面向通话的 media 与 audio meter 组件、toggle 按钮状态、公开 styling props、类型化 select modes、更丰富的 context menu items，以及向后兼容的 typo aliases。",
         "context-menu-repeat-right-click":
-          "NmorphContextMenu now only repositions an already open context menu from a repeated right-click inside the trigger, so outside right-clicks no longer move the menu.",
+          "NmorphContextMenu 现在只会在 trigger 内重复右键时重新定位已打开的菜单，外部右键不再移动菜单。",
         "text-input-prepend-placeholder-color":
-          "NmorphTextInput prepend icons now match the placeholder color by default and switch to the focus text color together with the input.",
+          "NmorphTextInput prepend 图标现在默认匹配 placeholder 颜色，并在输入框聚焦时一起切换到 focus text 颜色。",
         "form-item-model-binding":
-          "NmorphFormItem now provides field context so nested form controls can bind to a field by id when modelValue is omitted, while explicit v-model remains controlled.",
+          "NmorphFormItem 现在提供 field context，使嵌套表单控件在省略 modelValue 时可通过 id 绑定字段；显式 v-model 仍保持受控。",
         "file-upload-form-rules":
-          "NmorphFileUpload now participates in NmorphForm rules, rejects invalid files before accepting them, updates form field errors, and cleans up managed preview URLs.",
+          "NmorphFileUpload 现在参与 NmorphForm rules，会在接收前拒绝无效文件、更新表单字段错误，并清理托管的 preview URLs。",
         "form-controls-visual-polish":
-          "Polished form control sizing and surfaces, including checkbox and radio content height, select radius, text input backgrounds, autofill styling, and card padding propagation.",
+          "优化了表单控件尺寸和表面，包括 checkbox/radio content 高度、select 圆角、text input 背景、autofill 样式以及 card padding 传递。",
         "dev-open-opt-in-browser":
-          "Workspace dev scripts no longer open browser tabs by default; pass --open when the docs or sandbox should launch automatically.",
+          "Workspace dev scripts 默认不再打开浏览器标签；需要自动启动 docs 或 sandbox 时请传入 --open。",
         "component-types-split":
-          "Component prop, emit, slot, and shared library typings now live in focused type modules, keeping generated declarations easier to consume.",
+          "组件 prop、emit、slot 和共享库类型现在拆分到专门的 type modules 中，生成的声明文件更易使用。",
         "file-upload-type-helpers":
-          "NmorphFileUpload and form validation now share file type matching helpers, so MIME, extension, accept, and image-preview checks stay consistent.",
+          "NmorphFileUpload 和表单校验现在共享文件类型匹配 helpers，使 MIME、extension、accept 和 image-preview 检查保持一致。",
         "image-preview-lazy-portal":
-          "NmorphImagePreview now mounts its preview portal only while open, so pages with many previews do not accumulate hidden portals in body.",
+          "NmorphImagePreview 现在只在打开时挂载 preview portal，因此包含大量预览的页面不会在 body 中堆积隐藏 portals。",
         "image-preview-gallery-trigger":
-          "NmorphImagePreview now supports a gallery trigger that renders multiple thumbnails before opening the overlay.",
+          "NmorphImagePreview 现在支持 gallery trigger，可在打开 overlay 前渲染多个缩略图。",
         "button-multiline-height":
-          "NmorphButton now uses its height prop as a minimum for regular buttons, allowing multi-line content to expand without clipping while icon buttons stay fixed.",
+          "NmorphButton 现在将 height prop 作为普通按钮的最小高度，使多行内容可扩展而不被裁切，同时图标按钮保持固定。",
         "context-menu-open-controls":
-          "NmorphContextMenu now supports click, both, longpress, and manual triggers, exposes openAt/openAtElement/close, and keeps pointer menus inside the viewport.",
+          "NmorphContextMenu 现在支持 click、both、longpress 和 manual triggers，暴露 openAt/openAtElement/close，并将 pointer 菜单保持在 viewport 内。",
         "tag-list-common-design":
-          "NmorphTagList now accepts design=\"common\" to render plain token-backed tags with contrast text and icons instead of the neumorphic inset surface.",
+          'NmorphTagList 现在接受 design="common"，可渲染由 token 支撑的 plain 标签，使用对比文字和图标，而不是 neumorphic inset 表面。',
         "badge-larger-sizes":
-          "NmorphBadge size now includes medium, large, and extra-large variants for larger tags, dots, and ribbons.",
+          "NmorphBadge size 现在包含 medium、large 和 extra-large 变体，用于更大的 tags、dots 和 ribbons。",
         "style-utils-unification":
-          "Unified modifier normalization and CSS size helpers across components so boolean modifiers and numeric CSS values follow one code path.",
+          "统一了组件间的 modifier 规范化和 CSS size helpers，使 boolean modifiers 与数值 CSS 值走同一条代码路径。",
         "virtual-list-style-helpers":
-          "Select, Autocomplete, Table, and VirtualList now share option-height and virtual-list style helpers for more consistent scrolling surfaces.",
+          "Select、Autocomplete、Table 和 VirtualList 现在共享 option-height 与 virtual-list style helpers，使滚动表面更一致。",
         "dialog-overlay-close-api":
-          "NmorphDialog now documents close-on-overlay, keeps close-on-click-modal as a compatibility alias, and uses an accessible close button in the header.",
+          "NmorphDialog 现在文档化 close-on-overlay，保留 close-on-click-modal 作为兼容 alias，并在 header 中使用可访问的关闭按钮。",
         "component-local-style-split":
-          "Moved Avatar, Image, TextInput, and Scroll layout styles from common injected CSS into their component files for clearer component ownership.",
+          "Avatar、Image、TextInput 和 Scroll 的布局样式已从 common injected CSS 移入各自组件文件，使组件 ownership 更清晰。",
         "new-components-suite":
-          "Added NmorphTextarea, NmorphDrawer, NmorphLayout, NmorphSpace, NmorphQRCode, and NmorphVirtualList to the library exports.",
+          "新增 NmorphTextarea、NmorphDrawer、NmorphLayout、NmorphSpace、NmorphQRCode 和 NmorphVirtualList 到库导出。",
         "new-components-docs-sandbox":
-          "Added documentation pages, API tables, overview examples, and sandbox demos for the new components.",
+          "为新组件新增文档页面、API 表格、overview 示例和 sandbox demos。",
         "expanded-icon-set":
-          "Added more NmorphIcon exports for chevrons, clipboard states, data/server, drag handles, filters, mail, shields, save, undo, and redo actions.",
+          "新增更多 NmorphIcon 导出，覆盖 chevrons、clipboard states、data/server、drag handles、filters、mail、shields、save、undo 和 redo 操作。",
         "component-polish-round":
-          "Polished existing form, data, and navigation components, including option heights, pagination controls, avatar rendering, switch/button states, and Backtop behavior.",
+          "优化现有 form、data 和 navigation 组件，包括 option heights、pagination controls、avatar rendering、switch/button states 和 Backtop 行为。",
         "docs-api-inline-descriptions":
-          "Docs API tables can now use inline descriptions when an i18n key is not available, avoiding missing-translation noise for new component pages.",
+          "Docs API tables 现在可在缺少 i18n key 时使用 inline descriptions，避免新组件页面出现 missing-translation 噪音。",
         "link-icon-name-prop":
-          "NmorphLink now accepts iconName/icon-name to render a library icon before the link text, with docs and tests covering the new prop.",
+          "NmorphLink 现在接受 iconName/icon-name，可在链接文本前渲染库图标，并已为新 prop 补充文档和测试。",
         "link-anchor-attrs":
-          "NmorphLink 现在会把 rel、referrerpolicy、download、aria-label 和 title 转发到内部 anchor，并将 target=\"blank\" 渲染为 _blank。",
+          'NmorphLink 现在会把 rel、referrerpolicy、download、aria-label 和 title 转发到内部 anchor，并将 target="blank" 渲染为 _blank。',
         "callout-rich-link-slots":
           "NmorphCallout 现在支持 header/title/default slots 来安全渲染 rich content，也可以把 root 渲染为带 href、target、rel 和 referrerpolicy 的外部链接。",
         "file-card-embedded-surface":
@@ -346,17 +356,17 @@ export default {
         "notification-duration-value-toggle":
           "NmorphNotificationProvider 的 duration indicator 现在支持 showDurationValue: false，仅显示进度条倒计时。",
         "video-preview-overlay-actions":
-          "NmorphVideoPreview now exposes preview and fullscreen overlay actions with showPreviewAction/showFullscreenAction props and preview/fullscreen events.",
+          "NmorphVideoPreview 现在通过 showPreviewAction/showFullscreenAction props 与 preview/fullscreen events 暴露 preview 和 fullscreen overlay actions。",
         "attachment-actions-polish":
-          "Attachment previews now keep file icons muted while play/pause and PDF eye controls use contrast color, show a single upload action loader, and balance compact video FileCard vertical padding.",
+          "Attachment previews 现在让文件图标保持弱化，play/pause 与 PDF eye controls 使用 contrast color，显示单一 upload action loader，并平衡 compact video FileCard 的垂直 padding。",
         "file-card-sandbox-all-types":
-          "The sandbox data page now includes NmorphFileCard examples for documents, images, audio, video, archives, loading, error, and long filenames.",
+          "sandbox data 页面现在包含 NmorphFileCard 示例，覆盖 documents、images、audio、video、archives、loading、error 和 long filenames。",
         "file-card-image-media-preview":
-          "NmorphFileCard now supports media-preview=\"image\" from previewSrc, with compact visual thumbnails, shared soft/plain surfaces, file title overlays, size badges, and consistent download actions.",
+          'NmorphFileCard 现在支持从 previewSrc 使用 media-preview="image"，并提供 compact visual thumbnails、共享 soft/plain surfaces、文件标题 overlays、size badges 和一致的 download actions。',
         "media-gallery-mixed-preview":
-          "Added NmorphMediaGallery for fullscreen mixed image and video galleries with typed items, active index control, keyboard navigation, video pause-on-change/close behavior, and sandbox examples.",
+          "新增 NmorphMediaGallery，用于 fullscreen mixed image/video galleries，支持 typed items、active index control、keyboard navigation、video pause-on-change/close 行为和 sandbox examples。",
         "preview-portal-shared-flow":
-          "NmorphImagePreview and NmorphMediaGallery now share the same preview portal flow, so backdrop clicks, Escape closing, navigation arrows, image action bar controls, and synced video play/pause overlays behave consistently.",
+          "NmorphImagePreview 和 NmorphMediaGallery 现在共享同一个 preview portal flow，因此 backdrop clicks、Escape closing、navigation arrows、image action bar controls 以及同步的 video play/pause overlays 行为一致。",
         "media-gallery-file-card-triggers":
           "NmorphMediaGallery 现在可以自行渲染 image/video trigger grid，并带有 FileCard 风格的文件名、大小标签、play overlay、preview、fullscreen 和 download actions。",
         "file-card-preview-mode":
@@ -364,27 +374,27 @@ export default {
         "sandbox-media-downloads":
           "Sandbox media examples 现在为 audio 和 video 使用 download-safe href，让 download action 保存文件，而不是打开 cross-origin preview URL。",
         "media-card-visibility-sizing":
-          "NmorphFileCard and NmorphMediaGallery now expose height and overlay visibility props so media cards, gallery triggers, info labels, actions, and playback buttons can be tuned per layout.",
+          "NmorphFileCard 和 NmorphMediaGallery 现在暴露 height 与 overlay visibility props，使 media cards、gallery triggers、info labels、actions 和 playback buttons 可按布局调整。",
         "file-card-actions-slot-align":
-          "NmorphFileCard custom actions now use the same top-right action area across visual, compact, and regular cards while PDF preview and default actions stay intact.",
+          "NmorphFileCard custom actions 现在在 visual、compact 和 regular cards 中使用同一个右上 action area，同时保留 PDF preview 和 default actions。",
         "video-playback-full-buffer":
-          "NmorphVideoPreview and NmorphMediaGallery now show play/pause overlays only after a video is fully buffered.",
+          "NmorphVideoPreview 和 NmorphMediaGallery 现在只在视频完全缓冲后显示 play/pause overlays。",
         "divider-vertical-visibility":
           "NmorphDivider vertical dividers 现在会在 flex 和 grid layout 中拉伸。",
         "divider-original-styling":
           "NmorphDivider 已恢复原来的 theme shadow styling，同时保留 vertical divider 拉伸修复。",
         "guide-component":
-          "Added NmorphGuide and NmorphGuideStep for coordinated tooltip-based walkthroughs with images, grouped targets, and previous/next controls.",
+          "新增 NmorphGuide 和 NmorphGuideStep，用于基于 tooltip 的协调式 walkthroughs，支持图片、分组 targets 和 previous/next controls。",
         "stepper-component":
-          "Added NmorphStepper, a controlled horizontal stepper that shows one item at a time with transform-based previous/next movement, wheel, swipe, keyboard support, and indicator slots.",
+          "新增 NmorphStepper，这是一个受控 horizontal stepper，一次显示一个 item，支持基于 transform 的 previous/next 移动、wheel、swipe、keyboard 和 indicator slots。",
         "audio-meter-equal-bars":
-          "NmorphAudioMeter now keeps bar heights equal for silence and signal states while preserving the active color and opacity behavior.",
+          "NmorphAudioMeter 现在在 silence 和 signal 状态下保持 bar 高度一致，同时保留 active color 与 opacity 行为。",
         "avatar-loader-text-color":
-          "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
+          "NmorphAvatar loading 图标现在继承 default text color，而不是强制使用 accent color。",
         "avatar-initials-text-color":
           "NmorphAvatar fallback initials 现在使用默认 text color，而不是 accent color。",
         "badge-flat-ribbon-radius":
-          "NmorphBadge flat corner ribbons now render without rounded outer edges while corner ribbons keep their visible inner radius.",
+          "NmorphBadge flat corner ribbons 现在渲染时没有圆角外边缘，而 corner ribbons 保留可见的 inner radius。",
         "empty-padding-token":
           "NmorphEmpty 现在拥有有效的默认 padding token，文本会留在内容区域内，docs 示例在窄屏下也会自动换行布局。",
         "docs-collapse-title-scope":
@@ -396,11 +406,11 @@ export default {
         "docs-css-type-links":
           "Docs API tables 现在会将 Width、Height、Padding、Color、Background 和 Transition-duration 等 CSS value types 链接到 MDN。",
         "docs-api-type-links":
-          "Docs API tables now auto-link known attribute, expose, and event types, and stale component links now point to the correct element anchors.",
+          "Docs API tables 现在会自动链接已知的 attribute、expose 和 event 类型，过期的 component links 也会指向正确的元素 anchors。",
         "docs-example-english-source":
-          "Docs example source blocks now use plain English example text instead of copying runtime i18n expressions.",
+          "Docs 示例 source blocks 现在使用简单英文示例文本，而不是复制 runtime i18n expressions。",
         "nuxt-build-dir-isolation":
-          "Docs and sandbox Nuxt production builds now write to .nuxt-build so build commands no longer overwrite active dev-server metadata.",
+          "Docs 和 sandbox Nuxt production builds 现在写入 .nuxt-build，因此 build commands 不再覆盖正在运行的 dev-server metadata。",
         "dropdown-hide-shadow-prop":
           "NmorphDropdown 和 NmorphContextMenu 现在支持 hide-shadow，可渲染没有默认 neumorphic 阴影的菜单面板。",
         "backtop-teleport-styles":
@@ -415,9 +425,9 @@ export default {
           "NmorphFileUpload 现在默认接受所有文件，会按 MIME 或扩展名匹配 restricted types，并且只为图片文件渲染 image preview。",
         "pin-icon": "新增 NmorphIconPin 图标。",
         "card-header-slot-wrapper":
-          "NmorphCard now renders the header wrapper only when the header slot is provided.",
+          "NmorphCard 现在只在提供 header slot 时渲染 header wrapper。",
         "card-combined-border-style":
-          "NmorphCard now forwards --nmorph-card-combined-border-width only for combined shadow cards.",
+          "NmorphCard 现在只为 combined shadow cards 转发 --nmorph-card-combined-border-width。",
         "send-icons":
           "新增 NmorphIconSend 和 NmorphIconSendFilled 纸飞机图标。",
         "message-action-icons":
@@ -472,21 +482,21 @@ export default {
         "empty-border-box":
           "NmorphEmpty 现在会把 padding 计入组件宽度，避免 empty state 内容贴近 grid 或 docs preview 的边缘。",
         "empty-state-component":
-          "Added NmorphEmpty for empty states, including typed props, slots, docs, and sandbox examples.",
+          "新增 NmorphEmpty 用于空状态，包含 typed props、slots、docs 和 sandbox examples。",
         "card-padding-prop":
-          "NmorphCard now accepts a cardPadding prop that forwards to the --card-padding CSS variable, with numeric values converted to pixels.",
+          "NmorphCard 现在接受 cardPadding prop，并转发到 --card-padding CSS 变量；数值会转换为像素。",
         "card-fill-prop":
-          "NmorphCard now fills the available width by default and can fit its content when fill is false.",
+          "NmorphCard 默认填满可用宽度，并可在 fill 为 false 时贴合内容宽度。",
         "card-tag-prop":
-          "NmorphCard now accepts a tag prop so the root element can render as div, article, section, or another HTML tag.",
+          "NmorphCard 现在接受 tag prop，使根元素可渲染为 div、article、section 或其他 HTML 标签。",
         "css-variable-prop-overrides":
           "CSS variable overrides can now be passed through props for badges, tooltips, form controls, tables, progress, alerts, and related components.",
         "context-menu-neutral-hover":
           "NmorphContextMenu 现在会从基础 text color 推导默认选项 hover background，而不是使用 accent color；自定义颜色的选项仍使用自己的颜色。",
         "tooltip-z-index-stack":
-          "NmorphTooltip now participates in the shared automatic z-index stack and supports an explicit zIndex override.",
+          "NmorphTooltip 现在参与共享的自动 z-index stack，并支持显式 zIndex 覆盖。",
         "notification-provider-first-animation":
-          "NmorphNotificationProvider now keeps placement transition groups mounted so the first notification animates like the following ones.",
+          "NmorphNotificationProvider 现在保持 placement transition groups 挂载，因此第一条 notification 会像后续通知一样动画显示。",
         "carousel-collapse-docs":
           "Carousel 和 Collapse 现在已加入组件 registry、文档页面、API tables、examples 和 sandbox checks。",
         "time-picker-component":
@@ -534,13 +544,13 @@ export default {
         "docs-code-copy-fix":
           "文档 code blocks 现在保留正确的顶部间距，并通过 Clipboard API 复制完整示例 source，且带有 fallback。",
         "callout-docs-bottom-spacing":
-          "NmorphCallout no longer ships bottom margin in the library; docs apply their own callout spacing where notices need separation.",
+          "NmorphCallout 不再在库内附带 bottom margin；docs 会在需要分隔 notices 的地方应用自己的 callout spacing。",
         "callout-default-bottom-spacing":
           "NmorphCallout 现在带有默认 bottom spacing，连续 callout 与后续内容不再贴在一起。",
         "storybook-sass-modern-api":
           "Storybook 和 library dev configs 现在使用 Dart Sass modern API，不再使用 deprecated legacy JS API。",
         "workspace-dev-script-fixes":
-          "Docs and Storybook dev scripts now use local host/path helpers, include asset/raw import typings, and avoid pulling Storybook into the default dev run.",
+          "Docs 和 Storybook dev scripts 现在使用本地 host/path helpers，包含 asset/raw import typings，并避免将 Storybook 拉入默认 dev run。",
         "ci-pnpm-publish":
           "CI build 与 publish jobs 现在通过 pnpm 安装 workspace，并从准备好的 package 发布库。",
         "nuxt-theme-first-paint":
@@ -944,18 +954,16 @@ export default {
     },
     avatar: {
       size: {
-        subtitle: "Sets the size of the avatar, accepts a *number* type value.",
+        subtitle: "设置头像尺寸，接受 *number* 类型值。",
       },
       shape: {
-        subtitle:
-          "Defines the shape of the avatar. Can be *circle* or *square*.",
+        subtitle: "定义头像形状，可为 *circle* 或 *square*。",
       },
       fit: {
-        subtitle: "Defines how the image is displayed in the container.",
+        subtitle: "定义图片在容器中的显示方式。",
       },
       name: {
-        subtitle:
-          "Used to generate initials for the fallback when no image is available.",
+        subtitle: "用于在没有图片时生成 fallback 首字母。",
       },
       preview: {
         subtitle:
@@ -976,7 +984,7 @@ export default {
         "preview-max-scale-level": "预览最大缩放级别",
         "src-set": "List of image sources",
         alt: "Text description of the image",
-        fit: "Defines how the image fills the container",
+        fit: "定义图片如何填充容器",
         "frame-border": "Defines the thickness of the frame",
         "image-padding": "Inner padding",
         fallback:
@@ -1000,8 +1008,7 @@ export default {
           "通过 `value` slot 完全替换徽标内部内容。Slot props 暴露 `value` 和 `displayValue`，适用于 default、ribbon 和 tag 模式。",
       },
       max: {
-        subtitle:
-          "Maximum value for the badge. If it's set as a number and exceeded, it's displayed as max+.",
+        subtitle: "徽标最大值。若设置为数字且实际值超过该值，将显示为 max+。",
       },
       type: {
         subtitle: "在 default、dot、tag 和 ribbon badge 显示之间切换。",
@@ -1013,12 +1020,11 @@ export default {
         subtitle: "控制 ribbon badge 是斜向显示，还是平放在选定角落。",
       },
       "is-dot": {
-        subtitle:
-          "Displays the badge as a small dot if set to *true*. Works even when `value` is omitted.",
+        subtitle: "设为 *true* 时将徽标显示为小圆点，即使省略 `value` 也生效。",
       },
       "is-tag": {
         subtitle:
-          "Displays the badge as a standalone element without the default slot. Offsets are ignored in this mode.",
+          "将徽标显示为不依附 default slot 的独立元素；此模式会忽略 offset。",
       },
       hidden: {
         subtitle: "Controls the visibility of the badge.",
@@ -1027,39 +1033,35 @@ export default {
         subtitle: "Background color of the badge.",
       },
       size: {
-        subtitle: "Controls the badge text size through font-size variables.",
+        subtitle: "通过 font-size 变量控制徽标文字大小。",
       },
       offset: {
-        subtitle:
-          "Horizontal/vertical offset of the badge relative to its parent.",
+        subtitle: "徽标相对父元素的水平/垂直偏移。",
       },
       api: {
-        value:
-          "The displayed value on the badge. If undefined and type is not dot, the badge is hidden",
+        value: "徽标显示的值。如果为 undefined 且 type 不是 dot，则隐藏徽标",
         max: "Maximum value to display",
         type: "设置 badge 显示类型：default、dot、tag 或 ribbon",
         "ribbon-corner": "当 type 为 ribbon 时设置 ribbon 角落",
         "ribbon-tilt": "启用时让 ribbon 斜向显示，禁用时平放在选定角落",
         "is-dot": "Displays the badge as a dot",
         "is-tag":
-          "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
+          "将徽标切换为独立 tag 模式，不使用 absolute positioning 或 default slot",
         hidden: "Hides the badge",
         "hide-on-falsy-value":
-          "Hides the badge indicator when value is falsy, including 0 and an empty string.",
+          "当 value 为 falsy 时隐藏徽标指示器，包括 0 和空字符串。",
         color: "Sets the background color of the badge",
-        size:
-          "Sets the badge text size: tiny, extra-small, base, medium, large, or extra-large",
+        size: "设置徽标文字大小：tiny、extra-small、base、medium、large 或 extra-large",
         "z-index": "Defines the stacking order of the badge",
         "offset-y":
-          "Vertical offset of the badge. For ribbon, controls ribbon positioning. Ignored when type is tag",
+          "徽标垂直偏移。对于 ribbon，用于控制 ribbon 位置。type 为 tag 时忽略",
         "offset-x":
-          "Horizontal offset of the badge. For ribbon, controls ribbon positioning. Ignored when type is tag",
+          "徽标水平偏移。对于 ribbon，用于控制 ribbon 位置。type 为 tag 时忽略",
       },
       slot: {
-        default:
-          "Wrapped content the badge is attached to. Not used when `type` is `tag`.",
+        default: "徽标附着的包裹内容。`type` 为 `tag` 时不使用。",
         value:
-          "Custom content inside the badge instead of the plain `value`. Works only in overlay mode.",
+          "徽标内的自定义内容，用于替代纯 `value`。仅在 overlay 模式下生效。",
       },
       variables: {
         "nmorph-badge-dot-size": "Width and height of the dot",
@@ -1075,29 +1077,30 @@ export default {
         subtitle: "Defines the shadow type for the card.",
       },
       "card-padding": {
+        subtitle: "Sets the card padding.",
+      },
+      paper: {
         subtitle:
-          "Sets the card padding.",
+          "添加柔和的纸张纹理。0 会禁用效果，数值越大效果越强。",
       },
       fill: {
-        subtitle:
-          "Controls whether the card stretches to the available width or fits its content.",
+        subtitle: "控制卡片是拉伸到可用宽度，还是贴合自身内容。",
       },
       tag: {
-        subtitle: "Changes the HTML tag used for the card root element.",
+        subtitle: "更改卡片根元素使用的 HTML 标签。",
       },
       api: {
-        "shadow-type": "Defines the visibility of the card's shadow.",
-        "card-padding":
-          "Overrides the card padding. Numbers are treated as pixel values.",
-        "content-class": "Adds a custom class to the card content wrapper.",
+        "shadow-type": "定义卡片阴影的可见性。",
+        "card-padding": "覆盖卡片 padding。数字会按像素处理。",
+        "content-class": "为卡片内容包裹层添加自定义 class。",
+        paper: "纸张纹理强度。0 禁用效果，数值越高越明显。",
         "combined-shadow-border-width":
-          "Border width used only when shadow-type is combined.",
-        fill: "When true, the card takes the available width. Set false to fit the content width.",
+          "仅在 shadow-type 为 combined 时使用的边框宽度。",
+        fill: "为 true 时卡片占用可用宽度。设为 false 时贴合内容宽度。",
         tag: "HTML tag used for the card root element.",
       },
       slot: {
-        header:
-          "Card header. The header wrapper renders only when this slot is provided.",
+        header: "卡片头部。只有提供该 slot 时才渲染 header wrapper。",
         footer: "Card footer",
       },
       variables: {
@@ -1107,22 +1110,19 @@ export default {
     empty: {
       "basic-usage": {
         subtitle:
-          "Shows empty states with default content, custom icons, actions, and plain or nmorph surfaces.",
+          "展示带默认内容、自定义图标、操作区以及 plain 或 nmorph 表面的空状态。",
       },
       api: {
         title: "Main empty state title.",
         description: "Secondary empty state message.",
-        "icon-size": "Default icon size. Numbers are treated as pixel values.",
-        "min-height":
-          "Minimum empty state height. Numbers are treated as pixel values.",
-        padding:
-          "Inner empty state padding. Numbers are treated as pixel values.",
-        design: "Visual design of the empty state surface.",
-        "shadow-type": "Nmorph shadow used when design is nmorph.",
-        "hide-icon":
-          "Hides the default icon. The icon slot still renders when provided.",
-        role: "ARIA role applied to the empty state container.",
-        "aria-label": "Accessible label. Falls back to the title when omitted.",
+        "icon-size": "默认图标尺寸。数字会按像素处理。",
+        "min-height": "空状态最小高度。数字会按像素处理。",
+        padding: "空状态内部 padding。数字会按像素处理。",
+        design: "空状态表面的视觉设计。",
+        "shadow-type": "design 为 nmorph 时使用的 Nmorph 阴影。",
+        "hide-icon": "隐藏默认图标。提供 icon slot 时仍会渲染。",
+        role: "应用到空状态容器的 ARIA role。",
+        "aria-label": "无障碍标签。省略时回退为 title。",
       },
       slot: {
         icon: "Custom icon content.",
@@ -1187,7 +1187,8 @@ export default {
     },
     "tag-list": {
       "basic-usage": {
-        subtitle: "展示可移除标签、可选择的 plain 标签，以及带自定义内容的紧凑行。",
+        subtitle:
+          "展示可移除标签、可选择的 plain 标签，以及带自定义内容的紧凑行。",
       },
       api: {
         "model-value": "标签列表",
@@ -1262,7 +1263,7 @@ export default {
         block: "设置为 true 时禁止切换面板",
         thickness: "设置标题厚度",
         "transition-speed":
-          "Overrides the panel open and close transition speed. Numbers are treated as milliseconds",
+          "覆盖面板打开和关闭的 transition 速度。数字会按毫秒处理",
       },
       variables: {
         "transition-speed": "Panel content transition speed",
@@ -1305,7 +1306,8 @@ export default {
     },
     "file-card": {
       "basic-usage": {
-        subtitle: "展示 document、image-preview 和 loading 文件卡片的响应式一行。",
+        subtitle:
+          "展示 document、image-preview 和 loading 文件卡片的响应式一行。",
       },
     },
     guide: {
@@ -1320,7 +1322,8 @@ export default {
     },
     text: {
       "basic-usage": {
-        subtitle: "展示 typography variants、color roles 和 truncation 的紧凑堆叠。",
+        subtitle:
+          "展示 typography variants、color roles 和 truncation 的紧凑堆叠。",
       },
     },
     skeleton: {
@@ -1385,12 +1388,9 @@ export default {
         type: "指定进度指示器的类型",
         color: "设置进度指示器的颜色",
         percentage: "设置进度的百分比",
-        height:
-          "Overrides the linear progress bar height. Numbers are treated as pixel values",
-        "width-transition":
-          "Overrides the width transition used by the linear progress bar",
-        "indeterminate-animation":
-          "Overrides the animation used by indeterminate progress",
+        height: "覆盖线性 progress bar 高度。数字会按像素处理",
+        "width-transition": "覆盖线性 progress bar 使用的 width transition",
+        "indeterminate-animation": "覆盖 indeterminate progress 使用的动画",
         "value-inside": "在进度条内显示进度文本",
         "value-right-side": "显示或隐藏右侧的百分比文本",
         indeterminate: "启用不确定进度动画",
@@ -1422,8 +1422,7 @@ export default {
         "initial-date": "设置日历中显示的初始日期",
         "model-value": "表示日历中选定的日期",
         type: "定义日历中的选择类型",
-        "cell-height":
-          "Overrides the height of each date cell. Numbers are treated as pixel values",
+        "cell-height": "覆盖每个日期单元格的高度。数字会按像素处理",
         range:
           "启用日历中的范围选择模式，允许选择日历中的日期范围。不是选定的范围，而是显示的日历范围。",
       },
@@ -1478,18 +1477,13 @@ export default {
         "show-trigger": "定义是否渲染默认的预览触发器",
         "show-navigation-buttons": "定义图像组是否渲染图库导航按钮",
         "show-action-bar": "定义是否渲染底部旋转和缩放操作栏",
-        "trigger-view":
-          "Defines whether the preview trigger renders one image or a thumbnail gallery",
-        "trigger-limit":
-          "Limits how many thumbnails are rendered by the gallery trigger",
-        "trigger-gap":
-          "Defines the gap between thumbnails in the gallery trigger",
-        width:
-          "Overrides the preview trigger width. Numbers are treated as pixel values",
-        height:
-          "Overrides the preview trigger height. Numbers are treated as pixel values",
+        "trigger-view": "定义 preview trigger 渲染单张图片还是缩略图画廊",
+        "trigger-limit": "限制 gallery trigger 渲染的缩略图数量",
+        "trigger-gap": "定义 gallery trigger 中缩略图之间的间距",
+        width: "覆盖 preview trigger 宽度。数字会按像素处理",
+        height: "覆盖 preview trigger 高度。数字会按像素处理",
         "navigation-button-margin":
-          "Overrides the distance between gallery navigation buttons and the viewport edge",
+          "覆盖画廊导航按钮与 viewport 边缘之间的距离",
       },
       slot: {
         loading: "预览图像加载时显示的插槽",
@@ -1499,9 +1493,9 @@ export default {
         width: "定义图像预览的宽度。",
         height: "定义图像预览的高度。",
         "nmorph-image-preview-btn-margin":
-          "Distance between gallery navigation buttons and the viewport edge",
+          "画廊导航按钮与 viewport 边缘之间的距离",
         "nmorph-image-preview-trigger-gap":
-          "Gap between thumbnails in the gallery trigger",
+          "gallery trigger 中缩略图之间的间距",
       },
       events: {
         "update:model-value": "拦截双向绑定的事件",
@@ -1550,20 +1544,17 @@ export default {
         "virtual-height": "设置虚拟表格行的滚动视口高度",
         "virtual-row-height": "设置单个虚拟表格行的预期高度",
         "virtual-overscan": "设置可见区域前后额外渲染的行数",
-        "virtual-dynamic-height":
-          "Allows virtual table rows to measure their own height dynamically",
+        "virtual-dynamic-height": "允许 virtual table 行动态测量自身高度",
         "border-color": "Overrides the table border color",
-        "cell-height":
-          "Overrides the data cell height. Numbers are treated as pixel values",
-        "row-hover-background":
-          "Overrides the background used for hovered and keyboard-active rows",
+        "cell-height": "覆盖数据单元格高度。数字会按像素处理",
+        "row-hover-background": "覆盖 hover 和 keyboard-active 行使用的背景",
       },
       slot: {},
       variables: {
         "border-color": "设置表格的边框颜色",
         "table-cell-height": "定义表格单元格的高度",
         "table-background-row-hover":
-          "Defines the background used for hovered and keyboard-active rows",
+          "定义 hover 和 keyboard-active 行使用的背景",
       },
     },
     "table-column": {
@@ -1604,12 +1595,9 @@ export default {
         "force-show": "强制显示提示框的布尔值",
         "force-coordinate": "允许手动控制提示框的坐标",
         "z-index": "覆盖提示框可见时使用的共享自动 z-index",
-        width:
-          "Overrides the tooltip content width. Numbers are treated as pixel values",
-        "max-width":
-          "Overrides the tooltip content max width. Numbers are treated as pixel values",
-        height:
-          "Overrides the tooltip content height. Numbers are treated as pixel values",
+        width: "覆盖 tooltip 内容宽度。数字会按像素处理",
+        "max-width": "覆盖 tooltip 内容最大宽度。数字会按像素处理",
+        height: "覆盖 tooltip 内容高度。数字会按像素处理",
       },
       slot: {},
       variables: {
@@ -1688,7 +1676,7 @@ export default {
         padding: "Sets the callout inner spacing",
         "border-radius": "Sets the callout border radius",
         "accent-width": "Sets the width of the accent strip",
-        "title-gap": "Sets the spacing between title and content",
+        "title-gap": "设置 title 与 content 之间的间距",
         "title-font-size": "Sets the title font size",
         "content-font-size": "Sets the content font size",
       },
@@ -1741,10 +1729,12 @@ export default {
     },
     divider: {
       direction: {
-        subtitle: "定义分隔符的方向。Vertical dividers 会在 flex 和 grid layout 中拉伸。",
+        subtitle:
+          "定义分隔符的方向。Vertical dividers 会在 flex 和 grid layout 中拉伸。",
       },
       api: {
-        direction: "定义分隔符的方向：'horizontal' 或 'vertical'。Vertical dividers 会沿可用的 cross-axis 尺寸拉伸。",
+        direction:
+          "定义分隔符的方向：'horizontal' 或 'vertical'。Vertical dividers 会沿可用的 cross-axis 尺寸拉伸。",
       },
       slot: {},
       variables: {},
@@ -1853,9 +1843,8 @@ export default {
       api: {
         "model-value": "控制上下文菜单的打开状态",
         trigger:
-          "Defines how the menu opens: right click, left click, both, touch long press, or manual exposed calls",
-        options:
-          "Menu options rendered as text, object options, or custom components",
+          "定义菜单打开方式：右键、左键、两者、触控长按或手动 exposed 调用",
+        options: "以文本、对象选项或自定义组件渲染的菜单选项",
         placement: "定义上下文菜单相对于指针位置的放置方式",
         width: "设置上下文菜单的宽度",
         "min-width": "设置上下文菜单的最小宽度",
@@ -1885,8 +1874,8 @@ export default {
         "on-escape-keydown": "上下文菜单打开时用户按下 Escape 触发的事件",
       },
       exposes: {
-        openAt: "Opens the context menu at viewport coordinates",
-        openAtElement: "Opens the context menu anchored to an HTMLElement",
+        openAt: "在 viewport 坐标处打开 context menu",
+        openAtElement: "打开锚定到 HTMLElement 的 context menu",
         close: "Closes the context menu",
       },
     },
@@ -2090,12 +2079,9 @@ export default {
         loading: "布尔值，显示开关上的加载指示器",
         "active-value": "开关打开时的值",
         "inactive-value": "开关关闭时的值",
-        width:
-          "Overrides the switch width. Numbers are treated as pixel values",
-        offset:
-          "Overrides the thumb offset. Numbers are treated as pixel values",
-        "thumb-height":
-          "Overrides the switch thumb size. Numbers are treated as pixel values",
+        width: "覆盖 switch 宽度。数字会按像素处理",
+        offset: "覆盖 thumb 偏移。数字会按像素处理",
+        "thumb-height": "覆盖 switch thumb 尺寸。数字会按像素处理",
       },
       slot: {
         "bg-on": "插槽，用于自定义开关打开时的背景",
@@ -2360,8 +2346,7 @@ export default {
         open: "控制列表可见性的布尔值",
         "z-index":
           "定义 select 下拉列表的 z-index。未传入时使用共享的自动 z-index 栈",
-        width:
-          "Overrides the base select width. Numbers are treated as pixel values",
+        width: "覆盖基础 select 宽度。数字会按像素处理",
         virtual: "为大量选项列表启用虚拟渲染",
         "virtual-item-height": "设置单个虚拟选项的预期高度",
         "virtual-max-height": "设置虚拟选项列表的最大高度",
@@ -2383,10 +2368,10 @@ export default {
     "select-option": {
       api: {
         label: "定义显示在下拉列表中的选项标签",
-        thickness: "Sets the thickness preset of the select option",
+        thickness: "设置 select option 的 thickness 预设",
         disabled: "布尔值，指示选项是否禁用，无法选择",
         "hover-background": "Overrides the option hover background",
-        "hover-color": "Overrides the option hover text and icon color",
+        "hover-color": "覆盖 option hover 时的文本和图标颜色",
       },
       slot: {
         default: "用于自定义此选项显示内容的插槽",
@@ -2416,11 +2401,10 @@ export default {
         min: "滑块的最小值",
         step: "用于增加或减少值的步长",
         "show-tooltip": "布尔值，控制提示框的可见性",
-        "thumb-width": "Overrides the slider thumb width in pixels",
-        "slider-height":
-          "Overrides the slider hit area height. Numbers are treated as pixel values",
+        "thumb-width": "覆盖 slider thumb 的像素宽度",
+        "slider-height": "覆盖 slider hit area 高度。数字会按像素处理",
         "value-fixed-container-height":
-          "Overrides the visual track container height. Numbers are treated as pixel values",
+          "覆盖 visual track container 高度。数字会按像素处理",
       },
       slot: {},
       variables: {
@@ -2452,10 +2436,9 @@ export default {
         "text-separator": "范围选择模式中用于分隔开始和结束日期的文本",
         "z-index":
           "定义日期选择下拉层的 z-index。未传入时使用共享的自动 z-index 栈",
-        width:
-          "Overrides the date picker width. Numbers are treated as pixel values",
+        width: "覆盖 date picker 宽度。数字会按像素处理",
         "calendar-cell-height":
-          "Overrides the calendar date cell height. Numbers are treated as pixel values",
+          "覆盖 calendar date cell 高度。数字会按像素处理",
       },
       slot: {},
       variables: {
@@ -2495,8 +2478,7 @@ export default {
         "max-time": "最大可选时间",
         clearable: "选择值后显示清除按钮",
         "z-index": "下拉层级 z-index",
-        width:
-          "Overrides the time picker width. Numbers are treated as pixel values",
+        width: "覆盖 time picker 宽度。数字会按像素处理",
       },
       variables: {
         width: "Defines the width of the time picker",

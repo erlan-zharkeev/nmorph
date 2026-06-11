@@ -12,13 +12,12 @@ const time = ref("14:45:20");
       show-seconds
       :minute-step="15"
       :second-step="10"
-      width="180px"
     />
   </div>
 </template>
 
 <style lang="scss">
 .time-picker-seconds-overview {
-  min-height: 280px;
+  display: inline-flex;
 }
 </style>

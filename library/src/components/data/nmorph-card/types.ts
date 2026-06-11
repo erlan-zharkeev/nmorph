@@ -9,6 +9,7 @@ export interface INmorphCardProps {
   radius?: number | string;
   contentPadding?: number | string;
   contentClass?: string;
+  paper?: number;
   fill?: boolean;
   tag?: string;
 }

@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<INmorphImageProps>(), {
   loadingText: '',
   loadFailedText: '',
   srcSet: '',
-  frameBorder: 4,
+  frameBorder: 2.67,
 });
 
 const computedLoadFailedText = computed(() => (props.loadFailedText ? props.loadFailedText : t('loadFailedText')));

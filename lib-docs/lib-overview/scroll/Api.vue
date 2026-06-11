@@ -17,6 +17,11 @@ const attributesData = [
     default: "none",
   },
   {
+    name: "gap",
+    type: "Number | String",
+    default: "undefined",
+  },
+  {
     name: "model-value",
     type: "{ x: Number, y: Number }",
     default: "{ x: 0, y: 0 }",
@@ -86,7 +91,7 @@ const exposes = [
     name: "scrollDOMContainer",
     type: `${docsLink(
       "HTMLElement",
-      "https://developer.mozilla.org/ru/docs/Web/API/HTMLElement"
+      "https://developer.mozilla.org/ru/docs/Web/API/HTMLElement",
     )} | null`,
   },
   {
@@ -108,7 +113,7 @@ const events = [
     name: "on-scroll",
     type: docsLink(
       "Event",
-      "https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event"
+      "https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event",
     ),
   },
 ];
@@ -116,7 +121,14 @@ const events = [
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphScroll" name="scroll" :attributes="attributesData" :slots="slotData" :variables="variables"
-      :exposes="exposes" :events="events" />
+    <api-table
+      title="NmorphScroll"
+      name="scroll"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+      :exposes="exposes"
+      :events="events"
+    />
   </div>
 </template>

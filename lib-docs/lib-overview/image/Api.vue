@@ -33,9 +33,14 @@ const attributesData: IAttributesTableData[] = [
     name: "fit",
     type: docsLink(
       "Object-fit",
-      "https://developer.mozilla.org/ru/docs/Web/CSS/object-fit"
+      "https://developer.mozilla.org/ru/docs/Web/CSS/object-fit",
     ),
     default: "cover",
+  },
+  {
+    name: "frame-border",
+    type: "Number",
+    default: "2.67",
   },
   {
     name: "alt",
@@ -62,14 +67,14 @@ const events = [
     name: "error",
     type: docsLink(
       "Event",
-      "https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event"
+      "https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event",
     ),
   },
   {
     name: "load",
     type: docsLink(
       "Event",
-      "https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event"
+      "https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event",
     ),
   },
 ];
@@ -78,7 +83,14 @@ const translates = [{ name: "loadFailedText" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphImage" name="image" :attributes="attributesData" :slots="slotData" :variables="variables"
-      :events="events" :translates="translates" />
+    <api-table
+      title="NmorphImage"
+      name="image"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+      :events="events"
+      :translates="translates"
+    />
   </div>
 </template>

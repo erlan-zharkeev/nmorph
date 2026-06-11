@@ -58,6 +58,16 @@ const attributesData: IAttributesTableData[] = [
     default: "-",
   },
   {
+    name: "teleport-to",
+    type: "String | HTMLElement",
+    default: "body",
+  },
+  {
+    name: "disabled-teleport",
+    type: "Boolean",
+    default: "true",
+  },
+  {
     name: "width",
     type: "Width",
     default: "undefined",
@@ -85,7 +95,7 @@ const exposes = [
     name: "tooltipBody",
     type: `${docsLink(
       "HTMLElement",
-      "https://developer.mozilla.org/ru/docs/Web/API/HTMLElement"
+      "https://developer.mozilla.org/ru/docs/Web/API/HTMLElement",
     )} | null`,
   },
   { name: "open", type: "() => void" },
@@ -96,7 +106,13 @@ const exposes = [
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphTooltip" name="tooltip" :attributes="attributesData" :slots="slotData"
-      :variables="variables" :exposes="exposes" />
+    <api-table
+      title="NmorphTooltip"
+      name="tooltip"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+      :exposes="exposes"
+    />
   </div>
 </template>

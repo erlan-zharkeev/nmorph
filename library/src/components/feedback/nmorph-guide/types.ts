@@ -31,6 +31,8 @@ export interface INmorphGuideProps {
   finishText?: string;
   closeText?: string;
   zIndex?: number;
+  teleportTo?: string | HTMLElement;
+  disabledTeleport?: boolean;
   width?: number | string;
   maxWidth?: number | string;
 }
@@ -86,6 +88,8 @@ export interface INmorphGuideContext {
   finishText: ComputedRef<string>;
   closeText: ComputedRef<string>;
   zIndex: ComputedRef<number | undefined>;
+  teleportTo: ComputedRef<string | HTMLElement>;
+  disabledTeleport: ComputedRef<boolean>;
   width: ComputedRef<number | string | undefined>;
   maxWidth: ComputedRef<number | string | undefined>;
   registerStep: (step: INmorphGuideStepItem) => void;

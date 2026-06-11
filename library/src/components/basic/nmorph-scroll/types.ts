@@ -27,6 +27,7 @@ export type NmorphScrollBehaviorType = NmorphScrollBehavior;
 export interface INmorphScrollProps {
   height?: string;
   maxHeight?: string;
+  gap?: number | string;
   modelValue?: NmorphCoordsType;
   scrollYProp?: NmorphScrollOverflowType;
   scrollXProp?: NmorphScrollOverflowType;

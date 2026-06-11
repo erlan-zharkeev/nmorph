@@ -13,7 +13,7 @@ import { NmorphDivider, NmorphCard } from "@nmorph/nmorph-ui-kit";
               v-for="(_, idx) in Array.from({ length: 4 })"
               :key="idx"
             >
-              <NmorphCard>Lorem ipsum</NmorphCard>
+              <NmorphCard :paper="3">Lorem ipsum</NmorphCard>
             </div>
           </div>
           <NmorphDivider />
@@ -23,7 +23,7 @@ import { NmorphDivider, NmorphCard } from "@nmorph/nmorph-ui-kit";
               v-for="(_, idx) in Array.from({ length: 4 })"
               :key="idx"
             >
-              <NmorphCard>Lorem ipsum</NmorphCard>
+              <NmorphCard :paper="3">Lorem ipsum</NmorphCard>
             </div>
           </div>
         </div>
@@ -34,7 +34,7 @@ import { NmorphDivider, NmorphCard } from "@nmorph/nmorph-ui-kit";
               v-for="(_, idx) in Array.from({ length: 4 })"
               :key="idx"
             >
-              <NmorphCard>Lorem ipsum</NmorphCard>
+              <NmorphCard :paper="3">Lorem ipsum</NmorphCard>
             </div>
           </div>
           <NmorphDivider direction="vertical" />
@@ -44,7 +44,7 @@ import { NmorphDivider, NmorphCard } from "@nmorph/nmorph-ui-kit";
               v-for="(_, idx) in Array.from({ length: 4 })"
               :key="idx"
             >
-              <NmorphCard>Lorem ipsum</NmorphCard>
+              <NmorphCard :paper="3">Lorem ipsum</NmorphCard>
             </div>
           </div>
         </div>

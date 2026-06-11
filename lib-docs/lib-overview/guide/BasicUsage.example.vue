@@ -38,7 +38,7 @@ const steps = [
           </NmorphButton>
         </NmorphGuideStep>
         <NmorphGuideStep name="review">
-          <NmorphCard class="guide-basic-usage__card">
+          <NmorphCard class="guide-basic-usage__card" :paper="3">
             Review queue
           </NmorphCard>
         </NmorphGuideStep>

@@ -4,7 +4,14 @@ import { computed, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { createCssSizeVariables, useModifiers } from '@/utils';
-import { NmorphDropdown, NmorphIcon, NmorphIconCircleClose, NmorphIconClock } from '@/components';
+import {
+  NmorphButton,
+  NmorphDropdown,
+  NmorphIcon,
+  NmorphIconCircleClose,
+  NmorphIconClock,
+  NmorphScroll,
+} from '@/components';
 import { useFocusableInput } from '@/hooks/use-focusable-input';
 import { useFormItemInput, useFormItemModel } from '../nmorph-form/use-form-item-input';
 import type {
@@ -159,12 +166,6 @@ const modifiers = computed(() =>
   })
 );
 
-const optionHeightModifiers = computed(() =>
-  useModifiers({
-    nmorph: [NmorphComponentThickness[props.thickness]],
-  })
-);
-
 const styles = computed<CSSProperties>(() =>
   createCssSizeVariables({
     '--nmorph-private-time-picker-width': props.width,
@@ -234,55 +235,52 @@ defineExpose({ inputDOMRef });
         :class="{ 'nmorph-time-picker__panel--with-seconds': props.showSeconds }"
       >
         <div class="nmorph-time-picker__column" role="listbox" aria-label="Hours">
-          <button
-            v-for="option in hourOptions"
-            :key="option.value"
-            type="button"
-            class="nmorph-time-picker__option"
-            :class="[
-              optionHeightModifiers,
-              { 'nmorph-time-picker__option--active': option.value === pickerValue.hour },
-            ]"
-            :disabled="option.disabled"
-            @click="selectUnit('hour', option.value)"
-          >
-            {{ option.label }}
-          </button>
+          <NmorphScroll height="210px" :gap="6" scroll-x-prop="hidden" css-scroll-behavior="auto">
+            <NmorphButton
+              v-for="option in hourOptions"
+              :key="option.value"
+              class="nmorph-time-picker__option"
+              design="plain"
+              :text="option.label"
+              :thickness="props.thickness"
+              :active="option.value === pickerValue.hour"
+              :disabled="option.disabled"
+              @click="selectUnit('hour', option.value)"
+            />
+          </NmorphScroll>
         </div>
         <div class="nmorph-time-picker__separator">:</div>
         <div class="nmorph-time-picker__column" role="listbox" aria-label="Minutes">
-          <button
-            v-for="option in minuteOptions"
-            :key="option.value"
-            type="button"
-            class="nmorph-time-picker__option"
-            :class="[
-              optionHeightModifiers,
-              { 'nmorph-time-picker__option--active': option.value === pickerValue.minute },
-            ]"
-            :disabled="option.disabled"
-            @click="selectUnit('minute', option.value)"
-          >
-            {{ option.label }}
-          </button>
+          <NmorphScroll height="210px" :gap="6" scroll-x-prop="hidden" css-scroll-behavior="auto">
+            <NmorphButton
+              v-for="option in minuteOptions"
+              :key="option.value"
+              class="nmorph-time-picker__option"
+              design="plain"
+              :text="option.label"
+              :thickness="props.thickness"
+              :active="option.value === pickerValue.minute"
+              :disabled="option.disabled"
+              @click="selectUnit('minute', option.value)"
+            />
+          </NmorphScroll>
         </div>
         <template v-if="props.showSeconds">
           <div class="nmorph-time-picker__separator">:</div>
           <div class="nmorph-time-picker__column" role="listbox" aria-label="Seconds">
-            <button
-              v-for="option in secondOptions"
-              :key="option.value"
-              type="button"
-              class="nmorph-time-picker__option"
-              :class="[
-                optionHeightModifiers,
-                { 'nmorph-time-picker__option--active': option.value === pickerValue.second },
-              ]"
-              :disabled="option.disabled"
-              @click="selectUnit('second', option.value)"
-            >
-              {{ option.label }}
-            </button>
+            <NmorphScroll height="210px" :gap="6" scroll-x-prop="hidden" css-scroll-behavior="auto">
+              <NmorphButton
+                v-for="option in secondOptions"
+                :key="option.value"
+                class="nmorph-time-picker__option"
+                design="plain"
+                :text="option.label"
+                :thickness="props.thickness"
+                :active="option.value === pickerValue.second"
+                :disabled="option.disabled"
+                @click="selectUnit('second', option.value)"
+              />
+            </NmorphScroll>
           </div>
         </template>
       </div>
@@ -292,15 +290,21 @@ defineExpose({ inputDOMRef });
 
 <style lang="scss">
 .nmorph-time-picker {
-  --nmorph-private-time-picker-width: 160px;
+  --nmorph-private-time-picker-width: fit-content;
 
   position: relative;
+  display: inline-block;
   width: var(--nmorph-private-time-picker-width);
+  min-width: 0;
   height: var(--nmorph-private-control-height);
 
   .nmorph-time-picker__input {
-    display: flex;
+    display: inline-flex;
+    gap: 8px;
     align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
     height: 100%;
     padding: 0 var(--default-indentation-input);
     overflow: hidden;
@@ -322,11 +326,11 @@ defineExpose({ inputDOMRef });
 
   .nmorph-time-picker__clock-icon {
     flex: 0 0 auto;
-    margin-right: 6px;
   }
 
   .nmorph-time-picker__selected-value {
-    flex: 1;
+    flex: 0 1 auto;
+    min-width: 0;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -345,85 +349,6 @@ defineExpose({ inputDOMRef });
     background: transparent;
     border: 0;
     cursor: pointer;
-  }
-
-  .nmorph-time-picker__panel {
-    display: grid;
-    grid-template-columns: minmax(64px, 1fr) 8px minmax(64px, 1fr);
-    gap: 8px;
-    align-items: start;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 10px;
-    color: var(--nmorph-text-color);
-  }
-
-  .nmorph-time-picker__panel--with-seconds {
-    grid-template-columns: minmax(64px, 1fr) 8px minmax(64px, 1fr) 8px minmax(64px, 1fr);
-  }
-
-  .nmorph-time-picker__column {
-    display: grid;
-    grid-auto-flow: row;
-    grid-auto-rows: var(--nmorph-private-control-height);
-    grid-template-columns: minmax(0, 1fr);
-    gap: 6px;
-    align-content: start;
-    max-height: 210px;
-    padding: 4px;
-    overflow: hidden auto;
-    background: color-mix(in srgb, var(--nmorph-text-color) 4%, transparent);
-    border-radius: var(--default-border-radius);
-    scrollbar-gutter: stable;
-  }
-
-  .nmorph-time-picker__separator {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-width: 8px;
-    padding-top: calc((var(--nmorph-private-control-height) - 1em) / 2 + 2px);
-    color: var(--nmorph-semi-contrast-text-color);
-    font-weight: var(--font-weight-bold);
-    line-height: 1;
-  }
-
-  .nmorph-time-picker__option {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    width: 100%;
-    min-width: 0;
-    min-height: var(--nmorph-private-control-height);
-    margin: 0;
-    padding: 0 8px;
-    color: var(--nmorph-text-color);
-    font: inherit;
-    line-height: 1;
-    background: var(--nmorph-main-color);
-    border: 0;
-    border-radius: 4px;
-    box-shadow: var(--nmorph-shadow-outset);
-    cursor: pointer;
-    appearance: none;
-  }
-
-  .nmorph-time-picker__option:hover:not(:disabled),
-  .nmorph-time-picker__option--active {
-    color: var(--nmorph-focus-text-color);
-    background: var(--nmorph-accent-color);
-    box-shadow: var(--nmorph-shadow-inset);
-  }
-
-  .nmorph-time-picker__option:focus-visible {
-    outline: 2px solid var(--nmorph-accent-color);
-    outline-offset: 1px;
-  }
-
-  .nmorph-time-picker__option:disabled {
-    cursor: not-allowed;
-    opacity: 0.35;
   }
 
   &.nmorph-time-picker--open {
@@ -449,6 +374,80 @@ defineExpose({ inputDOMRef });
     .nmorph-time-picker__input {
       pointer-events: none;
     }
+  }
+}
+
+.nmorph-time-picker__panel {
+  display: grid;
+  grid-template-columns: minmax(64px, 1fr) 8px minmax(64px, 1fr);
+  gap: 8px;
+  align-items: start;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  color: var(--nmorph-text-color);
+}
+
+.nmorph-time-picker__panel--with-seconds {
+  grid-template-columns: minmax(64px, 1fr) 8px minmax(64px, 1fr) 8px minmax(64px, 1fr);
+}
+
+.nmorph-time-picker__column {
+  min-width: 0;
+  padding: 4px;
+  background: color-mix(in srgb, var(--nmorph-text-color) 4%, transparent);
+  border-radius: var(--default-border-radius);
+}
+
+.nmorph-time-picker__column .nmorph-scroll {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.nmorph-time-picker__column .nmorph-scroll__viewport {
+  padding: 0 2px 0 0;
+}
+
+.nmorph-time-picker__separator {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 8px;
+  padding-top: calc((var(--nmorph-private-control-height) - 1em) / 2 + 2px);
+  color: var(--nmorph-semi-contrast-text-color);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.nmorph-time-picker__option {
+  width: 100%;
+  min-width: 0;
+
+  .nmorph-button__content {
+    width: 100%;
+    min-width: 0;
+    padding-right: var(--indentation-02);
+    padding-left: var(--indentation-02);
+    background: transparent;
+  }
+
+  &.nmorph-button--plain .nmorph-button__content:not(:disabled, [loading='true']):hover {
+    background: color-mix(in srgb, var(--nmorph-accent-color) 14%, transparent);
+  }
+
+  &.nmorph-button.nmorph-button--active .nmorph-button__content {
+    color: var(--nmorph-focus-text-color);
+    background: var(--nmorph-accent-color);
+    border-color: var(--nmorph-accent-color);
+    box-shadow: none;
+  }
+
+  &.nmorph-button.nmorph-button--active .nmorph-button__content span,
+  &.nmorph-button.nmorph-button--active .nmorph-button__content .nmorph-icon {
+    color: var(--nmorph-focus-text-color);
+
+    --nmorph-private-icon-color: var(--nmorph-focus-text-color);
   }
 }
 </style>

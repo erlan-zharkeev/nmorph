@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {
   NmorphIcon,
+  NmorphCard,
   NmorphLink,
   NmorphDropdown,
   NmorphCheckbox,
-  NmorphTextInput,
   NmorphIconSearch,
   NmorphIconLogo,
   NmorphIconMenu,
@@ -30,6 +30,7 @@ const localePath = useLocalePath();
 const translateBtn = ref(null);
 const translateDropdownOpen = ref(false);
 const searchOpen = ref(false);
+const mobileNavLockClass = "docs-top-bar-mobile-nav-open";
 
 const openSearch = () => {
   searchOpen.value = true;
@@ -41,6 +42,12 @@ const closeHandler = () => {
 };
 
 const mobileNavMenu = ref(false);
+
+const setMobileNavLock = (locked: boolean) => {
+  if (!import.meta.client) return;
+
+  document.documentElement.classList.toggle(mobileNavLockClass, locked);
+};
 
 const isActive = (path: string) => {
   if (path.includes('components') && route.path.includes('elements')) return true
@@ -58,13 +65,24 @@ onMounted(() => {
   window.addEventListener("keydown", searchShortcutHandler);
 });
 
+watch(mobileNavMenu, setMobileNavLock);
+
 onUnmounted(() => {
   window.removeEventListener("keydown", searchShortcutHandler);
+  setMobileNavLock(false);
 });
 </script>
 
 <template>
-  <header class="docs-top-bar nmorph--shadow-outset">
+  <NmorphCard
+    tag="header"
+    shadow-type="not-defined"
+    :paper="3"
+    :fill="false"
+    padding="4px 20px"
+    content-class="docs-top-bar__content"
+    class="docs-top-bar"
+  >
     <div class="docs-top-bar__left">
       <div class="docs-top-bar__logo">
         <NuxtLink :to="localePath('/')">
@@ -76,26 +94,18 @@ onUnmounted(() => {
       <span class="docs-top-bar__version">v{{ libraryData.version }}</span>
     </div>
     <div class="docs-top-bar__right">
-      <div
+      <button
+        type="button"
         class="docs-top-bar__search-control"
+        :aria-label="$t('top-bar.search')"
         @click="openSearch"
-        @keydown.enter.prevent="openSearch"
-        @keydown.space.prevent="openSearch"
       >
-        <NmorphTextInput
-          class="docs-top-bar__search-input"
-          :model-value="''"
-          :placeholder="$t('top-bar.search')"
-          thickness="basic"
-          :input-attrs="{ readonly: true, 'aria-label': $t('top-bar.search') }"
-          @focus="openSearch"
-        >
-          <template #prepend-icon>
-            <NmorphIconSearch />
-          </template>
-        </NmorphTextInput>
+        <NmorphIcon class="docs-top-bar__search-icon" width="18px">
+          <NmorphIconSearch />
+        </NmorphIcon>
+        <span class="docs-top-bar__search-placeholder">{{ $t("top-bar.search") }}</span>
         <kbd>{{ $t("top-bar.search-shortcut") }}</kbd>
-      </div>
+      </button>
       <NmorphLink :href="repositoryUrl" target="blank" class="github-button">
         <GithubIcon />
       </NmorphLink>
@@ -179,7 +189,7 @@ onUnmounted(() => {
       </ul>
     </nav>
     <SearchDialog v-model:open="searchOpen" />
-  </header>
+  </NmorphCard>
 </template>
 
 <style lang="scss" scoped>
@@ -190,10 +200,10 @@ $top-bar-height: 50px;
 }
 
 .docs-top-bar {
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   flex-shrink: 0;
+  width: auto;
   height: var(--header-height);
   margin: var(--margin) var(--docs-shell-surface-margin) 0;
   padding: 4px 20px;
@@ -204,11 +214,20 @@ $top-bar-height: 50px;
       var(--nmorph-dark-shade-color),
     calc(-1 * var(--docs-layout-shadow-width)) calc(-1 * var(--docs-layout-shadow-width))
       var(--docs-layout-shadow-blur) var(--nmorph-light-shade-color);
-  z-index: 1;
+  z-index: 20;
+}
+
+.docs-top-bar :deep(.docs-top-bar__content) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
 }
 
 .docs-top-bar__translate-btn {
-  margin: 0 16px;
+  margin: 0;
 }
 
 .github-button {
@@ -256,30 +275,67 @@ $top-bar-height: 50px;
 .docs-top-bar__right {
   display: flex;
   align-items: center;
+  gap: 12px;
+  min-width: 0;
 }
 
 .docs-top-bar__search-control {
-  margin-right: 12px;
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   width: 184px;
+  height: var(--basic-component);
+  padding: 0 8px;
+  flex-shrink: 0;
+  color: var(--nmorph-placeholder-text-color);
+  font: inherit;
+  background: var(--nmorph-main-color);
+  border: 0;
+  border-radius: var(--default-border-radius);
+  box-shadow: var(--nmorph-shadow-inset);
   cursor: pointer;
 
-  :deep(.docs-top-bar__search-input input) {
-    cursor: pointer;
-    padding-right: 58px;
+  &:focus-visible {
+    color: var(--nmorph-focus-text-color);
+    background: var(--nmorph-accent-color);
+    outline: none;
+    box-shadow: var(--nmorph-shadow-outset);
+  }
+
+  &:focus-visible kbd {
+    color: var(--nmorph-focus-text-color);
+    background: color-mix(in srgb, var(--nmorph-focus-text-color) 14%, transparent);
+  }
+
+  .docs-top-bar__search-icon {
+    --nmorph-private-icon-color: currentColor;
+
+    flex: 0 0 auto;
+  }
+
+  .docs-top-bar__search-placeholder {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   kbd {
-    position: absolute;
-    top: 50%;
-    right: 8px;
-    transform: translateY(-50%);
-    padding: 2px 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    height: 22px;
+    min-width: 52px;
+    margin-left: auto;
+    padding: 0 6px;
     border: 0;
     border-radius: 4px;
     color: var(--nmorph-semi-contrast-text-color);
     font-family: inherit;
     font-size: var(--font-size-extra-small);
+    line-height: 1;
     background: color-mix(in srgb, var(--nmorph-text-color) 8%, transparent);
   }
 }
@@ -331,17 +387,22 @@ $top-bar-height: 50px;
 }
 
 .docs-top-bar__nav {
-  margin: 0 8px;
   display: flex;
+  min-width: 0;
 }
 
 .docs-top-bar__nav-list {
   display: flex;
+  align-items: center;
+  gap: 12px;
   padding-left: 0;
 
   li {
     list-style-type: none;
-    margin-right: 8px;
+  }
+
+  a {
+    white-space: nowrap;
   }
 }
 
@@ -351,20 +412,20 @@ $top-bar-height: 50px;
 
 .docs-top-bar__mobile-nav-menu {
   position: fixed;
+  inset: 0;
   opacity: 0;
-  bottom: 0;
-  z-index: 2;
-  transition: 0.2s bottom ease-in-out;
-  left: 0;
+  z-index: 1000;
   background: #0000009f;
   backdrop-filter: blur(10px);
-  width: 100%;
-  height: calc(100vh - 50px);
+  width: auto;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity ease-in-out .3s;
   pointer-events: none;
+  overscroll-behavior: contain;
+  touch-action: none;
 
   ul {
     display: flex;
@@ -384,7 +445,20 @@ $top-bar-height: 50px;
 .docs-top-bar__mobile-nav-menu--open {
   opacity: 1;
   transition: opacity ease-in-out .3s;
-  pointer-events: visible;
+  pointer-events: auto;
+}
+
+:global(html.docs-top-bar-mobile-nav-open) {
+  overflow: hidden;
+}
+
+:global(html.docs-top-bar-mobile-nav-open .docs-main-layout__scroll-container) {
+  pointer-events: none;
+}
+
+:global(html.docs-top-bar-mobile-nav-open .docs-main-layout__scroll-container .nmorph-scroll__bar) {
+  opacity: 0;
+  pointer-events: none;
 }
 
 @include max-width-query(768) {
@@ -401,15 +475,12 @@ $top-bar-height: 50px;
   }
 
   .docs-top-bar__search-control {
-    margin-right: 8px;
-    width: 34px;
+    margin-right: 0;
+    width: clamp(84px, 24vw, 152px);
+    flex: 0 1 clamp(84px, 24vw, 152px);
 
     kbd {
       display: none;
-    }
-
-    :deep(.docs-top-bar__search-input input) {
-      padding-right: 8px;
     }
   }
 

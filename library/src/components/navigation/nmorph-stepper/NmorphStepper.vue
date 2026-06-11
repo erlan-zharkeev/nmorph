@@ -285,7 +285,18 @@ defineExpose({ goTo, next, previous });
         <slot />
       </div>
     </div>
-    <slot name="indicator" v-bind="indicatorSlotProps" />
+    <div
+      v-if="$slots.indicator"
+      class="nmorph-stepper__indicator"
+      @pointerdown.stop
+      @pointermove.stop
+      @pointerup.stop
+      @pointercancel.stop
+      @pointerleave.stop
+      @wheel.stop
+    >
+      <slot name="indicator" v-bind="indicatorSlotProps" />
+    </div>
   </div>
 </template>
 
@@ -329,5 +340,9 @@ defineExpose({ goTo, next, previous });
   width: 100%;
   min-width: 100%;
   max-width: 100%;
+}
+
+.nmorph-stepper__indicator {
+  width: 100%;
 }
 </style>

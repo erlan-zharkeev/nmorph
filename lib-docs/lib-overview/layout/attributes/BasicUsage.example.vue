@@ -5,14 +5,14 @@ import { NmorphCard, NmorphLayout } from "@nmorph/nmorph-ui-kit";
 <template>
   <NmorphLayout class="layout-basic-usage-overview" gap="12px" aside-width="120px">
     <template #header>
-      <NmorphCard>Header</NmorphCard>
+      <NmorphCard :paper="3">Header</NmorphCard>
     </template>
     <template #aside>
-      <NmorphCard>Aside</NmorphCard>
+      <NmorphCard :paper="3">Aside</NmorphCard>
     </template>
-    <NmorphCard>Main content</NmorphCard>
+    <NmorphCard :paper="3">Main content</NmorphCard>
     <template #footer>
-      <NmorphCard>Footer</NmorphCard>
+      <NmorphCard :paper="3">Footer</NmorphCard>
     </template>
   </NmorphLayout>
 </template>

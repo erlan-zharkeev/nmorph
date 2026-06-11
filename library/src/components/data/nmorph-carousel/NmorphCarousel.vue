@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { generateUUID, useModifiers } from '@/utils';
 import { computed, provide, ref, watch } from 'vue';
-import { NmorphIcon, INmorphCarouselInjection, NmorphIconChevronDown } from '@/components';
+import { NmorphIcon, INmorphCarouselInjection, NmorphIconChevronLeft, NmorphIconChevronRight } from '@/components';
 import type { INmorphCarouselEmit, INmorphCarouselProps } from './types';
 
 const currentSlide = ref(0);
@@ -87,12 +87,12 @@ watch(currentSlide, () => {
     </div>
     <div class="nmorph-carousel__action-btn nmorph-carousel__prev" @click="nextSlide">
       <NmorphIcon>
-        <NmorphIconChevronDown />
+        <NmorphIconChevronRight />
       </NmorphIcon>
     </div>
     <div class="nmorph-carousel__action-btn nmorph-carousel__next" @click="prevSlide">
       <NmorphIcon>
-        <NmorphIconChevronDown />
+        <NmorphIconChevronLeft />
       </NmorphIcon>
     </div>
     <slot />
@@ -103,6 +103,8 @@ watch(currentSlide, () => {
 .nmorph-carousel {
   --nmorph-private-carousel-height: 500px;
   --nmorph-private-carousel-frame-border: 10px;
+  --nmorph-private-carousel-action-size: 36px;
+  --nmorph-private-carousel-action-offset: var(--indentation-02);
 
   position: relative;
   box-sizing: border-box;
@@ -146,7 +148,13 @@ watch(currentSlide, () => {
   .nmorph-carousel__action-btn {
     position: absolute;
     top: 50%;
-    padding: var(--indentation-03);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: var(--nmorph-private-carousel-action-size);
+    height: var(--nmorph-private-carousel-action-size);
+    padding: 0;
     background: var(--nmorph-info-color);
     border-radius: var(--default-border-radius);
     transform: translateY(-50%);
@@ -162,13 +170,11 @@ watch(currentSlide, () => {
   }
 
   .nmorph-carousel__prev {
-    right: var(--indentation-02);
-    rotate: -90deg;
+    right: var(--nmorph-private-carousel-action-offset);
   }
 
   .nmorph-carousel__next {
-    left: var(--indentation-02);
-    rotate: 90deg;
+    left: var(--nmorph-private-carousel-action-offset);
   }
 
   .nmorph-carousel__item {

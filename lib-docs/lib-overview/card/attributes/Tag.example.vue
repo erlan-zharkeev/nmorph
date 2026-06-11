@@ -4,11 +4,11 @@ import { NmorphCard } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="card-tag-overview">
-    <NmorphCard tag="article">
+    <NmorphCard tag="article" :paper="3">
       <template #header>Article</template>
       Semantic card root rendered as article.
     </NmorphCard>
-    <NmorphCard tag="section">
+    <NmorphCard tag="section" :paper="3">
       <template #header>Section</template>
       Semantic card root rendered as section.
     </NmorphCard>

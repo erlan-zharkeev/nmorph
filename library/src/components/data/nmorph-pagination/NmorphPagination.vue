@@ -8,6 +8,7 @@ const props = withDefaults(defineProps<INmorphPaginationProps>(), {
   modelValue: 1,
   elementsQuantityOnPage: 2,
   disabled: false,
+  loading: false,
   hideOnSinglePage: true,
   maxVisiblePages: 9,
   fastForwardStep: 5,
@@ -18,7 +19,7 @@ const emit = defineEmits<INmorphPaginationEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-pagination': [props.disabled && 'disabled'],
+    'nmorph-pagination': [props.disabled && 'disabled', props.loading && 'loading'],
   })
 );
 
@@ -32,6 +33,8 @@ const paginationStyle = computed(() => ({
   '--nmorph-private-pagination-height': thicknessHeightMap[props.thickness],
 }));
 
+const interactionDisabled = computed(() => props.disabled || props.loading);
+
 const prevClick = () => {
   selectedPage.value = String(Number(selectedPage.value) - 1);
 };
@@ -41,43 +44,90 @@ const nextClick = () => {
 
 const selectedPage = ref(String(props.modelValue));
 
-const pages = computed(() => {
-  const preResult = props.totalElementsQuantity / props.elementsQuantityOnPage + 1;
-  const errorRate = preResult % 1 === 0 ? -1 : 0;
-  const result = Array.from({ length: preResult + errorRate }, (_, index) => {
-    return { value: String(index + 1), label: String(index + 1) };
-  });
-  return result;
+type PaginationPage = { value: string; label: string };
+
+const totalPages = computed(() => {
+  const totalElementsQuantity = Number(props.totalElementsQuantity);
+  const elementsQuantityOnPage = Number(props.elementsQuantityOnPage);
+
+  if (!Number.isFinite(totalElementsQuantity) || !Number.isFinite(elementsQuantityOnPage)) return 0;
+  if (totalElementsQuantity <= 0 || elementsQuantityOnPage <= 0) return 0;
+
+  return Math.ceil(totalElementsQuantity / elementsQuantityOnPage);
 });
 
-const show = computed(() => props.hideOnSinglePage || props.totalElementsQuantity / props.elementsQuantityOnPage > 1);
+const pages = computed<PaginationPage[]>(() =>
+  Array.from({ length: totalPages.value }, (_, index) => {
+    return { value: String(index + 1), label: String(index + 1) };
+  })
+);
+
+const retainedPages = ref<PaginationPage[]>([]);
+const fallbackPages = computed<PaginationPage[]>(() => {
+  const fallbackPage = String(Math.max(1, Number(selectedPage.value) || 1));
+  return [{ value: fallbackPage, label: fallbackPage }];
+});
+const effectivePages = computed(() => {
+  if (props.loading && retainedPages.value.length) return retainedPages.value;
+  return pages.value.length ? pages.value : fallbackPages.value;
+});
+
+const show = computed(() => props.loading || !props.hideOnSinglePage || totalPages.value > 1);
 
 watch(selectedPage, (newValue) => {
   emit('update:model-value', Number(newValue));
 });
 
+watch(
+  [pages, () => props.loading] as const,
+  ([newPages, loading]) => {
+    if (newPages.length || !loading) retainedPages.value = newPages;
+  },
+  { immediate: true }
+);
+
+watch(
+  () => props.modelValue,
+  (modelValue) => {
+    selectedPage.value = String(modelValue);
+  }
+);
+
+watch([totalPages, () => props.loading] as const, ([pagesCount, loading]) => {
+  if (loading || pagesCount <= 0) return;
+  if (Number(selectedPage.value) > pagesCount) selectedPage.value = String(pagesCount);
+});
+
 const blockPrevButton = computed(() => Number(selectedPage.value) === 1);
-const blockNextButton = computed(() => pages.value.length === Number(selectedPage.value));
+const blockNextButton = computed(() => Number(selectedPage.value) >= effectivePages.value.length);
 
 const visiblePages = computed(() => {
-  const total = pages.value.length;
+  const total = effectivePages.value.length;
   const currentPage = Number(selectedPage.value);
   const maxVisiblePages = props.maxVisiblePages;
   if (total <= maxVisiblePages) {
-    return pages.value;
+    return effectivePages.value;
   }
   const half = Math.floor(maxVisiblePages / 2);
   if (currentPage <= half) {
-    return [...pages.value.slice(0, maxVisiblePages - 2), { value: 'next', label: '...' }, pages.value[total - 1]];
+    return [
+      ...effectivePages.value.slice(0, maxVisiblePages - 2),
+      { value: 'next', label: '...' },
+      effectivePages.value[total - 1],
+    ];
   } else if (currentPage >= total - half) {
-    return [pages.value[0], { value: 'prev', label: '...' }, ...pages.value.slice(total - (maxVisiblePages - 2))];
+    return [
+      effectivePages.value[0],
+      { value: 'prev', label: '...' },
+      ...effectivePages.value.slice(total - (maxVisiblePages - 2)),
+    ];
   } else {
     return [
-      pages.value[0],
+      effectivePages.value[0],
       { value: 'prev', label: '...' },
-      ...pages.value.slice(currentPage - half, currentPage + half - 1),
+      ...effectivePages.value.slice(currentPage - half, currentPage + half - 1),
       { value: 'next', label: '...' },
-      pages.value[total - 1],
+      effectivePages.value[total - 1],
     ];
   }
 });
@@ -86,17 +136,17 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
   const selected = Number(selectedPage.value);
   let result = direction === 'prev' ? selected - props.fastForwardStep : selected + props.fastForwardStep;
   if (result <= 0) result = 1;
-  if (result >= pages.value.length) result = pages.value.length;
+  if (result >= effectivePages.value.length) result = effectivePages.value.length;
   selectedPage.value = String(result);
 };
 </script>
 
 <template>
-  <div v-if="show" :class="modifiers" :style="paginationStyle">
+  <div v-if="show" :class="modifiers" :style="paginationStyle" :aria-busy="props.loading || undefined">
     <NmorphButton
       class="nmorph-pagination__btn nmorph-pagination__prev-btn"
       :thickness="props.thickness"
-      :disabled="blockPrevButton || props.disabled"
+      :disabled="blockPrevButton || interactionDisabled"
       @click="prevClick"
     >
       <NmorphIcon class="nmorph-pagination__prev-icon">
@@ -107,7 +157,7 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
       v-model="selectedPage"
       class="nmorph-pagination__page-group"
       :thickness="props.thickness"
-      :disabled="props.disabled"
+      :disabled="interactionDisabled"
     >
       <div v-for="page in visiblePages" :key="page.value" class="nmorph-pagination__page-btn-wrapper">
         <NmorphButton
@@ -115,7 +165,7 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
           :class="`nmorph-pagination__page-btn nmorph-pagination__${page.value}`"
           :text="page.label"
           :thickness="props.thickness"
-          :disabled="props.disabled"
+          :disabled="interactionDisabled"
           @click="bigStepUpdate(page.value)"
         />
         <NmorphRadio
@@ -124,14 +174,14 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
           :label="page.label"
           class="nmorph-pagination__page-btn"
           :thickness="props.thickness"
-          :disabled="props.disabled"
+          :disabled="interactionDisabled"
         />
       </div>
     </NmorphRadioGroup>
     <NmorphButton
       class="nmorph-pagination__btn nmorph-pagination__next-btn"
       :thickness="props.thickness"
-      :disabled="blockNextButton || props.disabled"
+      :disabled="blockNextButton || interactionDisabled"
       @click="nextClick"
     >
       <NmorphIcon class="nmorph-pagination__next-icon">

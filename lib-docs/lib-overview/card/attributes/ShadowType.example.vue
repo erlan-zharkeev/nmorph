@@ -7,7 +7,7 @@ import { Summer } from "~/assets/images";
   <div class="card-shadow-type-overview">
     <ClientOnly>
       <div class="card-shadow-type-overview__element">
-        <NmorphCard>
+        <NmorphCard :paper="3">
           <template #header>Lorem ipsum</template>
           <template #default>
             <p>
@@ -24,7 +24,7 @@ import { Summer } from "~/assets/images";
         </NmorphCard>
       </div>
       <div class="card-shadow-type-overview__element">
-        <NmorphCard shadow-type="combined">
+        <NmorphCard shadow-type="combined" :paper="3">
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque
             culpa assumenda, earum repellendus blanditiis explicabo laborum
@@ -34,7 +34,7 @@ import { Summer } from "~/assets/images";
         </NmorphCard>
       </div>
       <div class="card-shadow-type-overview__element">
-        <NmorphCard shadow-type="inset">
+        <NmorphCard shadow-type="inset" :paper="3">
           <template #header>Summer</template>
           <template #default>
             <NmorphImage :src="Summer" />

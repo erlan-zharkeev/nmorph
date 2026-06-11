@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { NmorphButton, NmorphCard, NmorphStepper } from "@nmorph/nmorph-ui-kit";
+import {
+  NmorphButton,
+  NmorphCard,
+  NmorphIconChevronLeft,
+  NmorphIconChevronRight,
+  NmorphStepper,
+} from "@nmorph/nmorph-ui-kit";
 
 const activeStep = ref(0);
 const slides = [
@@ -17,30 +23,52 @@ const slides = [
     :count="slides.length"
     loop
   >
-    <NmorphCard
+    <div
       v-for="slide in slides"
       :key="slide.title"
       class="stepper-basic-usage__slide"
     >
-      <strong>{{ slide.title }}</strong>
-      <span>{{ slide.text }}</span>
-    </NmorphCard>
+      <NmorphCard class="stepper-basic-usage__card" shadow-type="outset" :paper="3">
+        <div class="stepper-basic-usage__card-content">
+          <strong>{{ slide.title }}</strong>
+          <span>{{ slide.text }}</span>
+        </div>
+      </NmorphCard>
+    </div>
     <template #indicator="{ index, count, goTo, next, previous }">
       <div class="stepper-basic-usage__indicator">
-        <NmorphButton design="plain" thickness="thin" @click="previous">
-          Back
+        <NmorphButton
+          class="stepper-basic-usage__arrow"
+          design="plain"
+          thickness="thin"
+          title="Previous step"
+          @click="previous"
+        >
+          <template #icon-only>
+            <NmorphIconChevronLeft />
+          </template>
         </NmorphButton>
         <button
           v-for="stepIndex in count"
           :key="stepIndex"
           type="button"
           class="stepper-basic-usage__dot"
-          :class="{ 'stepper-basic-usage__dot--active': index === stepIndex - 1 }"
+          :class="{
+            'stepper-basic-usage__dot--active': index === stepIndex - 1,
+          }"
           :aria-label="`Go to step ${stepIndex}`"
           @click="goTo(stepIndex - 1)"
         />
-        <NmorphButton design="plain" thickness="thin" @click="next">
-          Next
+        <NmorphButton
+          class="stepper-basic-usage__arrow"
+          design="plain"
+          thickness="thin"
+          title="Next step"
+          @click="next"
+        >
+          <template #icon-only>
+            <NmorphIconChevronRight />
+          </template>
         </NmorphButton>
       </div>
     </template>
@@ -53,10 +81,20 @@ const slides = [
 }
 
 .stepper-basic-usage__slide {
+  box-sizing: border-box;
+  min-height: 168px;
+  padding: 16px;
+}
+
+.stepper-basic-usage__card {
   min-height: 136px;
+}
+
+.stepper-basic-usage__card-content {
   display: grid;
   align-content: center;
   gap: 8px;
+  min-height: 104px;
 }
 
 .stepper-basic-usage__indicator {
@@ -65,6 +103,10 @@ const slides = [
   align-items: center;
   justify-content: center;
   margin-top: 12px;
+}
+
+.stepper-basic-usage__arrow {
+  flex: 0 0 auto;
 }
 
 .stepper-basic-usage__dot {

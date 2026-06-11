@@ -1,9 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="56" d="M320 704V320a64 64 0 0 1 128 0v200"/>
-  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="56" d="M448 520V192a64 64 0 0 1 128 0v288"/>
-  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="56" d="M576 480V288a64 64 0 0 1 128 0v224"/>
-  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="56" d="M704 512V384a64 64 0 0 1 128 0v280c0 159.04-128.96 288-288 288h-88c-84.544 0-164.8-37.12-219.52-101.504L106.24 697.344a64 64 0 0 1 97.52-82.88L320 751.104"/>
-  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="56" d="M448 520v88"/>
-  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="56" d="M576 480v128"/>
-  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="56" d="M704 512v112"/>
+  <path
+    fill="currentColor"
+    d="M360 140c0-36.45 29.55-66 66-66s66 29.55 66 66v420h32V86c0-36.45 29.55-66 66-66s66 29.55 66 66v474h32V160c0-36.45 29.55-66 66-66s66 29.55 66 66v424h30V256c0-36.45 29.55-66 66-66s66 29.55 66 66v444c0 167.9-136.1 304-304 304h-82c-98.69 0-190.2-51.5-241.34-135.92L109.73 634.88a70 70 0 0 1 120.06-71.76L360 780V140Z"
+  />
 </svg>

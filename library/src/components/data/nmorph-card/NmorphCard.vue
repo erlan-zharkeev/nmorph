@@ -14,6 +14,7 @@ const props = withDefaults(defineProps<INmorphCardProps>(), {
   radius: undefined,
   contentPadding: undefined,
   contentClass: '',
+  paper: 0,
   fill: true,
   tag: 'div',
 });
@@ -32,6 +33,8 @@ const styles = computed<CSSProperties>(() => {
   const cardPadding = props.padding !== undefined ? toCssSize(props.padding) : toCssSize(props.cardPadding);
   const cardRadius = toCssSize(props.radius);
   const contentPadding = toCssSize(props.contentPadding);
+  const paper = Math.max(0, Number(props.paper) || 0);
+  const paperOpacity = Math.min(paper * 0.08, 0.48);
 
   return {
     ...(props.shadowType === 'combined' && {
@@ -40,6 +43,7 @@ const styles = computed<CSSProperties>(() => {
     ...(cardPadding !== undefined && { '--nmorph-private-card-padding': cardPadding, padding: cardPadding }),
     ...(cardRadius !== undefined && { '--nmorph-private-card-radius': cardRadius }),
     ...(contentPadding !== undefined && { '--nmorph-private-card-content-padding': contentPadding }),
+    ...(paperOpacity > 0 && { '--nmorph-private-card-paper-opacity': String(paperOpacity) }),
   };
 });
 </script>
@@ -64,8 +68,13 @@ const styles = computed<CSSProperties>(() => {
   --nmorph-private-card-background: var(--nmorph-main-color);
   --nmorph-private-card-border: none;
   --nmorph-private-card-shadow: none;
+  --nmorph-private-card-paper-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.72' filter='url(%23n)'/%3E%3C/svg%3E");
+  --nmorph-private-card-paper-opacity: 0;
+  --nmorph-private-card-paper-shadow-color: color-mix(in srgb, var(--nmorph-dark-shade-color) 82%, transparent);
+  --nmorph-private-card-paper-light-color: color-mix(in srgb, var(--nmorph-light-shade-color) 76%, transparent);
 
   position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -77,8 +86,32 @@ const styles = computed<CSSProperties>(() => {
   border-radius: var(--nmorph-private-card-radius, var(--default-border-radius));
   box-shadow: var(--nmorph-private-card-shadow);
 
+  &::before {
+    position: absolute;
+    z-index: 0;
+    background-image:
+      var(--nmorph-private-card-paper-noise),
+      radial-gradient(circle at 1px 1px, var(--nmorph-private-card-paper-shadow-color) 0 1px, transparent 1.7px),
+      radial-gradient(circle at 6px 4px, var(--nmorph-private-card-paper-light-color) 0 1px, transparent 1.8px);
+    background-size:
+      72px 72px,
+      11px 11px,
+      16px 16px;
+    border-radius: inherit;
+    opacity: var(--nmorph-private-card-paper-opacity);
+    pointer-events: none;
+    content: '';
+    inset: 0;
+  }
+
   &.nmorph-card--fill {
     width: 100%;
+  }
+
+  .nmorph-card__header,
+  .nmorph-card__content {
+    position: relative;
+    z-index: 1;
   }
 
   .nmorph-card__content {
@@ -93,6 +126,8 @@ const styles = computed<CSSProperties>(() => {
   }
 
   .nmorph-card__footer {
+    position: relative;
+    z-index: 1;
     height: fit-content;
     margin-top: 4px;
     font-weight: var(--nmorph-typography-body-small-font-weight);

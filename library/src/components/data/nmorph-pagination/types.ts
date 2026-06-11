@@ -5,6 +5,7 @@ export interface INmorphPaginationProps {
   modelValue?: number;
   elementsQuantityOnPage?: number;
   disabled?: boolean;
+  loading?: boolean;
   hideOnSinglePage?: boolean;
   maxVisiblePages?: number;
   fastForwardStep?: number;

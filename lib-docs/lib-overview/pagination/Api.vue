@@ -30,6 +30,11 @@ const attributesData: IAttributesTableData[] = [
     default: "false",
   },
   {
+    name: "loading",
+    type: "Boolean",
+    default: "false",
+  },
+  {
     name: "thickness",
     type: optionsToString(NmorphComponentThickness),
     default: "basic",
@@ -58,7 +63,13 @@ const events = [{ name: "update:model-value", type: "Number" }];
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphPagination" name="pagination" :attributes="attributesData" :slots="slotData"
-      :variables="variables" :events="events" />
+    <api-table
+      title="NmorphPagination"
+      name="pagination"
+      :attributes="attributesData"
+      :slots="slotData"
+      :variables="variables"
+      :events="events"
+    />
   </div>
 </template>

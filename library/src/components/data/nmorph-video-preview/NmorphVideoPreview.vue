@@ -5,9 +5,9 @@ import {
   NmorphIcon,
   NmorphIconDownload,
   NmorphIconEye,
+  NmorphIconExternalLink,
   NmorphIconFullScreen,
   NmorphIconLoader,
-  NmorphIconOpen,
   NmorphOverlay,
   NmorphIconPause,
   NmorphIconPlay,
@@ -292,7 +292,7 @@ defineExpose({ videoRef });
           @click="openHandler"
         >
           <NmorphIcon size="small">
-            <NmorphIconOpen />
+            <NmorphIconExternalLink />
           </NmorphIcon>
         </a>
         <a

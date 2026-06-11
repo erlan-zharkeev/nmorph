@@ -5,14 +5,17 @@ import { NmorphImage } from "@nmorph/nmorph-ui-kit";
 <template>
   <div class="image-load-failed-text-overview">
     <ClientOnly>
-      <ClientOnly>
-        <NmorphImage src="./error.jpg" load-failed-text="Custom error text" />
-      </ClientOnly>
-      <ClientOnly>
-        <NmorphImage src="./error.jpg">
-          <template #error>Load error</template>
-        </NmorphImage>
-      </ClientOnly>
+      <NmorphImage
+        src="./error.jpg"
+        width="300px"
+        height="300px"
+        load-failed-text="Custom error text"
+      />
+    </ClientOnly>
+    <ClientOnly>
+      <NmorphImage src="./error.jpg" width="300px" height="300px">
+        <template #error>Load error</template>
+      </NmorphImage>
     </ClientOnly>
   </div>
 </template>
@@ -20,14 +23,8 @@ import { NmorphImage } from "@nmorph/nmorph-ui-kit";
 <style lang="scss">
 .image-load-failed-text-overview {
   display: flex;
-  width: 100%;
   flex-wrap: wrap;
-
-  .nmorph-image {
-    --width: 300px;
-    --height: 300px;
-    margin-right: 16px;
-    margin-bottom: 8px;
-  }
+  gap: 8px 16px;
+  width: 100%;
 }
 </style>

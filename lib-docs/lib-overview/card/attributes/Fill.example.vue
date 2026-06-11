@@ -4,11 +4,11 @@ import { NmorphCard } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="card-fill-overview">
-    <NmorphCard>
+    <NmorphCard :paper="3">
       <template #header>Fill</template>
       Takes the available width.
     </NmorphCard>
-    <NmorphCard :fill="false">
+    <NmorphCard :fill="false" :paper="3">
       <template #header>Fit content</template>
       Width follows the content.
     </NmorphCard>

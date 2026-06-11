@@ -10,7 +10,7 @@ export default {
   attributes: "Атрибуты",
   slots: "Слоты",
   variables: "Переменные",
-  exposes: "Expose",
+  exposes: "Экспорты",
   "right-aside-title": "Содержание",
   name: "Название",
   events: "События",
@@ -41,7 +41,7 @@ export default {
       guide: "Гайд",
       component: "Компонент",
       api: "API",
-      changelog: "Changelog",
+      changelog: "Журнал изменений",
       project: "Проект",
     },
   },
@@ -110,7 +110,7 @@ export default {
       "other-messages": "Прочие переводы",
       "css-variables": "CSS-переменные",
       "css-variables-content":
-        "The library exposes theme and foundation CSS custom properties for your own styles. Component-specific customization is handled through props.",
+        "Библиотека предоставляет CSS-переменные темы и базовые custom properties для ваших стилей. Кастомизация отдельных компонентов выполняется через props.",
       "css-variables-theme-derived":
         "Переменные темы (задаются для каждой темы)",
       "css-variables-auto-generated":
@@ -217,15 +217,25 @@ export default {
     links: {
       guide: "Гайд",
       components: "Компоненты",
-      changelog: "Changelog",
+      changelog: "Журнал изменений",
       repository: "Репозиторий",
-      issues: "Issues",
+      issues: "Задачи",
     },
   },
   "changelog-page": {
     changelog: {
-      title: "Changelog",
+      title: "Журнал изменений",
       items: {
+        "card-paper-surface":
+          "NmorphCard теперь поддерживает встроенную бумажную текстуру через paper, а карточки в docs используют единый уровень paper для одинаковой тактильной поверхности.",
+        "media-tile-audio-sink":
+          "NmorphMediaTile теперь сохраняет remote audio в audio-only потоках с videoOff, не дублирует звук при видимом видео, учитывает muted и может направлять медиа через sinkId, если браузер поддерживает setSinkId.",
+        "docs-paper-shell":
+          "Lib docs теперь используют общие paper-карточки для основного shell, header, footer, overview, guide, about, changelog и примеров, а search стал настоящей кнопкой с ровным Ctrl K.",
+        "component-api-docs-refresh":
+          "Обновлены API-таблицы и примеры docs для Card paper, Image frame border и loading states, MediaTile sinkId, Pagination loading, Scroll, Tooltip, Guide и связанных props компонентов.",
+        "interaction-polish":
+          "Отполированы детали взаимодействия в scroll, pagination, carousel, guide, tooltip, stepper, time picker, file upload и media previews, включая обновление заполненной hand icon.",
         "docs-layout-refresh":
           "Docs теперь используют общий NmorphLayout shell с плавающими карточками header/footer, выровненными отступами aside/content, GitHub-иконкой в topbar и overlay search dialog, который закрывается после выбора результата.",
         "overview-preview-polish":
@@ -239,9 +249,9 @@ export default {
         "audio-backtop-polish":
           "NmorphAudioPreview теперь использует плотный play surface и более понятный external-link action, а NmorphBacktop plain controls рендерятся без лишнего border.",
         "avatar-borderless-prop":
-          "NmorphAvatar теперь поддерживает borderless для plain-аватаров, при этом design=\"plain\" по умолчанию остается с border.",
+          'NmorphAvatar теперь поддерживает borderless для plain-аватаров, при этом design="plain" по умолчанию остается с border.',
         "badge-tag-value-slot":
-          "NmorphBadge с type=\"tag\" теперь поддерживает slot value для компактных icon badges, сохраняя текстовый fallback.",
+          'NmorphBadge с type="tag" теперь поддерживает slot value для компактных icon badges, сохраняя текстовый fallback.',
         "preview-borderless-controls":
           "Preview controls в NmorphImagePreview и NmorphMediaGallery теперь используют borderless plain-кнопки с тем же overlay-фоном, что и Backtop.",
         "image-preview-plain-surface":
@@ -249,7 +259,7 @@ export default {
         "hand-icon-outline":
           "NmorphIconHand теперь использует более тонкую outline-only hand icon без заливки.",
         "button-borderless-prop":
-          "NmorphButton теперь поддерживает borderless для plain-кнопок, при этом design=\"plain\" по умолчанию остается с border.",
+          'NmorphButton теперь поддерживает borderless для plain-кнопок, при этом design="plain" по умолчанию остается с border.',
         "media-tile-show-status":
           "NmorphMediaTile теперь поддерживает show-status, чтобы скрывать правый нижний статус без изменения заглушки video-off.",
         "select-button-custom-thickness":
@@ -263,9 +273,9 @@ export default {
         "thin-input-centering":
           "Текст в thin native input теперь использует высоту компонента как line box, поэтому вертикальное центрирование выглядит ровнее без изменения свайпов, кликов или layout.",
         "design-api-plain":
-          "Breaking: surface design values теперь используют design=\"plain\" вместо design=\"common\" в Empty, Backtop, SkeletonItem, Table, TagList и TagItem.",
+          'Breaking: surface design values теперь используют design="plain" вместо design="common" в Empty, Backtop, SkeletonItem, Table, TagList и TagItem.',
         "selection-design-api":
-          "Breaking: NmorphButton, NmorphCheckbox, NmorphCheckboxGroup, NmorphRadio и NmorphRadioGroup теперь используют design=\"nmorph | plain\" для визуального дизайна.",
+          'Breaking: NmorphButton, NmorphCheckbox, NmorphCheckboxGroup, NmorphRadio и NmorphRadioGroup теперь используют design="nmorph | plain" для визуального дизайна.',
         "form-control-design-api":
           "Breaking: input-like form controls больше не экспортируют design prop; design остается только у Checkbox, CheckboxGroup, Radio и RadioGroup.",
         "control-typography-contract":
@@ -279,37 +289,37 @@ export default {
         "stepper-single-item-click":
           "NmorphStepper больше не падает на pointerup у single-item non-interactive stepper, сохраняя swipe behavior и click suppression после drag.",
         "attachment-preview-primitives":
-          "Added NmorphVideoPreview, NmorphAudioPreview, and NmorphFileCard as reusable attachment UI primitives for video, audio, documents, and unknown files.",
+          "Добавлены NmorphVideoPreview, NmorphAudioPreview и NmorphFileCard как переиспользуемые UI-примитивы вложений для видео, аудио, документов и неизвестных файлов.",
         "file-upload-attachment-previews":
-          "NmorphFileUpload now renders typed previews for uploaded video and audio files, document/file cards for PDF, Office, and unknown files, and keeps image previews for images.",
+          "NmorphFileUpload теперь отображает типизированные превью для загруженных видео и аудио, карточки документов/файлов для PDF, Office и неизвестных файлов, а для изображений сохраняет image preview.",
         "attachment-rendering-notes":
-          "Documented the K-Room attachment rendering approach, including app-level attachment routers, Nmorph UI primitives, message attachment data shape, and compatibility with existing images.",
+          "Задокументирован подход K-Room к рендерингу вложений: app-level attachment routers, UI-примитивы Nmorph, форма данных вложений сообщений и совместимость с существующими изображениями.",
         "emoji-picker-lazy-locales":
-          "Added optional NmorphEmojiPicker locale files for en, ru, and zh with lazy package imports so host apps can load only the emoji dataset they need.",
+          "Добавлены опциональные locale-файлы NmorphEmojiPicker для en, ru и zh с ленивыми импортами пакета, чтобы приложения загружали только нужный emoji dataset.",
         "image-preview-keyboard-navigation":
-          "NmorphImagePreview now supports ArrowLeft and ArrowRight keyboard navigation while the preview is open, including wrap-around for image sets.",
+          "NmorphImagePreview теперь поддерживает навигацию клавишами ArrowLeft и ArrowRight при открытом preview, включая циклический переход по наборам изображений.",
         "icon-wrapper-centering":
-          "NmorphIcon now centers its inner icon content when external classes resize the icon wrapper.",
+          "NmorphIcon теперь центрирует внутреннее содержимое иконки, когда внешние классы меняют размер обертки.",
         "scroll-runtime-skin":
-          "NmorphScroll runtime common styles again include the inset track skin and hidden native scrollbar buttons for plugin-only usage.",
+          "Runtime common styles NmorphScroll снова включают inset-оформление трека и скрытые нативные кнопки scrollbar для сценариев только с plugin.",
         "tag-list-common-color-api":
-          "NmorphTagList and NmorphTagItem now expose a color prop for common design backgrounds, support v-model:selected-value and click events for clicked tag values, automatically choose readable text and close icon colors, and remove borders from common tags.",
+          "NmorphTagList и NmorphTagItem теперь предоставляют prop color для common-фонов, поддерживают v-model:selected-value и click-события по значениям тегов, автоматически выбирают читаемые цвета текста и close-иконок, а также убирают borders у common tags.",
         "tag-list-custom-content":
-          "NmorphTagItem now supports a default slot for custom content, and NmorphTagList can forward an item scoped slot while preserving existing text, click, close, and v-model behavior.",
+          "NmorphTagItem теперь поддерживает default slot для кастомного контента, а NmorphTagList может прокидывать item scoped slot, сохраняя прежнее поведение text, click, close и v-model.",
         "realtime-ui-components-api":
-          "Added touch-friendly tooltip triggers, call-oriented media and audio meter components, toggle button state, public styling props, typed select modes, richer context menu items, and backward-compatible typo aliases.",
+          "Добавлены удобные для touch tooltip triggers, call-oriented media и audio meter компоненты, toggle-состояние кнопки, публичные styling props, типизированные select modes, более богатые элементы context menu и обратно совместимые typo aliases.",
         "context-menu-repeat-right-click":
-          "NmorphContextMenu now only repositions an already open context menu from a repeated right-click inside the trigger, so outside right-clicks no longer move the menu.",
+          "NmorphContextMenu теперь меняет позицию уже открытого меню только при повторном right-click внутри trigger, поэтому внешние right-click больше не двигают меню.",
         "text-input-prepend-placeholder-color":
-          "NmorphTextInput prepend icons now match the placeholder color by default and switch to the focus text color together with the input.",
+          "Prepend-иконки NmorphTextInput теперь по умолчанию используют цвет placeholder и вместе с input переключаются на цвет focus text.",
         "form-item-model-binding":
-          "NmorphFormItem now provides field context so nested form controls can bind to a field by id when modelValue is omitted, while explicit v-model remains controlled.",
+          "NmorphFormItem теперь предоставляет field context, чтобы вложенные form controls могли привязываться к полю по id, если modelValue не передан; явный v-model остается controlled.",
         "file-upload-form-rules":
-          "NmorphFileUpload now participates in NmorphForm rules, rejects invalid files before accepting them, updates form field errors, and cleans up managed preview URLs.",
+          "NmorphFileUpload теперь участвует в rules NmorphForm, отклоняет невалидные файлы до принятия, обновляет ошибки поля формы и очищает управляемые preview URLs.",
         "form-controls-visual-polish":
-          "Polished form control sizing and surfaces, including checkbox and radio content height, select radius, text input backgrounds, autofill styling, and card padding propagation.",
+          "Доработаны размеры и поверхности form controls: высота checkbox/radio content, radius select, фоны text input, стили autofill и проброс card padding.",
         "dev-open-opt-in-browser":
-          "Workspace dev scripts no longer open browser tabs by default; pass --open when the docs or sandbox should launch automatically.",
+          "Dev scripts workspace больше не открывают вкладки браузера по умолчанию; передайте --open, если docs или sandbox должны запускаться автоматически.",
         "component-types-split":
           "Типы props, emit, slots и общие типы библиотеки теперь разнесены по отдельным type modules, чтобы generated declarations было проще использовать.",
         "file-upload-type-helpers":
@@ -323,17 +333,17 @@ export default {
         "context-menu-open-controls":
           "NmorphContextMenu теперь поддерживает trigger click, both, longpress и manual, exposes openAt/openAtElement/close и удерживает pointer-меню внутри viewport.",
         "tag-list-common-design":
-          "NmorphTagList теперь принимает design=\"common\", чтобы отображать простые теги на фоне из токенов с контрастными текстом и иконками вместо nmorph inset-поверхности.",
+          'NmorphTagList теперь принимает design="common", чтобы отображать простые теги на фоне из токенов с контрастными текстом и иконками вместо nmorph inset-поверхности.',
         "badge-larger-sizes":
           "NmorphBadge size теперь включает medium, large и extra-large для более крупных tag, dot и ribbon вариантов.",
         "style-utils-unification":
-          "Unified modifier normalization and CSS size helpers across components so boolean modifiers and numeric CSS values follow one code path.",
+          "Унифицированы нормализация modifiers и CSS size helpers между компонентами, чтобы boolean modifiers и числовые CSS-значения проходили через один code path.",
         "virtual-list-style-helpers":
-          "Select, Autocomplete, Table, and VirtualList now share option-height and virtual-list style helpers for more consistent scrolling surfaces.",
+          "Select, Autocomplete, Table и VirtualList теперь используют общие helpers для option-height и virtual-list styles, чтобы scrolling surfaces были согласованнее.",
         "dialog-overlay-close-api":
-          "NmorphDialog now documents close-on-overlay, keeps close-on-click-modal as a compatibility alias, and uses an accessible close button in the header.",
+          "NmorphDialog теперь документирует close-on-overlay, сохраняет close-on-click-modal как compatibility alias и использует доступную кнопку закрытия в header.",
         "component-local-style-split":
-          "Moved Avatar, Image, TextInput, and Scroll layout styles from common injected CSS into their component files for clearer component ownership.",
+          "Layout-стили Avatar, Image, TextInput и Scroll перенесены из common injected CSS в файлы компонентов, чтобы ownership стилей был понятнее.",
         "new-components-suite":
           "Добавлены NmorphTextarea, NmorphDrawer, NmorphLayout, NmorphSpace, NmorphQRCode и NmorphVirtualList в экспорты библиотеки.",
         "new-components-docs-sandbox":
@@ -345,9 +355,9 @@ export default {
         "docs-api-inline-descriptions":
           "Docs API tables теперь могут использовать inline descriptions, если i18n ключа нет, без шума missing-translation на новых страницах компонентов.",
         "link-icon-name-prop":
-          "NmorphLink now accepts iconName/icon-name to render a library icon before the link text, with docs and tests covering the new prop.",
+          "NmorphLink теперь принимает iconName/icon-name для рендера библиотечной иконки перед текстом ссылки; новый prop покрыт документацией и тестами.",
         "link-anchor-attrs":
-          "NmorphLink теперь передаёт rel, referrerpolicy, download, aria-label и title на внутренний anchor и рендерит target=\"blank\" как _blank.",
+          'NmorphLink теперь передаёт rel, referrerpolicy, download, aria-label и title на внутренний anchor и рендерит target="blank" как _blank.',
         "callout-rich-link-slots":
           "NmorphCallout теперь поддерживает header/title/default slots для безопасного rich-контента и может рендерить root как внешнюю ссылку с href, target, rel и referrerpolicy.",
         "file-card-embedded-surface":
@@ -359,17 +369,17 @@ export default {
         "notification-duration-value-toggle":
           "NmorphNotificationProvider теперь поддерживает showDurationValue: false для countdown-индикатора только с progress bar.",
         "video-preview-overlay-actions":
-          "NmorphVideoPreview now exposes preview and fullscreen overlay actions with showPreviewAction/showFullscreenAction props and preview/fullscreen events.",
+          "NmorphVideoPreview теперь предоставляет overlay actions для preview и fullscreen через props showPreviewAction/showFullscreenAction и события preview/fullscreen.",
         "attachment-actions-polish":
-          "Attachment previews now keep file icons muted while play/pause and PDF eye controls use contrast color, show a single upload action loader, and balance compact video FileCard vertical padding.",
+          "Attachment previews теперь оставляют file icons приглушенными, а play/pause и PDF eye controls используют contrast color; также показывается единый upload action loader и выровнен vertical padding компактного video FileCard.",
         "file-card-sandbox-all-types":
-          "The sandbox data page now includes NmorphFileCard examples for documents, images, audio, video, archives, loading, error, and long filenames.",
+          "Страница sandbox data теперь содержит примеры NmorphFileCard для документов, изображений, аудио, видео, архивов, loading, error и длинных имен файлов.",
         "file-card-image-media-preview":
-          "NmorphFileCard now supports media-preview=\"image\" from previewSrc, with compact visual thumbnails, shared soft/plain surfaces, file title overlays, size badges, and consistent download actions.",
+          'NmorphFileCard теперь поддерживает media-preview="image" из previewSrc, с компактными visual thumbnails, общими soft/plain surfaces, overlay заголовка файла, size badges и согласованными download actions.',
         "media-gallery-mixed-preview":
-          "Added NmorphMediaGallery for fullscreen mixed image and video galleries with typed items, active index control, keyboard navigation, video pause-on-change/close behavior, and sandbox examples.",
+          "Добавлен NmorphMediaGallery для fullscreen mixed image/video галерей с типизированными items, контролем active index, клавиатурной навигацией, pause-on-change/close поведением для видео и примерами в sandbox.",
         "preview-portal-shared-flow":
-          "NmorphImagePreview and NmorphMediaGallery now share the same preview portal flow, so backdrop clicks, Escape closing, navigation arrows, image action bar controls, and synced video play/pause overlays behave consistently.",
+          "NmorphImagePreview и NmorphMediaGallery теперь используют общий preview portal flow, поэтому backdrop clicks, закрытие Escape, navigation arrows, controls image action bar и синхронные video play/pause overlays ведут себя одинаково.",
         "media-gallery-file-card-triggers":
           "NmorphMediaGallery теперь может сам рендерить image/video trigger grid с FileCard-style именем файла, размером, play overlay, preview, fullscreen и download actions.",
         "file-card-preview-mode":
@@ -379,25 +389,25 @@ export default {
         "media-card-visibility-sizing":
           "NmorphFileCard и NmorphMediaGallery теперь поддерживают height и props для скрытия overlays, чтобы media cards, gallery triggers, info labels, actions и playback buttons можно было настраивать под layout.",
         "file-card-actions-slot-align":
-          "NmorphFileCard custom actions now use the same top-right action area across visual, compact, and regular cards while PDF preview and default actions stay intact.",
+          "Custom actions NmorphFileCard теперь используют единую top-right action area в visual, compact и regular cards, при этом PDF preview и default actions остаются без изменений.",
         "video-playback-full-buffer":
-          "NmorphVideoPreview and NmorphMediaGallery now show play/pause overlays only after a video is fully buffered.",
+          "NmorphVideoPreview и NmorphMediaGallery теперь показывают play/pause overlays только после полной буферизации видео.",
         "divider-vertical-visibility":
           "NmorphDivider vertical dividers теперь растягиваются внутри flex и grid layout.",
         "divider-original-styling":
           "NmorphDivider вернул original theme shadow styling, сохранив fix растягивания vertical divider.",
         "guide-component":
-          "Added NmorphGuide and NmorphGuideStep for coordinated tooltip-based walkthroughs with images, grouped targets, and previous/next controls.",
+          "Добавлены NmorphGuide и NmorphGuideStep для согласованных tooltip-based walkthroughs с изображениями, группировкой targets и controls previous/next.",
         "stepper-component":
-          "Added NmorphStepper, a controlled horizontal stepper that shows one item at a time with transform-based previous/next movement, wheel, swipe, keyboard support, and indicator slots.",
+          "Добавлен NmorphStepper: controlled horizontal stepper, который показывает один item за раз и поддерживает transform-based previous/next движение, wheel, swipe, keyboard и indicator slots.",
         "audio-meter-equal-bars":
-          "NmorphAudioMeter now keeps bar heights equal for silence and signal states while preserving the active color and opacity behavior.",
+          "NmorphAudioMeter теперь сохраняет одинаковую высоту bars в состояниях silence и signal, не меняя поведение active color и opacity.",
         "avatar-loader-text-color":
-          "NmorphAvatar loading icons now inherit the default text color instead of forcing the accent color.",
+          "Loading-иконки NmorphAvatar теперь наследуют default text color вместо принудительного accent color.",
         "avatar-initials-text-color":
           "Fallback initials в NmorphAvatar теперь используют дефолтный text color вместо accent color.",
         "badge-flat-ribbon-radius":
-          "NmorphBadge flat corner ribbons now render without rounded outer edges while corner ribbons keep their visible inner radius.",
+          "Flat corner ribbons NmorphBadge теперь рендерятся без скругленных внешних краев, а corner ribbons сохраняют видимый inner radius.",
         "empty-padding-token":
           "У NmorphEmpty теперь есть валидный default padding token, текст остается внутри content area, а пример в docs переносится на узких экранах.",
         "docs-collapse-title-scope":
@@ -409,11 +419,11 @@ export default {
         "docs-css-type-links":
           "Docs API tables теперь ссылаются на MDN для CSS value types вроде Width, Height, Padding, Color, Background и Transition-duration.",
         "docs-api-type-links":
-          "Docs API tables now auto-link known attribute, expose, and event types, and stale component links now point to the correct element anchors.",
+          "Docs API tables теперь автоматически линкуют известные типы attributes, exposes и events, а устаревшие component links ведут к правильным anchors элементов.",
         "docs-example-english-source":
-          "Docs example source blocks now use plain English example text instead of copying runtime i18n expressions.",
+          "Source blocks в примерах docs теперь используют простой английский текст вместо копирования runtime i18n expressions.",
         "nuxt-build-dir-isolation":
-          "Docs and sandbox Nuxt production builds now write to .nuxt-build so build commands no longer overwrite active dev-server metadata.",
+          "Production builds docs и sandbox Nuxt теперь пишут в .nuxt-build, поэтому build-команды больше не перезаписывают metadata активного dev-server.",
         "dropdown-hide-shadow-prop":
           "NmorphDropdown и NmorphContextMenu теперь принимают hide-shadow, чтобы рендерить панели меню без дефолтной neumorphic-тени.",
         "backtop-teleport-styles":
@@ -498,9 +508,9 @@ export default {
         "context-menu-neutral-hover":
           "NmorphContextMenu теперь строит дефолтный hover background пункта от базового text color вместо accent color, а пункты с кастомным цветом продолжают использовать свой цвет.",
         "tooltip-z-index-stack":
-          "NmorphTooltip now participates in the shared automatic z-index stack and supports an explicit zIndex override.",
+          "NmorphTooltip теперь участвует в общем автоматическом z-index stack и поддерживает явное переопределение zIndex.",
         "notification-provider-first-animation":
-          "NmorphNotificationProvider now keeps placement transition groups mounted so the first notification animates like the following ones.",
+          "NmorphNotificationProvider теперь держит transition groups placement смонтированными, поэтому первая notification анимируется так же, как последующие.",
         "carousel-collapse-docs":
           "Carousel и Collapse теперь добавлены в registry компонентов, страницы документации, API tables, examples и sandbox checks.",
         "time-picker-component":
@@ -548,13 +558,13 @@ export default {
         "docs-code-copy-fix":
           "Code blocks в документации теперь сохраняют правильный верхний отступ и копируют полный source примера через Clipboard API с fallback.",
         "callout-docs-bottom-spacing":
-          "NmorphCallout no longer ships bottom margin in the library; docs apply their own callout spacing where notices need separation.",
+          "NmorphCallout больше не поставляет bottom margin в библиотеке; docs применяют собственный callout spacing там, где notice-блокам нужен отступ.",
         "callout-default-bottom-spacing":
           "У NmorphCallout теперь есть default bottom spacing, поэтому stacked callouts и следующий контент больше не прилегают друг к другу.",
         "storybook-sass-modern-api":
           "Storybook и library dev configs теперь используют Dart Sass modern API вместо deprecated legacy JS API.",
         "workspace-dev-script-fixes":
-          "Docs and Storybook dev scripts now use local host/path helpers, include asset/raw import typings, and avoid pulling Storybook into the default dev run.",
+          "Dev scripts docs и Storybook теперь используют local host/path helpers, включают typings для asset/raw imports и не подтягивают Storybook в default dev run.",
         "ci-pnpm-publish":
           "CI build и publish jobs теперь устанавливают workspace через pnpm и публикуют библиотеку из подготовленного package.",
         "nuxt-theme-first-paint":
@@ -1083,13 +1093,12 @@ export default {
         "hide-on-falsy-value":
           "Скрывает индикатор бейджа, когда value falsy, включая 0 и пустую строку.",
         color: "Устанавливает цвет фона бейджа",
-        size:
-          "Устанавливает размер текста бейджа: tiny, extra-small, base, medium, large или extra-large",
+        size: "Устанавливает размер текста бейджа: tiny, extra-small, base, medium, large или extra-large",
         "z-index": "Определяет порядок наложения бейджа",
         "offset-y":
-          "Vertical offset of the badge. For ribbon, controls ribbon positioning. Ignored when type is tag",
+          "Вертикальное смещение badge. Для ribbon управляет позиционированием ribbon. Игнорируется, когда type равен tag",
         "offset-x":
-          "Horizontal offset of the badge. For ribbon, controls ribbon positioning. Ignored when type is tag",
+          "Горизонтальное смещение badge. Для ribbon управляет позиционированием ribbon. Игнорируется, когда type равен tag",
       },
       slot: {
         default:
@@ -1114,8 +1123,11 @@ export default {
         subtitle: "Определяет тип тени для карточки.",
       },
       "card-padding": {
+        subtitle: "Sets the card padding.",
+      },
+      paper: {
         subtitle:
-          "Sets the card padding.",
+          "Добавляет мягкую бумажную фактуру. 0 отключает эффект, большие значения усиливают его.",
       },
       fill: {
         subtitle:
@@ -1131,6 +1143,8 @@ export default {
           "Переопределяет отступ карточки. Числа считаются значениями в пикселях.",
         "content-class":
           "Добавляет кастомный класс на обертку контента карточки.",
+        paper:
+          "Сила бумажной фактуры. 0 отключает эффект, большие значения делают его заметнее.",
         "combined-shadow-border-width":
           "Ширина border, которая используется только при shadow-type='combined'.",
         fill: "Если true, карточка занимает доступную ширину. Передайте false, чтобы ширина шла по контенту.",
@@ -1190,7 +1204,8 @@ export default {
         },
       },
       "loading-text": {
-        subtitle: "Иконка загрузчика, отображаемая во время загрузки изображения.",
+        subtitle:
+          "Иконка загрузчика, отображаемая во время загрузки изображения.",
       },
       "load-failed-text": {
         subtitle: "Текст, отображаемый при неудачной загрузке изображения.",
@@ -1314,7 +1329,7 @@ export default {
         block: "Запрещает переключение панели, если установлено в true",
         thickness: "Задает толщину заголовка",
         "transition-speed":
-          "Overrides the panel open and close transition speed. Numbers are treated as milliseconds",
+          "Переопределяет скорость transition открытия и закрытия панели. Числа считаются миллисекундами",
       },
       variables: {
         "transition-speed": "Panel content transition speed",
@@ -1455,11 +1470,11 @@ export default {
         color: "Задает цвет индикатора прогресса",
         percentage: "Устанавливает процентное значение прогресса",
         height:
-          "Overrides the linear progress bar height. Numbers are treated as pixel values",
+          "Переопределяет высоту linear progress bar. Числа считаются пикселями",
         "width-transition":
-          "Overrides the width transition used by the linear progress bar",
+          "Переопределяет width transition, используемый linear progress bar",
         "indeterminate-animation":
-          "Overrides the animation used by indeterminate progress",
+          "Переопределяет animation для indeterminate progress",
         "value-inside": "Отображает текст прогресса внутри полосы",
         "value-right-side": "Показывает или скрывает текст с процентом справа",
         indeterminate: "Включает анимацию неопределенного прогресса",
@@ -1497,7 +1512,7 @@ export default {
         "model-value": "Представляет выбранную дату (даты) в календаре",
         type: "Определяет тип выбора в календаре",
         "cell-height":
-          "Overrides the height of each date cell. Numbers are treated as pixel values",
+          "Переопределяет высоту каждой date cell. Числа считаются пикселями",
         range:
           "Включает режим выбора диапазона в календаре, позволяя выбирать диапазон дат календаря. Не выбранный диапозон, а диапозон отображемого календаря",
       },
@@ -1566,14 +1581,13 @@ export default {
           "Определяет, рендерит trigger одну картинку или thumbnail-галерею",
         "trigger-limit":
           "Ограничивает количество thumbnails, которые рендерит gallery trigger",
-        "trigger-gap":
-          "Задает расстояние между thumbnails в gallery trigger",
+        "trigger-gap": "Задает расстояние между thumbnails в gallery trigger",
         width:
-          "Overrides the preview trigger width. Numbers are treated as pixel values",
+          "Переопределяет ширину preview trigger. Числа считаются пикселями",
         height:
-          "Overrides the preview trigger height. Numbers are treated as pixel values",
+          "Переопределяет высоту preview trigger. Числа считаются пикселями",
         "navigation-button-margin":
-          "Overrides the distance between gallery navigation buttons and the viewport edge",
+          "Переопределяет расстояние между кнопками навигации gallery и краем viewport",
       },
       slot: {
         loading: "Слот, отображаемый во время загрузки изображения",
@@ -1583,7 +1597,7 @@ export default {
         width: "Определяет ширину предпросмотра изображения.",
         height: "Определяет высоту предпросмотра изображения.",
         "nmorph-image-preview-btn-margin":
-          "Distance between gallery navigation buttons and the viewport edge",
+          "Расстояние между кнопками навигации gallery и краем viewport",
         "nmorph-image-preview-trigger-gap":
           "Расстояние между thumbnails в gallery trigger",
       },
@@ -1642,19 +1656,19 @@ export default {
         "virtual-overscan":
           "Задает количество дополнительных строк до и после видимой области",
         "virtual-dynamic-height":
-          "Allows virtual table rows to measure their own height dynamically",
+          "Позволяет строкам virtual table динамически измерять собственную высоту",
         "border-color": "Overrides the table border color",
         "cell-height":
-          "Overrides the data cell height. Numbers are treated as pixel values",
+          "Переопределяет высоту data cell. Числа считаются пикселями",
         "row-hover-background":
-          "Overrides the background used for hovered and keyboard-active rows",
+          "Переопределяет фон для hovered и keyboard-active rows",
       },
       slot: {},
       variables: {
         "border-color": "Устанавливает цвет границы таблицы",
         "table-cell-height": "Определяет высоту ячеек таблицы",
         "table-background-row-hover":
-          "Defines the background used for hovered and keyboard-active rows",
+          "Задает фон для hovered и keyboard-active rows",
       },
     },
     "table-column": {
@@ -1702,11 +1716,11 @@ export default {
         "z-index":
           "Переопределяет общий автоматический z-index, пока подсказка видима",
         width:
-          "Overrides the tooltip content width. Numbers are treated as pixel values",
+          "Переопределяет ширину содержимого tooltip. Числа считаются пикселями",
         "max-width":
-          "Overrides the tooltip content max width. Numbers are treated as pixel values",
+          "Переопределяет максимальную ширину содержимого tooltip. Числа считаются пикселями",
         height:
-          "Overrides the tooltip content height. Numbers are treated as pixel values",
+          "Переопределяет высоту содержимого tooltip. Числа считаются пикселями",
       },
       slot: {},
       variables: {
@@ -1792,7 +1806,7 @@ export default {
         padding: "Sets the callout inner spacing",
         "border-radius": "Sets the callout border radius",
         "accent-width": "Sets the width of the accent strip",
-        "title-gap": "Sets the spacing between title and content",
+        "title-gap": "Задает расстояние между title и content",
         "title-font-size": "Sets the title font size",
         "content-font-size": "Sets the content font size",
       },
@@ -2253,12 +2267,10 @@ export default {
           "Булево значение, показывающее индикатор загрузки на переключателе",
         "active-value": "Значение, когда переключатель включен",
         "inactive-value": "Значение, когда переключатель выключен",
-        width:
-          "Overrides the switch width. Numbers are treated as pixel values",
-        offset:
-          "Overrides the thumb offset. Numbers are treated as pixel values",
+        width: "Переопределяет ширину switch. Числа считаются пикселями",
+        offset: "Переопределяет смещение thumb. Числа считаются пикселями",
         "thumb-height":
-          "Overrides the switch thumb size. Numbers are treated as pixel values",
+          "Переопределяет размер thumb в switch. Числа считаются пикселями",
       },
       slot: {
         "bg-on": "Слот для кастомизации фона, когда переключатель включен",
@@ -2544,7 +2556,7 @@ export default {
         "z-index":
           "Задает z-index выпадающего списка select. Если не передан, используется общий автоматический стек z-index",
         width:
-          "Overrides the base select width. Numbers are treated as pixel values",
+          "Переопределяет базовую ширину select. Числа считаются пикселями",
         virtual: "Включает виртуальный рендеринг для больших списков опций",
         "virtual-item-height":
           "Задает ожидаемую высоту одной виртуальной опции",
@@ -2571,11 +2583,11 @@ export default {
       api: {
         label:
           "Определяет метку для опции, которая отображается в выпадающем списке",
-        thickness: "Sets the thickness preset of the select option",
+        thickness: "Задает preset thickness для select option",
         disabled:
           "Булево значение, которое указывает, отключена ли опция и не может быть выбрана",
         "hover-background": "Overrides the option hover background",
-        "hover-color": "Overrides the option hover text and icon color",
+        "hover-color": "Переопределяет цвет текста и иконки option при hover",
       },
       slot: {
         default: "Слот для настройки отображаемого контента для этой опции",
@@ -2607,11 +2619,11 @@ export default {
         step: "Шаг для увеличения или уменьшения значения",
         "show-tooltip":
           "Булево значение для управления видимостью всплывающей подсказки",
-        "thumb-width": "Overrides the slider thumb width in pixels",
+        "thumb-width": "Переопределяет ширину slider thumb в пикселях",
         "slider-height":
-          "Overrides the slider hit area height. Numbers are treated as pixel values",
+          "Переопределяет высоту hit area slider. Числа считаются пикселями",
         "value-fixed-container-height":
-          "Overrides the visual track container height. Numbers are treated as pixel values",
+          "Переопределяет высоту visual track container. Числа считаются пикселями",
       },
       slot: {},
       variables: {
@@ -2645,10 +2657,9 @@ export default {
           "Текст для разделения начальной и конечной дат в режиме выбора диапазона",
         "z-index":
           "Задает z-index выпадающего календаря. Если не передан, используется общий автоматический стек z-index",
-        width:
-          "Overrides the date picker width. Numbers are treated as pixel values",
+        width: "Переопределяет ширину date picker. Числа считаются пикселями",
         "calendar-cell-height":
-          "Overrides the calendar date cell height. Numbers are treated as pixel values",
+          "Переопределяет высоту calendar date cell. Числа считаются пикселями",
       },
       slot: {},
       variables: {
@@ -2690,8 +2701,7 @@ export default {
         "max-time": "Максимально доступное время",
         clearable: "Показывает кнопку очистки, когда значение выбрано",
         "z-index": "Z-index выпадающего меню",
-        width:
-          "Overrides the time picker width. Numbers are treated as pixel values",
+        width: "Переопределяет ширину time picker. Числа считаются пикселями",
       },
       variables: {
         width: "Defines the width of the time picker",

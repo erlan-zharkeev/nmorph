@@ -96,6 +96,7 @@ const attributeNameLabel = (name: string, required: boolean) =>
       </h3>
       <NmorphTable
         v-if="updatedAttributes"
+        class="docs-api-table__attributes-table"
         :data="updatedAttributes"
         bordered
         :row-hover="false"
@@ -133,7 +134,7 @@ const attributeNameLabel = (name: string, required: boolean) =>
               </a>
               <p
                 v-html="linkApiType(row.type as string)"
-                class="no-wrap"
+                class="docs-api-table__type-value"
                 v-else
               />
             </NmorphTableCell>
@@ -143,7 +144,15 @@ const attributeNameLabel = (name: string, required: boolean) =>
           prop="default"
           :label="$t('default')"
           alignment="center"
-        />
+        >
+          <template #default="{ scope }">
+            <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
+              <span class="docs-api-table__default-value">
+                {{ row.default }}
+              </span>
+            </NmorphTableCell>
+          </template>
+        </NmorphTableColumn>
       </NmorphTable>
     </div>
     <div
@@ -192,7 +201,7 @@ const attributeNameLabel = (name: string, required: boolean) =>
               </a>
               <p
                 v-html="linkApiType(row.type as string)"
-                class="no-wrap"
+                class="docs-api-table__type-value"
                 v-else
               />
             </NmorphTableCell>
@@ -218,7 +227,10 @@ const attributeNameLabel = (name: string, required: boolean) =>
         <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
           <template #default="{ scope }">
             <NmorphTableCell v-for="(row, idx) in scope.rows" :row="idx">
-              <p v-html="linkApiType(row.type as string)" class="no-wrap" />
+              <p
+                v-html="linkApiType(row.type as string)"
+                class="docs-api-table__type-value"
+              />
             </NmorphTableCell>
           </template>
         </NmorphTableColumn>
@@ -250,10 +262,40 @@ const attributeNameLabel = (name: string, required: boolean) =>
 </template>
 
 <style lang="scss">
-.no-wrap {
+.docs-api-table__attributes-table {
+  .nmorph-table table {
+    table-layout: fixed;
+  }
+
+  col:nth-child(1) {
+    width: 18% !important;
+  }
+
+  col:nth-child(2) {
+    width: 42% !important;
+  }
+
+  col:nth-child(3) {
+    width: 24% !important;
+  }
+
+  col:nth-child(4) {
+    width: 16% !important;
+  }
+}
+
+.docs-api-table__type-value {
+  margin: 0;
   white-space: normal;
-  word-break: keep-all;
-  overflow-wrap: normal;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+.docs-api-table__default-value {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .docs-api-table__title {

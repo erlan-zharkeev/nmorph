@@ -3,6 +3,7 @@ export type NmorphMediaTileFit = 'cover' | 'contain';
 export interface INmorphMediaTileProps {
   src?: string;
   srcObject?: MediaStream | null;
+  sinkId?: string;
   fit?: NmorphMediaTileFit;
   mirrored?: boolean;
   muted?: boolean;
@@ -18,7 +19,6 @@ export interface INmorphMediaTileProps {
   screenSharing?: boolean;
   speaking?: boolean;
   selected?: boolean;
-  pinned?: boolean;
   error?: boolean;
   errorText?: string;
 }

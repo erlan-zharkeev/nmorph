@@ -19,7 +19,7 @@ const localePath = useLocalePath();
         <h2>{{ textByLocale(group.title, locale) }}</h2>
         <div class="docs-guide-landing__grid">
           <NuxtLink v-for="slug in group.pages" :key="slug" :to="localePath(`/guide/${slug}`)">
-            <NmorphCard class="docs-guide-landing__card">
+            <NmorphCard class="docs-guide-landing__card" :paper="3">
               <h3>{{ textByLocale(guidePageMap[slug].title, locale) }}</h3>
               <p>{{ textByLocale(guidePageMap[slug].description, locale) }}</p>
             </NmorphCard>

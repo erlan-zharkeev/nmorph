@@ -17,12 +17,24 @@ const imageKey = ref(0);
 <template>
   <div class="image-loading-text-overview">
     <ClientOnly>
-      <NmorphImage :src="imageSrc" @error="errorHandler" :key="imageKey" />
+      <NmorphImage
+        :src="imageSrc"
+        width="300px"
+        height="300px"
+        @error="errorHandler"
+        :key="imageKey"
+      />
     </ClientOnly>
     <ClientOnly>
-      <NmorphImage :src="imageSrc" @error="errorHandler" :key="imageKey">
+      <NmorphImage
+        :src="imageSrc"
+        width="300px"
+        height="300px"
+        @error="errorHandler"
+        :key="imageKey"
+      >
         <template #loading>
-          <NmorphIcon class="image-loading-text-overview__loader" size="large">
+          <NmorphIcon size="large" color="var(--nmorph-accent-color)">
             <NmorphIconLoader />
           </NmorphIcon>
         </template>
@@ -34,18 +46,8 @@ const imageKey = ref(0);
 <style lang="scss">
 .image-loading-text-overview {
   display: flex;
-  width: 100%;
   flex-wrap: wrap;
-
-  .nmorph-image {
-    --width: 300px;
-    --height: 300px;
-    margin-right: 16px;
-    margin-bottom: 8px;
-  }
-
-  &__loader {
-    --nmorph-private-icon-color: var(--nmorph-accent-color);
-  }
+  gap: 8px 16px;
+  width: 100%;
 }
 </style>

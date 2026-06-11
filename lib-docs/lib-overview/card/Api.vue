@@ -39,6 +39,11 @@ const attributesData: IAttributesTableData[] = [
     default: "-",
   },
   {
+    name: "paper",
+    type: "number",
+    default: "0",
+  },
+  {
     name: "combined-shadow-border-width",
     type: "Border-width",
     default: "0",

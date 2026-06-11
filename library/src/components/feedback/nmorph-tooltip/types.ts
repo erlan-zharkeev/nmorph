@@ -14,6 +14,8 @@ export interface INmorphTooltipProps {
   openDelay?: number;
   closeDelay?: number;
   zIndex?: number;
+  teleportTo?: string | HTMLElement;
+  disabledTeleport?: boolean;
   width?: number | string;
   maxWidth?: number | string;
   height?: number | string;

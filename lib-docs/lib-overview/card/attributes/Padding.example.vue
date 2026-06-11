@@ -4,9 +4,9 @@ import { NmorphCard } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="card-padding-overview">
-    <NmorphCard card-padding="8px">Compact padding</NmorphCard>
-    <NmorphCard :card-padding="24">Numeric padding</NmorphCard>
-    <NmorphCard card-padding="var(--indentation-06)">Token padding</NmorphCard>
+    <NmorphCard card-padding="8px" :paper="3">Compact padding</NmorphCard>
+    <NmorphCard :card-padding="24" :paper="3">Numeric padding</NmorphCard>
+    <NmorphCard card-padding="var(--indentation-06)" :paper="3">Token padding</NmorphCard>
   </div>
 </template>
 

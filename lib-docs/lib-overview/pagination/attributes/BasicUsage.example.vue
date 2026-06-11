@@ -107,12 +107,13 @@ getData(0);
         </div>
         <div class="cards__container" v-else>
           <div class="cards__card" v-for="card in elements" :key="card.id">
-            <NmorphCard> {{ card.body }} </NmorphCard>
+            <NmorphCard :paper="3"> {{ card.body }} </NmorphCard>
           </div>
         </div>
       </div>
       <NmorphPagination
         :disabled="disabled"
+        :loading="loading"
         v-model="currentPageModel"
         :elements-quantity-on-page="quantityElementsOnPage"
         :total-elements-quantity="total"

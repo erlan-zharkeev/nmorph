@@ -11,7 +11,7 @@ const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays",
 
 <template>
   <div class="nmorph-docs-content docs-about-page">
-    <NmorphCard class="docs-about-page__card" content-class="docs-about-page__card-content" padding="0">
+    <NmorphCard class="docs-about-page__card" content-class="docs-about-page__card-content" padding="0" :paper="3">
       <NmorphScroll class="docs-about-page__scroll" :y-gap-in-px="8">
         <div class="docs-about-page__content">
           <section class="docs-about-page__hero nmorph--shadow-outset">
@@ -38,7 +38,12 @@ const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays",
           <section class="docs-about-page__section">
             <h2>{{ $t("about-page.features-title") }}</h2>
             <div class="docs-about-page__feature-grid">
-              <NmorphCard v-for="featureKey in featureKeys" :key="featureKey" class="docs-about-page__feature-card">
+              <NmorphCard
+                v-for="featureKey in featureKeys"
+                :key="featureKey"
+                class="docs-about-page__feature-card"
+                :paper="3"
+              >
                 <h3>{{ $t(`about-page.features.${featureKey}.title`) }}</h3>
                 <p>{{ $t(`about-page.features.${featureKey}.text`) }}</p>
               </NmorphCard>

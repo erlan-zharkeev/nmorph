@@ -2993,7 +2993,9 @@ describe('components', () => {
       expect(wrapper.find('video').exists()).toBe(true);
       expect(assignedSrcObject).toStrictEqual(stream);
       expect(wrapper.find('.nmorph-media-tile__status').exists()).toBe(true);
-      expect(wrapper.findAll('.nmorph-media-tile__status-item')).toHaveLength(2);
+      const statusItems = wrapper.findAll('.nmorph-media-tile__status-item');
+      expect(statusItems).toHaveLength(2);
+      expect(statusItems.every((statusItem) => statusItem.classes().includes('nmorph-button--plain'))).toBe(true);
 
       await wrapper.setProps({ showStatus: false, videoOff: true });
       await nextTick();
@@ -4063,7 +4065,7 @@ describe('components', () => {
           return { open, activeStep, steps };
         },
         template: `
-          <NmorphGuide v-model="open" :active-step="activeStep" :steps="steps" @update:active-step="activeStep = $event">
+          <NmorphGuide v-model="open" :active-step="activeStep" :steps="steps" disabled-teleport @update:active-step="activeStep = $event">
             <section class="guide-area-left">
               <NmorphGuideStep name="first">
                 <button class="first-target">First</button>
@@ -4096,6 +4098,33 @@ describe('components', () => {
 
     expect(wrapper.vm.activeStep).toBe('first');
     expect(wrapper.find('.guide-area-left .nmorph-guide-step__title').text()).toBe('First target');
+
+    wrapper.unmount();
+  });
+
+  it('teleports guide cards above layout layers with the guide z-index', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphGuide, NmorphGuideStep },
+        template: `
+          <NmorphGuide model-value :z-index="2468" :steps="[{ name: 'first', title: 'Teleported guide card' }]">
+            <NmorphGuideStep name="first">
+              <button>Target</button>
+            </NmorphGuideStep>
+          </NmorphGuide>
+        `,
+      }),
+      { attachTo: document.body }
+    );
+
+    await nextTick();
+    await nextTick();
+
+    const teleportedCard = document.body.querySelector('.nmorph-tooltip__info-content--teleported') as HTMLElement;
+
+    expect(teleportedCard).toBeTruthy();
+    expect(teleportedCard.textContent).toContain('Teleported guide card');
+    expect(teleportedCard.style.getPropertyValue('--nmorph-private-tooltip-z-index')).toBe('2468');
 
     wrapper.unmount();
   });
@@ -4231,11 +4260,37 @@ describe('components', () => {
     expect(root.attributes('tabindex')).toBe('0');
     expect(track.attributes('style')).toContain('translateX(-0%)');
 
+    const setPointerCapture = vi.fn();
+
+    Object.defineProperty(root.element, 'setPointerCapture', { configurable: true, value: setPointerCapture });
+
+    wrapper.find('.indicator-next').element.dispatchEvent(
+      createPointerEvent('pointerdown', {
+        clientX: 120,
+        clientY: 30,
+        pointerId: 1,
+        pointerType: 'mouse',
+        button: 0,
+      })
+    );
+
+    expect(setPointerCapture).not.toHaveBeenCalled();
+
+    await wrapper.find('.indicator-next').trigger('click');
+    await nextTick();
+
+    expect(wrapper.vm.index).toBe(1);
+
+    await wrapper.find('.indicator-previous').trigger('click');
+    await nextTick();
+
+    expect(wrapper.vm.index).toBe(0);
+
     root.element.dispatchEvent(createWheelEvent({ deltaY: 90 }));
     await nextTick();
 
     expect(wrapper.vm.index).toBe(1);
-    expect(wrapper.vm.changes[0]).toEqual({ index: 1, previousIndex: 0, direction: 'next' });
+    expect(wrapper.vm.changes.at(-1)).toEqual({ index: 1, previousIndex: 0, direction: 'next' });
 
     root.element.dispatchEvent(createWheelEvent({ deltaY: 90 }));
     await nextTick();
@@ -4612,6 +4667,48 @@ describe('components', () => {
 
     expect(wrapper.vm.open).toBe(false);
     wrapper.unmount();
+  });
+
+  it('does not open the default context menu trigger from left click', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphContextMenu },
+        setup() {
+          const open = ref(false);
+
+          return { open };
+        },
+        template: `
+          <NmorphContextMenu v-model="open">
+            <button class="context-target">Target</button>
+            <template #menu>
+              <button class="context-action">Action</button>
+            </template>
+          </NmorphContextMenu>
+        `,
+      }),
+      {
+        attachTo: target,
+        global: {
+          stubs: {
+            Teleport: false,
+          },
+        },
+      }
+    );
+
+    await wrapper.find('.context-target').trigger('click', { button: 0 });
+    await nextTick();
+    await nextTick();
+
+    expect(wrapper.vm.open).toBe(false);
+    expect(document.body.querySelector('.nmorph-dropdown')).toBeFalsy();
+
+    wrapper.unmount();
+    target.remove();
   });
 
   it('opens context menu from right click and closes from Escape', async () => {
@@ -6351,6 +6448,24 @@ describe('components', () => {
 
     expect(pagination.style.getPropertyValue('--nmorph-private-pagination-height')).toBe('var(--basic-component)');
     expect(wrapper.find('.nmorph-pagination__page-btn.nmorph-radio').classes()).toContain('nmorph--basic-component');
+    wrapper.unmount();
+  });
+
+  it('keeps pagination page controls stable while loading with temporary empty totals', async () => {
+    const wrapper = mount(NmorphPagination, {
+      props: { totalElementsQuantity: 40, elementsQuantityOnPage: 10 },
+    });
+
+    await nextTick();
+
+    expect(wrapper.findAll('.nmorph-pagination__page-btn-wrapper')).toHaveLength(4);
+
+    await wrapper.setProps({ loading: true, totalElementsQuantity: 0 });
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-pagination').attributes('aria-busy')).toBe('true');
+    expect(wrapper.findAll('.nmorph-pagination__page-btn-wrapper')).toHaveLength(4);
+
     wrapper.unmount();
   });
 

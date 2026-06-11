@@ -11,7 +11,7 @@ const contextMenuOpen = ref(false);
     <NmorphContextMenu
       v-model="contextMenuOpen"
       :options="actions"
-      trigger="both"
+      trigger="contextmenu"
       :y-offset="4"
       :z-index="3000"
       aria-label="Context actions"

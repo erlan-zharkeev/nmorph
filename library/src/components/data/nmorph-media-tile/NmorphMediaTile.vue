@@ -2,19 +2,24 @@
 import { computed, ref, watch } from 'vue';
 import {
   NmorphAvatar,
+  NmorphButton,
   NmorphIcon,
   NmorphIconLoaderDots,
-  NmorphIconMic,
-  NmorphIconPin,
+  NmorphIconMute,
   NmorphIconShare,
-  NmorphIconVideo,
+  NmorphIconVideoCameraOff,
 } from '@/components';
 import { useModifiers } from '@/utils';
 import type { INmorphMediaTileProps } from './types';
 
+type SinkSelectableMediaElement = HTMLMediaElement & {
+  setSinkId?: (sinkId: string) => Promise<void>;
+};
+
 const props = withDefaults(defineProps<INmorphMediaTileProps>(), {
   src: '',
   srcObject: null,
+  sinkId: undefined,
   fit: 'cover',
   mirrored: false,
   muted: true,
@@ -30,13 +35,25 @@ const props = withDefaults(defineProps<INmorphMediaTileProps>(), {
   screenSharing: false,
   speaking: false,
   selected: false,
-  pinned: false,
   error: false,
   errorText: '',
 });
 
 const videoRef = ref<HTMLVideoElement | null>(null);
-const hasVideo = computed(() => Boolean((props.src || props.srcObject) && !props.videoOff && !props.error));
+const audioRef = ref<HTMLAudioElement | null>(null);
+const hasMediaSource = computed(() => Boolean(props.src || props.srcObject));
+const videoVisible = computed(() => hasMediaSource.value && !props.videoOff && !props.error);
+const getAudioTracks = (stream: MediaStream | null) => {
+  if (!stream || typeof stream.getAudioTracks !== 'function') return [];
+
+  return stream.getAudioTracks();
+};
+const hasAudioTracks = computed(() => getAudioTracks(props.srcObject).length > 0);
+const needsAudioOnlyOutput = computed(() =>
+  Boolean(props.srcObject && props.videoOff && !props.muted && !props.error && hasAudioTracks.value)
+);
+const videoMuted = computed(() => props.muted || needsAudioOnlyOutput.value);
+const videoSrc = computed(() => (videoVisible.value && props.src ? props.src : undefined));
 const initials = computed(() =>
   props.name
     .split(/\s+/)
@@ -53,7 +70,6 @@ const modifiers = computed(() =>
       props.fit,
       props.mirrored && 'mirrored',
       props.selected && 'selected',
-      props.pinned && 'pinned',
       props.speaking && 'speaking',
       props.error && 'error',
       props.videoOff && 'video-off',
@@ -63,11 +79,50 @@ const modifiers = computed(() =>
   })
 );
 
+const setMediaElementSinkId = (element: HTMLMediaElement | null) => {
+  if (!element || props.sinkId === undefined) return;
+
+  const sinkElement = element as SinkSelectableMediaElement;
+
+  if (typeof sinkElement.setSinkId !== 'function') return;
+
+  void sinkElement.setSinkId(props.sinkId).catch(() => undefined);
+};
+
 watch(
-  () => [props.srcObject, videoRef.value] as const,
+  () =>
+    [
+      props.srcObject,
+      props.sinkId,
+      props.autoplay,
+      videoVisible.value,
+      needsAudioOnlyOutput.value,
+      videoRef.value,
+      audioRef.value,
+    ] as const,
   () => {
-    if (videoRef.value && videoRef.value.srcObject !== props.srcObject) {
-      videoRef.value.srcObject = props.srcObject;
+    if (videoRef.value) {
+      const nextVideoStream = videoVisible.value ? props.srcObject : null;
+
+      if (videoRef.value.srcObject !== nextVideoStream) {
+        videoRef.value.srcObject = nextVideoStream;
+      }
+
+      setMediaElementSinkId(videoRef.value);
+    }
+
+    if (audioRef.value) {
+      const nextAudioStream = needsAudioOnlyOutput.value ? props.srcObject : null;
+
+      if (audioRef.value.srcObject !== nextAudioStream) {
+        audioRef.value.srcObject = nextAudioStream;
+      }
+
+      setMediaElementSinkId(audioRef.value);
+
+      if (props.autoplay && needsAudioOnlyOutput.value) {
+        void audioRef.value.play().catch(() => undefined);
+      }
     }
   },
   { immediate: true, flush: 'post' }
@@ -79,15 +134,23 @@ defineExpose({ videoRef });
 <template>
   <div :class="modifiers">
     <video
-      v-show="hasVideo && !props.loading"
+      v-show="videoVisible && !props.loading"
       ref="videoRef"
       class="nmorph-media-tile__video"
-      :src="props.src || undefined"
-      :muted="props.muted"
+      :src="videoSrc"
+      :muted="videoMuted"
       :autoplay="props.autoplay"
       :playsinline="props.playsinline"
     />
-    <div v-if="props.showFallback && (!hasVideo || props.loading)" class="nmorph-media-tile__fallback">
+    <audio
+      v-if="needsAudioOnlyOutput"
+      ref="audioRef"
+      class="nmorph-media-tile__audio"
+      :muted="props.muted"
+      :autoplay="props.autoplay"
+      preload="auto"
+    />
+    <div v-if="props.showFallback && (!videoVisible || props.loading)" class="nmorph-media-tile__fallback">
       <NmorphIcon v-if="props.loading" class="nmorph-media-tile__loader" size="large">
         <NmorphIconLoaderDots />
       </NmorphIcon>
@@ -97,26 +160,39 @@ defineExpose({ videoRef });
       <span v-if="props.error && props.errorText" class="nmorph-media-tile__error-text">{{ props.errorText }}</span>
     </div>
     <div v-if="props.showStatus" class="nmorph-media-tile__status">
-      <span v-if="props.micMuted" class="nmorph-media-tile__status-item" aria-label="Microphone muted">
-        <NmorphIcon size="small">
-          <NmorphIconMic />
-        </NmorphIcon>
-      </span>
-      <span v-if="props.videoOff" class="nmorph-media-tile__status-item" aria-label="Video off">
-        <NmorphIcon size="small">
-          <NmorphIconVideo />
-        </NmorphIcon>
-      </span>
-      <span v-if="props.screenSharing" class="nmorph-media-tile__status-item" aria-label="Screen sharing">
-        <NmorphIcon size="small">
+      <NmorphButton
+        v-if="props.micMuted"
+        class="nmorph-media-tile__status-item"
+        design="plain"
+        :tabindex="-1"
+        aria-label="Microphone muted"
+      >
+        <template #icon-only>
+          <NmorphIconMute />
+        </template>
+      </NmorphButton>
+      <NmorphButton
+        v-if="props.videoOff"
+        class="nmorph-media-tile__status-item"
+        design="plain"
+        :tabindex="-1"
+        aria-label="Video off"
+      >
+        <template #icon-only>
+          <NmorphIconVideoCameraOff />
+        </template>
+      </NmorphButton>
+      <NmorphButton
+        v-if="props.screenSharing"
+        class="nmorph-media-tile__status-item"
+        design="plain"
+        :tabindex="-1"
+        aria-label="Screen sharing"
+      >
+        <template #icon-only>
           <NmorphIconShare />
-        </NmorphIcon>
-      </span>
-      <span v-if="props.pinned" class="nmorph-media-tile__status-item" aria-label="Pinned">
-        <NmorphIcon size="small">
-          <NmorphIconPin />
-        </NmorphIcon>
-      </span>
+        </template>
+      </NmorphButton>
     </div>
     <slot name="overlay" />
   </div>
@@ -198,17 +274,19 @@ defineExpose({ videoRef });
   }
 
   .nmorph-media-tile__status-item {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 24px;
-    height: 24px;
     color: var(--nmorph-text-color);
-    background: color-mix(in srgb, var(--nmorph-main-color) 86%, transparent);
-    border-radius: var(--border-radius-circular);
-    box-shadow: var(--nmorph-shadow-outset);
 
-    --nmorph-private-icon-color: currentColor;
+    .nmorph-button__content {
+      width: 28px;
+      min-width: 28px;
+      height: 24px;
+      min-height: 24px;
+      padding: 0;
+      color: currentColor;
+      background: color-mix(in srgb, var(--nmorph-main-color) 86%, transparent);
+      border-color: color-mix(in srgb, currentColor 35%, transparent);
+      border-radius: var(--default-border-radius);
+    }
   }
 
   &.nmorph-media-tile--selected {

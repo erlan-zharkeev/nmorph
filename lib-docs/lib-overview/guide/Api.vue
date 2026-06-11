@@ -18,19 +18,22 @@ const guideAttributes: IAttributesTableData[] = [
     name: "active-step",
     type: "String | Number",
     default: "undefined",
-    description: "Controls the current step name when external step state is needed.",
+    description:
+      "Controls the current step name when external step state is needed.",
   },
   {
     name: "steps",
     type: "INmorphGuideStepItem[]",
     default: "[]",
-    description: "Shared step metadata and ordering. Each step is matched to a NmorphGuideStep by name.",
+    description:
+      "Shared step metadata and ordering. Each step is matched to a NmorphGuideStep by name.",
   },
   {
     name: "loop",
     type: "Boolean",
     default: "false",
-    description: "Lets Back from the first step and Next from the last step wrap around instead of stopping.",
+    description:
+      "Lets Back from the first step and Next from the last step wrap around instead of stopping.",
   },
   {
     name: "close-on-finish",
@@ -78,7 +81,20 @@ const guideAttributes: IAttributesTableData[] = [
     name: "z-index",
     type: "Number",
     default: "undefined",
-    description: "Overrides the tooltip z-index used by guide cards.",
+    description: "Overrides the shared automatic z-index used by guide cards.",
+  },
+  {
+    name: "teleport-to",
+    type: "String | HTMLElement",
+    default: "body",
+    description:
+      "Target used to teleport guide cards out of local layout stacking contexts.",
+  },
+  {
+    name: "disabled-teleport",
+    type: "Boolean",
+    default: "false",
+    description: "Renders guide cards inline instead of teleporting them.",
   },
   {
     name: "width",
@@ -106,7 +122,8 @@ const guideStepAttributes: IAttributesTableData[] = [
     name: "title",
     type: "String",
     default: "-",
-    description: "Fallback title for this step when it is not supplied through NmorphGuide steps.",
+    description:
+      "Fallback title for this step when it is not supplied through NmorphGuide steps.",
   },
   {
     name: "text",
@@ -136,20 +153,23 @@ const guideStepAttributes: IAttributesTableData[] = [
     name: "order",
     type: "Number",
     default: "undefined",
-    description: "Fallback ordering when NmorphGuide steps does not define the order.",
+    description:
+      "Fallback ordering when NmorphGuide steps does not define the order.",
   },
   {
     name: "disabled",
     type: "Boolean",
     default: "false",
-    description: "Removes this wrapper from guide navigation while preserving the target slot.",
+    description:
+      "Removes this wrapper from guide navigation while preserving the target slot.",
   },
 ];
 
 const guideSlots: ISlotsTableData[] = [
   {
     name: "default",
-    description: "Contains NmorphGuideStep wrappers and any surrounding layout.",
+    description:
+      "Contains NmorphGuideStep wrappers and any surrounding layout.",
   },
 ];
 
@@ -204,7 +224,11 @@ const guideEvents: IEventsTableData[] = [
 ];
 
 const guideExposes: IExposesTableData[] = [
-  { name: "back", type: "() => void", description: "Moves to the previous step." },
+  {
+    name: "back",
+    type: "() => void",
+    description: "Moves to the previous step.",
+  },
   { name: "next", type: "() => void", description: "Moves to the next step." },
   { name: "finish", type: "() => void", description: "Finishes the guide." },
   { name: "close", type: "() => void", description: "Closes the guide." },
@@ -218,8 +242,19 @@ const guideExposes: IExposesTableData[] = [
 
 <template>
   <div class="docs-api-table">
-    <api-table title="NmorphGuide" name="guide" :attributes="guideAttributes" :slots="guideSlots"
-      :events="guideEvents" :exposes="guideExposes" />
-    <api-table title="NmorphGuideStep" name="guide-step" :attributes="guideStepAttributes" :slots="guideStepSlots" />
+    <api-table
+      title="NmorphGuide"
+      name="guide"
+      :attributes="guideAttributes"
+      :slots="guideSlots"
+      :events="guideEvents"
+      :exposes="guideExposes"
+    />
+    <api-table
+      title="NmorphGuideStep"
+      name="guide-step"
+      :attributes="guideStepAttributes"
+      :slots="guideStepSlots"
+    />
   </div>
 </template>

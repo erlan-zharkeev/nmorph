@@ -152,7 +152,7 @@ const slotDataFormItem: ISlotsTableData[] = [{ name: "default" }];
 
 <template>
   <NmorphDivider />
-  <NmorphCard>
+  <NmorphCard :paper="3">
     <div class="additional-data" v-html="t('overview.form.explanation')" />
   </NmorphCard>
   <NmorphDivider />

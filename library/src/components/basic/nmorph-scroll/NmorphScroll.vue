@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { INmorphInstance, NmorphDomElementType } from '@/types';
-import { useModifiers } from '@/utils';
+import { createCssSizeVariables, useModifiers } from '@/utils';
 import { computed, inject, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import type { StyleValue } from 'vue';
 import { type INmorphScrollProps, type NmorphCoordsType } from './types';
@@ -29,6 +29,7 @@ interface INmorphScrollDragState {
 const props = withDefaults(defineProps<INmorphScrollProps>(), {
   height: '100%',
   maxHeight: 'none',
+  gap: undefined,
   modelValue: () => ({
     x: 0,
     y: 0,
@@ -348,6 +349,9 @@ const maxHeight = computed(() => props.maxHeight);
 const rootStyle = computed<StyleValue>(() => ({
   '--nmorph-private-scroll-bar-width': barWidth.value,
   '--nmorph-private-scroll-bar-height': barHeight.value,
+  ...createCssSizeVariables({
+    '--nmorph-private-scroll-gap': props.gap,
+  }),
   boxSizing: 'border-box',
   minWidth: '0',
   minHeight: '0',
@@ -566,7 +570,7 @@ const mouseLeaveHandler = () => {
     grid-auto-flow: inherit;
     grid-template-columns: inherit;
     grid-template-rows: inherit;
-    gap: inherit;
+    gap: var(--nmorph-private-scroll-gap, inherit);
     justify-content: inherit;
     align-content: inherit;
     align-items: inherit;

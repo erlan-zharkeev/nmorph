@@ -282,6 +282,8 @@ const styles = computed(() =>
   }
 
   .nmorph-file-upload__list > div {
+    display: grid;
+    gap: var(--indentation-02);
     box-sizing: border-box;
     width: 100%;
     min-width: 0;
@@ -295,7 +297,7 @@ const styles = computed(() =>
     width: 100%;
     min-width: 0;
     max-width: 100%;
-    margin-bottom: var(--indentation-02);
+    margin-bottom: 0;
     padding: var(--indentation-02) var(--indentation-03);
     overflow: hidden;
     background: var(--nmorph-main-color);

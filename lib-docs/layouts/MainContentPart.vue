@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   NmorphBacktop,
+  NmorphCard,
   NmorphLayout,
   NmorphScroll,
   type INmorphScrollExpose,
@@ -104,47 +105,72 @@ const showCenterAside = computed(() => Boolean(slots["aside-right"]) && isRouteR
     full-height
   >
     <template #aside>
-      <NmorphScroll
-        ref="leftAsideScroll"
-        :model-value="leftAsideScrollPosition"
-        css-scroll-behavior="auto"
-        :y-gap-in-px="8"
-        class="docs-main-layout__scroll-container docs-main-layout__card docs-main-layout__card--outset docs-main-layout__left-aside"
-        @on-scroll="saveLeftAsideScroll"
+      <NmorphCard
+        shadow-type="not-defined"
+        :paper="3"
+        padding="0"
+        radius="4px"
+        content-class="docs-main-layout__card-content"
+        class="docs-main-layout__card docs-main-layout__card--outset docs-main-layout__left-aside"
       >
-        <aside class="docs-main-layout__aside-content">
-          <slot name="aside" />
-        </aside>
-      </NmorphScroll>
+        <NmorphScroll
+          ref="leftAsideScroll"
+          :model-value="leftAsideScrollPosition"
+          css-scroll-behavior="auto"
+          :y-gap-in-px="8"
+          class="docs-main-layout__scroll-container"
+          @on-scroll="saveLeftAsideScroll"
+        >
+          <aside class="docs-main-layout__aside-content">
+            <slot name="aside" />
+          </aside>
+        </NmorphScroll>
+      </NmorphCard>
     </template>
-    <NmorphScroll
-      id="page-content-part"
-      ref="scroll"
-      :y-gap-in-px="8"
-      class="docs-main-layout__scroll-container docs-main-layout__card docs-main-layout__card--outset"
+    <NmorphCard
+      shadow-type="not-defined"
+      :paper="3"
+      padding="0"
+      radius="4px"
+      content-class="docs-main-layout__card-content"
+      class="docs-main-layout__card docs-main-layout__card--outset"
     >
-      <NmorphLayout
-        v-if="showCenterAside"
-        class="docs-main-layout__content-layout"
-        gap="var(--docs-layout-shadow-space)"
-        aside-width="200px"
-        aside-position="right"
-        full-height
+      <NmorphScroll
+        id="page-content-part"
+        ref="scroll"
+        :y-gap-in-px="8"
+        class="docs-main-layout__scroll-container"
       >
-        <main class="docs-main-layout__center docs-main-layout__center--lib-page">
+        <NmorphLayout
+          v-if="showCenterAside"
+          class="docs-main-layout__content-layout"
+          gap="var(--docs-layout-shadow-space)"
+          aside-width="200px"
+          aside-position="right"
+          full-height
+        >
+          <main class="docs-main-layout__center docs-main-layout__center--lib-page">
+            <slot name="default" />
+          </main>
+          <template #aside>
+            <NmorphCard
+              tag="aside"
+              shadow-type="not-defined"
+              :paper="3"
+              radius="4px"
+              content-class="docs-main-layout__card-content"
+              class="docs-main-layout__card docs-main-layout__card--inset docs-main-layout__center-aside"
+            >
+              <slot name="aside-right" />
+            </NmorphCard>
+          </template>
+        </NmorphLayout>
+        <main v-else class="docs-main-layout__center docs-main-layout__center--full-page">
           <slot name="default" />
         </main>
-        <template #aside>
-          <aside class="docs-main-layout__card docs-main-layout__card--inset docs-main-layout__center-aside">
-            <slot name="aside-right" />
-          </aside>
-        </template>
-      </NmorphLayout>
-      <main v-else class="docs-main-layout__center docs-main-layout__center--full-page">
-        <slot name="default" />
-      </main>
-      <NmorphBacktop design="plain" class="docs-main-layout__backtop" />
-    </NmorphScroll>
+        <NmorphBacktop design="plain" class="docs-main-layout__backtop" />
+      </NmorphScroll>
+    </NmorphCard>
   </NmorphLayout>
 </template>
 
@@ -163,6 +189,11 @@ const showCenterAside = computed(() => Boolean(slots["aside-right"]) && isRouteR
   border-radius: 4px;
   background: var(--nmorph-main-color);
   height: 100%;
+}
+
+.docs-main-layout .docs-main-layout__card-content {
+  height: 100%;
+  min-height: 0;
 }
 
 .docs-main-layout__card--outset {
@@ -218,6 +249,10 @@ const showCenterAside = computed(() => Boolean(slots["aside-right"]) && isRouteR
 }
 
 @include max-width-query(1024) {
+  .docs-main-layout__content-layout > .nmorph-layout__body > .nmorph-layout__aside {
+    display: none;
+  }
+
   .docs-main-layout__center-aside {
     display: none;
   }
