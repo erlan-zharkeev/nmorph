@@ -41,6 +41,7 @@ import tableOverview from "~/lib-overview/table";
 import virtualListOverview from "~/lib-overview/virtual-list";
 import tooltipOverview from "~/lib-overview/tooltip";
 import guideOverview from "~/lib-overview/guide";
+import guideStepOverview from "~/lib-overview/guide-step";
 import alertOverview from "~/lib-overview/alert";
 import calloutOverview from "~/lib-overview/callout";
 import dialogOverview from "~/lib-overview/dialog";
@@ -115,7 +116,7 @@ const overviewComponentsByName: Record<string, unknown[]> = {
   "virtual-list": virtualListOverview,
   tooltip: tooltipOverview,
   guide: guideOverview,
-  "guide-step": guideOverview,
+  "guide-step": guideStepOverview,
   alert: alertOverview,
   callout: calloutOverview,
   dialog: dialogOverview,

@@ -17,6 +17,11 @@ import {
 import type { INmorphImagePreviewEmit, INmorphImagePreviewProps } from './types';
 import NmorphPreviewPortal from '../nmorph-preview-portal/NmorphPreviewPortal.vue';
 
+type ImageTransformState = {
+  rotateLevel: number;
+  scaleLevel: number;
+};
+
 const props = withDefaults(defineProps<INmorphImagePreviewProps>(), {
   alt: '',
   modelValue: false,
@@ -80,7 +85,37 @@ const modifiers = computed(() =>
   })
 );
 
-const scaleLevel = ref(1);
+const imageTransformStates = ref(new Map<string, ImageTransformState>());
+const getImageTransformKey = (src: string, index: number) => src || `__empty-image-${index}`;
+const currentTransformKey = computed(() => getImageTransformKey(triggerSource.value, resolvedCurrentIndex.value));
+const currentTransformState = computed<ImageTransformState>(
+  () =>
+    imageTransformStates.value.get(currentTransformKey.value) || {
+      rotateLevel: 0,
+      scaleLevel: 1,
+    }
+);
+const rotateLevel = computed(() => currentTransformState.value.rotateLevel);
+const scaleLevel = computed(() => currentTransformState.value.scaleLevel);
+const imageTransform = computed(() => `rotate(${rotateLevel.value}deg) scale(${scaleLevel.value})`);
+const setCurrentTransformState = (state: ImageTransformState) => {
+  const nextStates = new Map(imageTransformStates.value);
+  nextStates.set(currentTransformKey.value, state);
+  imageTransformStates.value = nextStates;
+};
+const updateCurrentTransformState = (patch: Partial<ImageTransformState>) => {
+  setCurrentTransformState({
+    ...currentTransformState.value,
+    ...patch,
+  });
+};
+const normalizeRotateLevel = (value: number) => {
+  const normalized = value % 360;
+
+  return Object.is(normalized, -0) ? 0 : normalized;
+};
+const clampScaleLevel = (value: number) =>
+  parseFloat(Math.min(Math.max(value, props.minScaleLevel), props.maxScaleLevel).toFixed(3));
 
 watch(
   () => [props.initialIndex, sourceList.value.length],
@@ -107,40 +142,38 @@ const closeHandler = () => {
 };
 
 const rotateRight = () => {
-  rotateLevel.value = rotateLevel.value + 90;
-  if (rotateLevel.value >= 360) rotateLevel.value = 0;
+  updateCurrentTransformState({
+    rotateLevel: normalizeRotateLevel(rotateLevel.value + 90),
+  });
 };
 
 const rotateLeft = () => {
-  rotateLevel.value = rotateLevel.value - 90;
-  if (rotateLevel.value <= -360) rotateLevel.value = 0;
+  updateCurrentTransformState({
+    rotateLevel: normalizeRotateLevel(rotateLevel.value - 90),
+  });
 };
 
 const zoomIn = () => {
-  if (scaleLevel.value < props.maxScaleLevel) {
-    scaleLevel.value += props.scaleStep;
-  }
-  scaleLevel.value = parseFloat(scaleLevel.value.toFixed(3));
+  updateCurrentTransformState({
+    scaleLevel: clampScaleLevel(scaleLevel.value + props.scaleStep),
+  });
 };
 
 const zoomOut = () => {
-  if (scaleLevel.value > props.minScaleLevel) {
-    scaleLevel.value -= props.scaleStep;
-  }
-  scaleLevel.value = parseFloat(scaleLevel.value.toFixed(3));
+  updateCurrentTransformState({
+    scaleLevel: clampScaleLevel(scaleLevel.value - props.scaleStep),
+  });
 };
 
 const isLevelChangedToMin = computed(() => scaleLevel.value < 1);
 
 const enlargeToNormal = () => {
-  scaleLevel.value = 1;
+  updateCurrentTransformState({ scaleLevel: 1 });
 };
 
 const shrinkToNormal = () => {
-  scaleLevel.value = 1;
+  updateCurrentTransformState({ scaleLevel: 1 });
 };
-
-const rotateLevel = ref(0);
 
 const previousHandler = () => {
   const length = sourceList.value.length;
@@ -318,7 +351,7 @@ const getTriggerLabel = (index: number) => (props.alt ? `${props.alt} ${index + 
       fit="contain"
       design="plain"
       :frame-border="0"
-      :style="{ transform: `rotate(${rotateLevel}deg) scale(${scaleLevel})` }"
+      :style="{ transform: imageTransform }"
     >
       <template v-if="$slots.loading" #loading>
         <slot name="loading" />

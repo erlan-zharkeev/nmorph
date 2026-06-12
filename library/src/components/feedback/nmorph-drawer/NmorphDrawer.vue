@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { computed, nextTick, onBeforeUnmount, ref, useSlots, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphIcon, NmorphIconCross, NmorphOverlay } from '@/components';
 import { createCssSizeVariables, useModifiers } from '@/utils';
@@ -22,9 +22,15 @@ const props = withDefaults(defineProps<INmorphDrawerProps>(), {
 const emit = defineEmits<INmorphDrawerEmit>();
 const slots = useSlots();
 
+const drawerTransitionDuration = 220;
+const isVisible = ref(props.modelValue);
+const isOpen = ref(props.modelValue);
+let openAnimationFrame: number | null = null;
+let closeTimeout: ReturnType<typeof setTimeout> | null = null;
+
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-drawer': [props.placement, props.modelValue && 'open'],
+    'nmorph-drawer': [props.placement, isOpen.value && 'open'],
   })
 );
 
@@ -45,11 +51,73 @@ const overlayClickHandler = () => {
 };
 
 const hasHeader = computed(() => Boolean(slots.header || props.title || props.showClose));
+
+const clearOpenAnimationFrame = () => {
+  if (openAnimationFrame === null || typeof window === 'undefined') return;
+
+  cancelAnimationFrame(openAnimationFrame);
+  openAnimationFrame = null;
+};
+
+const clearCloseTimeout = () => {
+  if (closeTimeout === null) return;
+
+  clearTimeout(closeTimeout);
+  closeTimeout = null;
+};
+
+const openDrawer = async () => {
+  clearCloseTimeout();
+  isVisible.value = true;
+
+  if (typeof window === 'undefined') {
+    isOpen.value = true;
+    return;
+  }
+
+  await nextTick();
+  clearOpenAnimationFrame();
+  openAnimationFrame = requestAnimationFrame(() => {
+    isOpen.value = true;
+    openAnimationFrame = null;
+  });
+};
+
+const closeDrawer = () => {
+  clearOpenAnimationFrame();
+  isOpen.value = false;
+
+  if (!isVisible.value) return;
+
+  clearCloseTimeout();
+  closeTimeout = setTimeout(() => {
+    isVisible.value = false;
+    closeTimeout = null;
+  }, drawerTransitionDuration);
+};
+
+watch(
+  () => props.modelValue,
+  (visible) => {
+    if (visible) {
+      openDrawer();
+      return;
+    }
+
+    closeDrawer();
+  },
+  { immediate: true }
+);
+
+onBeforeUnmount(() => {
+  clearOpenAnimationFrame();
+  clearCloseTimeout();
+});
 </script>
 
 <template>
   <NmorphOverlay
-    :show="props.modelValue"
+    :show="isVisible"
     :z-index="props.zIndex"
     :teleport-to="props.teleportTo"
     :disabled-teleport="props.disabledTeleport"

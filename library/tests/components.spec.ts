@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { createSSRApp, defineComponent, h, nextTick, reactive, ref } from 'vue';
+import { createSSRApp, defineComponent, h, markRaw, nextTick, reactive, ref } from 'vue';
 import { renderToString } from '@vue/server-renderer';
 import { describe, expect, it, vi } from 'vitest';
 import { NmorphLibrary } from '../src/main';
@@ -2978,6 +2978,7 @@ describe('components', () => {
       });
 
       await nextTick();
+      await nextTick();
 
       const tile = wrapper.find('.nmorph-media-tile');
 
@@ -3013,6 +3014,75 @@ describe('components', () => {
     } finally {
       if (descriptor) Object.defineProperty(HTMLMediaElement.prototype, 'srcObject', descriptor);
       else delete (HTMLMediaElement.prototype as HTMLMediaElement & { srcObject?: unknown }).srcObject;
+    }
+  });
+
+  it('keeps media tile srcObject attached without relying on MediaStream track counters', async () => {
+    const srcObjectDescriptor = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'srcObject');
+    const playDescriptor = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'play');
+    const assignedSrcObjects = new WeakMap<HTMLMediaElement, unknown>();
+    const play = vi.fn().mockResolvedValue(undefined);
+
+    Object.defineProperty(HTMLMediaElement.prototype, 'srcObject', {
+      configurable: true,
+      get() {
+        return assignedSrcObjects.get(this);
+      },
+      set(value) {
+        assignedSrcObjects.set(this, value);
+      },
+    });
+    Object.defineProperty(HTMLMediaElement.prototype, 'play', {
+      configurable: true,
+      value: play,
+    });
+
+    try {
+      const stream = markRaw({
+        id: 'remote-stream',
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      } as unknown as MediaStream);
+      const wrapper = mount(NmorphMediaTile, {
+        props: {
+          srcObject: stream,
+          muted: false,
+          videoOff: true,
+          name: 'Remote user',
+        },
+      });
+
+      await nextTick();
+
+      const video = wrapper.find('video').element as HTMLVideoElement;
+      const audio = wrapper.find('audio').element as HTMLAudioElement;
+
+      expect(wrapper.find('audio').exists()).toBe(true);
+      expect(assignedSrcObjects.get(video)).toBe(stream);
+      expect(assignedSrcObjects.get(audio)).toBe(stream);
+      expect(video.muted).toBe(true);
+
+      await wrapper.setProps({ videoOff: false });
+      await nextTick();
+      await nextTick();
+
+      expect(assignedSrcObjects.get(video)).toBe(stream);
+      expect(play).toHaveBeenCalled();
+
+      await wrapper.setProps({ error: true });
+      await nextTick();
+      await nextTick();
+
+      expect(wrapper.find('audio').exists()).toBe(false);
+      expect(assignedSrcObjects.get(video)).toBe(stream);
+
+      wrapper.unmount();
+    } finally {
+      if (srcObjectDescriptor) Object.defineProperty(HTMLMediaElement.prototype, 'srcObject', srcObjectDescriptor);
+      else delete (HTMLMediaElement.prototype as HTMLMediaElement & { srcObject?: unknown }).srcObject;
+
+      if (playDescriptor) Object.defineProperty(HTMLMediaElement.prototype, 'play', playDescriptor);
+      else delete (HTMLMediaElement.prototype as HTMLMediaElement & { play?: unknown }).play;
     }
   });
 
@@ -5759,6 +5829,65 @@ describe('components', () => {
     target.remove();
   });
 
+  it('keeps image preview transform state per image source', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+    const gallerySources = ['preview-one.png', 'preview-two.png'];
+
+    const wrapper = mount(NmorphImagePreview, {
+      props: {
+        modelValue: true,
+        src: gallerySources,
+        alt: 'Gallery preview',
+      },
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const getPreviewFrame = () =>
+      document.body.querySelector<HTMLElement>('.nmorph-image-preview__content .nmorph-image');
+    const getPreviewImage = () =>
+      document.body.querySelector<HTMLImageElement>('.nmorph-image-preview__content img');
+    const getActionButtons = () =>
+      Array.from(document.body.querySelectorAll<HTMLButtonElement>('.nmorph-image-preview__actions button'));
+
+    expect(getPreviewImage()?.getAttribute('src')).toBe(gallerySources[0]);
+
+    getActionButtons()[0].click();
+    await nextTick();
+    getActionButtons()[2].click();
+    await nextTick();
+
+    expect(getPreviewFrame()?.style.transform).toBe('rotate(90deg) scale(1.2)');
+
+    document.body.querySelector<HTMLButtonElement>('.nmorph-image-preview__right button')?.click();
+    await nextTick();
+
+    expect(getPreviewImage()?.getAttribute('src')).toBe(gallerySources[1]);
+    expect(getPreviewFrame()?.style.transform).toBe('rotate(0deg) scale(1)');
+
+    getActionButtons()[2].click();
+    await nextTick();
+
+    expect(getPreviewFrame()?.style.transform).toBe('rotate(0deg) scale(1.2)');
+
+    document.body.querySelector<HTMLButtonElement>('.nmorph-image-preview__left button')?.click();
+    await nextTick();
+
+    expect(getPreviewImage()?.getAttribute('src')).toBe(gallerySources[0]);
+    expect(getPreviewFrame()?.style.transform).toBe('rotate(90deg) scale(1.2)');
+
+    wrapper.unmount();
+    target.remove();
+  });
+
   it('mounts image preview portal only while preview is open', async () => {
     const target = document.createElement('div');
     document.body.appendChild(target);
@@ -6465,6 +6594,31 @@ describe('components', () => {
 
     expect(wrapper.find('.nmorph-pagination').attributes('aria-busy')).toBe('true');
     expect(wrapper.findAll('.nmorph-pagination__page-btn-wrapper')).toHaveLength(4);
+
+    wrapper.unmount();
+  });
+
+  it('can reserve a fixed pagination container while loading', async () => {
+    const wrapper = mount(NmorphPagination, {
+      props: {
+        totalElementsQuantity: 0,
+        loading: true,
+        fixedContainer: true,
+        maxVisiblePages: 7,
+        width: '360px',
+        minWidth: 320,
+      },
+    });
+
+    await nextTick();
+
+    const pagination = wrapper.find('.nmorph-pagination');
+    const paginationElement = pagination.element as HTMLElement;
+
+    expect(pagination.classes()).toContain('nmorph-pagination--fixed-container');
+    expect(paginationElement.style.getPropertyValue('--nmorph-private-pagination-fixed-pages')).toBe('7');
+    expect(paginationElement.style.getPropertyValue('--nmorph-private-pagination-width')).toBe('360px');
+    expect(paginationElement.style.getPropertyValue('--nmorph-private-pagination-min-width')).toBe('320px');
 
     wrapper.unmount();
   });

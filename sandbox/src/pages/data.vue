@@ -35,9 +35,12 @@ import {
 import type {
   INmorphEmojiPickerI18n,
   INmorphFileCardProps,
+  NmorphDataTableElRecordType,
+  NmorphElementDesignType,
   NmorphMediaGalleryItem,
   NmorphEmojiPickerDataSource,
   NmorphSortOrderType,
+  NmorphTableSortType,
 } from '@nmorph/nmorph-ui-kit'
 import { loadNmorphEmojiLocale, nmorphEmojiLanguageOptions } from '../../../library/src/emoji'
 import type { NmorphEmojiLanguage, NmorphEmojiLocale } from '../../../library/src/emoji'
@@ -238,6 +241,81 @@ const tableSort = ref<Record<string, NmorphSortOrderType>>({
   name: 'ascending',
   count: 'descending',
 })
+
+interface BasicTableCell {
+  date: string
+  name: string
+  address: string
+}
+
+const basicTableData = ref<BasicTableCell[]>([
+  {
+    date: '2023-10-10',
+    name: 'Alice',
+    address: '123 Maple Ave, New York',
+  },
+  {
+    date: '2023-10-09',
+    name: 'Bob',
+    address: '456 Elm St, Chicago',
+  },
+  {
+    date: '2023-10-08',
+    name: 'Charlie',
+    address: '789 Pine St, San Francisco',
+  },
+  {
+    date: '2023-10-07',
+    name: 'Diana',
+    address: '321 Oak St, Seattle',
+  },
+  {
+    date: '2023-10-06',
+    name: 'Ethan',
+    address: '654 Birch Rd, Austin',
+  },
+  {
+    date: '2023-10-05',
+    name: 'Fiona',
+    address: '987 Cedar Blvd, Miami',
+  },
+  {
+    date: '2023-10-04',
+    name: 'George',
+    address: '147 Spruce St, Denver',
+  },
+])
+const basicTableSort = ref<NmorphTableSortType>({
+  date: 'descending',
+  name: 'ascending',
+})
+const basicTableBordered = ref(false)
+const basicTableDesign = ref<NmorphElementDesignType>('nmorph')
+const basicTableHighlightRowOnHover = ref(false)
+const basicTableDesignProps = computed(() =>
+  basicTableDesign.value === 'plain'
+    ? { design: 'plain' as const, bordered: basicTableBordered.value }
+    : { design: 'nmorph' as const }
+)
+const basicTableHighlightRowOnHoverText = computed(() =>
+  basicTableHighlightRowOnHover.value
+    ? 'Disable row highlight on hover'
+    : 'Enable row highlight on hover'
+)
+const toggleBasicTableDesign = () => {
+  if (basicTableDesign.value === 'nmorph') {
+    basicTableBordered.value = true
+    basicTableDesign.value = 'plain'
+    return
+  }
+
+  basicTableBordered.value = false
+  basicTableDesign.value = 'nmorph'
+}
+const clickBasicTableRow = (data: NmorphDataTableElRecordType) => {
+  alert(`My name is ${data.name}!`)
+}
+
 const selectedEmojiLanguage = ref<NmorphEmojiLanguage>('en')
 const emojiLocale = ref<NmorphEmojiLocale | null>(null)
 const emojiLoading = ref(false)
@@ -604,25 +682,62 @@ const progressColor = (value: number) => {
     </SandboxSection>
 
     <SandboxSection title="NmorphTable">
-      <NmorphTable
-        :data="tableData"
-        :sort="tableSort"
-        bordered
-        row-hover
-        design="nmorph"
-        :cell-height="44"
-        row-hover-background="color-mix(in srgb, var(--nmorph-accent-color) 10%, transparent)"
-      >
-        <NmorphTableColumn prop="name" label="Name" width="180" alignment="left" />
-        <NmorphTableColumn prop="status" label="Status" width="160">
-          <template #default="{ scope }">
-            <NmorphTableCell v-for="(_, index) in scope.rows" :key="index" :row="index">
-              <NmorphBadge :value="String(scope.rows[index].status)" type="tag" color="var(--nmorph-success-color)" />
-            </NmorphTableCell>
-          </template>
-        </NmorphTableColumn>
-        <NmorphTableColumn prop="count" label="Count" width="120" alignment="right" />
-      </NmorphTable>
+      <div class="table-demo-stack">
+        <div class="table-actions">
+          <NmorphButton text="Toggle design" @click="toggleBasicTableDesign" />
+          <NmorphButton
+            :text="basicTableHighlightRowOnHoverText"
+            @click="basicTableHighlightRowOnHover = !basicTableHighlightRowOnHover"
+          />
+          <p class="hint">sort: {{ basicTableSort }}</p>
+        </div>
+        <NmorphTable
+          :data="basicTableData"
+          :row-hover="basicTableHighlightRowOnHover"
+          :sort="basicTableSort"
+          v-bind="basicTableDesignProps"
+        >
+          <NmorphTableColumn prop="date" label="Date" alignment="left" width="100" />
+          <NmorphTableColumn prop="name" label="Name" />
+          <NmorphTableColumn prop="address" label="Address" />
+          <NmorphTableColumn prop="operations" label="Operations">
+            <template #default="{ scope }">
+              <NmorphTableCell v-for="(cellData, index) in scope.rows" :key="index" :row="index">
+                <NmorphButton
+                  text="Click me!"
+                  fill
+                  borderless
+                  design="plain"
+                  @click="clickBasicTableRow(cellData)"
+                />
+              </NmorphTableCell>
+            </template>
+          </NmorphTableColumn>
+        </NmorphTable>
+
+        <NmorphTable
+          :data="tableData"
+          :sort="tableSort"
+          row-hover
+          design="nmorph"
+          :cell-height="44"
+          row-hover-background="color-mix(in srgb, var(--nmorph-accent-color) 10%, transparent)"
+        >
+          <NmorphTableColumn prop="name" label="Name" width="180" alignment="left" />
+          <NmorphTableColumn prop="status" label="Status" width="160">
+            <template #default="{ scope }">
+              <NmorphTableCell v-for="(_, index) in scope.rows" :key="index" :row="index">
+                <NmorphBadge
+                  :value="String(scope.rows[index].status)"
+                  type="tag"
+                  color="var(--nmorph-success-color)"
+                />
+              </NmorphTableCell>
+            </template>
+          </NmorphTableColumn>
+          <NmorphTableColumn prop="count" label="Count" width="120" alignment="right" />
+        </NmorphTable>
+      </div>
     </SandboxSection>
 
     <SandboxSection title="NmorphVirtualList">
@@ -763,6 +878,22 @@ const progressColor = (value: number) => {
 
 .cards p,
 .stack p {
+  margin: 0;
+}
+
+.table-demo-stack {
+  display: grid;
+  gap: 24px;
+}
+
+.table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.table-actions p {
   margin: 0;
 }
 

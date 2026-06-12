@@ -11,6 +11,7 @@ import {
   NmorphIconCheck,
   NmorphNotificationProvider,
   NmorphNotificationPlacement,
+  NmorphSpace,
   NmorphTooltip,
   useNmorphNotification,
 } from '@nmorph/nmorph-ui-kit'
@@ -21,6 +22,7 @@ const notificationPlacements = Object.values(NmorphNotificationPlacement)
 const dialogOpen = ref(false)
 const customDialogOpen = ref(false)
 const tallDialogOpen = ref(false)
+const docsDrawerOpen = ref(false)
 const drawerOpen = ref(false)
 const leftDrawerOpen = ref(false)
 const closableAlertVisible = ref(true)
@@ -139,9 +141,18 @@ const showStickyNotification = () => {
 
     <SandboxSection title="NmorphDrawer">
       <div class="row">
+        <NmorphButton text="Open drawer" @click="docsDrawerOpen = true" />
         <NmorphButton text="Right drawer" @click="drawerOpen = true" />
         <NmorphButton text="Left drawer" design="plain" @click="leftDrawerOpen = true" />
       </div>
+      <NmorphDrawer v-model="docsDrawerOpen" title="Drawer" size="340px">
+        <NmorphSpace direction="column" size="large">
+          <p>
+            Use a drawer for secondary flows that should not replace the current page.
+          </p>
+          <NmorphButton text="Close" @click="docsDrawerOpen = false" />
+        </NmorphSpace>
+      </NmorphDrawer>
       <NmorphDrawer v-model="drawerOpen" title="Drawer title" size="360px">
         <div class="drawer-content">
           <p>Drawer keeps the page context while showing a secondary flow.</p>

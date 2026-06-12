@@ -54,6 +54,21 @@ const attributesData: IAttributesTableData[] = [
     type: "Number",
     default: "5",
   },
+  {
+    name: "fixed-container",
+    type: "Boolean",
+    default: "false",
+  },
+  {
+    name: "width",
+    type: "Number | String",
+    default: "undefined",
+  },
+  {
+    name: "min-width",
+    type: "Number | String",
+    default: "undefined",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [];

@@ -14,7 +14,9 @@ export default {
   "right-aside-title": "Содержание",
   name: "Название",
   events: "События",
-  translates: "Переводы",
+  translates: "Переводы i18n",
+  "translates-description":
+    "По этим ключам можно настраивать кастомный текст для языков, которые библиотека не поддерживает из коробки.",
   description: "Описание",
   text: "Текст",
   type: "Тип",
@@ -226,6 +228,16 @@ export default {
     changelog: {
       title: "Журнал изменений",
       items: {
+        "media-tile-stable-src-object-binding":
+          "NmorphMediaTile теперь сразу привязывает srcObject streams к media elements для WebRTC, держит немьютнутый remote audio в стабильном отдельном audio element, мьютит парный video output и сообщает об autoplay failures в development.",
+        "pagination-fixed-container-sizing":
+          "NmorphPagination теперь может резервировать фиксированный контейнер через width и min-width, а loading examples в docs держат стабильное место под skeleton cards, пока приходит контент.",
+        "table-plain-bordered-contract":
+          "NmorphTable теперь типизирует bordered как prop только для plain design и рендерит plain bordered tables с аккуратными одинарными линиями и целыми скругленными углами.",
+        "drawer-animation-sandbox-example":
+          "NmorphDrawer теперь анимирует открытие и закрытие, а sandbox содержит такой же drawer example, как в lib docs.",
+        "image-preview-docs-polish":
+          "NmorphImagePreview хранит scale и rotation отдельно для каждой preview-картинки, пока компонент смонтирован, docs вынесли Guide Step на отдельную страницу, а примеры получили polish для overlay, table, translations и icon.",
         "media-tile-src-object-audio-output":
           "NmorphMediaTile теперь выводит немьютнутый MediaStream audio через отдельный audio element для srcObject, держит video muted для стабильного autoplay, применяет sinkId к обоим элементам, вызывает play для video и audio и отслеживает addtrack/removetrack.",
         "hydration-navigation-stability":
@@ -1396,6 +1408,12 @@ export default {
           "Показывает guide из двух шагов, привязанный к обернутым target-элементам.",
       },
     },
+    "guide-step": {
+      "basic-usage": {
+        subtitle:
+          "Показывает, как guide step оборачивает target-элемент и задает fallback-контент карточки.",
+      },
+    },
     stepper: {
       "basic-usage": {
         subtitle:
@@ -1632,6 +1650,10 @@ export default {
           "Определяет, сколько страниц отображается в элементе управления пагинацией.",
         "fast-forward-step":
           "Определяет, сколько страниц пропускается при быстрой перемотке вперед.",
+        "fixed-container":
+          "Резервирует стабильную ширину контейнера пагинации на основе max-visible-pages.",
+        width: "Задает фиксированную ширину контейнера пагинации.",
+        "min-width": "Задает минимальную ширину контейнера пагинации.",
       },
       slot: {},
       variables: {},
@@ -1645,18 +1667,12 @@ export default {
         "enable-row-highlight": "Выделение строки при наведении",
         "disable-row-highlight": "Отключить выделение строки при наведении",
         "click-me-text": "Нажми на меня!",
-        info: {
-          title: "Важная информация",
-          content:
-            "Свойство 'bordered' работает только если свойство 'design' установлено в 'plain'. Кроме того, сортировка в настоящее время работает только с двумя значениями: 'ascending' и 'descending'.\nОбратите внимание, что таблица находится в стадии активной разработки и может содержать ошибки.",
-        },
       },
       api: {
         data: "Определяет данные, которые будут отображены в таблице",
         "row-hover":
           "Булево значение, которое включает или отключает эффект наведения на строки таблицы",
-        bordered:
-          "Булево значение, которое включает или отключает границы вокруг ячеек таблицы. Работает только если свойство 'design' установлено в 'plain'",
+        bordered: "Включает границы вокруг ячеек таблицы для plain-дизайна.",
         sort: "Определяет поведение сортировки для столбцов таблицы",
         design: "Стиль отображения таблицы",
         virtual: "Включает виртуальный рендеринг для больших наборов данных",

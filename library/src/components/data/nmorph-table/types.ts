@@ -29,12 +29,10 @@ export type NmorphTableColumnPropertyInjectionType = string;
 
 export type NmorphTableIdInjectionType = string;
 
-export interface INmorphTableProps {
+interface INmorphTableBaseProps {
   data?: NmorphTableDataType;
   rowHover?: boolean;
-  bordered?: boolean;
   sort?: NmorphTableSortType;
-  design?: NmorphElementDesignType;
   virtual?: boolean;
   virtualHeight?: number | string;
   virtualOverscan?: number;
@@ -44,3 +42,15 @@ export interface INmorphTableProps {
   cellHeight?: number | string;
   rowHoverBackground?: string;
 }
+
+type NmorphTablePlainDesignProps = INmorphTableBaseProps & {
+  design: 'plain';
+  bordered?: boolean;
+};
+
+type NmorphTableNmorphDesignProps = INmorphTableBaseProps & {
+  design?: Exclude<NmorphElementDesignType, 'plain'>;
+  bordered?: never;
+};
+
+export type INmorphTableProps = NmorphTablePlainDesignProps | NmorphTableNmorphDesignProps;

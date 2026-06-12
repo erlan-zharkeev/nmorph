@@ -17,7 +17,6 @@ import type { INmorphTableProps } from './types';
 
 const props = withDefaults(defineProps<INmorphTableProps>(), {
   data: () => [],
-  bordered: false,
   sort: undefined,
   design: 'nmorph',
   rowHover: true,
@@ -31,9 +30,13 @@ const props = withDefaults(defineProps<INmorphTableProps>(), {
   rowHoverBackground: undefined,
 });
 
+const bordered = computed(() => props.design === 'plain' && props.bordered === true);
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-table': [props.design],
+    'nmorph-table': {
+      [props.design]: true,
+      bordered: bordered.value,
+    },
   })
 );
 
@@ -98,7 +101,7 @@ const defaultColWidth = computed(() => {
 });
 
 const getWidth = (width: string | undefined) => {
-  return width !== '' ? width : defaultColWidth.value;
+  return width ? width : defaultColWidth.value;
 };
 
 const key = ref(0);
@@ -211,7 +214,7 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
                 v-for="(columnData, idx) in columns"
                 :key="idx"
                 class="nmorph-table__table-data"
-                :class="{ 'nmorph-table__table-data--bordered': props.bordered }"
+                :class="{ 'nmorph-table__table-data--bordered': bordered }"
               >
                 <div class="nmorph-table__cell">
                   <div :style="{ 'justify-content': columnData.alignment }" class="nmorph-table__cell-content">
@@ -266,7 +269,7 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
                     <td
                       v-for="columnData in columns"
                       :key="columnData.prop"
-                      :class="{ 'nmorph-table__table-data--bordered': props.bordered }"
+                      :class="{ 'nmorph-table__table-data--bordered': bordered }"
                       class="nmorph-table__table-data"
                     >
                       <div
@@ -301,7 +304,7 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
                   <td
                     v-for="columnData in columns"
                     :key="columnData.prop"
-                    :class="{ 'nmorph-table__table-data--bordered': props.bordered }"
+                    :class="{ 'nmorph-table__table-data--bordered': bordered }"
                     class="nmorph-table__table-data"
                   >
                     <div
@@ -341,6 +344,7 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
   table {
     width: calc(100% - 2px);
     margin-left: 1px;
+    table-layout: fixed;
     border-collapse: collapse;
     border-spacing: 0;
   }
@@ -429,5 +433,30 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
   background: var(--nmorph-main-color);
   border: var(--nmorph-plain-border);
   border-radius: var(--default-border-radius);
+}
+
+.nmorph-table--plain.nmorph-table--bordered {
+  border: 1px solid var(--nmorph-private-table-border-color);
+
+  table {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .nmorph-table__table-data--bordered {
+    border: 0;
+    border-right: 1px solid var(--nmorph-private-table-border-color);
+    border-bottom: 1px solid var(--nmorph-private-table-border-color);
+  }
+
+  .nmorph-table__table-data--bordered:last-child {
+    border-right: 0;
+  }
+
+  .nmorph-table__body:not(.nmorph-table__body--virtual) .nmorph-table__table-data-row:last-child {
+    .nmorph-table__table-data--bordered {
+      border-bottom: 0;
+    }
+  }
 }
 </style>

@@ -4,8 +4,8 @@ import {
   NmorphCard,
   NmorphButton,
   NmorphNumberInput,
-  NmorphIcon,
-  NmorphIconLoader,
+  NmorphSkeleton,
+  NmorphSkeletonItem,
 } from "@nmorph/nmorph-ui-kit";
 
 const quantityElementsOnPage = ref(10);
@@ -57,6 +57,16 @@ const getData = async (page: number) => {
   }
 };
 
+const placeholderElements = computed<Elements>(() =>
+  Array.from({ length: quantityElementsOnPage.value }, (_, index) => ({
+    id: `placeholder-${index}`,
+    body: "",
+  })),
+);
+const visibleElements = computed(() =>
+  loading.value ? placeholderElements.value : elements.value,
+);
+
 const toggleDisabled = () => {
   disabled.value = !disabled.value;
 };
@@ -100,14 +110,28 @@ getData(0);
         </div>
       </div>
       <div class="cards">
-        <div class="cards__loader" v-if="loading">
-          <NmorphIcon size="large">
-            <NmorphIconLoader />
-          </NmorphIcon>
-        </div>
-        <div class="cards__container" v-else>
-          <div class="cards__card" v-for="card in elements" :key="card.id">
-            <NmorphCard :paper="3"> {{ card.body }} </NmorphCard>
+        <div class="cards__container">
+          <div
+            class="cards__card"
+            v-for="card in visibleElements"
+            :key="card.id"
+          >
+            <NmorphSkeleton v-if="loading" class="cards__skeleton" loading>
+              <template #template>
+                <NmorphSkeletonItem
+                  variant="rect"
+                  width="100%"
+                  height="70px"
+                />
+              </template>
+            </NmorphSkeleton>
+            <NmorphCard
+              v-else
+              class="cards__card-content"
+              :paper="3"
+            >
+              <span>{{ card.body }}</span>
+            </NmorphCard>
           </div>
         </div>
       </div>
@@ -117,6 +141,8 @@ getData(0);
         v-model="currentPageModel"
         :elements-quantity-on-page="quantityElementsOnPage"
         :total-elements-quantity="total"
+        fixed-container
+        :max-visible-pages="5"
       />
     </ClientOnly>
   </div>
@@ -126,10 +152,36 @@ getData(0);
 .pagination-basic-usage-overview {
   width: 100%;
 
+  .cards {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+  }
+
   .cards__container {
     display: grid;
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .cards__card {
+    min-width: 0;
+  }
+
+  .cards__card-content {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    overflow: hidden;
+  }
+
+  .cards__card-content span {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .actions {
@@ -144,12 +196,15 @@ getData(0);
     margin-bottom: 8px;
   }
 
-  .cards__loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 94px;
-    margin-top: 16px;
+  .cards__skeleton,
+  .cards__skeleton .nmorph-skeleton__template,
+  .cards__skeleton .nmorph-skeleton-item {
+    width: 100%;
+  }
+
+  .cards__skeleton .nmorph-skeleton-item {
+    margin-bottom: 0;
+    border-radius: 4px;
   }
 }
 </style>

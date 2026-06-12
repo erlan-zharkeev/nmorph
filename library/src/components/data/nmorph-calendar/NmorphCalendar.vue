@@ -200,6 +200,9 @@ const styles = computed<CSSProperties>(() =>
     '--nmorph-private-calendar-cell-height': props.cellHeight,
   })
 );
+const tableDesignProps = computed(() =>
+  props.design === 'plain' ? { design: 'plain' as const, bordered: true } : { design: 'nmorph' as const }
+);
 const dateData = (data: unknown) => data as INmorphCalendarDate;
 
 updateCalendar();
@@ -221,7 +224,7 @@ updateCalendar();
       />
     </slot>
     <slot name="content">
-      <NmorphTable :data="calendar" bordered :row-hover="false" :design="props.design">
+      <NmorphTable :data="calendar" :row-hover="false" v-bind="tableDesignProps">
         <NmorphTableColumn
           v-for="columnName in days"
           :key="`${columnName}`"

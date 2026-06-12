@@ -119,6 +119,7 @@ const attributeNameLabel = (name: string, required: boolean) =>
         v-if="updatedAttributes"
         class="docs-api-table__attributes-table"
         :data="updatedAttributes"
+        design="plain"
         bordered
         :row-hover="false"
       >
@@ -184,7 +185,7 @@ const attributeNameLabel = (name: string, required: boolean) =>
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("slots") }}
       </h3>
-      <NmorphTable :data="updatedSlots" bordered :row-hover="false">
+      <NmorphTable :data="updatedSlots" design="plain" bordered :row-hover="false">
         <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
         <NmorphTableColumn
           prop="description"
@@ -201,7 +202,7 @@ const attributeNameLabel = (name: string, required: boolean) =>
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("exposes") }}
       </h3>
-      <NmorphTable :data="updatedExposes" bordered :row-hover="false">
+      <NmorphTable :data="updatedExposes" design="plain" bordered :row-hover="false">
         <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
         <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
           <template #default="{ scope }">
@@ -243,7 +244,7 @@ const attributeNameLabel = (name: string, required: boolean) =>
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("events") }}
       </h3>
-      <NmorphTable :data="updatedEvents" bordered :row-hover="false">
+      <NmorphTable :data="updatedEvents" design="plain" bordered :row-hover="false">
         <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
         <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
           <template #default="{ scope }">
@@ -270,7 +271,10 @@ const attributeNameLabel = (name: string, required: boolean) =>
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("translates") }}
       </h3>
-      <NmorphTable :data="updatedTranslates" bordered :row-hover="false">
+      <p class="docs-api-table__description nmorph-body">
+        {{ $t("translates-description") }}
+      </p>
+      <NmorphTable :data="updatedTranslates" design="plain" bordered :row-hover="false">
         <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
         <NmorphTableColumn
           prop="description"
@@ -321,6 +325,11 @@ const attributeNameLabel = (name: string, required: boolean) =>
 
 .docs-api-table__title {
   margin-bottom: 8px;
+}
+
+.docs-api-table__description {
+  margin: 0 0 12px;
+  color: var(--nmorph-text-color);
 }
 
 .docs-api-table__slots,

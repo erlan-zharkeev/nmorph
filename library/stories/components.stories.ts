@@ -611,7 +611,7 @@ export const Table: Story = {
     rowHover: true,
     bordered: true,
     sort: { name: undefined, group: undefined, status: undefined },
-    design: 'nmorph',
+    design: 'plain',
   },
   argTypes: {
     data: object,

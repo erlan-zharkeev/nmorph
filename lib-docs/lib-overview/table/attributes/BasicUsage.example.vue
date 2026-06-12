@@ -64,6 +64,11 @@ const sort = ref<NmorphTableSortType>({
 const bordered = ref(false);
 const design = ref<NmorphElementDesignType>("nmorph");
 const highlightRowOnHover = ref(false);
+const tableDesignProps = computed(() =>
+  design.value === "plain"
+    ? { design: "plain" as const, bordered: bordered.value }
+    : { design: "nmorph" as const },
+);
 
 const toggleDesignProp = () => {
   if (design.value === "nmorph") {
@@ -107,10 +112,9 @@ const clickMeText = "Click me!";
       </div>
       <NmorphTable
         :data="data"
-        :bordered="bordered"
         :row-hover="highlightRowOnHover"
-        :design="design"
         :sort="sort"
+        v-bind="tableDesignProps"
       >
         <NmorphTableColumn
           prop="date"
@@ -126,6 +130,7 @@ const clickMeText = "Click me!";
               <NmorphButton
                 :text="clickMeText"
                 fill
+                borderless
                 @click="clickHandler(cellData)"
                 design="plain"
               />

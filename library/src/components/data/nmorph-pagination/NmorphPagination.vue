@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { useModifiers } from '@/utils';
+import { createCssSizeVariables, useModifiers } from '@/utils';
 import { NmorphRadioGroup, NmorphButton, NmorphIcon, NmorphRadio, NmorphIconChevronDown } from '@/components';
 import type { INmorphPaginationEmit, INmorphPaginationProps } from './types';
 
@@ -13,13 +13,20 @@ const props = withDefaults(defineProps<INmorphPaginationProps>(), {
   maxVisiblePages: 9,
   fastForwardStep: 5,
   thickness: 'basic',
+  fixedContainer: false,
+  width: undefined,
+  minWidth: undefined,
 });
 
 const emit = defineEmits<INmorphPaginationEmit>();
 
 const modifiers = computed(() =>
   useModifiers({
-    'nmorph-pagination': [props.disabled && 'disabled', props.loading && 'loading'],
+    'nmorph-pagination': [
+      props.disabled && 'disabled',
+      props.loading && 'loading',
+      props.fixedContainer && 'fixed-container',
+    ],
   })
 );
 
@@ -29,8 +36,30 @@ const thicknessHeightMap = {
   thin: 'var(--thin-component)',
 };
 
+const fixedPagesCount = computed(() => Math.max(1, Math.floor(props.maxVisiblePages)));
+const fixedContainerWidth = computed(() => {
+  const pageButtonsWidth = fixedPagesCount.value * 40;
+  const pageButtonsGap = Math.max(0, fixedPagesCount.value - 1) * 8;
+  const pageControlsWidth = pageButtonsWidth + pageButtonsGap;
+
+  return [
+    'calc(',
+    'var(--nmorph-private-pagination-height) + ',
+    'var(--nmorph-private-pagination-height) + ',
+    '16px + var(--indentation-01) + var(--indentation-01) + ',
+    `${pageControlsWidth}px`,
+    ')',
+  ].join('');
+});
+
 const paginationStyle = computed(() => ({
   '--nmorph-private-pagination-height': thicknessHeightMap[props.thickness],
+  '--nmorph-private-pagination-fixed-pages': fixedPagesCount.value,
+  '--nmorph-private-pagination-fixed-width': fixedContainerWidth.value,
+  ...createCssSizeVariables({
+    '--nmorph-private-pagination-width': props.width,
+    '--nmorph-private-pagination-min-width': props.minWidth,
+  }),
 }));
 
 const interactionDisabled = computed(() => props.disabled || props.loading);
@@ -149,9 +178,11 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
       :disabled="blockPrevButton || interactionDisabled"
       @click="prevClick"
     >
-      <NmorphIcon class="nmorph-pagination__prev-icon">
-        <NmorphIconChevronDown />
-      </NmorphIcon>
+      <template #icon-only>
+        <NmorphIcon class="nmorph-pagination__prev-icon">
+          <NmorphIconChevronDown />
+        </NmorphIcon>
+      </template>
     </NmorphButton>
     <NmorphRadioGroup
       v-model="selectedPage"
@@ -184,9 +215,11 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
       :disabled="blockNextButton || interactionDisabled"
       @click="nextClick"
     >
-      <NmorphIcon class="nmorph-pagination__next-icon">
-        <NmorphIconChevronDown />
-      </NmorphIcon>
+      <template #icon-only>
+        <NmorphIcon class="nmorph-pagination__next-icon">
+          <NmorphIconChevronDown />
+        </NmorphIcon>
+      </template>
     </NmorphButton>
   </div>
 </template>
@@ -195,7 +228,17 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
 .nmorph-pagination {
   display: flex;
   justify-content: center;
+  box-sizing: border-box;
+  width: var(--nmorph-private-pagination-width, 100%);
+  min-width: min(100%, var(--nmorph-private-pagination-min-width, 0px));
+  max-width: 100%;
   margin-top: var(--indentation-04);
+  margin-right: auto;
+  margin-left: auto;
+
+  &.nmorph-pagination--fixed-container {
+    width: var(--nmorph-private-pagination-width, var(--nmorph-private-pagination-fixed-width));
+  }
 
   .nmorph-radio-group__content {
     display: flex;

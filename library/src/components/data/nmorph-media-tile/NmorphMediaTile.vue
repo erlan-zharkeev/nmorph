@@ -63,15 +63,12 @@ const updateSrcObjectTrackCount = (stream: MediaStream | null) => {
   };
 };
 const canInspectVideoTracks = computed(() => typeof props.srcObject?.getVideoTracks === 'function');
-const hasAudioTracks = computed(() => srcObjectTrackCount.value.audio > 0);
 const hasVideoTracks = computed(() => srcObjectTrackCount.value.video > 0);
 const hasVideoSource = computed(() =>
   Boolean(props.src || (props.srcObject && (!canInspectVideoTracks.value || hasVideoTracks.value)))
 );
 const videoVisible = computed(() => hasMediaSource.value && hasVideoSource.value && !props.videoOff && !props.error);
-const needsSeparateAudioOutput = computed(() =>
-  Boolean(props.srcObject && !props.muted && !props.error && hasAudioTracks.value)
-);
+const needsSeparateAudioOutput = computed(() => Boolean(props.srcObject && !props.muted && !props.error));
 const videoMuted = computed(() => props.muted || needsSeparateAudioOutput.value);
 const videoSrc = computed(() => (videoVisible.value && props.src ? props.src : undefined));
 const initials = computed(() =>
@@ -109,10 +106,27 @@ const setMediaElementSinkId = (element: HTMLMediaElement | null) => {
   void sinkElement.setSinkId(props.sinkId).catch(() => undefined);
 };
 
+const logMediaPlaybackError = (error: unknown) => {
+  if (!import.meta.env.DEV) return;
+
+  console.warn('[NmorphMediaTile] media autoplay failed', error);
+};
+
 const playMediaElement = (element: HTMLMediaElement | null) => {
   if (!element || !props.autoplay) return;
 
-  void element.play().catch(() => undefined);
+  let playResult: ReturnType<HTMLMediaElement['play']>;
+
+  try {
+    playResult = element.play();
+  } catch (error) {
+    logMediaPlaybackError(error);
+    return;
+  }
+
+  if (playResult && typeof playResult.catch === 'function') {
+    void playResult.catch(logMediaPlaybackError);
+  }
 };
 
 watch(
@@ -142,14 +156,17 @@ watch(
       props.srcObject,
       props.sinkId,
       props.autoplay,
+      props.videoOff,
+      props.error,
       videoVisible.value,
       needsSeparateAudioOutput.value,
+      videoMuted.value,
       videoRef.value,
       audioRef.value,
     ] as const,
   () => {
     if (videoRef.value) {
-      const nextVideoStream = videoVisible.value ? props.srcObject : null;
+      const nextVideoStream = props.srcObject;
 
       if (videoRef.value.srcObject !== nextVideoStream) {
         videoRef.value.srcObject = nextVideoStream;
@@ -157,7 +174,7 @@ watch(
 
       setMediaElementSinkId(videoRef.value);
 
-      if (props.autoplay && videoVisible.value && nextVideoStream) {
+      if (props.autoplay && nextVideoStream && !props.videoOff && !props.error) {
         playMediaElement(videoRef.value);
       }
     }

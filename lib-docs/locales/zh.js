@@ -14,7 +14,9 @@ export default {
   "right-aside-title": "目录",
   name: "名称",
   events: "事件",
-  translates: "翻译",
+  translates: "i18n 翻译",
+  "translates-description":
+    "可以通过这些 key 为库未内置支持的语言配置自定义文本。",
   description: "描述",
   text: "文本",
   type: "类型",
@@ -213,6 +215,16 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "media-tile-stable-src-object-binding":
+          "NmorphMediaTile 现在会立即把 srcObject streams 绑定到 WebRTC media elements，将未静音的 remote audio 保持在稳定的独立 audio element 中，让配对 video output 保持 muted，并在 development 中报告 autoplay failures。",
+        "pagination-fixed-container-sizing":
+          "NmorphPagination 现在可以通过 width 和 min-width 预留固定容器，docs loading 示例也会在内容到达前保持稳定的 skeleton card 空间。",
+        "table-plain-bordered-contract":
+          "NmorphTable 现在把 bordered 类型限制为仅 plain design 可用，并让 plain bordered tables 使用更干净的单线边框和完整的圆角。",
+        "drawer-animation-sandbox-example":
+          "NmorphDrawer 现在支持打开和关闭动画，sandbox 也加入了与 lib docs 相同的 drawer 示例。",
+        "image-preview-docs-polish":
+          "NmorphImagePreview 会在组件挂载期间按每张 preview 图片保存 scale 和 rotation，docs 将 Guide Step 拆为独立页面，并优化了 overlay、table、translations 和 icon 示例。",
         "media-tile-src-object-audio-output":
           "NmorphMediaTile 现在会为 srcObject 中未静音的 MediaStream audio 创建独立 audio element，让 video 保持 muted 以稳定 autoplay，同时把 sinkId 应用于两个元素、分别调用 play，并监听 addtrack/removetrack。",
         "hydration-navigation-stability":
@@ -1325,6 +1337,12 @@ export default {
         subtitle: "展示绑定到包装目标元素的两步 guide。",
       },
     },
+    "guide-step": {
+      "basic-usage": {
+        subtitle:
+          "展示 guide step 如何包装目标元素并提供 fallback 卡片内容。",
+      },
+    },
     stepper: {
       "basic-usage": {
         subtitle: "展示带自定义 indicator slot 的受控 step navigation。",
@@ -1524,6 +1542,9 @@ export default {
         "hide-on-single-page": "如果只有一页，则隐藏分页组件。",
         "max-visible-pages": "定义在分页控件中显示的页面数量。",
         "fast-forward-step": "定义快进时跳过的页面数量。",
+        "fixed-container": "根据 max-visible-pages 预留稳定的分页容器宽度。",
+        width: "定义分页容器的固定宽度。",
+        "min-width": "定义分页容器的最小宽度。",
       },
       slot: {},
       variables: {},
@@ -1537,17 +1558,11 @@ export default {
         "enable-row-highlight": "启用行高亮显示（悬停时）",
         "disable-row-highlight": "禁用行高亮显示（悬停时）",
         "click-me-text": "点击我！",
-        info: {
-          title: "重要信息",
-          content:
-            "'bordered' 属性仅在 'design' 属性设置为 'plain' 时有效。此外，排序当前仅支持 'ascending' 和 'descending' 两个值。\n请注意，表格处于积极开发阶段，可能包含错误。",
-        },
       },
       api: {
         data: "定义要显示在表格中的数据",
         "row-hover": "布尔值，启用或禁用表格行的悬停效果",
-        bordered:
-          "布尔值，启用或禁用表格单元格的边框。仅在 'design' 属性设置为 'plain' 时有效",
+        bordered: "为 plain 表格设计启用单元格边框。",
         sort: "定义表格列的排序行为",
         design: "表格的显示样式",
         virtual: "为大量表格数据启用虚拟渲染",

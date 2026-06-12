@@ -8,7 +8,7 @@ import basicUsageSource from "./BasicUsage.example.vue?raw";
   <div id="content-basic-usage">
     <DocsExample
       :header="$t('overview.basic-usage')"
-      :subtitle="$t('overview.table.basic-usage.subtitle')"
+      :subtitle="$t('overview.guide-step.basic-usage.subtitle')"
       :component="BasicUsageExample"
       :source="basicUsageSource"
     />

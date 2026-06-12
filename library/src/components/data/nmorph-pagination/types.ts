@@ -10,6 +10,9 @@ export interface INmorphPaginationProps {
   maxVisiblePages?: number;
   fastForwardStep?: number;
   thickness?: keyof typeof NmorphComponentThickness;
+  fixedContainer?: boolean;
+  width?: number | string;
+  minWidth?: number | string;
 }
 
 export interface INmorphPaginationEmit {

@@ -14,7 +14,9 @@ export default {
   "right-aside-title": "Contents",
   name: "Name",
   events: "Events",
-  translates: "Translations",
+  translates: "Translations i18n",
+  "translates-description":
+    "Use these keys to configure custom text for languages that the library does not support out of the box.",
   description: "Description",
   text: "Text",
   type: "Type",
@@ -224,6 +226,16 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "media-tile-stable-src-object-binding":
+          "NmorphMediaTile now binds srcObject streams to media elements immediately for WebRTC, keeps unmuted remote audio on a stable dedicated audio element, mutes the paired video output, and reports autoplay failures in development.",
+        "pagination-fixed-container-sizing":
+          "NmorphPagination can reserve a fixed container with width and min-width controls, and docs loading examples keep stable skeleton card space while content arrives.",
+        "table-plain-bordered-contract":
+          "NmorphTable now types bordered as a plain-design-only prop and renders plain bordered tables with cleaner single borders and intact rounded corners.",
+        "drawer-animation-sandbox-example":
+          "NmorphDrawer now animates open and close transitions, and the sandbox includes the same drawer example shown in lib docs.",
+        "image-preview-docs-polish":
+          "NmorphImagePreview keeps image scale and rotation per preview image while the component is mounted, docs split Guide Step into its own page, and docs examples received overlay, table, translation, and icon polish.",
         "media-tile-src-object-audio-output":
           "NmorphMediaTile now splits unmuted MediaStream audio into a dedicated audio element for srcObject streams, keeps video muted for stable autoplay, applies sinkId to both elements, calls play for video and audio, and tracks addtrack/removetrack updates.",
         "hydration-navigation-stability":
@@ -1381,6 +1393,12 @@ export default {
         subtitle: "Shows a two-step guide attached to wrapped targets.",
       },
     },
+    "guide-step": {
+      "basic-usage": {
+        subtitle:
+          "Shows how a guide step wraps a target element and provides fallback card content.",
+      },
+    },
     stepper: {
       "basic-usage": {
         subtitle: "Shows controlled step navigation with a custom indicator slot.",
@@ -1612,6 +1630,10 @@ export default {
           "Defines how many pages are displayed in the pagination control.",
         "fast-forward-step":
           "Defines how many pages are skipped when fast-forwarding.",
+        "fixed-container":
+          "Reserves a stable pagination container width based on max-visible-pages.",
+        width: "Defines a fixed width for the pagination container.",
+        "min-width": "Defines the minimum width of the pagination container.",
       },
       slot: {},
       variables: {},
@@ -1625,18 +1647,12 @@ export default {
         "enable-row-highlight": "Enable row highlight on hover",
         "disable-row-highlight": "Disable row highlight on hover",
         "click-me-text": "Click me!",
-        info: {
-          title: "Important Information",
-          content:
-            "'bordered' property works only if 'design' property is set to 'plain'. Additionally, sorting currently works only with two values: 'ascending' and 'descending'.\nPlease note that the table is under active development and may contain bugs.",
-        },
       },
       api: {
         data: "Defines the data to be displayed in the table",
         "row-hover":
           "Boolean value that enables or disables hover effect on table rows",
-        bordered:
-          "Boolean value that enables or disables borders around table cells. Works only if 'design' property is set to 'plain'",
+        bordered: "Enables borders around table cells for the plain table design.",
         sort: "Defines the sorting behavior for table columns",
         design: "Table display style",
         virtual: "Enables virtual rendering for large table datasets",

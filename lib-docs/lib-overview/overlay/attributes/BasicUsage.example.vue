@@ -64,18 +64,6 @@ const showTransparent = ref(false);
 
 <style lang="scss">
 .overlay-basic-usage-overview {
-  .overlay-slot-element {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .overlay-slot__content {
-    background: var(--nmorph-main-color);
-    padding: 8px;
-  }
-
   .nmorph-button {
     margin-bottom: 8px;
   }
@@ -88,5 +76,17 @@ const showTransparent = ref(false);
   .overlay-element {
     margin-right: 8px;
   }
+}
+
+.overlay-slot-element {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.overlay-slot__content {
+  background: var(--nmorph-main-color);
+  padding: 8px;
 }
 </style>
