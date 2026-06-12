@@ -35,9 +35,9 @@ const closeHandler = () => {
               @on-outside-click="firstMenuCloseHandler"
               :y-offset="8"
             >
-              <div class="content">
+              <div class="dropdown-basic-usage__content">
                 <p
-                  class="content__element"
+                  class="dropdown-basic-usage__item"
                   @click="closeHandler"
                   v-for="idx of [1, 2, 3]"
                   :key="idx"
@@ -61,9 +61,9 @@ const closeHandler = () => {
               :relative-element="secondMenu"
               @on-outside-click="closeHandler"
             >
-              <div class="content">
+              <div class="dropdown-basic-usage__content">
                 <p
-                  class="content__element"
+                  class="dropdown-basic-usage__item"
                   @click="closeHandler"
                   v-for="idx of [1, 2, 3]"
                   :key="idx"
@@ -89,23 +89,23 @@ const closeHandler = () => {
   .first-menu {
     margin-right: 16px;
   }
+}
 
-  .content {
-    border-radius: 4px;
-    padding: 8px;
-    overflow: hidden;
-  }
+.dropdown-basic-usage__content {
+  padding: 8px;
+  overflow: hidden;
+  border-radius: 4px;
+}
 
-  .content__element {
-    cursor: pointer;
-    margin: 0;
-    padding: 6px 8px;
-    border-radius: 4px;
+.dropdown-basic-usage__item {
+  margin: 0;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
 
-    &:hover {
-      background: var(--nmorph-text-color);
-      color: var(--nmorph-main-color);
-    }
+  &:hover {
+    background: var(--nmorph-text-color);
+    color: var(--nmorph-main-color);
   }
 }
 </style>

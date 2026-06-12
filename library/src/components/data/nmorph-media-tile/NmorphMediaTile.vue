@@ -17,6 +17,8 @@ type SinkSelectableMediaElement = HTMLMediaElement & {
 };
 
 const props = withDefaults(defineProps<INmorphMediaTileProps>(), {
+  design: 'nmorph',
+  aspect: 'video',
   src: '',
   srcObject: null,
   sinkId: undefined,
@@ -84,6 +86,8 @@ const fallbackLabel = computed(() => initials.value || props.name || '?');
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-media-tile': [
+      props.design,
+      props.aspect,
       props.fit,
       props.mirrored && 'mirrored',
       props.selected && 'selected',
@@ -272,12 +276,23 @@ defineExpose({ videoRef });
   display: flex;
   justify-content: center;
   align-items: center;
-  aspect-ratio: 16 / 9;
+  box-sizing: border-box;
   min-width: 0;
   overflow: hidden;
   background: var(--nmorph-main-color);
+  border: none;
   border-radius: var(--default-border-radius);
   box-shadow: var(--nmorph-shadow-inset);
+
+  &.nmorph-media-tile--video {
+    aspect-ratio: 16 / 9;
+  }
+
+  &.nmorph-media-tile--fill {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+  }
 
   .nmorph-media-tile__video {
     width: 100%;
@@ -367,6 +382,11 @@ defineExpose({ videoRef });
 
   &.nmorph-media-tile--error {
     outline: 2px solid var(--nmorph-error-color);
+  }
+
+  &.nmorph-media-tile--plain {
+    border: var(--nmorph-plain-border);
+    box-shadow: none;
   }
 
   &.nmorph-media-tile--screen-sharing {

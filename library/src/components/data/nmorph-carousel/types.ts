@@ -4,6 +4,7 @@ import type { NmorphElementDesignType } from '@/types';
 export interface INmorphCarouselInjection {
   data: Ref<string[]>;
   carouselId: string;
+  hasLoopClones: Ref<boolean>;
 }
 
 export interface INmorphCarouselProps {

@@ -17,6 +17,9 @@ const videoSrc =
     <NmorphMediaTile name="Nikita Kim" video-off mic-muted />
     <NmorphMediaTile name="Hidden status" video-off :show-status="false" />
     <NmorphMediaTile loading name="Preparing stream" />
+    <div class="media-tile-basic-usage__fill-container">
+      <NmorphMediaTile aspect="fill" name="Fill parent" video-off />
+    </div>
   </div>
 </template>
 
@@ -27,6 +30,10 @@ const videoSrc =
   max-width: 720px;
   grid-template-columns: repeat(2, minmax(180px, 1fr));
   gap: 12px;
+}
+
+.media-tile-basic-usage__fill-container {
+  height: 180px;
 }
 
 @media (max-width: 520px) {

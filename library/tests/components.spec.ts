@@ -676,6 +676,7 @@ const renderCases = [
     component: NmorphNotificationProvider,
     props: {
       notifications: [{ id: 'notification', type: 'info', title: 'Notification', content: 'Content' }],
+      disabledTeleport: true,
     },
   },
 ];
@@ -2967,6 +2968,8 @@ describe('components', () => {
       const wrapper = mount(NmorphMediaTile, {
         props: {
           srcObject: stream,
+          design: 'plain',
+          aspect: 'fill',
           name: 'Ada Lovelace',
           fit: 'contain',
           mirrored: true,
@@ -2985,6 +2988,8 @@ describe('components', () => {
       expect(tile.classes()).toEqual(
         expect.arrayContaining([
           'nmorph-media-tile--contain',
+          'nmorph-media-tile--plain',
+          'nmorph-media-tile--fill',
           'nmorph-media-tile--mirrored',
           'nmorph-media-tile--selected',
           'nmorph-media-tile--speaking',
@@ -4433,6 +4438,7 @@ describe('components', () => {
     const wrapper = mount(NmorphNotificationProvider, {
       props: {
         notifications: [],
+        disabledTeleport: true,
       },
     });
 
@@ -4451,6 +4457,7 @@ describe('components', () => {
   it('renders notification duration indicator and forwards alert border props', async () => {
     const wrapper = mount(NmorphNotificationProvider, {
       props: {
+        disabledTeleport: true,
         notifications: [
           {
             id: 'timed',
@@ -4485,6 +4492,7 @@ describe('components', () => {
 
     const wrapper = mount(NmorphNotificationProvider, {
       props: {
+        disabledTeleport: true,
         notifications: [
           {
             id: 'timed',
@@ -4520,6 +4528,7 @@ describe('components', () => {
   it('can hide only notification duration value while keeping the progress bar', async () => {
     const wrapper = mount(NmorphNotificationProvider, {
       props: {
+        disabledTeleport: true,
         notifications: [
           {
             id: 'timed',
@@ -4547,6 +4556,53 @@ describe('components', () => {
     expect(wrapper.find('.nmorph-notification-provider__duration-value').exists()).toBe(false);
 
     wrapper.unmount();
+  });
+
+  it('uses the shared z-index manager when notifications appear', async () => {
+    const wrapper = mount(NmorphNotificationProvider, {
+      props: {
+        disabledTeleport: true,
+        notifications: [],
+      },
+    });
+
+    const provider = wrapper.find('.nmorph-notification-provider').element as HTMLElement;
+    const initialZIndex = Number(provider.style.zIndex);
+
+    await wrapper.setProps({
+      notifications: [{ id: 'layered', type: 'info', title: 'Layered' }],
+    });
+    await nextTick();
+    await nextTick();
+
+    const updatedProvider = wrapper.find('.nmorph-notification-provider').element as HTMLElement;
+
+    expect(Number(updatedProvider.style.zIndex)).toBeGreaterThan(initialZIndex);
+
+    wrapper.unmount();
+  });
+
+  it('teleports notification provider to body by default', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    const wrapper = mount(NmorphNotificationProvider, {
+      props: {
+        notifications: [{ id: 'teleported', type: 'info', title: 'Teleported' }],
+      },
+      attachTo: target,
+    });
+
+    await nextTick();
+    await nextTick();
+
+    const provider = document.body.querySelector('#teleported')?.closest('.nmorph-notification-provider');
+
+    expect(provider).not.toBeNull();
+    expect(target.contains(provider)).toBe(false);
+
+    wrapper.unmount();
+    target.remove();
   });
 
   it('renders number input right action buttons with increase above decrease', () => {
@@ -4582,16 +4638,25 @@ describe('components', () => {
     await nextTick();
     await nextTick();
 
-    const rightButton = wrapper.find('.nmorph-carousel__prev');
-    await rightButton.trigger('click');
-    expect(wrapper.find('.nmorph-carousel__wrapper').attributes('style')).toContain('translateX(-100%)');
+    const wrapperTrack = wrapper.find('.nmorph-carousel__wrapper');
+    const rightButton = wrapper.find('.nmorph-carousel__next');
+
+    expect(wrapperTrack.attributes('style')).toContain('translateX(-100%)');
 
     await rightButton.trigger('click');
-    expect(wrapper.find('.nmorph-carousel__wrapper').attributes('style')).toContain('translateX(-200%)');
+    expect(wrapperTrack.attributes('style')).toContain('translateX(-200%)');
 
     await rightButton.trigger('click');
-    expect(wrapper.find('.nmorph-carousel__wrapper').attributes('style')).toContain('translateX(-0%)');
-    expect(wrapper.findAll('.nmorph-carousel__item')).toHaveLength(3);
+    expect(wrapperTrack.attributes('style')).toContain('translateX(-300%)');
+
+    await rightButton.trigger('click');
+    expect(wrapperTrack.attributes('style')).toContain('translateX(-400%)');
+    expect(wrapper.findAll('.nmorph-carousel__item')).toHaveLength(5);
+
+    await wrapperTrack.trigger('transitionend');
+    await nextTick();
+
+    expect(wrapperTrack.attributes('style')).toContain('translateX(-100%)');
 
     wrapper.unmount();
   });

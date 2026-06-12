@@ -1,6 +1,11 @@
+import type { NmorphElementDesignType } from '@/types';
+
 export type NmorphMediaTileFit = 'cover' | 'contain';
+export type NmorphMediaTileAspect = 'video' | 'fill';
 
 export interface INmorphMediaTileProps {
+  design?: NmorphElementDesignType;
+  aspect?: NmorphMediaTileAspect;
   src?: string;
   srcObject?: MediaStream | null;
   sinkId?: string;

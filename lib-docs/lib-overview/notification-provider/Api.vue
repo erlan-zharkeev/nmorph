@@ -27,6 +27,16 @@ const attributesData: IAttributesTableData[] = [
     default: "auto",
   },
   {
+    name: "teleport-to",
+    type: "String | HTMLElement",
+    default: "body",
+  },
+  {
+    name: "disabled-teleport",
+    type: "Boolean",
+    default: "false",
+  },
+  {
     name: "quantity",
     type: "Number",
     default: "100",

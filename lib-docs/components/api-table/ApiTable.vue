@@ -117,7 +117,7 @@ const attributeNameLabel = (name: string, required: boolean) =>
       </h3>
       <NmorphTable
         v-if="updatedAttributes"
-        class="docs-api-table__attributes-table"
+        class="docs-api-table__table docs-api-table__attributes-table"
         :data="updatedAttributes"
         design="plain"
         bordered
@@ -185,7 +185,13 @@ const attributeNameLabel = (name: string, required: boolean) =>
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("slots") }}
       </h3>
-      <NmorphTable :data="updatedSlots" design="plain" bordered :row-hover="false">
+      <NmorphTable
+        class="docs-api-table__table docs-api-table__slots-table"
+        :data="updatedSlots"
+        design="plain"
+        bordered
+        :row-hover="false"
+      >
         <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
         <NmorphTableColumn
           prop="description"
@@ -202,7 +208,13 @@ const attributeNameLabel = (name: string, required: boolean) =>
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("exposes") }}
       </h3>
-      <NmorphTable :data="updatedExposes" design="plain" bordered :row-hover="false">
+      <NmorphTable
+        class="docs-api-table__table docs-api-table__exposes-table"
+        :data="updatedExposes"
+        design="plain"
+        bordered
+        :row-hover="false"
+      >
         <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
         <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
           <template #default="{ scope }">
@@ -244,7 +256,13 @@ const attributeNameLabel = (name: string, required: boolean) =>
       <h3 class="docs-api-table__title nmorph-title-2">
         {{ $t("events") }}
       </h3>
-      <NmorphTable :data="updatedEvents" design="plain" bordered :row-hover="false">
+      <NmorphTable
+        class="docs-api-table__table docs-api-table__events-table"
+        :data="updatedEvents"
+        design="plain"
+        bordered
+        :row-hover="false"
+      >
         <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
         <NmorphTableColumn prop="type" :label="$t('type')" alignment="center">
           <template #default="{ scope }">
@@ -274,7 +292,13 @@ const attributeNameLabel = (name: string, required: boolean) =>
       <p class="docs-api-table__description nmorph-body">
         {{ $t("translates-description") }}
       </p>
-      <NmorphTable :data="updatedTranslates" design="plain" bordered :row-hover="false">
+      <NmorphTable
+        class="docs-api-table__table docs-api-table__translates-table"
+        :data="updatedTranslates"
+        design="plain"
+        bordered
+        :row-hover="false"
+      >
         <NmorphTableColumn prop="name" :label="$t('name')" alignment="left" />
         <NmorphTableColumn
           prop="description"
@@ -287,11 +311,32 @@ const attributeNameLabel = (name: string, required: boolean) =>
 </template>
 
 <style lang="scss">
-.docs-api-table__attributes-table {
+.docs-api-table__table {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+
+  .nmorph-table {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
   .nmorph-table table {
+    width: 100%;
     table-layout: fixed;
   }
 
+  .nmorph-table__cell,
+  .nmorph-table__cell-content {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+}
+
+.docs-api-table__attributes-table {
   col:nth-child(1) {
     width: 18% !important;
   }
@@ -306,6 +351,32 @@ const attributeNameLabel = (name: string, required: boolean) =>
 
   col:nth-child(4) {
     width: 16% !important;
+  }
+}
+
+.docs-api-table__slots-table,
+.docs-api-table__translates-table {
+  col:nth-child(1) {
+    width: 28% !important;
+  }
+
+  col:nth-child(2) {
+    width: 72% !important;
+  }
+}
+
+.docs-api-table__exposes-table,
+.docs-api-table__events-table {
+  col:nth-child(1) {
+    width: 30% !important;
+  }
+
+  col:nth-child(2) {
+    width: 28% !important;
+  }
+
+  col:nth-child(3) {
+    width: 42% !important;
   }
 }
 

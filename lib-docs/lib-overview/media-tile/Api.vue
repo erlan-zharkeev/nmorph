@@ -5,8 +5,22 @@ import {
   type ISlotsTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
+import { NmorphElementDesign } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
+  {
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
+    description: "Visual surface design used by the tile.",
+  },
+  {
+    name: "aspect",
+    type: "'video' | 'fill'",
+    default: "video",
+    description:
+      "Controls the tile aspect ratio. Use fill to let the tile occupy the parent size.",
+  },
   {
     name: "src",
     type: "String",

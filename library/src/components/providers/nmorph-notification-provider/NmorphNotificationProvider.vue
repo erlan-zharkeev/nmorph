@@ -2,7 +2,7 @@
 import { NmorphNotificationPlacement } from '@/components/providers';
 import type { INmorphNotification, TNmorphNotificationPlacement } from '@/components/providers';
 import { NmorphAlert } from '@/components';
-import { computed, inject, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, inject, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import type { INmorphInstance } from '@/types';
 import type { INmorphNotificationProviderProps, TNmorphNotificationItem } from './types';
@@ -108,9 +108,21 @@ const props = withDefaults(defineProps<INmorphNotificationProviderProps>(), {
   placement: 'top-right',
   zIndex: undefined,
   quantity: 100,
+  teleportTo: 'body',
+  disabledTeleport: false,
 });
 
-const nmorph = inject<INmorphInstance | undefined>('nmorph', undefined);
+const isMounted = ref(false);
+const nmorph = inject<INmorphInstance | undefined>('nmorph');
+const dynamicZIndex = ref(nmorph?.zIndex.current.value ?? 1000);
+const activeZIndexAllocated = ref(false);
+
+const allocateZIndex = () => {
+  if (props.zIndex !== undefined || activeZIndexAllocated.value) return;
+
+  dynamicZIndex.value = nmorph?.zIndex.next() ?? dynamicZIndex.value + 1;
+  activeZIndexAllocated.value = true;
+};
 
 const notificationGroups = computed(() =>
   placementList.map((placement) => {
@@ -131,6 +143,16 @@ const hasRunningDurationIndicator = computed(() =>
     (notification) => hasDurationIndicator(notification) && !closingIds.value.includes(notification.id)
   )
 );
+const hasRenderedNotifications = computed(() => renderedNotifications.value.length > 0);
+const hasActiveNotifications = computed(
+  () =>
+    hasRenderedNotifications.value ||
+    props.notifications.some(
+      (notification) => hasNotificationId(notification) && !removedIds.value.includes(notification.id)
+    )
+);
+const zIndex = computed(() => props.zIndex ?? dynamicZIndex.value);
+const teleportDisabled = computed(() => !isMounted.value || props.disabledTeleport);
 
 const stopDurationTicker = () => {
   if (!durationTicker) return;
@@ -138,6 +160,27 @@ const stopDurationTicker = () => {
   clearInterval(durationTicker);
   durationTicker = undefined;
 };
+
+watch(
+  () => props.notifications,
+  () => {
+    if (hasActiveNotifications.value) allocateZIndex();
+  },
+  { deep: true, immediate: true, flush: 'sync' }
+);
+
+watch(
+  hasRenderedNotifications,
+  (hasRendered) => {
+    if (hasRendered) {
+      allocateZIndex();
+      return;
+    }
+
+    activeZIndexAllocated.value = false;
+  },
+  { immediate: true, flush: 'sync' }
+);
 
 watch(
   hasRunningDurationIndicator,
@@ -175,7 +218,7 @@ watch(
       );
 
       if (!isRendered) {
-        renderedNotifications.value.push(notification);
+        renderedNotifications.value = [...renderedNotifications.value, notification];
       }
     });
 
@@ -190,7 +233,9 @@ watch(
   { deep: true, immediate: true }
 );
 
-const zIndex = computed(() => props.zIndex ?? (nmorph?.zIndex.current.value ?? 1000) + 1);
+onMounted(() => {
+  isMounted.value = true;
+});
 
 onBeforeUnmount(() => {
   durationTimers.forEach((timer) => clearTimeout(timer));
@@ -202,58 +247,60 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="nmorph-notification-provider" :style="{ zIndex }">
-    <transition-group
-      v-for="group in notificationGroups"
-      :key="group.placement"
-      appear
-      name="nmorph-notification"
-      tag="div"
-      :class="`nmorph-notification-provider__list nmorph-notification-provider__list--${group.placement}`"
-    >
-      <div
-        v-for="notification in group.notifications"
-        :key="notification.id"
-        :style="getNotificationStyle(notification)"
-        :class="[
-          'nmorph-notification-provider__notification',
-          hasDurationIndicator(notification) && 'nmorph-notification-provider__notification--with-duration',
-          closingIds.includes(notification.id) && 'nmorph-notification-provider__notification--closing',
-        ]"
+  <Teleport :to="props.teleportTo" :disabled="teleportDisabled">
+    <div class="nmorph-notification-provider" :style="{ zIndex }">
+      <transition-group
+        v-for="group in notificationGroups"
+        :key="group.placement"
+        appear
+        name="nmorph-notification"
+        tag="div"
+        :class="`nmorph-notification-provider__list nmorph-notification-provider__list--${group.placement}`"
       >
-        <NmorphAlert
-          :id="notification.id"
-          class="nmorph-notification-provider__alert"
-          :style="{ width: notification.width }"
-          :type="notification.type"
-          :closable="notification.closable"
-          :title="notification.title"
-          :content="notification.content"
-          :fill="notification.fill"
-          :show-icon="notification.showIcon"
-          :bordered="notification.bordered"
-          :html="notification.html"
-          :close-icon-position="notification.closeIconPosition"
-          :background-color="notification.backgroundColor"
-          @close="() => closeHandler(notification.id)"
-        />
         <div
-          v-if="hasDurationIndicator(notification)"
-          :key="`${notification.id}-${getNotificationDuration(notification)}`"
-          class="nmorph-notification-provider__duration"
-          :title="hasDurationValue(notification) ? getNotificationDurationLabel(notification) : undefined"
-          aria-hidden="true"
+          v-for="notification in group.notifications"
+          :key="notification.id"
+          :style="getNotificationStyle(notification)"
+          :class="[
+            'nmorph-notification-provider__notification',
+            hasDurationIndicator(notification) && 'nmorph-notification-provider__notification--with-duration',
+            closingIds.includes(notification.id) && 'nmorph-notification-provider__notification--closing',
+          ]"
         >
-          <span class="nmorph-notification-provider__duration-track">
-            <span class="nmorph-notification-provider__duration-bar" />
-          </span>
-          <span v-if="hasDurationValue(notification)" class="nmorph-notification-provider__duration-value">
-            {{ getNotificationDurationLabel(notification) }}
-          </span>
+          <NmorphAlert
+            :id="notification.id"
+            class="nmorph-notification-provider__alert"
+            :style="{ width: notification.width }"
+            :type="notification.type"
+            :closable="notification.closable"
+            :title="notification.title"
+            :content="notification.content"
+            :fill="notification.fill"
+            :show-icon="notification.showIcon"
+            :bordered="notification.bordered"
+            :html="notification.html"
+            :close-icon-position="notification.closeIconPosition"
+            :background-color="notification.backgroundColor"
+            @close="() => closeHandler(notification.id)"
+          />
+          <div
+            v-if="hasDurationIndicator(notification)"
+            :key="`${notification.id}-${getNotificationDuration(notification)}`"
+            class="nmorph-notification-provider__duration"
+            :title="hasDurationValue(notification) ? getNotificationDurationLabel(notification) : undefined"
+            aria-hidden="true"
+          >
+            <span class="nmorph-notification-provider__duration-track">
+              <span class="nmorph-notification-provider__duration-bar" />
+            </span>
+            <span v-if="hasDurationValue(notification)" class="nmorph-notification-provider__duration-value">
+              {{ getNotificationDurationLabel(notification) }}
+            </span>
+          </div>
         </div>
-      </div>
-    </transition-group>
-  </div>
+      </transition-group>
+    </div>
+  </Teleport>
 </template>
 
 <style lang="scss">

@@ -28,4 +28,6 @@ export interface INmorphNotificationProviderProps {
   placement?: TNmorphNotificationPlacement;
   zIndex?: number;
   quantity?: number;
+  teleportTo?: string | HTMLElement;
+  disabledTeleport?: boolean;
 }

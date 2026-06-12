@@ -58,7 +58,7 @@ const tabs = ref([
 
   .elements {
     display: grid;
-    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    grid-template-columns: 1fr;
     gap: 24px;
     width: 100%;
   }
@@ -79,13 +79,5 @@ const tabs = ref([
 .tabs-basic-usage-overview__content {
   display: grid;
   gap: 8px;
-}
-
-@media (max-width: 820px) {
-  .tabs-basic-usage-overview {
-    .elements {
-      grid-template-columns: 1fr;
-    }
-  }
 }
 </style>

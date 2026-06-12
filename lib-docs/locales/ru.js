@@ -228,6 +228,14 @@ export default {
     changelog: {
       title: "Журнал изменений",
       items: {
+        "media-tile-aspect-design":
+          "NmorphMediaTile теперь поддерживает props design и aspect, включая aspect=\"fill\" для call tiles по размеру родителя, сохраняя 16:9 video layout по умолчанию.",
+        "carousel-seamless-loop":
+          "NmorphCarousel теперь зацикливается через clone-слайды по краям для бесшовной навигации вперед и назад, с исправленными left/right controls и styling стрелок в sandbox.",
+        "notification-provider-layering":
+          "NmorphNotificationProvider теперь по умолчанию телепортируется в body и использует общий z-index manager, чтобы notifications стабильно располагались поверх docs shell и overlays.",
+        "docs-api-example-polish":
+          "Docs API tables теперь удерживают slots, exposes, events и translations внутри контейнера, а examples получили polish для dropdown spacing, stacked tabs, borderless stepper arrows и icon currentColor.",
         "media-tile-stable-src-object-binding":
           "NmorphMediaTile теперь сразу привязывает srcObject streams к media elements для WebRTC, держит немьютнутый remote audio в стабильном отдельном audio element, мьютит парный video output и сообщает об autoplay failures в development.",
         "pagination-fixed-container-sizing":
@@ -1951,7 +1959,11 @@ export default {
         placement:
           "Позиция по умолчанию для уведомлений без собственного placement",
         "z-index":
-          "Задает фиксированный z-index уведомлений. Если не передан, используется слой над общим стеком",
+          "Задает фиксированный z-index уведомлений. Если не передан, используется общий автоматический стек z-index",
+        "teleport-to":
+          "Задает цель, куда будет телепортирован fixed-слой уведомлений",
+        "disabled-teleport":
+          "Отключает Teleport и рендерит слой уведомлений на месте",
         quantity:
           "Максимальное количество уведомлений, которое может быть на экране одновременно",
       },

@@ -344,5 +344,12 @@ defineExpose({ goTo, next, previous });
 
 .nmorph-stepper__indicator {
   width: 100%;
+
+  .nmorph-button.nmorph-button--plain.nmorph-button--icon-only {
+    .nmorph-button__content,
+    .nmorph-button__content:not(:disabled, [loading='true']):hover {
+      border: none;
+    }
+  }
 }
 </style>

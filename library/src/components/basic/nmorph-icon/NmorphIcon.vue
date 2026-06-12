@@ -43,6 +43,7 @@ const customStyles = computed(() => {
   min-width: var(--nmorph-private-icon-width);
   height: var(--nmorph-private-icon-height);
   min-height: var(--nmorph-private-icon-height);
+  color: var(--nmorph-private-icon-color);
 
   .nmorph-icon__content {
     display: flex;
@@ -58,6 +59,11 @@ const customStyles = computed(() => {
     width: 100%;
     height: 100%;
     fill: var(--nmorph-private-icon-color);
+  }
+
+  svg,
+  svg * {
+    color: var(--nmorph-private-icon-color);
   }
 
   path[stroke],

@@ -215,6 +215,14 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "media-tile-aspect-design":
+          "NmorphMediaTile 现在提供 design 和 aspect props，包括用于按父容器尺寸填充通话卡片的 aspect=\"fill\"，同时保留默认的 16:9 video layout。",
+        "carousel-seamless-loop":
+          "NmorphCarousel 现在通过边缘 clone slides 实现无缝前后循环，并修正 left/right controls 与 sandbox 箭头样式。",
+        "notification-provider-layering":
+          "NmorphNotificationProvider 现在默认 teleport 到 body，并使用共享 z-index manager，让 notifications 稳定显示在 docs shell 和 overlays 之上。",
+        "docs-api-example-polish":
+          "Docs API tables 现在会让 slots、exposes、events 和 translations 保持在容器内，同时优化 dropdown spacing、stacked tabs、borderless stepper arrows 和 icon currentColor。",
         "media-tile-stable-src-object-binding":
           "NmorphMediaTile 现在会立即把 srcObject streams 绑定到 WebRTC media elements，将未静音的 remote audio 保持在稳定的独立 audio element 中，让配对 video output 保持 muted，并在 development 中报告 autoplay failures。",
         "pagination-fixed-container-sizing":
@@ -1801,7 +1809,9 @@ export default {
       api: {
         notifications: "包含通知的数组。每条通知都可以覆盖 placement",
         placement: "未定义 placement 的通知所使用的默认位置",
-        "z-index": "定义固定的通知 z-index。未传入时使用共享栈上方的一层",
+        "z-index": "定义固定的通知 z-index。未传入时使用共享的自动 z-index 栈",
+        "teleport-to": "定义固定通知层 Teleport 的目标位置",
+        "disabled-teleport": "禁用 Teleport，并在当前位置渲染通知层",
         quantity: "同时可以在屏幕上显示的最大通知数量",
       },
       slot: {},

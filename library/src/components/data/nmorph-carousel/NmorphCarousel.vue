@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { generateUUID, useModifiers } from '@/utils';
-import { computed, provide, ref, watch } from 'vue';
+import { computed, nextTick, provide, ref, watch } from 'vue';
 import { NmorphIcon, INmorphCarouselInjection, NmorphIconChevronLeft, NmorphIconChevronRight } from '@/components';
 import type { INmorphCarouselEmit, INmorphCarouselProps } from './types';
 
 const currentSlide = ref(0);
+const trackIndex = ref(0);
+const transitionEnabled = ref(true);
+const loopResetTrackIndex = ref<number | null>(null);
+const wrapperRef = ref<HTMLElement | null>(null);
 
 const props = withDefaults(defineProps<INmorphCarouselProps>(), {
   design: 'nmorph',
@@ -22,9 +26,12 @@ const modifiers = computed(() =>
 
 const carouselData = ref<string[]>([]);
 const carouselId = generateUUID();
-provide<INmorphCarouselInjection>('carousel-data', { data: carouselData, carouselId });
-
 const slideCount = computed(() => carouselData.value.length);
+const hasLoopClones = computed(() => props.loop && slideCount.value > 1);
+provide<INmorphCarouselInjection>('carousel-data', { data: carouselData, carouselId, hasLoopClones });
+
+const getCarouselItemId = (itemName: string, clone?: 'before' | 'after') =>
+  `nmorph-carousel-item-${carouselId}-${itemName}${clone ? `-${clone}` : ''}`;
 
 const normalizeSlideIndex = (index: number) => {
   if (!slideCount.value) return 0;
@@ -32,17 +39,100 @@ const normalizeSlideIndex = (index: number) => {
   return (index + slideCount.value) % slideCount.value;
 };
 
+const getRealTrackIndex = (slideIndex: number) => (hasLoopClones.value ? slideIndex + 1 : slideIndex);
+
+const enableTransitionAfterJump = async () => {
+  await nextTick();
+  void wrapperRef.value?.offsetWidth;
+
+  const schedule =
+    typeof requestAnimationFrame === 'function'
+      ? requestAnimationFrame
+      : (callback: FrameRequestCallback) => setTimeout(() => callback(Date.now()), 0);
+
+  schedule(() => {
+    schedule(() => {
+      transitionEnabled.value = true;
+    });
+  });
+};
+
+const jumpToTrackIndex = (index: number) => {
+  transitionEnabled.value = false;
+  trackIndex.value = index;
+  void enableTransitionAfterJump();
+};
+
 const goToSlide = (index: number) => {
   const nextSlide = normalizeSlideIndex(index);
   if (nextSlide === currentSlide.value) return;
   currentSlide.value = nextSlide;
+  loopResetTrackIndex.value = null;
+  transitionEnabled.value = true;
+  trackIndex.value = getRealTrackIndex(nextSlide);
 };
 
-const prevSlide = () => goToSlide(currentSlide.value - 1);
-const nextSlide = () => goToSlide(currentSlide.value + 1);
+const moveSlide = (direction: -1 | 1) => {
+  if (!slideCount.value) return;
+
+  if (!props.loop || !hasLoopClones.value) {
+    goToSlide(currentSlide.value + direction);
+    return;
+  }
+
+  const previousSlide = currentSlide.value;
+  const nextSlideIndex = normalizeSlideIndex(previousSlide + direction);
+
+  if (nextSlideIndex === previousSlide) return;
+
+  currentSlide.value = nextSlideIndex;
+  transitionEnabled.value = true;
+
+  if (direction > 0 && previousSlide === slideCount.value - 1) {
+    trackIndex.value = slideCount.value + 1;
+    loopResetTrackIndex.value = 1;
+    return;
+  }
+
+  if (direction < 0 && previousSlide === 0) {
+    trackIndex.value = 0;
+    loopResetTrackIndex.value = slideCount.value;
+    return;
+  }
+
+  loopResetTrackIndex.value = null;
+  trackIndex.value = getRealTrackIndex(nextSlideIndex);
+};
+
+const prevSlide = () => moveSlide(-1);
+const nextSlide = () => moveSlide(1);
 
 const translateX = computed(() => {
-  return `translateX(-${currentSlide.value * 100}%)`;
+  return `translateX(-${trackIndex.value * 100}%)`;
+});
+
+const renderedCarouselItems = computed(() => {
+  const items = carouselData.value.map((itemName) => ({
+    id: getCarouselItemId(itemName),
+    key: itemName,
+  }));
+
+  if (!hasLoopClones.value || !items.length) return items;
+
+  const firstItemName = carouselData.value[0];
+  const lastItemName = carouselData.value[carouselData.value.length - 1];
+
+  return [
+    {
+      id: getCarouselItemId(lastItemName, 'before'),
+      key: `${lastItemName}-loop-before`,
+    },
+    ...items,
+    {
+      id: getCarouselItemId(firstItemName, 'after'),
+      key: `${firstItemName}-loop-after`,
+    },
+  ];
 });
 
 const isCurrentElementActive = (idx: number) => {
@@ -53,8 +143,18 @@ const elementIndicator = (idx: number) => {
   goToSlide(idx);
 };
 
-watch(slideCount, (count) => {
+const wrapperTransitionEndHandler = (event: TransitionEvent) => {
+  if (event.target !== event.currentTarget || loopResetTrackIndex.value === null) return;
+
+  const nextTrackIndex = loopResetTrackIndex.value;
+  loopResetTrackIndex.value = null;
+  jumpToTrackIndex(nextTrackIndex);
+};
+
+watch([slideCount, () => props.loop], ([count]) => {
   if (currentSlide.value > count - 1) currentSlide.value = Math.max(count - 1, 0);
+  loopResetTrackIndex.value = null;
+  jumpToTrackIndex(getRealTrackIndex(currentSlide.value));
 });
 
 watch(currentSlide, () => {
@@ -64,13 +164,14 @@ watch(currentSlide, () => {
 
 <template>
   <div :class="modifiers">
-    <div class="nmorph-carousel__wrapper transition-enabled" :style="{ transform: translateX }">
-      <div
-        v-for="itemName in carouselData"
-        :id="`nmorph-carousel-item-${carouselId}-${itemName}`"
-        :key="itemName"
-        class="nmorph-carousel__item"
-      />
+    <div
+      ref="wrapperRef"
+      class="nmorph-carousel__wrapper"
+      :class="{ 'transition-enabled': transitionEnabled }"
+      :style="{ transform: translateX }"
+      @transitionend="wrapperTransitionEndHandler"
+    >
+      <div v-for="item in renderedCarouselItems" :id="item.id" :key="item.key" class="nmorph-carousel__item" />
     </div>
     <div class="nmorph-carousel__elements-indicator">
       <div
@@ -85,14 +186,14 @@ watch(currentSlide, () => {
         />
       </div>
     </div>
-    <div class="nmorph-carousel__action-btn nmorph-carousel__prev" @click="nextSlide">
-      <NmorphIcon>
-        <NmorphIconChevronRight />
-      </NmorphIcon>
-    </div>
-    <div class="nmorph-carousel__action-btn nmorph-carousel__next" @click="prevSlide">
+    <div class="nmorph-carousel__action-btn nmorph-carousel__prev" @click="prevSlide">
       <NmorphIcon>
         <NmorphIconChevronLeft />
+      </NmorphIcon>
+    </div>
+    <div class="nmorph-carousel__action-btn nmorph-carousel__next" @click="nextSlide">
+      <NmorphIcon>
+        <NmorphIconChevronRight />
       </NmorphIcon>
     </div>
     <slot />
@@ -170,11 +271,11 @@ watch(currentSlide, () => {
   }
 
   .nmorph-carousel__prev {
-    right: var(--nmorph-private-carousel-action-offset);
+    left: var(--nmorph-private-carousel-action-offset);
   }
 
   .nmorph-carousel__next {
-    left: var(--nmorph-private-carousel-action-offset);
+    right: var(--nmorph-private-carousel-action-offset);
   }
 
   .nmorph-carousel__item {

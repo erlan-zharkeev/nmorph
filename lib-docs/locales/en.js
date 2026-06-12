@@ -226,6 +226,14 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "media-tile-aspect-design":
+          "NmorphMediaTile now exposes design and aspect props, including aspect=\"fill\" for parent-sized call tiles while keeping the default 16:9 video layout.",
+        "carousel-seamless-loop":
+          "NmorphCarousel now loops through cloned edge slides for seamless forward/back navigation, with corrected left/right controls and sandbox arrow styling.",
+        "notification-provider-layering":
+          "NmorphNotificationProvider now teleports to body by default and uses the shared z-index manager so notifications layer above docs shells and overlays consistently.",
+        "docs-api-example-polish":
+          "Docs API tables now keep slots, exposes, events, and translations inside their container, while examples polish dropdown spacing, stacked tabs, borderless stepper arrows, and icon currentColor handling.",
         "media-tile-stable-src-object-binding":
           "NmorphMediaTile now binds srcObject streams to media elements immediately for WebRTC, keeps unmuted remote audio on a stable dedicated audio element, mutes the paired video output, and reports autoplay failures in development.",
         "pagination-fixed-container-sizing":
@@ -1929,7 +1937,11 @@ export default {
         placement:
           "Default position for notifications that do not define placement",
         "z-index":
-          "Defines a fixed notification z-index. Uses one layer above the shared stack when omitted",
+          "Defines a fixed notification z-index. Uses the shared automatic z-index stack when omitted",
+        "teleport-to":
+          "Defines the target where the fixed notification layer is teleported",
+        "disabled-teleport":
+          "Disables Teleport and renders the notification layer in place",
         quantity:
           "Maximum number of notifications that can be on the screen at the same time",
       },

@@ -1116,16 +1116,14 @@ const progressColor = (value: number) => {
 }
 
 :deep(.nmorph-carousel__prev) {
-  right: 12px;
-  rotate: -90deg;
+  left: 12px;
 }
 
 :deep(.nmorph-carousel__next) {
-  left: 12px;
-  rotate: 90deg;
+  right: 12px;
 }
 
 :deep(.nmorph-carousel__action-btn .nmorph-icon) {
-  --color: #fff;
+  --nmorph-private-icon-color: #fff;
 }
 </style>
