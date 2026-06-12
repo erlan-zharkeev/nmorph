@@ -5,9 +5,6 @@ import type { INmorphIconProps } from './types';
 
 const props = withDefaults(defineProps<INmorphIconProps>(), {
   size: 'small',
-  width: undefined,
-  height: undefined,
-  color: undefined,
 });
 
 const modifiers = computed(() =>

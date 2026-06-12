@@ -21,10 +21,13 @@ export type GuideSection = {
   title: GuideLocaleText;
   paragraphs: GuideLocaleText[];
   points?: GuideLocaleText[];
-  code?: {
-    language: string;
-    content: string;
-  };
+  code?: GuideCodeBlock;
+  codes?: GuideCodeBlock[];
+};
+
+export type GuideCodeBlock = {
+  language: string;
+  content: string;
 };
 
 export type GuidePage = {
@@ -143,10 +146,24 @@ export const guidePages: GuidePage[] = [
             ru: "Установите UI kit через ваш package manager. Библиотека рассчитана на Vue 3 приложения и Nuxt 3 проекты.",
           },
         ],
-        code: {
-          language: "bash",
-          content: "pnpm add @nmorph/nmorph-ui-kit",
-        },
+        codes: [
+          {
+            language: "bash",
+            content: "pnpm add @nmorph/nmorph-ui-kit",
+          },
+          {
+            language: "bash",
+            content: "npm install @nmorph/nmorph-ui-kit",
+          },
+          {
+            language: "bash",
+            content: "yarn add @nmorph/nmorph-ui-kit",
+          },
+          {
+            language: "bash",
+            content: "bun add @nmorph/nmorph-ui-kit",
+          },
+        ],
       },
       {
         title: { en: "Styles", zh: "样式", ru: "Стили" },

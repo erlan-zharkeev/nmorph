@@ -41,18 +41,38 @@ const props = withDefaults(defineProps<INmorphMediaTileProps>(), {
 
 const videoRef = ref<HTMLVideoElement | null>(null);
 const audioRef = ref<HTMLAudioElement | null>(null);
+const srcObjectTrackCount = ref({
+  audio: 0,
+  video: 0,
+});
 const hasMediaSource = computed(() => Boolean(props.src || props.srcObject));
-const videoVisible = computed(() => hasMediaSource.value && !props.videoOff && !props.error);
 const getAudioTracks = (stream: MediaStream | null) => {
   if (!stream || typeof stream.getAudioTracks !== 'function') return [];
 
   return stream.getAudioTracks();
 };
-const hasAudioTracks = computed(() => getAudioTracks(props.srcObject).length > 0);
-const needsAudioOnlyOutput = computed(() =>
-  Boolean(props.srcObject && props.videoOff && !props.muted && !props.error && hasAudioTracks.value)
+const getVideoTracks = (stream: MediaStream | null) => {
+  if (!stream || typeof stream.getVideoTracks !== 'function') return [];
+
+  return stream.getVideoTracks();
+};
+const updateSrcObjectTrackCount = (stream: MediaStream | null) => {
+  srcObjectTrackCount.value = {
+    audio: getAudioTracks(stream).length,
+    video: getVideoTracks(stream).length,
+  };
+};
+const canInspectVideoTracks = computed(() => typeof props.srcObject?.getVideoTracks === 'function');
+const hasAudioTracks = computed(() => srcObjectTrackCount.value.audio > 0);
+const hasVideoTracks = computed(() => srcObjectTrackCount.value.video > 0);
+const hasVideoSource = computed(() =>
+  Boolean(props.src || (props.srcObject && (!canInspectVideoTracks.value || hasVideoTracks.value)))
 );
-const videoMuted = computed(() => props.muted || needsAudioOnlyOutput.value);
+const videoVisible = computed(() => hasMediaSource.value && hasVideoSource.value && !props.videoOff && !props.error);
+const needsSeparateAudioOutput = computed(() =>
+  Boolean(props.srcObject && !props.muted && !props.error && hasAudioTracks.value)
+);
+const videoMuted = computed(() => props.muted || needsSeparateAudioOutput.value);
 const videoSrc = computed(() => (videoVisible.value && props.src ? props.src : undefined));
 const initials = computed(() =>
   props.name
@@ -89,6 +109,33 @@ const setMediaElementSinkId = (element: HTMLMediaElement | null) => {
   void sinkElement.setSinkId(props.sinkId).catch(() => undefined);
 };
 
+const playMediaElement = (element: HTMLMediaElement | null) => {
+  if (!element || !props.autoplay) return;
+
+  void element.play().catch(() => undefined);
+};
+
+watch(
+  () => props.srcObject,
+  (stream, _, onCleanup) => {
+    updateSrcObjectTrackCount(stream);
+
+    if (!stream || typeof stream.addEventListener !== 'function' || typeof stream.removeEventListener !== 'function')
+      return;
+
+    const updateTracks = () => updateSrcObjectTrackCount(stream);
+
+    stream.addEventListener('addtrack', updateTracks);
+    stream.addEventListener('removetrack', updateTracks);
+
+    onCleanup(() => {
+      stream.removeEventListener('addtrack', updateTracks);
+      stream.removeEventListener('removetrack', updateTracks);
+    });
+  },
+  { immediate: true }
+);
+
 watch(
   () =>
     [
@@ -96,7 +143,7 @@ watch(
       props.sinkId,
       props.autoplay,
       videoVisible.value,
-      needsAudioOnlyOutput.value,
+      needsSeparateAudioOutput.value,
       videoRef.value,
       audioRef.value,
     ] as const,
@@ -109,10 +156,14 @@ watch(
       }
 
       setMediaElementSinkId(videoRef.value);
+
+      if (props.autoplay && videoVisible.value && nextVideoStream) {
+        playMediaElement(videoRef.value);
+      }
     }
 
     if (audioRef.value) {
-      const nextAudioStream = needsAudioOnlyOutput.value ? props.srcObject : null;
+      const nextAudioStream = needsSeparateAudioOutput.value ? props.srcObject : null;
 
       if (audioRef.value.srcObject !== nextAudioStream) {
         audioRef.value.srcObject = nextAudioStream;
@@ -120,8 +171,8 @@ watch(
 
       setMediaElementSinkId(audioRef.value);
 
-      if (props.autoplay && needsAudioOnlyOutput.value) {
-        void audioRef.value.play().catch(() => undefined);
+      if (props.autoplay && needsSeparateAudioOutput.value) {
+        playMediaElement(audioRef.value);
       }
     }
   },
@@ -143,7 +194,7 @@ defineExpose({ videoRef });
       :playsinline="props.playsinline"
     />
     <audio
-      v-if="needsAudioOnlyOutput"
+      v-if="needsSeparateAudioOutput"
       ref="audioRef"
       class="nmorph-media-tile__audio"
       :muted="props.muted"

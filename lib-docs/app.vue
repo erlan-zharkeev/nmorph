@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, onUnmounted } from "vue";
 import {
+  NmorphCard,
   NmorphNotificationProvider,
   nmorphLog,
 } from "@nmorph/nmorph-ui-kit";
@@ -34,10 +35,10 @@ onUnmounted(async () => {
       <NuxtLayout name="default" />
     </div>
     <div class="docs-unsupported">
-      <div class="docs-unsupported__card nmorph--shadow-outset">
+      <NmorphCard class="docs-unsupported__card" :paper="3">
         <h1>{{ $t("unsupported-resolution.title") }}</h1>
         <p>{{ $t("unsupported-resolution.description") }}</p>
-      </div>
+      </NmorphCard>
     </div>
   </div>
 </template>

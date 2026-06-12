@@ -224,6 +224,16 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "media-tile-src-object-audio-output":
+          "NmorphMediaTile now splits unmuted MediaStream audio into a dedicated audio element for srcObject streams, keeps video muted for stable autoplay, applies sinkId to both elements, calls play for video and audio, and tracks addtrack/removetrack updates.",
+        "hydration-navigation-stability":
+          "Docs hydration is more stable: API table column slots now render outside table bodies, theme switching has a matching SSR default, and right-side Contents navigation is registered from component metadata instead of client-only DOM scanning.",
+        "media-preview-state-polish":
+          "NmorphVideoPreview now keeps its loading/error state as an overlay to avoid reload artifacts, and audio/video play controls no longer render the extra glowing shadow.",
+        "file-card-loading-layout":
+          "Compact loading NmorphFileCard layouts now reserve cleaner action space, keep the inset card surface, and docs show loading file cards on their own row.",
+        "docs-guide-shell-polish":
+          "Lib docs now show a first-load progress card in the main shell, use paper cards across more pages, add copy buttons and multiple package-manager install snippets in the guide, and polish icon/list examples.",
         "card-paper-surface":
           "NmorphCard now supports a built-in paper texture through paper, and docs card examples use a consistent paper strength for the same tactile surface.",
         "media-tile-audio-sink":

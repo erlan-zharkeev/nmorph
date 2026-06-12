@@ -19,9 +19,10 @@ const props = withDefaults(defineProps<IProps>(), {
 const nmorph = useNmorph();
 const currentTheme = nmorph.theme.currentTheme;
 const changeTheme = (theme: string) => nmorph.theme.setTheme(theme);
+const ssrTheme = nmorph.theme.data.defaultTheme ?? "dark";
 const isHydrated = ref(false);
 const currentThemeModel = computed({
-  get: () => currentTheme.value,
+  get: () => (isHydrated.value ? currentTheme.value : ssrTheme),
   set: (value) => changeTheme(String(value)),
 });
 

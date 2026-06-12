@@ -14,7 +14,7 @@ const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays",
     <NmorphCard class="docs-about-page__card" content-class="docs-about-page__card-content" padding="0" :paper="3">
       <NmorphScroll class="docs-about-page__scroll" :y-gap-in-px="8">
         <div class="docs-about-page__content">
-          <section class="docs-about-page__hero nmorph--shadow-outset">
+          <NmorphCard tag="section" class="docs-about-page__hero" :paper="3">
             <p class="docs-about-page__eyebrow">{{ $t("about-page.eyebrow") }}</p>
             <h1>Nmorph UI Kit</h1>
             <p class="docs-about-page__lead">{{ $t("about-page.lead") }}</p>
@@ -26,7 +26,7 @@ const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays",
               <span>{{ $t("about-page.meta.treeShaking") }}</span>
               <span>{{ $t("about-page.meta.license") }}</span>
             </div>
-          </section>
+          </NmorphCard>
 
           <section class="docs-about-page__section">
             <h2>{{ $t("about-page.overview-title") }}</h2>

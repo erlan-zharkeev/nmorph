@@ -18,9 +18,18 @@ import {
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
 
 const scrollCoords = ref({ x: 0, y: 0 })
+const maxHeightElements = ref(10)
 
 const moveScroll = () => {
   scrollCoords.value = { x: 120, y: 160 }
+}
+
+const addMaxHeightItem = () => {
+  maxHeightElements.value += 1
+}
+
+const removeMaxHeightItem = () => {
+  maxHeightElements.value = Math.max(0, maxHeightElements.value - 1)
 }
 </script>
 
@@ -157,6 +166,17 @@ const moveScroll = () => {
             <div v-for="item in 18" :key="item" class="scroll-item">Scrollable row {{ item }}</div>
           </div>
         </NmorphScroll>
+        <div class="scroll-max-height-overview">
+          <div class="row">
+            <NmorphButton @click="addMaxHeightItem">Add</NmorphButton>
+            <NmorphButton @click="removeMaxHeightItem">Remove</NmorphButton>
+          </div>
+          <NmorphScroll max-height="300px" class="scroll-max-height">
+            <div v-for="item in maxHeightElements" :key="item" class="scroll-max-height__box">
+              {{ item }}
+            </div>
+          </NmorphScroll>
+        </div>
       </div>
     </SandboxSection>
   </div>
@@ -236,5 +256,23 @@ const moveScroll = () => {
   box-shadow:
     -2px -2px 4px var(--nmorph-light-shade-color),
     2px 2px 4px var(--nmorph-dark-shade-color);
+}
+
+.scroll-max-height-overview {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.scroll-max-height {
+  width: 100%;
+  padding-right: 8px;
+  text-align: center;
+}
+
+.scroll-max-height__box {
+  margin-bottom: 8px;
+  color: var(--nmorph-focus-text-color);
+  background: var(--nmorph-accent-color);
 }
 </style>

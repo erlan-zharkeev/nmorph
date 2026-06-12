@@ -76,9 +76,6 @@ const clickHandler = () => {
   cursor: pointer;
   opacity: 0.45;
   transition:
-    color ease-in-out var(--transition-02),
-    background-color ease-in-out var(--transition-02),
-    box-shadow ease-in-out var(--transition-02),
     opacity ease-in-out var(--transition-02),
     transform ease-in-out var(--transition-01);
 

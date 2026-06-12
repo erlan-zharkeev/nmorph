@@ -370,6 +370,8 @@ defineExpose({ videoRef });
   }
 
   .nmorph-video-preview__state {
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
     gap: var(--indentation-02);
@@ -377,6 +379,7 @@ defineExpose({ videoRef });
     align-items: center;
     padding: var(--indentation-03);
     text-align: center;
+    pointer-events: none;
   }
 
   .nmorph-video-preview__error {
@@ -418,7 +421,6 @@ defineExpose({ videoRef });
     background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
     border: 0;
     border-radius: var(--border-radius-circular);
-    box-shadow: var(--nmorph-shadow-outset);
     transform: translate(-50%, -50%);
     cursor: pointer;
 
@@ -438,12 +440,6 @@ defineExpose({ videoRef });
   &.nmorph-video-preview--embedded {
     width: var(--nmorph-private-video-preview-width, 100%);
     height: var(--nmorph-private-video-preview-height, 120px);
-    box-shadow: none;
-  }
-
-  &.nmorph-video-preview--embedded .nmorph-video-preview__play,
-  &.nmorph-video-preview--soft .nmorph-video-preview__play,
-  &.nmorph-video-preview--plain .nmorph-video-preview__play {
     box-shadow: none;
   }
 

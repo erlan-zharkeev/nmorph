@@ -87,10 +87,6 @@ provide<NmorphSelectButtonChangeHandlerInjectionType>('select-button-change-hand
     inset var(--base-shadow-width) var(--base-shadow-width) var(--base-shadow-blur) var(--nmorph-dark-shade-color),
     inset calc(-1 * var(--base-shadow-width)) calc(-1 * var(--base-shadow-width)) var(--base-shadow-blur)
       var(--nmorph-light-shade-color);
-  transition:
-    background-color ease-in-out var(--transition-02),
-    border-color ease-in-out var(--transition-02),
-    box-shadow ease-in-out var(--transition-02);
 
   &.nmorph-select-button--disabled {
     cursor: not-allowed;

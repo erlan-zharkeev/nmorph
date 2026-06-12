@@ -15,6 +15,7 @@ import {
   type NmorphDataTableElRecordType,
 } from "@nmorph/nmorph-ui-kit";
 import { linkApiType } from "~/utils/api-type-links";
+import { useDocsNavigation } from "~/utils";
 
 const { t, te } = useI18n();
 
@@ -35,6 +36,7 @@ type ApiDescriptionItem = { name: string; description?: string };
 const props = withDefaults(defineProps<IProps>(), {
   additionalId: "",
 });
+const docsNavigation = useDocsNavigation();
 
 const getFallbackDescription = (name: string) => {
   const normalized = name.replace(/[-_:]/g, " ").replace(/\s+/g, " ").trim();
@@ -76,6 +78,25 @@ const getID = (name: string) => {
     props.additionalId ? `${props.additionalId}-${name}` : name
   }`;
 };
+
+const apiNavigationAnchors = computed(() => {
+  const anchors = [getID("api"), getID("attributes")];
+
+  if (updatedSlots.value?.length) anchors.push(getID("slots"));
+  if (updatedExposes.value?.length) anchors.push(getID("exposes"));
+  if (updatedEvents.value?.length) anchors.push(getID("events"));
+  if (updatedTranslates.value?.length) anchors.push(getID("translates"));
+
+  return anchors;
+});
+
+watch(
+  apiNavigationAnchors,
+  (anchors) => {
+    anchors.forEach((anchor) => docsNavigation?.registerAnchor(anchor));
+  },
+  { immediate: true },
+);
 
 const dialogs = ref<Record<string, boolean>>({});
 

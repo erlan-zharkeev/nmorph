@@ -16,4 +16,9 @@ import { NmorphLink } from "@nmorph/nmorph-ui-kit";
   align-items: center;
   gap: 16px;
 }
+
+.link-icon-name-overview .nmorph-link__icon {
+  --nmorph-private-icon-width: 14px !important;
+  --nmorph-private-icon-height: 14px !important;
+}
 </style>

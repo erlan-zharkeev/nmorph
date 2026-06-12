@@ -590,6 +590,16 @@ const errorHandler = () => emit('error');
     }
   }
 
+  &.nmorph-file-card--loading.nmorph-file-card--compact {
+    padding: var(--indentation-03);
+    padding-inline-end: calc(var(--indentation-03) + 44px + var(--indentation-01));
+
+    .nmorph-file-card__actions {
+      top: var(--indentation-03);
+      right: var(--indentation-03);
+    }
+  }
+
   &.nmorph-file-card--media-audio.nmorph-file-card--no-actions {
     .nmorph-file-card__body {
       padding-inline-end: var(--indentation-02);

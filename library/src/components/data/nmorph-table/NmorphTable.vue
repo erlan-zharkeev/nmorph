@@ -193,6 +193,9 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
   <div>
     <div ref="nmorphDOMTable" :key="key" :class="modifiers" :style="tableStyle">
       <div class="nmorph-table__wrapper">
+        <div class="nmorph-table__slot-columns" hidden>
+          <slot />
+        </div>
         <table class="nmorph-table__header">
           <colgroup>
             <col
@@ -277,18 +280,6 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
                   </tr>
                 </tbody>
               </table>
-              <table>
-                <colgroup>
-                  <col
-                    v-for="columnData in columns"
-                    :key="columnData.prop"
-                    :style="{ width: `${getWidth(columnData.width)}px` }"
-                  />
-                </colgroup>
-                <tbody class="nmorph-table__slot-columns">
-                  <slot />
-                </tbody>
-              </table>
             </div>
           </div>
           <template v-else>
@@ -322,18 +313,6 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
                     </div>
                   </td>
                 </tr>
-              </tbody>
-            </table>
-            <table>
-              <colgroup>
-                <col
-                  v-for="columnData in columns"
-                  :key="columnData.prop"
-                  :style="{ width: `${getWidth(columnData.width)}px` }"
-                />
-              </colgroup>
-              <tbody class="nmorph-table__slot-columns">
-                <slot />
               </tbody>
             </table>
           </template>

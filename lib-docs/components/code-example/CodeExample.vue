@@ -5,9 +5,13 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, onUpdated, ref } from "vue";
+import { computed, nextTick, onMounted, onUpdated, ref } from "vue";
 import { useNuxtApp } from "#app";
-const languageClass = ref("");
+
+const languageAliases = {
+  html: "xml",
+  vue: "xml",
+};
 
 const props = defineProps({
   lang: {
@@ -16,15 +20,20 @@ const props = defineProps({
   },
 });
 
-watchEffect(() => {
-  languageClass.value = `language-${props.lang}`;
-});
+const normalizedLanguage = computed(() => languageAliases[props.lang] || props.lang);
+const languageClass = computed(() => `language-${normalizedLanguage.value}`);
 
 const highlight = () => {
-  if (codeExample.value) {
-    codeExample.value.removeAttribute("data-highlighted");
-    $hljs.highlightElement(codeExample.value);
-  }
+  if (!codeExample.value) return;
+
+  const code = codeExample.value.textContent || "";
+  const language = normalizedLanguage.value;
+  const highlightedCode = $hljs.getLanguage(language)
+    ? $hljs.highlight(code, { language, ignoreIllegals: true }).value
+    : $hljs.highlightAuto(code).value;
+
+  codeExample.value.innerHTML = highlightedCode;
+  codeExample.value.classList.add("hljs");
 };
 
 onMounted(() => nextTick(highlight));

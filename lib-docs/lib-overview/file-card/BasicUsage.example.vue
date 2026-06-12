@@ -49,13 +49,14 @@ const launchCoverPreviewSrc = `data:image/svg+xml,${encodeURIComponent(`
       :size="732000"
       height="132px"
     />
-    <NmorphFileCard
-      name="Uploading archive.zip"
-      extension="zip"
-      loading
-      compact
-      surface="plain"
-    />
+    <div class="file-card-basic-usage__uploading">
+      <NmorphFileCard
+        name="Uploading archive.zip"
+        extension="zip"
+        loading
+        compact
+      />
+    </div>
   </div>
 </template>
 
@@ -65,6 +66,11 @@ const launchCoverPreviewSrc = `data:image/svg+xml,${encodeURIComponent(`
   width: 100%;
   grid-template-columns: repeat(3, minmax(180px, 1fr));
   gap: 12px;
+}
+
+.file-card-basic-usage__uploading {
+  grid-column: 1;
+  min-width: 0;
 }
 
 @media (max-width: 780px) {

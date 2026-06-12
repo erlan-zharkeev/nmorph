@@ -7,6 +7,7 @@ import { pascalToSpace } from "~/utils";
 import {
   NmorphForm,
   NmorphFormItem,
+  NmorphCard,
   NmorphTextInput,
   NmorphIcon,
 } from "@nmorph/nmorph-ui-kit";
@@ -71,7 +72,7 @@ const clickIconHandler = async (iconName: string) => {
 </script>
 
 <template>
-  <ComponentOverview name="icon">
+  <ComponentOverview name="icon" :extra-anchors="['content-icon-list']">
     <template #default>
       <div class="docs-icon" id="content-icon-list">
         <NmorphForm :value="form" class="docs-icon__search-icon-form">
@@ -79,17 +80,30 @@ const clickIconHandler = async (iconName: string) => {
             <NmorphTextInput :placeholder="$t('overview.icon.search-icon')" v-model="form.searchText.value" />
           </NmorphFormItem>
         </NmorphForm>
-        <div class="docs-icon__list-content nmorph--shadow-outset" v-if="filteredIconNames.length">
-          <div class="docs-icon__list-el nmorph--shadow-outset" v-for="(el, idx) in filteredIconNames" :key="idx"
-            @click="() => clickIconHandler(String(el))">
+        <NmorphCard
+          v-if="filteredIconNames.length"
+          class="docs-icon__list-content"
+          content-class="docs-icon__list-content-grid"
+          padding="8px"
+          :paper="3"
+        >
+          <NmorphCard
+            v-for="(el, idx) in filteredIconNames"
+            :key="idx"
+            class="docs-icon__list-el"
+            content-class="docs-icon__list-el-content"
+            padding="8px"
+            :paper="3"
+            @click="() => clickIconHandler(String(el))"
+          >
             <NmorphIcon size="medium">
               <component :is="nmorphIconRegistry[String(el)]" />
             </NmorphIcon>
             <span class="docs-icon__icon-name">{{
               pascalToSpace(el.slice(10)).toLowerCase()
               }}</span>
-          </div>
-        </div>
+          </NmorphCard>
+        </NmorphCard>
       </div>
     </template>
   </ComponentOverview>
@@ -123,24 +137,28 @@ const clickIconHandler = async (iconName: string) => {
   }
 
   .docs-icon__list-content {
+    margin: 20px 0;
+  }
+
+  .docs-icon__list-content-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
     grid-gap: 8px;
-    margin: 20px 0;
-    padding: 8px;
   }
 
   .docs-icon__list-el {
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 88px;
+    cursor: pointer;
+  }
+
+  .docs-icon__list-el-content {
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    box-sizing: border-box;
-    min-width: 0;
-    min-height: 88px;
-    padding: 8px;
     text-align: center;
-    cursor: pointer;
   }
 
   .docs-icon__icon-name {

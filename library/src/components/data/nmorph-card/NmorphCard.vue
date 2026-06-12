@@ -34,7 +34,8 @@ const styles = computed<CSSProperties>(() => {
   const cardRadius = toCssSize(props.radius);
   const contentPadding = toCssSize(props.contentPadding);
   const paper = Math.max(0, Number(props.paper) || 0);
-  const paperOpacity = Math.min(paper * 0.08, 0.48);
+  const paperLightOpacity = Math.min(paper * 0.08, 0.48);
+  const paperDarkOpacity = Math.min(paper * 0.04, 0.2);
 
   return {
     ...(props.shadowType === 'combined' && {
@@ -43,7 +44,10 @@ const styles = computed<CSSProperties>(() => {
     ...(cardPadding !== undefined && { '--nmorph-private-card-padding': cardPadding, padding: cardPadding }),
     ...(cardRadius !== undefined && { '--nmorph-private-card-radius': cardRadius }),
     ...(contentPadding !== undefined && { '--nmorph-private-card-content-padding': contentPadding }),
-    ...(paperOpacity > 0 && { '--nmorph-private-card-paper-opacity': String(paperOpacity) }),
+    ...(paper > 0 && {
+      '--nmorph-private-card-paper-light-opacity': String(paperLightOpacity),
+      '--nmorph-private-card-paper-dark-opacity': String(paperDarkOpacity),
+    }),
   };
 });
 </script>
@@ -69,7 +73,9 @@ const styles = computed<CSSProperties>(() => {
   --nmorph-private-card-border: none;
   --nmorph-private-card-shadow: none;
   --nmorph-private-card-paper-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.72' filter='url(%23n)'/%3E%3C/svg%3E");
-  --nmorph-private-card-paper-opacity: 0;
+  --nmorph-private-card-paper-light-opacity: 0;
+  --nmorph-private-card-paper-dark-opacity: 0;
+  --nmorph-private-card-paper-opacity: var(--nmorph-private-card-paper-light-opacity);
   --nmorph-private-card-paper-shadow-color: color-mix(in srgb, var(--nmorph-dark-shade-color) 82%, transparent);
   --nmorph-private-card-paper-light-color: color-mix(in srgb, var(--nmorph-light-shade-color) 76%, transparent);
 
@@ -163,5 +169,12 @@ const styles = computed<CSSProperties>(() => {
     --nmorph-private-card-border: var(--nmorph-plain-border);
     --nmorph-private-card-shadow: none;
   }
+}
+
+:root[nmorph-data-theme='dark'] .nmorph-card {
+  --nmorph-private-card-paper-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.36' filter='url(%23n)'/%3E%3C/svg%3E");
+  --nmorph-private-card-paper-opacity: var(--nmorph-private-card-paper-dark-opacity);
+  --nmorph-private-card-paper-shadow-color: color-mix(in srgb, var(--nmorph-black-color) 54%, transparent);
+  --nmorph-private-card-paper-light-color: color-mix(in srgb, var(--nmorph-white-color) 18%, transparent);
 }
 </style>

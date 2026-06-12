@@ -332,7 +332,6 @@ defineExpose({ audioRef });
     color: var(--nmorph-contrast-text-color);
     background: var(--nmorph-black-color);
     border-radius: var(--border-radius-circular);
-    box-shadow: var(--nmorph-shadow-outset);
 
     .nmorph-icon {
       --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
@@ -518,19 +517,11 @@ defineExpose({ audioRef });
   &.nmorph-audio-preview--soft {
     background: color-mix(in srgb, var(--nmorph-accent-color) 6%, transparent);
     box-shadow: none;
-
-    .nmorph-audio-preview__play-indicator {
-      box-shadow: none;
-    }
   }
 
   &.nmorph-audio-preview--plain {
     background: transparent;
     box-shadow: none;
-
-    .nmorph-audio-preview__play-indicator {
-      box-shadow: none;
-    }
   }
 
   &.nmorph-audio-preview--error {

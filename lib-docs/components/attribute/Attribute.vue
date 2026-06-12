@@ -5,6 +5,7 @@ import {
   NmorphCollapse,
   NmorphCollapseItem,
   NmorphCallout,
+  NmorphCard,
   NmorphIcon,
   NmorphIconCode,
   NmorphIconCopyDocument,
@@ -96,7 +97,7 @@ const infoData = `overview.${props.infoName}.info`;
       v-html="highlightedSubtitle"
     />
     <div class="docs-components__tips"></div>
-    <div class="docs-attribute__wrapper nmorph--shadow-outset">
+    <NmorphCard class="docs-attribute__wrapper" padding="0" :paper="3">
       <div class="docs-component__overview">
         <slot name="overview" />
       </div>
@@ -124,7 +125,7 @@ const infoData = `overview.${props.infoName}.info`;
           <slot name="code" />
         </NmorphCollapseItem>
       </NmorphCollapse>
-    </div>
+    </NmorphCard>
   </div>
 </template>
 
@@ -158,9 +159,10 @@ const infoData = `overview.${props.infoName}.info`;
 
 .docs-component__overview {
   padding: 16px 12px 0px 12px;
-  display: flex;
-  align-items: baseline;
+  display: block;
   width: 100%;
+  min-width: 0;
+  min-height: 0;
 }
 
 .docs-attribute__header {

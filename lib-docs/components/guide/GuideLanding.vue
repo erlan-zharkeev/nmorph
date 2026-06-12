@@ -8,11 +8,11 @@ const localePath = useLocalePath();
 
 <template>
   <div class="docs-guide-landing">
-    <section class="docs-guide-landing__hero nmorph--shadow-outset">
+    <NmorphCard tag="section" class="docs-guide-landing__hero" :paper="3">
       <p class="docs-guide-landing__eyebrow">{{ $t("guide-page.title") }}</p>
       <h1>{{ $t("guide-page.full-title") }}</h1>
       <p>{{ $t("guide-page.full-description") }}</p>
-    </section>
+    </NmorphCard>
 
     <section class="docs-guide-landing__groups">
       <div v-for="group in guideGroups" :key="group.title.en" class="docs-guide-landing__group">

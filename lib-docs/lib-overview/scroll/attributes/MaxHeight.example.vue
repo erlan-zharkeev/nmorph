@@ -41,8 +41,14 @@ const removeItem = () => (elements.value -= 1);
 
   .docs-scroll__scroll {
     width: 100%;
+    height: auto !important;
     text-align: center;
     padding-right: 8px;
+
+    .nmorph-scroll__viewport {
+      height: auto;
+      max-height: 300px;
+    }
   }
 }
 </style>

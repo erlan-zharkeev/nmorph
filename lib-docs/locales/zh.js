@@ -213,6 +213,16 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "media-tile-src-object-audio-output":
+          "NmorphMediaTile 现在会为 srcObject 中未静音的 MediaStream audio 创建独立 audio element，让 video 保持 muted 以稳定 autoplay，同时把 sinkId 应用于两个元素、分别调用 play，并监听 addtrack/removetrack。",
+        "hydration-navigation-stability":
+          "Docs hydration 更稳定：API table column slots 不再渲染在 table body 内，theme switcher 使用一致的 SSR default，右侧 Contents 也改为通过组件 metadata 注册，而不是只在客户端扫描 DOM。",
+        "media-preview-state-polish":
+          "NmorphVideoPreview 现在把 loading/error state 作为 overlay 渲染，避免页面 reload 时出现布局伪影，audio/video play controls 也移除了额外的发光 shadow。",
+        "file-card-loading-layout":
+          "Compact loading NmorphFileCard 现在为 actions 预留更干净的空间，保留 inset card surface，docs 中的 loading file card 也会显示在独立行。",
+        "docs-guide-shell-polish":
+          "Lib docs 现在在 main shell 中显示 first-load progress card，更多页面使用 paper cards，guide 增加 copy buttons 与多个 package manager 的安装 snippets，并优化 icon/list examples。",
         "card-paper-surface":
           "NmorphCard 现在通过 paper 支持内置纸张纹理，docs 中的卡片示例也统一使用相同的 paper 强度，保持一致的触感表面。",
         "media-tile-audio-sink":

@@ -3,7 +3,7 @@ import type { Component } from "vue";
 import type { NmorphCalloutType } from "@nmorph/nmorph-ui-kit";
 import Attribute from "~/components/attribute/Attribute.vue";
 import CodeSlotData from "~/components/code-slot-data/CodeSlotData.vue";
-import { splitVueSource } from "~/utils";
+import { getDocsExampleAnchor, splitVueSource, useDocsNavigation } from "~/utils";
 
 const props = defineProps<{
   component: Component;
@@ -14,10 +14,16 @@ const props = defineProps<{
   subtitle?: string;
 }>();
 
+const docsNavigation = useDocsNavigation();
+const anchor = computed(() => getDocsExampleAnchor(props.component));
 const sourceParts = computed(() => splitVueSource(props.source));
 const code = computed(() =>
   sourceParts.value.blocks.map((block) => block.source),
 );
+
+if (anchor.value) {
+  docsNavigation?.registerAnchor(anchor.value);
+}
 </script>
 
 <template>

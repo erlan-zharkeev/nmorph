@@ -22,10 +22,6 @@ const scroll = ref<INmorphScrollExpose | null>(null);
 const leftAsideScroll = ref<INmorphScrollExpose | null>(null);
 defineExpose({ scroll });
 
-const isRouteReady = ref(false);
-
-let timeoutId: ReturnType<typeof setTimeout> | null = null;
-
 const leftAsideStorageKey = computed(() => {
   const key = props.leftAsideScrollKey || router.currentRoute.value.path;
 
@@ -77,24 +73,15 @@ const restoreLeftAsideScroll = async () => {
 onMounted(async () => {
   await router.isReady();
   await restoreLeftAsideScroll();
-  timeoutId = setTimeout(() => {
-    isRouteReady.value = true;
-  }, 0);
 });
 
 onBeforeUnmount(saveLeftAsideScroll);
-
-onUnmounted(() => {
-  if (timeoutId !== null) {
-    clearTimeout(timeoutId);
-  }
-});
 
 watch(leftAsideStorageKey, restoreLeftAsideScroll);
 
 const isMainFullPage = computed(() => !router.currentRoute.value.fullPath.includes("elements"));
 const slots = useSlots() as Record<string, unknown>;
-const showCenterAside = computed(() => Boolean(slots["aside-right"]) && isRouteReady.value && !isMainFullPage.value);
+const showCenterAside = computed(() => Boolean(slots["aside-right"]) && !isMainFullPage.value);
 </script>
 
 <template>

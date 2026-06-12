@@ -1,6 +1,19 @@
 <script setup lang="ts">
-import { NmorphDivider } from "@nmorph/nmorph-ui-kit";
-import { guidePageMap, guidePages, textByLocale, type GuidePageSlug } from "~/data/guide";
+import {
+  NmorphButton,
+  NmorphCard,
+  NmorphDivider,
+  NmorphIconCopyDocument,
+} from "@nmorph/nmorph-ui-kit";
+import { notificationProvider } from "~/providers";
+import {
+  guidePageMap,
+  guidePages,
+  textByLocale,
+  type GuideCodeBlock,
+  type GuidePageSlug,
+  type GuideSection,
+} from "~/data/guide";
 
 const props = defineProps<{
   slug: GuidePageSlug;
@@ -12,18 +25,73 @@ const page = computed(() => guidePageMap[props.slug]);
 const currentIndex = computed(() => guidePages.findIndex((guidePage) => guidePage.slug === props.slug));
 const previousPage = computed(() => guidePages[currentIndex.value - 1]);
 const nextPage = computed(() => guidePages[currentIndex.value + 1]);
+
+const getSectionCodes = (section: GuideSection): GuideCodeBlock[] => {
+  if (section.codes?.length) return section.codes;
+  if (section.code) return [section.code];
+  return [];
+};
+
+const getCodeLineLength = (code: GuideCodeBlock) =>
+  code.content.split("\n").reduce((maxLength, line) => Math.max(maxLength, line.length), 0);
+
+const getCodeListStyle = (section: GuideSection) => {
+  const maxLineLength = getSectionCodes(section).reduce(
+    (maxLength, code) => Math.max(maxLength, getCodeLineLength(code)),
+    0,
+  );
+
+  return {
+    "--docs-guide-code-width": `${Math.min(Math.max(maxLineLength + 4, 24), 84)}ch`,
+  };
+};
+
+const fallbackCopy = (text: string) => {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.top = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+};
+
+const copyCode = async (text: string) => {
+  try {
+    if (navigator.clipboard?.writeText)
+      await navigator.clipboard.writeText(text);
+    else fallbackCopy(text);
+  } catch {
+    fallbackCopy(text);
+  }
+
+  notificationProvider.notify({
+    content: "Copied",
+    duration: 2000,
+    type: "success",
+    width: "fit-content",
+    closable: false,
+    bordered: false,
+  });
+};
 </script>
 
 <template>
   <article v-if="page" class="docs-guide-article">
-    <header class="docs-guide-article__header nmorph--shadow-outset">
+    <NmorphCard tag="header" class="docs-guide-article__header" :paper="3">
       <p class="docs-guide-article__eyebrow">{{ $t("guide") }}</p>
       <h1>{{ textByLocale(page.title, locale) }}</h1>
       <p>{{ textByLocale(page.description, locale) }}</p>
-    </header>
+    </NmorphCard>
 
-    <section v-for="section in page.sections" :id="section.title.en.toLowerCase().replaceAll(' ', '-')" :key="section.title.en"
-      class="docs-guide-article__section">
+    <section
+      v-for="section in page.sections"
+      :id="section.title.en.toLowerCase().replaceAll(' ', '-')"
+      :key="section.title.en"
+      class="docs-guide-article__section"
+    >
       <h2>{{ textByLocale(section.title, locale) }}</h2>
       <p v-for="paragraph in section.paragraphs" :key="paragraph.en">
         {{ textByLocale(paragraph, locale) }}
@@ -31,8 +99,30 @@ const nextPage = computed(() => guidePages[currentIndex.value + 1]);
       <ul v-if="section.points?.length" class="docs-guide-article__points">
         <li v-for="point in section.points" :key="point.en">{{ textByLocale(point, locale) }}</li>
       </ul>
-      <div v-if="section.code" class="docs-guide-article__code">
-        <code-example :lang="section.code.language">{{ section.code.content }}</code-example>
+      <div
+        v-if="getSectionCodes(section).length"
+        class="docs-guide-article__code-list"
+        :style="getCodeListStyle(section)"
+      >
+        <div
+          v-for="codeBlock in getSectionCodes(section)"
+          :key="codeBlock.content"
+          class="docs-guide-article__code-row"
+        >
+          <NmorphButton
+            class="docs-guide-article__code-copy"
+            aria-label="Copy code"
+            title="Copy code"
+            @click="copyCode(codeBlock.content)"
+          >
+            <template #icon-only>
+              <NmorphIconCopyDocument />
+            </template>
+          </NmorphButton>
+          <div class="docs-guide-article__code">
+            <code-example :lang="codeBlock.language">{{ codeBlock.content }}</code-example>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -107,10 +197,30 @@ const nextPage = computed(() => guidePages[currentIndex.value + 1]);
   padding-left: 20px;
 }
 
-.docs-guide-article__code {
+.docs-guide-article__code-list {
   max-width: 100%;
+  display: grid;
+  gap: 10px;
+  justify-items: start;
   margin-top: 16px;
-  padding: 16px;
+}
+
+.docs-guide-article__code-row {
+  max-width: 100%;
+  display: inline-grid;
+  width: min(100%, calc(var(--docs-guide-code-width, 64ch) + var(--basic-component) + 10px));
+  grid-template-columns: var(--basic-component) minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+
+.docs-guide-article__code {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: var(--basic-component);
+  padding: 6px 12px;
   overflow: auto;
   border-radius: 4px;
   box-shadow:

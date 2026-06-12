@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { NmorphCard } from "@nmorph/nmorph-ui-kit";
 import { FirstScreen } from '~/components/guide-page-sections'
 </script>
 
 <template>
   <div class="docs-first-page nmorph-docs-content">
-    <main class="docs-first-page__surface nmorph--shadow-outset">
+    <NmorphCard tag="main" class="docs-first-page__surface" padding="0" :paper="3">
       <FirstScreen />
-    </main>
+    </NmorphCard>
   </div>
 </template>
 

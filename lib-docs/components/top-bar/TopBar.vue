@@ -34,7 +34,6 @@ const mobileNavLockClass = "docs-top-bar-mobile-nav-open";
 
 const openSearch = () => {
   searchOpen.value = true;
-  mobileNavMenu.value = false;
 };
 
 const closeHandler = () => {
@@ -66,6 +65,9 @@ onMounted(() => {
 });
 
 watch(mobileNavMenu, setMobileNavLock);
+watch(searchOpen, (open) => {
+  if (open) mobileNavMenu.value = false;
+});
 
 onUnmounted(() => {
   window.removeEventListener("keydown", searchShortcutHandler);
@@ -94,18 +96,21 @@ onUnmounted(() => {
       <span class="docs-top-bar__version">v{{ libraryData.version }}</span>
     </div>
     <div class="docs-top-bar__right">
-      <button
-        type="button"
+      <NmorphCheckbox
+        v-model="searchOpen"
         class="docs-top-bar__search-control"
-        :aria-label="$t('top-bar.search')"
-        @click="openSearch"
+        design="nmorph"
       >
-        <NmorphIcon class="docs-top-bar__search-icon" width="18px">
-          <NmorphIconSearch />
-        </NmorphIcon>
-        <span class="docs-top-bar__search-placeholder">{{ $t("top-bar.search") }}</span>
-        <kbd>{{ $t("top-bar.search-shortcut") }}</kbd>
-      </button>
+        <template #label>
+          <span class="docs-top-bar__search-label">
+            <NmorphIcon width="18px">
+              <NmorphIconSearch />
+            </NmorphIcon>
+            <span class="docs-top-bar__search-placeholder">{{ $t("top-bar.search") }}</span>
+            <kbd>{{ $t("top-bar.search-shortcut") }}</kbd>
+          </span>
+        </template>
+      </NmorphCheckbox>
       <NmorphLink :href="repositoryUrl" target="blank" class="github-button">
         <GithubIcon />
       </NmorphLink>
@@ -280,40 +285,39 @@ $top-bar-height: 50px;
 }
 
 .docs-top-bar__search-control {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 184px;
-  height: var(--basic-component);
-  padding: 0 8px;
+  width: auto;
+  min-width: 0;
   flex-shrink: 0;
-  color: var(--nmorph-placeholder-text-color);
-  font: inherit;
-  background: var(--nmorph-main-color);
-  border: 0;
-  border-radius: var(--default-border-radius);
-  box-shadow: var(--nmorph-shadow-inset);
-  cursor: pointer;
+  color: var(--nmorph-semi-contrast-text-color);
 
-  &:focus-visible {
-    color: var(--nmorph-focus-text-color);
-    background: var(--nmorph-accent-color);
-    outline: none;
-    box-shadow: var(--nmorph-shadow-outset);
+  :deep(.nmorph-checkbox__content),
+  :deep(.nmorph-checkbox__fake) {
+    width: 100%;
   }
 
-  &:focus-visible kbd {
-    color: var(--nmorph-focus-text-color);
-    background: color-mix(in srgb, var(--nmorph-focus-text-color) 14%, transparent);
+  :deep(.nmorph-checkbox__fake) {
+    justify-content: flex-start;
+    padding: 0 8px;
+    color: currentColor;
   }
 
-  .docs-top-bar__search-icon {
+  :deep(.nmorph-checkbox__fake .nmorph-icon) {
     --nmorph-private-icon-color: currentColor;
+  }
 
-    flex: 0 0 auto;
+  &.nmorph-checkbox--checked {
+    color: var(--nmorph-accent-color);
+  }
+
+  .docs-top-bar__search-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
   }
 
   .docs-top-bar__search-placeholder {
+    flex: 1 1 auto;
     min-width: 0;
     overflow: hidden;
     white-space: nowrap;
@@ -328,15 +332,15 @@ $top-bar-height: 50px;
     box-sizing: border-box;
     height: 22px;
     min-width: 52px;
-    margin-left: auto;
+    margin-left: 6px;
     padding: 0 6px;
     border: 0;
     border-radius: 4px;
-    color: var(--nmorph-semi-contrast-text-color);
+    color: currentColor;
     font-family: inherit;
     font-size: var(--font-size-extra-small);
     line-height: 1;
-    background: color-mix(in srgb, var(--nmorph-text-color) 8%, transparent);
+    background: color-mix(in srgb, currentColor 8%, transparent);
   }
 }
 

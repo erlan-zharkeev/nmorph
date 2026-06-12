@@ -1,6 +1,11 @@
 <script setup lang="ts">
-import { nextTick, shallowRef } from "vue";
-import { pascalToSpace, anyToPascalCase } from "~/utils";
+import { nextTick, provide, shallowRef } from "vue";
+import {
+  anyToPascalCase,
+  docsNavigationKey,
+  normalizeDocsAnchor,
+  pascalToSpace,
+} from "~/utils";
 import MainContentPart from "~/layouts/MainContentPart.vue";
 import ComponentsList from "~/components/component-list/ComponentList.vue";
 import buttonOverview from "~/lib-overview/button";
@@ -70,8 +75,11 @@ import timePickerOverview from "~/lib-overview/time-picker";
 
 interface IProps {
   name: string;
+  extraAnchors?: string[];
 }
-const props = withDefaults(defineProps<IProps>(), {});
+const props = withDefaults(defineProps<IProps>(), {
+  extraAnchors: () => [],
+});
 
 const overviewComponentsByName: Record<string, unknown[]> = {
   button: buttonOverview,
@@ -143,10 +151,34 @@ const overviewComponentsByName: Record<string, unknown[]> = {
 
 const overviewComponents = shallowRef<unknown[]>([]);
 const navigationContents = ref<string[]>([]);
+const navigationAnchorSet = new Set<string>();
 const timeoutScrollId = ref<ReturnType<typeof setTimeout> | null>(null);
 const scrollDOMRef = ref<any>(null);
-const componentPage = ref<HTMLElement | null>(null);
 const router = useRouter();
+const activeAnchor = ref("");
+const observer = ref<IntersectionObserver | null>(null);
+
+const registerAnchor = (anchor: string) => {
+  const normalizedAnchor = normalizeDocsAnchor(anchor);
+
+  if (!normalizedAnchor || navigationAnchorSet.has(normalizedAnchor)) return;
+
+  navigationAnchorSet.add(normalizedAnchor);
+  navigationContents.value = [...navigationContents.value, normalizedAnchor];
+};
+
+const resetAnchors = () => {
+  navigationAnchorSet.clear();
+  navigationContents.value = [];
+  activeAnchor.value = "";
+  props.extraAnchors.forEach(registerAnchor);
+};
+
+provide(docsNavigationKey, {
+  anchors: navigationContents,
+  registerAnchor,
+  resetAnchors,
+});
 
 const scrollToAnchor = (anchor: string) => {
   if (typeof document === "undefined" || !scrollDOMRef.value || !anchor) return;
@@ -173,7 +205,7 @@ onMounted(() => {
     rootMargin: "-10px 0px -90% 0px",
     threshold: 0,
   });
-  doUpdate();
+  observeNavigationAnchors();
   timeoutScrollId.value = setTimeout(() => {
     scrollToAnchor(router.currentRoute.value.hash.substring(1));
   }, 400);
@@ -182,23 +214,21 @@ onMounted(() => {
 onUnmounted(() => {
   if (timeoutScrollId.value !== null) clearTimeout(timeoutScrollId.value);
   if (observer.value) observer.value.disconnect();
-  timeoutScrollId.value = null
+  timeoutScrollId.value = null;
 });
 
-const doUpdate = () => {
-  if (!componentPage.value) return;
+const observeNavigationAnchors = () => {
+  if (!import.meta.client || !observer.value) return;
   observer.value?.disconnect();
-  const matchedEl = componentPage.value.querySelectorAll('[id^="content-"]');
-  navigationContents.value = [];
-  matchedEl.forEach((element) => {
-    navigationContents.value.push(element.id);
-    if (!observer.value) return;
+
+  navigationContents.value.forEach((anchor) => {
+    const element = document.getElementById(anchor);
+
+    if (!element || !observer.value) return;
+
     observer.value.observe(element);
   });
 };
-
-const activeAnchor = ref("");
-const observer = ref<IntersectionObserver | null>(null);
 
 const updateActiveAnchor = (entries: IntersectionObserverEntry[]) => {
   entries.forEach((entry) => {
@@ -216,13 +246,17 @@ const linkName = (anchor: string) => {
     .join(" ");
 };
 
-const loadOverview = async () => {
+const loadOverview = () => {
+  resetAnchors();
   overviewComponents.value = overviewComponentsByName[props.name] ?? [];
-  await nextTick();
-  doUpdate();
 };
 
-watch(() => props.name, loadOverview, { immediate: true });
+watch(navigationContents, async () => {
+  await nextTick();
+  observeNavigationAnchors();
+});
+
+watch([() => props.name, () => props.extraAnchors], loadOverview, { immediate: true, deep: true });
 </script>
 
 <template>
@@ -232,7 +266,7 @@ watch(() => props.name, loadOverview, { immediate: true });
         <ComponentsList />
       </template>
       <template #default>
-        <section ref="componentPage">
+        <section>
           <div class="component-overview">
             <div class="component-overview__title nmorph-title-1">
               {{ pascalToSpace(anyToPascalCase(props.name)) }}
