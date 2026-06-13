@@ -4,19 +4,15 @@ import { NmorphImage } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="image-load-failed-text-overview">
-    <ClientOnly>
-      <NmorphImage
-        src="./error.jpg"
-        width="300px"
-        height="300px"
-        load-failed-text="Custom error text"
-      />
-    </ClientOnly>
-    <ClientOnly>
-      <NmorphImage src="./error.jpg" width="300px" height="300px">
-        <template #error>Load error</template>
-      </NmorphImage>
-    </ClientOnly>
+    <NmorphImage
+      src="./error.jpg"
+      width="300px"
+      height="300px"
+      load-failed-text="Custom error text"
+    />
+    <NmorphImage src="./error.jpg" width="300px" height="300px">
+      <template #error>Load error</template>
+    </NmorphImage>
   </div>
 </template>
 

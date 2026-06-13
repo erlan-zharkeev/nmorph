@@ -12,6 +12,11 @@ export default {
   variables: "Variables",
   exposes: "Expose",
   "right-aside-title": "Contents",
+  "component-navigation": {
+    "aria-label": "Component navigation",
+    previous: "Previous component",
+    next: "Next component",
+  },
   name: "Name",
   events: "Events",
   translates: "Translations i18n",
@@ -21,7 +26,6 @@ export default {
   text: "Text",
   type: "Type",
   default: "Default",
-  loadingText: "Loading ...",
   basic: "Basic",
   data: "Data",
   feedback: "Feedback",
@@ -53,7 +57,7 @@ export default {
   "unsupported-resolution": {
     title: "Resolution is not supported",
     description:
-      "Open the documentation on a device with a screen width of at least 320px.",
+      "Open the documentation on a device with a screen size of at least 375px by 640px.",
   },
   "guide-page": {
     title: "Guide",
@@ -226,6 +230,18 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "component-colocated-stories-tests":
+          "Component Storybook stories and Vitest specs now live next to their components, with shared Storybook utilities and Vitest coverage for co-located src/**/*.spec.ts files.",
+        "public-type-barrels-emoji-entrypoints":
+          "Public component barrels now export more prop and helper types consistently, while emoji sources moved under NmorphEmojiPicker and keep the same package emoji entrypoints.",
+        "docs-example-workflow-cleanup":
+          "Lib docs examples were refreshed across the component catalog, old docs generators were removed, and docs clean now uses a cross-platform Node helper.",
+        "dev-workflow-cleanup":
+          "Root dev scripts now use the shared dev-open helper from the repository root, docs and sandbox use the Vue devtools stub, and Storybook scripts call the Storybook CLI directly without the wrapper folder.",
+        "component-control-polish":
+          "Button, Empty, ColorPicker, TimePicker, Tabs, MediaTile, Table, Image loading slots, and related docs examples received focused visual and API polish.",
+        "legacy-cleanup-public-api":
+          "Legacy docs tooling and package metadata were cleaned up: stale generators and unused docs dependencies were removed, NmorphImage loadingText was replaced by the loading slot docs, and component prop types now export consistently through the public barrels.",
         "media-tile-aspect-design":
           "NmorphMediaTile now exposes design and aspect props, including aspect=\"fill\" for parent-sized call tiles while keeping the default 16:9 video layout.",
         "carousel-seamless-loop":
@@ -1223,8 +1239,8 @@ export default {
             "To ensure the 'fit' property is displayed correctly, make sure the container has a fixed size.",
         },
       },
-      "loading-text": {
-        subtitle: "Loader icon displayed during image loading.",
+      "loading-slot": {
+        subtitle: "Custom loading content displayed while the image is loading.",
       },
       "load-failed-text": {
         subtitle: "Text displayed when the image fails to load.",
@@ -1234,8 +1250,6 @@ export default {
         "close-on-outside-click":
           "Closes the preview when clicking outside the container.",
         alt: "Text description for the image.",
-        "loading-text":
-          "Deprecated. Image loading now renders a loader icon; use the loading slot for custom content.",
         "load-failed-text": "Text displayed when the image fails to load.",
         "frame-border": "Defines the thickness of the frame.",
         "image-padding": "Defines the padding of the image.",
@@ -2780,7 +2794,6 @@ export default {
         pear: "Pear",
         apple: "Apple",
         orange: "Orange",
-        unknown: "Unknown",
         username: "Username",
         "years-old": "Years old",
         "preferred-drink": "Preferred drink",
@@ -2797,7 +2810,7 @@ export default {
         info: {
           title: "Typing Information",
           content:
-            "For correct typing, you must import the type INmorphFormDataExpose.",
+            "When accessing form data through a ref, you can import INmorphFormDataExpose to type the exposed API.",
         },
       },
       "validate-immediately": {
@@ -2814,6 +2827,38 @@ export default {
       variables: {},
       exposes: {
         "form-data": "Form data including validation",
+      },
+      "validation-guide": {
+        metadata: {
+          title: "Field metadata and binding",
+          content:
+            "NmorphFormItem passes id, name, and autocomplete to nested controls. When a control has no explicit v-model, it binds to the matching NmorphForm field and validates that field.",
+        },
+        text: {
+          title: "Text rules",
+          content:
+            "Use pattern for string values when a field must match a regular expression.",
+        },
+        number: {
+          title: "Number rules",
+          content:
+            "Use numberCompareType with compareValue to check numeric limits or equality.",
+        },
+        boolean: {
+          title: "Boolean rules",
+          content:
+            "Use booleanCompareType for switches, checkboxes, and agreement-like fields.",
+        },
+        array: {
+          title: "Array rules",
+          content:
+            "Use arrayCompareType for checkbox groups and multi-value controls.",
+        },
+        file: {
+          title: "File rules",
+          content:
+            "Use file rules with NmorphFileUpload to validate size, accepted types, and count before accepting files.",
+        },
       },
       explanation: `
         <div class="container">

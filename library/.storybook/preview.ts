@@ -16,11 +16,29 @@ setup((app) => {
 
 const preview: Preview = {
   parameters: {
+    backgrounds: {
+      default: 'Nmorph dark',
+      values: [
+        { name: 'Nmorph dark', value: '#1b2023' },
+        { name: 'Nmorph light', value: '#e6edf1' },
+      ],
+    },
     controls: {
       expanded: true,
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,
+      },
+    },
+    docs: {
+      description: {
+        component: 'Interactive stories for Nmorph UI Kit components. Initial controls mirror component defaults.',
+      },
+      toc: true,
+    },
+    options: {
+      storySort: {
+        order: ['Nmorph', ['Basic', 'Data', 'Feedback', 'Form', 'Navigation', 'Other', 'Providers']],
       },
     },
   },

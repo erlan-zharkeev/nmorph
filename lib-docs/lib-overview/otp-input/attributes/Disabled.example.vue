@@ -4,9 +4,7 @@ import { NmorphOTPInput } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="otp-input-disabled-overview">
-    <ClientOnly>
-      <NmorphOTPInput disabled />
-    </ClientOnly>
+    <NmorphOTPInput disabled />
   </div>
 </template>
 

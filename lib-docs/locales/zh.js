@@ -12,6 +12,11 @@ export default {
   variables: "变量",
   exposes: "公开",
   "right-aside-title": "目录",
+  "component-navigation": {
+    "aria-label": "组件导航",
+    previous: "上一个组件",
+    next: "下一个组件",
+  },
   name: "名称",
   events: "事件",
   translates: "i18n 翻译",
@@ -21,7 +26,6 @@ export default {
   text: "文本",
   type: "类型",
   default: "默认",
-  loadingText: "加载中 ...",
   basic: "基础",
   data: "数据",
   feedback: "反馈",
@@ -52,7 +56,7 @@ export default {
   },
   "unsupported-resolution": {
     title: "不支持当前分辨率",
-    description: "请在屏幕宽度不小于 320px 的设备上打开文档。",
+    description: "请在屏幕尺寸不小于 375px × 640px 的设备上打开文档。",
   },
   "guide-page": {
     title: "指南",
@@ -215,6 +219,18 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "component-colocated-stories-tests":
+          "组件的 Storybook stories 和 Vitest specs 现在与组件放在同一目录，复用共享 Storybook utilities，Vitest 也会覆盖 co-located src/**/*.spec.ts 文件。",
+        "public-type-barrels-emoji-entrypoints":
+          "公共 component barrels 现在更一致地导出 prop 和 helper types，emoji sources 移入 NmorphEmojiPicker，同时保留原有 package emoji entrypoints。",
+        "docs-example-workflow-cleanup":
+          "Lib docs 示例已在组件目录中刷新，旧的 docs generators 已移除，docs clean 现在使用跨平台 Node helper。",
+        "dev-workflow-cleanup":
+          "Root dev scripts 现在使用仓库根目录的共享 dev-open helper，docs 和 sandbox 使用 Vue devtools stub，Storybook scripts 直接调用 Storybook CLI，不再需要 wrapper folder。",
+        "component-control-polish":
+          "Button、Empty、ColorPicker、TimePicker、Tabs、MediaTile、Table、Image loading slots 以及相关 docs examples 获得了更细致的视觉和 API 打磨。",
+        "legacy-cleanup-public-api":
+          "清理了旧的文档工具和 package metadata：移除了过时的生成脚本和未使用的 docs 依赖，NmorphImage loadingText 改为使用 loading slot 文档，组件 props 类型也会通过公共 barrel 稳定导出。",
         "media-tile-aspect-design":
           "NmorphMediaTile 现在提供 design 和 aspect props，包括用于按父容器尺寸填充通话卡片的 aspect=\"fill\"，同时保留默认的 16:9 video layout。",
         "carousel-seamless-loop":
@@ -1175,8 +1191,8 @@ export default {
           content: "为了确保 'fit' 属性正确显示，请确保容器具有固定大小。",
         },
       },
-      "loading-text": {
-        subtitle: "图像加载期间显示的加载图标。",
+      "loading-slot": {
+        subtitle: "图像加载期间显示的自定义加载内容。",
       },
       "load-failed-text": {
         subtitle: "图像加载失败时显示的文本。",
@@ -1185,8 +1201,6 @@ export default {
         fit: "定义图像如何适应容器。",
         "close-on-outside-click": "点击容器外部时关闭预览。",
         alt: "图像的文本描述。",
-        "loading-text":
-          "已弃用。图像加载现在显示加载图标；如需自定义内容，请使用 loading 插槽。",
         "load-failed-text": "图像加载失败时显示的文本。",
         "frame-border": "定义边框的厚度。",
         "image-padding": "定义图像的内边距。",
@@ -2587,7 +2601,6 @@ export default {
         pear: "梨",
         apple: "苹果",
         orange: "橙子",
-        unknown: "未知",
         username: "用户名",
         "years-old": "岁",
         "preferred-drink": "首选饮料",
@@ -2604,7 +2617,7 @@ export default {
         info: {
           title: "类型信息",
           content:
-            "为了正确的类型检查，您必须导入 INmorphFormDataExpose 类型。",
+            "通过 ref 访问表单数据时，可以导入 INmorphFormDataExpose 来为 exposed API 提供类型。",
         },
       },
       "validate-immediately": {
@@ -2620,6 +2633,35 @@ export default {
       variables: {},
       exposes: {
         "form-data": "表单数据，包括验证",
+      },
+      "validation-guide": {
+        metadata: {
+          title: "字段元数据与绑定",
+          content:
+            "NmorphFormItem 会把 id、name 和 autocomplete 传递给内部控件。控件没有显式 v-model 时，会绑定到同 id 的 NmorphForm 字段并验证该字段。",
+        },
+        text: {
+          title: "文本规则",
+          content: "字符串字段需要匹配正则表达式时，使用 pattern。",
+        },
+        number: {
+          title: "数字规则",
+          content:
+            "使用 numberCompareType 和 compareValue 检查数字范围或相等关系。",
+        },
+        boolean: {
+          title: "布尔规则",
+          content: "switch、checkbox 和确认类字段可使用 booleanCompareType。",
+        },
+        array: {
+          title: "数组规则",
+          content: "checkbox groups 和多值控件可使用 arrayCompareType。",
+        },
+        file: {
+          title: "文件规则",
+          content:
+            "NmorphFileUpload 可使用 file rules，在接收文件前验证大小、类型和数量。",
+        },
       },
       explanation: `
         <div class="container">

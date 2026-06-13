@@ -1,7 +1,92 @@
 <script setup lang="ts">
 import { NmorphScroll, NmorphCard, NmorphDivider } from "@nmorph/nmorph-ui-kit";
+import { h } from "vue";
 
 const knownBugItems: string[] = [];
+
+const releaseDates: Record<string, string> = {
+  "v3.0.9": "2026-06-13",
+  "v3.0.8": "2026-06-12",
+  "v3.0.7": "2026-06-12",
+  "v3.0.6": "2026-06-12",
+  "v3.0.5": "2026-06-11",
+  "v3.0.3": "2026-06-07",
+  "v3.0.2": "2026-06-07",
+  "v3.0.1": "2026-06-06",
+  "v3.0.0": "2026-06-06",
+  "v2.2.59": "2026-06-04",
+  "v2.2.58": "2026-06-04",
+  "v2.2.57": "2026-06-02",
+  "v2.2.56": "2026-06-02",
+  "v2.2.54": "2026-06-01",
+  "v2.2.53": "2026-06-01",
+  "v2.2.52": "2026-05-31",
+  "v2.2.51": "2026-05-31",
+  "v2.2.48": "2026-05-31",
+  "v2.2.43": "2026-05-27",
+  "v2.2.42": "2026-05-27",
+  "v2.2.40": "2026-05-26",
+  "v2.2.39": "2026-05-25",
+  "v2.2.38": "2026-05-23",
+  "v2.2.37": "2026-05-22",
+  "v2.2.36": "2026-05-22",
+  "v2.2.35": "2026-05-21",
+  "v2.2.34": "2026-05-20",
+  "v2.2.33": "2026-05-20",
+  "v2.2.32": "2026-05-19",
+  "v2.2.31": "2026-05-19",
+  "v2.2.30": "2026-05-19",
+  "v2.2.29": "2026-05-19",
+  "v2.2.28": "2026-05-19",
+  "v2.2.27": "2026-05-19",
+  "v2.2.26": "2026-05-19",
+  "v2.2.25": "2026-05-19",
+  "v2.2.24": "2026-05-19",
+  "v2.2.23": "2026-05-18",
+  "v2.2.22": "2026-05-18",
+  "v2.2.21": "2026-05-18",
+  "v2.2.20": "2026-05-12",
+  "v2.2.19": "2026-05-11",
+  "v2.2.18": "2026-05-10",
+  "v2.2.17": "2026-05-10",
+  "v2.2.16": "2026-05-10",
+  "v2.2.15": "2026-05-10",
+  "v2.2.14": "2026-05-10",
+  "v2.2.13": "2026-05-10",
+  "v2.2.12": "2026-05-09",
+  "v2.2.11": "2026-05-09",
+  "v2.2.10": "2026-05-09",
+  "v2.2.9": "2026-05-09",
+  "v2.2.8": "2026-05-09",
+  "v2.2.7": "2026-05-08",
+  "v2.2.6": "2026-05-08",
+  "v2.2.5": "2026-05-08",
+  "v2.2.4": "2026-05-07",
+  "v2.2.3": "2026-05-07",
+  "v2.2.2": "2026-05-07",
+  "v2.2.1": "2026-05-06",
+  "v2.2.0": "2026-05-06",
+  "v2.1.1": "2026-05-05",
+  "v2.1.0": "2026-05-05",
+};
+
+const ReleaseHeading = ({ version }: { version: string }) => {
+  const date = releaseDates[version];
+
+  return h("h3", { class: "docs-changelog-page__release-title" }, [
+    h("span", version),
+    date
+      ? h(
+          "time",
+          {
+            class: "docs-changelog-page__release-date",
+            datetime: date,
+          },
+          date,
+        )
+      : null,
+  ]);
+};
 </script>
 
 <template>
@@ -12,8 +97,31 @@ const knownBugItems: string[] = [];
           <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
           <div class="docs-changelog-page__release">
-            <h3>v3.0.8</h3>
+            <ReleaseHeading version="v3.0.9" />
             <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.component-colocated-stories-tests") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.public-type-barrels-emoji-entrypoints") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.docs-example-workflow-cleanup") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.dev-workflow-cleanup") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.component-control-polish") }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
+            <ReleaseHeading version="v3.0.8" />
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.legacy-cleanup-public-api") }}
+              </li>
               <li>
                 {{ $t("changelog-page.changelog.items.media-tile-aspect-design") }}
               </li>
@@ -29,7 +137,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v3.0.7</h3>
+            <ReleaseHeading version="v3.0.7" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.media-tile-stable-src-object-binding") }}
@@ -49,7 +157,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v3.0.6</h3>
+            <ReleaseHeading version="v3.0.6" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.media-tile-src-object-audio-output") }}
@@ -69,7 +177,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v3.0.5</h3>
+            <ReleaseHeading version="v3.0.5" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.card-paper-surface") }}
@@ -89,7 +197,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v3.0.3</h3>
+            <ReleaseHeading version="v3.0.3" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.docs-layout-refresh") }}
@@ -112,7 +220,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v3.0.2</h3>
+            <ReleaseHeading version="v3.0.2" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.avatar-borderless-prop") }}
@@ -132,7 +240,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v3.0.1</h3>
+            <ReleaseHeading version="v3.0.1" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.button-borderless-prop") }}
@@ -152,7 +260,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v3.0.0</h3>
+            <ReleaseHeading version="v3.0.0" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.design-api-plain") }}
@@ -187,7 +295,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.59</h3>
+            <ReleaseHeading version="v2.2.59" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.guide-component") }}
@@ -201,7 +309,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.58</h3>
+            <ReleaseHeading version="v2.2.58" />
             <ul>
               <li>
                 {{
@@ -213,7 +321,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.57</h3>
+            <ReleaseHeading version="v2.2.57" />
             <ul>
               <li>
                 {{
@@ -225,7 +333,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.56</h3>
+            <ReleaseHeading version="v2.2.56" />
             <ul>
               <li>
                 {{
@@ -244,7 +352,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.54</h3>
+            <ReleaseHeading version="v2.2.54" />
             <ul>
               <li>
                 {{
@@ -256,7 +364,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.53</h3>
+            <ReleaseHeading version="v2.2.53" />
             <ul>
               <li>
                 {{
@@ -282,7 +390,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.52</h3>
+            <ReleaseHeading version="v2.2.52" />
             <ul>
               <li>
                 {{
@@ -308,7 +416,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.51</h3>
+            <ReleaseHeading version="v2.2.51" />
             <ul>
               <li>
                 {{
@@ -334,7 +442,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.48</h3>
+            <ReleaseHeading version="v2.2.48" />
             <ul>
               <li>
                 {{
@@ -393,7 +501,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.43</h3>
+            <ReleaseHeading version="v2.2.43" />
             <ul>
               <li>
                 {{
@@ -415,7 +523,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.42</h3>
+            <ReleaseHeading version="v2.2.42" />
             <ul>
               <li>
                 {{
@@ -449,7 +557,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.40</h3>
+            <ReleaseHeading version="v2.2.40" />
             <ul>
               <li>
                 {{
@@ -476,7 +584,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.39</h3>
+            <ReleaseHeading version="v2.2.39" />
             <ul>
               <li>
                 {{
@@ -501,7 +609,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.38</h3>
+            <ReleaseHeading version="v2.2.38" />
             <ul>
               <li>
                 {{
@@ -528,7 +636,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.37</h3>
+            <ReleaseHeading version="v2.2.37" />
             <ul>
               <li>
                 {{
@@ -555,7 +663,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.36</h3>
+            <ReleaseHeading version="v2.2.36" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.new-components-suite") }}
@@ -585,7 +693,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.35</h3>
+            <ReleaseHeading version="v2.2.35" />
             <ul>
               <li>
                 {{
@@ -659,7 +767,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.34</h3>
+            <ReleaseHeading version="v2.2.34" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.link-icon-name-prop") }}
@@ -692,7 +800,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.33</h3>
+            <ReleaseHeading version="v2.2.33" />
             <ul>
               <li>
                 {{
@@ -704,7 +812,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.32</h3>
+            <ReleaseHeading version="v2.2.32" />
             <ul>
               <li>
                 {{
@@ -716,7 +824,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.31</h3>
+            <ReleaseHeading version="v2.2.31" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.badge-ribbon-tilt") }}
@@ -727,7 +835,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.30</h3>
+            <ReleaseHeading version="v2.2.30" />
             <ul>
               <li>
                 {{
@@ -737,7 +845,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.29</h3>
+            <ReleaseHeading version="v2.2.29" />
             <ul>
               <li>
                 {{
@@ -761,7 +869,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.28</h3>
+            <ReleaseHeading version="v2.2.28" />
             <ul>
               <li>
                 {{
@@ -771,7 +879,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.27</h3>
+            <ReleaseHeading version="v2.2.27" />
             <ul>
               <li>
                 {{
@@ -781,7 +889,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.26</h3>
+            <ReleaseHeading version="v2.2.26" />
             <ul>
               <li>
                 {{
@@ -810,7 +918,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.25</h3>
+            <ReleaseHeading version="v2.2.25" />
             <ul>
               <li>
                 {{
@@ -820,7 +928,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.24</h3>
+            <ReleaseHeading version="v2.2.24" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.badge-ribbon-type") }}
@@ -845,7 +953,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.23</h3>
+            <ReleaseHeading version="v2.2.23" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.scroll-gap-defaults") }}
@@ -870,7 +978,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.22</h3>
+            <ReleaseHeading version="v2.2.22" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.smile-icon") }}
@@ -878,7 +986,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.21</h3>
+            <ReleaseHeading version="v2.2.21" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.send-icons") }}
@@ -899,7 +1007,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.20</h3>
+            <ReleaseHeading version="v2.2.20" />
             <ul>
               <li>
                 {{
@@ -916,7 +1024,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.19</h3>
+            <ReleaseHeading version="v2.2.19" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.empty-state-component") }}
@@ -980,7 +1088,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.18</h3>
+            <ReleaseHeading version="v2.2.18" />
             <ul>
               <li>
                 {{
@@ -1002,7 +1110,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.17</h3>
+            <ReleaseHeading version="v2.2.17" />
             <ul>
               <li>
                 {{
@@ -1024,7 +1132,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.16</h3>
+            <ReleaseHeading version="v2.2.16" />
             <ul>
               <li>
                 {{
@@ -1073,7 +1181,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.15</h3>
+            <ReleaseHeading version="v2.2.15" />
             <ul>
               <li>
                 {{
@@ -1115,7 +1223,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.14</h3>
+            <ReleaseHeading version="v2.2.14" />
             <ul>
               <li>
                 {{
@@ -1142,7 +1250,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.13</h3>
+            <ReleaseHeading version="v2.2.13" />
             <ul>
               <li>
                 {{
@@ -1173,7 +1281,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.12</h3>
+            <ReleaseHeading version="v2.2.12" />
             <ul>
               <li>
                 {{
@@ -1200,7 +1308,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.11</h3>
+            <ReleaseHeading version="v2.2.11" />
             <ul>
               <li>
                 {{
@@ -1213,7 +1321,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.10</h3>
+            <ReleaseHeading version="v2.2.10" />
             <ul>
               <li>
                 {{
@@ -1230,7 +1338,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.9</h3>
+            <ReleaseHeading version="v2.2.9" />
             <ul>
               <li>
                 {{
@@ -1247,7 +1355,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.8</h3>
+            <ReleaseHeading version="v2.2.8" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.nuxt-module") }}
@@ -1266,7 +1374,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.7</h3>
+            <ReleaseHeading version="v2.2.7" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.height-basic-name") }}
@@ -1284,7 +1392,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.6</h3>
+            <ReleaseHeading version="v2.2.6" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.overlay-z-index-stack") }}
@@ -1295,7 +1403,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.5</h3>
+            <ReleaseHeading version="v2.2.5" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.checkbox-height") }}
@@ -1304,7 +1412,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.4</h3>
+            <ReleaseHeading version="v2.2.4" />
             <ul>
               <li>{{ $t("changelog-page.changelog.items.avatar-preview") }}</li>
               <li>
@@ -1313,7 +1421,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.3</h3>
+            <ReleaseHeading version="v2.2.3" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.media-control-icons") }}
@@ -1321,7 +1429,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.2</h3>
+            <ReleaseHeading version="v2.2.2" />
             <ul>
               <li>
                 {{
@@ -1348,7 +1456,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.1</h3>
+            <ReleaseHeading version="v2.2.1" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.callout-status-types") }}
@@ -1362,7 +1470,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.2.0</h3>
+            <ReleaseHeading version="v2.2.0" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.callout-component") }}
@@ -1388,7 +1496,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.1.1</h3>
+            <ReleaseHeading version="v2.1.1" />
             <ul>
               <li>{{ $t("changelog-page.changelog.items.badge-z-index") }}</li>
               <li>
@@ -1416,7 +1524,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.1.0</h3>
+            <ReleaseHeading version="v2.1.0" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.avatar-name-initials") }}
@@ -1452,7 +1560,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.0.3</h3>
+            <ReleaseHeading version="v2.0.3" />
             <ul>
               <li>
                 {{
@@ -1465,7 +1573,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.0.2</h3>
+            <ReleaseHeading version="v2.0.2" />
             <ul>
               <li>
                 {{
@@ -1484,7 +1592,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.0.1</h3>
+            <ReleaseHeading version="v2.0.1" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.otp-input-component") }}
@@ -1516,7 +1624,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v2.0.0</h3>
+            <ReleaseHeading version="v2.0.0" />
             <ul>
               <li>
                 {{
@@ -1555,7 +1663,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v1.1.6</h3>
+            <ReleaseHeading version="v1.1.6" />
             <ul>
               <li>{{ $t("changelog-page.changelog.items.color-picker") }}</li>
               <li>{{ $t("changelog-page.changelog.items.badge-tag-mode") }}</li>
@@ -1576,7 +1684,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v1.1.5</h3>
+            <ReleaseHeading version="v1.1.5" />
             <ul>
               <li>
                 {{
@@ -1589,7 +1697,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v1.1.4</h3>
+            <ReleaseHeading version="v1.1.4" />
             <ul>
               <li>
                 {{
@@ -1608,7 +1716,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v1.1.3</h3>
+            <ReleaseHeading version="v1.1.3" />
             <ul>
               <li>{{ $t("changelog-page.changelog.items.google-icon") }}</li>
               <li>
@@ -1625,7 +1733,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v1.1.2</h3>
+            <ReleaseHeading version="v1.1.2" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.validation-icon-fix") }}
@@ -1633,7 +1741,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v1.1.1</h3>
+            <ReleaseHeading version="v1.1.1" />
             <ul>
               <li>
                 {{
@@ -1645,19 +1753,19 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v1.1.0</h3>
+            <ReleaseHeading version="v1.1.0" />
             <ul>
               <li>{{ $t("changelog-page.changelog.items.select-button") }}</li>
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v1.0.107</h3>
+            <ReleaseHeading version="v1.0.107" />
             <ul>
               <li>{{ $t("changelog-page.changelog.items.engines-range") }}</li>
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v1.0.106</h3>
+            <ReleaseHeading version="v1.0.106" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.export-en-locale") }}
@@ -1665,7 +1773,7 @@ const knownBugItems: string[] = [];
             </ul>
           </div>
           <div class="docs-changelog-page__release">
-            <h3>v1.0.105</h3>
+            <ReleaseHeading version="v1.0.105" />
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.skeleton-animation") }}
@@ -1727,6 +1835,24 @@ const knownBugItems: string[] = [];
 
   h3 {
     margin: 0 0 8px;
+  }
+
+  .docs-changelog-page__release + .docs-changelog-page__release {
+    margin-top: 36px;
+  }
+
+  :deep(.docs-changelog-page__release-title) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    align-items: baseline;
+  }
+
+  :deep(.docs-changelog-page__release-date) {
+    color: var(--nmorph-semi-contrast-text-color);
+    font-weight: var(--nmorph-typography-body-small-font-weight);
+    font-size: var(--nmorph-typography-body-small-font-size);
+    line-height: var(--nmorph-typography-body-small-line-height);
   }
 
   p,

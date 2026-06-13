@@ -4,9 +4,7 @@ import { NmorphSwitch } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="switch-loading-overview">
-    <ClientOnly>
-      <NmorphSwitch loading disabled />
-    </ClientOnly>
+    <NmorphSwitch loading disabled />
   </div>
 </template>
 

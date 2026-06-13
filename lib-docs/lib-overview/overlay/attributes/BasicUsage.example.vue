@@ -7,58 +7,56 @@ const showTransparent = ref(false);
 
 <template>
   <div class="overlay-basic-usage-overview">
-    <ClientOnly>
-      <div class="overlay-content">
-        <div class="overlay-element">
-          <NmorphButton text="Show default" @click="showDefault = true" />
-          <NmorphOverlay
-            :show="showDefault"
-            @on-outside-click="showDefault = false"
-          >
-            <div class="overlay-slot-element">
-              <div class="overlay-slot__content">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
-              </div>
+    <div class="overlay-content">
+      <div class="overlay-element">
+        <NmorphButton text="Show default" @click="showDefault = true" />
+        <NmorphOverlay
+          :show="showDefault"
+          @on-outside-click="showDefault = false"
+        >
+          <div class="overlay-slot-element">
+            <div class="overlay-slot__content">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy
+              text ever since the 1500s, when an unknown printer took a galley
+              of type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
             </div>
-          </NmorphOverlay>
-        </div>
-        <div class="overlay-element">
-          <NmorphButton
-            text="Show transparent"
-            @click="showTransparent = true"
-          />
-          <NmorphOverlay
-            :show="showTransparent"
-            transparent
-            @on-outside-click="showTransparent = false"
-          >
-            <div class="overlay-slot-element">
-              <NmorphCard :paper="3">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
-              </NmorphCard>
-            </div>
-          </NmorphOverlay>
-        </div>
+          </div>
+        </NmorphOverlay>
       </div>
-    </ClientOnly>
+      <div class="overlay-element">
+        <NmorphButton
+          text="Show transparent"
+          @click="showTransparent = true"
+        />
+        <NmorphOverlay
+          :show="showTransparent"
+          transparent
+          @on-outside-click="showTransparent = false"
+        >
+          <div class="overlay-slot-element">
+            <NmorphCard :paper="3">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy
+              text ever since the 1500s, when an unknown printer took a galley
+              of type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
+            </NmorphCard>
+          </div>
+        </NmorphOverlay>
+      </div>
+    </div>
   </div>
 </template>
 

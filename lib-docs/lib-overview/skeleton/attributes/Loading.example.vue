@@ -12,34 +12,32 @@ const loading = ref(true);
 
 <template>
   <div class="skeleton-loading-overview">
-    <ClientOnly>
-      <div class="switch">
-        <span>Loading state</span>
-        <NmorphSwitch v-model="loading" />
-      </div>
-      <NmorphSkeleton :loading="loading">
-        <template #template>
-          <NmorphSkeletonItem
-            variant="image"
-            width="200px"
-            height="200px"
-            :style="{ 'margin-bottom': '8px' }"
-          />
-          <NmorphSkeletonItem variant="rect" width="100%" height="14px" />
-        </template>
-        <template #default>
-          <NmorphImage
-            :src="Winter"
-            :style="{
-              width: '200px',
-              height: '200px',
-              'margin-bottom': '5px',
-            }"
-          />
-          <span>Lorem</span>
-        </template>
-      </NmorphSkeleton>
-    </ClientOnly>
+    <div class="switch">
+      <span>Loading state</span>
+      <NmorphSwitch v-model="loading" />
+    </div>
+    <NmorphSkeleton :loading="loading">
+      <template #template>
+        <NmorphSkeletonItem
+          variant="image"
+          width="200px"
+          height="200px"
+          :style="{ 'margin-bottom': '8px' }"
+        />
+        <NmorphSkeletonItem variant="rect" width="100%" height="14px" />
+      </template>
+      <template #default>
+        <NmorphImage
+          :src="Winter"
+          :style="{
+            width: '200px',
+            height: '200px',
+            'margin-bottom': '5px',
+          }"
+        />
+        <span>Lorem</span>
+      </template>
+    </NmorphSkeleton>
   </div>
 </template>
 

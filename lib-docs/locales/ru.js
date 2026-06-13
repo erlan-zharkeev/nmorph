@@ -12,6 +12,11 @@ export default {
   variables: "Переменные",
   exposes: "Экспорты",
   "right-aside-title": "Содержание",
+  "component-navigation": {
+    "aria-label": "Навигация по компонентам",
+    previous: "Предыдущий компонент",
+    next: "Следующий компонент",
+  },
   name: "Название",
   events: "События",
   translates: "Переводы i18n",
@@ -21,7 +26,6 @@ export default {
   text: "Текст",
   type: "Тип",
   default: "По умолчанию",
-  loadingText: "Загрузка ...",
   basic: "Основное",
   data: "Данные",
   feedback: "Обратная связь",
@@ -53,7 +57,7 @@ export default {
   "unsupported-resolution": {
     title: "Разрешение не поддерживается",
     description:
-      "Откройте документацию на устройстве с шириной экрана не меньше 320px.",
+      "Откройте документацию на устройстве с размером экрана не меньше 375px на 640px.",
   },
   "guide-page": {
     title: "Гайд",
@@ -228,6 +232,18 @@ export default {
     changelog: {
       title: "Журнал изменений",
       items: {
+        "component-colocated-stories-tests":
+          "Storybook stories и Vitest specs теперь лежат рядом со своими компонентами, используют общие Storybook utilities, а Vitest подхватывает co-located src/**/*.spec.ts файлы.",
+        "public-type-barrels-emoji-entrypoints":
+          "Публичные component barrels теперь стабильнее экспортируют prop и helper types, а emoji sources переехали внутрь NmorphEmojiPicker с сохранением прежних package emoji entrypoints.",
+        "docs-example-workflow-cleanup":
+          "Примеры lib docs обновлены по каталогу компонентов, старые docs generators удалены, а docs clean теперь использует кроссплатформенный Node helper.",
+        "dev-workflow-cleanup":
+          "Root dev scripts теперь используют общий dev-open helper из корня репозитория, docs и sandbox подключают Vue devtools stub, а Storybook scripts вызывают Storybook CLI напрямую без wrapper folder.",
+        "component-control-polish":
+          "Button, Empty, ColorPicker, TimePicker, Tabs, MediaTile, Table, loading slots у Image и связанные docs examples получили точечную визуальную и API-полировку.",
+        "legacy-cleanup-public-api":
+          "Очищены legacy-инструменты документации и package metadata: удалены старые генераторы и неиспользуемые зависимости docs, NmorphImage loadingText заменен документацией loading slot, а типы props компонентов теперь последовательно экспортируются через публичные barrels.",
         "media-tile-aspect-design":
           "NmorphMediaTile теперь поддерживает props design и aspect, включая aspect=\"fill\" для call tiles по размеру родителя, сохраняя 16:9 video layout по умолчанию.",
         "carousel-seamless-loop":
@@ -1233,9 +1249,9 @@ export default {
             "Чтобы свойство fit отображалось корректно, убедитесь, что у контейнера задан фиксированный размер.",
         },
       },
-      "loading-text": {
+      "loading-slot": {
         subtitle:
-          "Иконка загрузчика, отображаемая во время загрузки изображения.",
+          "Кастомное содержимое, отображаемое во время загрузки изображения.",
       },
       "load-failed-text": {
         subtitle: "Текст, отображаемый при неудачной загрузке изображения.",
@@ -1245,8 +1261,6 @@ export default {
         "close-on-outside-click":
           "Закрывает предпросмотр при нажатии вне контейнера.",
         alt: "Текстовое описание для изображения.",
-        "loading-text":
-          "Устаревший проп. Во время загрузки изображения теперь отображается иконка загрузчика; для кастомного содержимого используйте слот loading.",
         "load-failed-text":
           "Текст, отображаемый при неудачной загрузке изображения.",
         "frame-border": "Определяет толщину рамки",
@@ -2814,7 +2828,6 @@ export default {
         pear: "Груша",
         apple: "Яблоко",
         orange: "Апельсин",
-        unknown: "Неизвестно",
         username: "Имя пользователя",
         "years-old": "Лет",
         "preferred-drink": "Предпочитаемый напиток",
@@ -2831,7 +2844,7 @@ export default {
         info: {
           title: "Информация о типизации",
           content:
-            "Для обеспечения правильной типизации необходимо импортировать тип INmorphFormDataExpose.",
+            "Если вы обращаетесь к данным формы через ref, можно импортировать INmorphFormDataExpose для типизации exposed API.",
         },
       },
       "validate-immediately": {
@@ -2849,6 +2862,38 @@ export default {
       variables: {},
       exposes: {
         "form-data": "Данные о форме включая валидацию",
+      },
+      "validation-guide": {
+        metadata: {
+          title: "Метаданные поля и привязка",
+          content:
+            "NmorphFormItem передает id, name и autocomplete вложенным контролам. Если у контрола нет явного v-model, он привязывается к полю NmorphForm с тем же id и валидирует это поле.",
+        },
+        text: {
+          title: "Правила для текста",
+          content:
+            "Используйте pattern для строковых значений, когда поле должно соответствовать регулярному выражению.",
+        },
+        number: {
+          title: "Правила для чисел",
+          content:
+            "Используйте numberCompareType вместе с compareValue, чтобы проверять числовые границы или равенство.",
+        },
+        boolean: {
+          title: "Правила для boolean",
+          content:
+            "Используйте booleanCompareType для switches, чекбоксов и полей вроде подтверждения соглашения.",
+        },
+        array: {
+          title: "Правила для массивов",
+          content:
+            "Используйте arrayCompareType для checkbox groups и контролов с несколькими значениями.",
+        },
+        file: {
+          title: "Правила для файлов",
+          content:
+            "Используйте file rules с NmorphFileUpload, чтобы проверять размер, допустимые типы и количество файлов до принятия.",
+        },
       },
       explanation: `
         <div class="container">

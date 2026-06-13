@@ -11,10 +11,8 @@ const options = [
 
 <template>
   <div class="select-options-width-overview">
-    <ClientOnly>
-      <NmorphSelect v-model="value" :options="options" />
-      <NmorphSelect v-model="value" :options="options" options-width="auto" />
-    </ClientOnly>
+    <NmorphSelect v-model="value" :options="options" />
+    <NmorphSelect v-model="value" :options="options" options-width="auto" />
   </div>
 </template>
 

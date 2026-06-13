@@ -16,66 +16,64 @@ const closeHandler = () => {
 
 <template>
   <div class="dropdown-basic-usage-overview">
-    <ClientOnly>
-      <div class="wrapper">
-        <div class="first-menu">
-          <div ref="firstMenu">
-            <NmorphCheckbox
-              v-model="firstMenuOpen"
-              label="First menu"
-              design="nmorph"
-            />
-            <NmorphDropdown
-              :fill-width="false"
-              :width="160"
-              v-if="firstMenu"
-              :open="firstMenuOpen"
-              :relative-element="firstMenu"
-              placement="bottom-end"
-              @on-outside-click="firstMenuCloseHandler"
-              :y-offset="8"
-            >
-              <div class="dropdown-basic-usage__content">
-                <p
-                  class="dropdown-basic-usage__item"
-                  @click="closeHandler"
-                  v-for="idx of [1, 2, 3]"
-                  :key="idx"
-                >
-                  Lorem ipsum {{ idx }}
-                </p>
-              </div>
-            </NmorphDropdown>
-          </div>
-        </div>
-        <div class="second-menu">
-          <div ref="secondMenu">
-            <NmorphCheckbox
-              v-model="secondMenuOpen"
-              label="Second menu"
-              design="nmorph"
-            />
-            <NmorphDropdown
-              v-if="secondMenu"
-              :open="secondMenuOpen"
-              :relative-element="secondMenu"
-              @on-outside-click="closeHandler"
-            >
-              <div class="dropdown-basic-usage__content">
-                <p
-                  class="dropdown-basic-usage__item"
-                  @click="closeHandler"
-                  v-for="idx of [1, 2, 3]"
-                  :key="idx"
-                >
-                  Lorem ipsum {{ idx }}
-                </p>
-              </div>
-            </NmorphDropdown>
-          </div>
+    <div class="wrapper">
+      <div class="first-menu">
+        <div ref="firstMenu">
+          <NmorphCheckbox
+            v-model="firstMenuOpen"
+            label="First menu"
+            design="nmorph"
+          />
+          <NmorphDropdown
+            :fill-width="false"
+            :width="160"
+            v-if="firstMenu"
+            :open="firstMenuOpen"
+            :relative-element="firstMenu"
+            placement="bottom-end"
+            @on-outside-click="firstMenuCloseHandler"
+            :y-offset="8"
+          >
+            <div class="dropdown-basic-usage__content">
+              <p
+                class="dropdown-basic-usage__item"
+                @click="closeHandler"
+                v-for="idx of [1, 2, 3]"
+                :key="idx"
+              >
+                Lorem ipsum {{ idx }}
+              </p>
+            </div>
+          </NmorphDropdown>
         </div>
       </div>
-    </ClientOnly>
+      <div class="second-menu">
+        <div ref="secondMenu">
+          <NmorphCheckbox
+            v-model="secondMenuOpen"
+            label="Second menu"
+            design="nmorph"
+          />
+          <NmorphDropdown
+            v-if="secondMenu"
+            :open="secondMenuOpen"
+            :relative-element="secondMenu"
+            @on-outside-click="closeHandler"
+          >
+            <div class="dropdown-basic-usage__content">
+              <p
+                class="dropdown-basic-usage__item"
+                @click="closeHandler"
+                v-for="idx of [1, 2, 3]"
+                :key="idx"
+              >
+                Lorem ipsum {{ idx }}
+              </p>
+            </div>
+          </NmorphDropdown>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

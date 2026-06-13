@@ -12,31 +12,29 @@ const teamSize = 12;
 
 <template>
   <div class="badge-value-slot-overview">
-    <ClientOnly>
-      <NmorphBadge :value="teamSize" color="var(--nmorph-success-color)">
-        <template #value="{ value }">
-          <div class="badge-value-slot-overview__content">
-            <NmorphIcon width="10px" height="10px" color="currentColor">
-              <NmorphIconUsers />
-            </NmorphIcon>
-            <span>{{ value }}</span>
-          </div>
-        </template>
-        <NmorphButton text="team" />
-      </NmorphBadge>
-      <NmorphBadge
-        type="tag"
-        size="tiny"
-        color="var(--nmorph-accent-color)"
-        :value="''"
-      >
-        <template #value>
-          <NmorphIcon>
-            <NmorphIconPin />
+    <NmorphBadge :value="teamSize" color="var(--nmorph-success-color)">
+      <template #value="{ value }">
+        <div class="badge-value-slot-overview__content">
+          <NmorphIcon width="10px" height="10px" color="currentColor">
+            <NmorphIconUsers />
           </NmorphIcon>
-        </template>
-      </NmorphBadge>
-    </ClientOnly>
+          <span>{{ value }}</span>
+        </div>
+      </template>
+      <NmorphButton text="team" />
+    </NmorphBadge>
+    <NmorphBadge
+      type="tag"
+      size="tiny"
+      color="var(--nmorph-accent-color)"
+      :value="''"
+    >
+      <template #value>
+        <NmorphIcon>
+          <NmorphIconPin />
+        </NmorphIcon>
+      </template>
+    </NmorphBadge>
   </div>
 </template>
 

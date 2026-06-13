@@ -5,11 +5,9 @@ import { Cat, Dog, Racoon } from "~/assets/images";
 
 <template>
   <div class="avatar-size-overview">
-    <ClientOnly>
-      <NmorphAvatar :src="Dog" :size="70" />
-      <NmorphAvatar :src="Cat" :size="50" />
-      <NmorphAvatar :src="Racoon" :size="40" />
-    </ClientOnly>
+    <NmorphAvatar :src="Dog" :size="70" />
+    <NmorphAvatar :src="Cat" :size="50" />
+    <NmorphAvatar :src="Racoon" :size="40" />
   </div>
 </template>
 

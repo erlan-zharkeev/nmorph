@@ -11,11 +11,9 @@ const handleComplete = (value: string) => {
 
 <template>
   <div class="otp-input-basic-usage-overview">
-    <ClientOnly>
-      <p class="nmorph-title-3">Value: {{ otpValue || "-" }}</p>
-      <p class="nmorph-title-3">Complete: {{ completedValue || "-" }}</p>
-      <NmorphOTPInput v-model="otpValue" @complete="handleComplete" />
-    </ClientOnly>
+    <p class="nmorph-title-3">Value: {{ otpValue || "-" }}</p>
+    <p class="nmorph-title-3">Complete: {{ completedValue || "-" }}</p>
+    <NmorphOTPInput v-model="otpValue" @complete="handleComplete" />
   </div>
 </template>
 

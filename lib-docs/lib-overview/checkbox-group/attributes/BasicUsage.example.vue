@@ -12,21 +12,19 @@ const value = ref(["2"]);
 
 <template>
   <div class="checkbox-group-model-value-overview">
-    <ClientOnly>
-      <NmorphCheckboxGroup
-        v-model="value"
-        :options="options"
-        direction="row"
-        thickness="thin"
-      />
-      <NmorphCheckboxGroup
-        v-model="value"
-        :options="options"
-        direction="column"
-        design="plain"
-        thickness="extra-thin"
-      />
-    </ClientOnly>
+    <NmorphCheckboxGroup
+      v-model="value"
+      :options="options"
+      direction="row"
+      thickness="thin"
+    />
+    <NmorphCheckboxGroup
+      v-model="value"
+      :options="options"
+      direction="column"
+      design="plain"
+      thickness="extra-thin"
+    />
   </div>
 </template>
 

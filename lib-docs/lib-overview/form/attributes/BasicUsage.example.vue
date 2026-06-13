@@ -48,12 +48,6 @@ const browsers = [
     label: "Chrome",
   },
   {
-    id: "unknown",
-    disabled: true,
-    modelValue: false,
-    label: "Unknown",
-  },
-  {
     id: "firefox",
     disabled: false,
     modelValue: false,
@@ -186,98 +180,96 @@ watch(
 
 <template>
   <div class="form-basic-usage-overview">
-    <ClientOnly>
-      <div class="nmorph-title-3">
-        Form is valid:
-        {{ isFormValid }}
-      </div>
-      <NmorphForm :value="form" ref="formRef">
-        <NmorphFormItem id="username" label="Username">
-          <NmorphTextInput
-            placeholder="Enter username"
-            clearable
+    <div class="nmorph-title-3">
+      Form is valid:
+      {{ isFormValid }}
+    </div>
+    <NmorphForm :value="form" ref="formRef">
+      <NmorphFormItem id="username" label="Username">
+        <NmorphTextInput
+          placeholder="Enter username"
+          clearable
+        />
+      </NmorphFormItem>
+      <NmorphFormItem id="years" label="Years old">
+        <NmorphNumberInput :min="0" :max="150" />
+      </NmorphFormItem>
+      <NmorphFormItem id="drink" label="Preferred drink">
+        <NmorphRadioGroup>
+          <NmorphRadio
+            v-for="option in drinks"
+            :key="option.value"
+            :label="option.label"
+            :value="option.value"
+            :disabled="option.disabled"
           />
-        </NmorphFormItem>
-        <NmorphFormItem id="years" label="Years old">
-          <NmorphNumberInput :min="0" :max="150" />
-        </NmorphFormItem>
-        <NmorphFormItem id="drink" label="Preferred drink">
-          <NmorphRadioGroup>
-            <NmorphRadio
-              v-for="option in drinks"
-              :key="option.value"
-              :label="option.label"
-              :value="option.value"
-              :disabled="option.disabled"
-            />
-          </NmorphRadioGroup>
-        </NmorphFormItem>
-        <NmorphFormItem id="browsers" label="Browsers">
-          <NmorphCheckboxGroup direction="column">
-            <NmorphCheckbox
-              v-for="option in browsers"
-              :id="option.id"
-              :key="option.id"
-              :label="option.label"
-              :disabled="option.disabled"
-              design="nmorph"
-            />
-          </NmorphCheckboxGroup>
-        </NmorphFormItem>
-        <NmorphFormItem id="numberValue" label="Numeric value">
-          <NmorphSlider
-            :step="1"
-            :min="0"
-            :max="100"
+        </NmorphRadioGroup>
+      </NmorphFormItem>
+      <NmorphFormItem id="browsers" label="Browsers">
+        <NmorphCheckboxGroup>
+          <NmorphCheckbox
+            v-for="option in browsers"
+            :id="option.id"
+            :key="option.id"
+            :label="option.label"
+            :disabled="option.disabled"
+            design="nmorph"
           />
-          <span class="form-basic-usage-overview__value">{{
-            form.numberValue.value
-          }}</span>
-        </NmorphFormItem>
-        <NmorphFormItem id="food" label="Food">
-          <NmorphSelect
-            value-required
-            :options-map="food"
-            fill
-          >
-            <NmorphSelectOption
-              v-for="option in food"
-              :key="option.value"
-              :label="option.label"
-              :value="option.value"
-            />
-          </NmorphSelect>
-        </NmorphFormItem>
-        <NmorphFormItem id="date" label="Choose a date">
-          <NmorphDatePicker />
-        </NmorphFormItem>
-        <NmorphFormItem id="photo" label="Photo">
-          <NmorphFileUpload multiple />
-        </NmorphFormItem>
-        <NmorphFormItem id="agreement" label="Agreement">
-          <NmorphSwitch>
-            <template #thumb-on>
-              <NmorphIcon width="10px" height="10px">
-                <NmorphIconEye />
-              </NmorphIcon>
-            </template>
-            <template #thumb-off>
-              <NmorphIcon name="eye-blocked" width="10px" height="10px">
-                <NmorphIconEyeBlocked />
-              </NmorphIcon>
-            </template>
-          </NmorphSwitch>
-        </NmorphFormItem>
-        <NmorphFormItem id="send">
-          <NmorphButton
-            text="Send form"
-            :disabled="!isFormValid"
-            width="100px"
-            fill
+        </NmorphCheckboxGroup>
+      </NmorphFormItem>
+      <NmorphFormItem id="numberValue" label="Numeric value">
+        <NmorphSlider
+          :step="1"
+          :min="0"
+          :max="100"
+        />
+        <span class="form-basic-usage-overview__value">{{
+          form.numberValue.value
+        }}</span>
+      </NmorphFormItem>
+      <NmorphFormItem id="food" label="Food">
+        <NmorphSelect
+          value-required
+          :options-map="food"
+          fill
+        >
+          <NmorphSelectOption
+            v-for="option in food"
+            :key="option.value"
+            :label="option.label"
+            :value="option.value"
           />
-        </NmorphFormItem>
-      </NmorphForm>
-    </ClientOnly>
+        </NmorphSelect>
+      </NmorphFormItem>
+      <NmorphFormItem id="date" label="Choose a date">
+        <NmorphDatePicker />
+      </NmorphFormItem>
+      <NmorphFormItem id="photo" label="Photo">
+        <NmorphFileUpload multiple />
+      </NmorphFormItem>
+      <NmorphFormItem id="agreement" label="Agreement">
+        <NmorphSwitch>
+          <template #thumb-on>
+            <NmorphIcon width="10px" height="10px">
+              <NmorphIconEye />
+            </NmorphIcon>
+          </template>
+          <template #thumb-off>
+            <NmorphIcon name="eye-blocked" width="10px" height="10px">
+              <NmorphIconEyeBlocked />
+            </NmorphIcon>
+          </template>
+        </NmorphSwitch>
+      </NmorphFormItem>
+      <NmorphFormItem id="send">
+        <NmorphButton
+          text="Send form"
+          :disabled="!isFormValid"
+          width="100px"
+          fill
+        />
+      </NmorphFormItem>
+    </NmorphForm>
   </div>
 </template>
 

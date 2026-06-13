@@ -6,18 +6,16 @@ const percentage = 33;
 
 <template>
   <div class="progress-value-inside-overview">
-    <ClientOnly>
-      <NmorphProgress
-        :percentage="percentage"
-        value-inside
-        :value-right-side="false"
-        color="pink"
-      >
-        <template #inner-text>
-          <span>I am slot prefix {{ percentage }}%</span>
-        </template>
-      </NmorphProgress>
-    </ClientOnly>
+    <NmorphProgress
+      :percentage="percentage"
+      value-inside
+      :value-right-side="false"
+      color="pink"
+    >
+      <template #inner-text>
+        <span>I am slot prefix {{ percentage }}%</span>
+      </template>
+    </NmorphProgress>
   </div>
 </template>
 

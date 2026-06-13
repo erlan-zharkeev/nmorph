@@ -27,9 +27,7 @@ onUnmounted(async () => {
 </script>
 
 <template>
-  <ClientOnly>
-    <NmorphNotificationProvider :notifications="notificationProvider.notifications.value" placement="top-center" />
-  </ClientOnly>
+  <NmorphNotificationProvider :notifications="notificationProvider.notifications.value" placement="top-center" />
   <div class="docs-shell">
     <div class="docs">
       <NuxtLayout name="default" />
@@ -97,7 +95,7 @@ body,
   }
 }
 
-@media (max-width: 319px) {
+@media (max-width: 374px), (max-height: 639px) {
   .docs {
     display: none;
   }

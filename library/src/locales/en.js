@@ -20,7 +20,6 @@ export default {
   dec: 'December',
   pickADate: 'Pick a date',
   pickATime: 'Pick a time',
-  loadingText: 'Loading ...',
   loadFailedText: 'Image loading failed',
   noElementPlaceholder: 'Choose value',
   selectFile: 'Select file',

@@ -8,28 +8,26 @@ const thirdSwitch = ref(1);
 
 <template>
   <div class="switch-model-value-overview">
-    <ClientOnly>
-      <div class="switch-el">
-        <p class="switch-value nmorph-title-3">Value: {{ firstSwitch }}</p>
-        <NmorphSwitch v-model="firstSwitch" />
-      </div>
-      <div class="switch-el">
-        <p class="switch-value nmorph-title-3">Value: {{ secondSwitch }}</p>
-        <NmorphSwitch
-          v-model="secondSwitch"
-          active-value="on"
-          inactive-value="off"
-        />
-      </div>
-      <div class="switch-el">
-        <p class="switch-value nmorph-title-3">Value: {{ thirdSwitch }}</p>
-        <NmorphSwitch
-          v-model="thirdSwitch"
-          :active-value="1"
-          :inactive-value="0"
-        />
-      </div>
-    </ClientOnly>
+    <div class="switch-el">
+      <p class="switch-value nmorph-title-3">Value: {{ firstSwitch }}</p>
+      <NmorphSwitch v-model="firstSwitch" />
+    </div>
+    <div class="switch-el">
+      <p class="switch-value nmorph-title-3">Value: {{ secondSwitch }}</p>
+      <NmorphSwitch
+        v-model="secondSwitch"
+        active-value="on"
+        inactive-value="off"
+      />
+    </div>
+    <div class="switch-el">
+      <p class="switch-value nmorph-title-3">Value: {{ thirdSwitch }}</p>
+      <NmorphSwitch
+        v-model="thirdSwitch"
+        :active-value="1"
+        :inactive-value="0"
+      />
+    </div>
   </div>
 </template>
 

@@ -4,18 +4,16 @@ import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="badge-value-overview">
-    <ClientOnly>
-      <div class="badge-value-overview__element">
-        <NmorphBadge value="abc">
-          <NmorphButton text="button" />
-        </NmorphBadge>
-      </div>
-      <div class="badge-value-overview__element">
-        <NmorphBadge :value="99">
-          <NmorphButton text="button" />
-        </NmorphBadge>
-      </div>
-    </ClientOnly>
+    <div class="badge-value-overview__element">
+      <NmorphBadge value="abc">
+        <NmorphButton text="button" />
+      </NmorphBadge>
+    </div>
+    <div class="badge-value-overview__element">
+      <NmorphBadge :value="99">
+        <NmorphButton text="button" />
+      </NmorphBadge>
+    </div>
   </div>
 </template>
 

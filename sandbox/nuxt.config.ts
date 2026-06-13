@@ -7,6 +7,22 @@ const nmorphAliases = {
   "@nmorph/nmorph-ui-kit/plugin": resolve(nmorphSrc, "plugin.ts"),
   "@nmorph/nmorph-ui-kit/icons": resolve(nmorphSrc, "icons.ts"),
   "@nmorph/nmorph-ui-kit/styles": resolve(nmorphSrc, "styles.ts"),
+  "@nmorph/nmorph-ui-kit/emoji": resolve(
+    nmorphSrc,
+    "components/data/nmorph-emoji-picker/emoji/index.ts",
+  ),
+  "@nmorph/nmorph-ui-kit/emoji/en": resolve(
+    nmorphSrc,
+    "components/data/nmorph-emoji-picker/emoji/locales/en.ts",
+  ),
+  "@nmorph/nmorph-ui-kit/emoji/ru": resolve(
+    nmorphSrc,
+    "components/data/nmorph-emoji-picker/emoji/locales/ru.ts",
+  ),
+  "@nmorph/nmorph-ui-kit/emoji/zh": resolve(
+    nmorphSrc,
+    "components/data/nmorph-emoji-picker/emoji/locales/zh.ts",
+  ),
   "@nmorph/nmorph-ui-kit": resolve(nmorphSrc, "main.ts"),
 };
 const nuxtCommand = process.argv

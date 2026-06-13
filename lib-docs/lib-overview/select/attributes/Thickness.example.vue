@@ -13,14 +13,12 @@ const thicknesses = Object.keys(NmorphComponentThickness) as Array<
 
 <template>
   <div class="select-thickness-overview">
-    <ClientOnly>
-      <NmorphSelect
-        v-for="thickness in thicknesses"
-        :key="thickness"
-        :thickness="thickness"
-        :options="options"
-      />
-    </ClientOnly>
+    <NmorphSelect
+      v-for="thickness in thicknesses"
+      :key="thickness"
+      :thickness="thickness"
+      :options="options"
+    />
   </div>
 </template>
 

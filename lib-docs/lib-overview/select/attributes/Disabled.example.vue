@@ -4,9 +4,7 @@ import { NmorphSelect } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="select-disabled-overview">
-    <ClientOnly>
-      <NmorphSelect disabled />
-    </ClientOnly>
+    <NmorphSelect disabled />
   </div>
 </template>
 

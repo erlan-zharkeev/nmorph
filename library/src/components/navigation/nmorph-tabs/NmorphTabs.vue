@@ -77,11 +77,13 @@ const slots = useSlots();
 
 <style lang="scss">
 .nmorph-tabs {
+  --nmorph-private-tabs-wall-width: var(--indentation-01);
+
   border-radius: var(--default-border-radius);
 
   .nmorph-tabs__label-list {
     display: flex;
-    padding: var(--indentation-02);
+    padding: var(--nmorph-private-tabs-wall-width);
     background: var(--nmorph-main-color);
     border-top-left-radius: var(--default-border-radius);
     border-top-right-radius: var(--default-border-radius);
@@ -117,7 +119,7 @@ const slots = useSlots();
   }
 
   .nmorph-tabs__content__wrapper {
-    padding: var(--indentation-02);
+    padding: var(--nmorph-private-tabs-wall-width);
     background: var(--nmorph-main-color);
     border-bottom-right-radius: var(--default-border-radius);
     border-bottom-left-radius: var(--default-border-radius);

@@ -4,11 +4,9 @@ import { NmorphOTPInput } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="otp-input-thickness-overview">
-    <ClientOnly>
-      <NmorphOTPInput thickness="thick" />
-      <NmorphOTPInput thickness="basic" />
-      <NmorphOTPInput thickness="thin" />
-    </ClientOnly>
+    <NmorphOTPInput thickness="thick" />
+    <NmorphOTPInput thickness="basic" />
+    <NmorphOTPInput thickness="thin" />
   </div>
 </template>
 

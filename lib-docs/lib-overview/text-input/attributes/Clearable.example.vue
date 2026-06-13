@@ -6,9 +6,7 @@ const text = ref("Lorem ipsum");
 
 <template>
   <div class="text-input-clearable-overview">
-    <ClientOnly>
-      <NmorphTextInput clearable v-model="text" />
-    </ClientOnly>
+    <NmorphTextInput clearable v-model="text" />
   </div>
 </template>
 

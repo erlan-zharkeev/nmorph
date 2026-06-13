@@ -10,16 +10,14 @@ const elements = [
 
 <template>
   <div class="breadcrumb-basic-usage-overview">
-    <ClientOnly>
-      <NmorphBreadcrumb separator="/">
-        <NmorphBreadcrumbItem
-          v-for="el in elements"
-          :key="el.path"
-          :to="el.path"
-          >{{ el.name }}
-        </NmorphBreadcrumbItem>
-      </NmorphBreadcrumb>
-    </ClientOnly>
+    <NmorphBreadcrumb separator="/">
+      <NmorphBreadcrumbItem
+        v-for="el in elements"
+        :key="el.path"
+        :to="el.path"
+        >{{ el.name }}
+      </NmorphBreadcrumbItem>
+    </NmorphBreadcrumb>
   </div>
 </template>
 

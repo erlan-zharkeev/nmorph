@@ -6,13 +6,11 @@ const date = ref(new Date());
 
 <template>
   <div class="calendar-custom-content-overview">
-    <ClientOnly>
-      <NmorphCalendar :initial-date="new Date()" v-model="date">
-        <template #date-cell="{ scope }">
-          {{ scope.isToday ? "!TODAY!" : scope.value }}
-        </template>
-      </NmorphCalendar>
-    </ClientOnly>
+    <NmorphCalendar :initial-date="new Date()" v-model="date">
+      <template #date-cell="{ scope }">
+        {{ scope.isToday ? "!TODAY!" : scope.value }}
+      </template>
+    </NmorphCalendar>
   </div>
 </template>
 

@@ -4,9 +4,7 @@ import { NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="text-input-disabled-overview">
-    <ClientOnly>
-      <NmorphTextInput placeholder="I am disabled" disabled />
-    </ClientOnly>
+    <NmorphTextInput placeholder="I am disabled" disabled />
   </div>
 </template>
 

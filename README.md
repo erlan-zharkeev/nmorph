@@ -39,7 +39,7 @@ pnpm build
 pnpm check
 ```
 
-The workspace includes the published library, the Nuxt documentation app, the Vue sandbox, and the Nuxt SSR sandbox. Turborepo keeps package build order explicit and caches repeated lint, typecheck, test, and build tasks.
+The workspace includes the published library, the Nuxt documentation app, and the Nuxt sandbox. Turborepo keeps package build order explicit and caches repeated lint, typecheck, test, and build tasks.
 
 ---
 

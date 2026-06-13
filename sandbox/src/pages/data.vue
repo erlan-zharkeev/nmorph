@@ -42,8 +42,11 @@ import type {
   NmorphSortOrderType,
   NmorphTableSortType,
 } from '@nmorph/nmorph-ui-kit'
-import { loadNmorphEmojiLocale, nmorphEmojiLanguageOptions } from '../../../library/src/emoji'
-import type { NmorphEmojiLanguage, NmorphEmojiLocale } from '../../../library/src/emoji'
+import {
+  loadNmorphEmojiLocale,
+  nmorphEmojiLanguageOptions,
+} from '@nmorph/nmorph-ui-kit/emoji'
+import type { NmorphEmojiLanguage, NmorphEmojiLocale } from '@nmorph/nmorph-ui-kit/emoji'
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
 
 const createImage = (startColor: string, endColor: string, label: string) =>

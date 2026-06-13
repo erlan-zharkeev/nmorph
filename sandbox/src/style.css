@@ -47,7 +47,8 @@
 body {
   margin: 0;
   font-family: sans-serif;
-  min-width: 320px;
+  min-width: 375px;
+  min-height: 640px;
   background: var(--nmorph-main-color);
   color: var(--nmorph-text-color);
 }

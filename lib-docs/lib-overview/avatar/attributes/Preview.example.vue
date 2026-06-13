@@ -5,15 +5,13 @@ import { Dog, Racoon } from "~/assets/images";
 
 <template>
   <div class="avatar-preview-overview">
-    <ClientOnly>
-      <NmorphAvatar
-        :src="[Dog, Racoon]"
-        preview
-        :size="80"
-        shape="square"
-        :preview-initial-index="0"
-      />
-    </ClientOnly>
+    <NmorphAvatar
+      :src="[Dog, Racoon]"
+      preview
+      :size="80"
+      shape="square"
+      :preview-initial-index="0"
+    />
   </div>
 </template>
 

@@ -12,18 +12,16 @@ const multipleValue = ref(["one", "two"]);
 
 <template>
   <div class="select-model-value-overview">
-    <ClientOnly>
-      <div class="select-element">
-        <NmorphSelect v-model="value" :options="options" />
-      </div>
-      <div class="select-element">
-        <NmorphSelect
-          v-model="multipleValue"
-          :options="options"
-          no-element-placeholder="Multiple values"
-        />
-      </div>
-    </ClientOnly>
+    <div class="select-element">
+      <NmorphSelect v-model="value" :options="options" />
+    </div>
+    <div class="select-element">
+      <NmorphSelect
+        v-model="multipleValue"
+        :options="options"
+        no-element-placeholder="Multiple values"
+      />
+    </div>
   </div>
 </template>
 

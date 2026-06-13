@@ -127,7 +127,7 @@ const styles = computed<CSSProperties>(() =>
   }
 
   &.nmorph-empty--plain {
-    border: var(--nmorph-plain-border);
+    background: color-mix(in srgb, var(--nmorph-overlay-color) 42%, transparent);
   }
 }
 </style>

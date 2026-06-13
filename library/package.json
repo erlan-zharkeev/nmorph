@@ -2,7 +2,7 @@
   "name": "@nmorph/nmorph-ui-kit",
   "type": "module",
   "private": false,
-  "version": "3.0.8",
+  "version": "3.0.9",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -20,11 +20,7 @@
     "**/*.css"
   ],
   "files": [
-    "dist",
-    "tsconfig.base.json",
-    ".eslintrc.base.cjs",
-    ".stylelintrc.base.cjs",
-    ".prettierrc.base.cjs"
+    "dist"
   ],
   "exports": {
     ".": {
@@ -47,19 +43,19 @@
       "import": "./dist/styles.js"
     },
     "./emoji": {
-      "types": "./dist/src/emoji/index.d.ts",
+      "types": "./dist/src/components/data/nmorph-emoji-picker/emoji/index.d.ts",
       "import": "./dist/emoji/index.js"
     },
     "./emoji/en": {
-      "types": "./dist/src/emoji/locales/en.d.ts",
+      "types": "./dist/src/components/data/nmorph-emoji-picker/emoji/locales/en.d.ts",
       "import": "./dist/emoji/locales/en.js"
     },
     "./emoji/ru": {
-      "types": "./dist/src/emoji/locales/ru.d.ts",
+      "types": "./dist/src/components/data/nmorph-emoji-picker/emoji/locales/ru.d.ts",
       "import": "./dist/emoji/locales/ru.js"
     },
     "./emoji/zh": {
-      "types": "./dist/src/emoji/locales/zh.d.ts",
+      "types": "./dist/src/components/data/nmorph-emoji-picker/emoji/locales/zh.d.ts",
       "import": "./dist/emoji/locales/zh.js"
     },
     "./styles.css": "./dist/style.css",
@@ -81,9 +77,9 @@
     "./dist/styles/main.scss": "./dist/styles/main.scss"
   },
   "scripts": {
-    "dev": "node ./scripts/run-storybook.cjs dev -p 43183",
-    "storybook": "node ./scripts/run-storybook.cjs dev -p 43183",
-    "build:storybook": "node ./scripts/run-storybook.cjs build",
+    "dev": "storybook dev -p 43183",
+    "storybook": "storybook dev -p 43183",
+    "build:storybook": "storybook build",
     "build": "pnpm run build:types && vite build && vite build --config vite.umd.config.ts && vite build --config vite.nuxt.config.ts",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -97,17 +93,12 @@
     "dev:type": "vue-tsc -p ./tsconfig.json",
     "typecheck": "vue-tsc -p ./tsconfig.json",
     "check": "pnpm run lint:check && pnpm run typecheck && pnpm run test",
-    "prepare": "node ./scripts/install-husky.cjs",
-    "validate-branch-name": "node .husky/validate-branch-name.cjs",
-    "validate-commit-msg": "node .husky/validate-commit-msg.cjs",
     "build:types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist"
   },
-  "dependencies": {
-    "vue": "^3.5.13",
-    "vue-i18n": "^9.9.0"
-  },
   "peerDependencies": {
-    "nuxt": ">=3.0.0"
+    "nuxt": ">=3.0.0",
+    "vue": ">=3.4.0",
+    "vue-i18n": ">=9.0.0"
   },
   "peerDependenciesMeta": {
     "nuxt": {
@@ -122,7 +113,6 @@
     "@storybook/vue3": "10.3.6",
     "@storybook/vue3-vite": "10.3.6",
     "@types/node": "^20.10.8",
-    "@types/vue": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
     "@vitejs/plugin-vue": "^5.2.4",
@@ -134,9 +124,7 @@
     "eslint-plugin-storybook": "^0.6.15",
     "eslint-plugin-vue": "^9.19.2",
     "happy-dom": "^15.11.7",
-    "husky": "^8.0.3",
     "prettier": "^3.1.1",
-    "rollup-plugin-ignore": "^1.0.10",
     "sass": "^1.69.7",
     "storybook": "10.3.6",
     "stylelint": "^16.1.0",
@@ -152,10 +140,11 @@
     "typescript": "~5.1.6",
     "vite": "^5.4.21",
     "vite-plugin-dts": "^4.3.0",
-    "vite-plugin-static-copy": "^0.17.1",
     "vite-svg-loader": "^5.1.0",
     "vitest": "2.1.9",
+    "vue": "^3.5.13",
     "vue-eslint-parser": "^9.4.0",
+    "vue-i18n": "^9.9.0",
     "vue-tsc": "^1.6.5"
   }
 }

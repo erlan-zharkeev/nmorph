@@ -6,10 +6,8 @@ const color = ref("#4a90e2");
 
 <template>
   <div class="color-picker-model-value-overview">
-    <ClientOnly>
-      <p class="nmorph-title-3">Value: {{ color }}</p>
-      <NmorphColorPicker v-model="color" show-value />
-    </ClientOnly>
+    <p class="nmorph-title-3">Value: {{ color }}</p>
+    <NmorphColorPicker v-model="color" show-value />
   </div>
 </template>
 

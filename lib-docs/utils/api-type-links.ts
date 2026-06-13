@@ -57,7 +57,7 @@ const apiTypeLinks: Record<string, string> = {
     "components/form/nmorph-select-button/types.ts",
   ),
   INmorphSelectOption: source("components/form/nmorph-select/types.ts"),
-  INmorphTabPaneProps: source("components/navigation/nmorph-tabs/type.ts"),
+  INmorphTabPaneProps: source("components/navigation/nmorph-tabs/types.ts"),
   NmorphAvailableFormValueType: source("components/form/nmorph-form/types.ts"),
   NmorphContextMenuOption: source(
     "components/navigation/nmorph-context-menu/types.ts",

@@ -4,9 +4,7 @@ import { NmorphSlider } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="slider-disabled-overview">
-    <ClientOnly>
-      <NmorphSlider disabled />
-    </ClientOnly>
+    <NmorphSlider disabled />
   </div>
 </template>
 

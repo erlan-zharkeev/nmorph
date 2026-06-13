@@ -11,24 +11,22 @@ const value = ref("three");
 
 <template>
   <div class="radio-group-model-value-overview">
-    <ClientOnly>
-      <div class="radio-group-el">
-        <NmorphRadioGroup
-          :options="options"
-          v-model="value"
-          thickness="thin"
-        />
-      </div>
-      <div class="radio-group-el">
-        <NmorphRadioGroup
-          :options="options"
-          v-model="value"
-          direction="column"
-          design="plain"
-          thickness="extra-thin"
-        />
-      </div>
-    </ClientOnly>
+    <div class="radio-group-el">
+      <NmorphRadioGroup
+        :options="options"
+        v-model="value"
+        thickness="thin"
+      />
+    </div>
+    <div class="radio-group-el">
+      <NmorphRadioGroup
+        :options="options"
+        v-model="value"
+        direction="column"
+        design="plain"
+        thickness="extra-thin"
+      />
+    </div>
   </div>
 </template>
 

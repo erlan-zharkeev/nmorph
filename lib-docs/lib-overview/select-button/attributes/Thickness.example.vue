@@ -13,21 +13,19 @@ const thicknesses = Object.keys(NmorphComponentThickness) as Array<
 
 <template>
   <div class="select-button-thickness-overview">
-    <ClientOnly>
-      <NmorphSelectButton
-        v-for="thickness in thicknesses"
-        :key="thickness"
-        v-model="value"
-        :thickness="thickness"
-      >
-        <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
-        <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
-      </NmorphSelectButton>
-      <NmorphSelectButton v-model="value" custom-thickness="44px">
-        <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
-        <NmorphSelectButtonItem value="on">Custom</NmorphSelectButtonItem>
-      </NmorphSelectButton>
-    </ClientOnly>
+    <NmorphSelectButton
+      v-for="thickness in thicknesses"
+      :key="thickness"
+      v-model="value"
+      :thickness="thickness"
+    >
+      <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
+      <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
+    </NmorphSelectButton>
+    <NmorphSelectButton v-model="value" custom-thickness="44px">
+      <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
+      <NmorphSelectButtonItem value="on">Custom</NmorphSelectButtonItem>
+    </NmorphSelectButton>
   </div>
 </template>
 

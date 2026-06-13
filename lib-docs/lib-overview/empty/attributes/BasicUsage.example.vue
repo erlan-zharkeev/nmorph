@@ -29,7 +29,7 @@ import {
         <NmorphIcon
           width="40px"
           height="40px"
-          color="var(--nmorph-accent-color)"
+          color="var(--nmorph-semi-contrast-text-color)"
         >
           <NmorphIconSearch />
         </NmorphIcon>

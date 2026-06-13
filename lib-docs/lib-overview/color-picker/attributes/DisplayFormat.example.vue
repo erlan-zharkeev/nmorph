@@ -6,11 +6,9 @@ const color = ref("#4a90e2");
 
 <template>
   <div class="color-picker-display-format-overview">
-    <ClientOnly>
-      <NmorphColorPicker v-model="color" show-value display-format="hex" />
-      <NmorphColorPicker v-model="color" show-value display-format="rgb" />
-      <NmorphColorPicker v-model="color" show-value display-format="hsl" />
-    </ClientOnly>
+    <NmorphColorPicker v-model="color" show-value display-format="hex" />
+    <NmorphColorPicker v-model="color" show-value display-format="rgb" />
+    <NmorphColorPicker v-model="color" show-value display-format="hsl" />
   </div>
 </template>
 

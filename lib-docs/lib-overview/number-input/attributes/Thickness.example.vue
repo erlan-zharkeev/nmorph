@@ -4,11 +4,9 @@ import { NmorphNumberInput } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="number-input-thickness-overview">
-    <ClientOnly>
-      <NmorphNumberInput thickness="thick" />
-      <NmorphNumberInput thickness="basic" />
-      <NmorphNumberInput thickness="thin" />
-    </ClientOnly>
+    <NmorphNumberInput thickness="thick" />
+    <NmorphNumberInput thickness="basic" />
+    <NmorphNumberInput thickness="thin" />
   </div>
 </template>
 

@@ -24,6 +24,7 @@
     "typescript": "~5.4.5",
     "vite": "^5.4.21",
     "vite-svg-loader": "^5.1.0",
+    "vue-devtools-stub": "^0.1.0",
     "vue-tsc": "^2.2.12"
   }
 }

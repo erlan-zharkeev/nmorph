@@ -12,9 +12,7 @@ const model = ref(new Date());
 
 <template>
   <div class="calendar-initial-date-overview">
-    <ClientOnly>
-      <NmorphCalendar :range="range" v-model="model" />
-    </ClientOnly>
+    <NmorphCalendar :range="range" v-model="model" />
   </div>
 </template>
 

@@ -6,9 +6,7 @@ const value = ref(3);
 
 <template>
   <div class="slider-basic-usage-overview">
-    <ClientOnly>
-      <NmorphSlider :min="1" :max="22" :step="1" v-model="value" />
-    </ClientOnly>
+    <NmorphSlider :min="1" :max="22" :step="1" v-model="value" />
   </div>
 </template>
 

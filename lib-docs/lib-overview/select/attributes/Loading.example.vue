@@ -4,9 +4,7 @@ import { NmorphSelect } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="select-loading-overview">
-    <ClientOnly>
-      <NmorphSelect loading />
-    </ClientOnly>
+    <NmorphSelect loading />
   </div>
 </template>
 

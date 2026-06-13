@@ -4,9 +4,7 @@ import { NmorphSlider } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="slider-show-tooltip-overview">
-    <ClientOnly>
-      <NmorphSlider :show-tooltip="false" :model-value="50" />
-    </ClientOnly>
+    <NmorphSlider :show-tooltip="false" :model-value="50" />
   </div>
 </template>
 

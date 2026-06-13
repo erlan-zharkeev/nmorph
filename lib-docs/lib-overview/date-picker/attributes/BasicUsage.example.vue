@@ -10,21 +10,19 @@ const range = ref([date1, date2]);
 
 <template>
   <div class="date-picker-basic-usage-overview">
-    <ClientOnly>
-      <div class="date-picker-basic-usage-overview__element">
-        <NmorphDatePicker v-model="date" />
-      </div>
-      <div class="date-picker-basic-usage-overview__element">
-        <NmorphDatePicker v-model="dates" type="dates" :initial-date="date" />
-      </div>
-      <div class="date-picker-basic-usage-overview__element">
-        <NmorphDatePicker
-          v-model="range"
-          type="daterange"
-          :initial-date="date1"
-        />
-      </div>
-    </ClientOnly>
+    <div class="date-picker-basic-usage-overview__element">
+      <NmorphDatePicker v-model="date" />
+    </div>
+    <div class="date-picker-basic-usage-overview__element">
+      <NmorphDatePicker v-model="dates" type="dates" :initial-date="date" />
+    </div>
+    <div class="date-picker-basic-usage-overview__element">
+      <NmorphDatePicker
+        v-model="range"
+        type="daterange"
+        :initial-date="date1"
+      />
+    </div>
   </div>
 </template>
 

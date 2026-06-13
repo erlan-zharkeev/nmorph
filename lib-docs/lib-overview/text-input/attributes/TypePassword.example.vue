@@ -6,14 +6,12 @@ const typePassword = ref(true);
 
 <template>
   <div class="text-input-type-password-overview">
-    <ClientOnly>
-      <NmorphButton
-        text="Toggle type"
-        @click="typePassword = !typePassword"
-        class="type-input-button"
-      />
-      <NmorphTextInput :type-password="typePassword" />
-    </ClientOnly>
+    <NmorphButton
+      text="Toggle type"
+      @click="typePassword = !typePassword"
+      class="type-input-button"
+    />
+    <NmorphTextInput :type-password="typePassword" />
   </div>
 </template>
 

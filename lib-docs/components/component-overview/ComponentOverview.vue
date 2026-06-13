@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { nextTick, provide, shallowRef } from "vue";
 import {
+  NmorphIcon,
+  NmorphIconArrowLeft,
+  NmorphIconArrowRight,
+} from "@nmorph/nmorph-ui-kit";
+import { componentGroups } from "~/data/components";
+import {
   anyToPascalCase,
+  componentPathByName,
   docsNavigationKey,
   normalizeDocsAnchor,
   pascalToSpace,
@@ -156,8 +163,34 @@ const navigationAnchorSet = new Set<string>();
 const timeoutScrollId = ref<ReturnType<typeof setTimeout> | null>(null);
 const scrollDOMRef = ref<any>(null);
 const router = useRouter();
+const localePath = useLocalePath();
 const activeAnchor = ref("");
 const observer = ref<IntersectionObserver | null>(null);
+const componentNames = componentGroups.flatMap((group) => group.components);
+const currentComponentIndex = computed(() =>
+  componentNames.findIndex((componentName) => componentPathByName(componentName).endsWith(`/${props.name}`))
+);
+
+const createSiblingComponent = (componentName: string | undefined) => {
+  if (!componentName) return null;
+
+  return {
+    path: localePath(componentPathByName(componentName)),
+    title: pascalToSpace(componentName.substring(6)),
+  };
+};
+
+const previousComponent = computed(() => {
+  if (currentComponentIndex.value <= 0) return null;
+
+  return createSiblingComponent(componentNames[currentComponentIndex.value - 1]);
+});
+
+const nextComponent = computed(() => {
+  if (currentComponentIndex.value < 0 || currentComponentIndex.value >= componentNames.length - 1) return null;
+
+  return createSiblingComponent(componentNames[currentComponentIndex.value + 1]);
+});
 
 const registerAnchor = (anchor: string) => {
   const normalizedAnchor = normalizeDocsAnchor(anchor);
@@ -276,6 +309,46 @@ watch([() => props.name, () => props.extraAnchors], loadOverview, { immediate: t
             <div v-for="(el, idx) in overviewComponents" :key="idx">
               <component :is="el" />
             </div>
+            <nav
+              v-if="previousComponent || nextComponent"
+              class="component-overview__navigation"
+              :aria-label="$t('component-navigation.aria-label')"
+            >
+              <NuxtLink
+                v-if="previousComponent"
+                :to="previousComponent.path"
+                class="component-overview__navigation-link component-overview__navigation-link--previous"
+              >
+                <NmorphIcon width="20px">
+                  <NmorphIconArrowLeft />
+                </NmorphIcon>
+                <span class="component-overview__navigation-text">
+                  <span class="component-overview__navigation-label">
+                    {{ $t("component-navigation.previous") }}
+                  </span>
+                  <span class="component-overview__navigation-name">
+                    {{ previousComponent.title }}
+                  </span>
+                </span>
+              </NuxtLink>
+              <NuxtLink
+                v-if="nextComponent"
+                :to="nextComponent.path"
+                class="component-overview__navigation-link component-overview__navigation-link--next"
+              >
+                <span class="component-overview__navigation-text">
+                  <span class="component-overview__navigation-label">
+                    {{ $t("component-navigation.next") }}
+                  </span>
+                  <span class="component-overview__navigation-name">
+                    {{ nextComponent.title }}
+                  </span>
+                </span>
+                <NmorphIcon width="20px">
+                  <NmorphIconArrowRight />
+                </NmorphIcon>
+              </NuxtLink>
+            </nav>
           </div>
         </section>
       </template>
@@ -304,5 +377,84 @@ watch([() => props.name, () => props.extraAnchors], loadOverview, { immediate: t
 
 .component-overview__title {
   margin-bottom: var(--docs-content-padding);
+}
+
+.component-overview__navigation {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: clamp(32px, 6vw, 56px);
+  margin-bottom: clamp(24px, 5vw, 48px);
+  padding-top: var(--docs-content-padding);
+  border-top: 1px solid color-mix(in srgb, var(--nmorph-text-color) 16%, transparent);
+}
+
+.component-overview__navigation-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 72px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: var(--nmorph-main-color);
+  box-shadow: var(--nmorph-shadow-outset);
+  color: var(--nmorph-text-color);
+  transition:
+    color var(--transition-02),
+    transform var(--transition-02);
+
+  :deep(.nmorph-icon) {
+    flex: 0 0 auto;
+
+    --nmorph-private-icon-color: currentColor;
+  }
+
+  &:hover {
+    color: var(--nmorph-accent-color);
+    transform: translateY(-1px);
+  }
+}
+
+.component-overview__navigation-link--previous {
+  grid-column: 1;
+}
+
+.component-overview__navigation-link--next {
+  grid-column: 2;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.component-overview__navigation-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.component-overview__navigation-label {
+  color: var(--nmorph-semi-contrast-text-color);
+  font-size: var(--font-size-extra-small);
+  line-height: 1;
+}
+
+.component-overview__navigation-name {
+  overflow: hidden;
+  font-weight: 700;
+  line-height: var(--line-height-regular);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .component-overview__navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .component-overview__navigation-link--previous,
+  .component-overview__navigation-link--next {
+    grid-column: 1;
+  }
 }
 </style>

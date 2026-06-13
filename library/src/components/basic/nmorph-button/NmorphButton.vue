@@ -107,6 +107,8 @@ defineExpose({ buttonDOMElement });
 
 <style lang="scss">
 .nmorph-button {
+  --nmorph-private-button-padding-y: max(var(--indentation-01), calc(var(--nmorph-private-control-height) * 0.1));
+
   display: inline-block;
   width: auto;
   height: auto;
@@ -114,6 +116,7 @@ defineExpose({ buttonDOMElement });
 
   &.nmorph--basic-component,
   &.nmorph--thin-component,
+  &.nmorph--extra-thin-component,
   &.nmorph--thick-component {
     height: auto;
   }
@@ -131,7 +134,7 @@ defineExpose({ buttonDOMElement });
     width: 100%;
     height: auto;
     min-height: var(--nmorph-private-control-height);
-    padding: var(--indentation-00) var(--indentation-04);
+    padding: var(--nmorph-private-button-padding-y) var(--indentation-04);
     color: var(--nmorph-private-button-color, var(--nmorph-text-color));
     line-height: var(--nmorph-private-control-line-height, var(--line-height-regular));
     background: var(--nmorph-main-color);
@@ -153,6 +156,7 @@ defineExpose({ buttonDOMElement });
   .nmorph-button__label {
     display: inline-block;
     min-width: 0;
+    line-height: var(--line-height-regular);
     white-space: normal;
     text-align: center;
     overflow-wrap: anywhere;

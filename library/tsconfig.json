@@ -17,9 +17,10 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "#storybook/*": ["./.storybook/*"]
     }
   },
   "include": ["env.d.ts", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/locales/zh.js", "src/locales/ru.js", "src/locales/en.js"],
-  "exclude": ["node_modules", "dist", "**/*.story.vue", "**/*.spec.ts"]
+  "exclude": ["node_modules", "dist", "**/*.story.vue", "**/*.stories.ts", "**/*.spec.ts"]
 }

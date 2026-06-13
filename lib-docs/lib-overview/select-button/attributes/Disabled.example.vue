@@ -9,12 +9,10 @@ const value = ref("on");
 
 <template>
   <div class="select-button-disabled-overview">
-    <ClientOnly>
-      <NmorphSelectButton v-model="value" disabled>
-        <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
-        <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
-      </NmorphSelectButton>
-    </ClientOnly>
+    <NmorphSelectButton v-model="value" disabled>
+      <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
+      <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
+    </NmorphSelectButton>
   </div>
 </template>
 

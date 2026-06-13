@@ -4,9 +4,7 @@ import { NmorphDatePicker } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="date-picker-disabled-overview">
-    <ClientOnly>
-      <NmorphDatePicker :model-value="new Date()" disabled />
-    </ClientOnly>
+    <NmorphDatePicker :model-value="new Date()" disabled />
   </div>
 </template>
 

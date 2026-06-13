@@ -4,9 +4,7 @@ import { NmorphNumberInput } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="number-input-disabled-overview">
-    <ClientOnly>
-      <NmorphNumberInput disabled />
-    </ClientOnly>
+    <NmorphNumberInput disabled />
   </div>
 </template>
 

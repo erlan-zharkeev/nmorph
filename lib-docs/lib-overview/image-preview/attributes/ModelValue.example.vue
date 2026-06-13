@@ -11,17 +11,15 @@ const showHandler = () => {
 
 <template>
   <div class="image-preview-model-value-overview">
-    <ClientOnly>
-      <NmorphImagePreview
-        v-model="show"
-        :src="Winter"
-        :width="76"
-        :height="76"
-        preview-width="min(92vw, 840px)"
-        preview-height="min(72vh, 560px)"
-      />
-      <NmorphButton text="Show" design="plain" @click="showHandler" />
-    </ClientOnly>
+    <NmorphImagePreview
+      v-model="show"
+      :src="Winter"
+      :width="76"
+      :height="76"
+      preview-width="min(92vw, 840px)"
+      preview-height="min(72vh, 560px)"
+    />
+    <NmorphButton text="Show" design="plain" @click="showHandler" />
   </div>
 </template>
 

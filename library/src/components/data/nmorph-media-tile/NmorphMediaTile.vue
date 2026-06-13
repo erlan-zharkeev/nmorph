@@ -236,6 +236,7 @@ defineExpose({ videoRef });
         v-if="props.micMuted"
         class="nmorph-media-tile__status-item"
         design="plain"
+        borderless
         :tabindex="-1"
         aria-label="Microphone muted"
       >
@@ -247,6 +248,7 @@ defineExpose({ videoRef });
         v-if="props.videoOff"
         class="nmorph-media-tile__status-item"
         design="plain"
+        borderless
         :tabindex="-1"
         aria-label="Video off"
       >
@@ -258,6 +260,7 @@ defineExpose({ videoRef });
         v-if="props.screenSharing"
         class="nmorph-media-tile__status-item"
         design="plain"
+        borderless
         :tabindex="-1"
         aria-label="Screen sharing"
       >

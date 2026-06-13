@@ -6,10 +6,8 @@ const text = ref("Lorem ipsum");
 
 <template>
   <div class="text-input-model-value-overview">
-    <ClientOnly>
-      <p class="nmorph-title-3">Model text: {{ text }}</p>
-      <NmorphTextInput v-model="text" />
-    </ClientOnly>
+    <p class="nmorph-title-3">Model text: {{ text }}</p>
+    <NmorphTextInput v-model="text" />
   </div>
 </template>
 

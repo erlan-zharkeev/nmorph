@@ -4,9 +4,7 @@ import { NmorphFileUpload } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="file-upload-disabled-overview">
-    <ClientOnly>
-      <NmorphFileUpload disabled />
-    </ClientOnly>
+    <NmorphFileUpload disabled />
   </div>
 </template>
 

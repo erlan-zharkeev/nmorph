@@ -53,7 +53,7 @@ export { default as ru } from './locales/ru.js';
 export { default as zh } from './locales/zh.js';
 export { default as en } from './locales/en.js';
 
-export { nmorphLog } from './outside-utils';
+export { nmorphLog } from './outside-utils/nmorph-log';
 export { useNmorphBrowser } from './outside-hooks/use-nmorph-browser';
 export { useNmorph } from './outside-hooks/use-nmorph';
 export { useNmorphNotification } from './outside-hooks/use-nmorph-notification';

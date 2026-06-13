@@ -8,7 +8,7 @@ const storybookDir = dirname(fileURLToPath(import.meta.url));
 const libraryRoot = resolve(storybookDir, '..');
 
 const config: StorybookConfig = {
-  stories: ['../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: ['@storybook/addon-docs'],
   framework: {
     name: '@storybook/vue3-vite',
@@ -45,6 +45,7 @@ const config: StorybookConfig = {
       resolve: {
         alias: {
           '@': resolve(libraryRoot, 'src'),
+          '#storybook': resolve(libraryRoot, '.storybook'),
         },
       },
       server: {

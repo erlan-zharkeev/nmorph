@@ -9,13 +9,11 @@ const value = ref("on");
 
 <template>
   <div class="select-button-fill-overview">
-    <ClientOnly>
-      <NmorphSelectButton v-model="value" fill>
-        <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
-        <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
-        <NmorphSelectButtonItem value="auto">Auto</NmorphSelectButtonItem>
-      </NmorphSelectButton>
-    </ClientOnly>
+    <NmorphSelectButton v-model="value" fill>
+      <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
+      <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
+      <NmorphSelectButtonItem value="auto">Auto</NmorphSelectButtonItem>
+    </NmorphSelectButton>
   </div>
 </template>
 

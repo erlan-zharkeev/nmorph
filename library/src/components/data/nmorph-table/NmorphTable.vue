@@ -327,7 +327,7 @@ const tableKeydownHandler = (event: KeyboardEvent) => {
 
 <style lang="scss">
 .nmorph-table {
-  --nmorph-private-table-border-color: var(--nmorph-info-text-color);
+  --nmorph-private-table-border-color: color-mix(in srgb, var(--nmorph-text-color) 52%, transparent);
   --nmorph-private-table-cell-height: auto;
   --nmorph-private-table-row-hover-background: var(--nmorph-info-color);
 

@@ -4,9 +4,7 @@ import { NmorphSwitch } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="switch-disabled-overview">
-    <ClientOnly>
-      <NmorphSwitch disabled />
-    </ClientOnly>
+    <NmorphSwitch disabled />
   </div>
 </template>
 

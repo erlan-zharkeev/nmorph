@@ -4,23 +4,21 @@ import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="badge-color-overview">
-    <ClientOnly>
-      <div class="badge-value-overview__element">
-        <NmorphBadge type="dot" color="red">
-          <NmorphButton text="button" />
-        </NmorphBadge>
-      </div>
-      <div class="badge-value-overview__element">
-        <NmorphBadge color="green" value="abc">
-          <NmorphButton text="button" />
-        </NmorphBadge>
-      </div>
-      <div class="badge-value-overview__element">
-        <NmorphBadge color="var(--nmorph-warn-color)" :value="1">
-          <NmorphButton text="button" />
-        </NmorphBadge>
-      </div>
-    </ClientOnly>
+    <div class="badge-value-overview__element">
+      <NmorphBadge type="dot" color="red">
+        <NmorphButton text="button" />
+      </NmorphBadge>
+    </div>
+    <div class="badge-value-overview__element">
+      <NmorphBadge color="green" value="abc">
+        <NmorphButton text="button" />
+      </NmorphBadge>
+    </div>
+    <div class="badge-value-overview__element">
+      <NmorphBadge color="var(--nmorph-warn-color)" :value="1">
+        <NmorphButton text="button" />
+      </NmorphBadge>
+    </div>
   </div>
 </template>
 

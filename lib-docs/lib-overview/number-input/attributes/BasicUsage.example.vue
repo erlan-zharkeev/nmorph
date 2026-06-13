@@ -6,15 +6,13 @@ const value = ref(3);
 
 <template>
   <div class="number-input-basic-usage-overview">
-    <ClientOnly>
-      <NmorphNumberInput
-        v-model="value"
-        :max="5"
-        :min="1"
-        :step="1"
-        thickness="thin"
-      />
-    </ClientOnly>
+    <NmorphNumberInput
+      v-model="value"
+      :max="5"
+      :min="1"
+      :step="1"
+      thickness="thin"
+    />
   </div>
 </template>
 

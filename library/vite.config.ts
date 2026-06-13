@@ -17,6 +17,8 @@ const getChunkCssFileName = (chunkFileName: string, bundle: Record<string, Outpu
   return bundle[cssFileName]?.type === 'asset' ? cssFileName : undefined;
 };
 
+const emojiEntryRoot = resolve(__dirname, 'src', 'components', 'data', 'nmorph-emoji-picker', 'emoji');
+
 const injectChunkCss = (): Plugin => ({
   name: 'nmorph-inject-chunk-css',
   enforce: 'post',
@@ -66,7 +68,10 @@ export default defineConfig(() => {
           plugin: resolve(__dirname, 'src', 'plugin.ts'),
           icons: resolve(__dirname, 'src', 'icons.ts'),
           styles: resolve(__dirname, 'src', 'styles.ts'),
-          'emoji/index': resolve(__dirname, 'src', 'emoji', 'index.ts'),
+          'emoji/index': resolve(emojiEntryRoot, 'index.ts'),
+          'emoji/locales/en': resolve(emojiEntryRoot, 'locales', 'en.ts'),
+          'emoji/locales/ru': resolve(emojiEntryRoot, 'locales', 'ru.ts'),
+          'emoji/locales/zh': resolve(emojiEntryRoot, 'locales', 'zh.ts'),
         },
         name: 'library',
         formats: ['es'],

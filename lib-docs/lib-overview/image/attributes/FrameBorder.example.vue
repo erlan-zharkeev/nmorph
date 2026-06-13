@@ -5,26 +5,24 @@ import { CatReal } from "~/assets/images";
 
 <template>
   <div class="image-frame-border-overview">
-    <ClientOnly>
-      <NmorphImage
-        :src="CatReal"
-        width="180px"
-        height="180px"
-        :frame-border="0"
-      />
-      <NmorphImage
-        :src="CatReal"
-        width="180px"
-        height="180px"
-        :frame-border="2.67"
-      />
-      <NmorphImage
-        :src="CatReal"
-        width="180px"
-        height="180px"
-        :frame-border="8"
-      />
-    </ClientOnly>
+    <NmorphImage
+      :src="CatReal"
+      width="180px"
+      height="180px"
+      :frame-border="0"
+    />
+    <NmorphImage
+      :src="CatReal"
+      width="180px"
+      height="180px"
+      :frame-border="2.67"
+    />
+    <NmorphImage
+      :src="CatReal"
+      width="180px"
+      height="180px"
+      :frame-border="8"
+    />
   </div>
 </template>
 

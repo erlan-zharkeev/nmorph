@@ -11,9 +11,7 @@ const options = [
 
 <template>
   <div class="select-fill-overview">
-    <ClientOnly>
-      <NmorphSelect v-model="value" :options="options" fill />
-    </ClientOnly>
+    <NmorphSelect v-model="value" :options="options" fill />
   </div>
 </template>
 

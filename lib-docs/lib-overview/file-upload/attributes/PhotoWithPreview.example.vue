@@ -4,9 +4,7 @@ import { NmorphFileUpload } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="file-upload-photo-with-preview-overview">
-    <ClientOnly>
-      <NmorphFileUpload photo-with-preview />
-    </ClientOnly>
+    <NmorphFileUpload photo-with-preview />
   </div>
 </template>
 

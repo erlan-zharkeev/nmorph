@@ -4,26 +4,24 @@ import { NmorphProgress } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="progress-circle-size-overview">
-    <ClientOnly>
-      <NmorphProgress
-        :percentage="33"
-        :circle-size="50"
-        type="circle"
-        color="var(--nmorph-accent-color)"
-      />
-      <NmorphProgress
-        :percentage="33"
-        :circle-size="100"
-        type="circle"
-        color="var(--nmorph-error-color)"
-      />
-      <NmorphProgress
-        :percentage="33"
-        :circle-size="120"
-        type="circle"
-        color="pink"
-      />
-    </ClientOnly>
+    <NmorphProgress
+      :percentage="33"
+      :circle-size="50"
+      type="circle"
+      color="var(--nmorph-accent-color)"
+    />
+    <NmorphProgress
+      :percentage="33"
+      :circle-size="100"
+      type="circle"
+      color="var(--nmorph-error-color)"
+    />
+    <NmorphProgress
+      :percentage="33"
+      :circle-size="120"
+      type="circle"
+      color="pink"
+    />
   </div>
 </template>
 

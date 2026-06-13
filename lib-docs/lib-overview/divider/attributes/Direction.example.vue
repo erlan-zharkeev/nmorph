@@ -4,52 +4,50 @@ import { NmorphDivider, NmorphCard } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="divider-direction-overview">
-    <ClientOnly>
-      <div class="divider-wrapper">
-        <div class="divider-horizontal">
-          <div class="horizontal-elements">
-            <div
-              class="element"
-              v-for="(_, idx) in Array.from({ length: 4 })"
-              :key="idx"
-            >
-              <NmorphCard :paper="3">Lorem ipsum</NmorphCard>
-            </div>
-          </div>
-          <NmorphDivider />
-          <div class="horizontal-elements">
-            <div
-              class="element"
-              v-for="(_, idx) in Array.from({ length: 4 })"
-              :key="idx"
-            >
-              <NmorphCard :paper="3">Lorem ipsum</NmorphCard>
-            </div>
+    <div class="divider-wrapper">
+      <div class="divider-horizontal">
+        <div class="horizontal-elements">
+          <div
+            class="element"
+            v-for="(_, idx) in Array.from({ length: 4 })"
+            :key="idx"
+          >
+            <NmorphCard :paper="3">Lorem ipsum</NmorphCard>
           </div>
         </div>
-        <div class="divider-vertical">
-          <div class="vertical-elements">
-            <div
-              class="element"
-              v-for="(_, idx) in Array.from({ length: 4 })"
-              :key="idx"
-            >
-              <NmorphCard :paper="3">Lorem ipsum</NmorphCard>
-            </div>
-          </div>
-          <NmorphDivider direction="vertical" />
-          <div class="vertical-elements">
-            <div
-              class="element"
-              v-for="(_, idx) in Array.from({ length: 4 })"
-              :key="idx"
-            >
-              <NmorphCard :paper="3">Lorem ipsum</NmorphCard>
-            </div>
+        <NmorphDivider />
+        <div class="horizontal-elements">
+          <div
+            class="element"
+            v-for="(_, idx) in Array.from({ length: 4 })"
+            :key="idx"
+          >
+            <NmorphCard :paper="3">Lorem ipsum</NmorphCard>
           </div>
         </div>
       </div>
-    </ClientOnly>
+      <div class="divider-vertical">
+        <div class="vertical-elements">
+          <div
+            class="element"
+            v-for="(_, idx) in Array.from({ length: 4 })"
+            :key="idx"
+          >
+            <NmorphCard :paper="3">Lorem ipsum</NmorphCard>
+          </div>
+        </div>
+        <NmorphDivider direction="vertical" />
+        <div class="vertical-elements">
+          <div
+            class="element"
+            v-for="(_, idx) in Array.from({ length: 4 })"
+            :key="idx"
+          >
+            <NmorphCard :paper="3">Lorem ipsum</NmorphCard>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

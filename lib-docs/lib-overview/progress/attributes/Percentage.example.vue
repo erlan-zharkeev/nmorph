@@ -4,11 +4,9 @@ import { NmorphProgress } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="progress-percentage-overview">
-    <ClientOnly>
-      <NmorphProgress :percentage="33" color="pink" />
-      <NmorphProgress :percentage="66" color="var(--nmorph-accent-color)" />
-      <NmorphProgress :percentage="99" color="lightblue" />
-    </ClientOnly>
+    <NmorphProgress :percentage="33" color="pink" />
+    <NmorphProgress :percentage="66" color="var(--nmorph-accent-color)" />
+    <NmorphProgress :percentage="99" color="lightblue" />
   </div>
 </template>
 

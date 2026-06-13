@@ -4,10 +4,8 @@ import { NmorphOTPInput } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="otp-input-length-overview">
-    <ClientOnly>
-      <NmorphOTPInput :length="4" />
-      <NmorphOTPInput :length="6" />
-    </ClientOnly>
+    <NmorphOTPInput :length="4" />
+    <NmorphOTPInput :length="6" />
   </div>
 </template>
 

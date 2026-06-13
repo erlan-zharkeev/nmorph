@@ -4,11 +4,9 @@ import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="badge-max-overview">
-    <ClientOnly>
-      <NmorphBadge :max="18" :value="100">
-        <NmorphButton text="button" />
-      </NmorphBadge>
-    </ClientOnly>
+    <NmorphBadge :max="18" :value="100">
+      <NmorphButton text="button" />
+    </NmorphBadge>
   </div>
 </template>
 

@@ -91,9 +91,9 @@ onUnmounted(() => {
           <NmorphIcon width="40px">
             <NmorphIconLogo />
           </NmorphIcon>
+          <span class="docs-top-bar__version">v{{ libraryData.version }}</span>
         </NuxtLink>
       </div>
-      <span class="docs-top-bar__version">v{{ libraryData.version }}</span>
     </div>
     <div class="docs-top-bar__right">
       <NmorphCheckbox
@@ -103,7 +103,7 @@ onUnmounted(() => {
       >
         <template #label>
           <span class="docs-top-bar__search-label">
-            <NmorphIcon width="18px">
+            <NmorphIcon width="16px">
               <NmorphIconSearch />
             </NmorphIcon>
             <span class="docs-top-bar__search-placeholder">{{ $t("top-bar.search") }}</span>
@@ -245,11 +245,13 @@ $top-bar-height: 50px;
 .docs-top-bar__left {
   display: flex;
   align-items: center;
+  flex: 0 0 auto;
   height: 100%;
+  margin-right: 16px;
 }
 
 .docs-top-bar__logo {
-  height: 40px;
+  height: 100%;
   border-radius: 4px;
   overflow: hidden;
   border-radius: 8px;
@@ -258,20 +260,22 @@ $top-bar-height: 50px;
 
   a {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 1px;
   }
 
-  img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
+  :deep(.nmorph-icon) {
+    width: 34px;
+    height: 28px;
   }
 }
 
 .docs-top-bar__version {
-  margin-left: 8px;
-  color: var(--nmorph-semi-contrast-text-color);
-  font-size: var(--font-size-extra-small);
+  color: color-mix(in srgb, var(--nmorph-semi-contrast-text-color) 58%, transparent);
+  font-size: 10px;
   font-weight: 600;
   line-height: 1;
   white-space: nowrap;

@@ -94,57 +94,55 @@ getData(0);
 
 <template>
   <div class="pagination-basic-usage-overview">
-    <ClientOnly>
-      <div class="actions">
-        <div class="actions__element">
-          <p>Selected page: {{ currentPage }}</p>
-        </div>
-        <div class="actions__element">
-          <NmorphButton text="Toggle disabled" @click="toggleDisabled" />
-        </div>
-        <div class="actions__element">
-          <NmorphNumberInput
-            v-model="quantityElementsOnPageModel"
-            :fill="false"
-          />
-        </div>
+    <div class="actions">
+      <div class="actions__element">
+        <p>Selected page: {{ currentPage }}</p>
       </div>
-      <div class="cards">
-        <div class="cards__container">
-          <div
-            class="cards__card"
-            v-for="card in visibleElements"
-            :key="card.id"
+      <div class="actions__element">
+        <NmorphButton text="Toggle disabled" @click="toggleDisabled" />
+      </div>
+      <div class="actions__element">
+        <NmorphNumberInput
+          v-model="quantityElementsOnPageModel"
+          :fill="false"
+        />
+      </div>
+    </div>
+    <div class="cards">
+      <div class="cards__container">
+        <div
+          class="cards__card"
+          v-for="card in visibleElements"
+          :key="card.id"
+        >
+          <NmorphSkeleton v-if="loading" class="cards__skeleton" loading>
+            <template #template>
+              <NmorphSkeletonItem
+                variant="rect"
+                width="100%"
+                height="70px"
+              />
+            </template>
+          </NmorphSkeleton>
+          <NmorphCard
+            v-else
+            class="cards__card-content"
+            :paper="3"
           >
-            <NmorphSkeleton v-if="loading" class="cards__skeleton" loading>
-              <template #template>
-                <NmorphSkeletonItem
-                  variant="rect"
-                  width="100%"
-                  height="70px"
-                />
-              </template>
-            </NmorphSkeleton>
-            <NmorphCard
-              v-else
-              class="cards__card-content"
-              :paper="3"
-            >
-              <span>{{ card.body }}</span>
-            </NmorphCard>
-          </div>
+            <span>{{ card.body }}</span>
+          </NmorphCard>
         </div>
       </div>
-      <NmorphPagination
-        :disabled="disabled"
-        :loading="loading"
-        v-model="currentPageModel"
-        :elements-quantity-on-page="quantityElementsOnPage"
-        :total-elements-quantity="total"
-        fixed-container
-        :max-visible-pages="5"
-      />
-    </ClientOnly>
+    </div>
+    <NmorphPagination
+      :disabled="disabled"
+      :loading="loading"
+      v-model="currentPageModel"
+      :elements-quantity-on-page="quantityElementsOnPage"
+      :total-elements-quantity="total"
+      fixed-container
+      :max-visible-pages="5"
+    />
   </div>
 </template>
 

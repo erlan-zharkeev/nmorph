@@ -23,14 +23,12 @@ const actionCallback = async () => {
 
 <template>
   <div class="autocomplete-action-callback-overview">
-    <ClientOnly>
-      <NmorphAutocomplete
-        v-model="text"
-        :list="list"
-        placeholder="Text..."
-        :action-callback="actionCallback"
-      />
-    </ClientOnly>
+    <NmorphAutocomplete
+      v-model="text"
+      :list="list"
+      placeholder="Text..."
+      :action-callback="actionCallback"
+    />
   </div>
 </template>
 

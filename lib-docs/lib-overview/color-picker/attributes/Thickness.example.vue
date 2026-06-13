@@ -4,11 +4,9 @@ import { NmorphColorPicker } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="color-picker-thickness-overview">
-    <ClientOnly>
-      <NmorphColorPicker thickness="thick" />
-      <NmorphColorPicker thickness="basic" />
-      <NmorphColorPicker thickness="thin" />
-    </ClientOnly>
+    <NmorphColorPicker thickness="thick" />
+    <NmorphColorPicker thickness="basic" />
+    <NmorphColorPicker thickness="thin" />
   </div>
 </template>
 

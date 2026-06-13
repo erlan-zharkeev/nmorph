@@ -5,11 +5,9 @@ import CatReal from "~/assets/images/cat-real.png";
 
 <template>
   <div class="avatar-fit-overview">
-    <ClientOnly>
-      <NmorphAvatar :src="CatReal" :size="100" shape="square" fit="cover" />
-      <NmorphAvatar :src="CatReal" :size="100" shape="square" fit="contain" />
-      <NmorphAvatar :src="CatReal" :size="100" shape="square" fit="fill" />
-    </ClientOnly>
+    <NmorphAvatar :src="CatReal" :size="100" shape="square" fit="cover" />
+    <NmorphAvatar :src="CatReal" :size="100" shape="square" fit="contain" />
+    <NmorphAvatar :src="CatReal" :size="100" shape="square" fit="fill" />
   </div>
 </template>
 

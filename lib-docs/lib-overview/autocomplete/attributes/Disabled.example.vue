@@ -4,8 +4,6 @@ import { NmorphAutocomplete } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="autocomplete-disabled-overview">
-    <ClientOnly>
-      <NmorphAutocomplete :list="[]" disabled />
-    </ClientOnly>
+    <NmorphAutocomplete :list="[]" disabled />
   </div>
 </template>

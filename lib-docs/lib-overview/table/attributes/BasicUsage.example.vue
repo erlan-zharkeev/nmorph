@@ -95,50 +95,48 @@ const clickMeText = "Click me!";
 
 <template>
   <div class="table-basic-usage-overview">
-    <ClientOnly>
-      <div class="actions">
-        <div class="actions__element">
-          <NmorphButton text="Toggle design" @click="toggleDesignProp" />
-        </div>
-        <div class="actions__element">
-          <NmorphButton
-            :text="highlightRowOnHoverText"
-            @click="toggleHighlightRow"
-          />
-        </div>
-        <div class="actions__element">
-          <p>Sort values {{ sort }}</p>
-        </div>
+    <div class="actions">
+      <div class="actions__element">
+        <NmorphButton text="Toggle design" @click="toggleDesignProp" />
       </div>
-      <NmorphTable
-        :data="data"
-        :row-hover="highlightRowOnHover"
-        :sort="sort"
-        v-bind="tableDesignProps"
-      >
-        <NmorphTableColumn
-          prop="date"
-          label="Date"
-          alignment="left"
-          width="100"
+      <div class="actions__element">
+        <NmorphButton
+          :text="highlightRowOnHoverText"
+          @click="toggleHighlightRow"
         />
-        <NmorphTableColumn prop="name" label="Name" />
-        <NmorphTableColumn prop="address" label="Address" />
-        <NmorphTableColumn prop="operations" label="Operations">
-          <template #default="{ scope }">
-            <NmorphTableCell v-for="(cellData, idx) in scope.rows" :row="idx">
-              <NmorphButton
-                :text="clickMeText"
-                fill
-                borderless
-                @click="clickHandler(cellData)"
-                design="plain"
-              />
-            </NmorphTableCell>
-          </template>
-        </NmorphTableColumn>
-      </NmorphTable>
-    </ClientOnly>
+      </div>
+      <div class="actions__element">
+        <p>Sort values {{ sort }}</p>
+      </div>
+    </div>
+    <NmorphTable
+      :data="data"
+      :row-hover="highlightRowOnHover"
+      :sort="sort"
+      v-bind="tableDesignProps"
+    >
+      <NmorphTableColumn
+        prop="date"
+        label="Date"
+        alignment="left"
+        width="100"
+      />
+      <NmorphTableColumn prop="name" label="Name" />
+      <NmorphTableColumn prop="address" label="Address" />
+      <NmorphTableColumn prop="operations" label="Operations">
+        <template #default="{ scope }">
+          <NmorphTableCell v-for="(cellData, idx) in scope.rows" :row="idx">
+            <NmorphButton
+              :text="clickMeText"
+              fill
+              borderless
+              @click="clickHandler(cellData)"
+              design="plain"
+            />
+          </NmorphTableCell>
+        </template>
+      </NmorphTableColumn>
+    </NmorphTable>
   </div>
 </template>
 

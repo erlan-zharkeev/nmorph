@@ -4,11 +4,9 @@ import { NmorphTextInput } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="text-input-thickness-overview">
-    <ClientOnly>
-      <NmorphTextInput thickness="thick" placeholder="Enter text" />
-      <NmorphTextInput thickness="basic" placeholder="Enter text" />
-      <NmorphTextInput thickness="thin" placeholder="Enter text" />
-    </ClientOnly>
+    <NmorphTextInput thickness="thick" placeholder="Enter text" />
+    <NmorphTextInput thickness="basic" placeholder="Enter text" />
+    <NmorphTextInput thickness="thin" placeholder="Enter text" />
   </div>
 </template>
 

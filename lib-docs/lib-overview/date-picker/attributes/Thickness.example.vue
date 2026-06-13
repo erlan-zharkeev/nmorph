@@ -9,14 +9,12 @@ const thicknesses = Object.keys(NmorphComponentThickness) as Array<
 
 <template>
   <div class="date-picker-thickness-overview">
-    <ClientOnly>
-      <NmorphDatePicker
-        v-for="thickness in thicknesses"
-        :key="thickness"
-        :thickness="thickness"
-        v-model="value"
-      />
-    </ClientOnly>
+    <NmorphDatePicker
+      v-for="thickness in thicknesses"
+      :key="thickness"
+      :thickness="thickness"
+      v-model="value"
+    />
   </div>
 </template>
 

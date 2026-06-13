@@ -4,9 +4,7 @@ import { NmorphColorPicker } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="color-picker-disabled-overview">
-    <ClientOnly>
-      <NmorphColorPicker model-value="#6b7280" show-value disabled />
-    </ClientOnly>
+    <NmorphColorPicker model-value="#6b7280" show-value disabled />
   </div>
 </template>
 

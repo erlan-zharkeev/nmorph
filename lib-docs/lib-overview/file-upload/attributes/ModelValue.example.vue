@@ -11,10 +11,8 @@ const resetFiles = () => {
 
 <template>
   <div class="file-upload-model-value-overview">
-    <ClientOnly>
-      <NmorphFileUpload v-model="value" />
-      <NmorphButton text="Reset files" thickness="thin" @click="resetFiles" />
-    </ClientOnly>
+    <NmorphFileUpload v-model="value" />
+    <NmorphButton text="Reset files" thickness="thin" @click="resetFiles" />
   </div>
 </template>
 

@@ -5,31 +5,29 @@ import { Spring, Summer, Autumn, Winter } from "@/assets/images";
 
 <template>
   <div class="image-preview-src-overview">
-    <ClientOnly>
-      <NmorphImagePreview
-        :src="Spring"
-        :width="76"
-        :height="76"
-        preview-width="min(92vw, 840px)"
-        preview-height="min(72vh, 560px)"
-      />
-      <NmorphImagePreview
-        :src="[Summer, Spring, Winter, Autumn]"
-        :width="76"
-        :height="76"
-        preview-width="min(92vw, 840px)"
-        preview-height="min(72vh, 560px)"
-      />
-      <NmorphImagePreview
-        :src="[Summer, Spring, Winter, Autumn]"
-        trigger-view="gallery"
-        :trigger-limit="3"
-        :width="108"
-        :height="108"
-        preview-width="min(92vw, 840px)"
-        preview-height="min(72vh, 560px)"
-      />
-    </ClientOnly>
+    <NmorphImagePreview
+      :src="Spring"
+      :width="76"
+      :height="76"
+      preview-width="min(92vw, 840px)"
+      preview-height="min(72vh, 560px)"
+    />
+    <NmorphImagePreview
+      :src="[Summer, Spring, Winter, Autumn]"
+      :width="76"
+      :height="76"
+      preview-width="min(92vw, 840px)"
+      preview-height="min(72vh, 560px)"
+    />
+    <NmorphImagePreview
+      :src="[Summer, Spring, Winter, Autumn]"
+      trigger-view="gallery"
+      :trigger-limit="3"
+      :width="108"
+      :height="108"
+      preview-width="min(92vw, 840px)"
+      preview-height="min(72vh, 560px)"
+    />
   </div>
 </template>
 

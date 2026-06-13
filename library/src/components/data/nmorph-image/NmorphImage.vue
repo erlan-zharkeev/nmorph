@@ -13,7 +13,6 @@ const props = withDefaults(defineProps<INmorphImageProps>(), {
   alt: '',
   width: undefined,
   height: undefined,
-  loadingText: '',
   loadFailedText: '',
   srcSet: '',
   frameBorder: 2.67,

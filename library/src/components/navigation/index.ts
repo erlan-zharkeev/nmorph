@@ -1,13 +1,17 @@
 export { default as NmorphBacktop } from './nmorph-backtop/NmorphBacktop.vue';
+export * from './nmorph-backtop/types';
 export { default as NmorphBreadcrumb } from './nmorph-breadcrumb/NmorphBreadcrumb.vue';
 export * from './nmorph-breadcrumb/types';
 export { default as NmorphBreadcrumbItem } from './nmorph-breadcrumb/components/nmorph-breadcrumb-item/NmorphBreadcrumbItem.vue';
+export * from './nmorph-breadcrumb/components/nmorph-breadcrumb-item/types';
 export { default as NmorphContextMenu } from './nmorph-context-menu/NmorphContextMenu.vue';
 export * from './nmorph-context-menu/types';
 export { default as NmorphDropdown } from './nmorph-dropdown/NmorphDropdown.vue';
+export * from './nmorph-dropdown/types';
 export { default as NmorphStepper } from './nmorph-stepper/NmorphStepper.vue';
 export * from './nmorph-stepper/types';
 export { default as NmorphTabs } from './nmorph-tabs/NmorphTabs.vue';
 export * from './nmorph-tabs/types';
 export * from './nmorph-tabs/utils';
 export { default as NmorphTabPane } from './nmorph-tabs/components/nmorph-tab-pane/NmorphTabPane.vue';
+export * from './nmorph-tabs/components/nmorph-tab-pane/types';

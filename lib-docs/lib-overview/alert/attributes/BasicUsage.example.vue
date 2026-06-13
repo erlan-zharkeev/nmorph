@@ -25,27 +25,25 @@ const closeHandler = (id: string) => {
 
 <template>
   <div class="alert-basic-usage-overview">
-    <ClientOnly>
-      <div class="first-row">
-        <div v-for="(alert, idx) in alerts" :key="idx">
-          <NmorphAlert
-            v-if="!alert.closed"
-            content="Content for the alert"
-            title="Any title"
-            v-bind="alert"
-            @close="() => closeHandler(alert.id)"
-          />
-        </div>
-      </div>
-      <div class="second-row">
+    <div class="first-row">
+      <div v-for="(alert, idx) in alerts" :key="idx">
         <NmorphAlert
-          html="<span>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</span><br><p>Lorem ipsum</p>"
-          fill
-          :bordered="false"
-          :show-icon="false"
+          v-if="!alert.closed"
+          content="Content for the alert"
+          title="Any title"
+          v-bind="alert"
+          @close="() => closeHandler(alert.id)"
         />
       </div>
-    </ClientOnly>
+    </div>
+    <div class="second-row">
+      <NmorphAlert
+        html="<span>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</span><br><p>Lorem ipsum</p>"
+        fill
+        :bordered="false"
+        :show-icon="false"
+      />
+    </div>
   </div>
 </template>
 

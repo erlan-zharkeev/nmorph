@@ -14,27 +14,25 @@ const shortDate = (value: Date) => value.toLocaleDateString("en-US");
 
 <template>
   <div class="calendar-type-overview">
-    <ClientOnly>
-      <div class="calendar-type-overview__element">
-        <p>Date</p>
-        <p>{{ shortDate(date) }}</p>
-        <NmorphCalendar v-model="date" />
-      </div>
-      <div class="calendar-type-overview__element">
-        <p>Dates</p>
-        <p>{{ dates.map((date) => shortDate(date)).join("~") }}</p>
-        <NmorphCalendar v-model="dates" type="dates" :initial-date="date1" />
-      </div>
-      <div class="calendar-type-overview__element">
-        <p>Date range</p>
-        <p>{{ range.map((date) => shortDate(date)).join("~") }}</p>
-        <NmorphCalendar
-          v-model="range"
-          type="daterange"
-          :initial-date="date1"
-        />
-      </div>
-    </ClientOnly>
+    <div class="calendar-type-overview__element">
+      <p>Date</p>
+      <p>{{ shortDate(date) }}</p>
+      <NmorphCalendar v-model="date" />
+    </div>
+    <div class="calendar-type-overview__element">
+      <p>Dates</p>
+      <p>{{ dates.map((date) => shortDate(date)).join("~") }}</p>
+      <NmorphCalendar v-model="dates" type="dates" :initial-date="date1" />
+    </div>
+    <div class="calendar-type-overview__element">
+      <p>Date range</p>
+      <p>{{ range.map((date) => shortDate(date)).join("~") }}</p>
+      <NmorphCalendar
+        v-model="range"
+        type="daterange"
+        :initial-date="date1"
+      />
+    </div>
   </div>
 </template>
 

@@ -4,21 +4,19 @@ import { NmorphBacktop, NmorphScroll } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="backtop-basic-usage-overview">
-    <ClientOnly>
-      <NmorphScroll width="100%" height="260px">
-        <ul class="backtop-basic-usage-overview__content">
-          <li v-for="(_, idx) in Array.from({ length: 200 })" :key="idx">
-            Scroll down
-          </li>
-        </ul>
-        <NmorphBacktop
-          design="plain"
-          :right="24"
-          :bottom="24"
-          :visibility-height="80"
-        />
-      </NmorphScroll>
-    </ClientOnly>
+    <NmorphScroll width="100%" height="260px">
+      <ul class="backtop-basic-usage-overview__content">
+        <li v-for="(_, idx) in Array.from({ length: 200 })" :key="idx">
+          Scroll down
+        </li>
+      </ul>
+      <NmorphBacktop
+        design="plain"
+        :right="24"
+        :bottom="24"
+        :visibility-height="80"
+      />
+    </NmorphScroll>
   </div>
 </template>
 

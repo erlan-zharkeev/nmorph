@@ -4,15 +4,13 @@ import { NmorphProgress } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="progress-type-overview">
-    <ClientOnly>
-      <NmorphProgress :percentage="50" color="var(--nmorph-accent-color)" />
-      <NmorphProgress
-        type="circle"
-        :percentage="50"
-        class="circle-progress"
-        color="pink"
-      />
-    </ClientOnly>
+    <NmorphProgress :percentage="50" color="var(--nmorph-accent-color)" />
+    <NmorphProgress
+      type="circle"
+      :percentage="50"
+      class="circle-progress"
+      color="pink"
+    />
   </div>
 </template>
 

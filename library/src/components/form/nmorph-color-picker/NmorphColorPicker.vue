@@ -147,7 +147,7 @@ const displayValue = computed(() => {
         @focus="handleFocus"
         @blur="handleBlur"
       />
-      <div class="nmorph-color-picker__swatch" :style="{ background: currentValue }" />
+      <div class="nmorph-color-picker__swatch" :style="{ '--nmorph-private-color-picker-color': currentValue }" />
       <span v-if="props.showValue" class="nmorph-color-picker__value">{{ displayValue }}</span>
     </div>
   </div>
@@ -181,6 +181,7 @@ const displayValue = computed(() => {
 
   .nmorph-color-picker__native {
     position: absolute;
+    z-index: 2;
     width: 100%;
     height: 100%;
     cursor: pointer;
@@ -189,13 +190,27 @@ const displayValue = computed(() => {
   }
 
   .nmorph-color-picker__swatch {
+    position: relative;
+    z-index: 1;
     flex: 0 0 auto;
-    width: calc(var(--nmorph-private-control-height) - var(--indentation-03));
-    height: calc(var(--nmorph-private-control-height) - var(--indentation-03));
+    width: calc(var(--nmorph-private-control-height) - var(--indentation-03) + 2px);
+    height: calc(var(--nmorph-private-control-height) - var(--indentation-03) + 2px);
+    overflow: hidden;
+    background: var(--nmorph-main-color);
     border-radius: var(--default-border-radius);
     box-shadow:
       inset 0 0 0 1px rgb(255 255 255 / 25%),
       0 0 0 1px rgb(0 0 0 / 12%);
+    pointer-events: none;
+
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: 1;
+      inset: 1px;
+      background: var(--nmorph-private-color-picker-color);
+      border-radius: calc(var(--default-border-radius) - 1px);
+    }
   }
 
   .nmorph-color-picker__value {

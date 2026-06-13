@@ -4,14 +4,12 @@ import { NmorphProgress } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="progress-indeterminate-overview">
-    <ClientOnly>
-      <NmorphProgress
-        :percentage="50"
-        indeterminate
-        color="var(--nmorph-accent-color)"
-        :value-right-side="false"
-      />
-    </ClientOnly>
+    <NmorphProgress
+      :percentage="50"
+      indeterminate
+      color="var(--nmorph-accent-color)"
+      :value-right-side="false"
+    />
   </div>
 </template>
 

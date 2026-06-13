@@ -4,10 +4,8 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="button-loading-overview">
-    <ClientOnly>
-      <NmorphButton design="nmorph" loading />
-      <NmorphButton design="plain" loading />
-    </ClientOnly>
+    <NmorphButton design="nmorph" loading />
+    <NmorphButton design="plain" loading />
   </div>
 </template>
 

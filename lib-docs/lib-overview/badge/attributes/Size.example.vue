@@ -4,14 +4,12 @@ import { NmorphBadge } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="badge-size-overview">
-    <ClientOnly>
-      <NmorphBadge type="tag" value="tiny" size="tiny" />
-      <NmorphBadge type="tag" value="extra-small" size="extra-small" />
-      <NmorphBadge type="tag" value="base" size="base" />
-      <NmorphBadge type="tag" value="medium" size="medium" />
-      <NmorphBadge type="tag" value="large" size="large" />
-      <NmorphBadge type="tag" value="extra-large" size="extra-large" />
-    </ClientOnly>
+    <NmorphBadge type="tag" value="tiny" size="tiny" />
+    <NmorphBadge type="tag" value="extra-small" size="extra-small" />
+    <NmorphBadge type="tag" value="base" size="base" />
+    <NmorphBadge type="tag" value="medium" size="medium" />
+    <NmorphBadge type="tag" value="large" size="large" />
+    <NmorphBadge type="tag" value="extra-large" size="extra-large" />
   </div>
 </template>
 

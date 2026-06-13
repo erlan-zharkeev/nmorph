@@ -6,13 +6,11 @@ const value = ref(2);
 
 <template>
   <div class="number-input-action-btn-position-right-overview">
-    <ClientOnly>
-      <NmorphNumberInput
-        action-btn-position-right
-        v-model="value"
-        thickness="thick"
-      />
-    </ClientOnly>
+    <NmorphNumberInput
+      action-btn-position-right
+      v-model="value"
+      thickness="thick"
+    />
   </div>
 </template>
 

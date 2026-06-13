@@ -2,17 +2,15 @@
   "name": "nmorph-lib-docs",
   "private": true,
   "type": "module",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --no-qr --host 127.0.0.1 --port 43117",
-    "clean": "rm -rf .nuxt node_modules && pnpm install",
+    "clean": "node scripts/clean.cjs && pnpm install",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "typecheck": "nuxt typecheck",
-    "check": "pnpm run typecheck && pnpm run build",
-    "generate-component": "node generate-component.js",
-    "deploy": "pnpm run generate && gh-pages -d dist"
+    "check": "pnpm run typecheck && pnpm run build"
   },
   "dependencies": {
     "@nmorph/nmorph-ui-kit": "workspace:*",
@@ -20,13 +18,12 @@
     "highlight.js": "10.7.3",
     "nuxt": "^3.11.2",
     "nuxt-svgo": "^4.0.1",
-    "vue": "^3.4.27",
-    "vue-router": "^4.3.2",
-    "vue3-highlightjs": "^1.0.5"
+    "vue": "^3.4.27"
   },
   "devDependencies": {
     "sass": "^1.77.4",
     "typescript": "~5.4.5",
+    "vue-devtools-stub": "^0.1.0",
     "vue-tsc": "^2.2.12"
   }
 }

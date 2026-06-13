@@ -4,9 +4,7 @@ import { NmorphFileUpload } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="file-upload-multiple-overview">
-    <ClientOnly>
-      <NmorphFileUpload multiple />
-    </ClientOnly>
+    <NmorphFileUpload multiple />
   </div>
 </template>
 

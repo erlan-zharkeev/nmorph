@@ -13,13 +13,11 @@ const options = [
 
 <template>
   <div class="select-button-basic-overview">
-    <ClientOnly>
-      <NmorphSelectButton v-model="value" :options="options" />
-      <NmorphSelectButton v-model="value">
-        <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
-        <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
-      </NmorphSelectButton>
-    </ClientOnly>
+    <NmorphSelectButton v-model="value" :options="options" />
+    <NmorphSelectButton v-model="value">
+      <NmorphSelectButtonItem value="off">Off</NmorphSelectButtonItem>
+      <NmorphSelectButtonItem value="on">On</NmorphSelectButtonItem>
+    </NmorphSelectButton>
   </div>
 </template>
 

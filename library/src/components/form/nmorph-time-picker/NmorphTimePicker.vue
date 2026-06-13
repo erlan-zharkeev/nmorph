@@ -207,9 +207,12 @@ defineExpose({ inputDOMRef });
       </NmorphIcon>
       <div class="nmorph-time-picker__selected-value">{{ displayValue }}</div>
       <button
-        v-if="showClearButton"
         class="nmorph-time-picker__clear"
+        :class="{ 'nmorph-time-picker__clear--hidden': !showClearButton }"
         type="button"
+        :disabled="!showClearButton"
+        :tabindex="showClearButton ? 0 : -1"
+        :aria-hidden="!showClearButton"
         aria-label="Clear time"
         @click.stop="clearHandler"
       >
@@ -329,7 +332,7 @@ defineExpose({ inputDOMRef });
   }
 
   .nmorph-time-picker__selected-value {
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     min-width: 0;
     overflow: hidden;
     white-space: nowrap;
@@ -340,7 +343,7 @@ defineExpose({ inputDOMRef });
   .nmorph-time-picker__clear {
     display: inline-flex;
     flex: 0 0 auto;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     width: 18px;
     height: 18px;
@@ -349,6 +352,11 @@ defineExpose({ inputDOMRef });
     background: transparent;
     border: 0;
     cursor: pointer;
+  }
+
+  .nmorph-time-picker__clear--hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 
   &.nmorph-time-picker--open {

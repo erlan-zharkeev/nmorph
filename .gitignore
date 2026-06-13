@@ -3,13 +3,7 @@ node_modules
 .nuxt
 .nuxt-build
 .output
-nuxt-sandbox/.data
-nuxt-sandbox/.nitro
-nuxt-sandbox/dist
-nuxt-sandbox/*.log
 *.log
-nuxt-sandbox/.env
-nuxt-sandbox/.env.*
 
 .vscode/*
 !.vscode/extensions.json

@@ -6,10 +6,8 @@ const value = ref(false);
 
 <template>
   <div class="checkbox-design-overview">
-    <ClientOnly>
-      <NmorphCheckbox v-model="value" id="1" design="plain" />
-      <NmorphCheckbox v-model="value" id="2" design="nmorph" :label="String(value)" />
-    </ClientOnly>
+    <NmorphCheckbox v-model="value" id="1" design="plain" />
+    <NmorphCheckbox v-model="value" id="2" design="nmorph" :label="String(value)" />
   </div>
 </template>
 

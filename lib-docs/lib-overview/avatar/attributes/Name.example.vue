@@ -4,10 +4,8 @@ import { NmorphAvatar } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="avatar-name-overview">
-    <ClientOnly>
-      <NmorphAvatar name="John Doe" :size="70" />
-      <NmorphAvatar name="Alex Smith" :size="50" />
-    </ClientOnly>
+    <NmorphAvatar name="John Doe" :size="70" />
+    <NmorphAvatar name="Alex Smith" :size="50" />
   </div>
 </template>
 

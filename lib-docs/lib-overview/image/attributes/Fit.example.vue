@@ -5,17 +5,15 @@ import { CatReal } from "~/assets/images";
 
 <template>
   <div class="image-fit-overview">
-    <ClientOnly>
-      <div class="image-fit-overview__wrapper">
-        <NmorphImage :src="CatReal" fit="contain" />
-      </div>
-      <div class="image-fit-overview__wrapper">
-        <NmorphImage :src="CatReal" fit="fill" />
-      </div>
-      <div class="image-fit-overview__wrapper">
-        <NmorphImage :src="CatReal" fit="cover" />
-      </div>
-    </ClientOnly>
+    <div class="image-fit-overview__wrapper">
+      <NmorphImage :src="CatReal" fit="contain" />
+    </div>
+    <div class="image-fit-overview__wrapper">
+      <NmorphImage :src="CatReal" fit="fill" />
+    </div>
+    <div class="image-fit-overview__wrapper">
+      <NmorphImage :src="CatReal" fit="cover" />
+    </div>
   </div>
 </template>
 

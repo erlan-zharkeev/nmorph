@@ -26,29 +26,27 @@ const tabs = ref([
 
 <template>
   <div class="tabs-basic-usage-overview">
-    <ClientOnly>
-      <div class="elements">
-        <div class="elements__element">
-          <NmorphTabs v-model="customActiveTab" :stretch="true">
-            <NmorphTabPane v-for="tab in tabs" :key="tab.name" v-bind="tab">
-              <template #label="{ scope }">
-                <div v-if="scope.name === 'tab-2'">Custom label</div>
-                <div v-else>{{ scope.label }}</div>
-              </template>
-              <template #default="{ scope }">
-                <div class="tabs-basic-usage-overview__content">
-                  <strong>Custom content for {{ scope.name }}</strong>
-                  <span>{{ scope.content }}</span>
-                </div>
-              </template>
-            </NmorphTabPane>
-          </NmorphTabs>
-        </div>
-        <div class="elements__element">
-          <NmorphTabs v-model="activeTab" :panes="tabs" stretch />
-        </div>
+    <div class="elements">
+      <div class="elements__element">
+        <NmorphTabs v-model="customActiveTab" :stretch="true">
+          <NmorphTabPane v-for="tab in tabs" :key="tab.name" v-bind="tab">
+            <template #label="{ scope }">
+              <div v-if="scope.name === 'tab-2'">Custom label</div>
+              <div v-else>{{ scope.label }}</div>
+            </template>
+            <template #default="{ scope }">
+              <div class="tabs-basic-usage-overview__content">
+                <strong>Custom content for {{ scope.name }}</strong>
+                <span>{{ scope.content }}</span>
+              </div>
+            </template>
+          </NmorphTabPane>
+        </NmorphTabs>
       </div>
-    </ClientOnly>
+      <div class="elements__element">
+        <NmorphTabs v-model="activeTab" :panes="tabs" stretch />
+      </div>
+    </div>
   </div>
 </template>
 

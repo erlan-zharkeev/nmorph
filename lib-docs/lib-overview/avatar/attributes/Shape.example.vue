@@ -5,11 +5,9 @@ import { Dog, Racoon } from "~/assets/images";
 
 <template>
   <div class="avatar-shape-overview">
-    <ClientOnly>
-      <NmorphAvatar :src="Dog" :size="70" shape="square" />
-      <NmorphAvatar :src="Racoon" :size="70" shape="circle" />
-      <NmorphAvatar :src="Dog" :size="70" shape="square" design="plain" borderless />
-    </ClientOnly>
+    <NmorphAvatar :src="Dog" :size="70" shape="square" />
+    <NmorphAvatar :src="Racoon" :size="70" shape="circle" />
+    <NmorphAvatar :src="Dog" :size="70" shape="square" design="plain" borderless />
   </div>
 </template>
 

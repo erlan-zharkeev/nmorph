@@ -11,43 +11,41 @@ const ribbonCorners = [
 
 <template>
   <div class="badge-type-overview">
-    <ClientOnly>
-      <NmorphBadge value="4">
-        <NmorphButton text="Default" />
+    <NmorphBadge value="4">
+      <NmorphButton text="Default" />
+    </NmorphBadge>
+    <div class="badge-type-overview__dot">
+      <NmorphBadge type="dot" color="var(--nmorph-error-color)" :dot-size="9">
+        <NmorphButton text="Dot" />
       </NmorphBadge>
-      <div class="badge-type-overview__dot">
-        <NmorphBadge type="dot" color="var(--nmorph-error-color)" :dot-size="9">
-          <NmorphButton text="Dot" />
-        </NmorphBadge>
-      </div>
-      <NmorphBadge type="tag" value="Tag" color="var(--nmorph-success-color)" />
-      <NmorphBadge
-        v-for="corner in ribbonCorners"
-        :key="corner"
-        value="New"
-        type="ribbon"
-        :ribbon-corner="corner"
-      >
-        <div class="badge-type-overview__card">{{ corner }}</div>
-      </NmorphBadge>
-      <NmorphBadge
-        value="Flat"
-        type="ribbon"
-        ribbon-corner="top-right"
-        :ribbon-tilt="false"
-        color="var(--nmorph-success-color)"
-      >
-        <div class="badge-type-overview__card">flat corner</div>
-      </NmorphBadge>
-      <NmorphBadge
-        value="Tiny"
-        type="ribbon"
-        size="tiny"
-        ribbon-corner="bottom-right"
-      >
-        <div class="badge-type-overview__card">tiny ribbon</div>
-      </NmorphBadge>
-    </ClientOnly>
+    </div>
+    <NmorphBadge type="tag" value="Tag" color="var(--nmorph-success-color)" />
+    <NmorphBadge
+      v-for="corner in ribbonCorners"
+      :key="corner"
+      value="New"
+      type="ribbon"
+      :ribbon-corner="corner"
+    >
+      <div class="badge-type-overview__card">{{ corner }}</div>
+    </NmorphBadge>
+    <NmorphBadge
+      value="Flat"
+      type="ribbon"
+      ribbon-corner="top-right"
+      :ribbon-tilt="false"
+      color="var(--nmorph-success-color)"
+    >
+      <div class="badge-type-overview__card">flat corner</div>
+    </NmorphBadge>
+    <NmorphBadge
+      value="Tiny"
+      type="ribbon"
+      size="tiny"
+      ribbon-corner="bottom-right"
+    >
+      <div class="badge-type-overview__card">tiny ribbon</div>
+    </NmorphBadge>
   </div>
 </template>
 

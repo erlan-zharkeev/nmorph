@@ -32,27 +32,25 @@ const addNotification = (
 
 <template>
   <div class="notification-provider-basic-usage-overview">
-    <ClientOnly>
-      <div class="actions">
-        <div class="actions__button">
-          <NmorphButton
-            text="Add action notification"
-            @click="() => addNotification('top-right')"
-          />
-        </div>
-        <div class="actions__button">
-          <NmorphButton
-            text="Add info notification"
-            @click="() => addNotification('top-center')"
-          />
-        </div>
+    <div class="actions">
+      <div class="actions__button">
+        <NmorphButton
+          text="Add action notification"
+          @click="() => addNotification('top-right')"
+        />
       </div>
-      <NmorphNotificationProvider
-        :notifications="notifications"
-        placement="top-right"
-        :quantity="3"
-      />
-    </ClientOnly>
+      <div class="actions__button">
+        <NmorphButton
+          text="Add info notification"
+          @click="() => addNotification('top-center')"
+        />
+      </div>
+    </div>
+    <NmorphNotificationProvider
+      :notifications="notifications"
+      placement="top-right"
+      :quantity="3"
+    />
   </div>
 </template>
 

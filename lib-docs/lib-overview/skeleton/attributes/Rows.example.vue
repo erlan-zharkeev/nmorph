@@ -4,9 +4,7 @@ import { NmorphSkeleton } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="skeleton-rows-overview">
-    <ClientOnly>
-      <NmorphSkeleton :rows="3" :loading="true" />
-    </ClientOnly>
+    <NmorphSkeleton :rows="3" :loading="true" />
   </div>
 </template>
 

@@ -2,9 +2,16 @@
 import { type IAttributesTableData, type ISlotsTableData } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
 import {
-  NmorphCard,
+  NmorphCallout,
   NmorphComponentThickness,
   NmorphDivider,
+  NmorphIcon,
+  NmorphIconChecked,
+  NmorphIconDatabase,
+  NmorphIconDocument,
+  NmorphIconFiles,
+  NmorphIconInfoFilled,
+  NmorphIconList,
 } from "@nmorph/nmorph-ui-kit";
 
 const { t } = useI18n();
@@ -152,9 +159,109 @@ const slotDataFormItem: ISlotsTableData[] = [{ name: "default" }];
 
 <template>
   <NmorphDivider />
-  <NmorphCard :paper="3">
-    <div class="additional-data" v-html="t('overview.form.explanation')" />
-  </NmorphCard>
+  <section class="form-validation-guide">
+    <NmorphCallout type="info">
+      <template #header>
+        <span class="form-validation-guide__title">
+          <NmorphIcon size="small">
+            <NmorphIconInfoFilled />
+          </NmorphIcon>
+          {{ t("overview.form.validation-guide.metadata.title") }}
+        </span>
+      </template>
+      <p>
+        {{ t("overview.form.validation-guide.metadata.content") }}
+      </p>
+    </NmorphCallout>
+
+    <div class="form-validation-guide__grid">
+      <NmorphCallout type="warning">
+        <template #header>
+          <span class="form-validation-guide__title">
+            <NmorphIcon size="small">
+              <NmorphIconDocument />
+            </NmorphIcon>
+            {{ t("overview.form.validation-guide.text.title") }}
+          </span>
+        </template>
+        <p>{{ t("overview.form.validation-guide.text.content") }}</p>
+        <div class="form-validation-guide__tokens">
+          <code>pattern</code>
+          <code>error</code>
+        </div>
+      </NmorphCallout>
+
+      <NmorphCallout type="warning">
+        <template #header>
+          <span class="form-validation-guide__title">
+            <NmorphIcon size="small">
+              <NmorphIconDatabase />
+            </NmorphIcon>
+            {{ t("overview.form.validation-guide.number.title") }}
+          </span>
+        </template>
+        <p>{{ t("overview.form.validation-guide.number.content") }}</p>
+        <div class="form-validation-guide__tokens">
+          <code>eq</code>
+          <code>gte</code>
+          <code>lte</code>
+          <code>gt</code>
+          <code>lt</code>
+        </div>
+      </NmorphCallout>
+
+      <NmorphCallout type="warning">
+        <template #header>
+          <span class="form-validation-guide__title">
+            <NmorphIcon size="small">
+              <NmorphIconChecked />
+            </NmorphIcon>
+            {{ t("overview.form.validation-guide.boolean.title") }}
+          </span>
+        </template>
+        <p>{{ t("overview.form.validation-guide.boolean.content") }}</p>
+        <div class="form-validation-guide__tokens">
+          <code>eq</code>
+          <code>not-eq</code>
+          <code>compareValue</code>
+        </div>
+      </NmorphCallout>
+
+      <NmorphCallout type="warning">
+        <template #header>
+          <span class="form-validation-guide__title">
+            <NmorphIcon size="small">
+              <NmorphIconList />
+            </NmorphIcon>
+            {{ t("overview.form.validation-guide.array.title") }}
+          </span>
+        </template>
+        <p>{{ t("overview.form.validation-guide.array.content") }}</p>
+        <div class="form-validation-guide__tokens">
+          <code>contains-one</code>
+          <code>not-contains</code>
+          <code>full-eq</code>
+        </div>
+      </NmorphCallout>
+
+      <NmorphCallout type="warning">
+        <template #header>
+          <span class="form-validation-guide__title">
+            <NmorphIcon size="small">
+              <NmorphIconFiles />
+            </NmorphIcon>
+            {{ t("overview.form.validation-guide.file.title") }}
+          </span>
+        </template>
+        <p>{{ t("overview.form.validation-guide.file.content") }}</p>
+        <div class="form-validation-guide__tokens">
+          <code>fileMaxSize</code>
+          <code>fileAllowedTypes</code>
+          <code>fileMaxCount</code>
+        </div>
+      </NmorphCallout>
+    </div>
+  </section>
   <NmorphDivider />
   <div class="docs-api-table">
     <api-table title="NmorphForm" name="form" :attributes="attributesData" :slots="slotData" :exposes="exposes" />
@@ -167,21 +274,43 @@ const slotDataFormItem: ISlotsTableData[] = [{ name: "default" }];
 </template>
 
 <style scoped>
-.additional-data {
-  margin: 16px 0;
-}
-
 .docs-api-table {
   margin: 16px 0;
 }
 
-.additional-data {
-  h2 {
-    margin-top: 8px;
-  }
+.form-validation-guide {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0;
 
-  ul {
-    margin-top: 0;
+  p {
+    margin: 0;
   }
+}
+
+.form-validation-guide__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.form-validation-guide__title {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.form-validation-guide__tokens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.form-validation-guide__tokens code {
+  padding: 2px 6px;
+  background: color-mix(in srgb, var(--nmorph-text-color) 10%, transparent);
+  border-radius: 4px;
+  font-size: 0.9em;
 }
 </style>

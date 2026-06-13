@@ -4,20 +4,18 @@ import { NmorphOTPInput } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="otp-input-mode-overview">
-    <ClientOnly>
-      <div class="otp-input-mode-overview__item">
-        <p class="nmorph-title-3">numeric</p>
-        <NmorphOTPInput mode="numeric" />
-      </div>
-      <div class="otp-input-mode-overview__item">
-        <p class="nmorph-title-3">text</p>
-        <NmorphOTPInput mode="text" />
-      </div>
-      <div class="otp-input-mode-overview__item">
-        <p class="nmorph-title-3">alphanumeric</p>
-        <NmorphOTPInput mode="alphanumeric" :length="4" />
-      </div>
-    </ClientOnly>
+    <div class="otp-input-mode-overview__item">
+      <p class="nmorph-title-3">numeric</p>
+      <NmorphOTPInput mode="numeric" />
+    </div>
+    <div class="otp-input-mode-overview__item">
+      <p class="nmorph-title-3">text</p>
+      <NmorphOTPInput mode="text" />
+    </div>
+    <div class="otp-input-mode-overview__item">
+      <p class="nmorph-title-3">alphanumeric</p>
+      <NmorphOTPInput mode="alphanumeric" :length="4" />
+    </div>
   </div>
 </template>
 

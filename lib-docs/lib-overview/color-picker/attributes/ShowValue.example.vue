@@ -4,9 +4,7 @@ import { NmorphColorPicker } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="color-picker-show-value-overview">
-    <ClientOnly>
-      <NmorphColorPicker show-value />
-    </ClientOnly>
+    <NmorphColorPicker show-value />
   </div>
 </template>
 

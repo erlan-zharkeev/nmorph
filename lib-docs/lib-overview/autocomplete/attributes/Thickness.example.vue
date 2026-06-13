@@ -7,11 +7,9 @@ const list = ref([{ value: "First" }, { value: "Second" }, { value: "Third" }]);
 
 <template>
   <div class="autocomplete-thickness-overview">
-    <ClientOnly>
-      <NmorphAutocomplete thickness="thick" v-model="text" :list="list" />
-      <NmorphAutocomplete thickness="basic" :list="list" />
-      <NmorphAutocomplete thickness="thin" :list="list" />
-    </ClientOnly>
+    <NmorphAutocomplete thickness="thick" v-model="text" :list="list" />
+    <NmorphAutocomplete thickness="basic" :list="list" />
+    <NmorphAutocomplete thickness="thin" :list="list" />
   </div>
 </template>
 

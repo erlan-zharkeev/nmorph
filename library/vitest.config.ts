@@ -13,12 +13,15 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: [{ find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) }],
+    alias: [
+      { find: '@test', replacement: fileURLToPath(new URL('./tests', import.meta.url)) },
+      { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },
+    ],
   },
   test: {
     environment: 'happy-dom',
     globals: true,
     setupFiles: ['./tests/setup.ts'],
-    include: ['tests/**/*.spec.ts'],
+    include: ['tests/**/*.spec.ts', 'src/**/*.spec.ts'],
   },
 });

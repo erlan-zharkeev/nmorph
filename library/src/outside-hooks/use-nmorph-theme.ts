@@ -10,7 +10,7 @@ import {
 } from '@/main';
 import { readonly, ref } from 'vue';
 import packageData from '../../package.json';
-import { nmorphLog } from '@/outside-utils';
+import { nmorphLog } from '@/outside-utils/nmorph-log';
 import { camelToKebab } from '@/utils';
 
 const DEFAULT_THEME_COLORS = {
