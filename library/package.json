@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/ketjo/nmorph",
+    "url": "https://github.com/erlan-zharkeev/nmorph",
     "directory": "library"
   },
   "engines": {

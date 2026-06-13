@@ -4,7 +4,7 @@ import libraryData from "../../library/package.json";
 
 const localePath = useLocalePath();
 const repositoryUrl = libraryData.repository.url;
-const issuesUrl = `${repositoryUrl}/-/issues`;
+const issuesUrl = `${repositoryUrl}/issues`;
 const featureKeys = ["components", "bundle", "theme", "nuxt", "typescript"];
 const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays", "forms", "virtualization", "accessibility"];
 </script>

@@ -1,0 +1,75 @@
+name: Publish package
+
+on:
+  push:
+    branches:
+      - production
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  NODE_ENV: development
+  NODE_VERSION: 24
+  NPM_CONFIG_PRODUCTION: "false"
+  PNPM_VERSION: 10.33.0
+
+jobs:
+  publish:
+    name: Publish npm package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org
+
+      - name: Setup npm for trusted publishing
+        run: npm install -g npm@latest
+
+      - name: Setup pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@${PNPM_VERSION} --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --prod=false --ignore-scripts
+
+      - name: Build library
+        run: pnpm --filter @nmorph/nmorph-ui-kit build
+
+      - name: Check published version
+        id: package
+        working-directory: library
+        shell: bash
+        run: |
+          package_name=$(node -p "require('./package.json').name")
+          package_version=$(node -p "require('./package.json').version")
+          published_version=$(npm view "$package_name@$package_version" version --registry=https://registry.npmjs.org/ 2>/dev/null || true)
+
+          echo "name=$package_name" >> "$GITHUB_OUTPUT"
+          echo "version=$package_version" >> "$GITHUB_OUTPUT"
+
+          if [ "$published_version" = "$package_version" ]; then
+            echo "already_published=true" >> "$GITHUB_OUTPUT"
+            echo "Version $package_version is already published for $package_name. Skipping publish."
+          else
+            echo "already_published=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Dry-run package
+        if: steps.package.outputs.already_published != 'true'
+        working-directory: library
+        run: npm pack --dry-run
+
+      - name: Publish package
+        if: steps.package.outputs.already_published != 'true'
+        working-directory: library
+        run: npm publish --access public --registry=https://registry.npmjs.org/

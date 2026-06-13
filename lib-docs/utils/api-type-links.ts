@@ -3,7 +3,7 @@ import { docsLink } from "./docs-link";
 const mdn = (path: string) =>
   `https://developer.mozilla.org/en-US/docs/${path}`;
 const source = (path: string) =>
-  `https://gitlab.com/ketjo/nmorph/-/blob/production/library/src/${path}`;
+  `https://github.com/erlan-zharkeev/nmorph/blob/production/library/src/${path}`;
 
 const apiTypeLinks: Record<string, string> = {
   Blob: mdn("Web/API/Blob"),

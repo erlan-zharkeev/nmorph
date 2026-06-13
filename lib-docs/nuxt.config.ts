@@ -25,7 +25,12 @@ const buildDir = nuxtCommand ? ".nuxt-build" : ".nuxt";
 const siteTitle = "Nmorph UI Kit";
 const siteDescription =
   "Vue 3 and Nuxt component library for building tactile product interfaces with neumorphic styling, forms, tables, overlays, theming, and typed component APIs.";
-const siteUrl = "https://ketjo.gitlab.io/nmorph/";
+const appBaseUrl = process.env.NUXT_APP_BASE_URL ?? "/";
+const siteUrl =
+  process.env.NUXT_PUBLIC_SITE_URL ??
+  "https://erlan-zharkeev.github.io/nmorph/";
+const withBaseUrl = (path: string) =>
+  `${appBaseUrl.replace(/\/$/, "")}${path}`;
 
 export default defineNuxtConfig({
   compatibilityDate: "2024-09-05",
@@ -34,28 +39,33 @@ export default defineNuxtConfig({
   ssr: true,
   telemetry: false,
   app: {
+    baseURL: appBaseUrl,
     head: {
       title: siteTitle,
       link: [
         {
           rel: "apple-touch-icon",
           sizes: "180x180",
-          href: "/apple-touch-icon.png",
+          href: withBaseUrl("/apple-touch-icon.png"),
         },
         {
           rel: "icon",
           type: "image/png",
           sizes: "32x32",
-          href: "/favicon-32x32.png",
+          href: withBaseUrl("/favicon-32x32.png"),
         },
         {
           rel: "icon",
           type: "image/png",
           sizes: "16x16",
-          href: "/favicon-16x16.png",
+          href: withBaseUrl("/favicon-16x16.png"),
         },
-        { rel: "manifest", href: "/site.webmanifest" },
-        { rel: "mask-icon", href: "/safari-pinned-tab.svg", color: "#5bbad5" },
+        { rel: "manifest", href: withBaseUrl("/site.webmanifest") },
+        {
+          rel: "mask-icon",
+          href: withBaseUrl("/safari-pinned-tab.svg"),
+          color: "#5bbad5",
+        },
         { rel: "canonical", href: siteUrl },
       ],
       meta: [
@@ -68,14 +78,14 @@ export default defineNuxtConfig({
         { name: "robots", content: "index, follow" },
         { property: "og:title", content: siteTitle },
         { property: "og:description", content: siteDescription },
-        { property: "og:image", content: "/og-image.png" },
+        { property: "og:image", content: `${siteUrl}og-image.png` },
         { property: "og:url", content: siteUrl },
         { property: "og:type", content: "website" },
         { property: "og:site_name", content: siteTitle },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: siteTitle },
         { name: "twitter:description", content: siteDescription },
-        { name: "twitter:image", content: "/twitter-image.png" },
+        { name: "twitter:image", content: `${siteUrl}twitter-image.png` },
       ],
     },
   },
