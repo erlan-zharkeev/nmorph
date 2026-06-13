@@ -219,6 +219,10 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "guide-bordered-prop":
+          "NmorphGuide 现在支持 bordered，用于为默认 guide card 添加可见边框。",
+        "guide-plain-actions":
+          "默认 guide action buttons 现在使用 plain button design，让 card 内 controls 更清爽。",
         "component-colocated-stories-tests":
           "组件的 Storybook stories 和 Vitest specs 现在与组件放在同一目录，复用共享 Storybook utilities，Vitest 也会覆盖 co-located src/**/*.spec.ts 文件。",
         "public-type-barrels-emoji-entrypoints":

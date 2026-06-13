@@ -69,6 +69,51 @@ describe('NmorphGuide', () => {
     wrapper.unmount();
   });
 
+  it('uses plain design for default guide action buttons', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphGuide, NmorphGuideStep },
+        template: `
+          <NmorphGuide model-value disabled-teleport :steps="[{ name: 'first', title: 'Guide' }]">
+            <NmorphGuideStep name="first">
+              <button>Target</button>
+            </NmorphGuideStep>
+          </NmorphGuide>
+        `,
+      })
+    );
+
+    await nextTick();
+
+    const actionButtons = wrapper.findAll('.nmorph-guide-step__actions .nmorph-button');
+
+    expect(actionButtons).toHaveLength(3);
+    expect(actionButtons.every((button) => button.classes().includes('nmorph-button--plain'))).toBe(true);
+
+    wrapper.unmount();
+  });
+
+  it('adds bordered styling to default guide card when bordered is enabled', async () => {
+    const wrapper = mount(
+      defineComponent({
+        components: { NmorphGuide, NmorphGuideStep },
+        template: `
+          <NmorphGuide model-value bordered disabled-teleport :steps="[{ name: 'first', title: 'Guide' }]">
+            <NmorphGuideStep name="first">
+              <button>Target</button>
+            </NmorphGuideStep>
+          </NmorphGuide>
+        `,
+      })
+    );
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-guide-step__card').classes()).toContain('nmorph-guide-step__card--bordered');
+
+    wrapper.unmount();
+  });
+
   it('teleports guide cards above layout layers with the guide z-index', async () => {
     const wrapper = mount(
       defineComponent({

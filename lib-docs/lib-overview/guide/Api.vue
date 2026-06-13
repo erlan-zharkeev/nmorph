@@ -54,6 +54,12 @@ const guideAttributes: IAttributesTableData[] = [
     description: "Shows the current step index and total steps.",
   },
   {
+    name: "bordered",
+    type: "Boolean",
+    default: "false",
+    description: "Adds a visible border to the default guide card.",
+  },
+  {
     name: "back-text",
     type: "String",
     default: "Back",

@@ -80,7 +80,12 @@ onBeforeUnmount(() => {
     <slot />
     <template #content>
       <slot v-if="hasCustomContent && stepSlotProps" name="content" v-bind="stepSlotProps" />
-      <div v-else-if="currentStep && stepSlotProps" class="nmorph-guide-step__card" role="dialog" aria-live="polite">
+      <div
+        v-else-if="currentStep && stepSlotProps"
+        :class="['nmorph-guide-step__card', guide?.bordered.value && 'nmorph-guide-step__card--bordered']"
+        role="dialog"
+        aria-live="polite"
+      >
         <img
           v-if="currentStep.imageSrc"
           class="nmorph-guide-step__image"
@@ -115,6 +120,7 @@ onBeforeUnmount(() => {
           <NmorphButton
             class="nmorph-guide-step__next"
             :text="isLastStep && !guide?.loop.value ? guide?.finishText.value : guide?.nextText.value"
+            design="plain"
             thickness="thin"
             @click="isLastStep && !guide?.loop.value ? guide?.finish() : guide?.next()"
           />
@@ -128,7 +134,14 @@ onBeforeUnmount(() => {
 .nmorph-guide-step__card {
   display: grid;
   gap: var(--indentation-03);
+  box-sizing: border-box;
   min-width: min(240px, calc(100vw - 48px));
+  padding: var(--indentation-02);
+  border-radius: var(--default-border-radius);
+}
+
+.nmorph-guide-step__card--bordered {
+  border: var(--nmorph-plain-border);
 }
 
 .nmorph-guide-step__image {

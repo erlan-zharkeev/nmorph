@@ -232,6 +232,10 @@ export default {
     changelog: {
       title: "Журнал изменений",
       items: {
+        "guide-bordered-prop":
+          "NmorphGuide теперь поддерживает bordered, чтобы добавлять видимую рамку вокруг стандартной guide card.",
+        "guide-plain-actions":
+          "Стандартные guide action buttons теперь используют plain button design для более чистых controls внутри карточки.",
         "component-colocated-stories-tests":
           "Storybook stories и Vitest specs теперь лежат рядом со своими компонентами, используют общие Storybook utilities, а Vitest подхватывает co-located src/**/*.spec.ts файлы.",
         "public-type-barrels-emoji-entrypoints":

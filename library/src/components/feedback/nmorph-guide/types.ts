@@ -26,6 +26,7 @@ export interface INmorphGuideProps {
   closeOnFinish?: boolean;
   showClose?: boolean;
   showProgress?: boolean;
+  bordered?: boolean;
   backText?: string;
   nextText?: string;
   finishText?: string;
@@ -83,6 +84,7 @@ export interface INmorphGuideContext {
   loop: ComputedRef<boolean>;
   showClose: ComputedRef<boolean>;
   showProgress: ComputedRef<boolean>;
+  bordered: ComputedRef<boolean>;
   backText: ComputedRef<string>;
   nextText: ComputedRef<string>;
   finishText: ComputedRef<string>;

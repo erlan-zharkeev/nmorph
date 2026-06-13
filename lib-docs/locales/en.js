@@ -230,6 +230,10 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "guide-bordered-prop":
+          "NmorphGuide now supports bordered to add a visible border around the default guide card.",
+        "guide-plain-actions":
+          "Default guide action buttons now use the plain button design for cleaner in-card controls.",
         "component-colocated-stories-tests":
           "Component Storybook stories and Vitest specs now live next to their components, with shared Storybook utilities and Vitest coverage for co-located src/**/*.spec.ts files.",
         "public-type-barrels-emoji-entrypoints":
