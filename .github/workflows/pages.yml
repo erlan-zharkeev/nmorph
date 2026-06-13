@@ -22,8 +22,8 @@ env:
   NODE_ENV: production
   NODE_VERSION: 20.19.0
   PNPM_VERSION: 10.33.0
-  NUXT_APP_BASE_URL: /nmorph/
-  NUXT_PUBLIC_SITE_URL: https://erlan-zharkeev.github.io/nmorph/
+  NUXT_APP_BASE_URL: /
+  NUXT_PUBLIC_SITE_URL: https://nmorph.dev/
 
 jobs:
   build:

@@ -26,9 +26,7 @@ const siteTitle = "Nmorph UI Kit";
 const siteDescription =
   "Vue 3 and Nuxt component library for building tactile product interfaces with neumorphic styling, forms, tables, overlays, theming, and typed component APIs.";
 const appBaseUrl = process.env.NUXT_APP_BASE_URL ?? "/";
-const siteUrl =
-  process.env.NUXT_PUBLIC_SITE_URL ??
-  "https://erlan-zharkeev.github.io/nmorph/";
+const siteUrl = process.env.NUXT_PUBLIC_SITE_URL ?? "https://nmorph.dev/";
 const withBaseUrl = (path: string) =>
   `${appBaseUrl.replace(/\/$/, "")}${path}`;
 
