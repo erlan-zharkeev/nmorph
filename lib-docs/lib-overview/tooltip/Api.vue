@@ -82,6 +82,18 @@ const attributesData: IAttributesTableData[] = [
     type: "Height",
     default: "undefined",
   },
+  {
+    name: "content-class",
+    type: "String | Object | Array",
+    default: "undefined",
+    description: "Adds classes to the tooltip popup surface.",
+  },
+  {
+    name: "hide-triangle",
+    type: "Boolean",
+    default: "false",
+    description: "Hides the pointing triangle.",
+  },
 ];
 
 const slotData: ISlotsTableData[] = [{ name: "default" }, { name: "content" }];

@@ -57,7 +57,8 @@ const guideAttributes: IAttributesTableData[] = [
     name: "bordered",
     type: "Boolean",
     default: "false",
-    description: "Adds a visible border to the default guide card.",
+    description:
+      "Adds a visible border around the guide popup and hides the pointing triangle.",
   },
   {
     name: "back-text",

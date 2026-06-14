@@ -135,4 +135,25 @@ describe('NmorphTooltip', () => {
 
     wrapper.unmount();
   });
+
+  it('supports popup surface classes and hidden triangle', async () => {
+    const wrapper = mount(NmorphTooltip, {
+      props: {
+        forceShow: true,
+        text: 'Tooltip',
+        contentClass: 'custom-tooltip-surface',
+        hideTriangle: true,
+      },
+      slots: {
+        default: '<span class="tooltip-target">Target</span>',
+      },
+    });
+
+    await nextTick();
+
+    expect(wrapper.find('.nmorph-tooltip__info-content').classes()).toContain('custom-tooltip-surface');
+    expect(wrapper.find('.nmorph-tooltip__triangle').exists()).toBe(false);
+
+    wrapper.unmount();
+  });
 });

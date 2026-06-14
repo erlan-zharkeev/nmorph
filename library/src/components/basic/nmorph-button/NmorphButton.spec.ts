@@ -100,4 +100,35 @@ describe('NmorphButton', () => {
     defaultWrapper.unmount();
     borderlessWrapper.unmount();
   });
+
+  it('wraps text-only default slot content with the aligned button label', () => {
+    const wrapper = mount(NmorphButton, {
+      props: {
+        thickness: 'thin',
+      },
+      slots: {
+        default: 'Thin',
+      },
+    });
+
+    const label = wrapper.find('.nmorph-button__label');
+
+    expect(label.exists()).toBe(true);
+    expect(label.text()).toBe('Thin');
+
+    wrapper.unmount();
+  });
+
+  it('keeps rich default slot content unwrapped', () => {
+    const wrapper = mount(NmorphButton, {
+      slots: {
+        default: '<span class="custom-button-content">Custom</span>',
+      },
+    });
+
+    expect(wrapper.find('.custom-button-content').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-button__label').exists()).toBe(false);
+
+    wrapper.unmount();
+  });
 });

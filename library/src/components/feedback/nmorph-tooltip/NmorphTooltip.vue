@@ -25,6 +25,8 @@ const props = withDefaults(defineProps<INmorphTooltipProps>(), {
   width: undefined,
   maxWidth: undefined,
   height: undefined,
+  contentClass: undefined,
+  hideTriangle: false,
 });
 
 defineSlots<INmorphTooltipSlots>();
@@ -187,6 +189,7 @@ const tooltipContentClass = computed(() => [
   'nmorph-tooltip__info-content',
   `nmorph-tooltip__info-content--${placementSide.value}`,
   teleportTooltip.value && 'nmorph-tooltip__info-content--teleported',
+  props.contentClass,
 ]);
 const tooltipContentStyle = computed<CSSProperties>(() => ({
   ...styles.value,
@@ -248,7 +251,7 @@ defineExpose({ tooltipBody, open, close, toggle });
             :style="{ left: forceCoordinate?.x, bottom: forceCoordinate?.y }"
           >
             <div class="nmorph-tooltip__shadow-content">
-              <div v-if="!props.forceCoordinate" class="nmorph-tooltip__triangle" />
+              <div v-if="!props.forceCoordinate && !props.hideTriangle" class="nmorph-tooltip__triangle" />
               <span v-if="props.text">{{ text }}</span>
               <slot v-else name="content" />
             </div>
@@ -257,7 +260,7 @@ defineExpose({ tooltipBody, open, close, toggle });
         <Transition v-else name="opacity">
           <div v-if="shouldRenderTooltip" ref="tooltipBody" :class="tooltipContentClass">
             <div class="nmorph-tooltip__shadow-content">
-              <div class="nmorph-tooltip__triangle" />
+              <div v-if="!props.hideTriangle" class="nmorph-tooltip__triangle" />
               <span v-if="props.text">{{ text }}</span>
               <slot v-else name="content" />
             </div>
@@ -269,7 +272,7 @@ defineExpose({ tooltipBody, open, close, toggle });
       <Transition name="opacity">
         <div v-if="shouldRenderTooltip" ref="tooltipBody" :class="tooltipContentClass" :style="tooltipContentStyle">
           <div class="nmorph-tooltip__shadow-content">
-            <div class="nmorph-tooltip__triangle" />
+            <div v-if="!props.hideTriangle" class="nmorph-tooltip__triangle" />
             <span v-if="props.text">{{ text }}</span>
             <slot v-else name="content" />
           </div>

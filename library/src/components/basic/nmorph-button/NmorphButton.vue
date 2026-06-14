@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { NmorphComponentThickness, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
-import { computed, ref, useSlots } from 'vue';
+import { Comment, computed, Fragment, ref, Text, useSlots } from 'vue';
+import type { VNode } from 'vue';
 import { NmorphIcon, NmorphIconSize, NmorphIconLoader } from '@/components';
 import type { INmorphButtonEmit, INmorphButtonProps } from './types';
 
@@ -30,6 +31,20 @@ const slots = useSlots();
 const hasIconSlot = computed(() => Boolean(slots['icon']));
 const hasIconOnlySlot = computed(() => Boolean(slots['icon-only']));
 const active = computed(() => props.active || Boolean(props.modelValue));
+
+const flattenSlotNodes = (nodes: VNode[]): VNode[] =>
+  nodes.flatMap((node) =>
+    node.type === Fragment && Array.isArray(node.children) ? flattenSlotNodes(node.children as VNode[]) : node
+  );
+
+const isEmptySlotNode = (node: VNode) =>
+  node.type === Comment || (node.type === Text && typeof node.children === 'string' && node.children.trim() === '');
+
+const hasTextOnlyDefaultSlot = () => {
+  const visibleNodes = flattenSlotNodes(slots.default?.() ?? []).filter((node) => !isEmptySlotNode(node));
+
+  return visibleNodes.length > 0 && visibleNodes.every((node) => node.type === Text);
+};
 
 const modifiers = computed(() =>
   useModifiers({
@@ -97,7 +112,10 @@ defineExpose({ buttonDOMElement });
         <NmorphIcon v-if="hasIconSlot">
           <slot name="icon" />
         </NmorphIcon>
-        <slot />
+        <span v-if="hasTextOnlyDefaultSlot()" class="nmorph-button__label">
+          <slot />
+        </span>
+        <slot v-else />
         <span v-if="props.text !== undefined" class="nmorph-button__label">{{ props.text }}</span>
         <slot name="append" />
       </template>
@@ -108,6 +126,7 @@ defineExpose({ buttonDOMElement });
 <style lang="scss">
 .nmorph-button {
   --nmorph-private-button-padding-y: max(var(--indentation-01), calc(var(--nmorph-private-control-height) * 0.1));
+  --nmorph-private-button-text-offset-y: var(--nmorph-private-control-text-offset-y);
 
   display: inline-block;
   width: auto;
@@ -156,11 +175,11 @@ defineExpose({ buttonDOMElement });
   .nmorph-button__label {
     display: inline-block;
     min-width: 0;
-    line-height: var(--line-height-regular);
+    line-height: var(--nmorph-private-control-line-height, var(--line-height-control));
     white-space: normal;
     text-align: center;
     overflow-wrap: anywhere;
-    transform: translateY(var(--nmorph-private-control-text-offset-y));
+    transform: translateY(var(--nmorph-private-button-text-offset-y));
   }
 
   .nmorph-button__content > .nmorph-icon {
@@ -265,6 +284,8 @@ defineExpose({ buttonDOMElement });
   }
 
   &.nmorph-button--plain {
+    --nmorph-private-button-text-offset-y: 0px;
+
     padding: var(--indentation-00);
 
     .nmorph-button__content:not(:disabled, [loading='true']):hover {

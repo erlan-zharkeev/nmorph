@@ -232,6 +232,16 @@ export default {
     changelog: {
       title: "Журнал изменений",
       items: {
+        "github-actions-pages-publish":
+          "CI/CD переехал с GitLab CI на GitHub Actions: теперь для GitHub-репозитория есть отдельные workflows для Pages deployment и npm publish.",
+        "docs-custom-domain":
+          "Pages deployment для lib docs теперь нацелен на кастомный домен nmorph.dev и использует root-relative assets.",
+        "button-text-slot-alignment":
+          "NmorphButton теперь выравнивает текстовые default slots так же, как text prop, а plain-кнопки больше не применяют вертикальный offset, нужный только nmorph-дизайну.",
+        "guide-bordered-popup-surface":
+          "NmorphGuide с bordered теперь рисует border вокруг всего tooltip popup и скрывает указывающий треугольник, когда border включен.",
+        "tooltip-popup-surface-controls":
+          "NmorphTooltip теперь поддерживает contentClass и hideTriangle, чтобы составные feedback-компоненты могли стилизовать popup surface напрямую.",
         "guide-bordered-prop":
           "NmorphGuide теперь поддерживает bordered, чтобы добавлять видимую рамку вокруг стандартной guide card.",
         "guide-plain-actions":

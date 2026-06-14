@@ -93,7 +93,7 @@ describe('NmorphGuide', () => {
     wrapper.unmount();
   });
 
-  it('adds bordered styling to default guide card when bordered is enabled', async () => {
+  it('adds bordered styling to the guide popup and hides the triangle when bordered is enabled', async () => {
     const wrapper = mount(
       defineComponent({
         components: { NmorphGuide, NmorphGuideStep },
@@ -109,7 +109,9 @@ describe('NmorphGuide', () => {
 
     await nextTick();
 
-    expect(wrapper.find('.nmorph-guide-step__card').classes()).toContain('nmorph-guide-step__card--bordered');
+    expect(wrapper.find('.nmorph-tooltip__info-content').classes()).toContain('nmorph-guide-step__tooltip--bordered');
+    expect(wrapper.find('.nmorph-guide-step__card').classes()).not.toContain('nmorph-guide-step__card--bordered');
+    expect(wrapper.find('.nmorph-tooltip__triangle').exists()).toBe(false);
 
     wrapper.unmount();
   });

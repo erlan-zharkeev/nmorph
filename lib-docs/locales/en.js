@@ -230,6 +230,16 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "github-actions-pages-publish":
+          "CI/CD moved from GitLab CI to GitHub Actions, with separate Pages deployment and npm publish workflows for the GitHub repository.",
+        "docs-custom-domain":
+          "Lib docs Pages deployment now targets the nmorph.dev custom domain with root-relative assets.",
+        "button-text-slot-alignment":
+          "NmorphButton now aligns text-only default slot labels the same way as the text prop, while plain buttons avoid the nmorph-only vertical text offset.",
+        "guide-bordered-popup-surface":
+          "NmorphGuide bordered cards now draw the border around the whole tooltip popup and hide the pointing triangle when the border is enabled.",
+        "tooltip-popup-surface-controls":
+          "NmorphTooltip now supports contentClass and hideTriangle so composed feedback components can style the popup surface directly.",
         "guide-bordered-prop":
           "NmorphGuide now supports bordered to add a visible border around the default guide card.",
         "guide-plain-actions":

@@ -219,6 +219,16 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "github-actions-pages-publish":
+          "CI/CD 已从 GitLab CI 迁移到 GitHub Actions，并为 GitHub 仓库拆分出 Pages deployment 与 npm publish workflows。",
+        "docs-custom-domain":
+          "Lib docs 的 Pages deployment 现在指向 nmorph.dev 自定义域名，并使用 root-relative assets。",
+        "button-text-slot-alignment":
+          "NmorphButton 现在会像 text prop 一样对齐纯文本 default slot 标签，同时 plain 按钮不再应用仅 nmorph 设计需要的垂直文本偏移。",
+        "guide-bordered-popup-surface":
+          "NmorphGuide 的 bordered 现在会把 border 绘制在整个 tooltip popup 外层，并在启用 border 时隐藏指向三角形。",
+        "tooltip-popup-surface-controls":
+          "NmorphTooltip 现在支持 contentClass 和 hideTriangle，方便组合型 feedback 组件直接控制 popup surface 样式。",
         "guide-bordered-prop":
           "NmorphGuide 现在支持 bordered，用于为默认 guide card 添加可见边框。",
         "guide-plain-actions":

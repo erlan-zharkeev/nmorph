@@ -1,4 +1,5 @@
 import type { INmorphCoords, NmorphPlacementType } from '@/types';
+import type { HTMLAttributes } from 'vue';
 
 export type NmorphTooltipTrigger = 'hover' | 'click' | 'manual';
 export type NmorphTooltipTouchBehavior = 'disable' | 'click' | 'longpress';
@@ -19,6 +20,8 @@ export interface INmorphTooltipProps {
   width?: number | string;
   maxWidth?: number | string;
   height?: number | string;
+  contentClass?: HTMLAttributes['class'];
+  hideTriangle?: boolean;
 }
 
 export interface INmorphTooltipSlots {

@@ -74,18 +74,15 @@ onBeforeUnmount(() => {
     :disabled-teleport="guide?.disabledTeleport.value"
     :width="guide?.width.value"
     :max-width="guide?.maxWidth.value"
+    :content-class="guide?.bordered.value ? 'nmorph-guide-step__tooltip--bordered' : undefined"
+    :hide-triangle="guide?.bordered.value"
     trigger="manual"
     :disabled="!guide || props.disabled"
   >
     <slot />
     <template #content>
       <slot v-if="hasCustomContent && stepSlotProps" name="content" v-bind="stepSlotProps" />
-      <div
-        v-else-if="currentStep && stepSlotProps"
-        :class="['nmorph-guide-step__card', guide?.bordered.value && 'nmorph-guide-step__card--bordered']"
-        role="dialog"
-        aria-live="polite"
-      >
+      <div v-else-if="currentStep && stepSlotProps" class="nmorph-guide-step__card" role="dialog" aria-live="polite">
         <img
           v-if="currentStep.imageSrc"
           class="nmorph-guide-step__image"
@@ -140,7 +137,8 @@ onBeforeUnmount(() => {
   border-radius: var(--default-border-radius);
 }
 
-.nmorph-guide-step__card--bordered {
+.nmorph-guide-step__tooltip--bordered {
+  box-sizing: border-box;
   border: var(--nmorph-plain-border);
 }
 
