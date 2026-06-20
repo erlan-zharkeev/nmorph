@@ -89,6 +89,7 @@ describe('NmorphGuide', () => {
 
     expect(actionButtons).toHaveLength(3);
     expect(actionButtons.every((button) => button.classes().includes('nmorph-button--plain'))).toBe(true);
+    expect(actionButtons.every((button) => button.classes().includes('nmorph--basic-component'))).toBe(true);
 
     wrapper.unmount();
   });
@@ -114,6 +115,69 @@ describe('NmorphGuide', () => {
     expect(wrapper.find('.nmorph-tooltip__triangle').exists()).toBe(false);
 
     wrapper.unmount();
+  });
+
+  it('highlights the active guide target with default and custom outline settings', async () => {
+    const defaultWrapper = mount(
+      defineComponent({
+        components: { NmorphGuide, NmorphGuideStep },
+        template: `
+          <NmorphGuide model-value disabled-teleport :steps="[{ name: 'first', title: 'Guide' }]">
+            <NmorphGuideStep name="first">
+              <button>Target</button>
+            </NmorphGuideStep>
+          </NmorphGuide>
+        `,
+      })
+    );
+
+    await nextTick();
+
+    const defaultStep = defaultWrapper.find('.nmorph-guide-step');
+
+    expect(defaultStep.classes()).toContain('nmorph-guide-step--active');
+    expect(defaultStep.element.style.getPropertyValue('--nmorph-private-guide-target-outline-color')).toBe(
+      'var(--nmorph-success-color)'
+    );
+    expect(defaultStep.element.style.getPropertyValue('--nmorph-private-guide-target-outline-offset')).toBe(
+      'var(--indentation-02)'
+    );
+
+    defaultWrapper.unmount();
+
+    const customWrapper = mount(
+      defineComponent({
+        components: { NmorphGuide, NmorphGuideStep },
+        template: `
+          <NmorphGuide
+            model-value
+            disabled-teleport
+            target-outline-color="#23aa55"
+            :target-outline-offset="10"
+            :steps="[{ name: 'first', title: 'Guide' }]"
+          >
+            <NmorphGuideStep name="first">
+              <button>Target</button>
+            </NmorphGuideStep>
+          </NmorphGuide>
+        `,
+      })
+    );
+
+    await nextTick();
+
+    expect(
+      customWrapper
+        .find('.nmorph-guide-step')
+        .element.style.getPropertyValue('--nmorph-private-guide-target-outline-color')
+    ).toBe('#23aa55');
+    expect(
+      customWrapper
+        .find('.nmorph-guide-step')
+        .element.style.getPropertyValue('--nmorph-private-guide-target-outline-offset')
+    ).toBe('10px');
+
+    customWrapper.unmount();
   });
 
   it('teleports guide cards above layout layers with the guide z-index', async () => {

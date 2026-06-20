@@ -61,6 +61,20 @@ const guideAttributes: IAttributesTableData[] = [
       "Adds a visible border around the guide popup and hides the pointing triangle.",
   },
   {
+    name: "target-outline-color",
+    type: "'accent' | 'success' | 'error' | 'warning' | String",
+    default: "success",
+    description:
+      "Sets the outline color for the active guide target. Named values use Nmorph color tokens; CSS colors and variables are also accepted.",
+  },
+  {
+    name: "target-outline-offset",
+    type: "Number | String",
+    default: "var(--indentation-02)",
+    description:
+      "Controls the gap between the active guide target and its outline. Numbers are treated as pixel values.",
+  },
+  {
     name: "back-text",
     type: "String",
     default: "Back",

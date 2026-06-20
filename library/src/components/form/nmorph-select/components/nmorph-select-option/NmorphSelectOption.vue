@@ -123,28 +123,26 @@ const styles = computed<CSSProperties>(() =>
   }
 
   &:not(.nmorph-select-option--disabled):hover {
-    background: var(--nmorph-private-select-option-hover-background);
-  }
-
-  &:not(.nmorph-select-option--disabled):hover span {
     color: var(--nmorph-private-select-option-hover-color);
+    background: var(--nmorph-private-select-option-hover-background);
+
+    --nmorph-private-icon-color: var(--nmorph-private-select-option-hover-color);
   }
 
-  &:not(.nmorph-select-option--disabled):hover .nmorph-select-option__checked {
-    --nmorph-private-icon-color: var(--nmorph-private-select-option-hover-color);
+  &:not(.nmorph-select-option--disabled):hover :where(*) {
+    color: inherit;
   }
 
   &.nmorph-select-option--focused {
     &:not(.nmorph-select-option--disabled) {
-      background: var(--nmorph-private-select-option-hover-background);
-    }
-
-    &:not(.nmorph-select-option--disabled) span {
       color: var(--nmorph-private-select-option-hover-color);
+      background: var(--nmorph-private-select-option-hover-background);
+
+      --nmorph-private-icon-color: var(--nmorph-private-select-option-hover-color);
     }
 
-    &:not(.nmorph-select-option--disabled) .nmorph-select-option__checked {
-      --nmorph-private-icon-color: var(--nmorph-private-select-option-hover-color);
+    &:not(.nmorph-select-option--disabled) :where(*) {
+      color: inherit;
     }
   }
 

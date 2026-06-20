@@ -327,8 +327,15 @@ const optionHeightModifiers = computed(() =>
 
 .nmorph-autocomplete__list-item:hover,
 .nmorph-autocomplete__list-item--focused {
-  color: var(--nmorph-white-color);
+  color: var(--nmorph-focus-text-color);
   background: var(--nmorph-accent-color);
+
+  --nmorph-private-icon-color: var(--nmorph-focus-text-color);
+}
+
+.nmorph-autocomplete__list-item:hover :where(*),
+.nmorph-autocomplete__list-item--focused :where(*) {
+  color: inherit;
 }
 
 .nmorph-autocomplete__list--virtual {

@@ -5,6 +5,8 @@ import { h } from "vue";
 const knownBugItems: string[] = [];
 
 const releaseDates: Record<string, string> = {
+  "v3.0.13": "2026-06-20",
+  "v3.0.12": "2026-06-20",
   "v3.0.11": "2026-06-14",
   "v3.0.10": "2026-06-13",
   "v3.0.9": "2026-06-13",
@@ -98,6 +100,37 @@ const ReleaseHeading = ({ version }: { version: string }) => {
         <div class="docs-changelog-page__content">
           <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
+          <div class="docs-changelog-page__release">
+            <ReleaseHeading version="v3.0.13" />
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.button-loading-icon-size") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.icon-cross-alignment") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.accent-option-contrast") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.error-box-spacing") }}
+              </li>
+            </ul>
+          </div>
+          <div class="docs-changelog-page__release">
+            <ReleaseHeading version="v3.0.12" />
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.guide-target-outline-color") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.error-box-multiline-layout") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.docs-repository-browser-links") }}
+              </li>
+            </ul>
+          </div>
           <div class="docs-changelog-page__release">
             <ReleaseHeading version="v3.0.11" />
             <ul>

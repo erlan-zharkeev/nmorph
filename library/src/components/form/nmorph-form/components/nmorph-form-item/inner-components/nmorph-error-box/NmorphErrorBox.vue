@@ -12,22 +12,22 @@ const props = withDefaults(defineProps<INmorphErrorBoxProps>(), {
 
 const currentError = computed(() => {
   const arr = Array.isArray(props.errors) ? props.errors : props.errors.value;
-  return arr.length ? [arr[arr.length - 1]] : [];
+  return arr.length ? arr[arr.length - 1] : '';
 });
 
 const modifiers = computed(() =>
   useModifiers({
     nmorph: [NmorphComponentThickness[props.thickness]],
-    'nmorph-error-box': [props.staticHeight && 'static-height', currentError.value.length === 0 && 'empty'],
+    'nmorph-error-box': [props.staticHeight && 'static-height', !currentError.value && 'empty'],
   })
 );
 </script>
 
 <template>
   <div :class="modifiers">
-    <transition-group name="list" tag="div">
-      <p v-for="error in currentError" :key="error" class="nmorph-error-box__error">{{ error }}</p>
-    </transition-group>
+    <transition name="list" mode="out-in">
+      <p v-if="currentError" :key="currentError" class="nmorph-error-box__error">{{ currentError }}</p>
+    </transition>
   </div>
 </template>
 
@@ -35,13 +35,25 @@ const modifiers = computed(() =>
 .nmorph-error-box {
   display: flex;
   align-items: center;
+  min-width: 0;
   overflow: hidden;
 
+  &.nmorph--basic-component,
+  &.nmorph--thin-component,
+  &.nmorph--thick-component {
+    height: auto;
+    min-height: var(--nmorph-private-control-height);
+  }
+
   .nmorph-error-box__error {
-    margin: var(--indentation-00);
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: var(--indentation-02) var(--indentation-00);
     margin-left: var(--default-indentation-input);
     color: var(--nmorph-error-text-color);
+    line-height: var(--nmorph-typography-body-line-height);
     text-align: left;
+    overflow-wrap: anywhere;
   }
 
   &.nmorph-error-box--empty {

@@ -1,5 +1,5 @@
 import type { ComputedRef, InjectionKey } from 'vue';
-import type { NmorphPlacementType } from '@/types';
+import type { NmorphColor, NmorphPlacementType } from '@/types';
 
 export type NmorphGuideStepName = string | number;
 
@@ -27,6 +27,8 @@ export interface INmorphGuideProps {
   showClose?: boolean;
   showProgress?: boolean;
   bordered?: boolean;
+  targetOutlineColor?: NmorphColor | string;
+  targetOutlineOffset?: number | string;
   backText?: string;
   nextText?: string;
   finishText?: string;
@@ -85,6 +87,8 @@ export interface INmorphGuideContext {
   showClose: ComputedRef<boolean>;
   showProgress: ComputedRef<boolean>;
   bordered: ComputedRef<boolean>;
+  targetOutlineColor: ComputedRef<string>;
+  targetOutlineOffset: ComputedRef<number | string>;
   backText: ComputedRef<string>;
   nextText: ComputedRef<string>;
   finishText: ComputedRef<string>;

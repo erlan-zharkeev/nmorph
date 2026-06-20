@@ -232,6 +232,14 @@ export default {
     changelog: {
       title: "Журнал изменений",
       items: {
+        "button-loading-icon-size":
+          "Индикаторы loading в NmorphButton теперь используют меньшие размеры для каждого thickness, поэтому busy-кнопки выглядят легче.",
+        "icon-cross-alignment":
+          "NmorphIconCross теперь использует отцентрированный viewBox, чтобы close/remove icons точнее сидели в icon-only buttons.",
+        "accent-option-contrast":
+          "NmorphAutocomplete и NmorphSelectOption теперь сохраняют читаемость focused и hovered accent rows, заставляя вложенный option content наследовать focus text color.",
+        "error-box-spacing":
+          "NmorphErrorBox теперь добавляет вертикальный воздух для многострочных validation messages, а sandbox form получил длинное email rule для визуальной проверки.",
         "github-actions-pages-publish":
           "CI/CD переехал с GitLab CI на GitHub Actions: теперь для GitHub-репозитория есть отдельные workflows для Pages deployment и npm publish.",
         "docs-custom-domain":
@@ -240,6 +248,12 @@ export default {
           "NmorphButton теперь выравнивает текстовые default slots так же, как text prop, а plain-кнопки больше не применяют вертикальный offset, нужный только nmorph-дизайну.",
         "guide-bordered-popup-surface":
           "NmorphGuide с bordered теперь рисует border вокруг всего tooltip popup и скрывает указывающий треугольник, когда border включен.",
+        "guide-target-outline-color":
+          "NmorphGuide теперь подсвечивает активную цель настраиваемой рамкой с цветом, отступом и свечением; стандартные guide action buttons используют basic-размер, а sandbox получил контролы guide.",
+        "error-box-multiline-layout":
+          "NmorphErrorBox теперь естественно растет для многострочных validation messages, а static-error-box-space по-прежнему резервирует стабильное место для пустого состояния.",
+        "docs-repository-browser-links":
+          "Lib docs теперь нормализует npm repository metadata в браузерные GitHub links для top bar, repository и issues actions.",
         "tooltip-popup-surface-controls":
           "NmorphTooltip теперь поддерживает contentClass и hideTriangle, чтобы составные feedback-компоненты могли стилизовать popup surface напрямую.",
         "guide-bordered-prop":

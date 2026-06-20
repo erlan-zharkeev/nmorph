@@ -6,6 +6,8 @@ import {
   NmorphCallout,
   NmorphDialog,
   NmorphDrawer,
+  NmorphGuide,
+  NmorphGuideStep,
   NmorphIcon,
   NmorphIconBell,
   NmorphIconCheck,
@@ -13,11 +15,14 @@ import {
   NmorphNotificationPlacement,
   NmorphSpace,
   NmorphTooltip,
+  type INmorphGuideStepItem,
   useNmorphNotification,
 } from '@nmorph/nmorph-ui-kit'
 import SandboxSection from '@sandbox/components/SandboxSection.vue'
 
 const notificationPlacements = Object.values(NmorphNotificationPlacement)
+const guideOutlineColors = ['success', 'accent', 'warning', 'error'] as const
+const guideOutlineOffsets = [0, 4, 8, 12]
 
 const dialogOpen = ref(false)
 const customDialogOpen = ref(false)
@@ -26,8 +31,25 @@ const docsDrawerOpen = ref(false)
 const drawerOpen = ref(false)
 const leftDrawerOpen = ref(false)
 const closableAlertVisible = ref(true)
+const guideOpen = ref(false)
+const guideOutlineColor = ref<(typeof guideOutlineColors)[number]>('success')
+const guideOutlineOffset = ref(4)
 const notificationProvider = useNmorphNotification()
 const tallDialogItems = Array.from({ length: 16 }, (_, index) => `Dynamic row ${index + 1}`)
+const guideSteps = [
+  {
+    name: 'guide-action',
+    title: 'Guide action',
+    text: 'The target outline follows the selected color and offset.',
+    position: 'bottom',
+  },
+  {
+    name: 'guide-review',
+    title: 'Review target',
+    text: 'Change the controls and restart the guide to compare the highlight.',
+    position: 'top',
+  },
+] satisfies INmorphGuideStepItem[]
 
 const showNotification = (type: 'success' | 'info' | 'warning' | 'error') => {
   notificationProvider.notify({
@@ -190,6 +212,52 @@ const showStickyNotification = () => {
       </div>
     </SandboxSection>
 
+    <SandboxSection title="NmorphGuide">
+      <div class="stack">
+        <div class="row">
+          <NmorphButton text="Start guide" @click="guideOpen = true" />
+          <NmorphButton
+            v-for="color in guideOutlineColors"
+            :key="color"
+            :text="color"
+            :design="guideOutlineColor === color ? 'nmorph' : 'plain'"
+            thickness="thin"
+            @click="guideOutlineColor = color"
+          />
+          <NmorphButton
+            v-for="offset in guideOutlineOffsets"
+            :key="offset"
+            :text="`${offset}px`"
+            :design="guideOutlineOffset === offset ? 'nmorph' : 'plain'"
+            thickness="thin"
+            @click="guideOutlineOffset = offset"
+          />
+        </div>
+        <NmorphGuide
+          v-model="guideOpen"
+          :steps="guideSteps"
+          :target-outline-color="guideOutlineColor"
+          :target-outline-offset="guideOutlineOffset"
+          max-width="320px"
+          bordered
+        >
+          <div class="guide-targets">
+            <NmorphGuideStep name="guide-action">
+              <NmorphButton text="Primary target" />
+            </NmorphGuideStep>
+            <NmorphGuideStep name="guide-review">
+              <NmorphCallout
+                class="guide-review-target"
+                type="success"
+                title="Review"
+                content="The active target receives the outline."
+              />
+            </NmorphGuideStep>
+          </div>
+        </NmorphGuide>
+      </div>
+    </SandboxSection>
+
     <SandboxSection title="NmorphNotificationProvider">
       <div class="row">
         <NmorphButton text="Success" @click="showNotification('success')" />
@@ -242,6 +310,19 @@ const showStickyNotification = () => {
 .tooltip-row {
   min-height: 120px;
   align-items: center;
+}
+
+.guide-targets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  min-height: 180px;
+  padding: 24px 12px;
+}
+
+.guide-review-target {
+  width: 220px;
 }
 
 .dialog-header {

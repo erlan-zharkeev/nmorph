@@ -14,8 +14,9 @@ import GithubIcon from "~/assets/icons/github.svg";
 import type { LocaleObject } from "@nuxtjs/i18n";
 import SearchDialog from "~/components/search-dialog/SearchDialog.vue";
 import libraryData from "../../../library/package.json";
+import { toRepositoryBrowserUrl } from "~/utils";
 
-const repositoryUrl = libraryData.repository.url;
+const repositoryUrl = toRepositoryBrowserUrl(libraryData.repository.url);
 const switchLocalePath = useSwitchLocalePath();
 
 const { locales, locale } = useI18n();

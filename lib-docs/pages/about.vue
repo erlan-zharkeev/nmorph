@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { NmorphCard, NmorphDivider, NmorphLink, NmorphScroll } from "@nmorph/nmorph-ui-kit";
 import libraryData from "../../library/package.json";
+import { toRepositoryBrowserUrl } from "~/utils";
 
 const localePath = useLocalePath();
-const repositoryUrl = libraryData.repository.url;
+const repositoryUrl = toRepositoryBrowserUrl(libraryData.repository.url);
 const issuesUrl = `${repositoryUrl}/issues`;
 const featureKeys = ["components", "bundle", "theme", "nuxt", "typescript"];
 const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays", "forms", "virtualization", "accessibility"];

@@ -4,6 +4,13 @@ import { useZIndex } from '@/hooks/use-z-index';
 import type { INmorphGuideProps, INmorphGuideEmit, INmorphGuideStepItem } from './types';
 import { nmorphGuideInjectionKey, type INmorphGuideResolvedStep, type NmorphGuideStepName } from './types';
 
+const targetOutlineColorMap: Record<string, string> = {
+  accent: 'var(--nmorph-accent-color)',
+  success: 'var(--nmorph-success-color)',
+  error: 'var(--nmorph-error-color)',
+  warning: 'var(--nmorph-warn-color)',
+};
+
 const props = withDefaults(defineProps<INmorphGuideProps>(), {
   modelValue: false,
   activeStep: undefined,
@@ -13,6 +20,8 @@ const props = withDefaults(defineProps<INmorphGuideProps>(), {
   showClose: true,
   showProgress: true,
   bordered: false,
+  targetOutlineColor: 'success',
+  targetOutlineOffset: 'var(--indentation-02)',
   backText: 'Back',
   nextText: 'Next',
   finishText: 'Finish',
@@ -68,6 +77,7 @@ const activeIndex = computed(() => steps.value.findIndex((step) => step.name ===
 const activeStep = computed(() => steps.value[activeIndex.value] ?? null);
 const isFirstStep = computed(() => activeIndex.value <= 0);
 const isLastStep = computed(() => activeIndex.value >= steps.value.length - 1);
+const targetOutlineColor = computed(() => targetOutlineColorMap[props.targetOutlineColor] || props.targetOutlineColor);
 
 const setActiveStep = (name: NmorphGuideStepName) => {
   const step = steps.value.find((item) => item.name === name);
@@ -172,6 +182,8 @@ provide(nmorphGuideInjectionKey, {
   showClose: computed(() => props.showClose),
   showProgress: computed(() => props.showProgress),
   bordered: computed(() => props.bordered),
+  targetOutlineColor,
+  targetOutlineOffset: computed(() => props.targetOutlineOffset),
   backText: computed(() => props.backText),
   nextText: computed(() => props.nextText),
   finishText: computed(() => props.finishText),

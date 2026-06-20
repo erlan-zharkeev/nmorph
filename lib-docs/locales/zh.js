@@ -219,6 +219,14 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "button-loading-icon-size":
+          "NmorphButton 的 loading indicators 现在会按 thickness 使用更小的图标尺寸，让 busy buttons 视觉上更轻。",
+        "icon-cross-alignment":
+          "NmorphIconCross 现在使用居中的 viewBox，让 close/remove icons 在 icon-only buttons 中更准确地居中。",
+        "accent-option-contrast":
+          "NmorphAutocomplete 和 NmorphSelectOption 现在会让 focused 与 hovered accent rows 中的嵌套 option content 继承 focus text color，保持可读性。",
+        "error-box-spacing":
+          "NmorphErrorBox 现在为多行 validation messages 增加垂直留白，sandbox form 也加入了用于视觉测试的长 email rule。",
         "github-actions-pages-publish":
           "CI/CD 已从 GitLab CI 迁移到 GitHub Actions，并为 GitHub 仓库拆分出 Pages deployment 与 npm publish workflows。",
         "docs-custom-domain":
@@ -227,6 +235,12 @@ export default {
           "NmorphButton 现在会像 text prop 一样对齐纯文本 default slot 标签，同时 plain 按钮不再应用仅 nmorph 设计需要的垂直文本偏移。",
         "guide-bordered-popup-surface":
           "NmorphGuide 的 bordered 现在会把 border 绘制在整个 tooltip popup 外层，并在启用 border 时隐藏指向三角形。",
+        "guide-target-outline-color":
+          "NmorphGuide 现在会用可配置颜色、间距和发光效果高亮当前目标；默认 guide action buttons 使用 basic 尺寸，sandbox 也加入了 guide 控制项。",
+        "error-box-multiline-layout":
+          "NmorphErrorBox 现在会让多行 validation messages 自然撑开，同时 static-error-box-space 仍会为 empty state 预留稳定空间。",
+        "docs-repository-browser-links":
+          "Lib docs 现在会把 npm repository metadata 规范化为浏览器可打开的 GitHub links，用于 top bar、repository 和 issues actions。",
         "tooltip-popup-surface-controls":
           "NmorphTooltip 现在支持 contentClass 和 hideTriangle，方便组合型 feedback 组件直接控制 popup surface 样式。",
         "guide-bordered-prop":

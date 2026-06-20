@@ -3,7 +3,7 @@ import { NmorphComponentThickness, NmorphDomElementType } from '@/types';
 import { useModifiers } from '@/utils';
 import { Comment, computed, Fragment, ref, Text, useSlots } from 'vue';
 import type { VNode } from 'vue';
-import { NmorphIcon, NmorphIconSize, NmorphIconLoader } from '@/components';
+import { NmorphIcon, NmorphIconLoader } from '@/components';
 import type { INmorphButtonEmit, INmorphButtonProps } from './types';
 
 const props = withDefaults(defineProps<INmorphButtonProps>(), {
@@ -66,13 +66,13 @@ const modifiers = computed(() =>
 
 const buttonDOMElement = ref<NmorphDomElementType>(null);
 
-const iconSizeMap = {
-  thin: 'small',
-  basic: 'medium',
-  thick: 'large',
+const loadingIconSizeMap = {
+  thin: '12px',
+  basic: '16px',
+  thick: '24px',
 };
 
-const loadingButtonSize = computed(() => iconSizeMap[props.thickness] as NmorphIconSize);
+const loadingIconSize = computed(() => loadingIconSizeMap[props.thickness]);
 const buttonColorStyles = computed(() => {
   if (!props.color) return {};
   return {
@@ -102,7 +102,7 @@ defineExpose({ buttonDOMElement });
       :aria-pressed="props.toggle ? active : undefined"
       @click="toggleClickHandler"
     >
-      <NmorphIcon v-if="props.loading" :size="loadingButtonSize">
+      <NmorphIcon v-if="props.loading" :width="loadingIconSize" :height="loadingIconSize">
         <NmorphIconLoader />
       </NmorphIcon>
       <NmorphIcon v-else-if="hasIconOnlySlot">

@@ -113,7 +113,11 @@ const formValue = ref<NmorphFormValueType>({
     value: '',
     rules: [
       { pattern: /^.+$/, error: 'Email is required' },
-      { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, error: 'Enter a valid email' },
+      {
+        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        error:
+          'Enter a valid email address with a user name, @ symbol, domain name, and top-level domain so this long sandbox validation message wraps across several lines.',
+      },
     ],
   },
   password: {

@@ -230,6 +230,14 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "button-loading-icon-size":
+          "NmorphButton loading indicators now use smaller per-thickness icon sizes so busy buttons feel less visually heavy.",
+        "icon-cross-alignment":
+          "NmorphIconCross now uses a centered viewBox so close and remove icons sit more precisely in icon-only buttons.",
+        "accent-option-contrast":
+          "NmorphAutocomplete and NmorphSelectOption now keep focused and hovered accent rows readable by forcing nested option content to inherit the focus text color.",
+        "error-box-spacing":
+          "NmorphErrorBox now adds vertical breathing room for multiline validation messages, and the sandbox form includes a long email rule for visual testing.",
         "github-actions-pages-publish":
           "CI/CD moved from GitLab CI to GitHub Actions, with separate Pages deployment and npm publish workflows for the GitHub repository.",
         "docs-custom-domain":
@@ -238,6 +246,12 @@ export default {
           "NmorphButton now aligns text-only default slot labels the same way as the text prop, while plain buttons avoid the nmorph-only vertical text offset.",
         "guide-bordered-popup-surface":
           "NmorphGuide bordered cards now draw the border around the whole tooltip popup and hide the pointing triangle when the border is enabled.",
+        "guide-target-outline-color":
+          "NmorphGuide now highlights the active target with configurable outline color, offset, and glow; default guide action buttons use basic sizing, and sandbox includes guide controls.",
+        "error-box-multiline-layout":
+          "NmorphErrorBox now lets multiline validation messages grow naturally while static-error-box-space still reserves stable space for empty states.",
+        "docs-repository-browser-links":
+          "Lib docs now normalize npm repository metadata into browser-safe GitHub links for the top bar, repository, and issues actions.",
         "tooltip-popup-surface-controls":
           "NmorphTooltip now supports contentClass and hideTriangle so composed feedback components can style the popup surface directly.",
         "guide-bordered-prop":
