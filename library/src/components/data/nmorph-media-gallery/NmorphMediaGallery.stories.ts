@@ -14,6 +14,7 @@ export default meta;
 export const MediaGallery: Story = {
   args: {
     modelValue: false,
+    design: 'nmorph',
     items: [],
     initialIndex: 0,
     activeIndex: undefined,
@@ -47,6 +48,7 @@ export const MediaGallery: Story = {
   },
   argTypes: {
     modelValue: boolean,
+    design: select(['nmorph', 'plain']),
     items: object,
     initialIndex: number,
     activeIndex: number,

@@ -4,6 +4,7 @@ import {
   type IEventsTableData,
 } from "~/types";
 import ApiTable from "~/components/api-table/ApiTable.vue";
+import { NmorphElementDesign } from "@nmorph/nmorph-ui-kit";
 
 const attributesData: IAttributesTableData[] = [
   {
@@ -11,6 +12,12 @@ const attributesData: IAttributesTableData[] = [
     type: "Boolean",
     default: "false",
     description: "Controls whether the preview overlay is open.",
+  },
+  {
+    name: "design",
+    type: optionsToString(NmorphElementDesign),
+    default: "nmorph",
+    description: "Visual surface design used by trigger cards.",
   },
   {
     name: "items",

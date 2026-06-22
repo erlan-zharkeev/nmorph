@@ -1,4 +1,4 @@
-import type { NmorphCSSProperties } from '@/types';
+import type { NmorphCSSProperties, NmorphElementDesignType } from '@/types';
 
 export type NmorphMediaGalleryFit = 'cover' | 'contain';
 export type NmorphMediaGalleryTriggerLayout = 'grid' | 'natural' | 'mosaic';
@@ -34,6 +34,7 @@ export type NmorphMediaGalleryItem =
 
 export interface INmorphMediaGalleryProps {
   modelValue?: boolean;
+  design?: NmorphElementDesignType;
   items: NmorphMediaGalleryItem[];
   initialIndex?: number;
   activeIndex?: number;

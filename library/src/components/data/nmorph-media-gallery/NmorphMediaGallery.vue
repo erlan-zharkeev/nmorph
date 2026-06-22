@@ -27,6 +27,7 @@ const MOSAIC_TRIGGER_ROW_BASIS = 128;
 
 const props = withDefaults(defineProps<INmorphMediaGalleryProps>(), {
   modelValue: false,
+  design: 'nmorph',
   initialIndex: 0,
   activeIndex: undefined,
   zIndex: undefined,
@@ -113,6 +114,7 @@ const showFileActions = computed(
 const modifiers = computed(() =>
   useModifiers({
     'nmorph-media-gallery': [
+      props.design,
       open.value && 'opened',
       isImage.value && 'image',
       isVideo.value && 'video',
@@ -134,6 +136,7 @@ const triggerStyle = computed<NmorphCSSProperties>(() => ({
 const triggerModifiers = computed(() =>
   useModifiers({
     'nmorph-media-gallery__trigger': [
+      props.design,
       props.height !== undefined && 'fixed-height',
       props.triggerLayout !== 'grid' && props.triggerLayout,
       props.triggerLayout !== 'grid' && sourceList.value.length === 1 && 'single',
@@ -768,12 +771,20 @@ const pointerUpHandler = (event: PointerEvent) => {
 
 .nmorph-media-gallery__trigger-item {
   position: relative;
+  box-sizing: border-box;
   min-width: 0;
   overflow: hidden;
   background: color-mix(in srgb, var(--nmorph-accent-color) 6%, transparent);
   border-radius: var(--default-border-radius);
   box-shadow: var(--nmorph-shadow-outset);
   aspect-ratio: 16 / 9;
+}
+
+.nmorph-media-gallery__trigger--plain {
+  .nmorph-media-gallery__trigger-item {
+    border: var(--nmorph-plain-border);
+    box-shadow: none;
+  }
 }
 
 .nmorph-media-gallery__trigger-open {

@@ -219,6 +219,10 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "media-gallery-design-prop":
+          'NmorphMediaGallery 现在支持 design="nmorph | plain"；plain trigger cards 会移除 neumorphic shadow，同时保留可见 border。',
+        "textarea-transition-polish":
+          "NmorphTextarea 不再为 textarea surface 颜色和 inset shadow 添加动画，状态变化更即时，也避免多余 transitions。",
         "button-loading-icon-size":
           "NmorphButton 的 loading indicators 现在会按 thickness 使用更小的图标尺寸，让 busy buttons 视觉上更轻。",
         "icon-cross-alignment":

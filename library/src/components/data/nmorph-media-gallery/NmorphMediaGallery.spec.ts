@@ -126,6 +126,7 @@ describe('NmorphMediaGallery', () => {
 
     const wrapper = mount(NmorphMediaGallery, {
       props: {
+        design: 'plain',
         items,
         showTrigger: true,
       },
@@ -134,12 +135,14 @@ describe('NmorphMediaGallery', () => {
     await nextTick();
 
     const triggerItems = wrapper.findAll('.nmorph-media-gallery__trigger-item');
+    const trigger = wrapper.find('.nmorph-media-gallery__trigger');
     const imageTrigger = triggerItems[0];
     const videoTrigger = triggerItems[1];
     const imageDownload = imageTrigger.find('.nmorph-media-gallery__trigger-action');
     const videoActions = videoTrigger.findAll('.nmorph-media-gallery__trigger-action');
 
     expect(triggerItems).toHaveLength(2);
+    expect(trigger.classes()).toContain('nmorph-media-gallery__trigger--plain');
     expect(imageTrigger.find('.nmorph-media-gallery__trigger-name').text()).toBe('photo.jpg');
     expect(imageTrigger.find('.nmorph-media-gallery__trigger-size').text()).toBe('240 KB');
     expect(imageDownload.attributes('href')).toBe('blob:photo-download');

@@ -129,10 +129,6 @@ const styles = computed<CSSProperties>(() => ({
     border: none;
     border-radius: var(--default-border-radius);
     box-shadow: var(--nmorph-shadow-inset);
-    transition:
-      background var(--transition-02) ease,
-      box-shadow var(--transition-02) ease,
-      color var(--transition-02) ease;
     resize: var(--nmorph-private-textarea-resize);
   }
 

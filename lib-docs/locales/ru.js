@@ -232,6 +232,10 @@ export default {
     changelog: {
       title: "Журнал изменений",
       items: {
+        "media-gallery-design-prop":
+          'NmorphMediaGallery теперь поддерживает design="nmorph | plain"; plain trigger cards рендерятся без neumorphic shadow, но с видимым border.',
+        "textarea-transition-polish":
+          "NmorphTextarea больше не анимирует цвета textarea surface и inset shadow, чтобы состояния менялись сразу и без лишних transitions.",
         "button-loading-icon-size":
           "Индикаторы loading в NmorphButton теперь используют меньшие размеры для каждого thickness, поэтому busy-кнопки выглядят легче.",
         "icon-cross-alignment":
