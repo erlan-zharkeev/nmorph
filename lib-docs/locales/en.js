@@ -230,6 +230,12 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "theme-shadow-convex-tuning":
+          "Default theme shadows now use a tighter 2px/4px neumorphic depth, and the light palette has a stronger highlight/shade pair for a more convex surface.",
+        "select-option-currentcolor-check":
+          "NmorphSelectOption checked icons now inherit the option row color so hover and focus states keep selected markers readable.",
+        "sandbox-theme-defaults":
+          "The sandbox ColorPicker example no longer mutates the active global theme, so light and dark defaults remain stable while browsing examples.",
         "media-gallery-design-prop":
           'NmorphMediaGallery now supports design="nmorph | plain"; plain trigger cards render without the neumorphic shadow while keeping a visible border.',
         "textarea-transition-polish":

@@ -219,6 +219,12 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "theme-shadow-convex-tuning":
+          "默认主题阴影现在使用更紧凑的 2px/4px neumorphic 深度，light 调色板也获得了更明显的 highlight/shade 组合，让表面更有凸起感。",
+        "select-option-currentcolor-check":
+          "NmorphSelectOption 的已选图标现在会继承 option 行颜色，使 hover 与 focus 状态下的 selected marker 保持可读。",
+        "sandbox-theme-defaults":
+          "Sandbox 的 ColorPicker 示例不再修改当前全局主题，因此浏览示例时 light 和 dark 默认颜色会保持稳定。",
         "media-gallery-design-prop":
           'NmorphMediaGallery 现在支持 design="nmorph | plain"；plain trigger cards 会移除 neumorphic shadow，同时保留可见 border。',
         "textarea-transition-polish":

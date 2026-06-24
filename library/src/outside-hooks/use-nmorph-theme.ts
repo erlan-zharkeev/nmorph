@@ -29,9 +29,9 @@ const DEFAULT_THEME_COLORS = {
 };
 
 const DEFAULT_LIGHT_THEME_COLORS = {
-  darkShade: '#c8c9ca',
+  darkShade: '#c4c8ca',
   main: '#e9ecec',
-  lightShade: '#fdfdfd',
+  lightShade: '#fcfcfc',
   text: '#687b9e',
   scrollThumb: '#687b9e',
   accent: '#4a90e2',
@@ -42,9 +42,9 @@ const DEFAULT_LIGHT_THEME_COLORS = {
 };
 
 const DEFAULT_DARK_THEME_COLORS = {
-  darkShade: '#0f1112',
+  darkShade: '#131415',
   main: '#1c1f21',
-  lightShade: '#292d30',
+  lightShade: '#242728',
   text: '#778288',
   scrollThumb: '#778288',
   accent: '#006cb6',
@@ -67,7 +67,7 @@ const DEFAULT_OPTIONS: Required<INmorphThemeOptions> = {
   darkShadeGeneratorCoefficient: -45,
   lightShadeGeneratorCoefficient: 45,
   other: {
-    baseShadowWidth: '3.5px',
+    baseShadowWidth: '2px',
     baseShadowBlurCoefficient: '2',
   },
 };

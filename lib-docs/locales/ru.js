@@ -232,6 +232,12 @@ export default {
     changelog: {
       title: "Журнал изменений",
       items: {
+        "theme-shadow-convex-tuning":
+          "Тени темы по умолчанию теперь используют более плотную neumorphic-глубину 2px/4px, а светлая палитра получила более выразительную пару highlight/shade для выпуклой поверхности.",
+        "select-option-currentcolor-check":
+          "Иконки выбранного NmorphSelectOption теперь наследуют цвет строки option, поэтому selected marker остается читаемым в hover и focus состояниях.",
+        "sandbox-theme-defaults":
+          "Пример ColorPicker в sandbox больше не изменяет активную глобальную тему, поэтому дефолтные light и dark цвета остаются стабильными при просмотре примеров.",
         "media-gallery-design-prop":
           'NmorphMediaGallery теперь поддерживает design="nmorph | plain"; plain trigger cards рендерятся без neumorphic shadow, но с видимым border.',
         "textarea-transition-polish":

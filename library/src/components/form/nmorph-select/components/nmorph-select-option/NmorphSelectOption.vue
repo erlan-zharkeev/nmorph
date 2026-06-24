@@ -120,6 +120,8 @@ const styles = computed<CSSProperties>(() =>
 
   .nmorph-select-option__checked {
     flex: 0 0 auto;
+
+    --nmorph-private-icon-color: currentColor;
   }
 
   &:not(.nmorph-select-option--disabled):hover {
