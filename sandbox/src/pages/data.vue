@@ -385,11 +385,11 @@ const progressColor = (value: number) => {
           <NmorphButton text="Max" />
         </NmorphBadge>
         <div class="badge-dot-demo">
-          <NmorphBadge type="dot" color="var(--nmorph-error-color)" :dot-size="10">
+          <NmorphBadge type="dot" color="var(--nmorph-error-text-color)" :dot-size="10">
             <NmorphButton text="Dot" />
           </NmorphBadge>
         </div>
-        <NmorphBadge :value="12" color="var(--nmorph-success-color)">
+        <NmorphBadge :value="12" color="var(--nmorph-success-text-color)">
           <template #value="{ displayValue }">
             <div class="badge-value">
               <NmorphIcon width="10px" height="10px" color="currentColor"><NmorphIconUsers /></NmorphIcon>
@@ -401,10 +401,10 @@ const progressColor = (value: number) => {
         <NmorphBadge value="Top right" type="ribbon" ribbon-corner="top-right">
           <div class="badge-ribbon-card">Ribbon</div>
         </NmorphBadge>
-        <NmorphBadge value="asdf" type="ribbon" :offset-x="20" ribbon-corner="top-left" color="var(--nmorph-error-color)">
+        <NmorphBadge value="asdf" type="ribbon" :offset-x="20" ribbon-corner="top-left" color="var(--nmorph-error-text-color)">
           <div class="badge-ribbon-card">Corner</div>
         </NmorphBadge>
-        <NmorphBadge value="Bottom right" type="ribbon" ribbon-corner="bottom-right" color="var(--nmorph-warn-color)">
+        <NmorphBadge value="Bottom right" type="ribbon" ribbon-corner="bottom-right" color="var(--nmorph-warn-text-color)">
           <div class="badge-ribbon-card">Bottom</div>
         </NmorphBadge>
         <NmorphBadge
@@ -416,7 +416,7 @@ const progressColor = (value: number) => {
           :ribbon-tilt="false"
           :offset-x="example.offsetX"
           :offset-y="example.offsetY"
-          color="var(--nmorph-success-color)"
+          color="var(--nmorph-success-text-color)"
         >
           <div class="badge-ribbon-card">{{ example.label }}</div>
         </NmorphBadge>
@@ -573,7 +573,7 @@ const progressColor = (value: number) => {
           <NmorphFileCard v-bind="file.props" @open="openFileCardMedia(file.props.name)">
             <template #actions="{ fileName }">
               <button class="file-card-demo__close" type="button" :aria-label="`Remove ${fileName}`" @click.stop>
-                <NmorphIcon size="small" color="var(--nmorph-contrast-text-color)">
+                <NmorphIcon size="small" color="var(--nmorph-white-color)">
                   <NmorphIconClose />
                 </NmorphIcon>
               </button>

@@ -151,25 +151,25 @@ onBeforeUnmount(() => {
     &::after {
       position: absolute;
       z-index: 1;
-      border: 2px solid var(--nmorph-private-guide-target-outline-color, var(--nmorph-success-color));
+      border: 2px solid var(--nmorph-private-guide-target-outline-color, var(--nmorph-success-text-color));
       border-radius: inherit;
       box-shadow:
         0 0 0 1px
           color-mix(
             in srgb,
-            var(--nmorph-private-guide-target-outline-color, var(--nmorph-success-color)) 18%,
+            var(--nmorph-private-guide-target-outline-color, var(--nmorph-success-text-color)) 18%,
             transparent
           ),
         0 0 8px
           color-mix(
             in srgb,
-            var(--nmorph-private-guide-target-outline-color, var(--nmorph-success-color)) 28%,
+            var(--nmorph-private-guide-target-outline-color, var(--nmorph-success-text-color)) 28%,
             transparent
           ),
         inset 0 0 4px
           color-mix(
             in srgb,
-            var(--nmorph-private-guide-target-outline-color, var(--nmorph-success-color)) 18%,
+            var(--nmorph-private-guide-target-outline-color, var(--nmorph-success-text-color)) 18%,
             transparent
           );
       transform: scale(0.98);

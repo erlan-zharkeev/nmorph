@@ -92,7 +92,7 @@ const showStickyNotification = () => {
       <div class="stack">
         <NmorphAlert type="info" title="Info" content="This is an info alert" />
         <NmorphAlert type="success" title="Success" content="This is a success alert" fill />
-        <NmorphAlert type="warning" title="Warning" content="No border and no icon" :bordered="false" :show-icon="false" />
+        <NmorphAlert type="warning" title="Warning" content="No border and no icon" :bordered="false" />
         <NmorphAlert type="error" title="Error" close-icon-position="flex-start" closable @close="closableAlertVisible = false">
           Closable alert slot content.
         </NmorphAlert>
@@ -100,7 +100,7 @@ const showStickyNotification = () => {
         <NmorphAlert :html="'<strong>HTML</strong> alert content'" />
         <NmorphAlert type="info" title="Custom icon">
           <template #icon>
-            <NmorphIcon color="var(--nmorph-success-color)">
+            <NmorphIcon color="var(--nmorph-success-text-color)">
               <NmorphIconCheck />
             </NmorphIcon>
           </template>

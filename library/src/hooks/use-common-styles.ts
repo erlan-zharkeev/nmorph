@@ -151,7 +151,7 @@ export const getCommonStyles = () => {
           var(--nmorph-dark-shade-color);
       --nmorph-wrapper-padding: calc(var(--base-shadow-width) * 1.5);
       --nmorph-plain-border-color: color-mix(in srgb, var(--nmorph-text-color) 18%, transparent);
-      --nmorph-plain-border: 1.5px solid var(--nmorph-plain-border-color);
+      --nmorph-plain-border: 1px solid var(--nmorph-plain-border-color);
 
       --transition-04: 0.4s;
       --transition-03: 0.3s;

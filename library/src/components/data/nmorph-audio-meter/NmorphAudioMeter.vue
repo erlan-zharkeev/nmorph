@@ -5,16 +5,10 @@ import { createCssVariables, useModifiers } from '@/utils';
 import type { INmorphAudioMeterProps } from './types';
 
 const props = withDefaults(defineProps<INmorphAudioMeterProps>(), {
-  value: undefined,
-  volumeDb: undefined,
   variant: 'bars',
   bars: 12,
   warnThreshold: 0.7,
   errorThreshold: 0.9,
-  color: undefined,
-  warnColor: undefined,
-  errorColor: undefined,
-  trackColor: undefined,
   label: 'Audio level',
 });
 
@@ -72,9 +66,9 @@ const isBarActive = (index: number) => (index + 1) / barIndexes.value.length <= 
 
 <style lang="scss">
 .nmorph-audio-meter {
-  --nmorph-private-audio-meter-color: var(--nmorph-success-color);
-  --nmorph-private-audio-meter-warn-color: var(--nmorph-warn-color);
-  --nmorph-private-audio-meter-error-color: var(--nmorph-error-color);
+  --nmorph-private-audio-meter-color: var(--nmorph-success-text-color);
+  --nmorph-private-audio-meter-warn-color: var(--nmorph-warn-text-color);
+  --nmorph-private-audio-meter-error-color: var(--nmorph-error-text-color);
   --nmorph-private-audio-meter-track-color: color-mix(in srgb, var(--nmorph-text-color) 16%, transparent);
   --nmorph-private-audio-meter-percent: 0%;
 

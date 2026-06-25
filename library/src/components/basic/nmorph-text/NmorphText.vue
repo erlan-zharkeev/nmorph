@@ -30,7 +30,7 @@ const colorMap: Record<string, string> = {
   focus: 'var(--nmorph-focus-text-color)',
   accent: 'var(--nmorph-accent-color)',
   success: 'var(--nmorph-success-text-color)',
-  warning: 'var(--nmorph-warning-text-color)',
+  warning: 'var(--nmorph-warn-text-color)',
   error: 'var(--nmorph-error-text-color)',
   white: 'var(--nmorph-white-color)',
 };

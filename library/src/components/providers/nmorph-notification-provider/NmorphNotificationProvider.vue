@@ -47,8 +47,6 @@ const getNotificationRemainingDuration = (notification: TNmorphNotificationItem)
 };
 
 const formatNotificationDuration = (duration: number) => {
-  if (duration < 1000) return `${Math.ceil(duration)}ms`;
-
   return `${Math.ceil(duration / 1000)}s`;
 };
 
@@ -337,15 +335,22 @@ onBeforeUnmount(() => {
     }
   }
 
+  .nmorph-notification-provider__notification .nmorph-alert {
+    background: color-mix(in srgb, var(--nmorph-private-alert-background-color) 82%, var(--nmorph-main-color));
+    border-color: color-mix(in srgb, var(--nmorph-contrast-text-color) 12%, transparent);
+    box-shadow: var(--nmorph-shadow-outset);
+    backdrop-filter: blur(8px);
+  }
+
   .nmorph-notification-provider__duration {
     position: absolute;
     right: var(--indentation-04);
-    bottom: var(--indentation-02);
+    bottom: calc(var(--indentation-02) + 2px);
     left: var(--indentation-04);
     display: flex;
     gap: var(--indentation-02);
-    align-items: center;
-    color: var(--nmorph-white-color);
+    align-items: baseline;
+    color: var(--nmorph-contrast-text-color);
     pointer-events: none;
   }
 
@@ -356,6 +361,7 @@ onBeforeUnmount(() => {
     overflow: hidden;
     background: color-mix(in srgb, currentColor 20%, transparent);
     border-radius: 999px;
+    transform: translateY(-1px);
   }
 
   .nmorph-notification-provider__duration-bar {
@@ -373,9 +379,10 @@ onBeforeUnmount(() => {
   .nmorph-notification-provider__duration-value {
     flex: 0 0 auto;
     color: currentColor;
-    font-size: var(--nmorph-typography-caption-font-size);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--nmorph-typography-body-small-font-size);
     line-height: 1;
-    opacity: 0.72;
+    opacity: 0.82;
   }
 
   .nmorph-notification-provider__list {
@@ -534,23 +541,25 @@ onBeforeUnmount(() => {
     .nmorph-alert__close .nmorph-icon,
     .nmorph-alert__content,
     .nmorph-alert__content-title {
-      --nmorph-private-icon-color: var(--nmorph-white-color);
+      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
+
+      color: var(--nmorph-contrast-text-color);
     }
 
     .nmorph-alert--success .nmorph-alert__icon .nmorph-icon {
-      --nmorph-private-icon-color: var(--nmorph-success-color);
+      --nmorph-private-icon-color: var(--nmorph-success-text-color);
     }
 
     .nmorph-alert--error .nmorph-alert__icon .nmorph-icon {
-      --nmorph-private-icon-color: var(--nmorph-error-color);
+      --nmorph-private-icon-color: var(--nmorph-error-text-color);
     }
 
     .nmorph-alert--warning .nmorph-alert__icon .nmorph-icon {
-      --nmorph-private-icon-color: var(--nmorph-warn-color);
+      --nmorph-private-icon-color: var(--nmorph-warn-text-color);
     }
 
     .nmorph-alert--info .nmorph-alert__icon .nmorph-icon {
-      --nmorph-private-icon-color: var(--nmorph-info-color);
+      --nmorph-private-icon-color: var(--nmorph-info-text-color);
     }
 
     svg {

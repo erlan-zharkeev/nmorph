@@ -219,6 +219,16 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "semantic-surface-readability":
+          "Alert, Callout, Empty, Guide, form validation, link and status components now use semantic background/text tokens more consistently so light and dark themes stay readable.",
+        "media-overlay-readable-controls":
+          "FileCard, MediaGallery, VideoPreview, AudioPreview and PreviewPortal now keep media overlay labels and controls readable with white foregrounds on dark overlay surfaces.",
+        "notification-provider-opaque-duration":
+          "NmorphNotificationProvider now renders denser notification backgrounds, blur, readable duration colors, larger whole-second duration labels and better duration baseline alignment.",
+        "root-type-exports-and-prop-defaults":
+          "The package root now exports shared library types directly and removes undefined prop defaults that confused Volar for Badge, AudioMeter, Button, Link and Callout props.",
+        "plain-border-one-pixel":
+          "The shared --nmorph-plain-border token is now 1px instead of 1.5px for cleaner plain component outlines.",
         "component-attrs-merge":
           "带有 Teleport、overlay、动态 root 标签或自定义属性处理的组件现在会把外部 class/style/attrs 与 Nmorph root class 合并，不再丢失或转移它们。",
         "text-inline-controls":
@@ -1769,7 +1779,7 @@ export default {
         referrerpolicy: "as 为 a 时的原生 anchor referrerpolicy",
         download: "as 为 a 时的原生 anchor download",
         "aria-label": "根链接的可访问名称",
-        color: "Overrides the callout accent color",
+        color: "Overrides the callout accent and background colors",
         padding: "Sets the callout inner spacing",
         "border-radius": "Sets the callout border radius",
         "accent-width": "Sets the width of the accent strip",
@@ -1783,7 +1793,8 @@ export default {
         default: "自定义 body 内容",
       },
       variables: {
-        "callout-color": "Callout accent color",
+        "callout-accent-color": "Callout accent color",
+        "callout-background-color": "Callout background color",
         "callout-padding": "Callout inner spacing",
         "callout-border-radius": "Callout border radius",
         "callout-accent-width": "Accent strip width",

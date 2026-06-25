@@ -33,7 +33,7 @@ import type { NmorphMediaGalleryItem } from '../nmorph-media-gallery/types';
 import NmorphVideoPreview from '../nmorph-video-preview/NmorphVideoPreview.vue';
 import type { INmorphFileCardEmit, INmorphFileCardProps } from './types';
 
-const CONTRAST_ICON_COLOR = 'var(--nmorph-contrast-text-color)';
+const CONTRAST_ICON_COLOR = 'var(--nmorph-white-color)';
 
 const props = withDefaults(defineProps<INmorphFileCardProps>(), {
   extension: '',
@@ -384,7 +384,7 @@ const errorHandler = () => emit('error');
     align-items: center;
     width: 18px;
     height: 18px;
-    color: var(--nmorph-contrast-text-color);
+    color: var(--nmorph-white-color);
     text-decoration: none;
     background: color-mix(in srgb, var(--nmorph-black-color) 36%, transparent);
     border-radius: var(--border-radius-circular);
@@ -395,7 +395,7 @@ const errorHandler = () => emit('error');
     }
 
     .nmorph-icon {
-      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-white-color);
     }
   }
 
@@ -500,7 +500,7 @@ const errorHandler = () => emit('error');
     min-height: 22px;
     padding: 0 6px;
     overflow: hidden;
-    color: var(--nmorph-contrast-text-color);
+    color: var(--nmorph-white-color);
     font-size: var(--nmorph-typography-caption-font-size);
     line-height: var(--nmorph-typography-caption-line-height);
     white-space: nowrap;
@@ -637,7 +637,7 @@ const errorHandler = () => emit('error');
       min-height: 22px;
       padding: 0 6px;
       overflow: hidden;
-      color: var(--nmorph-contrast-text-color);
+      color: var(--nmorph-white-color);
       line-height: 22px;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -667,18 +667,18 @@ const errorHandler = () => emit('error');
 
     .nmorph-file-card__action-link,
     .nmorph-file-card__action-loader {
-      color: var(--nmorph-contrast-text-color);
+      color: var(--nmorph-white-color);
       background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
       border: 0;
 
       .nmorph-icon {
         flex: 0 0 auto;
-        --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
+        --nmorph-private-icon-color: var(--nmorph-white-color);
       }
     }
 
     .nmorph-file-card__action-link:hover {
-      color: var(--nmorph-contrast-text-color);
+      color: var(--nmorph-white-color);
       background: color-mix(in srgb, var(--nmorph-black-color) 72%, transparent);
     }
   }
@@ -700,7 +700,7 @@ const errorHandler = () => emit('error');
   }
 
   &.nmorph-file-card--error {
-    outline: 1px solid var(--nmorph-error-color);
+    outline: 1px solid var(--nmorph-error-text-color);
   }
 
   &.nmorph-file-card--soft {

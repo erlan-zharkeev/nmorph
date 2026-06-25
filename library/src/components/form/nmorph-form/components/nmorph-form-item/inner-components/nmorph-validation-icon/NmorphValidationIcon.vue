@@ -38,7 +38,7 @@ const validateIconSize = '18px';
 
   &.nmorph-validation-icon--valid {
     .nmorph-validation-icon__content {
-      --nmorph-private-icon-color: var(--nmorph-success-color);
+      --nmorph-private-icon-color: var(--nmorph-success-text-color);
     }
   }
 

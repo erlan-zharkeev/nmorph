@@ -36,7 +36,7 @@ describe('shared component styles', () => {
     expect(styles).toContain('line-height: var(--nmorph-private-control-line-height);');
     expect(styles).toContain('.nmorph-typography--body');
     expect(styles).toContain('.nmorph-typography--control');
-    expect(styles).toContain('--nmorph-plain-border: 1.5px solid var(--nmorph-plain-border-color);');
+    expect(styles).toContain('--nmorph-plain-border: 1px solid var(--nmorph-plain-border-color);');
     expect(styles).toContain('.nmorph--plain-surface');
     expect(styles).not.toContain('.nmorph--thin-component.nmorph-native-input');
   });

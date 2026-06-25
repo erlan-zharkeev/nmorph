@@ -102,7 +102,8 @@ const slotData: ISlotsTableData[] = [
   },
 ];
 const variables: IVariablesTableData[] = [
-  { name: "callout-color" },
+  { name: "callout-accent-color" },
+  { name: "callout-background-color" },
   { name: "callout-padding" },
   { name: "callout-border-radius" },
   { name: "callout-accent-width" },

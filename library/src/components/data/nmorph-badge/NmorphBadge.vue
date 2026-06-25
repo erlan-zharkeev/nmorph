@@ -6,7 +6,6 @@ import { NmorphDomElementType } from '@/types';
 import type { INmorphBadgeProps, INmorphBadgeSlots } from './types';
 
 const props = withDefaults(defineProps<INmorphBadgeProps>(), {
-  value: undefined,
   max: 99,
   type: 'default',
   ribbonCorner: 'top-right',

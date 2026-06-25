@@ -88,7 +88,7 @@ const slots = useSlots();
 
 <style lang="scss">
 .nmorph-alert {
-  --nmorph-private-alert-background-color: var(--nmorph-overlay-color);
+  --nmorph-private-alert-background-color: var(--nmorph-info-color);
 
   display: inline-block;
   padding: var(--indentation-03) var(--indentation-04);
@@ -97,7 +97,7 @@ const slots = useSlots();
 
   .nmorph-alert__content,
   .nmorph-alert__content-title {
-    color: var(--nmorph-white-color);
+    color: var(--nmorph-contrast-text-color);
     white-space: pre-line;
   }
 
@@ -127,43 +127,58 @@ const slots = useSlots();
   }
 
   .nmorph-alert__close {
+    display: inline-flex;
+    flex: 0 0 auto;
+    justify-content: center;
+    align-items: center;
     align-self: var(--nmorph-private-alert-close-align);
+    width: 28px;
+    height: 28px;
+    margin-right: -7px;
     margin-left: var(--indentation-03);
     cursor: pointer;
 
     .nmorph-icon {
-      --nmorph-private-icon-color: var(--nmorph-white-color);
+      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
     }
   }
 
-  .nmorph-alert--success {
+  &.nmorph-alert--success {
+    --nmorph-private-alert-background-color: var(--nmorph-success-color);
+
     .nmorph-alert__icon {
       .nmorph-icon {
-        --nmorph-private-icon-color: var(--nmorph-success-color);
+        --nmorph-private-icon-color: var(--nmorph-success-text-color);
       }
     }
   }
 
   &.nmorph-alert--error {
+    --nmorph-private-alert-background-color: var(--nmorph-error-color);
+
     .nmorph-alert__icon {
       .nmorph-icon {
-        --nmorph-private-icon-color: var(--nmorph-error-color);
+        --nmorph-private-icon-color: var(--nmorph-error-text-color);
       }
     }
   }
 
   &.nmorph-alert--warning {
+    --nmorph-private-alert-background-color: var(--nmorph-warn-color);
+
     .nmorph-alert__icon {
       .nmorph-icon {
-        --nmorph-private-icon-color: var(--nmorph-warn-color);
+        --nmorph-private-icon-color: var(--nmorph-warn-text-color);
       }
     }
   }
 
   &.nmorph-alert--info {
+    --nmorph-private-alert-background-color: var(--nmorph-info-color);
+
     .nmorph-alert__icon {
       .nmorph-icon {
-        --nmorph-private-icon-color: var(--nmorph-info-color);
+        --nmorph-private-icon-color: var(--nmorph-info-text-color);
       }
     }
   }

@@ -170,12 +170,12 @@ describe('NmorphFileCard', () => {
       (
         wrapper.find('button.nmorph-audio-preview__play-button .nmorph-icon').element as HTMLElement
       ).style.getPropertyValue('--nmorph-private-icon-color')
-    ).toBe('var(--nmorph-contrast-text-color)');
+    ).toBe('var(--nmorph-white-color)');
     expect(
       (
         wrapper.find('button.nmorph-audio-preview__play-button .nmorph-icon').element as HTMLElement
       ).style.getPropertyValue('--nmorph-private-icon-color')
-    ).toBe('var(--nmorph-contrast-text-color)');
+    ).toBe('var(--nmorph-white-color)');
     expect(wrapper.find('.nmorph-audio-preview__range').exists()).toBe(true);
     expect(wrapper.find('.nmorph-audio-preview__actions').exists()).toBe(false);
     expect(wrapper.find('.nmorph-audio-preview__icon').exists()).toBe(false);
@@ -281,10 +281,10 @@ describe('NmorphFileCard', () => {
     expect(playButton.attributes('aria-label')).toBe('Play clip.mp4');
     expect(
       (playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')
-    ).toBe('var(--nmorph-contrast-text-color)');
+    ).toBe('var(--nmorph-white-color)');
     expect(
       (playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')
-    ).toBe('var(--nmorph-contrast-text-color)');
+    ).toBe('var(--nmorph-white-color)');
     expect(wrapper.find('.nmorph-video-preview__actions').exists()).toBe(true);
     expect(wrapper.findAll('.nmorph-video-preview__action-button')).toHaveLength(2);
     expect(wrapper.find('.nmorph-video-preview__action-button--preview').attributes('aria-label')).toBe(
@@ -558,10 +558,10 @@ describe('NmorphFileCard', () => {
     ).toBe('');
     expect(
       (iconAction.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')
-    ).toBe('var(--nmorph-contrast-text-color)');
+    ).toBe('var(--nmorph-white-color)');
     expect(
       (iconAction.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')
-    ).toBe('var(--nmorph-contrast-text-color)');
+    ).toBe('var(--nmorph-white-color)');
     expect(defaultActions).toHaveLength(1);
     expect(defaultActions[0].attributes('href')).toBe('blob:download-report');
     expect(defaultActions[0].attributes('download')).toBe('report.pdf');

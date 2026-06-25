@@ -12,7 +12,7 @@ import {
 import { createCssSizeVariables, useModifiers } from '@/utils';
 import type { INmorphAudioPreviewEmit, INmorphAudioPreviewProps } from './types';
 
-const CONTRAST_ICON_COLOR = 'var(--nmorph-contrast-text-color)';
+const CONTRAST_ICON_COLOR = 'var(--nmorph-white-color)';
 
 const props = withDefaults(defineProps<INmorphAudioPreviewProps>(), {
   name: '',
@@ -305,7 +305,7 @@ defineExpose({ audioRef });
     width: 20px;
     height: 20px;
     padding: 0;
-    color: var(--nmorph-contrast-text-color);
+    color: var(--nmorph-white-color);
     background: var(--nmorph-black-color);
     border: 0;
     border-radius: var(--border-radius-circular);
@@ -316,7 +316,7 @@ defineExpose({ audioRef });
     }
 
     .nmorph-icon {
-      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-white-color);
     }
   }
 
@@ -329,12 +329,12 @@ defineExpose({ audioRef });
     align-items: center;
     width: 18px;
     height: 18px;
-    color: var(--nmorph-contrast-text-color);
+    color: var(--nmorph-white-color);
     background: var(--nmorph-black-color);
     border-radius: var(--border-radius-circular);
 
     .nmorph-icon {
-      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-white-color);
     }
   }
 
@@ -525,7 +525,7 @@ defineExpose({ audioRef });
   }
 
   &.nmorph-audio-preview--error {
-    outline: 1px solid var(--nmorph-error-color);
+    outline: 1px solid var(--nmorph-error-text-color);
   }
 }
 </style>

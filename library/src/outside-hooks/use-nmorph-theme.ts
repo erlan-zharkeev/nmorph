@@ -14,14 +14,14 @@ import { nmorphLog } from '@/outside-utils/nmorph-log';
 import { camelToKebab } from '@/utils';
 
 const DEFAULT_THEME_COLORS = {
-  info: '#d4e5edbb',
-  infoText: '#506c80',
-  success: '#67C23A',
-  successText: '#0b5b1d',
-  error: '#F56C6C',
-  errorText: '#8d3333',
-  warn: '#E6A21C',
-  warnText: '#7a6712',
+  info: '#4592c936',
+  infoText: '#4592c9',
+  success: '#2ba74833',
+  successText: '#2ba748',
+  error: '#e84f4f49',
+  errorText: '#e84f4f',
+  warn: '#e6a31c3f',
+  warnText: '#E6A21C',
   gray: '#c9d2dee6',
   white: '#ffffff',
   black: '#000000',

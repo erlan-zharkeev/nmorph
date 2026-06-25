@@ -21,7 +21,6 @@ const props = withDefaults(defineProps<INmorphLinkProps>(), {
   ariaLabel: undefined,
   title: undefined,
   disabled: false,
-  color: undefined,
   iconName: undefined,
 });
 
@@ -129,15 +128,15 @@ const anchorAttrs = computed(() => ({
   }
 
   &.nmorph-link--success {
-    --nmorph-private-link-color: var(--nmorph-success-color);
+    --nmorph-private-link-color: var(--nmorph-success-text-color);
   }
 
   &.nmorph-link--warning {
-    --nmorph-private-link-color: var(--nmorph-warn-color);
+    --nmorph-private-link-color: var(--nmorph-warn-text-color);
   }
 
   &.nmorph-link--error {
-    --nmorph-private-link-color: var(--nmorph-error-color);
+    --nmorph-private-link-color: var(--nmorph-error-text-color);
   }
 }
 </style>

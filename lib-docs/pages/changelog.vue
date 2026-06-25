@@ -5,6 +5,7 @@ import { h } from "vue";
 const knownBugItems: string[] = [];
 
 const releaseDates: Record<string, string> = {
+  "v3.0.18": "2026-06-25",
   "v3.0.17": "2026-06-25",
   "v3.0.16": "2026-06-25",
   "v3.0.15": "2026-06-25",
@@ -104,6 +105,26 @@ const ReleaseHeading = ({ version }: { version: string }) => {
         <div class="docs-changelog-page__content">
           <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
+          <div class="docs-changelog-page__release">
+            <ReleaseHeading version="v3.0.18" />
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.semantic-surface-readability") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.media-overlay-readable-controls") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.notification-provider-opaque-duration") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.root-type-exports-and-prop-defaults") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.plain-border-one-pixel") }}
+              </li>
+            </ul>
+          </div>
           <div class="docs-changelog-page__release">
             <ReleaseHeading version="v3.0.17" />
             <ul>

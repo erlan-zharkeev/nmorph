@@ -137,7 +137,7 @@ describe('NmorphGuide', () => {
 
     expect(defaultStep.classes()).toContain('nmorph-guide-step--active');
     expect(defaultStep.element.style.getPropertyValue('--nmorph-private-guide-target-outline-color')).toBe(
-      'var(--nmorph-success-color)'
+      'var(--nmorph-success-text-color)'
     );
     expect(defaultStep.element.style.getPropertyValue('--nmorph-private-guide-target-outline-offset')).toBe(
       'var(--indentation-02)'

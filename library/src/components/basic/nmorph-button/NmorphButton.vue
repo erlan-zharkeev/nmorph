@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<INmorphButtonProps>(), {
   type: 'button',
   fill: false,
   text: undefined,
-  color: undefined,
   disabled: false,
   loading: false,
   design: 'nmorph',

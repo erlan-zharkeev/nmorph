@@ -34,12 +34,12 @@ describe('NmorphAudioPreview', () => {
       (
         wrapper.find('.nmorph-audio-preview__play-indicator .nmorph-icon').element as HTMLElement
       ).style.getPropertyValue('--nmorph-private-icon-color')
-    ).toBe('var(--nmorph-contrast-text-color)');
+    ).toBe('var(--nmorph-white-color)');
     expect(
       (
         wrapper.find('.nmorph-audio-preview__play-indicator .nmorph-icon').element as HTMLElement
       ).style.getPropertyValue('--nmorph-private-icon-color')
-    ).toBe('var(--nmorph-contrast-text-color)');
+    ).toBe('var(--nmorph-white-color)');
 
     wrapper.unmount();
   });

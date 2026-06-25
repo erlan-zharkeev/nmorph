@@ -6,9 +6,9 @@ import { nmorphGuideInjectionKey, type INmorphGuideResolvedStep, type NmorphGuid
 
 const targetOutlineColorMap: Record<string, string> = {
   accent: 'var(--nmorph-accent-color)',
-  success: 'var(--nmorph-success-color)',
-  error: 'var(--nmorph-error-color)',
-  warning: 'var(--nmorph-warn-color)',
+  success: 'var(--nmorph-success-text-color)',
+  error: 'var(--nmorph-error-text-color)',
+  warning: 'var(--nmorph-warn-text-color)',
 };
 
 const props = withDefaults(defineProps<INmorphGuideProps>(), {

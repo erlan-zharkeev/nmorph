@@ -556,7 +556,7 @@ const pointerUpHandler = (event: PointerEvent) => {
           :title="getItemName(item)"
         />
         <span v-if="props.showTriggerPlayButton && item.kind === 'video'" class="nmorph-media-gallery__trigger-play">
-          <NmorphIcon size="medium" color="var(--nmorph-contrast-text-color)">
+          <NmorphIcon size="medium" color="var(--nmorph-white-color)">
             <NmorphIconPlay />
           </NmorphIcon>
         </span>
@@ -575,7 +575,7 @@ const pointerUpHandler = (event: PointerEvent) => {
           :aria-label="`Preview ${getItemLabel(item, index)}`"
           @click.stop="openPreviewAt(index)"
         >
-          <NmorphIcon size="small" color="var(--nmorph-contrast-text-color)">
+          <NmorphIcon size="small" color="var(--nmorph-white-color)">
             <NmorphIconEye />
           </NmorphIcon>
         </button>
@@ -586,7 +586,7 @@ const pointerUpHandler = (event: PointerEvent) => {
           :aria-label="`Fullscreen ${getItemLabel(item, index)}`"
           @click.stop="triggerFullscreenHandler(item, index)"
         >
-          <NmorphIcon size="small" color="var(--nmorph-contrast-text-color)">
+          <NmorphIcon size="small" color="var(--nmorph-white-color)">
             <NmorphIconFullScreen />
           </NmorphIcon>
         </button>
@@ -598,7 +598,7 @@ const pointerUpHandler = (event: PointerEvent) => {
           :aria-label="`Download ${getItemLabel(item, index)}`"
           @click.stop="downloadItemHandler(item, index)"
         >
-          <NmorphIcon size="small" color="var(--nmorph-contrast-text-color)">
+          <NmorphIcon size="small" color="var(--nmorph-white-color)">
             <NmorphIconDownload />
           </NmorphIcon>
         </a>
@@ -662,7 +662,7 @@ const pointerUpHandler = (event: PointerEvent) => {
           :aria-label="`Fullscreen ${currentVideoName}`"
           @click.stop="fullscreenHandler"
         >
-          <NmorphIcon size="small" color="var(--nmorph-contrast-text-color)">
+          <NmorphIcon size="small" color="var(--nmorph-white-color)">
             <NmorphIconFullScreen />
           </NmorphIcon>
         </button>
@@ -674,7 +674,7 @@ const pointerUpHandler = (event: PointerEvent) => {
           :aria-label="`Download ${currentItemName || 'media'}`"
           @click.stop="downloadHandler"
         >
-          <NmorphIcon size="small" color="var(--nmorph-contrast-text-color)">
+          <NmorphIcon size="small" color="var(--nmorph-white-color)">
             <NmorphIconDownload />
           </NmorphIcon>
         </a>
@@ -856,7 +856,7 @@ const pointerUpHandler = (event: PointerEvent) => {
   min-height: 22px;
   padding: 0 6px;
   overflow: hidden;
-  color: var(--nmorph-contrast-text-color);
+  color: var(--nmorph-white-color);
   line-height: 22px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -901,7 +901,7 @@ const pointerUpHandler = (event: PointerEvent) => {
   width: 22px;
   height: 22px;
   padding: 0;
-  color: var(--nmorph-contrast-text-color);
+  color: var(--nmorph-white-color);
   font: inherit;
   line-height: 1;
   text-decoration: none;
@@ -912,11 +912,11 @@ const pointerUpHandler = (event: PointerEvent) => {
 
   .nmorph-icon {
     flex: 0 0 auto;
-    --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
+    --nmorph-private-icon-color: var(--nmorph-white-color);
   }
 
   &:hover {
-    color: var(--nmorph-contrast-text-color);
+    color: var(--nmorph-white-color);
     background: color-mix(in srgb, var(--nmorph-black-color) 72%, transparent);
   }
 }
@@ -931,14 +931,14 @@ const pointerUpHandler = (event: PointerEvent) => {
   align-items: center;
   width: 54px;
   height: 54px;
-  color: var(--nmorph-contrast-text-color);
+  color: var(--nmorph-white-color);
   background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
   border-radius: var(--border-radius-circular);
   transform: translate(-50%, -50%);
   pointer-events: none;
 
   .nmorph-icon {
-    --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
+    --nmorph-private-icon-color: var(--nmorph-white-color);
   }
 }
 
@@ -995,7 +995,7 @@ const pointerUpHandler = (event: PointerEvent) => {
     min-height: 22px;
     padding: 0 6px;
     overflow: hidden;
-    color: var(--nmorph-contrast-text-color);
+    color: var(--nmorph-white-color);
     line-height: 22px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -1041,7 +1041,7 @@ const pointerUpHandler = (event: PointerEvent) => {
     width: 22px;
     height: 22px;
     padding: 0;
-    color: var(--nmorph-contrast-text-color);
+    color: var(--nmorph-white-color);
     font: inherit;
     line-height: 1;
     text-decoration: none;
@@ -1052,7 +1052,7 @@ const pointerUpHandler = (event: PointerEvent) => {
 
     .nmorph-icon {
       flex: 0 0 auto;
-      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-white-color);
     }
 
     &:hover {

@@ -19,6 +19,30 @@ import SandboxSection from '@sandbox/components/SandboxSection.vue'
 
 const scrollCoords = ref({ x: 0, y: 0 })
 const maxHeightElements = ref(10)
+const themeColorTokens = [
+  { name: 'main', variable: '--nmorph-main-color' },
+  { name: 'darkShade', variable: '--nmorph-dark-shade-color' },
+  { name: 'lightShade', variable: '--nmorph-light-shade-color' },
+  { name: 'text', variable: '--nmorph-text-color' },
+  { name: 'scrollThumb', variable: '--nmorph-scroll-thumb-color' },
+  { name: 'accent', variable: '--nmorph-accent-color' },
+  { name: 'focusText', variable: '--nmorph-focus-text-color' },
+  { name: 'placeholderText', variable: '--nmorph-placeholder-text-color' },
+  { name: 'semiContrastText', variable: '--nmorph-semi-contrast-text-color' },
+  { name: 'contrastText', variable: '--nmorph-contrast-text-color' },
+  { name: 'info', variable: '--nmorph-info-color' },
+  { name: 'infoText', variable: '--nmorph-info-text-color' },
+  { name: 'success', variable: '--nmorph-success-color' },
+  { name: 'successText', variable: '--nmorph-success-text-color' },
+  { name: 'error', variable: '--nmorph-error-color' },
+  { name: 'errorText', variable: '--nmorph-error-text-color' },
+  { name: 'warn', variable: '--nmorph-warn-color' },
+  { name: 'warnText', variable: '--nmorph-warn-text-color' },
+  { name: 'gray', variable: '--nmorph-gray-color' },
+  { name: 'white', variable: '--nmorph-white-color' },
+  { name: 'black', variable: '--nmorph-black-color' },
+  { name: 'overlay', variable: '--nmorph-overlay-color' },
+]
 
 const moveScroll = () => {
   scrollCoords.value = { x: 120, y: 160 }
@@ -44,6 +68,18 @@ const removeMaxHeightItem = () => {
         <NmorphText class="text-demo__truncate" truncate>
           Long single-line text that is intentionally truncated by the NmorphText component.
         </NmorphText>
+      </div>
+    </SandboxSection>
+
+    <SandboxSection title="Theme colors">
+      <div class="palette-grid">
+        <div v-for="token in themeColorTokens" :key="token.variable" class="palette-card">
+          <div class="palette-card__swatch" :style="{ background: `var(${token.variable})` }">
+            <span>{{ token.name }}</span>
+          </div>
+          <div class="palette-card__sample" :style="{ color: `var(${token.variable})` }">Aa text sample</div>
+          <code>{{ token.variable }}</code>
+        </div>
       </div>
     </SandboxSection>
 
@@ -202,6 +238,52 @@ const removeMaxHeightItem = () => {
 
 .text-demo__truncate {
   max-width: 260px;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.palette-card {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--nmorph-main-color);
+  box-shadow:
+    -2px -2px 4px var(--nmorph-light-shade-color),
+    2px 2px 4px var(--nmorph-dark-shade-color);
+}
+
+.palette-card__swatch {
+  display: flex;
+  align-items: flex-end;
+  min-height: 72px;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.palette-card__swatch span {
+  color: var(--nmorph-white-color);
+  font-weight: 700;
+  font-size: 13px;
+  text-shadow:
+    0 1px 2px var(--nmorph-black-color),
+    0 0 8px var(--nmorph-black-color);
+}
+
+.palette-card__sample {
+  font-weight: 700;
+}
+
+.palette-card code {
+  min-width: 0;
+  color: var(--nmorph-semi-contrast-text-color);
+  font-size: 12px;
+  overflow-wrap: anywhere;
 }
 
 .layout-demo {

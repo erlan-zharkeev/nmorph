@@ -16,7 +16,7 @@ import {
 import { createCssSizeVariables, useMergedAttrs, useModifiers } from '@/utils';
 import type { INmorphVideoPreviewEmit, INmorphVideoPreviewProps } from './types';
 
-const CONTRAST_ICON_COLOR = 'var(--nmorph-contrast-text-color)';
+const CONTRAST_ICON_COLOR = 'var(--nmorph-white-color)';
 const VIDEO_BUFFER_EPSILON_SECONDS = 0.25;
 
 defineOptions({
@@ -412,7 +412,7 @@ defineExpose({ videoRef });
     width: 42px;
     height: 42px;
     padding: 0;
-    color: var(--nmorph-contrast-text-color);
+    color: var(--nmorph-white-color);
     background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
     border: 0;
     border-radius: var(--border-radius-circular);
@@ -420,7 +420,7 @@ defineExpose({ videoRef });
     cursor: pointer;
 
     .nmorph-icon {
-      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-white-color);
     }
 
     &:hover {
@@ -475,7 +475,7 @@ defineExpose({ videoRef });
     width: 22px;
     height: 22px;
     padding: 0;
-    color: var(--nmorph-contrast-text-color);
+    color: var(--nmorph-white-color);
     font: inherit;
     text-decoration: none;
     background: color-mix(in srgb, var(--nmorph-black-color) 58%, transparent);
@@ -488,7 +488,7 @@ defineExpose({ videoRef });
     }
 
     .nmorph-icon {
-      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-white-color);
     }
   }
 
@@ -508,7 +508,7 @@ defineExpose({ videoRef });
   }
 
   &.nmorph-video-preview--error {
-    outline: 1px solid var(--nmorph-error-color);
+    outline: 1px solid var(--nmorph-error-text-color);
   }
 }
 

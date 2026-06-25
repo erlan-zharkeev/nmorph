@@ -55,17 +55,17 @@ describe('NmorphVideoPreview', () => {
     expect(playButton.attributes('aria-label')).toBe('Play clip.mp4');
     expect(
       (playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')
-    ).toBe('var(--nmorph-contrast-text-color)');
+    ).toBe('var(--nmorph-white-color)');
     expect(
       (playButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue('--nmorph-private-icon-color')
-    ).toBe('var(--nmorph-contrast-text-color)');
+    ).toBe('var(--nmorph-white-color)');
     expect(fullscreenButton.exists()).toBe(true);
     expect(previewButton.exists()).toBe(true);
     expect(
       (fullscreenButton.find('.nmorph-icon').element as HTMLElement).style.getPropertyValue(
         '--nmorph-private-icon-color'
       )
-    ).toBe('var(--nmorph-contrast-text-color)');
+    ).toBe('var(--nmorph-white-color)');
 
     await wrapper.find('video').trigger('play');
 

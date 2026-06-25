@@ -380,11 +380,11 @@ defineExpose({ videoRef });
   }
 
   &.nmorph-media-tile--speaking {
-    outline: 3px solid var(--nmorph-success-color);
+    outline: 3px solid var(--nmorph-success-text-color);
   }
 
   &.nmorph-media-tile--error {
-    outline: 2px solid var(--nmorph-error-color);
+    outline: 2px solid var(--nmorph-error-text-color);
   }
 
   &.nmorph-media-tile--plain {
@@ -393,7 +393,7 @@ defineExpose({ videoRef });
   }
 
   &.nmorph-media-tile--screen-sharing {
-    box-shadow: 0 0 0 2px var(--nmorph-success-color);
+    box-shadow: 0 0 0 2px var(--nmorph-success-text-color);
   }
 }
 </style>

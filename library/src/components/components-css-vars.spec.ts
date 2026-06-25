@@ -171,7 +171,8 @@ describe('component CSS variables', () => {
       }),
       '.nmorph-callout',
       {
-        '--nmorph-private-callout-color': '#345678',
+        '--nmorph-private-callout-accent-color': '#345678',
+        '--nmorph-private-callout-background-color': '#345678',
         '--nmorph-private-callout-padding': '14px',
         '--nmorph-private-callout-border-radius': 'var(--border-radius-80)',
         '--nmorph-private-callout-accent-width': '6px',

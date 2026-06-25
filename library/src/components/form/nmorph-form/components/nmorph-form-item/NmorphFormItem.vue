@@ -111,7 +111,7 @@ const modifiers = computed(() =>
 
   &.nmorph-form-item--invalid {
     .nmorph-native-input:focus {
-      background: var(--nmorph-error-text-color);
+      background: var(--nmorph-error-color);
     }
   }
 }

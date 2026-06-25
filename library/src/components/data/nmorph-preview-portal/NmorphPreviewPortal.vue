@@ -144,7 +144,7 @@ const rootAttrs = useMergedAttrs(rootClasses, portalStyle);
 
     .nmorph-button__content,
     .nmorph-button__content:not(:disabled, [loading='true']):hover {
-      color: var(--nmorph-contrast-text-color);
+      color: var(--nmorph-white-color);
       background: transparent;
       border: 0;
       box-shadow: none;
@@ -152,7 +152,7 @@ const rootAttrs = useMergedAttrs(rootClasses, portalStyle);
 
     .nmorph-button__content .nmorph-icon,
     .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
-      --nmorph-private-icon-color: var(--nmorph-contrast-text-color);
+      --nmorph-private-icon-color: var(--nmorph-white-color);
     }
   }
 

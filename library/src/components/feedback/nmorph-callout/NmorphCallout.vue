@@ -27,7 +27,6 @@ const props = withDefaults(defineProps<INmorphCalloutProps>(), {
   referrerPolicy: undefined,
   download: undefined,
   ariaLabel: undefined,
-  color: undefined,
   padding: 'var(--indentation-03) var(--indentation-04)',
   borderRadius: 'var(--default-border-radius)',
   accentWidth: 'var(--indentation-02)',
@@ -48,7 +47,8 @@ const styles = computed<CSSProperties>(() => ({
     '--nmorph-private-callout-content-font-size': props.contentFontSize,
   }),
   ...createCssVariables({
-    '--nmorph-private-callout-color': props.color,
+    '--nmorph-private-callout-accent-color': props.color,
+    '--nmorph-private-callout-background-color': props.color,
   }),
 }));
 
@@ -98,7 +98,8 @@ const hasDefaultContent = computed(() => Boolean(slots.default));
 
 <style lang="scss">
 .nmorph-callout {
-  --nmorph-private-callout-color: var(--nmorph-accent-color);
+  --nmorph-private-callout-accent-color: var(--nmorph-info-text-color);
+  --nmorph-private-callout-background-color: var(--nmorph-info-color);
   --nmorph-private-callout-padding: var(--indentation-03) var(--indentation-04);
   --nmorph-private-callout-border-radius: var(--default-border-radius);
   --nmorph-private-callout-accent-width: var(--indentation-02);
@@ -110,8 +111,9 @@ const hasDefaultContent = computed(() => Boolean(slots.default));
   display: block;
   padding: var(--nmorph-private-callout-padding);
   overflow: hidden;
-  color: inherit;
+  color: var(--nmorph-contrast-text-color);
   text-decoration: none;
+  background: var(--nmorph-private-callout-background-color);
   border-radius: var(--nmorph-private-callout-border-radius);
 
   &::before {
@@ -120,31 +122,23 @@ const hasDefaultContent = computed(() => Boolean(slots.default));
     left: 0;
     width: var(--nmorph-private-callout-accent-width);
     height: 100%;
-    background: var(--nmorph-private-callout-color);
-    content: '';
-  }
-
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--nmorph-private-callout-color);
-    opacity: 0.2;
+    background: var(--nmorph-private-callout-accent-color);
     content: '';
   }
 
   &.nmorph-callout--warning {
-    --nmorph-private-callout-color: var(--nmorph-warn-color);
+    --nmorph-private-callout-accent-color: var(--nmorph-warn-text-color);
+    --nmorph-private-callout-background-color: var(--nmorph-warn-color);
   }
 
   &.nmorph-callout--success {
-    --nmorph-private-callout-color: var(--nmorph-success-color);
+    --nmorph-private-callout-accent-color: var(--nmorph-success-text-color);
+    --nmorph-private-callout-background-color: var(--nmorph-success-color);
   }
 
   &.nmorph-callout--error {
-    --nmorph-private-callout-color: var(--nmorph-error-color);
+    --nmorph-private-callout-accent-color: var(--nmorph-error-text-color);
+    --nmorph-private-callout-background-color: var(--nmorph-error-color);
   }
 
   .nmorph-callout__title {
