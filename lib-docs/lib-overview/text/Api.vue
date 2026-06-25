@@ -16,6 +16,12 @@ const attributesData: IAttributesTableData[] = [
     description: "HTML tag used for the rendered text element.",
   },
   {
+    name: "text",
+    type: "String | Number",
+    default: "undefined",
+    description: "Text content used when the default slot is not provided.",
+  },
+  {
     name: "variant",
     type: optionsToString(NmorphTypographyVariant),
     default: "body",

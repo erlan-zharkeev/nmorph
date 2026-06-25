@@ -14,6 +14,7 @@ export default meta;
 export const Text: Story = {
   args: {
     as: 'span',
+    text: 'Nmorph typography',
     variant: 'body',
     weight: undefined,
     color: 'text',
@@ -24,6 +25,7 @@ export const Text: Story = {
   },
   argTypes: {
     as: select(['span', 'p', 'div', 'label', 'strong', 'em', 'small', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
+    text: text,
     variant: select([
       'display-large',
       'display-medium',
@@ -47,5 +49,5 @@ export const Text: Story = {
     nowrap: boolean,
     lineClamp: number,
   },
-  render: render({ NmorphText }, '<NmorphText v-bind="args">Nmorph typography</NmorphText>'),
+  render: render({ NmorphText }, '<NmorphText v-bind="args" />'),
 };

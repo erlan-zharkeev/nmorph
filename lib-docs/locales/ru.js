@@ -232,6 +232,12 @@ export default {
     changelog: {
       title: "Журнал изменений",
       items: {
+        "text-prop-fallback":
+          "NmorphText теперь принимает prop text как fallback для default slot, поэтому простой текст можно передавать и через props, и через slots.",
+        "text-contrast-color-role":
+          'NmorphText теперь поддерживает color="contrast" через общие typography color options.',
+        "docs-shell-surface-margin":
+          "Страницы shell в lib docs теперь используют общий surface margin token для согласованных внешних отступов.",
         "theme-shadow-convex-tuning":
           "Тени темы по умолчанию теперь используют более плотную neumorphic-глубину 2px/4px, а светлая палитра получила более выразительную пару highlight/shade для выпуклой поверхности.",
         "select-option-currentcolor-check":

@@ -4,9 +4,7 @@ import { NmorphText } from "@nmorph/nmorph-ui-kit";
 
 <template>
   <div class="text-basic-usage">
-    <NmorphText as="h3" variant="title" weight="bold">
-      Dashboard status
-    </NmorphText>
+    <NmorphText as="h3" variant="title" weight="bold" text="Dashboard status" />
     <NmorphText variant="body">
       NmorphText keeps typography roles consistent across headings, labels, and helper copy.
     </NmorphText>

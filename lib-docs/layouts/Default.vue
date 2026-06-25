@@ -83,7 +83,7 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  padding: var(--docs-layout-shadow-space);
+  padding: var(--docs-shell-surface-margin);
   color: var(--nmorph-semi-contrast-text-color);
   background: var(--nmorph-main-color);
 }

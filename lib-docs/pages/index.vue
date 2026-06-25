@@ -14,7 +14,7 @@ import { FirstScreen } from '~/components/guide-page-sections'
 <style lang="scss">
 .docs-first-page {
   box-sizing: border-box;
-  padding: var(--docs-layout-shadow-space);
+  padding: var(--docs-shell-surface-margin);
   overflow: hidden;
 }
 

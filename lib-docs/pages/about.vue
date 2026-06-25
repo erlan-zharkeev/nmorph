@@ -100,7 +100,7 @@ const systemKeys = ["plugin", "themeEngine", "nuxtModule", "styles", "overlays",
 
 <style scoped lang="scss">
 .docs-about-page {
-  padding: var(--docs-layout-shadow-space);
+  padding: var(--docs-shell-surface-margin);
 }
 
 .docs-about-page__card {

@@ -5,6 +5,7 @@ import type { INmorphTextProps } from './types';
 
 const props = withDefaults(defineProps<INmorphTextProps>(), {
   as: 'span',
+  text: undefined,
   variant: 'body',
   weight: undefined,
   color: 'text',
@@ -16,6 +17,7 @@ const props = withDefaults(defineProps<INmorphTextProps>(), {
 
 const colorMap: Record<string, string> = {
   text: 'var(--nmorph-text-color)',
+  contrast: 'var(--nmorph-contrast-text-color)',
   'semi-contrast': 'var(--nmorph-semi-contrast-text-color)',
   placeholder: 'var(--nmorph-placeholder-text-color)',
   focus: 'var(--nmorph-focus-text-color)',
@@ -49,6 +51,6 @@ const styles = computed(() =>
 
 <template>
   <component :is="props.as" :class="modifiers" :style="styles">
-    <slot />
+    <slot>{{ props.text }}</slot>
   </component>
 </template>

@@ -5,6 +5,7 @@ import { h } from "vue";
 const knownBugItems: string[] = [];
 
 const releaseDates: Record<string, string> = {
+  "v3.0.16": "2026-06-25",
   "v3.0.15": "2026-06-25",
   "v3.0.14": "2026-06-22",
   "v3.0.13": "2026-06-20",
@@ -102,6 +103,20 @@ const ReleaseHeading = ({ version }: { version: string }) => {
         <div class="docs-changelog-page__content">
           <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
+          <div class="docs-changelog-page__release">
+            <ReleaseHeading version="v3.0.16" />
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.text-prop-fallback") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.text-contrast-color-role") }}
+              </li>
+              <li>
+                {{ $t("changelog-page.changelog.items.docs-shell-surface-margin") }}
+              </li>
+            </ul>
+          </div>
           <div class="docs-changelog-page__release">
             <ReleaseHeading version="v3.0.15" />
             <ul>
@@ -1891,7 +1906,7 @@ const ReleaseHeading = ({ version }: { version: string }) => {
 
 <style scoped lang="scss">
 .docs-changelog-page {
-  padding: var(--docs-layout-shadow-space);
+  padding: var(--docs-shell-surface-margin);
 }
 
 .docs-changelog-page__card {

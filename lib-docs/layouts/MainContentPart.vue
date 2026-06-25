@@ -169,7 +169,7 @@ const showCenterAside = computed(() => Boolean(slots["aside-right"]) && !isMainF
 .docs-main-layout {
   height: 100%;
   min-height: 0;
-  padding: var(--docs-layout-shadow-space);
+  padding: var(--docs-shell-surface-margin);
 }
 
 .docs-main-layout__card {

@@ -230,6 +230,12 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "text-prop-fallback":
+          "NmorphText now accepts a text prop as a fallback to the default slot, so plain text can be passed through props or slots.",
+        "text-contrast-color-role":
+          'NmorphText now supports color="contrast" through the shared typography color options.',
+        "docs-shell-surface-margin":
+          "Lib docs shell pages now use the shared surface margin token for consistent outer spacing.",
         "theme-shadow-convex-tuning":
           "Default theme shadows now use a tighter 2px/4px neumorphic depth, and the light palette has a stronger highlight/shade pair for a more convex surface.",
         "select-option-currentcolor-check":

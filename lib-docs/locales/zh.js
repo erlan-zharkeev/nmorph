@@ -219,6 +219,12 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "text-prop-fallback":
+          "NmorphText 现在接受 text prop 作为 default slot 的 fallback，因此纯文本可以通过 props 或 slots 传入。",
+        "text-contrast-color-role":
+          'NmorphText 现在通过共享 typography color options 支持 color="contrast"。',
+        "docs-shell-surface-margin":
+          "Lib docs shell 页面现在使用共享 surface margin token，使外层间距保持一致。",
         "theme-shadow-convex-tuning":
           "默认主题阴影现在使用更紧凑的 2px/4px neumorphic 深度，light 调色板也获得了更明显的 highlight/shade 组合，让表面更有凸起感。",
         "select-option-currentcolor-check":

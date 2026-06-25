@@ -95,6 +95,7 @@ export type NmorphTypographyWeightType = keyof typeof NmorphTypographyWeight;
 
 export const NmorphTypographyColor = {
   text: 'text',
+  contrast: 'contrast',
   'semi-contrast': 'semi-contrast',
   placeholder: 'placeholder',
   focus: 'focus',

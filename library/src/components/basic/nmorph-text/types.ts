@@ -22,6 +22,7 @@ export type NmorphTextTag =
 
 export interface INmorphTextProps {
   as?: NmorphTextTag;
+  text?: string | number;
   variant?: NmorphTypographyVariantType;
   weight?: NmorphTypographyWeightType;
   color?: NmorphTypographyColorType | string;

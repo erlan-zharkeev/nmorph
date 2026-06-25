@@ -37,7 +37,7 @@ const removeMaxHeightItem = () => {
   <div class="page">
     <SandboxSection title="NmorphText">
       <div class="stack text-demo">
-        <NmorphText as="h2" variant="title-large">Title large</NmorphText>
+        <NmorphText as="h2" variant="title-large" color="contrast">Title large</NmorphText>
         <NmorphText variant="body">Body text with the shared Nmorph typography scale.</NmorphText>
         <NmorphText variant="caption" color="semi-contrast">Caption text</NmorphText>
         <NmorphText variant="label" color="accent">Accent label</NmorphText>
