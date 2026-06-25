@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { computed, ref, toRef, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { createCssSizeVariables, toCssSize, useModifiers } from '@/utils';
+import { createCssSizeVariables, toCssSize, useMergedAttrs, useModifiers } from '@/utils';
 import { usePlacement } from '@/hooks/use-placement';
 import { NmorphDomElementType } from '@/types';
 import { NmorphOverlay } from '@/components';
 import type { INmorphDropdownEmit, INmorphDropdownProps } from './types';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = withDefaults(defineProps<INmorphDropdownProps>(), {
   placement: 'bottom',
@@ -59,6 +63,10 @@ const dropdownStyle = computed<CSSProperties>(() => ({
   top: placementCoords.value.y,
   visibility: props.open && placementReady.value ? 'visible' : 'hidden',
 }));
+const rootAttrs = useMergedAttrs(
+  computed(() => [modifiers.value, props.contentClass]),
+  dropdownStyle
+);
 
 watch(
   () => props.open,
@@ -91,8 +99,7 @@ const escapeHandler = () => {
     <div
       v-if="props.open"
       ref="dropdownDOMRef"
-      :class="[modifiers, props.contentClass]"
-      :style="dropdownStyle"
+      v-bind="rootAttrs"
       :role="props.role || undefined"
       :aria-label="props.ariaLabel || undefined"
     >

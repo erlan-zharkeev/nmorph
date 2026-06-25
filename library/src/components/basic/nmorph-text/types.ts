@@ -27,6 +27,9 @@ export interface INmorphTextProps {
   weight?: NmorphTypographyWeightType;
   color?: NmorphTypographyColorType | string;
   align?: NmorphTextAlignType;
+  selectable?: boolean;
+  italic?: boolean;
+  noLineHeight?: boolean;
   truncate?: boolean;
   nowrap?: boolean;
   lineClamp?: number;

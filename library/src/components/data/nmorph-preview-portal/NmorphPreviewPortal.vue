@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
 import { computed } from 'vue';
-import { createCssSizeVariables } from '@/utils';
+import { createCssSizeVariables, useMergedAttrs } from '@/utils';
 import { NmorphButton, NmorphIcon, NmorphIconChevronDown, NmorphOverlay } from '@/components';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = withDefaults(
   defineProps<{
@@ -55,11 +59,12 @@ const portalStyle = computed<CSSProperties>(() =>
     '--nmorph-private-preview-portal-content-height': props.contentHeight,
   })
 );
+const rootAttrs = useMergedAttrs(rootClasses, portalStyle);
 </script>
 
 <template>
   <Teleport v-if="props.show" to="body">
-    <div :class="rootClasses" :style="portalStyle">
+    <div v-bind="rootAttrs">
       <NmorphOverlay
         :show="props.show"
         :z-index="props.zIndex"

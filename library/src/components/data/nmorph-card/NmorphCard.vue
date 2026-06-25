@@ -2,8 +2,12 @@
 import { NmorphShadowType } from '@/types';
 import { computed, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
-import { toCssSize, useModifiers } from '@/utils';
+import { toCssSize, useMergedAttrs, useModifiers } from '@/utils';
 import type { INmorphCardProps } from './types';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = withDefaults(defineProps<INmorphCardProps>(), {
   design: 'nmorph',
@@ -50,10 +54,11 @@ const styles = computed<CSSProperties>(() => {
     }),
   };
 });
+const rootAttrs = useMergedAttrs(modifiers, styles);
 </script>
 
 <template>
-  <component :is="props.tag" :class="modifiers" :style="styles">
+  <component :is="props.tag" v-bind="rootAttrs">
     <div v-if="slots.header" class="nmorph-card__header">
       <slot name="header" />
     </div>

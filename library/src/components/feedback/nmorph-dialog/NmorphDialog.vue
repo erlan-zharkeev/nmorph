@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { computed, ref, useSlots, watch } from 'vue';
 import type { CSSProperties } from 'vue';
-import { useModifiers } from '@/utils';
+import { useMergedAttrs, useModifiers } from '@/utils';
 import { NmorphOverlay, NmorphIcon, NmorphIconCross } from '@/components';
 import type { INmorphDialogEmit, INmorphDialogProps } from './types';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = withDefaults(defineProps<INmorphDialogProps>(), {
   modelValue: false,
@@ -33,6 +37,7 @@ const dialogStyle = computed<CSSProperties>(() => ({
   ...(props.maxWidth && { '--nmorph-private-dialog-max-width': props.maxWidth }),
   ...(props.maxHeight && { '--nmorph-private-dialog-max-height': props.maxHeight }),
 }));
+const rootAttrs = useMergedAttrs(modifiers, dialogStyle);
 const hasHeader = computed(() => Boolean(slots.header || props.title || props.showClose));
 
 const isVisible = ref(props.modelValue);
@@ -87,7 +92,7 @@ const overlayClickHandler = () => {
     @on-outside-click="overlayClickHandler"
     @on-escape-keydown="closeHandler"
   >
-    <div :class="modifiers" :style="dialogStyle" role="dialog" aria-modal="true" :aria-label="props.title || undefined">
+    <div v-bind="rootAttrs" role="dialog" aria-modal="true" :aria-label="props.title || undefined">
       <div v-if="hasHeader" class="nmorph-dialog__header">
         <slot name="header">
           <div class="nmorph-dialog__title">{{ props.title }}</div>

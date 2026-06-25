@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { createCssVariables, useModifiers } from '@/utils';
+import { createCssVariables, useMergedAttrs, useModifiers } from '@/utils';
 import type { INmorphTextProps } from './types';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = withDefaults(defineProps<INmorphTextProps>(), {
   as: 'span',
@@ -10,6 +14,9 @@ const props = withDefaults(defineProps<INmorphTextProps>(), {
   weight: undefined,
   color: 'text',
   align: 'inherit',
+  selectable: true,
+  italic: false,
+  noLineHeight: false,
   truncate: false,
   nowrap: false,
   lineClamp: undefined,
@@ -33,6 +40,9 @@ const modifiers = computed(() =>
     'nmorph-typography': [
       props.variant,
       props.weight,
+      !props.selectable && 'not-selectable',
+      props.italic && 'italic',
+      props.noLineHeight && 'no-line-height',
       props.truncate && 'truncate',
       props.nowrap && 'nowrap',
       props.lineClamp && 'line-clamp',
@@ -47,10 +57,11 @@ const styles = computed(() =>
     '--nmorph-private-text-line-clamp': props.lineClamp,
   })
 );
+const rootAttrs = useMergedAttrs(modifiers, styles);
 </script>
 
 <template>
-  <component :is="props.as" :class="modifiers" :style="styles">
+  <component :is="props.as" v-bind="rootAttrs">
     <slot>{{ props.text }}</slot>
   </component>
 </template>

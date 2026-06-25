@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { CSSProperties } from 'vue';
-import { toCssSize, useModifiers } from '@/utils';
+import { toCssSize, useMergedAttrs, useModifiers } from '@/utils';
 import type { INmorphSpaceProps, NmorphSpaceSizeType } from './types';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = withDefaults(defineProps<INmorphSpaceProps>(), {
   tag: 'div',
@@ -43,10 +47,11 @@ const styles = computed<CSSProperties>(() => ({
   '--nmorph-private-space-align': alignItems.value,
   '--nmorph-private-space-justify': justifyContent.value,
 }));
+const rootAttrs = useMergedAttrs(modifiers, styles);
 </script>
 
 <template>
-  <component :is="props.tag" :class="modifiers" :style="styles">
+  <component :is="props.tag" v-bind="rootAttrs">
     <slot />
   </component>
 </template>

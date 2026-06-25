@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useAttrs, useSlots, watch } from 'vue';
+import { computed, ref, useSlots, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import {
   NmorphIcon,
@@ -13,7 +13,7 @@ import {
   NmorphIconPlay,
   NmorphIconVideo,
 } from '@/components';
-import { createCssSizeVariables, useModifiers } from '@/utils';
+import { createCssSizeVariables, useMergedAttrs, useModifiers } from '@/utils';
 import type { INmorphVideoPreviewEmit, INmorphVideoPreviewProps } from './types';
 
 const CONTRAST_ICON_COLOR = 'var(--nmorph-contrast-text-color)';
@@ -52,7 +52,6 @@ const props = withDefaults(defineProps<INmorphVideoPreviewProps>(), {
 });
 
 const emit = defineEmits<INmorphVideoPreviewEmit>();
-const attrs = useAttrs();
 const slots = useSlots();
 const videoRef = ref<HTMLVideoElement | null>(null);
 const previewOpen = ref(false);
@@ -102,11 +101,7 @@ const styles = computed<CSSProperties>(() =>
     '--nmorph-private-video-preview-portal-height': props.previewHeight,
   })
 );
-const rootAttrs = computed(() => {
-  return Object.fromEntries(Object.entries(attrs).filter(([key]) => key !== 'class' && key !== 'style'));
-});
-const rootClass = computed(() => [modifiers.value, attrs.class]);
-const rootStyle = computed(() => [styles.value, attrs.style]);
+const rootAttrs = useMergedAttrs(modifiers, styles);
 
 watch(
   () => [props.src, props.loading, props.error] as const,
@@ -212,7 +207,7 @@ defineExpose({ videoRef });
 </script>
 
 <template>
-  <div v-bind="rootAttrs" :class="rootClass" :style="rootStyle">
+  <div v-bind="rootAttrs">
     <video
       v-if="!props.loading && !props.error"
       ref="videoRef"

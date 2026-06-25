@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
-import { createCssSizeVariables, createCssVariables } from '@/utils';
+import { createCssSizeVariables, createCssVariables, useMergedAttrs } from '@/utils';
 import type { INmorphCalloutProps } from './types';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const targetMap = {
   self: '_self',
@@ -53,7 +57,7 @@ const resolvedTarget = computed(() => {
   return props.target in targetMap ? targetMap[props.target as keyof typeof targetMap] : props.target;
 });
 
-const rootAttrs = computed(() => {
+const linkAttrs = computed(() => {
   if (props.as !== 'a') return {};
 
   return {
@@ -65,19 +69,21 @@ const rootAttrs = computed(() => {
     'aria-label': props.ariaLabel,
   };
 });
+const mergedAttrs = useMergedAttrs(
+  computed(() => ['nmorph-callout', `nmorph-callout--${props.type}`]),
+  styles
+);
+const rootAttrs = computed(() => ({
+  ...mergedAttrs.value,
+  ...linkAttrs.value,
+}));
 
 const hasHeader = computed(() => Boolean(slots.header || slots.title || props.title));
 const hasDefaultContent = computed(() => Boolean(slots.default));
 </script>
 
 <template>
-  <component
-    :is="props.as"
-    class="nmorph-callout"
-    :class="`nmorph-callout--${props.type}`"
-    :style="styles"
-    v-bind="rootAttrs"
-  >
+  <component :is="props.as" v-bind="rootAttrs">
     <div v-if="hasHeader" class="nmorph-callout__title">
       <slot name="header">
         <slot name="title">{{ props.title }}</slot>

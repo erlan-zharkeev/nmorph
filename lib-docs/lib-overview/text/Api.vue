@@ -46,6 +46,24 @@ const attributesData: IAttributesTableData[] = [
     description: "Text alignment.",
   },
   {
+    name: "selectable",
+    type: "Boolean",
+    default: "true",
+    description: "Controls whether users can select the text.",
+  },
+  {
+    name: "italic",
+    type: "Boolean",
+    default: "false",
+    description: "Applies italic font style.",
+  },
+  {
+    name: "no-line-height",
+    type: "Boolean",
+    default: "false",
+    description: "Sets line-height to 0 for compact inline/icon layout cases.",
+  },
+  {
     name: "truncate",
     type: "Boolean",
     default: "false",

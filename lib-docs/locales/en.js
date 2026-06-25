@@ -230,6 +230,12 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "component-attrs-merge":
+          "Components with Teleport, overlay, dynamic root tags, or custom attribute handling now merge external class/style/attrs with Nmorph root classes instead of losing or redirecting them.",
+        "text-inline-controls":
+          "NmorphText now supports selectable, italic, and no-line-height props, while truncate and line-clamp continue to apply on the same root element as external attrs.",
+        "light-contrast-text-color":
+          "The default light theme contrastText color is now darker for readable high-contrast text and icon usage.",
         "text-prop-fallback":
           "NmorphText now accepts a text prop as a fallback to the default slot, so plain text can be passed through props or slots.",
         "text-contrast-color-role":

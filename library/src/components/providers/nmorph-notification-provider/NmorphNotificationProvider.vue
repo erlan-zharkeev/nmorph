@@ -5,7 +5,12 @@ import { NmorphAlert } from '@/components';
 import { computed, inject, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import type { INmorphInstance } from '@/types';
+import { useMergedAttrs } from '@/utils';
 import type { INmorphNotificationProviderProps, TNmorphNotificationItem } from './types';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const ANIMATION_DURATION = 500;
 const DURATION_TICK_INTERVAL = 250;
@@ -153,6 +158,8 @@ const hasActiveNotifications = computed(
 );
 const zIndex = computed(() => props.zIndex ?? dynamicZIndex.value);
 const teleportDisabled = computed(() => !isMounted.value || props.disabledTeleport);
+const rootStyle = computed<CSSProperties>(() => ({ zIndex: zIndex.value }));
+const rootAttrs = useMergedAttrs('nmorph-notification-provider', rootStyle);
 
 const stopDurationTicker = () => {
   if (!durationTicker) return;
@@ -248,7 +255,7 @@ onBeforeUnmount(() => {
 
 <template>
   <Teleport :to="props.teleportTo" :disabled="teleportDisabled">
-    <div class="nmorph-notification-provider" :style="{ zIndex }">
+    <div v-bind="rootAttrs">
       <transition-group
         v-for="group in notificationGroups"
         :key="group.placement"

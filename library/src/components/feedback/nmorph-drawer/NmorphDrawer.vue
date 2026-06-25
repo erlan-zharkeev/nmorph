@@ -2,8 +2,12 @@
 import { computed, nextTick, onBeforeUnmount, ref, useSlots, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import { NmorphIcon, NmorphIconCross, NmorphOverlay } from '@/components';
-import { createCssSizeVariables, useModifiers } from '@/utils';
+import { createCssSizeVariables, useMergedAttrs, useModifiers } from '@/utils';
 import type { INmorphDrawerEmit, INmorphDrawerProps } from './types';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = withDefaults(defineProps<INmorphDrawerProps>(), {
   modelValue: false,
@@ -39,6 +43,7 @@ const drawerStyle = computed<CSSProperties>(() =>
     '--nmorph-private-drawer-size': props.size,
   })
 );
+const rootAttrs = useMergedAttrs(modifiers, drawerStyle);
 
 const closeHandler = () => {
   emit('on-close');
@@ -126,13 +131,7 @@ onBeforeUnmount(() => {
     @on-outside-click="overlayClickHandler"
     @on-escape-keydown="closeHandler"
   >
-    <aside
-      :class="modifiers"
-      :style="drawerStyle"
-      role="dialog"
-      aria-modal="true"
-      :aria-label="props.title || undefined"
-    >
+    <aside v-bind="rootAttrs" role="dialog" aria-modal="true" :aria-label="props.title || undefined">
       <div v-if="hasHeader" class="nmorph-drawer__header">
         <slot name="header">
           <div class="nmorph-drawer__title">{{ props.title }}</div>

@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
 import type { CSSProperties } from 'vue';
-import { createCssSizeVariables, useModifiers } from '@/utils';
+import { createCssSizeVariables, useMergedAttrs, useModifiers } from '@/utils';
 import type { INmorphLayoutProps } from './types';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = withDefaults(defineProps<INmorphLayoutProps>(), {
   tag: 'section',
@@ -26,10 +30,11 @@ const styles = computed<CSSProperties>(() =>
     '--nmorph-private-layout-aside-width': props.asideWidth,
   })
 );
+const rootAttrs = useMergedAttrs(modifiers, styles);
 </script>
 
 <template>
-  <component :is="props.tag" :class="modifiers" :style="styles">
+  <component :is="props.tag" v-bind="rootAttrs">
     <header v-if="slots.header" class="nmorph-layout__header">
       <slot name="header" />
     </header>

@@ -219,6 +219,12 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "component-attrs-merge":
+          "带有 Teleport、overlay、动态 root 标签或自定义属性处理的组件现在会把外部 class/style/attrs 与 Nmorph root class 合并，不再丢失或转移它们。",
+        "text-inline-controls":
+          "NmorphText 现在支持 selectable、italic 和 no-line-height props，同时 truncate 与 line-clamp 仍会作用在同一个接收外部 attrs 的 root 元素上。",
+        "light-contrast-text-color":
+          "默认浅色主题的 contrastText 现在更深，使高对比文本和图标更易读。",
         "text-prop-fallback":
           "NmorphText 现在接受 text prop 作为 default slot 的 fallback，因此纯文本可以通过 props 或 slots 传入。",
         "text-contrast-color-role":

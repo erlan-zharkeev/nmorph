@@ -545,6 +545,18 @@ export const getCommonStyles = () => {
       font-weight: var(--font-weight-extrabold);
     }
 
+    .nmorph-typography--not-selectable {
+      user-select: none;
+    }
+
+    .nmorph-typography--italic {
+      font-style: italic;
+    }
+
+    .nmorph-typography--no-line-height {
+      line-height: 0;
+    }
+
     .nmorph-typography--truncate {
       overflow: hidden;
       white-space: nowrap;

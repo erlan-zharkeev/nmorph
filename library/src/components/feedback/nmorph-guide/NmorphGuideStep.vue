@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { computed, inject, onBeforeUnmount, useSlots, watch } from 'vue';
-import { createCssSizeVariables, createCssVariables } from '@/utils';
+import { createCssSizeVariables, createCssVariables, useMergedAttrs } from '@/utils';
 import NmorphButton from '../../basic/nmorph-button/NmorphButton.vue';
 import NmorphTooltip from '../nmorph-tooltip/NmorphTooltip.vue';
 import type { INmorphGuideStepProps, INmorphGuideStepSlotProps, INmorphGuideStepSlots } from './types';
 import { nmorphGuideInjectionKey } from './types';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = withDefaults(defineProps<INmorphGuideStepProps>(), {
   title: '',
@@ -36,6 +40,10 @@ const styles = computed(() => ({
     '--nmorph-private-guide-target-outline-offset': guide?.targetOutlineOffset.value,
   }),
 }));
+const rootAttrs = useMergedAttrs(
+  computed(() => ['nmorph-guide-step', isActive.value && 'nmorph-guide-step--active']),
+  styles
+);
 const stepSlotProps = computed<INmorphGuideStepSlotProps | null>(() => {
   if (!guide || !currentStep.value) return null;
 
@@ -76,8 +84,7 @@ onBeforeUnmount(() => {
 
 <template>
   <NmorphTooltip
-    :class="['nmorph-guide-step', isActive && 'nmorph-guide-step--active']"
-    :style="styles"
+    v-bind="rootAttrs"
     :force-show="isActive"
     :position="tooltipPosition"
     :z-index="guide?.zIndex.value"

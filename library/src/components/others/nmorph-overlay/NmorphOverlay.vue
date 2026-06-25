@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { useModifiers } from '@/utils';
+import { useMergedAttrs, useModifiers } from '@/utils';
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue';
 import { useZIndex } from '@/hooks/use-z-index';
 import type { INmorphOverlayEmit, INmorphOverlayProps } from './types';
+
+defineOptions({
+  inheritAttrs: false,
+});
 
 const props = withDefaults(defineProps<INmorphOverlayProps>(), {
   transparent: false,
@@ -25,6 +29,8 @@ const modifiers = computed(() =>
   })
 );
 const renderInline = computed(() => props.disabledTeleport || !props.show || typeof document === 'undefined');
+const overlayStyle = computed(() => ({ '--nmorph-private-overlay-z-index': zIndex.value }));
+const rootAttrs = useMergedAttrs(modifiers, overlayStyle);
 
 const clickHandler = () => {
   emit('on-outside-click');
@@ -119,18 +125,13 @@ onBeforeUnmount(removeKeydownListener);
 </script>
 
 <template>
-  <div
-    v-if="renderInline"
-    :class="modifiers"
-    :style="{ '--nmorph-private-overlay-z-index': zIndex }"
-    @click.stop="clickHandler"
-  >
+  <div v-if="renderInline" v-bind="rootAttrs" @click.stop="clickHandler">
     <div ref="contentRef" class="nmorph-overlay__slot" :tabindex="props.trapFocus ? -1 : undefined" @click.stop>
       <slot />
     </div>
   </div>
   <Teleport v-else :to="props.teleportTo">
-    <div :class="modifiers" :style="{ '--nmorph-private-overlay-z-index': zIndex }" @click.stop="clickHandler">
+    <div v-bind="rootAttrs" @click.stop="clickHandler">
       <div ref="contentRef" class="nmorph-overlay__slot" :tabindex="props.trapFocus ? -1 : undefined" @click.stop>
         <slot />
       </div>
