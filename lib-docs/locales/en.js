@@ -230,6 +230,10 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "video-preview-ready-playback-control":
+          "NmorphVideoPreview and FileCard video previews now show the playback button as soon as the media source is ready, without waiting for loaded video metadata.",
+        "media-gallery-larger-overlay-controls":
+          "NmorphMediaGallery preview overlay controls are larger with clearer icons for easier interaction on dark media surfaces.",
         "semantic-surface-readability":
           "Alert, Callout, Empty, Guide, form validation, link, and status components now use semantic background/text tokens more consistently so light and dark themes stay readable.",
         "media-overlay-readable-controls":

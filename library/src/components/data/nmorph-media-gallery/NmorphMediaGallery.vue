@@ -1038,8 +1038,8 @@ const pointerUpHandler = (event: PointerEvent) => {
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    width: 22px;
-    height: 22px;
+    width: 30px;
+    height: 30px;
     padding: 0;
     color: var(--nmorph-white-color);
     font: inherit;
@@ -1053,6 +1053,11 @@ const pointerUpHandler = (event: PointerEvent) => {
     .nmorph-icon {
       flex: 0 0 auto;
       --nmorph-private-icon-color: var(--nmorph-white-color);
+    }
+
+    .nmorph-icon svg {
+      width: 18px;
+      height: 18px;
     }
 
     &:hover {

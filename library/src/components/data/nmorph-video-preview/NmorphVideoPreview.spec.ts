@@ -2,7 +2,6 @@ import { mount } from '@vue/test-utils';
 import { describe, expect, it, vi } from 'vitest';
 import { nextTick } from 'vue';
 import { NmorphVideoPreview } from '@/components';
-import { setVideoBufferedState } from '@test/utils/components';
 
 describe('NmorphVideoPreview', () => {
   it('renders embedded video preview surfaces with playback control over the media', async () => {
@@ -40,16 +39,9 @@ describe('NmorphVideoPreview', () => {
       ])
     );
     expect(wrapper.find('.nmorph-video-preview__meta').exists()).toBe(false);
-    expect(wrapper.find('button.nmorph-video-preview__play').exists()).toBe(false);
+    const playButton = wrapper.find('button.nmorph-video-preview__play');
 
     await wrapper.find('video').trigger('loadeddata');
-
-    expect(wrapper.find('button.nmorph-video-preview__play').exists()).toBe(false);
-
-    setVideoBufferedState(wrapper.find('video').element as HTMLVideoElement, { duration: 120, end: 120 });
-    await wrapper.find('video').trigger('progress');
-
-    const playButton = wrapper.find('button.nmorph-video-preview__play');
 
     expect(playButton.exists()).toBe(true);
     expect(playButton.attributes('aria-label')).toBe('Play clip.mp4');

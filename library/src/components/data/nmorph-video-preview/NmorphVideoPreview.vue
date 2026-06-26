@@ -70,7 +70,7 @@ const formatDuration = (durationMs?: number) => {
 
 const duration = computed(() => formatDuration(props.durationMs));
 const mediaReady = computed(() => Boolean(props.src) && !props.loading && !props.error);
-const showPlaybackControl = computed(() => props.showPlaybackButton && mediaReady.value && videoLoaded.value);
+const showPlaybackControl = computed(() => props.showPlaybackButton && mediaReady.value);
 const resolvedPreload = computed(() =>
   props.showPlaybackButton && props.preload === 'metadata' ? 'auto' : props.preload
 );
@@ -147,7 +147,7 @@ const fullscreenHandler = async () => {
 };
 
 const togglePlayback = async () => {
-  if (!videoRef.value || props.loading || props.error || !videoLoaded.value) return;
+  if (!videoRef.value || props.loading || props.error) return;
   if (playing.value) {
     videoRef.value.pause();
     return;

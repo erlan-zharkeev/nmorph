@@ -2,7 +2,6 @@ import { mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 import { h, nextTick } from 'vue';
 import { NmorphFileCard } from '@/components';
-import { setVideoBufferedState } from '@test/utils/components';
 
 describe('NmorphFileCard', () => {
   it('can emit visual file preview without opening the internal gallery', async () => {
@@ -266,16 +265,9 @@ describe('NmorphFileCard', () => {
     expect(video.attributes('controls')).toBeUndefined();
     expect(video.attributes('preload')).toBe('auto');
     expect(wrapper.find('.nmorph-video-preview__meta').exists()).toBe(false);
-    expect(wrapper.find('button.nmorph-video-preview__play').exists()).toBe(false);
+    const playButton = wrapper.find('button.nmorph-video-preview__play');
 
     await video.trigger('loadeddata');
-
-    expect(wrapper.find('button.nmorph-video-preview__play').exists()).toBe(false);
-
-    setVideoBufferedState(video.element as HTMLVideoElement, { duration: 120, end: 120 });
-    await video.trigger('progress');
-
-    const playButton = wrapper.find('button.nmorph-video-preview__play');
 
     expect(playButton.exists()).toBe(true);
     expect(playButton.attributes('aria-label')).toBe('Play clip.mp4');
