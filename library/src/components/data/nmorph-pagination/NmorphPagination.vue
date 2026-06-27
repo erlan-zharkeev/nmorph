@@ -286,6 +286,18 @@ const bigStepUpdate = (direction: 'prev' | 'next') => {
     min-height: var(--nmorph-private-pagination-height);
   }
 
+  .nmorph-pagination__page-btn.nmorph-button {
+    .nmorph-button__content {
+      padding-right: 0;
+      padding-left: 0;
+    }
+
+    .nmorph-button__label {
+      white-space: nowrap;
+      overflow-wrap: normal;
+    }
+  }
+
   .nmorph-pagination__page-btn.nmorph-radio {
     .nmorph-radio__content,
     .nmorph-radio__fake {

@@ -23,4 +23,16 @@ import { NmorphButton } from "@nmorph/nmorph-ui-kit";
 .button-shape-overview__square {
   --nmorph-private-control-height: 72px;
 }
+
+.button-shape-overview__square {
+  .nmorph-button__content {
+    padding-right: var(--indentation-02);
+    padding-left: var(--indentation-02);
+  }
+
+  .nmorph-button__label {
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+}
 </style>

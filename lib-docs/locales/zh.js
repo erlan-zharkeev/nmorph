@@ -219,6 +219,14 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "backtop-plain-white-foreground":
+          "NmorphBacktop plain overlay controls now keep slotted text and default icons white on the dark overlay surface.",
+        "light-contrast-text-softened":
+          "The default light theme contrastText token is slightly softer while staying distinct from regular text.",
+        "pagination-ellipsis-single-line":
+          "NmorphPagination fast-jump ellipsis buttons now keep the dots on one centered line.",
+        "button-square-docs-label":
+          "The Button shape docs example now keeps the square button label on one line.",
         "video-preview-ready-playback-control":
           "NmorphVideoPreview and FileCard video previews now show the playback button as soon as the media source is ready, without waiting for loaded video metadata.",
         "media-gallery-larger-overlay-controls":

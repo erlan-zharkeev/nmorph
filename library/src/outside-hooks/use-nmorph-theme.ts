@@ -38,7 +38,7 @@ const DEFAULT_LIGHT_THEME_COLORS = {
   focusText: '#ffffff',
   placeholderText: '#9aa8b3',
   semiContrastText: '#8a9dc0',
-  contrastText: '#40506f',
+  contrastText: '#536381',
 };
 
 const DEFAULT_DARK_THEME_COLORS = {

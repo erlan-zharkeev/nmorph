@@ -99,7 +99,7 @@ onUnmounted(() => {
             <NmorphButton :design="props.design" :borderless="props.design === 'plain'">
               <NmorphIcon
                 class="nmorph-backtop__up-icon"
-                :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-contrast-text-color)'"
+                :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-white-color)'"
               >
                 <NmorphIconChevronDown />
               </NmorphIcon>
@@ -132,13 +132,26 @@ onUnmounted(() => {
 
   &.nmorph-backtop--plain {
     .nmorph-button {
+      --nmorph-private-button-plain-color: var(--nmorph-white-color);
+      --nmorph-private-icon-color: var(--nmorph-white-color);
+
       background: var(--nmorph-overlay-color);
       border-radius: 4px;
     }
 
     .nmorph-button.nmorph-button--plain .nmorph-button__content,
     .nmorph-button.nmorph-button--plain .nmorph-button__content:not(:disabled, [loading='true']):hover {
+      color: var(--nmorph-white-color);
       border: 0;
+    }
+
+    .nmorph-button.nmorph-button--plain .nmorph-button__content span,
+    .nmorph-button.nmorph-button--plain .nmorph-button__content:not(:disabled, [loading='true']):hover span,
+    .nmorph-button.nmorph-button--plain .nmorph-button__content .nmorph-icon,
+    .nmorph-button.nmorph-button--plain .nmorph-button__content:not(:disabled, [loading='true']):hover .nmorph-icon {
+      color: var(--nmorph-white-color);
+
+      --nmorph-private-icon-color: var(--nmorph-white-color);
     }
   }
 }
