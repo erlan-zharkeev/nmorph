@@ -29,6 +29,8 @@ const styles = computed(() => ({
   '--nmorph-private-backtop-z-index': props.zIndex,
 }));
 
+const plainControlColor = computed(() => (props.design === 'plain' ? 'var(--nmorph-white-color)' : undefined));
+
 const isWindow = (value: NmorphBacktopScrollContainer): value is Window => value === window;
 
 const getScrollTop = (target: NmorphBacktopScrollContainer) => {
@@ -96,11 +98,8 @@ onUnmounted(() => {
       <div ref="selfDOMEl" :class="modifiers" :style="styles">
         <div @click.stop="scrollToTopHandler">
           <slot>
-            <NmorphButton :design="props.design" :borderless="props.design === 'plain'">
-              <NmorphIcon
-                class="nmorph-backtop__up-icon"
-                :color="props.design === 'nmorph' ? undefined : 'var(--nmorph-white-color)'"
-              >
+            <NmorphButton :design="props.design" :borderless="props.design === 'plain'" :color="plainControlColor">
+              <NmorphIcon class="nmorph-backtop__up-icon" :color="plainControlColor">
                 <NmorphIconChevronDown />
               </NmorphIcon>
             </NmorphButton>

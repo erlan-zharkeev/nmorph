@@ -15,11 +15,11 @@ const ribbonCorners = [
       <NmorphButton text="Default" />
     </NmorphBadge>
     <div class="badge-type-overview__dot">
-      <NmorphBadge type="dot" color="var(--nmorph-error-color)" :dot-size="9">
+      <NmorphBadge type="dot" color="var(--nmorph-error-text-color)" :dot-size="9">
         <NmorphButton text="Dot" />
       </NmorphBadge>
     </div>
-    <NmorphBadge type="tag" value="Tag" color="var(--nmorph-success-color)" />
+    <NmorphBadge type="tag" value="Tag" color="var(--nmorph-success-text-color)" />
     <NmorphBadge
       v-for="corner in ribbonCorners"
       :key="corner"
@@ -34,7 +34,7 @@ const ribbonCorners = [
       type="ribbon"
       ribbon-corner="top-right"
       :ribbon-tilt="false"
-      color="var(--nmorph-success-color)"
+      color="var(--nmorph-success-text-color)"
     >
       <div class="badge-type-overview__card">flat corner</div>
     </NmorphBadge>

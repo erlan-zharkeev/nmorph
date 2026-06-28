@@ -12,7 +12,7 @@ const teamSize = 12;
 
 <template>
   <div class="badge-value-slot-overview">
-    <NmorphBadge :value="teamSize" color="var(--nmorph-success-color)">
+    <NmorphBadge :value="teamSize" color="var(--nmorph-success-text-color)">
       <template #value="{ value }">
         <div class="badge-value-slot-overview__content">
           <NmorphIcon width="10px" height="10px" color="currentColor">
@@ -26,7 +26,7 @@ const teamSize = 12;
     <NmorphBadge
       type="tag"
       size="tiny"
-      color="var(--nmorph-accent-color)"
+      color="var(--nmorph-info-text-color)"
       :value="''"
     >
       <template #value>

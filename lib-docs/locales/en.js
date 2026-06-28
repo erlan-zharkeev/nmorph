@@ -230,6 +230,10 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "backtop-plain-direct-white-color":
+          "NmorphBacktop now passes white directly to its default plain button and icon so overlay controls stay white through button icon styling.",
+        "badge-docs-text-color-tokens":
+          "Badge color examples now use opaque semantic text color tokens instead of alpha background colors for clearer dark-theme docs.",
         "backtop-plain-white-foreground":
           "NmorphBacktop plain overlay controls now keep slotted text and default icons white on the dark overlay surface.",
         "light-contrast-text-softened":

@@ -79,4 +79,22 @@ describe('NmorphBacktop', () => {
     target.remove();
     portal.remove();
   });
+
+  it('uses white color for the default plain button and icon', () => {
+    const wrapper = mount(NmorphBacktop, {
+      props: {
+        design: 'plain',
+        teleportDisabled: true,
+      },
+    });
+
+    const button = wrapper.find('.nmorph-button').element as HTMLElement;
+    const icon = wrapper.find('.nmorph-icon').element as HTMLElement;
+
+    expect(button.style.getPropertyValue('--nmorph-private-button-color')).toBe('var(--nmorph-white-color)');
+    expect(button.style.getPropertyValue('--nmorph-private-button-plain-color')).toBe('var(--nmorph-white-color)');
+    expect(icon.style.getPropertyValue('--nmorph-private-icon-color')).toBe('var(--nmorph-white-color)');
+
+    wrapper.unmount();
+  });
 });

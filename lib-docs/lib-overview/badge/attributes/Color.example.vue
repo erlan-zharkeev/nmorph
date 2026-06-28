@@ -5,17 +5,17 @@ import { NmorphBadge, NmorphButton } from "@nmorph/nmorph-ui-kit";
 <template>
   <div class="badge-color-overview">
     <div class="badge-value-overview__element">
-      <NmorphBadge type="dot" color="red">
+      <NmorphBadge type="dot" color="var(--nmorph-error-text-color)">
         <NmorphButton text="button" />
       </NmorphBadge>
     </div>
     <div class="badge-value-overview__element">
-      <NmorphBadge color="green" value="abc">
+      <NmorphBadge color="var(--nmorph-success-text-color)" value="abc">
         <NmorphButton text="button" />
       </NmorphBadge>
     </div>
     <div class="badge-value-overview__element">
-      <NmorphBadge color="var(--nmorph-warn-color)" :value="1">
+      <NmorphBadge color="var(--nmorph-warn-text-color)" :value="1">
         <NmorphButton text="button" />
       </NmorphBadge>
     </div>
