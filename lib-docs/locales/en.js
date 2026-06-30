@@ -230,6 +230,8 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "badge-hidden-geometry":
+          "NmorphBadge hidden indicators are no longer rendered into badge geometry, preventing invisible dot, default, and ribbon badges from expanding parent focus outlines.",
         "backtop-plain-direct-white-color":
           "NmorphBacktop now passes white directly to its default plain button and icon so overlay controls stay white through button icon styling.",
         "badge-docs-text-color-tokens":
@@ -1203,7 +1205,8 @@ export default {
         "is-dot": "Displays the badge as a dot",
         "is-tag":
           "Switches the badge to a standalone tag mode without absolute positioning or a default slot",
-        hidden: "Hides the badge",
+        hidden:
+          "Hides the badge indicator without rendering hidden badge geometry.",
         "hide-on-falsy-value":
           "Hides the badge indicator when value is falsy, including 0 and an empty string.",
         color: "Sets the background color of the badge",

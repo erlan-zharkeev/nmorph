@@ -232,6 +232,8 @@ export default {
     changelog: {
       title: "Журнал изменений",
       items: {
+        "badge-hidden-geometry":
+          "Скрытые индикаторы NmorphBadge больше не рендерятся в геометрии бейджа, поэтому невидимые dot, default и ribbon badges не расширяют focus outline родителя.",
         "backtop-plain-direct-white-color":
           "NmorphBacktop now passes white directly to its default plain button and icon so overlay controls stay white through button icon styling.",
         "badge-docs-text-color-tokens":
@@ -1211,7 +1213,8 @@ export default {
         "is-dot": "Отображает бейдж в виде точки",
         "is-tag":
           "Переключает бейдж в standalone tag-режим без absolute-позиционирования и без default slot",
-        hidden: "Скрывает бейдж",
+        hidden:
+          "Скрывает индикатор бейджа без рендера hidden badge geometry.",
         "hide-on-falsy-value":
           "Скрывает индикатор бейджа, когда value falsy, включая 0 и пустую строку.",
         color: "Устанавливает цвет фона бейджа",

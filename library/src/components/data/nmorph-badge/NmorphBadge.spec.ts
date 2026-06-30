@@ -82,6 +82,31 @@ describe('NmorphBadge', () => {
     hiddenZero.unmount();
   });
 
+  it('does not render hidden badge geometry', async () => {
+    const wrapper = mount(NmorphBadge, {
+      props: {
+        type: 'dot',
+        hidden: true,
+        offsetX: 12,
+        offsetY: -8,
+      },
+      slots: {
+        default: '<button>Profile</button>',
+      },
+    });
+
+    expect(wrapper.find('.nmorph-badge__container').exists()).toBe(false);
+    expect(wrapper.find('.nmorph-badge__dot').exists()).toBe(false);
+    expect(wrapper.text()).toBe('Profile');
+
+    await wrapper.setProps({ hidden: false });
+
+    expect(wrapper.find('.nmorph-badge__container').exists()).toBe(true);
+    expect(wrapper.find('.nmorph-badge__dot').exists()).toBe(true);
+
+    wrapper.unmount();
+  });
+
   it('renders ribbon badge in the selected corner', async () => {
     const wrapper = mount(NmorphBadge, {
       props: {

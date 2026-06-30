@@ -219,6 +219,8 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "badge-hidden-geometry":
+          "NmorphBadge 的隐藏指示器不再渲染到徽标几何中，避免不可见的 dot、default 和 ribbon badges 扩大父级 focus outline。",
         "backtop-plain-direct-white-color":
           "NmorphBacktop now passes white directly to its default plain button and icon so overlay controls stay white through button icon styling.",
         "badge-docs-text-color-tokens":
@@ -1169,7 +1171,7 @@ export default {
         "is-dot": "Displays the badge as a dot",
         "is-tag":
           "将徽标切换为独立 tag 模式，不使用 absolute positioning 或 default slot",
-        hidden: "Hides the badge",
+        hidden: "隐藏徽标指示器，同时不渲染 hidden badge geometry。",
         "hide-on-falsy-value":
           "当 value 为 falsy 时隐藏徽标指示器，包括 0 和空字符串。",
         color: "Sets the background color of the badge",

@@ -46,7 +46,6 @@ const modifiers = computed(() =>
 const containerModifiers = computed(() =>
   useModifiers({
     'nmorph-badge__container': [
-      props.hidden && 'hidden',
       isTagType.value && 'tag',
       isRibbon.value && 'ribbon',
       isRibbon.value && `ribbon-${props.ribbonCorner}`,
@@ -70,6 +69,7 @@ const shouldHideOnFalsyValue = computed(() => props.hideOnFalsyValue && !props.v
 const shouldShowBadge = computed(
   () => (isDotType.value || props.value !== undefined || hasValueSlot.value) && !shouldHideOnFalsyValue.value
 );
+const shouldRenderBadge = computed(() => shouldShowBadge.value && !props.hidden);
 
 const appliedOffset = computed(() => {
   const x = `${(badgeWidth?.value / 2 + props.offsetX) * -1}px`;
@@ -127,15 +127,24 @@ const ribbonFrameStyle = computed<CSSProperties>(() => ({
 onMounted(updateBadgeSize);
 
 watch(
-  () => [props.value, props.max, props.type, props.ribbonCorner, props.ribbonTilt, props.size, props.hideOnFalsyValue],
+  () => [
+    props.value,
+    props.max,
+    props.type,
+    props.ribbonCorner,
+    props.ribbonTilt,
+    props.size,
+    props.hidden,
+    props.hideOnFalsyValue,
+  ],
   updateBadgeSize
 );
 </script>
 
 <template>
-  <div v-if="!props.disabled && (!isTagType || shouldShowBadge)" :class="modifiers" :style="styles">
+  <div v-if="!props.disabled && (!isTagType || shouldRenderBadge)" :class="modifiers" :style="styles">
     <slot v-if="!isTagType" />
-    <div v-if="shouldShowBadge && isRibbon" class="nmorph-badge__ribbon-frame" :style="ribbonFrameStyle">
+    <div v-if="shouldRenderBadge && isRibbon" class="nmorph-badge__ribbon-frame" :style="ribbonFrameStyle">
       <div :class="ribbonCornerModifiers">
         <div ref="badge" :class="containerModifiers" :style="containerStyle">
           <div class="nmorph-badge__content" :class="hasValueSlot && 'nmorph-badge__content--custom'">
@@ -144,7 +153,7 @@ watch(
         </div>
       </div>
     </div>
-    <div v-else-if="shouldShowBadge" ref="badge" :class="containerModifiers" :style="containerStyle">
+    <div v-else-if="shouldRenderBadge" ref="badge" :class="containerModifiers" :style="containerStyle">
       <div v-if="isDotType" class="nmorph-badge__dot" />
       <div v-else class="nmorph-badge__content" :class="hasValueSlot && 'nmorph-badge__content--custom'">
         <slot name="value" :value="props.value" :display-value="displayValue"> {{ displayValue }} </slot>
@@ -243,7 +252,7 @@ $nmorph-badge-dot-size-extra-large: 8px;
   }
 
   .nmorph-badge__container--hidden {
-    opacity: 0;
+    display: none;
   }
 
   .nmorph-badge__ribbon-frame {
