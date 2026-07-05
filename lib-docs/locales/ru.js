@@ -232,6 +232,8 @@ export default {
     changelog: {
       title: "Журнал изменений",
       items: {
+        "media-tile-public-api-removal":
+          "Breaking: NmorphMediaTile удален из публичных экспортов data-компонентов, render tests, stories и навигации lib docs.",
         "badge-hidden-geometry":
           "Скрытые индикаторы NmorphBadge больше не рендерятся в геометрии бейджа, поэтому невидимые dot, default и ribbon badges не расширяют focus outline родителя.",
         "backtop-plain-direct-white-color":
@@ -319,19 +321,15 @@ export default {
         "dev-workflow-cleanup":
           "Root dev scripts теперь используют общий dev-open helper из корня репозитория, docs и sandbox подключают Vue devtools stub, а Storybook scripts вызывают Storybook CLI напрямую без wrapper folder.",
         "component-control-polish":
-          "Button, Empty, ColorPicker, TimePicker, Tabs, MediaTile, Table, loading slots у Image и связанные docs examples получили точечную визуальную и API-полировку.",
+          "Button, Empty, ColorPicker, TimePicker, Tabs, Table, loading slots у Image и связанные docs examples получили точечную визуальную и API-полировку.",
         "legacy-cleanup-public-api":
           "Очищены legacy-инструменты документации и package metadata: удалены старые генераторы и неиспользуемые зависимости docs, NmorphImage loadingText заменен документацией loading slot, а типы props компонентов теперь последовательно экспортируются через публичные barrels.",
-        "media-tile-aspect-design":
-          "NmorphMediaTile теперь поддерживает props design и aspect, включая aspect=\"fill\" для call tiles по размеру родителя, сохраняя 16:9 video layout по умолчанию.",
         "carousel-seamless-loop":
           "NmorphCarousel теперь зацикливается через clone-слайды по краям для бесшовной навигации вперед и назад, с исправленными left/right controls и styling стрелок в sandbox.",
         "notification-provider-layering":
           "NmorphNotificationProvider теперь по умолчанию телепортируется в body и использует общий z-index manager, чтобы notifications стабильно располагались поверх docs shell и overlays.",
         "docs-api-example-polish":
           "Docs API tables теперь удерживают slots, exposes, events и translations внутри контейнера, а examples получили polish для dropdown spacing, stacked tabs, borderless stepper arrows и icon currentColor.",
-        "media-tile-stable-src-object-binding":
-          "NmorphMediaTile теперь сразу привязывает srcObject streams к media elements для WebRTC, держит немьютнутый remote audio в стабильном отдельном audio element, мьютит парный video output и сообщает об autoplay failures в development.",
         "pagination-fixed-container-sizing":
           "NmorphPagination теперь может резервировать фиксированный контейнер через width и min-width, а loading examples в docs держат стабильное место под skeleton cards, пока приходит контент.",
         "table-plain-bordered-contract":
@@ -340,8 +338,6 @@ export default {
           "NmorphDrawer теперь анимирует открытие и закрытие, а sandbox содержит такой же drawer example, как в lib docs.",
         "image-preview-docs-polish":
           "NmorphImagePreview хранит scale и rotation отдельно для каждой preview-картинки, пока компонент смонтирован, docs вынесли Guide Step на отдельную страницу, а примеры получили polish для overlay, table, translations и icon.",
-        "media-tile-src-object-audio-output":
-          "NmorphMediaTile теперь выводит немьютнутый MediaStream audio через отдельный audio element для srcObject, держит video muted для стабильного autoplay, применяет sinkId к обоим элементам, вызывает play для video и audio и отслеживает addtrack/removetrack.",
         "hydration-navigation-stability":
           "Hydration в docs стал стабильнее: слоты колонок API-таблиц рендерятся вне table body, theme switcher получает совпадающий SSR default, а правое Содержание регистрируется из metadata компонентов вместо client-only DOM scan.",
         "media-preview-state-polish":
@@ -352,12 +348,10 @@ export default {
           "Lib docs теперь показывают first-load progress card в main shell, используют paper cards на большем числе страниц, добавляют copy buttons и install snippets для нескольких package manager в guide, а также полируют icon/list examples.",
         "card-paper-surface":
           "NmorphCard теперь поддерживает встроенную бумажную текстуру через paper, а карточки в docs используют единый уровень paper для одинаковой тактильной поверхности.",
-        "media-tile-audio-sink":
-          "NmorphMediaTile теперь сохраняет remote audio в audio-only потоках с videoOff, не дублирует звук при видимом видео, учитывает muted и может направлять медиа через sinkId, если браузер поддерживает setSinkId.",
         "docs-paper-shell":
           "Lib docs теперь используют общие paper-карточки для основного shell, header, footer, overview, guide, about, changelog и примеров, а search стал настоящей кнопкой с ровным Ctrl K.",
         "component-api-docs-refresh":
-          "Обновлены API-таблицы и примеры docs для Card paper, Image frame border и loading states, MediaTile sinkId, Pagination loading, Scroll, Tooltip, Guide и связанных props компонентов.",
+          "Обновлены API-таблицы и примеры docs для Card paper, Image frame border и loading states, Pagination loading, Scroll, Tooltip, Guide и связанных props компонентов.",
         "interaction-polish":
           "Отполированы детали взаимодействия в scroll, pagination, carousel, guide, tooltip, stepper, time picker, file upload и media previews, включая обновление заполненной hand icon.",
         "docs-layout-refresh":
@@ -384,14 +378,10 @@ export default {
           "NmorphIconHand теперь использует более тонкую outline-only hand icon без заливки.",
         "button-borderless-prop":
           'NmorphButton теперь поддерживает borderless для plain-кнопок, при этом design="plain" по умолчанию остается с border.',
-        "media-tile-show-status":
-          "NmorphMediaTile теперь поддерживает show-status, чтобы скрывать правый нижний статус без изменения заглушки video-off.",
         "select-button-custom-thickness":
           "NmorphSelectButton теперь использует один prop custom-thickness для переопределения выбранного thickness вместо отдельных публичных props для размеров элементов.",
         "speaker-icons":
           "Добавлен NmorphIconMuteSpeaker, NmorphIconSpeaker остается в публичном наборе иконок, а NmorphIconSpeakerOff сохранен как совместимый alias.",
-        "media-tile-plain-avatar":
-          "Аватары-заглушки в NmorphMediaTile теперь рендерятся с plain-поверхностью для более чистого вида плиток звонка.",
         "component-thickness-api":
           "Breaking: props с размерными пресетами теперь называются thickness вместо height в Button, form controls, selection controls, Pagination, CollapseItem, TagItem и связанных option data.",
         "thin-input-centering":
@@ -1483,12 +1473,6 @@ export default {
       "basic-usage": {
         subtitle:
           "Показывает mixed image/video галерею с более выразительными trigger cards и preview overlay.",
-      },
-    },
-    "media-tile": {
-      "basic-usage": {
-        subtitle:
-          "Показывает video tile, fallback tile и loading state для call UI.",
       },
     },
     "video-preview": {

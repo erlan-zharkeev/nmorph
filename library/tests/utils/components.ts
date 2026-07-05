@@ -44,7 +44,6 @@ import {
   NmorphLayout,
   NmorphLink,
   NmorphMediaGallery,
-  NmorphMediaTile,
   NmorphNotificationProvider,
   NmorphNumberInput,
   NmorphOTPInput,
@@ -340,11 +339,6 @@ export const renderCases = [
     name: 'NmorphMediaGallery',
     component: NmorphMediaGallery,
     props: { modelValue: true, items: [{ kind: 'image', src: imageSrc, name: 'Preview' }] },
-  },
-  {
-    name: 'NmorphMediaTile',
-    component: NmorphMediaTile,
-    props: { name: 'Ada Lovelace', videoOff: true },
   },
   {
     name: 'NmorphPagination',

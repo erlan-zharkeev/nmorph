@@ -5,6 +5,7 @@ import { h } from "vue";
 const knownBugItems: string[] = [];
 
 const releaseDates: Record<string, string> = {
+  "v3.0.23": "2026-07-05",
   "v3.0.22": "2026-06-30",
   "v3.0.21": "2026-06-28",
   "v3.0.20": "2026-06-27",
@@ -109,6 +110,14 @@ const ReleaseHeading = ({ version }: { version: string }) => {
         <div class="docs-changelog-page__content">
           <section id="changelog">
           <h2>{{ $t("changelog-page.changelog.title") }}</h2>
+          <div class="docs-changelog-page__release">
+            <ReleaseHeading version="v3.0.23" />
+            <ul>
+              <li>
+                {{ $t("changelog-page.changelog.items.media-tile-public-api-removal") }}
+              </li>
+            </ul>
+          </div>
           <div class="docs-changelog-page__release">
             <ReleaseHeading version="v3.0.22" />
             <ul>
@@ -318,9 +327,6 @@ const ReleaseHeading = ({ version }: { version: string }) => {
                 {{ $t("changelog-page.changelog.items.legacy-cleanup-public-api") }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.media-tile-aspect-design") }}
-              </li>
-              <li>
                 {{ $t("changelog-page.changelog.items.carousel-seamless-loop") }}
               </li>
               <li>
@@ -334,9 +340,6 @@ const ReleaseHeading = ({ version }: { version: string }) => {
           <div class="docs-changelog-page__release">
             <ReleaseHeading version="v3.0.7" />
             <ul>
-              <li>
-                {{ $t("changelog-page.changelog.items.media-tile-stable-src-object-binding") }}
-              </li>
               <li>
                 {{ $t("changelog-page.changelog.items.pagination-fixed-container-sizing") }}
               </li>
@@ -354,9 +357,6 @@ const ReleaseHeading = ({ version }: { version: string }) => {
           <div class="docs-changelog-page__release">
             <ReleaseHeading version="v3.0.6" />
             <ul>
-              <li>
-                {{ $t("changelog-page.changelog.items.media-tile-src-object-audio-output") }}
-              </li>
               <li>
                 {{ $t("changelog-page.changelog.items.hydration-navigation-stability") }}
               </li>
@@ -376,9 +376,6 @@ const ReleaseHeading = ({ version }: { version: string }) => {
             <ul>
               <li>
                 {{ $t("changelog-page.changelog.items.card-paper-surface") }}
-              </li>
-              <li>
-                {{ $t("changelog-page.changelog.items.media-tile-audio-sink") }}
               </li>
               <li>
                 {{ $t("changelog-page.changelog.items.docs-paper-shell") }}
@@ -441,16 +438,10 @@ const ReleaseHeading = ({ version }: { version: string }) => {
                 {{ $t("changelog-page.changelog.items.button-borderless-prop") }}
               </li>
               <li>
-                {{ $t("changelog-page.changelog.items.media-tile-show-status") }}
-              </li>
-              <li>
                 {{ $t("changelog-page.changelog.items.select-button-custom-thickness") }}
               </li>
               <li>
                 {{ $t("changelog-page.changelog.items.speaker-icons") }}
-              </li>
-              <li>
-                {{ $t("changelog-page.changelog.items.media-tile-plain-avatar") }}
               </li>
             </ul>
           </div>

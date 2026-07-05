@@ -230,6 +230,8 @@ export default {
     changelog: {
       title: "Changelog",
       items: {
+        "media-tile-public-api-removal":
+          "Breaking: NmorphMediaTile has been removed from public data component exports, render tests, stories, and lib docs navigation.",
         "badge-hidden-geometry":
           "NmorphBadge hidden indicators are no longer rendered into badge geometry, preventing invisible dot, default, and ribbon badges from expanding parent focus outlines.",
         "backtop-plain-direct-white-color":
@@ -317,19 +319,15 @@ export default {
         "dev-workflow-cleanup":
           "Root dev scripts now use the shared dev-open helper from the repository root, docs and sandbox use the Vue devtools stub, and Storybook scripts call the Storybook CLI directly without the wrapper folder.",
         "component-control-polish":
-          "Button, Empty, ColorPicker, TimePicker, Tabs, MediaTile, Table, Image loading slots, and related docs examples received focused visual and API polish.",
+          "Button, Empty, ColorPicker, TimePicker, Tabs, Table, Image loading slots, and related docs examples received focused visual and API polish.",
         "legacy-cleanup-public-api":
           "Legacy docs tooling and package metadata were cleaned up: stale generators and unused docs dependencies were removed, NmorphImage loadingText was replaced by the loading slot docs, and component prop types now export consistently through the public barrels.",
-        "media-tile-aspect-design":
-          "NmorphMediaTile now exposes design and aspect props, including aspect=\"fill\" for parent-sized call tiles while keeping the default 16:9 video layout.",
         "carousel-seamless-loop":
           "NmorphCarousel now loops through cloned edge slides for seamless forward/back navigation, with corrected left/right controls and sandbox arrow styling.",
         "notification-provider-layering":
           "NmorphNotificationProvider now teleports to body by default and uses the shared z-index manager so notifications layer above docs shells and overlays consistently.",
         "docs-api-example-polish":
           "Docs API tables now keep slots, exposes, events, and translations inside their container, while examples polish dropdown spacing, stacked tabs, borderless stepper arrows, and icon currentColor handling.",
-        "media-tile-stable-src-object-binding":
-          "NmorphMediaTile now binds srcObject streams to media elements immediately for WebRTC, keeps unmuted remote audio on a stable dedicated audio element, mutes the paired video output, and reports autoplay failures in development.",
         "pagination-fixed-container-sizing":
           "NmorphPagination can reserve a fixed container with width and min-width controls, and docs loading examples keep stable skeleton card space while content arrives.",
         "table-plain-bordered-contract":
@@ -338,8 +336,6 @@ export default {
           "NmorphDrawer now animates open and close transitions, and the sandbox includes the same drawer example shown in lib docs.",
         "image-preview-docs-polish":
           "NmorphImagePreview keeps image scale and rotation per preview image while the component is mounted, docs split Guide Step into its own page, and docs examples received overlay, table, translation, and icon polish.",
-        "media-tile-src-object-audio-output":
-          "NmorphMediaTile now splits unmuted MediaStream audio into a dedicated audio element for srcObject streams, keeps video muted for stable autoplay, applies sinkId to both elements, calls play for video and audio, and tracks addtrack/removetrack updates.",
         "hydration-navigation-stability":
           "Docs hydration is more stable: API table column slots now render outside table bodies, theme switching has a matching SSR default, and right-side Contents navigation is registered from component metadata instead of client-only DOM scanning.",
         "media-preview-state-polish":
@@ -350,12 +346,10 @@ export default {
           "Lib docs now show a first-load progress card in the main shell, use paper cards across more pages, add copy buttons and multiple package-manager install snippets in the guide, and polish icon/list examples.",
         "card-paper-surface":
           "NmorphCard now supports a built-in paper texture through paper, and docs card examples use a consistent paper strength for the same tactile surface.",
-        "media-tile-audio-sink":
-          "NmorphMediaTile now keeps remote audio playing in audio-only videoOff streams, avoids duplicate playback when video is visible, respects muted, and can route media through sinkId when the browser supports setSinkId.",
         "docs-paper-shell":
           "Lib docs now use shared paper cards for the main shell, header, footer, overview, guide, about, changelog, and examples, with a real search button that aligns the Ctrl K shortcut cleanly.",
         "component-api-docs-refresh":
-          "Docs API tables and examples were refreshed for Card paper, Image frame borders and loading states, MediaTile sinkId, Pagination loading, Scroll, Tooltip, Guide, and related component props.",
+          "Docs API tables and examples were refreshed for Card paper, Image frame borders and loading states, Pagination loading, Scroll, Tooltip, Guide, and related component props.",
         "interaction-polish":
           "Polished component interaction details across scroll, pagination, carousel, guide, tooltip, stepper, time picker, file upload, and media previews, including the filled hand icon update.",
         "docs-layout-refresh":
@@ -382,14 +376,10 @@ export default {
           "NmorphIconHand now uses a thinner outline-only hand glyph without a filled shape.",
         "button-borderless-prop":
           "NmorphButton now supports borderless plain buttons through borderless, keeping design=\"plain\" bordered by default.",
-        "media-tile-show-status":
-          "NmorphMediaTile now supports show-status to hide the bottom-right status overlay without changing video-off fallback behavior.",
         "select-button-custom-thickness":
           "NmorphSelectButton now uses a single custom-thickness prop to override the selected thickness, replacing separate public item sizing props.",
         "speaker-icons":
           "Added NmorphIconMuteSpeaker, kept NmorphIconSpeaker in the public icon set, and kept NmorphIconSpeakerOff as a compatibility alias.",
-        "media-tile-plain-avatar":
-          "NmorphMediaTile fallback avatars now render with the plain avatar surface for cleaner call tiles.",
         "component-thickness-api":
           "Breaking: component size preset props are now named thickness instead of height across Button, form controls, selection controls, Pagination, CollapseItem, TagItem, and related option data.",
         "thin-input-centering":
@@ -1469,12 +1459,6 @@ export default {
       "basic-usage": {
         subtitle:
           "Shows a mixed image and video gallery with polished trigger cards and a preview overlay.",
-      },
-    },
-    "media-tile": {
-      "basic-usage": {
-        subtitle:
-          "Shows a video tile, fallback tile, and loading state for call interfaces.",
       },
     },
     "video-preview": {

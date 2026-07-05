@@ -24,7 +24,6 @@ export const componentGroups = [
       "NmorphFileCard",
       "NmorphImage",
       "NmorphMediaGallery",
-      "NmorphMediaTile",
       "NmorphVideoPreview",
       "NmorphTagList",
       "NmorphTagItem",

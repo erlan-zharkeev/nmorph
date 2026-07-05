@@ -219,6 +219,8 @@ export default {
     changelog: {
       title: "变更日志",
       items: {
+        "media-tile-public-api-removal":
+          "Breaking: NmorphMediaTile 已从公共 data component exports、render tests、stories 和 lib docs navigation 中移除。",
         "badge-hidden-geometry":
           "NmorphBadge 的隐藏指示器不再渲染到徽标几何中，避免不可见的 dot、default 和 ribbon badges 扩大父级 focus outline。",
         "backtop-plain-direct-white-color":
@@ -306,19 +308,15 @@ export default {
         "dev-workflow-cleanup":
           "Root dev scripts 现在使用仓库根目录的共享 dev-open helper，docs 和 sandbox 使用 Vue devtools stub，Storybook scripts 直接调用 Storybook CLI，不再需要 wrapper folder。",
         "component-control-polish":
-          "Button、Empty、ColorPicker、TimePicker、Tabs、MediaTile、Table、Image loading slots 以及相关 docs examples 获得了更细致的视觉和 API 打磨。",
+          "Button、Empty、ColorPicker、TimePicker、Tabs、Table、Image loading slots 以及相关 docs examples 获得了更细致的视觉和 API 打磨。",
         "legacy-cleanup-public-api":
           "清理了旧的文档工具和 package metadata：移除了过时的生成脚本和未使用的 docs 依赖，NmorphImage loadingText 改为使用 loading slot 文档，组件 props 类型也会通过公共 barrel 稳定导出。",
-        "media-tile-aspect-design":
-          "NmorphMediaTile 现在提供 design 和 aspect props，包括用于按父容器尺寸填充通话卡片的 aspect=\"fill\"，同时保留默认的 16:9 video layout。",
         "carousel-seamless-loop":
           "NmorphCarousel 现在通过边缘 clone slides 实现无缝前后循环，并修正 left/right controls 与 sandbox 箭头样式。",
         "notification-provider-layering":
           "NmorphNotificationProvider 现在默认 teleport 到 body，并使用共享 z-index manager，让 notifications 稳定显示在 docs shell 和 overlays 之上。",
         "docs-api-example-polish":
           "Docs API tables 现在会让 slots、exposes、events 和 translations 保持在容器内，同时优化 dropdown spacing、stacked tabs、borderless stepper arrows 和 icon currentColor。",
-        "media-tile-stable-src-object-binding":
-          "NmorphMediaTile 现在会立即把 srcObject streams 绑定到 WebRTC media elements，将未静音的 remote audio 保持在稳定的独立 audio element 中，让配对 video output 保持 muted，并在 development 中报告 autoplay failures。",
         "pagination-fixed-container-sizing":
           "NmorphPagination 现在可以通过 width 和 min-width 预留固定容器，docs loading 示例也会在内容到达前保持稳定的 skeleton card 空间。",
         "table-plain-bordered-contract":
@@ -327,8 +325,6 @@ export default {
           "NmorphDrawer 现在支持打开和关闭动画，sandbox 也加入了与 lib docs 相同的 drawer 示例。",
         "image-preview-docs-polish":
           "NmorphImagePreview 会在组件挂载期间按每张 preview 图片保存 scale 和 rotation，docs 将 Guide Step 拆为独立页面，并优化了 overlay、table、translations 和 icon 示例。",
-        "media-tile-src-object-audio-output":
-          "NmorphMediaTile 现在会为 srcObject 中未静音的 MediaStream audio 创建独立 audio element，让 video 保持 muted 以稳定 autoplay，同时把 sinkId 应用于两个元素、分别调用 play，并监听 addtrack/removetrack。",
         "hydration-navigation-stability":
           "Docs hydration 更稳定：API table column slots 不再渲染在 table body 内，theme switcher 使用一致的 SSR default，右侧 Contents 也改为通过组件 metadata 注册，而不是只在客户端扫描 DOM。",
         "media-preview-state-polish":
@@ -339,12 +335,10 @@ export default {
           "Lib docs 现在在 main shell 中显示 first-load progress card，更多页面使用 paper cards，guide 增加 copy buttons 与多个 package manager 的安装 snippets，并优化 icon/list examples。",
         "card-paper-surface":
           "NmorphCard 现在通过 paper 支持内置纸张纹理，docs 中的卡片示例也统一使用相同的 paper 强度，保持一致的触感表面。",
-        "media-tile-audio-sink":
-          "NmorphMediaTile 现在会在 videoOff 的 audio-only 流中继续播放 remote audio，视频可见时避免重复播放，遵守 muted，并在浏览器支持 setSinkId 时可通过 sinkId 路由媒体输出。",
         "docs-paper-shell":
           "Lib docs 现在为主 shell、header、footer、overview、guide、about、changelog 和示例统一使用 paper 卡片，search 也改为真正的按钮并让 Ctrl K 对齐更稳定。",
         "component-api-docs-refresh":
-          "刷新了 Card paper、Image frame border 与 loading states、MediaTile sinkId、Pagination loading、Scroll、Tooltip、Guide 以及相关组件 props 的 API 表格和示例。",
+          "刷新了 Card paper、Image frame border 与 loading states、Pagination loading、Scroll、Tooltip、Guide 以及相关组件 props 的 API 表格和示例。",
         "interaction-polish":
           "优化了 scroll、pagination、carousel、guide、tooltip、stepper、time picker、file upload 和 media previews 的交互细节，并更新为填充式 hand icon。",
         "docs-layout-refresh":
@@ -371,14 +365,10 @@ export default {
           "NmorphIconHand 现在使用更细的纯描边手形图标，不再使用填充形状。",
         "button-borderless-prop":
           'NmorphButton 现在支持通过 borderless 渲染无边框 plain 按钮，同时 design="plain" 默认仍保留 border。',
-        "media-tile-show-status":
-          "NmorphMediaTile 现在支持 show-status，可隐藏右下角状态 overlay，同时不改变 video-off fallback 行为。",
         "select-button-custom-thickness":
           "NmorphSelectButton 现在使用单一 custom-thickness prop 覆盖当前 thickness，替代单独公开的 item 尺寸 props。",
         "speaker-icons":
           "新增 NmorphIconMuteSpeaker，NmorphIconSpeaker 保留在公开图标集中，并继续保留 NmorphIconSpeakerOff 作为兼容 alias。",
-        "media-tile-plain-avatar":
-          "NmorphMediaTile fallback avatar 现在使用 plain avatar surface，让 call tile 视觉更干净。",
         "component-thickness-api":
           "Breaking: Button、form controls、selection controls、Pagination、CollapseItem、TagItem 以及相关 option data 的尺寸预设 prop 现在从 height 改名为 thickness。",
         "thin-input-centering":
@@ -1414,11 +1404,6 @@ export default {
       "basic-usage": {
         subtitle:
           "展示包含图片和视频的混合画廊，带更精致的 trigger cards 和 preview overlay。",
-      },
-    },
-    "media-tile": {
-      "basic-usage": {
-        subtitle: "展示通话 UI 中的视频 tile、fallback tile 和 loading 状态。",
       },
     },
     "video-preview": {

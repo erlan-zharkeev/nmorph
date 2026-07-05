@@ -20,7 +20,6 @@ const overviewComponents = [
   { title: "Image", path: "image", preview: "image" },
   { title: "Image Preview", path: "image-preview", preview: "image-preview" },
   { title: "Media Gallery", path: "media-gallery", preview: "media-gallery" },
-  { title: "Media Tile", path: "media-tile", preview: "media-tile" },
   { title: "File Card", path: "file-card", preview: "file-card" },
   { title: "Audio Preview", path: "audio-preview", preview: "audio-preview" },
   { title: "Video Preview", path: "video-preview", preview: "video-preview" },
@@ -631,35 +630,6 @@ const overviewComponents = [
       width: 14px;
       height: 76px;
       opacity: 0.55;
-    }
-  }
-
-  .overview-preview--media-tile {
-    .overview-preview__part:nth-child(1) {
-      inset: 20px 34px;
-      display: block;
-      background: var(--nmorph-main-color);
-      box-shadow: var(--nmorph-shadow-inset);
-    }
-
-    .overview-preview__part:nth-child(2) {
-      top: 38px;
-      left: 50%;
-      display: block;
-      width: 42px;
-      height: 42px;
-      border-radius: var(--border-radius-circular);
-      background: var(--overview-preview-accent-soft);
-      transform: translateX(-50%);
-    }
-
-    .overview-preview__part:nth-child(3) {
-      right: 46px;
-      bottom: 30px;
-      display: block;
-      width: 50px;
-      height: 8px;
-      background: var(--overview-preview-muted);
     }
   }
 

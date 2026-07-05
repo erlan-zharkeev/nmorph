@@ -32,7 +32,6 @@ import emojiPickerOverview from "~/lib-overview/emoji-picker";
 import fileCardOverview from "~/lib-overview/file-card";
 import imageOverview from "~/lib-overview/image";
 import mediaGalleryOverview from "~/lib-overview/media-gallery";
-import mediaTileOverview from "~/lib-overview/media-tile";
 import videoPreviewOverview from "~/lib-overview/video-preview";
 import tagListOverview from "~/lib-overview/tag-list";
 import tagItemOverview from "~/lib-overview/tag-item";
@@ -107,7 +106,6 @@ const overviewComponentsByName: Record<string, unknown[]> = {
   "file-card": fileCardOverview,
   image: imageOverview,
   "media-gallery": mediaGalleryOverview,
-  "media-tile": mediaTileOverview,
   "video-preview": videoPreviewOverview,
   "tag-list": tagListOverview,
   "tag-item": tagItemOverview,
@@ -400,19 +398,11 @@ watch([() => props.name, () => props.extraAnchors], loadOverview, { immediate: t
   background: var(--nmorph-main-color);
   box-shadow: var(--nmorph-shadow-outset);
   color: var(--nmorph-text-color);
-  transition:
-    color var(--transition-02),
-    transform var(--transition-02);
 
   :deep(.nmorph-icon) {
     flex: 0 0 auto;
 
     --nmorph-private-icon-color: currentColor;
-  }
-
-  &:hover {
-    color: var(--nmorph-accent-color);
-    transform: translateY(-1px);
   }
 }
 
