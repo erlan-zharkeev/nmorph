@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { nextTick } from 'vue';
 import { NmorphAudioPreview } from '@/components';
 
@@ -58,6 +58,60 @@ describe('NmorphAudioPreview', () => {
 
     expect(wrapper.find('.nmorph-audio-preview').classes()).toContain('nmorph-audio-preview--no-actions');
     expect(wrapper.find('.nmorph-audio-preview__actions').exists()).toBe(false);
+
+    wrapper.unmount();
+  });
+
+  it('releases the audio media pipeline on unmount without emitting playback events', () => {
+    const wrapper = mount(NmorphAudioPreview, {
+      props: {
+        src: 'blob:audio',
+      },
+    });
+    const audio = wrapper.find('audio').element as HTMLAudioElement;
+    const source = document.createElement('source');
+    const pause = vi.fn(() => audio.dispatchEvent(new Event('pause')));
+    const load = vi.fn();
+    const removeAttribute = vi.spyOn(audio, 'removeAttribute');
+
+    source.setAttribute('src', 'blob:audio-fallback');
+    audio.append(source);
+    Object.defineProperty(audio, 'pause', { configurable: true, value: pause });
+    Object.defineProperty(audio, 'load', { configurable: true, value: load });
+    Object.defineProperty(audio, 'srcObject', { configurable: true, writable: true, value: {} });
+
+    wrapper.unmount();
+
+    expect(pause).toHaveBeenCalledTimes(1);
+    expect(removeAttribute).toHaveBeenCalledWith('src');
+    expect(source.hasAttribute('src')).toBe(false);
+    expect(audio.srcObject).toBeNull();
+    expect(load).toHaveBeenCalledTimes(1);
+    expect(wrapper.emitted('pause')).toBeUndefined();
+  });
+
+  it('keeps ordinary audio play and pause controls working', async () => {
+    const wrapper = mount(NmorphAudioPreview, {
+      props: {
+        src: 'blob:audio',
+      },
+    });
+    const audio = wrapper.find('audio').element as HTMLAudioElement;
+    const play = vi.fn(async () => audio.dispatchEvent(new Event('play')));
+    const pause = vi.fn(() => audio.dispatchEvent(new Event('pause')));
+
+    Object.defineProperty(audio, 'play', { configurable: true, value: play });
+    Object.defineProperty(audio, 'pause', { configurable: true, value: pause });
+
+    await wrapper.find('button.nmorph-audio-preview__icon').trigger('click');
+
+    expect(play).toHaveBeenCalledTimes(1);
+    expect(wrapper.emitted('play')).toHaveLength(1);
+
+    await wrapper.find('button.nmorph-audio-preview__icon').trigger('click');
+
+    expect(pause).toHaveBeenCalledTimes(1);
+    expect(wrapper.emitted('pause')).toHaveLength(1);
 
     wrapper.unmount();
   });

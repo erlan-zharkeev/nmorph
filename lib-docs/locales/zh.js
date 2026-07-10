@@ -221,6 +221,8 @@ export default {
       items: {
         "media-tile-public-api-removal":
           "Breaking: NmorphMediaTile 已从公共 data component exports、render tests、stories 和 lib docs navigation 中移除。",
+        "media-element-unmount-cleanup":
+          "NmorphAudioPreview、NmorphVideoPreview 和 NmorphMediaGallery 现在会在卸载时停止媒体播放并清理自身媒体源，同时不会撤销调用方创建的 blob URL。",
         "badge-hidden-geometry":
           "NmorphBadge 的隐藏指示器不再渲染到徽标几何中，避免不可见的 dot、default 和 ribbon badges 扩大父级 focus outline。",
         "backtop-plain-direct-white-color":

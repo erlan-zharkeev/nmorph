@@ -16,6 +16,7 @@ import {
   NmorphImage,
 } from '@/components';
 import { createCssSizeVariables, useModifiers } from '@/utils';
+import { cleanupMediaElement } from '@/utils/cleanup-media-element';
 import type { NmorphCSSProperties } from '@/types';
 import type { INmorphMediaGalleryEmit, INmorphMediaGalleryProps, NmorphMediaGalleryItem } from './types';
 import NmorphPreviewPortal from '../nmorph-preview-portal/NmorphPreviewPortal.vue';
@@ -494,7 +495,11 @@ watch(
   { immediate: true }
 );
 
-onBeforeUnmount(removeKeyboardNavigationListener);
+onBeforeUnmount(() => {
+  removeKeyboardNavigationListener();
+  cleanupMediaElement(currentVideoRef.value);
+  Object.values(triggerVideoRefs.value).forEach(cleanupMediaElement);
+});
 
 const pointerDownHandler = (event: PointerEvent) => {
   pointerStart.value = { x: event.clientX, y: event.clientY };

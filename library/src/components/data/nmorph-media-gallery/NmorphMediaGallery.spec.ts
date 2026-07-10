@@ -453,4 +453,51 @@ describe('NmorphMediaGallery', () => {
     wrapper.unmount();
     target.remove();
   });
+
+  it('releases trigger and preview videos when unmounted', async () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+    const wrapper = mount(NmorphMediaGallery, {
+      attachTo: target,
+      global: {
+        stubs: {
+          Teleport: false,
+        },
+      },
+      props: {
+        modelValue: true,
+        showTrigger: true,
+        items: [{ kind: 'video' as const, src: 'blob:clip', name: 'clip.mp4' }],
+      },
+    });
+
+    await nextTick();
+
+    const triggerVideo = wrapper.find('.nmorph-media-gallery__trigger-video').element as HTMLVideoElement;
+    const previewVideo = document.body.querySelector('.nmorph-media-gallery__video') as HTMLVideoElement;
+    const triggerPause = vi.fn();
+    const triggerLoad = vi.fn();
+    const previewPause = vi.fn();
+    const previewLoad = vi.fn();
+
+    Object.defineProperty(triggerVideo, 'pause', { configurable: true, value: triggerPause });
+    Object.defineProperty(triggerVideo, 'load', { configurable: true, value: triggerLoad });
+    Object.defineProperty(triggerVideo, 'srcObject', { configurable: true, writable: true, value: {} });
+    Object.defineProperty(previewVideo, 'pause', { configurable: true, value: previewPause });
+    Object.defineProperty(previewVideo, 'load', { configurable: true, value: previewLoad });
+    Object.defineProperty(previewVideo, 'srcObject', { configurable: true, writable: true, value: {} });
+
+    wrapper.unmount();
+
+    expect(triggerPause).toHaveBeenCalledTimes(1);
+    expect(triggerVideo.hasAttribute('src')).toBe(false);
+    expect(triggerVideo.srcObject).toBeNull();
+    expect(triggerLoad).toHaveBeenCalledTimes(1);
+    expect(previewPause).toHaveBeenCalledTimes(1);
+    expect(previewVideo.hasAttribute('src')).toBe(false);
+    expect(previewVideo.srcObject).toBeNull();
+    expect(previewLoad).toHaveBeenCalledTimes(1);
+
+    target.remove();
+  });
 });

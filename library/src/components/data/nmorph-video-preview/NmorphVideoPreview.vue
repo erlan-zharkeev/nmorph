@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useSlots, watch } from 'vue';
+import { computed, onBeforeUnmount, ref, useSlots, watch } from 'vue';
 import type { CSSProperties } from 'vue';
 import {
   NmorphIcon,
@@ -14,6 +14,7 @@ import {
   NmorphIconVideo,
 } from '@/components';
 import { createCssSizeVariables, useMergedAttrs, useModifiers } from '@/utils';
+import { cleanupMediaElement } from '@/utils/cleanup-media-element';
 import type { INmorphVideoPreviewEmit, INmorphVideoPreviewProps } from './types';
 
 const CONTRAST_ICON_COLOR = 'var(--nmorph-white-color)';
@@ -54,9 +55,11 @@ const props = withDefaults(defineProps<INmorphVideoPreviewProps>(), {
 const emit = defineEmits<INmorphVideoPreviewEmit>();
 const slots = useSlots();
 const videoRef = ref<HTMLVideoElement | null>(null);
+const portalVideoRef = ref<HTMLVideoElement | null>(null);
 const previewOpen = ref(false);
 const playing = ref(false);
 const videoLoaded = ref(false);
+let isUnmounting = false;
 
 const formatDuration = (durationMs?: number) => {
   if (!durationMs || durationMs < 0) return '';
@@ -184,11 +187,15 @@ const updateVideoLoaded = () => {
 };
 
 const playHandler = (event: Event) => {
+  if (isUnmounting) return;
+
   playing.value = true;
   emit('play', event);
 };
 
 const pauseHandler = (event: Event) => {
+  if (isUnmounting) return;
+
   playing.value = false;
   emit('pause', event);
 };
@@ -198,10 +205,18 @@ const endedHandler = () => {
 };
 
 const errorHandler = (event: Event) => {
+  if (isUnmounting) return;
+
   playing.value = false;
   videoLoaded.value = false;
   emit('error', event);
 };
+
+onBeforeUnmount(() => {
+  isUnmounting = true;
+  cleanupMediaElement(videoRef.value);
+  cleanupMediaElement(portalVideoRef.value);
+});
 
 defineExpose({ videoRef });
 </script>
@@ -315,6 +330,7 @@ defineExpose({ videoRef });
       >
         <div class="nmorph-video-preview__portal-content">
           <video
+            ref="portalVideoRef"
             class="nmorph-video-preview__portal-media"
             :src="props.src"
             :poster="props.poster || undefined"

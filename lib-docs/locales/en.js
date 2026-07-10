@@ -232,6 +232,8 @@ export default {
       items: {
         "media-tile-public-api-removal":
           "Breaking: NmorphMediaTile has been removed from public data component exports, render tests, stories, and lib docs navigation.",
+        "media-element-unmount-cleanup":
+          "NmorphAudioPreview, NmorphVideoPreview, and NmorphMediaGallery now stop media playback and clear owned media sources on unmount without revoking caller-owned blob URLs.",
         "badge-hidden-geometry":
           "NmorphBadge hidden indicators are no longer rendered into badge geometry, preventing invisible dot, default, and ribbon badges from expanding parent focus outlines.",
         "backtop-plain-direct-white-color":

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useSlots, watch, type CSSProperties } from 'vue';
+import { computed, onBeforeUnmount, ref, useSlots, watch, type CSSProperties } from 'vue';
 import {
   NmorphIcon,
   NmorphIconAudio,
@@ -10,6 +10,7 @@ import {
   NmorphIconPlay,
 } from '@/components';
 import { createCssSizeVariables, useModifiers } from '@/utils';
+import { cleanupMediaElement } from '@/utils/cleanup-media-element';
 import type { INmorphAudioPreviewEmit, INmorphAudioPreviewProps } from './types';
 
 const CONTRAST_ICON_COLOR = 'var(--nmorph-white-color)';
@@ -38,6 +39,7 @@ const audioRef = ref<HTMLAudioElement | null>(null);
 const playing = ref(false);
 const currentTime = ref(0);
 const durationSeconds = ref(props.durationMs ? props.durationMs / 1000 : 0);
+let isUnmounting = false;
 
 watch(
   () => props.durationMs,
@@ -119,11 +121,15 @@ const timeUpdateHandler = () => {
 };
 
 const playHandler = (event: Event) => {
+  if (isUnmounting) return;
+
   playing.value = true;
   emit('play', event);
 };
 
 const pauseHandler = (event: Event) => {
+  if (isUnmounting) return;
+
   playing.value = false;
   emit('pause', event);
 };
@@ -133,12 +139,19 @@ const endedHandler = () => {
 };
 
 const errorHandler = (event: Event) => {
+  if (isUnmounting) return;
+
   playing.value = false;
   emit('error', event);
 };
 
 const openHandler = () => emit('open');
 const downloadHandler = () => emit('download');
+
+onBeforeUnmount(() => {
+  isUnmounting = true;
+  cleanupMediaElement(audioRef.value);
+});
 
 defineExpose({ audioRef });
 </script>

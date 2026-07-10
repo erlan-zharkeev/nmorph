@@ -234,6 +234,8 @@ export default {
       items: {
         "media-tile-public-api-removal":
           "Breaking: NmorphMediaTile удален из публичных экспортов data-компонентов, render tests, stories и навигации lib docs.",
+        "media-element-unmount-cleanup":
+          "NmorphAudioPreview, NmorphVideoPreview и NmorphMediaGallery теперь при размонтировании останавливают медиа и очищают собственные источники, не освобождая blob URL, созданные вызывающим кодом.",
         "badge-hidden-geometry":
           "Скрытые индикаторы NmorphBadge больше не рендерятся в геометрии бейджа, поэтому невидимые dot, default и ribbon badges не расширяют focus outline родителя.",
         "backtop-plain-direct-white-color":
